@@ -7,3 +7,18 @@ The project can be deployed in  multiple ways:
 * frontend and backend can be both deployed in a single war file on a server.
 * frontend and backend can be packaged in an executable file that contains a Tomcat EE instance and that is used to serve the application.
 
+Below are some screenshots of the running application:
+
+The welome screen:
+![Alt text](/resources/welcome-screenshot.png?raw=true)
+
+The Age Control GUI:
+![Alt text](/resources/age-control-screenshot.png?raw=true)
+
+The Selectable Ontology Tree:
+![Alt text](/resources/selectable-ontology-screenshot.png?raw=true "Selectable Tree")
+
+The Simple Ontology Tree:
+![Alt text](/resources/simple-ontology-screenshot.png?raw=true)
+
+
