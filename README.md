@@ -9,14 +9,14 @@ The project can be deployed in  multiple ways:
 
 Below are some screenshots of the running application:
 
-The welome screen:
+The welcome screen:
 ![Alt text](/resources/welcome-screenshot.png?raw=true)
 
 The Age Control GUI:
 ![Alt text](/resources/age-control-screenshot.png?raw=true)
 
 The Selectable Ontology Tree:
-![Alt text](/resources/selectable-ontology-screenshot.png?raw=true "Selectable Tree")
+![Alt text](/resources/selectable-ontology-screenshot.png?raw=true)
 
 The Simple Ontology Tree:
 ![Alt text](/resources/simple-ontology-screenshot.png?raw=true)
