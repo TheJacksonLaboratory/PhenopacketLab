@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.jax.pheno</groupId>
-        <artifactId>pheno-springboot-angular</artifactId>
+        <groupId>org.monarchinitiative.phenopacket</groupId>
+        <artifactId>phenopacket</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -34,7 +34,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.3</version>
                 <configuration>
-                    <mainClass>org.jax.pheno.Application</mainClass>
+                    <mainClass>org.monarchinitiative.phenopacket.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>
