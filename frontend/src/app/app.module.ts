@@ -32,7 +32,7 @@ import { AppComponent } from './app.component';
 
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { ComponentsModule } from './component/component.module';
+import { ComponentsModule } from './component/components.module';
 import { MatRippleModule } from '@angular/material/core';
 import { SearchFilterComponent } from './component/age-control/search-filter/search-filter.component';
 

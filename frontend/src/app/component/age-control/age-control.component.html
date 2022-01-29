@@ -6,28 +6,129 @@
           <h5>Age Control UI</h5>
         </div>
         <div class="row">
-          <table class="example-full-width" cellspacing="0">
-            <tr>
-              <td>
-                <mat-form-field class="example-full-width" appearance="fill">
-                  <mat-label>Years</mat-label>
-                  <input matInput type="number" placeholder="Ex. 1" min="0">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field class="example-full-width" appearance="fill">
-                  <mat-label>Months</mat-label>
-                  <input matInput type="number" placeholder="Ex. 1" min="0">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field class="example-full-width" appearance="fill">
-                  <mat-label>Days</mat-label>
-                  <input matInput type="number" placeholder="Ex. 1" min="0">
-                </mat-form-field>
-              </td>
-            </tr>
-          </table>
+          <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Age">
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Years</mat-label>
+                      <input matInput type="number" placeholder="Ex. 1990" min="1">
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Months</mat-label>
+                      <input matInput type="number" placeholder="Ex. 1" min="1" max="12">
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                      <mat-label>Days</mat-label>
+                      <input matInput type="number" placeholder="Ex. 27" min="1" max="31">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+            </mat-tab>
+            <mat-tab label="Age Range">
+              <div class="row">
+                <div class="col-md-12">
+                  Start
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="example-full-width" cellspacing="0">
+                    <tr>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Years</mat-label>
+                          <input matInput type="number" placeholder="Ex. 1990" min="1">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Months</mat-label>
+                          <input matInput type="number" placeholder="Ex. 1" min="1" max="12">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Days</mat-label>
+                          <input matInput type="number" placeholder="Ex. 27" min="1" max="31">
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  End
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="example-full-width" cellspacing="0">
+                    <tr>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Years</mat-label>
+                          <input matInput type="number" placeholder="Ex. 1990" min="1">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Months</mat-label>
+                          <input matInput type="number" placeholder="Ex. 1" min="1" max="12">
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Days</mat-label>
+                          <input matInput type="number" placeholder="Ex. 27" min="1" max="31">
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+            </mat-tab>
+            <mat-tab label="Gestational Age">
+              <div class="row">
+                <div class="col-md-12">
+                  Weeks
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Weeks</mat-label>
+                    <input matInput type="number" placeholder="Ex. 1" min="0" max="42">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  Days
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <app-search-filter [options]="days" title="Select days"></app-search-filter>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Ontology Class">
+              <div class="row">
+                <div class="col-md-12">
+                  <app-search-filter [options]="ontologies" title="Select ontology"></app-search-filter>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
         </div>
       </div>
     </div>
