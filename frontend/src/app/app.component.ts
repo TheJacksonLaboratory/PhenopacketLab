@@ -1,18 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import 'rxjs/add/operator/filter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: []
 })
-export class AppComponent implements OnInit{
-  title = 'frontend';
+export class AppComponent implements OnInit {
+  title = "frontend";
 
-  constructor() { }
+  constructor(public location: Location, private router: Router) { }
 
-  ngOnInit(): void {
-    
+  ngOnInit() {
+   
+    this.router.navigate(['/aboutUs']);
   }
 
 }
