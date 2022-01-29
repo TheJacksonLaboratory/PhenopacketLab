@@ -7,7 +7,7 @@
                 </div>
                 <div class="row">
                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <mat-tree-node *matTreeNodeDef="let node;" matTreeNodeToggle matTreeNodePadding>
                             <button mat-icon-button disabled></button>
                             <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
                                 <mat-button-toggle value="Y">Y</mat-button-toggle>
