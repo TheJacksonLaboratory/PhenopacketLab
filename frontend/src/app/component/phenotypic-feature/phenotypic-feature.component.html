@@ -1,0 +1,80 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body margin">
+                <div class="row">
+                    <div style="clear: both">
+                        <h2><b>Hypertension </b></h2>
+                        <h3>HP:0000822</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>
+                        The presence of chronic increased pressure in the systemic arterial system.
+                    </p>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="status-radio-group-label"><b>Status:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-radio-group aria-labelledby="status-radio-group-label" class="status-radio-group"
+                            [(ngModel)]="selectedStatus">
+                            <mat-radio-button class="status-radio-button" *ngFor="let status of statuses"
+                                [value]="status">
+                                {{status}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="onset-time-label"><b>Onset:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-age-control aria-labelledby="onset-time-label"></app-age-control>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="resolution-time-label"><b>Resolution:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-age-control aria-labelledby="resolution-time-label"></app-age-control>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="severity-label"><b>Severity:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-search-filter [options]="severities" title="Add severity"></app-search-filter>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="modifiers-label"><b>Modifiers:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-select-chip [values]="modifierValues" label="Modifier values" placeholderLabel="Add Modifier Value..." description="A description of the modifier UI"></app-select-chip>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="evidence-label"><b>Evidence:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-select-chip [values]="evidenceValues" label="Evidence values" placeholderLabel="Add Evidence Value..." description="A description of the evidence UI"></app-select-chip>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

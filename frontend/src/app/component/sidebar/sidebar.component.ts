@@ -10,7 +10,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/selectable-ontology-tree', title: 'Selectable Ontology Tree',  icon: 'account_tree', class: '' },
     { path: '/simple-ontology-tree', title: 'Simple Ontology Tree',  icon:'account_tree', class: '' },
-    { path: '/age-control', title: 'Age Control UI',  icon:'list', class: '' },
+    { path: '/phenotypic-feature', title: 'Phenotypic Feature',  icon:'list', class: '' },
     { path: '/aboutUs', title: 'About',  icon:'explore', class: '' },
 ];
 
