@@ -7,14 +7,17 @@ import { Component } from '@angular/core';
 })
 
 export class PhenotypicFeatureComponent {
-    selectedStatus: string;
-    statuses: string[] = ['Included', 'Excluded'];
 
-    severities: string[] = ['Severity 0', 'Severity 1', 'Severity 2', 'Severity 3'];
+  phenotypicFeatureName = "Hypertension";
+  termId = "HP:0000822";
+  description = "The presence of chronic increased pressure in the systemic arterial system.";
+  selectedStatus = "Included";
+  statuses: string[] = ['Included', 'Excluded'];
 
-    modifierValues: string[] = [ 'modifier 1', 'modifier 2' ];
+  severities: string[] = ['Severity 0', 'Severity 1', 'Severity 2', 'Severity 3'];
 
-    evidenceValues: string[] = [ 'evidence 1', 'evidence 2' ];
-   
-  
+  modifierValues: string[] = ['modifier 1', 'modifier 2'];
+
+  evidenceValues: string[] = ['evidence 1', 'evidence 2'];
+
 }

@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { SelectChipComponent } from './select-chip/select-chip.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { DateComponent } from './age-control/date/date.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     AgeControlComponent,
     SearchFilterComponent,
     SelectChipComponent,
+    DateComponent,
     PhenotypicFeatureComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
