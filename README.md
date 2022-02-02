@@ -12,8 +12,8 @@ Below are some screenshots of the running application:
 The welcome screen:
 ![Alt text](/resources/welcome-screenshot.png?raw=true)
 
-The Age Control GUI:
-![Alt text](/resources/age-control-screenshot.png?raw=true)
+The Phenotypic Feature GUI:
+![Alt text](/resources/phenotypic-feature-screenshot.png?raw=true)
 
 The Selectable Ontology Tree:
 ![Alt text](/resources/selectable-ontology-screenshot.png?raw=true)
