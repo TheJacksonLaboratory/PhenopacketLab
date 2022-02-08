@@ -14,7 +14,7 @@ export class PhenotypicFeatureComponent {
   selectedStatus = "Included";
   statuses: string[] = ['Included', 'Excluded'];
 
-  severities: string[] = ['Severity 0', 'Severity 1', 'Severity 2', 'Severity 3'];
+  severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
 
   modifierValues: string[] = ['modifier 1', 'modifier 2'];
 

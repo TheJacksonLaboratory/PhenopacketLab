@@ -20,15 +20,15 @@ export class DateComponent {
 
     yearFormControl = new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[12][0-9]{3}$/)
+        Validators.pattern(/^([0-9]|[1-9][0-9]|1[0-4][0-9]|150)$/)
     ]);
     monthFormControl = new FormControl('', [
         Validators.required,
-        Validators.pattern(/^([1-9]|1[012])$/)
+        Validators.pattern(/^([0-9]|1[011])$/)
     ]);
     dayFormControl = new FormControl('', [
         Validators.required,
-        Validators.pattern(/^([1-9]|[1-2][0-9]|[3][0-1])$/)
+        Validators.pattern(/^([0-9]|[1-2][0-9]|[3][0-1])$/)
     ]);
 
     matcher = new MyErrorStateMatcher();
