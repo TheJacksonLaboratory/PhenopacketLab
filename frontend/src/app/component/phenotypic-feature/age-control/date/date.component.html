@@ -23,7 +23,7 @@
     <td>
       <mat-form-field appearance="fill">
         <mat-label>Days</mat-label>
-        <input matInput [formControl]="dayFormControl" type="number" placeholder="Ex. 27" min="0" max="31"
+        <input matInput [formControl]="dayFormControl" type="number" placeholder="Ex. 27" min="0" max="30"
           [errorStateMatcher]="matcher">
         <mat-error *ngIf="dayFormControl.hasError('day') && !dayFormControl.hasError('required')">
           Please enter a valid day

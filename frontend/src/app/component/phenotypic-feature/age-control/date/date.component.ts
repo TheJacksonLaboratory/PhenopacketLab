@@ -28,7 +28,7 @@ export class DateComponent {
     ]);
     dayFormControl = new FormControl('', [
         Validators.required,
-        Validators.pattern(/^([0-9]|[1-2][0-9]|[3][0-1])$/)
+        Validators.pattern(/^([0-9]|[1-2][0-9]|[3][0])$/)
     ]);
 
     matcher = new MyErrorStateMatcher();
