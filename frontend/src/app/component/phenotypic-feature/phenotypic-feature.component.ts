@@ -14,10 +14,13 @@ export class PhenotypicFeatureComponent {
   selectedStatus = "Included";
   statuses: string[] = ['Included', 'Excluded'];
 
+  // TODO - fetch from backend
   severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
 
+  // TODO - fetch from backend
   modifierValues: string[] = ['modifier 1', 'modifier 2'];
 
+  // TODO - fetch from backend
   evidenceValues: string[] = ['evidence 1', 'evidence 2'];
 
 }
