@@ -1,4 +1,4 @@
-package org.jax.pheno;
+package org.monarchinitiative.phenopacketlab.restapi;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;

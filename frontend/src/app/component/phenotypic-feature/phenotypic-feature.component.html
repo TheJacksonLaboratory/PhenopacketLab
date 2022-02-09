@@ -1,0 +1,102 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body margin">
+                <div class="row">
+                    <div style="clear: both">
+                        <h2><b>{{phenotypicFeatureName}} </b></h2>
+                        <h3>{{termId}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>
+                        {{description}}
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="status-radio-group-label"><b>Status:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-radio-group aria-labelledby="status-radio-group-label" class="status-radio-group"
+                            [(ngModel)]="selectedStatus">
+                            <mat-radio-button class="status-radio-button" *ngFor="let status of statuses"
+                                [value]="status">
+                                {{status}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="onset-time-label"><b>Onset:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-age-control aria-labelledby="onset-time-label"></app-age-control>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="resolution-time-label"><b>Resolution:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-age-control aria-labelledby="resolution-time-label"></app-age-control>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="severity-label"><b>Severity:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-search-filter [options]="severities" title="Add severity"></app-search-filter>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="modifiers-label"><b>Modifiers:</b></label>
+                    </div>
+                    <div class="col-md-12">
+                        <app-search-filter [options]="modifierValues" title="Choose modifier value"></app-search-filter>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label id="evidence-label"><b>Evidence:</b></label>
+                    </div>
+                </div>
+                <div class="row half-width">
+                    <div class="col-md-12">
+                        <app-search-filter [options]="evidenceValues" title="Choose evidence"></app-search-filter>
+                    </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Evidence code</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>ID</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Reference</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-package org.jax.pheno;
+package org.monarchinitiative.phenopacketlab.restapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
