@@ -18,17 +18,25 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
 
-
+        <phenol.version>2.0.0-RC1</phenol.version>
     </properties>
 
     <modules>
         <module>phenopacketlab-model</module>
         <module>phenopacketlab-restapi</module>
         <module>frontend</module>
+        <module>phenopacketlab-core</module>
+        <module>phenopacketlab-io</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.monarchinitiative.phenol</groupId>
+                <artifactId>phenol-core</artifactId>
+                <version>${phenol.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
