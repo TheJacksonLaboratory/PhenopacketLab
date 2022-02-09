@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.monarchinitiative.phenopacket</groupId>
-        <artifactId>phenopacket</artifactId>
+        <groupId>org.monarchinitiative.phenopacketlab</groupId>
+        <artifactId>phenopacketlab</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -16,7 +16,7 @@
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
     </properties>
 
-    <artifactId>backend</artifactId>
+    <artifactId>phenopacketlab-restapi</artifactId>
 
     <dependencies>
     <dependency>
@@ -34,7 +34,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.3</version>
                 <configuration>
-                    <mainClass>org.monarchinitiative.phenopacket.Application</mainClass>
+                    <mainClass>org.monarchinitiative.phenopacketlab.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>

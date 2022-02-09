@@ -1,6 +1,6 @@
 # Phenopacket Angular/Spring Boot Prototype
 
-This Maven project is a test project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (Backend). 
+This Maven project is a test project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (phenopacketlab-restapi). 
 
 The project can be deployed in  multiple ways: 
 * frontend dist folder can be deployed in a Tomcat container and the backend can be deployed as a war file.
