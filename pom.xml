@@ -4,10 +4,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Phenopacket Lab</name>
+    <description>An app for creating phenopackets</description>
+    <url>https://github.com/TheJacksonLaboratory/PhenopacketLab</url>
+    <inceptionYear>2022</inceptionYear>
+
     <groupId>org.monarchinitiative.phenopacketlab</groupId>
     <artifactId>PhenopacketLab</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <name>Baha El Kassaby</name>
+            <email>baha.elkassaby@jax.org</email>
+            <organization>The Jackson Laboratory</organization>
+            <organizationUrl>https://www.jax.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Daniel Danis</name>
+            <email>daniel.danis@jax.org</email>
+            <organization>The Jackson Laboratory</organization>
+            <organizationUrl>https://www.jax.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Michael Gargano</name>
+            <url>https://github.com/iimpulse</url>
+            <organization>The Jackson Laboratory</organization>
+            <organizationUrl>https://www.jax.org</organizationUrl>
+        </developer>
+        <developer>
+            <name>Peter Robinson</name>
+            <email>peter.robinson@jax.org</email>
+            <organization>The Jackson Laboratory</organization>
+            <organizationUrl>https://www.jax.org</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:TheJacksonLaboratory/PhenopacketLab.git</connection>
+        <developerConnection>scm:git:git@github.com:TheJacksonLaboratory/PhenopacketLab.git</developerConnection>
+        <url>scm:git:git@github.com:TheJacksonLaboratory/PhenopacketLab.git</url>
+        <tag>v${project.version}</tag>
+    </scm>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -15,8 +55,11 @@
     </parent>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <phenol.version>2.0.0-RC1</phenol.version>
     </properties>
@@ -84,8 +127,62 @@
 <!--                        </execution>-->
 <!--                    </executions>-->
                 </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                        <doclint>none</doclint>
+                        <quiet>true</quiet>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
