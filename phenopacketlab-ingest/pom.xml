@@ -18,6 +18,10 @@
             <artifactId>picocli</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.monarchinitiative.biodownload</groupId>
+            <artifactId>biodownload</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
