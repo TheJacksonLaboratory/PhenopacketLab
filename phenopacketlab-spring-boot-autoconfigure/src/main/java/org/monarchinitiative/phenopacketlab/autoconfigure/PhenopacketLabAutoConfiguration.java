@@ -41,7 +41,7 @@ public class PhenopacketLabAutoConfiguration {
         }
         Path dataDirPath = Paths.get(dataDir);
         if (!Files.isDirectory(dataDirPath)) {
-            throw new UndefinedPhenopacketLabResourceException(String.format("Path to PhenopacketLab data directory '%s' does not point to real directory", dataDirPath));
+            throw new UndefinedPhenopacketLabResourceException(String.format("Path to PhenopacketLab data directory '%s' does not point to an existing directory", dataDirPath));
         }
         LOGGER.info("Spooling up PhenopacketLab v{} using resources in `{}`", PHENOPACKETLAB_VERSION, dataDirPath.toAbsolutePath());
         return dataDirPath;
@@ -53,7 +53,7 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public HpoService ontologyService(PhenopacketLabDataResolver phenopacketLabDataResolver) {
+    public HpoService hpoService(PhenopacketLabDataResolver phenopacketLabDataResolver) {
         Path hpoPath = phenopacketLabDataResolver.hpoJsonPath();
         Ontology hpo = OntologyLoader.loadOntology(hpoPath.toFile());
         return new PhenolHpoService(hpo);
