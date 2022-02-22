@@ -2,7 +2,6 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin
+// @CrossOrigin // TODO - do we need this here?
 @RestController
 @RequestMapping(value = "${api.version}/ontology")
 public class OntologyConstantsController {
