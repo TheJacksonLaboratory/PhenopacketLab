@@ -61,6 +61,9 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
+        <phenopacket.version>2.0.0</phenopacket.version>
+        <protobuf.version>3.19.3</protobuf.version>
+
         <phenol.version>2.0.0-RC1</phenol.version>
         <biodownload.version>1.0.0</biodownload.version>
         <picocli.version>4.6.2</picocli.version>
@@ -91,6 +94,22 @@
                 <groupId>org.monarchinitiative.phenol</groupId>
                 <artifactId>phenol-io</artifactId>
                 <version>${phenol.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.phenopackets</groupId>
+                <artifactId>phenopacket-schema</artifactId>
+                <version>${phenopacket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java-util</artifactId>
+                <version>${protobuf.version}</version>
             </dependency>
 
             <dependency>
