@@ -23,6 +23,11 @@
             <groupId>org.phenopackets</groupId>
             <artifactId>phenopacket-schema</artifactId>
         </dependency>
+        <!-- TODO - consider removing -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java-util</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
