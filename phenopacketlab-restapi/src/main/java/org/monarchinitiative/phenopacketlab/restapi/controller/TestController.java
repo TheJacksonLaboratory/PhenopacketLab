@@ -5,9 +5,7 @@ import com.google.protobuf.util.JsonFormat;
 import org.phenopackets.schema.v2.Cohort;
 import org.phenopackets.schema.v2.Family;
 import org.phenopackets.schema.v2.core.MetaData;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "${api.version}/test")
@@ -35,5 +33,29 @@ public class TestController {
 
         return JSON.print(cohort);
     }
+
+// TODO - finish endpoint structure
+//
+//    @GetMapping(value = "/phenopacket/{id}", headers = "Accept=application/json")
+//    public ResponseEntity<Phenopacket> getPhenopacket(@PathVariable(value="id") String id) {
+//        Phenopacket phenopacket = Phenopacket.newBuilder().build();
+//
+//
+//        return ResponseEntity.ok(phenopacket);
+//    }
+//
+//    @PostMapping(value = "/phenopacket/{id}/individual", headers = "Accept=application/json")
+//    public ResponseEntity<String> updatePhenopacketIndividual(@PathVariable(value="id") String id) {
+//
+//        return ResponseEntity.ok()
+//                .body("The phenopacket individual has been updated.");
+//    }
+//
+//    @PostMapping(value = "/phenopacket/{id}/measurement", headers = "Accept=application/json")
+//    public ResponseEntity<String> updatePhenopacketMeasurement(@PathVariable(value="id") String id) {
+//
+//        return ResponseEntity.ok()
+//                .body("The phenopacket measurement has been updated.");
+//    }
 
 }
