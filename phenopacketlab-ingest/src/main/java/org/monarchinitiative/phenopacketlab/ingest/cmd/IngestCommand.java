@@ -48,37 +48,10 @@ public class IngestCommand implements Callable<Integer> {
                 LOGGER.error("Error occurred during the download: {}", e.getMessage(), e);
                 return 1;
             }
-
-            try {
-                uncompressHpoJson(dataDirectory);
-            } catch (IOException e) {
-                LOGGER.error("Error occurred during un-compressing HPO JSON file: {}", e.getMessage(), e);
-                return 1;
-            }
         }
 
         LOGGER.info("Done!");
         return 0;
-    }
-
-    private static void uncompressHpoJson(Path dataDirectory) throws IOException {
-        Path hpoJson = dataDirectory.resolve("hp.json");
-        Path gzipped = dataDirectory.resolve("hp.json.gz");
-
-        // Uncompressed HP JSON has ~25MB
-        long tenMegaBytes = 10 * 1000 * 1000;
-        if (Files.isRegularFile(hpoJson) && Files.size(hpoJson) < tenMegaBytes) {
-            LOGGER.info("Un-compressing HP JSON file");
-            // Add `.gz` suffix to the HP JSON file
-            Files.move(hpoJson, gzipped, StandardCopyOption.REPLACE_EXISTING);
-            // un-compress HP JSON
-            try (InputStream in = new BufferedInputStream(new GZIPInputStream(Files.newInputStream(gzipped)));
-                 BufferedOutputStream out = new BufferedOutputStream(Files.newOutputStream(hpoJson))) {
-                in.transferTo(out);
-            }
-            // delete gZipped
-            Files.delete(gzipped);
-        }
     }
 
     private static Optional<Path> createDataDirectory(Path destinationPath) {
