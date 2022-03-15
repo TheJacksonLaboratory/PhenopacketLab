@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "${api.version}/test/cohort")
 public class CohortController {
 
-    @GetMapping(value = "/abc", headers = "Accept=application/json")
-    public Cohort abc() {
-        return Examples.Cohorts.abc();
+    @GetMapping(value = "/neurofibromatosis-cohort", headers = "Accept=application/json")
+    public Cohort toyNeurofibromatosisCohort() {
+        return Examples.Cohorts.toyNeurofibromatosisCohort();
     }
 
 }
