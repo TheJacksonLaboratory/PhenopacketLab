@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "${api.version}/test/family")
 public class FamilyController {
 
-    @GetMapping(value = "/abc", headers = "Accept=application/json")
-    public Family abc() {
-        return Examples.Families.abc();
+    @GetMapping(value = "/leigh-syndrome", headers = "Accept=application/json")
+    public Family toyLeighSyndromeTrio() {
+        return Examples.Families.toyLeighSyndromeTrio();
     }
 
 }
