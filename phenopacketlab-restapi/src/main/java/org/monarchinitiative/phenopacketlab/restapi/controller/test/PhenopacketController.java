@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.restapi.controller.test;
 
 import org.monarchinitiative.phenopacketlab.restapi.util.Examples;
 import org.phenopackets.schema.v2.Phenopacket;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,38 +10,38 @@ import org.springframework.web.bind.annotation.*;
 public class PhenopacketController {
 
     @GetMapping(value = "/aml", headers = "Accept=application/json")
-    public Phenopacket aml() {
-        return Examples.Phenopackets.acuteMyeloidLeukemia();
+    public ResponseEntity<Phenopacket> aml() {
+        return ResponseEntity.ok(Examples.Phenopackets.acuteMyeloidLeukemia());
     }
 
     @GetMapping(value = "/bethlem-myopathy", headers = "Accept=application/json")
-    public Phenopacket bethlemMyopathy() {
-        return Examples.Phenopackets.bethlemMyopathy();
+    public ResponseEntity<Phenopacket> bethlemMyopathy() {
+        return ResponseEntity.ok(Examples.Phenopackets.bethlemMyopathy());
     }
 
     @GetMapping(value = "/covid", headers = "Accept=application/json")
-    public Phenopacket covid() {
-        return Examples.Phenopackets.covid();
+    public ResponseEntity<Phenopacket> covid() {
+        return ResponseEntity.ok(Examples.Phenopackets.covid());
     }
 
     @GetMapping(value = "/marfan", headers = "Accept=application/json")
-    public Phenopacket marfan() {
-        return Examples.Phenopackets.marfan();
+    public ResponseEntity<Phenopacket> marfan() {
+        return ResponseEntity.ok(Examples.Phenopackets.marfan());
     }
 
     @GetMapping(value = "/squamous-cell-esophageal-carcinoma", headers = "Accept=application/json")
-    public Phenopacket squamousCellEsophagealCarcinoma() {
-        return Examples.Phenopackets.squamousCellEsophagealCarcinoma();
+    public ResponseEntity<Phenopacket> squamousCellEsophagealCarcinoma() {
+        return ResponseEntity.ok(Examples.Phenopackets.squamousCellEsophagealCarcinoma());
     }
 
     @GetMapping(value = "/thrombocytopenia2", headers = "Accept=application/json")
-    public Phenopacket thrombocytopenia2() {
-        return Examples.Phenopackets.thrombocytopenia2();
+    public ResponseEntity<Phenopacket> thrombocytopenia2() {
+        return ResponseEntity.ok(Examples.Phenopackets.thrombocytopenia2());
     }
 
     @GetMapping(value = "/urothelialCancer", headers = "Accept=application/json")
-    public Phenopacket urothelialCancer() {
-        return Examples.Phenopackets.urothelialCancer();
+    public ResponseEntity<Phenopacket> urothelialCancer() {
+        return ResponseEntity.ok(Examples.Phenopackets.urothelialCancer());
     }
 
 }
