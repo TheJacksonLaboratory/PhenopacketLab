@@ -11,10 +11,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     RouterModule,
   ],
   declarations: [
-    SidebarComponent
+    SidebarComponent,
   ],
   exports: [
-    SidebarComponent
+    SidebarComponent,
   ]
 })
 export class ComponentsModule { }

@@ -1,21 +1,21 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { PhenotypicDetailComponent } from './phenotypic-detail.component';
 import { AgeControlComponent } from './age-control/age-control.component';
 import { SearchFilterComponent } from './age-control/search-filter/search-filter.component';
-import { PhenotypicFeatureComponent } from './phenotypic-feature.component';
+import { SelectChipComponent } from './select-chip/select-chip.component';
+import { DateComponent } from './age-control/date/date.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
-import { SelectChipComponent } from './select-chip/select-chip.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { DateComponent } from './age-control/date/date.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -39,14 +39,12 @@ import { DateComponent } from './age-control/date/date.component';
     SearchFilterComponent,
     SelectChipComponent,
     DateComponent,
-    PhenotypicFeatureComponent
+    PhenotypicDetailComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   exports: [
-    MatFormFieldModule,
-    MatInputModule,
-    PhenotypicFeatureComponent
+    PhenotypicDetailComponent
   ]
 })
-export class PhenotypicFeatureModule { }
+export class PhenotypicDetailModule { }
