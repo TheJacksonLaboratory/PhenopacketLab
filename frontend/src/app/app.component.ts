@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
+  title = "frontend";
 
   constructor(public location: Location, private router: Router) { }
 
   ngOnInit() {
-    this.router.navigate(['/families']);
+   
+    this.router.navigate(['/aboutUs']);
   }
 
 }
