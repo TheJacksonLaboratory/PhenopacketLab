@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
 import { AgeControlComponent } from './age-control/age-control.component';
 import { SearchFilterComponent } from './age-control/search-filter/search-filter.component';
-import { SelectChipComponent } from './select-chip/select-chip.component';
 import { DateComponent } from './age-control/date/date.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
@@ -37,7 +36,6 @@ import { RouterModule } from '@angular/router';
   declarations: [
     AgeControlComponent,
     SearchFilterComponent,
-    SelectChipComponent,
     DateComponent,
     PhenotypicDetailComponent
   ],
