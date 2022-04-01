@@ -25,6 +25,9 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { routing } from './app.routing';
 import { ErrorInterceptor } from './helpers/error.interceptor';
@@ -40,10 +43,8 @@ import { PhenotypicFeatureComponent } from './component/phenotypic-feature/pheno
 import { SharedModule } from './component/shared/shared.module';
 import { PhenopacketComponent } from './component/phenopacket/phenopacket.component';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
-import { MatTabsModule } from '@angular/material/tabs';
 import { FamilyListComponent } from './component/family-list/family-list.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { DiseaseComponent } from './component/disease/disease.component';
 // import { SharedModule } from './component/shared/shared.module';
 // import { PhenotypicDetailModule } from './component/phenotypic-detail/phenotypic-detail.module';
 // import { PhenotypicDetailComponent } from './component/phenotypic-detail/phenotypic-detail.component';
@@ -95,7 +96,8 @@ import { MatSelectModule } from '@angular/material/select';
     PhenotypicFeatureComponent,
     PhenopacketComponent,
     CohortListComponent,
-    FamilyListComponent
+    FamilyListComponent,
+    DiseaseComponent
   ],
   exports: [RouterModule],
   providers: [{ provide: MatDialogRef, useValue: {} },
