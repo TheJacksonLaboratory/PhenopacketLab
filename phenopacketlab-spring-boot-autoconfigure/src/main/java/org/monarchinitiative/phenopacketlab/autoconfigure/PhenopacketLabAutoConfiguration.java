@@ -1,9 +1,14 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
+import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDiseases;
+import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseAnnotationLoader;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
+import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
+import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
+import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.slf4j.Logger;
@@ -28,9 +33,15 @@ public class PhenopacketLabAutoConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PhenopacketLabAutoConfiguration.class);
 
-    private static final Properties properties = readProperties();
+    private static final Properties PROPERTIES = readProperties();
 
-    private static final String PHENOPACKETLAB_VERSION = properties.getProperty("phenopacketlab.version", "unknown version");
+    private static final String PHENOPACKETLAB_VERSION = PROPERTIES.getProperty("phenopacketlab.version", "unknown version");
+
+    private final PhenopacketLabProperties properties;
+
+    public PhenopacketLabAutoConfiguration(PhenopacketLabProperties properties) {
+        this.properties = properties;
+    }
 
     @Bean
     @ConditionalOnMissingBean(name = "phenopacketLabDataDirectory")
@@ -53,10 +64,28 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public HpoService hpoService(PhenopacketLabDataResolver phenopacketLabDataResolver) {
+    public Ontology hpo(PhenopacketLabDataResolver phenopacketLabDataResolver) {
         Path hpoPath = phenopacketLabDataResolver.hpoJsonPath();
-        Ontology hpo = OntologyLoader.loadOntology(hpoPath.toFile());
+        LOGGER.debug("Reading HPO file at {}", hpoPath.toAbsolutePath());
+        return OntologyLoader.loadOntology(hpoPath.toFile());
+    }
+
+    @Bean
+    public HpoService hpoService(Ontology hpo) {
         return new PhenolHpoService(hpo);
+    }
+
+    @Bean
+    public DiseaseService diseaseService(PhenopacketLabDataResolver resolver,
+                                         Ontology hpo) throws InvalidResourceException {
+        try {
+            Path annotationPath = resolver.hpoAnnotationPath();
+            LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
+            HpoDiseases diseases = HpoDiseaseAnnotationLoader.loadHpoDiseases(annotationPath, hpo, properties.diseaseDatabases());
+            return new PhenolDiseaseService(diseases);
+        } catch (IOException e) {
+            throw new InvalidResourceException(e);
+        }
     }
 
     private static Properties readProperties() {

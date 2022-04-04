@@ -1,6 +1,7 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.springframework.beans.factory.BeanCreationException;
 
@@ -14,13 +15,15 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
 
     @Test
     public void testAllPropertiesSupplied() {
-        load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + TEST_DATA);
+        load(PhenopacketLabAutoConfiguration.class,
+                "phenopacketlab.data-directory=" + TEST_DATA);
 
         Path datadirectory = context.getBean("phenopacketLabDataDirectory", Path.class);
         assertThat(datadirectory.getFileName(), equalTo(Path.of("data")));
 
         assertThat(context.getBean(PhenopacketLabDataResolver.class), is(notNullValue()));
         assertThat(context.getBean(HpoService.class), is(notNullValue()));
+        assertThat(context.getBean(DiseaseService.class), is(notNullValue()));
     }
 
     @Test
