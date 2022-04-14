@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,6 +52,16 @@ public class DiseaseControllerTest {
         MockHttpServletResponse response = result.getResponse();
 
         assertThat(response.getContentAsString(), equalTo("{\"id\":\"OMIM:123456\",\"name\":\"First\"}"));
+    }
+
+    @Test
+    public void diseaseById_missingDisease() throws Exception {
+        TermId diseaseId = TermId.of("OMIM:123456");
+        when(diseaseService.diseaseById(diseaseId))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/OMIM:123456"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
