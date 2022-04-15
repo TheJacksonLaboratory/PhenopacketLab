@@ -27,6 +27,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class DiseaseControllerTest {
 
+    private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
+
     @Mock
     public DiseaseService diseaseService;
     @InjectMocks
@@ -37,6 +39,7 @@ public class DiseaseControllerTest {
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .addPlaceholderValue("api.version", "/api/v1")
+                .setControllerAdvice(HANDLER)
                 .build();
     }
 
@@ -62,6 +65,12 @@ public class DiseaseControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/OMIM:123456"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void diseaseById_InvalidId() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/INVALID"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
