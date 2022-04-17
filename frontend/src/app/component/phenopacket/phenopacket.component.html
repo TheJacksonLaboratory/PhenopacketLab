@@ -63,7 +63,7 @@
                                     <mat-select [(value)]="sex" [formControl]="phenoSexControl">
                                         <mat-option *ngFor="let sex of getSexes()" [value]="sex">
                                             {{sex}}
-                                          </mat-option>
+                                        </mat-option>
                                     </mat-select>
                                     <mat-label>
                                         <b>Sex</b>
@@ -81,9 +81,10 @@
                             <div class="col-md-10">
                                 <mat-form-field appearance="fill">
                                     <mat-select [(value)]="karyotypicSex">
-                                        <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
+                                        <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()"
+                                            [value]="karyotypicSex">
                                             {{karyotypicSex}}
-                                          </mat-option>
+                                        </mat-option>
                                     </mat-select>
                                     <mat-label>
                                         <b>Karyotypic sex</b>
@@ -129,71 +130,84 @@
                     </div>
 
                 </div>
+
                 <mat-divider></mat-divider>
+
                 <div class="row">
                     <div class="col-md-12">
-                        <mat-tab-group>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">list</mat-icon>
-                                    Phenotypic Features
-                                </ng-template>
-                                <app-phenotypic-feature></app-phenotypic-feature>
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">square_foot</mat-icon>
-                                    Measurements
-                                </ng-template>
-                                Measurements
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">biotech</mat-icon>
-                                    Biosamples
-                                </ng-template>
-                                Biosamples
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">interpreter_mode</mat-icon>
-                                    Interpretations
-                                </ng-template>
-                                Interpretations
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">coronavirus</mat-icon>
-                                    Diseases
-                                </ng-template>
-                                <app-disease></app-disease>
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">medical_services</mat-icon>
-                                    Medical Actions
-                                </ng-template>
-                                Medical Actions
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">text_snippet</mat-icon>
-                                    Files
-                                </ng-template>
-                                Files
-                            </mat-tab>
-                            <mat-tab>
-                                <ng-template mat-tab-label>
-                                    <mat-icon class="tab-icon">data_object</mat-icon>
-                                    Metadata
-                                </ng-template>
-                                Metadata
-                            </mat-tab>
-                        </mat-tab-group>
+                        <div class="column-1">
+                            <ul class="vertical-menu">
+                                <li (click)="viewMode ='tab1'" [ngClass]="{'active':viewMode =='tab1'}">
+                                    <mat-icon class="tab-icon">list</mat-icon>  Phenotypic Features
+                                </li>
+                                <li (click)="viewMode ='tab2'" [ngClass]="{'active':viewMode =='tab2'}">
+                                    <mat-icon class="tab-icon">square_foot</mat-icon>  Measurements
+                                </li>
+                                <li (click)="viewMode ='tab3'" [ngClass]="{'active':viewMode =='tab3'}">
+                                    <mat-icon class="tab-icon">biotech</mat-icon>  Biosamples
+                                </li>
+                                <li (click)="viewMode ='tab4'" [ngClass]="{'active':viewMode =='tab4'}">
+                                    <mat-icon class="tab-icon">interpreter_mode</mat-icon>  Interpretations
+                                </li>
+                                <li (click)="viewMode ='tab5'" [ngClass]="{'active':viewMode =='tab5'}">
+                                    <mat-icon class="tab-icon">coronavirus</mat-icon>  Diseases
+                                </li>
+                                <li (click)="viewMode ='tab6'" [ngClass]="{'active':viewMode =='tab6'}">
+                                    <mat-icon class="tab-icon">medical_services</mat-icon>  Medical Actions
+                                </li>
+                                <li (click)="viewMode ='tab7'" [ngClass]="{'active':viewMode =='tab7'}">
+                                    <mat-icon class="tab-icon">medical_services</mat-icon>  Files
+                                </li>
+                                <li (click)="viewMode ='tab8'" [ngClass]="{'active':viewMode =='tab8'}">
+                                    <mat-icon class="tab-icon">data_object</mat-icon>  Metadata
+                                </li>
 
+                            </ul>
+                        </div>
+                        <div class="column-2" [ngSwitch]="viewMode">
+                            <div *ngSwitchCase="'tab1'">
+                                <app-phenotypic-feature></app-phenotypic-feature>
+                            </div>
+                            <div *ngSwitchCase="'tab2'">
+                                <h3>Measurements</h3>
+                                <p></p>
+                            </div>
+                            <div *ngSwitchCase="'tab3'">
+                                <h3>Biosamples</h3>
+                                <p></p>
+                            </div>
+                            <div *ngSwitchCase="'tab4'">
+                                <div class="main-content">
+                                    <div class="container-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'tab5'">
+                                <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"></app-disease>
+                            </div>
+                            <div *ngSwitchCase="'tab6'">
+                                <div class="main-content">
+                                    <div class="container-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'tab7'">
+                                <div class="main-content">
+                                    <div class="container-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'tab8'">
+                                <div class="main-content">
+                                    <div class="container-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
-</div>

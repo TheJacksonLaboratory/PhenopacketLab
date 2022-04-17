@@ -1,85 +1,54 @@
-:host {
-  >.container {
-      max-width: 1264px;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      background: none;
-  }
-  ::ng-deep {
-      .mat-tab-group {
-          flex-direction: row;
-      }
-      .mat-tab-header {
-        border-bottom: none;
-      }
-      .mat-tab-header-pagination {
-        display: none !important;
-      }
-      .mat-tab-labels {
-        justify-items: left !important;
-        flex-direction: column;
-      }
-      .mat-tab-label-active {
-        border-right: 5px solid darkgreen !important;
-      }
-      .mat-ink-bar {
-        display: none;
-      }
-      .mat-tab-body-wrapper {
-          flex: 1 1 auto;
-      }
+.column-1{
+  width: 200px;
+  float: left;
+}
+.column-2{
+  float: none;
+  overflow: hidden;
+  background-color: #fff;
+  div{
+    padding: 20px;
   }
 }
 
-.container {
-  position: relative;
+.active{
+  outline: 1px solid #ddd;
+  cursor: pointer;
+  background-color:#ecf0f1;
+  color: #017171; //#2980b9
+}
+.vertical-menu {
+  
+  display: block !important;
   width: 100%;
-  flex: 1 0 auto;
-  margin: 0 auto;
+  text-align: center;
+  list-style-type: none;
+  padding: 0px;
+}
+
+li {
+  color: darkgrey; //#212121
+  font-style: normal;
+  font-weight: normal;
   text-align: left;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-#content {
-  box-sizing: content-box;
-  margin: 0 auto;
-  padding: 15px;
-  width: 1264px;
-  background-color: #ffffff;
+li:after {
+  display: none;
 }
 
-#content {
-  max-width: 1100px;
-  width: 100%;
-  background-color: #ffffff;
-  padding: 24px;
-  box-sizing: border-box;
+a {
+  padding: 8px;
 }
-
-#content,
-#main-content {
-  &::before,
-  &::after {
-      content: "";
-      display: table;
+@media(max-width:550px){
+  .column-1{
+    width: 40% !important;
+    
   }
-  &::after {
-      clear: both;
+  .column-2{
+    width: 60% !important;
   }
-}
-
-.tab-icon {
-  margin-right: 8px;
-}
-.tab-icon:hover {
-  color: darkgray;
-}
-
-.edit-icon:hover {
-  color: darkgrey;
-}
-
-.margin {
-  margin-left: 10px;
 }
