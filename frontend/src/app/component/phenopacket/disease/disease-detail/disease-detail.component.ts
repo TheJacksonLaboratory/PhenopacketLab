@@ -18,6 +18,13 @@ export class DiseaseDetailComponent {
   statuses: string[] = ['Included', 'Excluded'];
   selectedStatus: string;
 
+  // TODO - fetch from backend
+  // stages: string[] = ['Incubation', 'Prodromal', 'Illness', 'Decline', 'Convalescence'];
+  stages: string[] = ['Stage 0 - carcinoma in situ', 'Stage I - localized cancer', 'Stage II - locally advanced cancer, early stages', 'Stage III - locally advanced cancer, later stages', 'Stage IV - metastatic cancer'];
+  clinicalFindings: string[] = ['Tumor', 'Nodes', 'Metastasis'];
+  severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
+  lateralities: string[] = ['Right', 'Left'];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -27,7 +34,6 @@ export class DiseaseDetailComponent {
       this.description = this.disease.description;
       this.isA = this.disease.isA;
       this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';
-      console.log(this.selectedStatus);
     }
   }
 
