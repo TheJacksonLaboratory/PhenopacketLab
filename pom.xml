@@ -92,6 +92,11 @@
             </dependency>
             <dependency>
                 <groupId>org.monarchinitiative.phenol</groupId>
+                <artifactId>phenol-annotations</artifactId>
+                <version>${phenol.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.monarchinitiative.phenol</groupId>
                 <artifactId>phenol-io</artifactId>
                 <version>${phenol.version}</version>
             </dependency>

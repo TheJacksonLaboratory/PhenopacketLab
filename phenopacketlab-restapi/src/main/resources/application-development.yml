@@ -1,6 +1,8 @@
 phenopacketlab:
   # Path to folder with data files prepared by running `phenopacketlab-ingest ingest`
   data-directory:
+  # Disease databases to use
+  #disease-databases: ['OMIM', 'ORPHANET', 'DECIPHER']
 
 api:
   version: /api/v1

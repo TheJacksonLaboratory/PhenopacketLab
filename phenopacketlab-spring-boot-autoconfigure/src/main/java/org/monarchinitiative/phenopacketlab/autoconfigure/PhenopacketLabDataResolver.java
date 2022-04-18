@@ -13,7 +13,7 @@ public class PhenopacketLabDataResolver {
     public PhenopacketLabDataResolver(Path phenopacketLabDataDirectory) throws MissingPhenopacketLabResourceException {
         this.phenopacketLabDataDirectory = phenopacketLabDataDirectory;
 
-        List<Path> paths = List.of(hpoJsonPath());
+        List<Path> paths = List.of(hpoJsonPath(), hpoAnnotationPath());
         for (Path path : paths) {
             if (!(Files.isRegularFile(path) && Files.isReadable(path))) {
                 throw new MissingPhenopacketLabResourceException(String.format("The file `%s` is missing in the data directory", path.toFile().getName()));
@@ -23,5 +23,9 @@ public class PhenopacketLabDataResolver {
 
     public Path hpoJsonPath() {
         return phenopacketLabDataDirectory.resolve("hp.json");
+    }
+
+    public Path hpoAnnotationPath() {
+        return phenopacketLabDataDirectory.resolve("phenotype.hpoa");
     }
 }

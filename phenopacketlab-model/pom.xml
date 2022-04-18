@@ -12,6 +12,15 @@
 
     <artifactId>phenopacketlab-model</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.monarchinitiative.phenol</groupId>
+            <artifactId>phenol-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.monarchinitiative.phenol</groupId>
+            <artifactId>phenol-annotations</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
