@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
+const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
 const hpoDiseasesUrl = environment.HPO_DISEASE_URL;
 
 @Injectable({
@@ -30,24 +31,21 @@ export class DiseaseSearchService {
     }
 
     public getAllHpoDiseases(): Observable<any> {
-        return this.http.get(hpoDiseasesUrl);
+        return this.http.get(phenopacketDiseasesUrl);
     }
 
     public queryDiseases(paramsIn: any): Observable<any> {
-        return this.sendDiseaseQueryRequest(paramsIn, hpoDiseasesUrl);
+        return this.sendDiseaseQueryRequest(paramsIn, phenopacketDiseasesUrl);
     }
 
     public queryDiseasesById(id: string): Observable<any> {
-        console.log("id:");
-        console.log(id);
+        console.log(hpoDiseasesUrl);
         return this.http.get(hpoDiseasesUrl + '/' + id);
     }
 
     private sendDiseaseQueryRequest(paramsIn: any, url: string): Observable<any> {
-
         //console.log(paramsIn)
         const nameList: string[] = [];
-
         if (paramsIn.selectedItems) {
             paramsIn.selectedItems.forEach(item => {
                 nameList.push(item.selectedValue.name);
