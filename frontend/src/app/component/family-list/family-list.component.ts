@@ -112,7 +112,9 @@ export class FamilyListComponent implements OnInit {
   }
 
   openTab(element: any) {
-    this.individualTabs.push(element);
+    if (!this.individualTabs.includes(element)) {
+      this.individualTabs.push(element);
+    }
     this.selected.setValue(this.individualTabs.length);
   }
   closeTab(index: number) {

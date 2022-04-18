@@ -24,8 +24,6 @@ export class DiseaseSearchService {
     }
 
     setSelectedSearchItems(searchItems: any) {
-        console.log(searchItems)
-
         this.selectedSearchItems = searchItems;
         this.selectedSearchItemSubject.next(searchItems);
     }
@@ -39,7 +37,6 @@ export class DiseaseSearchService {
     }
 
     public queryDiseasesById(id: string): Observable<any> {
-        console.log(hpoDiseasesUrl);
         return this.http.get(hpoDiseasesUrl + '/' + id);
     }
 
