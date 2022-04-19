@@ -4,76 +4,79 @@
     </button>
 </div>
 
-<mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-    <mat-tab label="Summary">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- Table summary of individuals -->
-                <table #varTable mat-table class="table-hover mat-elevation-z8" [dataSource]="datasource" matSort
-                    multiTemplateDataRows>
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                    </ng-container>
+<div class="card">
+    <div class="card-body">
+        <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+            <mat-tab label="Summary">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Table summary of individuals -->
+                        <table #varTable mat-table class="table-hover mat-elevation-z8" [dataSource]="datasource"
+                            matSort multiTemplateDataRows>
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                            </ng-container>
 
-                    <ng-container matColumnDef="dob">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of birth </th>
-                        <td mat-cell *matCellDef="let element"> {{formatDate(element.subject?.dateOfBirth,
-                            'MM-dd-yyyy')}} </td>
-                    </ng-container>
+                            <ng-container matColumnDef="dob">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of birth </th>
+                                <td mat-cell *matCellDef="let element"> {{formatDate(element.subject?.dateOfBirth,
+                                    'MM-dd-yyyy')}} </td>
+                            </ng-container>
 
-                    <ng-container matColumnDef="sex">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex </th>
-                        <td mat-cell *matCellDef="let element"> {{element.subject?.sex}} </td>
-                    </ng-container>
+                            <ng-container matColumnDef="sex">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex </th>
+                                <td mat-cell *matCellDef="let element"> {{element.subject?.sex}} </td>
+                            </ng-container>
 
-                    <ng-container matColumnDef="proband">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Proband </th>
-                        <td mat-cell *matCellDef="let element; let i = index">
-                            <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selectionProband.toggle(element) : null"
-                                [checked]="selectionProband.isSelected(element)"
-                                [aria-label]="checkboxLabel(element)">
-                            </mat-checkbox>
-                        </td>
-                    </ng-container>
+                            <ng-container matColumnDef="proband">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Proband </th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    <!-- <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selectionProband.toggle(element) : null"
+                                    [checked]="selectionProband.isSelected(element)"
+                                    [aria-label]="checkboxLabel(element)">
+                                </mat-checkbox> -->
+                                    <mat-checkbox [checked]="selectionProband.isSelected(element)" disabled="true">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
 
-                    <ng-container matColumnDef="remove">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let element">
-                            <button (click)="$event.stopPropagation()" mat-icon-button type="submit" color="primary"
-                                class="pull-right" matTooltip="Remove individual" (click)="removeIndividual(element)">
-                                <mat-icon matSuffix>close</mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
+                            <ng-container matColumnDef="remove">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
+                                        color="primary" class="pull-right" matTooltip="Remove individual"
+                                        (click)="removeIndividual(element)">
+                                        <mat-icon matSuffix>close</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
 
-                    <tr mat-row (click)="openTab(element)" *matRowDef="let element; columns: displayedColumns;"
-                        class="example-element-row" matTooltip="Click to open in new tab">
-                    </tr>
+                            <tr mat-row (click)="openTab(element)" *matRowDef="let element; columns: displayedColumns;"
+                                class="example-element-row" matTooltip="Click to open in new tab">
+                            </tr>
 
-                    <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-                </table>
+                        </table>
 
-                <mat-paginator #varPaginator [length]="pageLength" [pageSize]="pageSize"
-                    [pageSizeOptions]="pageSizeOptions" (page)="doPageChange($event)">
-                </mat-paginator>
-            </div>
-        </div>
+                        <mat-paginator #varPaginator [length]="pageLength" [pageSize]="pageSize"
+                            [pageSizeOptions]="pageSizeOptions" (page)="doPageChange($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
 
-    </mat-tab>
-    <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
-        <ng-template mat-tab-label>{{ phenopacket.id }}<i class="material-icons close-icon" matTooltip="Close this tab"
-                (click)="closeTab(index)">close</i>
-        </ng-template>
-        <div class="card">
+            </mat-tab>
+            <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
+                <ng-template mat-tab-label>{{ phenopacket.id }}<i class="material-icons close-icon"
+                        matTooltip="Close this tab" (click)="closeTab(index)">close</i>
+                </ng-template>
 
-            <div class="card-body margin">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2>Phenopacket</h2>
+                        <h3>Phenopacket</h3>
                     </div>
                     <div class="col-md-6">
                         <button (click)="closeTab(index)" mat-icon-button type="submit"
@@ -82,14 +85,16 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
-                    <app-phenopacket [phenopacket]="phenopacket" 
-                        (onIdChanged)="changeId($event, index)" 
-                        (onSexChanged)="changeSex($event, index)" 
-                        (onDobChanged)="changeDob($event, index)">
-                    </app-phenopacket>
+                <div class="row margin">
+                    <mat-checkbox (change)="changeProband($event, index)">Proband</mat-checkbox>
                 </div>
-            </div>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+
+                <app-phenopacket [phenopacket]="phenopacket" (onIdChanged)="changeId($event, index)"
+                    (onSexChanged)="changeSex($event, index)" (onDobChanged)="changeDob($event, index)">
+                    <!-- [isFamily]="true"
+                    (onProbandChanged)="changeProband($event, index)" -->
+                </app-phenopacket>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

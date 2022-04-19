@@ -57,7 +57,7 @@ export class FamilyListComponent implements OnInit {
 
   addTab() {
     let newPheno = new Phenopacket();
-    newPheno.id = "new-pheno-" + (this.individualTabs.length + 1);
+    newPheno.id = "new-patient-" + (this.individualTabs.length + 1);
     newPheno.subject = new Individual();
     this.individualTabs.push(newPheno);
     this.familyMap.set(newPheno.id, newPheno);
@@ -94,19 +94,40 @@ export class FamilyListComponent implements OnInit {
     return dialogRef;
 
   }
+  changeProband(element: any, index: number) {
+    this.family.relatives = [];
+    let isProband = element.checked !== undefined ? element.checked : false;
+    for(let i=0; i < this.individualTabs.length; i++) {
+      if (i == index && isProband) {
+        // if proband then we select
+        this.selectionProband.select(this.individualTabs[i]);
+        this.family.proband = this.individualTabs[i];
+      } else if (i == index && !isProband) {
+        // if not proband, we deselect
+        this.selectionProband.deselect(this.individualTabs[i]);
+        this.family.relatives.push(this.individualTabs[i]);
+      } else {
+        // all other indices: If not originally selected then deselect
+        if (!this.selectionProband.isSelected) {
+          this.selectionProband.deselect(this.individualTabs[i]);
+          this.family.relatives.push(this.individualTabs[i]);
+        }
+      }
+    }
+  }
+  isProband(phenopacket: Phenopacket) {
+    return this.selectionProband.isSelected(phenopacket);
+  }
 
   changeId(id: string, index: number) {
-    console.log("id:" + id + ", index:" + index);
     let selectedIndividual = this.individualTabs[index];
     selectedIndividual.id = id;
   }
   changeSex(sex: Sex, index: number) {
-    console.log("sex:" + sex + ", index:" + index);
     let selectedIndividual = this.individualTabs[index];
     selectedIndividual.subject.sex = sex;
   }
   changeDob(dob: Date, index: number) {
-    console.log("dob:" + dob + ", index:" + index);
     let selectedIndividual = this.individualTabs[index];
     selectedIndividual.subject.dateOfBirth = dob;
   }
@@ -129,18 +150,18 @@ export class FamilyListComponent implements OnInit {
     return this.datePipe.transform(date, format);
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selectionProband.selected.length;
-    const numRows = this.datasource.data.length;
-    return numSelected === numRows;
-  }
+  // Whether the number of selected elements matches the total number of rows.
+  // isAllSelected() {
+  //   const numSelected = this.selectionProband.selected.length;
+  //   const numRows = this.datasource.data.length;
+  //   return numSelected === numRows;
+  // }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Phenopacket): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selectionProband.isSelected(row) ? 'deselect' : 'select'}`;
-  }
+  // // The label for the checkbox on the passed row
+  // checkboxLabel(row?: Phenopacket): string {
+  //   if (!row) {
+  //     return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+  //   }
+  //   return `${this.selectionProband.isSelected(row) ? 'deselect' : 'select'}`;
+  // }
 }
