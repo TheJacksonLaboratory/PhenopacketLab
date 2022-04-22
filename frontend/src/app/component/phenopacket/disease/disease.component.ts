@@ -8,7 +8,7 @@ import { Disease } from 'src/app/models/disease';
 import { MondoDisease } from 'src/app/models/mondo-disease';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
-import { DiseaseSearchService } from './disease-search.service';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 
 @Component({
   selector: 'app-disease',
@@ -16,6 +16,11 @@ import { DiseaseSearchService } from './disease-search.service';
   styleUrls: ['./disease.component.scss']
 })
 export class DiseaseComponent implements OnInit {
+  // search box params
+  itemName = "Disease";
+  searchLabel = "Disease name";
+  placeHolderTxt = "Enter disease name";
+  localStorageKey = "hpo_diseases";
 
   //Table items
   displayedColumns = ['id', 'name', 'status', 'onset', 'resolution', 'metadata', 'remove'];
@@ -42,7 +47,7 @@ export class DiseaseComponent implements OnInit {
   spinnerDialogRef: any;
 
 
-  constructor(private searchService: DiseaseSearchService, public dialog: MatDialog) { }
+  constructor(public searchService: DiseaseSearchService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.phenopacketDiseases) {
@@ -55,9 +60,7 @@ export class DiseaseComponent implements OnInit {
         this.diseases.push(disease);
       });
     }
-    // this.diseases = [...this.diseases];
     this.datasource.data = this.diseases;
-    // this.diseaseTable.renderRows();
   }
 
   addDisease(disease: MondoDisease) {
@@ -67,10 +70,7 @@ export class DiseaseComponent implements OnInit {
     newDisease.synonyms = disease.synonyms;
     newDisease.xrefs = disease.xrefs;
     this.diseases.push(newDisease);
-    console.log(newDisease);
-    console.log(this.diseases.length);
     this.datasource.data = this.diseases;
-    // this.diseaseTable.renderRows();
   }
 
   removeDisease(element: MondoDisease) {
@@ -89,9 +89,7 @@ export class DiseaseComponent implements OnInit {
 
           }
         });
-        console.log(this.diseases.length);
         this.datasource.data = this.diseases;
-        // this.diseaseTable.renderRows();
       }
     });
     return dialogRef;
@@ -114,11 +112,6 @@ export class DiseaseComponent implements OnInit {
       this.currSearchParams = searchCriteria;
       this._queryDiseasesById(id);
     }
-    //  else {
-    //   this.diseaseDatasource = []
-    //   this.diseaseCount = 0
-    //   this.pageLength = 0
-    // }
 
   }
 

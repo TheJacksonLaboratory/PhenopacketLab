@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-// import diseases from '../../assets/data/diseases.json';
 
 // array in local storage for list of diseases
 // let diseasesf = JSON.parse("") || [];
 let diseases = require('../../assets/data/mondo.json');
 let diseaseNames = require('../../assets/data/mondo-id-names.json');
+let phenotypicFeatures = require('../../assets/data/hp.json');
+let phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
+
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -26,12 +28,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.endsWith('/diseases') && method === 'GET':
                     console.log("fakebackend disease");
                     return getDiseases();
-                 case url.match(/\/diseases\/.*/) && method === 'GET':
+                case url.match(/\/diseases\/.*/) && method === 'GET':
                     return getDiseaseById();
+                case url.endsWith('/phenotypic-features') && method === 'GET':
+                    console.log("fakebackend phenotypic features");
+                    return getPhenotypicFeatures();
+                case url.match(/\/phenotypic-features\/.*/) && method === 'GET':
+                    return getPhenotypicFeatureById();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
-            }    
+            }
         }
 
         // route functions
@@ -44,7 +51,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(disease);
         }
 
-       // helper functions
+        function getPhenotypicFeatures() {
+            return ok(phenotypicFeaturesNames);
+        }
+
+        function getPhenotypicFeatureById() {
+            const phenotypicFeature = phenotypicFeatures.find(x => x.id === idFromUrl());
+            return ok(phenotypicFeature);
+        }
+
+        // helper functions
 
         function ok(body?) {
             return of(new HttpResponse({ status: 200, body }))

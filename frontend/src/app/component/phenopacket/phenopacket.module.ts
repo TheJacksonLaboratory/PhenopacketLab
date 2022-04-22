@@ -22,7 +22,6 @@ import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detai
 import { DiseaseComponent } from './disease/disease.component';
 import { PhenotypicFeatureComponent } from './phenotypic-feature/phenotypic-feature.component';
 import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.component';
-import { SearchBoxComponent } from './disease/search-box/search-box.component';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -53,14 +52,12 @@ import { SharedModule } from '../shared/shared.module';
   ],
   declarations: [
     DiseaseComponent,
-    SearchBoxComponent,
     DiseaseDetailComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent
   ],
   exports: [
     DiseaseComponent,
-    SearchBoxComponent,
     DiseaseDetailComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,

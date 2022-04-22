@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchFilterComponent } from './age-control/search-filter/search-filter.component';
 import { AgeControlComponent } from './age-control/age-control.component';
 import { DateComponent } from './age-control/date/date.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 
 @NgModule({
@@ -52,14 +53,16 @@ import { DateComponent } from './age-control/date/date.component';
     SpinnerDialogComponent,
     AgeControlComponent,
     SearchFilterComponent,
-    DateComponent
+    DateComponent,
+    SearchBoxComponent
   ],
   exports: [
     MessageDialogComponent,
     SpinnerDialogComponent,
     AgeControlComponent,
     SearchFilterComponent,
-    DateComponent
+    DateComponent,
+    SearchBoxComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
