@@ -56,6 +56,7 @@ export class DiseaseComponent implements OnInit {
         let disease = new MondoDisease(element.term.id, element.term.label);
         disease.description = '';
         disease.onset = element.onset;
+        disease.excluded = element.excluded;
         // TODO other values to set up
         this.diseases.push(disease);
       });
