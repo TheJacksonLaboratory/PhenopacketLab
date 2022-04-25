@@ -136,7 +136,12 @@ export class FamilyListComponent implements OnInit {
     if (!this.individualTabs.includes(element)) {
       this.individualTabs.push(element);
     }
-    this.selected.setValue(this.individualTabs.length);
+    for(let i = 0; i < this.individualTabs.length; i++) {
+      if (element === this.individualTabs[i]) {
+        this.selected.setValue(i + 1);
+      }
+    }
+    
   }
   closeTab(index: number) {
     this.individualTabs.splice(index, 1)
