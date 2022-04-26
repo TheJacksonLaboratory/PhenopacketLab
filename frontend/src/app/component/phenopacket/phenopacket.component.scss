@@ -1,0 +1,85 @@
+:host {
+  >.container {
+      max-width: 1264px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      background: none;
+  }
+  ::ng-deep {
+      .mat-tab-group {
+          flex-direction: row;
+      }
+      .mat-tab-header {
+        border-bottom: none;
+      }
+      .mat-tab-header-pagination {
+        display: none !important;
+      }
+      .mat-tab-labels {
+        justify-items: left !important;
+        flex-direction: column;
+      }
+      .mat-tab-label-active {
+        border-right: 5px solid darkgreen !important;
+      }
+      .mat-ink-bar {
+        display: none;
+      }
+      .mat-tab-body-wrapper {
+          flex: 1 1 auto;
+      }
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  flex: 1 0 auto;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#content {
+  box-sizing: content-box;
+  margin: 0 auto;
+  padding: 15px;
+  width: 1264px;
+  background-color: #ffffff;
+}
+
+#content {
+  max-width: 1100px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+#content,
+#main-content {
+  &::before,
+  &::after {
+      content: "";
+      display: table;
+  }
+  &::after {
+      clear: both;
+  }
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+.tab-icon:hover {
+  color: darkgray;
+}
+
+.edit-icon:hover {
+  color: darkgrey;
+}
+
+.margin {
+  margin-left: 10px;
+}
