@@ -22,7 +22,6 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/assets/themes/jax-palette.scss",
               "src/assets/scss/material-dashboard.scss"
             ],
             "scripts": []

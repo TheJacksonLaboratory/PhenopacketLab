@@ -32,9 +32,14 @@ export class PhenopacketComponent implements OnInit {
   dob: Date;
   individual: Individual;
 
+  active = 'top';
+  viewMode;
+
   constructor() {
   }
   ngOnInit(): void {
+
+    this.viewMode = "tab1";
     this.individual = this.phenopacket.subject;
     this.dob = this.individual.dateOfBirth;
     this.sex = this.individual.sex;
@@ -77,6 +82,10 @@ export class PhenopacketComponent implements OnInit {
     return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
   }
 
+  getPhenopacketDiseases() {
+    return this.phenopacket.diseases;
+  }
+
   getSexes() {
     return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
   }
@@ -86,4 +95,5 @@ export class PhenopacketComponent implements OnInit {
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     
   }
+ 
 }

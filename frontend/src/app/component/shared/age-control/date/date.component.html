@@ -1,0 +1,34 @@
+<table class="full-width" cellspacing="0">
+  <tr>
+    <td>
+      <mat-form-field appearance="fill">
+        <mat-label>Years</mat-label>
+        <input matInput [formControl]="yearFormControl" type="number" placeholder="Ex. 20" min="0"
+          [errorStateMatcher]="matcher" max="150">
+        <mat-error *ngIf="yearFormControl.hasError('year') && !yearFormControl.hasError('required')">
+          Please enter a valid year
+        </mat-error>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field appearance="fill">
+        <mat-label>Months</mat-label>
+        <input matInput [formControl]="monthFormControl" type="number" placeholder="Ex. 1" min="0" max="11"
+          [errorStateMatcher]="matcher">
+        <mat-error *ngIf="monthFormControl.hasError('month') && !monthFormControl.hasError('required')">
+          Please enter a valid month
+        </mat-error>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field appearance="fill">
+        <mat-label>Days</mat-label>
+        <input matInput [formControl]="dayFormControl" type="number" placeholder="Ex. 27" min="0" max="30"
+          [errorStateMatcher]="matcher">
+        <mat-error *ngIf="dayFormControl.hasError('day') && !dayFormControl.hasError('required')">
+          Please enter a valid day
+        </mat-error>
+      </mat-form-field>
+    </td>
+  </tr>
+</table>
