@@ -40,41 +40,42 @@ export class PhenopacketComponent implements OnInit {
   ngOnInit(): void {
 
     this.viewMode = "tab1";
-    this.individual = this.phenopacket.subject;
-    this.dob = this.individual.dateOfBirth;
-    this.sex = this.individual.sex;
-    this.karyotypicSex = this.individual.karyotypicSex;
-    this.gender = this.individual.gender;
-
-    // id update
-    this.phenoIdControl.setValue(this.phenopacket.id);
-    if (this.phenopacketIdSubscription) {
-      this.phenopacketIdSubscription.unsubscribe();
-    }
-    this.phenopacketIdSubscription = this.phenoIdControl.valueChanges.subscribe(value => {
-      if (value && value.length > 0) {
-        this.onIdChanged.emit(value);
+    if (this.phenopacket) {
+      this.individual = this.phenopacket.subject;
+      this.dob = this.individual.dateOfBirth;
+      this.sex = this.individual.sex;
+      this.karyotypicSex = this.individual.karyotypicSex;
+      this.gender = this.individual.gender;
+  
+      // id update
+      this.phenoIdControl.setValue(this.phenopacket.id);
+      if (this.phenopacketIdSubscription) {
+        this.phenopacketIdSubscription.unsubscribe();
       }
-    });
-    // sex update
-    this.phenoSexControl.setValue(this.sex);
-    if (this.phenopacketSexSubscription) {
-      this.phenopacketSexSubscription.unsubscribe();
-    }
-    this.phenopacketSexSubscription = this.phenoSexControl.valueChanges.subscribe(value => {
-      if (value && value.length > 0) {
-        this.onSexChanged.emit(value);
+      this.phenopacketIdSubscription = this.phenoIdControl.valueChanges.subscribe(value => {
+        if (value && value.length > 0) {
+          this.onIdChanged.emit(value);
+        }
+      });
+      // sex update
+      this.phenoSexControl.setValue(this.sex);
+      if (this.phenopacketSexSubscription) {
+        this.phenopacketSexSubscription.unsubscribe();
       }
-    });
-    // Dob update
-    this.phenoDobControl.setValue(this.dob);
-    if (this.phenopacketDobSubscription) {
-      this.phenopacketDobSubscription.unsubscribe();
+      this.phenopacketSexSubscription = this.phenoSexControl.valueChanges.subscribe(value => {
+        if (value && value.length > 0) {
+          this.onSexChanged.emit(value);
+        }
+      });
+      // Dob update
+      this.phenoDobControl.setValue(this.dob);
+      if (this.phenopacketDobSubscription) {
+        this.phenopacketDobSubscription.unsubscribe();
+      }
+      this.phenopacketDobSubscription = this.phenoDobControl.valueChanges.subscribe(value => {
+        this.onDobChanged.emit(value);
+      });
     }
-    this.phenopacketDobSubscription = this.phenoDobControl.valueChanges.subscribe(value => {
-      this.onDobChanged.emit(value);
-    });
-    
   }
 
 
@@ -83,7 +84,10 @@ export class PhenopacketComponent implements OnInit {
   }
 
   getPhenopacketDiseases() {
-    return this.phenopacket.diseases;
+    if (this.phenopacket) {
+      return this.phenopacket.diseases;
+    }
+    return [];
   }
 
   getSexes() {

@@ -37,7 +37,7 @@
                                     [checked]="selectionProband.isSelected(element)"
                                     [aria-label]="checkboxLabel(element)">
                                 </mat-checkbox> -->
-                                    <mat-checkbox [checked]="selectionProband.isSelected(element)" disabled="true">
+                                    <mat-checkbox [checked]="element.isProband" disabled="true">
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
@@ -71,7 +71,7 @@
             </mat-tab>
             <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
                 <ng-template mat-tab-label>{{ phenopacket.id }}<i class="material-icons close-icon"
-                        matTooltip="Close this tab" (click)="closeTab(index)">close</i>
+                        matTooltip="Close this tab" (click)="closeTab(phenopacket)">close</i>
                 </ng-template>
 
                 <div class="row">
@@ -79,20 +79,18 @@
                         <h3>Phenopacket</h3>
                     </div>
                     <div class="col-md-6">
-                        <button (click)="closeTab(index)" mat-icon-button type="submit"
+                        <button (click)="closeTab(phenopacket)" mat-icon-button type="submit"
                             class="pull-right delete-tab-button" matTooltip="Close this tab">
                             <mat-icon mat-fab>close</mat-icon>
                         </button>
                     </div>
                 </div>
                 <div class="row margin">
-                    <mat-checkbox (change)="changeProband($event, index)">Proband</mat-checkbox>
+                    <mat-checkbox (change)="changeProband($event, index)" [checked]="phenopacket.isProband">Proband</mat-checkbox>
                 </div>
 
-                <app-phenopacket [phenopacket]="phenopacket" (onIdChanged)="changeId($event, index)"
-                    (onSexChanged)="changeSex($event, index)" (onDobChanged)="changeDob($event, index)">
-                    <!-- [isFamily]="true"
-                    (onProbandChanged)="changeProband($event, index)" -->
+                <app-phenopacket [phenopacket]="phenopacket" (onIdChanged)="changeId($event, phenopacket)"
+                    (onSexChanged)="changeSex($event, phenopacket)" (onDobChanged)="changeDob($event, phenopacket)">
                 </app-phenopacket>
             </mat-tab>
         </mat-tab-group>
