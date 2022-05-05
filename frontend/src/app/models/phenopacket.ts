@@ -18,4 +18,7 @@ export class Phenopacket {
     medicalActions: MedicalAction[];
     metadata: MetaData;
 
+    // for Family Phenopacket
+    isProband = false;
+
 }

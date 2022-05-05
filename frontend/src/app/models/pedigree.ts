@@ -15,5 +15,9 @@ export class Person {
 
 }
 export class Pedigree {
-    persons: Person;
+    persons: Person[];
+
+    constructor() {
+        this.persons = [];
+    }
 }
