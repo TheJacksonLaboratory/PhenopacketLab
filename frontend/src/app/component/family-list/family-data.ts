@@ -1,4 +1,5 @@
 import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from "src/app/models/base";
+import { Cohort } from "src/app/models/cohort";
 import { Family } from "src/app/models/family";
 import { Individual, KaryotypicSex, Sex } from "src/app/models/individual";
 import { Phenopacket } from "src/app/models/phenopacket";
@@ -6,6 +7,7 @@ import { PhenotypicFeature } from "src/app/models/phenotypic-feature";
 
 export class FamilyData {
     FAMILY_DATA: Family;
+    COHORT_DATA: Cohort;
 
     constructor() {
         
@@ -72,11 +74,10 @@ export class FamilyData {
         phenopacket2.subject.karyotypicSex = KaryotypicSex.XX;
         phenopacket2.subject.gender = new OntologyClass("", "cisgender");
 
-        this.FAMILY_DATA = new Family();
-        this.FAMILY_DATA.proband = phenopacket1;
-        this.FAMILY_DATA.relatives = [];
-        this.FAMILY_DATA.relatives.push(phenopacket2);
-
+        this.COHORT_DATA = new Cohort();
+        this.COHORT_DATA.members = [];
+        this.COHORT_DATA.members.push(phenopacket1);
+        this.COHORT_DATA.members.push(phenopacket2);
     }
 
 }
