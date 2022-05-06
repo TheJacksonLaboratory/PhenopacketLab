@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -33,12 +33,14 @@ export class DiseaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild('diseaseTable', { static: false }) diseaseTable: MatTable<HpoDisease>;
 
-  expandedElement: MondoDisease | null;
+  expandedElement: Disease | null;
   @Input()
   phenopacketDiseases: Disease[] = [];
+  
+  @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
-  diseases: MondoDisease[] = [];
-  datasource = new MatTableDataSource<MondoDisease>();
+  // diseases: MondoDisease[] = [];
+  datasource = new MatTableDataSource<Disease>();
   diseaseCount: number;
   //searchparams
   currSearchParams: any = {}
@@ -50,33 +52,21 @@ export class DiseaseComponent implements OnInit {
   constructor(public searchService: DiseaseSearchService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    if (this.phenopacketDiseases) {
-      console.log("phenopacketDisease defined")
-      this.phenopacketDiseases.forEach(element => {
-        let disease = new MondoDisease(element.term.id, element.term.label);
-        disease.description = '';
-        disease.onset = element.onset;
-        disease.excluded = element.excluded;
-        // TODO other values to set up
-        this.diseases.push(disease);
-      });
+    if (this.phenopacketDiseases === undefined) {
+      this.phenopacketDiseases = [];
     }
-    this.datasource.data = this.diseases;
+    this.datasource.data = this.phenopacketDiseases;
   }
 
-  addDisease(disease: MondoDisease) {
-    let newDisease = new MondoDisease(disease.id, disease.name);
-    newDisease.isA = disease.isA;
-    newDisease.description = disease.description;
-    newDisease.synonyms = disease.synonyms;
-    newDisease.xrefs = disease.xrefs;
-    this.diseases.push(newDisease);
-    this.datasource.data = this.diseases;
+  addDisease(disease: Disease) {
+    this.phenopacketDiseases.push(disease);
+    this.datasource.data = this.phenopacketDiseases;
+    this.onDiseasesChanged.emit(this.phenopacketDiseases);
   }
 
-  removeDisease(element: MondoDisease) {
+  removeDisease(element: Disease) {
     const msgData = { 'title': 'Remove Disease' };
-    msgData['description'] = 'Remove "' + element.name + ' from disease list" ?';
+    msgData['description'] = 'Remove "' + element.term.label + ' from disease list" ?';
     msgData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '400px',
@@ -84,13 +74,13 @@ export class DiseaseComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
-        this.diseases.forEach((disease, index) => {
+        this.phenopacketDiseases.forEach((disease, index) => {
           if (disease == element) {
-            this.diseases.splice(index, 1);
+            this.phenopacketDiseases.splice(index, 1);
 
           }
         });
-        this.datasource.data = this.diseases;
+        this.datasource.data = this.phenopacketDiseases;
       }
     });
     return dialogRef;
@@ -119,7 +109,10 @@ export class DiseaseComponent implements OnInit {
   private _queryDiseasesById(id: string) {
     this.openSpinnerDialog();
     this.searchService.queryDiseasesById(id).subscribe(data => {
-      this.addDisease(data);
+      let dis = new MondoDisease(data);
+      // convert MondoDisease to phenopacket Disease
+      let disease = dis.getPhenoDisease();
+      this.addDisease(disease);
       this.spinnerDialogRef.close();
     },
       (error) => {
@@ -140,7 +133,6 @@ export class DiseaseComponent implements OnInit {
 
   expandCollapse(element: any) {
     this.expandedElement = this.expandedElement === element ? null : element
-
   }
 
 }

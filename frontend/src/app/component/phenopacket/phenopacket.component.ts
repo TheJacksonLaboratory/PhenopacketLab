@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
+import { Disease } from 'src/app/models/disease';
 import { Individual, KaryotypicSex, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 
@@ -90,6 +91,13 @@ export class PhenopacketComponent implements OnInit {
     return [];
   }
 
+  getPhenopacketFiles() {
+    if (this.phenopacket) {
+      return this.phenopacket.files;
+    }
+    return [];
+  }
+
   getSexes() {
     return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
   }
@@ -98,6 +106,11 @@ export class PhenopacketComponent implements OnInit {
   }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     
+  }
+
+  changeDiseases(diseases: Disease[]) {
+    console.log(diseases);
+    this.phenopacket.diseases = diseases;
   }
  
 }

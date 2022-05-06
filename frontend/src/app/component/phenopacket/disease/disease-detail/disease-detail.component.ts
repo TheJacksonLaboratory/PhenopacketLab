@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MondoDisease } from 'src/app/models/mondo-disease';
+import { Disease } from 'src/app/models/disease';
 
 @Component({
   selector: 'app-disease-detail',
@@ -8,7 +8,7 @@ import { MondoDisease } from 'src/app/models/mondo-disease';
 })
 export class DiseaseDetailComponent {
 
-  @Input() disease: MondoDisease;
+  @Input() disease: Disease;
 
   diseaseDetailName: string;
   diseaseId: string;
@@ -29,8 +29,8 @@ export class DiseaseDetailComponent {
 
   ngOnInit(): void {
     if(this.disease) {
-      this.diseaseDetailName = this.disease.name;
-      this.diseaseId = this.disease.id;
+      this.diseaseDetailName = this.disease.term.label;
+      this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
       this.isA = this.disease.isA;
       this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';

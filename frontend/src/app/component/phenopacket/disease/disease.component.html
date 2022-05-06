@@ -14,22 +14,17 @@
                     multiTemplateDataRows>
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Disease Identifier </th>
-                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.term.id}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Disease Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.term.label}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="status">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                         <td mat-cell *matCellDef="let element; let i = index">
-                            <!-- <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionProband.toggle(element) : null"
-                            [checked]="selectionProband.isSelected(element)"
-                            [aria-label]="checkboxLabel(element)">
-                        </mat-checkbox> -->
                             <mat-checkbox [checked]="element.exluded"></mat-checkbox>
                         </td>
                     </ng-container>

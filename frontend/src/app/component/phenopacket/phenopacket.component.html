@@ -185,7 +185,7 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab5'">
-                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"></app-disease>
+                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()" (onDiseasesChanged)="changeDiseases($event)"></app-disease>
                     </div>
                     <div *ngSwitchCase="'tab6'">
                         <div class="main-content">
@@ -194,10 +194,11 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab7'">
-                        <div class="main-content">
+                        <app-file [phenopacketFiles]="getPhenopacketFiles()"></app-file>
+                        <!-- <div class="main-content">
                             <div class="container-fluid">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div *ngSwitchCase="'tab8'">
                         <div class="main-content">
