@@ -23,6 +23,8 @@ import { DiseaseComponent } from './disease/disease.component';
 import { PhenotypicFeatureComponent } from './phenotypic-feature/phenotypic-feature.component';
 import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.component';
 import { SharedModule } from '../shared/shared.module';
+import { FileComponent } from './file/file.component';
+import { FileDetailComponent } from './file/file-detail/file-detail.component';
 
 
 @NgModule({
@@ -54,14 +56,17 @@ import { SharedModule } from '../shared/shared.module';
     DiseaseComponent,
     DiseaseDetailComponent,
     PhenotypicFeatureComponent,
-    PhenotypicDetailComponent
+    PhenotypicDetailComponent,
+    FileComponent,
+    FileDetailComponent
   ],
   exports: [
     DiseaseComponent,
     DiseaseDetailComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
-    // PhenopacketComponent
+    FileComponent,
+    FileDetailComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
