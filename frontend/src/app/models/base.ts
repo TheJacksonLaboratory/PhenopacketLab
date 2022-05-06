@@ -80,7 +80,13 @@ export class TimeElement {
 }
 export class File {
     uri: string;
-    infividualToFileIdentifier: Map<string, string>;
-    fileAttribute: Map<string, string>;
+    individualToFileIdentifier = new Map<string, string>();
+    fileAttribute = new Map<string, string>();
+
+    constructor(uri: string, description: string) {
+        this.uri = uri;
+        this.fileAttribute.set('description', description);
+        
+    }
 }
 
