@@ -79,6 +79,7 @@ export class TimeElement {
     }
 }
 export class File {
+    id: string; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
     individualToFileIdentifier = new Map<string, string>();
     fileAttribute = new Map<string, string>();
