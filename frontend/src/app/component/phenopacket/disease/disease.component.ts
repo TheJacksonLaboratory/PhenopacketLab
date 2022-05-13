@@ -56,6 +56,7 @@ export class DiseaseComponent implements OnInit {
       this.phenopacketDiseases = [];
     }
     this.datasource.data = this.phenopacketDiseases;
+    this.onDiseasesChanged.emit(this.phenopacketDiseases);
   }
 
   addDisease(disease: Disease) {
@@ -81,6 +82,7 @@ export class DiseaseComponent implements OnInit {
           }
         });
         this.datasource.data = this.phenopacketDiseases;
+        this.onDiseasesChanged.emit(this.phenopacketDiseases);
       }
     });
     return dialogRef;
@@ -135,6 +137,25 @@ export class DiseaseComponent implements OnInit {
     this.expandedElement = this.expandedElement === element ? null : element
   }
 
+  changeDisease(disease: Disease) {
+    for (let i = 0; i < this.phenopacketDiseases.length; i++) {
+      if (this.phenopacketDiseases[i].term.id === disease.term.id) {
+        this.phenopacketDiseases[i] = disease;
+        this.datasource.data = this.phenopacketDiseases;
+      }
+    }
+  }
+
+  updateStatus(status: boolean, disease: Disease) {
+    console.log(status);
+    for (let i =0; i < this.phenopacketDiseases.length; i++) {
+      if (disease.term.id === this.phenopacketDiseases[i].term.id) {
+        this.phenopacketDiseases[i].excluded = !status;
+        this.datasource.data = this.phenopacketDiseases;
+        this.onDiseasesChanged.emit(this.phenopacketDiseases);
+      }
+    }
+  }
 }
 
 

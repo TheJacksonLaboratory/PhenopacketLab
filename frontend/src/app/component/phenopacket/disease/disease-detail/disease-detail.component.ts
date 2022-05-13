@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatRadioChange } from '@angular/material/radio';
 import { Disease } from 'src/app/models/disease';
 
 @Component({
@@ -9,6 +10,7 @@ import { Disease } from 'src/app/models/disease';
 export class DiseaseDetailComponent {
 
   @Input() disease: Disease;
+  @Output() onDiseaseChanged = new EventEmitter<Disease>();
 
   diseaseDetailName: string;
   diseaseId: string;
@@ -29,13 +31,22 @@ export class DiseaseDetailComponent {
 
   ngOnInit(): void {
     if(this.disease) {
+      console.log(this.disease);
       this.diseaseDetailName = this.disease.term.label;
       this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
       this.isA = this.disease.isA;
       this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';
+      console.log(this.selectedStatus);
     }
   }
+
+  changeStatus(evt: MatRadioChange) {
+    this.selectedStatus = evt.value;
+    this.disease.excluded = evt.value === 'Excluded';
+    this.onDiseaseChanged.emit(this.disease);
+  }
+
 
 
 }

@@ -23,7 +23,6 @@ export class MondoDisease {
         this.id = obj?.id ?? '';
         this.name = obj?.name ?? '';
         // set default to false
-        this.excluded = false;
     }
 
     /**

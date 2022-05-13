@@ -29,9 +29,7 @@
                                 <mat-radio-group aria-labelledby="status-radio-group-label" class="status-radio-group"
                                     [(ngModel)]="selectedStatus">
                                     <mat-radio-button class="status-radio-button" *ngFor="let status of statuses"
-                                        [value]="status">
-                                        {{status}}
-                                    </mat-radio-button>
+                                        (change)="changeStatus($event)" [value]="status">{{status}}</mat-radio-button>
                                 </mat-radio-group>
                             </div>
                         </div>
