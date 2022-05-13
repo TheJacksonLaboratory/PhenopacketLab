@@ -66,7 +66,6 @@ import { PhenopacketComponent } from './component/phenopacket/phenopacket.compon
     MatTreeModule,
     MatTabsModule,
     BrowserModule,
-    CommonModule,
     MatButtonToggleModule,
     MatExpansionModule,
     MatTableModule,
@@ -85,7 +84,7 @@ import { PhenopacketComponent } from './component/phenopacket/phenopacket.compon
     SelectableOntologyTreeComponent,
     CohortListComponent,
     FamilyListComponent,
-    PhenopacketComponent,
+    // PhenopacketComponent,
   ],
 
   exports: [RouterModule],

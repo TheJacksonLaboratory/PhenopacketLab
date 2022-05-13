@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
 import { DiseaseComponent } from './disease/disease.component';
@@ -25,10 +26,15 @@ import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.
 import { SharedModule } from '../shared/shared.module';
 import { FileComponent } from './file/file.component';
 import { FileDetailComponent } from './file/file-detail/file-detail.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { PhenopacketComponent } from './phenopacket.component';
+import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
   imports: [
+    BrowserModule,
     CommonModule,
     RouterModule,
     MatRadioModule,
@@ -50,6 +56,8 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
+    MatDialogModule,
     SharedModule
   ],
   declarations: [
@@ -58,7 +66,9 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
     FileComponent,
-    FileDetailComponent
+    FileDetailComponent,
+    FileDetailDialogComponent,
+    PhenopacketComponent
   ],
   exports: [
     DiseaseComponent,
@@ -66,7 +76,8 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
     FileComponent,
-    FileDetailComponent
+    FileDetailComponent,
+    PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
