@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Disease } from 'src/app/models/disease';
 import { Individual, KaryotypicSex, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { File } from 'src/app/models/base';
 
 @Component({
   selector: 'app-phenopacket',
@@ -111,6 +112,10 @@ export class PhenopacketComponent implements OnInit {
   changeDiseases(diseases: Disease[]) {
     console.log(diseases);
     this.phenopacket.diseases = diseases;
+  }
+
+  changeFiles(files: File[]) {
+    this.phenopacket.files = files;
   }
  
 }
