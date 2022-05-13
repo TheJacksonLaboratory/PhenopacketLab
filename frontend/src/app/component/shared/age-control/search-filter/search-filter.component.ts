@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ComponentsModule } from 'src/app/component/components.module';
 
 @Component({
   selector: 'app-search-filter',
@@ -15,7 +16,8 @@ export class SearchFilterComponent {
   title: string;
   @Input()
   options: string[];
-  
+  @Output()
+  onSelected = new EventEmitter<string>();
   filteredOptions: Observable<string[]>;
 
   ngOnInit() {
@@ -28,7 +30,10 @@ export class SearchFilterComponent {
 
   private _filterOptions(value: string): string[] {
     const filterValue = value.toLowerCase();
+    return this.options.filter(val => val.toLowerCase().includes(filterValue));
+  }
 
-    return this.options.filter(day => day.toLowerCase().includes(filterValue));
+  selectItem(selected: any) {
+    this.onSelected.emit(selected);
   }
 }
