@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,15 +23,17 @@ export class FileComponent implements OnInit {
   pageLength = 0;
   pageSize = 10;
   pageSizeOptions: number[] = [10, 50, 100];
-  @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  // @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
+  // @ViewChild(MatSort, { static: true }) sort: MatSort;
   // @ViewChild('diseaseTable', { static: false }) diseaseTable: MatTable<HpoDisease>;
 
   expandedElement: File | null;
   @Input()
   phenopacketFiles: File[] = [];
+  @Output()
+  onFilesChanged = new EventEmitter<File[]>();
 
-  files: File[] = [];
+  filesMap = new Map<string, File>();
   datasource = new MatTableDataSource<File>();
   diseaseCount: number;
   //searchparams
@@ -46,27 +48,21 @@ export class FileComponent implements OnInit {
   ngOnInit(): void {
     if (this.phenopacketFiles) {
       console.log("phenopacketFiles defined")
-      this.phenopacketFiles.forEach(element => {
-        // let disease = new MondoDisease(element.term.id, element.term.label);
-        // disease.description = '';
-        // disease.onset = element.onset;
-        // disease.excluded = element.excluded;
-        // // TODO other values to set up
-        // this.diseases.push(disease);
+      this.phenopacketFiles.forEach((element, index) => {
+        let id = "file-" + index;
+        this.filesMap.set(id, element);
       });
     }
-    this.datasource.data = this.files;
+    this.datasource.data = Array.from(this.filesMap.values());
   }
 
   addFile() {
     let newFile = new File('new/file/uri', 'new file description');
-    // let newFile = new MondoDisease(disease.id, disease.name);
-    // newFile.isA = disease.isA;
-    // newFile.description = disease.description;
-    // newFile.synonyms = disease.synonyms;
-    // newFile.xrefs = disease.xrefs;
-    this.files.push(newFile);
-    this.datasource.data = this.files;
+    let id = "file-" + (this.filesMap.size + 1);
+    newFile.id = id;
+    console.log(id);
+    this.filesMap.set(id, newFile);
+    this.updateFiles();
   }
 
   removeFile(element: File) {
@@ -79,25 +75,26 @@ export class FileComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
-        this.files.forEach((disease, index) => {
-          if (disease == element) {
-            this.files.splice(index, 1);
-
-          }
-        });
-        this.datasource.data = this.files;
+        this.filesMap.delete(element.id);
+        this.updateFiles();
       }
     });
     return dialogRef;
+  }
+
+  changeFile(file: File, element: File) {
+    this.filesMap.set(element.id, file);
+    // update files
+    this.updateFiles();
   }
 
   doPageChange(pageEvent: any) {
 
   }
 
-  private clearSort() {
-    this.sort.sort({ id: '', start: 'asc', disableClear: false });
-  }
+  // private clearSort() {
+  //   this.sort.sort({ id: '', start: 'asc', disableClear: false });
+  // }
 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
@@ -109,6 +106,12 @@ export class FileComponent implements OnInit {
   expandCollapse(element: any) {
     this.expandedElement = this.expandedElement === element ? null : element
 
+  }
+
+  updateFiles() {
+    let filesArray = Array.from(this.filesMap.values());
+    this.datasource.data = filesArray;
+    this.onFilesChanged.emit(filesArray);
   }
 
 }

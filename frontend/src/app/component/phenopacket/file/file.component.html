@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Table summary of individuals -->
-                <table mat-table class="table-hover mat-elevation-z8" [dataSource]="datasource" matSort
+                <table mat-table class="table-hover mat-elevation-z2" [dataSource]="datasource" matSort
                     multiTemplateDataRows>
                     <ng-container matColumnDef="uri">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> URI </th>
@@ -47,7 +47,7 @@
                             <div *ngIf="element === expandedElement" class="example-element-detail"
                                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                 <div style="width: 100%">
-                                    <app-file-detail [file]="element"></app-file-detail>
+                                    <app-file-detail [file]="element" (onFileChanged)="changeFile($event, element)"></app-file-detail>
                                 </div>
                             </div>
                         </td>
@@ -67,7 +67,7 @@
                     [pageSizeOptions]="pageSizeOptions" (page)="doPageChange($event)">
                 </mat-paginator>
                 <div class="add-button-container">
-                    <button mat-raised-button (click)="addFile()" class="add-button mat-elevation-z8">
+                    <button mat-raised-button (click)="addFile()" class="add-button mat-elevation-z2">
                         Add File
                     </button>
                 </div>

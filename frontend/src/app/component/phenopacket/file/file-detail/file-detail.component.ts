@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { File } from 'src/app/models/base';
+import { FileDetailDialogComponent } from './file-detail-dialog/file-detail-dialog.component';
 
 @Component({
   selector: 'app-file-detail',
@@ -11,27 +14,44 @@ import { File } from 'src/app/models/base';
 export class FileDetailComponent {
 
   @Input() file: File;
+  @Output() onFileChanged = new EventEmitter<File>();
 
   uri: string;
   description: string;
 
   uriControl = new FormControl('', [Validators.required]);
+  uriSubscription: Subscription;
 
   mappingColumns = ['subjectid', 'fileid', 'remove'];
   attributeColumns = ['id', 'value', 'remove'];
-  mappingDataSource: Mapping[];
-  attributeDataSource: Attribute[];
+  mappingDataSource = new MatTableDataSource<Mapping>();
+  attributeDataSource = new MatTableDataSource<Attribute>();
+  mappings: Mapping[];
+  attributes: Attribute[];
 
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    if(this.file) {
+    if (this.file) {
+      // uri update
       this.uri = this.file.uri;
       this.uriControl.setValue(this.uri);
+      if (this.uriSubscription) {
+        this.uriSubscription.unsubscribe();
+      }
+      this.uriSubscription = this.uriControl.valueChanges.subscribe(value => {
+        if (value && value.length > 0) {
+          this.uri = value;
+          this.file.uri = value;
+          this.onFileChanged.emit(this.file);
+        }
+      });
       this.description = this.file.fileAttribute.get('description');
-      this.mappingDataSource = this.getMapping(this.file.individualToFileIdentifier);
-      this.attributeDataSource = this.getAttribute(this.file.fileAttribute);
+      this.mappings = this.getMapping(this.file.individualToFileIdentifier);
+      this.mappingDataSource.data = this.mappings;
+      this.attributes = this.getAttribute(this.file.fileAttribute);
+      this.attributeDataSource.data = this.attributes;
     }
   }
 
@@ -46,19 +66,112 @@ export class FileDetailComponent {
   getAttribute(fileAttribute: Map<string, string>): Attribute[] {
     let attributes = [];
     fileAttribute.forEach((value, key) => {
-      if(key !== 'description') {
+      if (key !== 'description') {
         attributes.push(new Attribute(key, value))
       }
     });
     return attributes;
   }
   addAttribute() {
-    this.attributeDataSource.push(new Attribute('', ''));
+    const fileDetailData = { 'title': 'Add attribute' };
+    fileDetailData['description'] = 'Add following attribute to file:';
+    fileDetailData['comboTitle'] = 'ID';
+    fileDetailData['comboItems'] = ['File format', 'Genome assembly'];
+    fileDetailData['txtFieldTitle'] = 'Value';
+    fileDetailData['displayCancelButton'] = true;
+    const dialogRef = this.dialog.open(FileDetailDialogComponent, {
+      width: '400px',
+      data: fileDetailData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        let id = result.key;
+        let value = result.value;
+        if (id !== undefined && value !== undefined) {
+          // check if entry already exists
+          if (this.file.fileAttribute.has(id)) {
+            this.attributes.forEach((element, index) => {
+              if (element.id == id) {
+                this.attributes[index].value = value;
+              }
+            });
+          } else {
+            this.attributes.push(new Attribute(id, value));
+          }
+          this.attributeDataSource.data = this.attributes;
+          // change file
+          this.file.fileAttribute.set(id, value);
+          // emit change
+          this.onFileChanged.emit(this.file);
+        }
+      }
+    });
+    return dialogRef;
+
   }
   addMapping() {
-    this.mappingDataSource.push(new Mapping('', ''));
+    const fileDetailData = { 'title': 'Add mapping' };
+    fileDetailData['description'] = 'Add following mapping to file:';
+    fileDetailData['comboTitle'] = 'Subject ID';
+    fileDetailData['comboItems'] = ['I:1', 'I:2', 'I:3']; // TODO get these values from file
+    fileDetailData['txtFieldTitle'] = 'ID used in file';
+    fileDetailData['displayCancelButton'] = true;
+    const dialogRef = this.dialog.open(FileDetailDialogComponent, {
+      width: '400px',
+      data: fileDetailData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        let subjectId = result.key;
+        let fileId = result.value;
+        if (subjectId !== undefined && fileId !== undefined) {
+          // check if entry already exists
+          if (this.file.individualToFileIdentifier.has(subjectId)) {
+            this.mappings.forEach((element, index) => {
+              if (element.subjectId == subjectId) {
+                this.mappings[index].fileId = fileId;
+              }
+            });
+          } else {
+            this.mappings.push(new Mapping(subjectId, fileId));
+          }
+          this.mappingDataSource.data = this.mappings;
+          // change file
+          this.file.individualToFileIdentifier.set(subjectId, fileId);
+          // emit change
+          this.onFileChanged.emit(this.file);
+        }
+      }
+    });
+    return dialogRef;
   }
-  
+
+  deleteMapping(mapping: Mapping) {
+    this.mappings.forEach((element, index) => {
+      if (element == mapping) {
+        this.mappings.splice(index, 1);
+      }
+    });
+    // update datasource
+    this.mappingDataSource.data = this.mappings;
+    // update file and emit change
+    this.file.individualToFileIdentifier.delete(mapping.subjectId);
+    this.onFileChanged.emit(this.file);
+  }
+
+  deleteAttribute(attribute: Attribute) {
+    this.attributes.forEach((element, index) => {
+      if (element == attribute) {
+        this.attributes.splice(index, 1);
+      }
+    });
+    // update datasource
+    this.attributeDataSource.data = this.attributes;
+    // update file and emit change
+    this.file.fileAttribute.delete(attribute.id);
+    this.onFileChanged.emit(this.file);
+  }
+
 }
 
 class Mapping {
