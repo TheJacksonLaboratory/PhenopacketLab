@@ -19,7 +19,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <table mat-table class="table-hover mat-elevation-z8" [dataSource]="mappingDataSource" matSort
+                        <table mat-table class="table-hover mat-elevation-z2" [dataSource]="mappingDataSource"
                             multiTemplateDataRows>
                             <ng-container matColumnDef="subjectid">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject ID </th>
@@ -37,7 +37,7 @@
                                     <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
                                         color="primary" class="pull-right" matTooltip="Delete ID mapping"
                                         (click)="deleteMapping(element)">
-                                        <mat-icon matSuffix>delete</mat-icon>
+                                        <mat-icon matSuffix>close</mat-icon>
                                     </button>
                                 </td>
                             </ng-container>
@@ -47,22 +47,20 @@
                             <!-- [class.example-expanded-row]="expandedElement === element"
                                 (click)="expandCollapse(element)">
                             </tr> -->
-
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
-                            </tr>
+                            
                             <tr mat-header-row *matHeaderRowDef="mappingColumns; sticky: true"></tr>
 
                         </table>
                         <br>
                         <div class="add-button-container">
-                            <button mat-raised-button (click)="addMapping()" class="add-button mat-elevation-z8">
+                            <button mat-raised-button (click)="addMapping()">
                                 Add Mapping
                             </button>
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <table mat-table class="table-hover mat-elevation-z8" [dataSource]="attributeDataSource" matSort
+                        <table mat-table class="table-hover mat-elevation-z2" [dataSource]="attributeDataSource"
                             multiTemplateDataRows>
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -80,25 +78,20 @@
                                     <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
                                         color="primary" class="pull-right" matTooltip="Delete Attribute"
                                         (click)="deleteAttribute(element)">
-                                        <mat-icon matSuffix>delete</mat-icon>
+                                        <mat-icon matSuffix>close</mat-icon>
                                     </button>
                                 </td>
                             </ng-container>
 
                             <tr mat-row *matRowDef="let element; columns: attributeColumns;"
                                 class="example-element-row"></tr>
-                            <!-- [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandCollapse(element)">
-                        </tr> -->
-
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
-                            </tr>
+                            
                             <tr mat-header-row *matHeaderRowDef="attributeColumns; sticky: true"></tr>
 
                         </table>
                         <br>
                         <div class="add-button-container">
-                            <button mat-raised-button (click)="addAttribute()" class="add-button mat-elevation-z8">
+                            <button mat-raised-button (click)="addAttribute()">
                                 Add Attribute
                             </button>
                         </div>

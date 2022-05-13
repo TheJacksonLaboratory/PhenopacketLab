@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row">
-            <table mat-table class="table-hover mat-elevation-z8" [dataSource]="phenotypicDataSource" matSort
+            <table mat-table class="table-hover mat-elevation-z2" [dataSource]="phenotypicDataSource" matSort
                 multiTemplateDataRows>
                 <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Label </th>
@@ -102,7 +102,7 @@
         </div>
         <div class="row">
             <div class="add-button-container">
-                <button mat-raised-button (click)="addPhenotypicFeature()" class="add-button mat-elevation-z8">
+                <button mat-raised-button (click)="addPhenotypicFeature()" class="add-button mat-elevation-z2">
                     Add Phenotypic Feature
                 </button>
             </div>
