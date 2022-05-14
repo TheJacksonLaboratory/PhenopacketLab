@@ -42,7 +42,6 @@ export class FileDetailDialogComponent {
   }
 
   setSelected(key: any) {
-    console.log(key);
     this.selectedKey = key;
   }
 

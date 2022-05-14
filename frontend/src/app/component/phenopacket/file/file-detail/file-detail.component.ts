@@ -73,10 +73,10 @@ export class FileDetailComponent {
     return attributes;
   }
   addAttribute() {
-    const fileDetailData = { 'title': 'Add attribute' };
+    const fileDetailData = { 'title': 'Attribute' };
     fileDetailData['description'] = 'Add following attribute to file:';
     fileDetailData['comboTitle'] = 'ID';
-    fileDetailData['comboItems'] = ['File format', 'Genome assembly'];
+    fileDetailData['comboItems'] = Attribute.getValues();//['File format', 'Genome assembly'];
     fileDetailData['txtFieldTitle'] = 'Value';
     fileDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(FileDetailDialogComponent, {
@@ -110,10 +110,10 @@ export class FileDetailComponent {
 
   }
   addMapping() {
-    const fileDetailData = { 'title': 'Add mapping' };
+    const fileDetailData = { 'title': 'Mapping' };
     fileDetailData['description'] = 'Add following mapping to file:';
     fileDetailData['comboTitle'] = 'Subject ID';
-    fileDetailData['comboItems'] = ['I:1', 'I:2', 'I:3']; // TODO get these values from file
+    fileDetailData['comboItems'] = Mapping.getValues(); //['I:1', 'I:2', 'I:3']; // TODO get these values from file
     fileDetailData['txtFieldTitle'] = 'ID used in file';
     fileDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(FileDetailDialogComponent, {
@@ -174,21 +174,62 @@ export class FileDetailComponent {
 
 }
 
-class Mapping {
+export class Mapping {
   subjectId: string;
   fileId: string;
+
   constructor(subjectId: string, fileId: string) {
     this.subjectId = subjectId;
     this.fileId = fileId;
   }
+
+  /**
+   * get Mapping values
+   */
+  public static getValues() {
+    let values = [];
+    for (var key in Mapping.Keys) {
+      values.push(Mapping.Keys[key]);
+    }
+    return values;
+  }
+}
+export namespace Mapping {
+  export enum Keys {
+    i1 = 'I:1',
+    i2 = 'I:2',
+    i3 = 'I:3',
+    i4 = 'I:4',
+    i5 = 'I:5'
+  }
+
 }
 
-class Attribute {
+export class Attribute {
   id: string;
   value: string;
+  key: Attribute.Keys;
+
   constructor(id: string, value: string) {
     this.id = id;
     this.value = value;
+  }
+  /**
+  * get Attribute values
+  */
+  public static getValues() {
+    let values = [];
+    for (var key in Attribute.Keys) {
+      values.push(Attribute.Keys[key]);
+    }
+    return values;
+  }
+
+}
+export namespace Attribute {
+  export enum Keys {
+    FileFormat = 'File format',
+    GenomeAssembly = 'Genome assembly'
   }
 }
 

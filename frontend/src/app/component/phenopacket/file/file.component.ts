@@ -114,6 +114,21 @@ export class FileComponent implements OnInit {
     this.onFilesChanged.emit(filesArray);
   }
 
+  getMappingKeys(file: File) {
+    return file.individualToFileIdentifier.keys();
+  }
+  getMapping(file: File, key: string) {
+    let value = file.individualToFileIdentifier.get(key);
+    return key + " -> " + value;
+  }
+  getAttributeKeys() {
+    // return file.fileAttribute.keys();
+    return [ "File format", "Genome assembly"];
+  }
+  getAttribute(file: File, key: string) {
+    return file.fileAttribute.get(key);
+  }
+
 }
 
 
