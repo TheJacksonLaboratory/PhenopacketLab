@@ -18,6 +18,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
 import { DiseaseComponent } from './disease/disease.component';
@@ -29,7 +31,7 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { PhenopacketComponent } from './phenopacket.component';
 import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 @NgModule({
@@ -58,6 +60,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatNativeDateModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatChipsModule,
     SharedModule
   ],
   declarations: [
