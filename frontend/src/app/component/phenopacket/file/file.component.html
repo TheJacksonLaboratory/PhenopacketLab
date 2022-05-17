@@ -30,8 +30,8 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Attributes </th>
                         <td mat-cell *matCellDef="let element">
                             <mat-chip-list>
-                                <span *ngFor="let key of getAttributeKeys()">
-                                    <mat-chip>{{getAttribute(element, key)}}</mat-chip>
+                                <span *ngFor="let key of getAttributeKeys(element)">
+                                    <mat-chip selected [color]="getColor(key)">{{getAttribute(element, key)}}</mat-chip>
                                 </span>
                             </mat-chip-list>
                         </td>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,6 +8,7 @@ import { File } from 'src/app/models/base';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
+import { Attribute } from './file-detail/file-detail.component';
 
 @Component({
   selector: 'app-file',
@@ -121,9 +122,19 @@ export class FileComponent implements OnInit {
     let value = file.individualToFileIdentifier.get(key);
     return key + " -> " + value;
   }
-  getAttributeKeys() {
-    // return file.fileAttribute.keys();
-    return [ "File format", "Genome assembly"];
+  getAttributeKeys(file: File) {
+    let attributes = file.fileAttribute;
+    attributes.delete('description');
+    return attributes.keys();
+  }
+  getColor(key: string) {
+    if (key === Attribute.Keys.FileFormat) {
+      return 'accent';
+    }
+    if (key === Attribute.Keys.GenomeAssembly) {
+      return 'primary';
+    }
+    return '';
   }
   getAttribute(file: File, key: string) {
     return file.fileAttribute.get(key);
