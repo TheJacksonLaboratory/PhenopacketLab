@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Setup
 
 Make sure that Node memory has its size increased with the following command: `export NODE_OPTIONS=--max_old_space_size=4096`
+To install all packages required for the Frontend app, run `npm install`.
 
 ## Development server
 
