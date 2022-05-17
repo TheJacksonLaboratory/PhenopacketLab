@@ -65,7 +65,7 @@
         <protobuf.version>3.19.3</protobuf.version>
 
         <phenol.version>2.0.0-RC1</phenol.version>
-        <biodownload.version>1.0.1</biodownload.version>
+        <biodownload.version>1.1.0</biodownload.version>
         <picocli.version>4.6.2</picocli.version>
 
         <spring-boot-starter.version>2.6.3</spring-boot-starter.version>

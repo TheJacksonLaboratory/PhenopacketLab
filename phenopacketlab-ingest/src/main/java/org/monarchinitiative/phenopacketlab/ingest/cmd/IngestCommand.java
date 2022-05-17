@@ -70,6 +70,10 @@ public class IngestCommand implements Callable<Integer> {
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
                 .hpoJson()
+                .mondoJson()
+                .uberonJson()
+                .genoJson()
+                .hgnc()
                 .hpDiseaseAnnotations()
                 .build();
 
