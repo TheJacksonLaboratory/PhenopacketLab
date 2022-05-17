@@ -6,7 +6,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDisease;
+import org.monarchinitiative.phenol.annotations.base.Ratio;
+import org.monarchinitiative.phenol.annotations.base.Sex;
+import org.monarchinitiative.phenol.annotations.base.temporal.Age;
+import org.monarchinitiative.phenol.annotations.base.temporal.TemporalInterval;
+import org.monarchinitiative.phenol.annotations.formats.AnnotationReference;
+import org.monarchinitiative.phenol.annotations.formats.EvidenceCode;
+import org.monarchinitiative.phenol.annotations.formats.hpo.*;
+import org.monarchinitiative.phenol.constants.hpo.HpoModeOfInheritanceTermIds;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -47,7 +54,7 @@ public class DiseaseControllerTest {
     public void diseaseById() throws Exception {
         TermId diseaseId = TermId.of("OMIM:123456");
         when(diseaseService.diseaseById(diseaseId))
-                .thenReturn(Optional.of(createDisease(diseaseId.getValue(), "First")));
+                .thenReturn(Optional.of(createDisease(diseaseId.getValue(), "First", List.of())));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/OMIM:123456"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -77,8 +84,8 @@ public class DiseaseControllerTest {
     public void getAllDiseases() throws Exception {
         when(diseaseService.diseases())
                 .thenReturn(Stream.of(
-                        createDisease("OMIM:123456", "First"),
-                        createDisease("OMIM:987654", "Second")
+                        createDisease("OMIM:123456", "First", List.of(arachnodactyly())),
+                        createDisease("OMIM:987654", "Second", List.of(hypertension()))
                 ));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases"))
@@ -88,7 +95,31 @@ public class DiseaseControllerTest {
         assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"name\":\"First\"},{\"id\":\"OMIM:987654\",\"name\":\"Second\"}]"));
     }
 
-    private static HpoDisease createDisease(String diseaseId, String diseaseName) {
-        return HpoDisease.of(TermId.of(diseaseId), diseaseName, List.of(), List.of(), List.of(), List.of(), List.of());
+    private static HpoDisease createDisease(String diseaseId, String diseaseName, List<HpoDiseaseAnnotation> diseaseAnnotations) {
+        return HpoDisease.of(TermId.of(diseaseId),
+                diseaseName,
+                HpoOnset.CHILDHOOD_ONSET,
+                diseaseAnnotations,
+                List.of(HpoModeOfInheritanceTermIds.AUTOSOMAL_RECESSIVE));
+    }
+
+    private static HpoDiseaseAnnotation arachnodactyly() {
+        return HpoDiseaseAnnotation.of(TermId.of("HP:0001166"), List.of(
+                HpoDiseaseAnnotationMetadata.of(
+                        AnnotationReference.of(TermId.of("PMID:123456"), EvidenceCode.PCS),
+                        TemporalInterval.openEnd(Age.birth()),
+                        AnnotationFrequency.of(Ratio.of(1, 1)),
+                        List.of(),
+                        Sex.MALE)));
+    }
+
+    private static HpoDiseaseAnnotation hypertension() {
+        return HpoDiseaseAnnotation.of(TermId.of("HP:0000822"), List.of(
+                HpoDiseaseAnnotationMetadata.of(
+                        AnnotationReference.of(TermId.of("PMID:987456"), EvidenceCode.PCS),
+                        TemporalInterval.openEnd(Age.postnatal(42, 3, 0)),
+                        AnnotationFrequency.of(Ratio.of(1, 1)),
+                        List.of(),
+                        Sex.FEMALE)));
     }
 }

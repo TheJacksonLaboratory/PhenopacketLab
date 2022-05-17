@@ -10,5 +10,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>phenopacketlab-io</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.monarchinitiative.phenopacketlab</groupId>
+            <artifactId>phenopacketlab-model</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.monarchinitiative.phenol</groupId>
+            <artifactId>phenol-io</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>--add-reads com.fasterxml.jackson.datatype.guava=ALL-UNNAMED --add-reads org.monarchinitiative.phenol.io=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

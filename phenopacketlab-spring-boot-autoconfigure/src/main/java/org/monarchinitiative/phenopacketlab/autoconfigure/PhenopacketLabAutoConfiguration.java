@@ -1,7 +1,8 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDiseases;
-import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseAnnotationLoader;
+import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaderOptions;
+import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaders;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
@@ -81,7 +82,8 @@ public class PhenopacketLabAutoConfiguration {
         try {
             Path annotationPath = resolver.hpoAnnotationPath();
             LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
-            HpoDiseases diseases = HpoDiseaseAnnotationLoader.loadHpoDiseases(annotationPath, hpo, properties.diseaseDatabases());
+            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo, HpoDiseaseLoaderOptions.defaultOptions())
+                    .load(annotationPath);
             return new PhenolDiseaseService(diseases);
         } catch (IOException e) {
             throw new InvalidResourceException(e);
