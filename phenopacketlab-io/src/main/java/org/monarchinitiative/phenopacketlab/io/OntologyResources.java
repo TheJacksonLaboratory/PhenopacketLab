@@ -85,6 +85,40 @@ public class OntologyResources {
                 .build();
     }
 
+    public static OntologyResource uo(InputStream is) {
+        Ontology ontology = OntologyLoader.loadOntology(is);
+        Resource resource = uoResource(getOntologyVersion(ontology));
+        return OntologyResource.of(ontology, resource);
+    }
+
+    private static Resource uoResource(String version) {
+        return Resource.newBuilder()
+                .setId("uo")
+                .setName("Units of measurement ontology")
+                .setUrl("http://purl.obolibrary.org/obo/uo.owl")
+                .setVersion(version)
+                .setNamespacePrefix("UO")
+                .setIriPrefix("http://purl.obolibrary.org/obo/UO_")
+                .build();
+    }
+
+    public static OntologyResource efo(InputStream is) {
+        Ontology ontology = OntologyLoader.loadOntology(is);
+        Resource resource = efoResource(getOntologyVersion(ontology));
+        return OntologyResource.of(ontology, resource);
+    }
+
+    private static Resource efoResource(String version) {
+        return Resource.newBuilder()
+                .setId("efo")
+                .setName("Experimental Factor Ontology")
+                .setUrl("http://www.ebi.ac.uk/efo/efo.owl")
+                .setVersion(version)
+                .setNamespacePrefix("EFO")
+                .setIriPrefix("http://www.ebi.ac.uk/efo/EFO_")
+                .build();
+    }
+
     private static String getOntologyVersion(Ontology ontology) {
         return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
     }

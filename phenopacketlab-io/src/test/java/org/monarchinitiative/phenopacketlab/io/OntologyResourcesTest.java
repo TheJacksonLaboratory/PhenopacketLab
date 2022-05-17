@@ -96,4 +96,35 @@ public class OntologyResourcesTest {
         assertThat(resource.getNamespacePrefix(), equalTo("UBERON"));
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/UBERON_"));
     }
+
+    @Test
+    public void loadUo() throws IOException {
+        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), OntologyResources::uo);
+
+        assertThat(or.ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = or.resource();
+        assertThat(resource.getId(), equalTo("uo"));
+        assertThat(resource.getName(), equalTo("Units of measurement ontology"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/uo.owl"));
+        assertThat(resource.getVersion(), equalTo("UNKNOWN")); // TODO - resolve
+        assertThat(resource.getNamespacePrefix(), equalTo("UO"));
+        assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/UO_"));
+    }
+
+    @Test
+    public void loadEfo() throws IOException {
+        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), OntologyResources::efo);
+
+        assertThat(or.ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = or.resource();
+        assertThat(resource.getId(), equalTo("efo"));
+        assertThat(resource.getName(), equalTo("Experimental Factor Ontology"));
+        assertThat(resource.getUrl(), equalTo("http://www.ebi.ac.uk/efo/efo.owl"));
+        assertThat(resource.getVersion(), equalTo("3.42.0"));
+        assertThat(resource.getNamespacePrefix(), equalTo("EFO"));
+        assertThat(resource.getIriPrefix(), equalTo("http://www.ebi.ac.uk/efo/EFO_"));
+    }
+
 }

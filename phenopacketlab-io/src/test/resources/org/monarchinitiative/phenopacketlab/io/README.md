@@ -26,6 +26,20 @@ The folder contains toy versions of real resources for testing.
   obographs convert -f json uberon.module.owl
   rm uberon.module.owl
   ```
-  
+
+- `uo.json` - the complete UO prepared by running:
+  ```shell
+  wget http://purl.obolibrary.org/obo/uo.owl
+  obographs convert -f json uo.owl
+  rm uo.owl 
+  ```
+
+- `efo.json` - EFO module containing ancestors of `http://www.ebi.ac.uk/efo/EFO_0009370` *genomic DNA* prepared by running:
+  ```shell
+  robot extract --input-iri http://www.ebi.ac.uk/efo/efo.owl --term http://www.ebi.ac.uk/efo/EFO_0008479 --output efo.module.owl --method BOT --copy-ontology-annotations true 
+  obographs convert -f json efo.module.owl
+  rm efo.module.owl
+  ```
+
 > Note: `robot` and `obographs` expand to `java -jar robot.jar` (`v1.8.3`) and `java -jar obographs-cli.jar` (`v0.3.0`).
  
