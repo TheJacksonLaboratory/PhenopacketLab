@@ -51,6 +51,7 @@ export class FileComponent implements OnInit {
       console.log("phenopacketFiles defined")
       this.phenopacketFiles.forEach((element, index) => {
         let id = "file-" + index;
+        element.id = id;
         this.filesMap.set(id, element);
       });
     }
@@ -61,7 +62,6 @@ export class FileComponent implements OnInit {
     let newFile = new File('new/file/uri', 'new file description');
     let id = "file-" + (this.filesMap.size + 1);
     newFile.id = id;
-    console.log(id);
     this.filesMap.set(id, newFile);
     this.updateFiles();
   }
