@@ -1,6 +1,7 @@
 module phenopacketlab.io {
 
-    requires phenopacketlab.model;
+    requires transitive phenopacketlab.model;
     requires org.monarchinitiative.phenol.io;
 
+    requires org.slf4j;
 }

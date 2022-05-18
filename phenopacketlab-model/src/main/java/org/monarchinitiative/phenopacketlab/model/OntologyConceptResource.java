@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacketlab.model;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermSynonym;
+import org.monarchinitiative.phenopacketlab.model.util.MappingIterator;
 import org.phenopackets.schema.v2.core.Resource;
 
 import java.util.Iterator;
@@ -21,7 +22,7 @@ public interface OntologyConceptResource extends ConceptResource {
     @Override
     default Iterator<Concept> iterator() {
         // TODO - how about the obsolete terms?
-        return new MappingIterator<>(ontology().getTerms().iterator(), termToConcept());
+        return MappingIterator.of(ontology().getTerms().iterator(), termToConcept());
     }
 
     @Override

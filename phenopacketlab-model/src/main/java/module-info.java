@@ -4,4 +4,5 @@ module phenopacketlab.model {
     requires transitive phenopacket.schema;
 
     exports org.monarchinitiative.phenopacketlab.model;
+    exports org.monarchinitiative.phenopacketlab.model.util;
 }

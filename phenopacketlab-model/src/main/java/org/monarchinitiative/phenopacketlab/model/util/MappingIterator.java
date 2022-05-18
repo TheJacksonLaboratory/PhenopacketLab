@@ -1,6 +1,7 @@
-package org.monarchinitiative.phenopacketlab.model;
+package org.monarchinitiative.phenopacketlab.model.util;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -11,16 +12,20 @@ import java.util.function.Function;
  * @param <SOURCE> source element type.
  * @param <TARGET> target element type.
  */
-class MappingIterator<SOURCE, TARGET> implements Iterator<TARGET> {
+public class MappingIterator<SOURCE, TARGET> implements Iterator<TARGET> {
 
     private final Iterator<SOURCE> base;
     private final Function<SOURCE, Optional<TARGET>> mapper;
 
     private TARGET next;
 
-    MappingIterator(Iterator<SOURCE> base, Function<SOURCE, Optional<TARGET>> mapper) {
-        this.base = base;
-        this.mapper = mapper;
+    public static <SOURCE, TARGET> MappingIterator<SOURCE, TARGET> of(Iterator<SOURCE> base, Function<SOURCE, Optional<TARGET>> mapper) {
+        return new MappingIterator<>(base, mapper);
+    }
+
+    private MappingIterator(Iterator<SOURCE> base, Function<SOURCE, Optional<TARGET>> mapper) {
+        this.base = Objects.requireNonNull(base);
+        this.mapper = Objects.requireNonNull(mapper);
         this.next = readNextElement();
     }
 
