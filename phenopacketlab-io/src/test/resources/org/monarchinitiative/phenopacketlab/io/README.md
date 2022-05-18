@@ -2,7 +2,7 @@
 
 The folder contains toy versions of real resources for testing.
 
-- `mondo.module.json` - MONDO module containing ancestors of `MONDO:0007038` *Ahoo syndrome*.
+- `mondo.module.json` - MONDO module containing ancestors of `MONDO:0007038` *Achoo syndrome*.
   ```shell
   robot extract --input-iri http://purl.obolibrary.org/obo/mondo.owl --term http://purl.obolibrary.org/obo/MONDO_0007038 --output mondo.module.owl --method BOT --copy-ontology-annotations true 
   obographs convert -f json mondo.module.owl

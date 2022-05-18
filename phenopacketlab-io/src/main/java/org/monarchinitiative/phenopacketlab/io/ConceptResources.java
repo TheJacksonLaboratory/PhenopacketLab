@@ -4,21 +4,22 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.io.utils.CurieUtil;
 import org.monarchinitiative.phenol.io.utils.CurieUtilBuilder;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacketlab.model.OntologyResource;
+import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.phenopackets.schema.v2.core.Resource;
 
 import java.io.InputStream;
 import java.util.Map;
 
-public class OntologyResources {
+public class ConceptResources {
 
-    private OntologyResources() {
+    private ConceptResources() {
     }
-    public static OntologyResource mondo(InputStream is) {
+
+    public static OntologyConceptResource mondo(InputStream is) {
         CurieUtil newCurie = CurieUtilBuilder.withDefaultsAnd(Map.of("HGNC", "http://identifiers.org/hgnc/"));
         Ontology ontology = OntologyLoader.loadOntology(is, newCurie, "MONDO", "HGNC");
         Resource resource = mondoResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource mondoResource(String version) {
@@ -33,10 +34,10 @@ public class OntologyResources {
                 .build();
     }
 
-    public static OntologyResource hpo(InputStream is) {
+    public static OntologyConceptResource hpo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = hpoResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource hpoResource(String version) {
@@ -51,10 +52,10 @@ public class OntologyResources {
                 .build();
     }
 
-    public static OntologyResource uberon(InputStream is) {
+    public static OntologyConceptResource uberon(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uberonResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource uberonResource(String version) {
@@ -68,10 +69,10 @@ public class OntologyResources {
                 .build();
     }
 
-    public static OntologyResource geno(InputStream is) {
+    public static OntologyConceptResource geno(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = genoResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource genoResource(String version) {
@@ -85,10 +86,10 @@ public class OntologyResources {
                 .build();
     }
 
-    public static OntologyResource uo(InputStream is) {
+    public static OntologyConceptResource uo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uoResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource uoResource(String version) {
@@ -102,10 +103,10 @@ public class OntologyResources {
                 .build();
     }
 
-    public static OntologyResource efo(InputStream is) {
+    public static OntologyConceptResource efo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = efoResource(getOntologyVersion(ontology));
-        return OntologyResource.of(ontology, resource);
+        return OntologyConceptResource.of(ontology, resource);
     }
 
     private static Resource efoResource(String version) {

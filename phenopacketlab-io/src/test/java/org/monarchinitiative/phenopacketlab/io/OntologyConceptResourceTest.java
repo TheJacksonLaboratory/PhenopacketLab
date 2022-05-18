@@ -5,7 +5,7 @@ import org.monarchinitiative.phenol.ontology.data.Dbxref;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.model.OntologyResource;
+import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.phenopackets.schema.v2.core.Resource;
 
 import java.io.IOException;
@@ -18,9 +18,9 @@ import java.util.function.Function;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class OntologyResourcesTest {
+public class OntologyConceptResourceTest {
 
-    private static OntologyResource loadOntologyResource(Path ontologyPath, Function<InputStream, OntologyResource> loader) throws IOException {
+    private static OntologyConceptResource loadOntologyResource(Path ontologyPath, Function<InputStream, OntologyConceptResource> loader) throws IOException {
         try (InputStream is = Files.newInputStream(ontologyPath)) {
             return loader.apply(is);
         }
@@ -28,7 +28,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadMondo() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), OntologyResources::mondo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResources::mondo);
 
         // Test the `Ontology`.
         Ontology ontology = or.ontology();
@@ -54,7 +54,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadHpo() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), OntologyResources::hpo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResources::hpo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -69,7 +69,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadGeno() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), OntologyResources::geno);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResources::geno);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -84,7 +84,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadUberon() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), OntologyResources::uberon);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResources::uberon);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -99,7 +99,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadUo() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), OntologyResources::uo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResources::uo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -114,7 +114,7 @@ public class OntologyResourcesTest {
 
     @Test
     public void loadEfo() throws IOException {
-        OntologyResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), OntologyResources::efo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResources::efo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
