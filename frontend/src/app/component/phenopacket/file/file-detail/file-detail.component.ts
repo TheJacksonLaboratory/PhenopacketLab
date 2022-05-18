@@ -21,6 +21,8 @@ export class FileDetailComponent {
 
   uriControl = new FormControl('', [Validators.required]);
   uriSubscription: Subscription;
+  descriptionControl = new FormControl('');
+  descriptionSubscription: Subscription;
 
   mappingColumns = ['subjectid', 'fileid', 'remove'];
   attributeColumns = ['id', 'value', 'remove'];
@@ -48,6 +50,17 @@ export class FileDetailComponent {
         }
       });
       this.description = this.file.fileAttribute.get('description');
+      this.descriptionControl.setValue(this.description);
+      if (this.descriptionSubscription) {
+        this.descriptionSubscription.unsubscribe();
+      }
+      this.descriptionSubscription = this.descriptionControl.valueChanges.subscribe(value => {
+        if (value && value.length > 0) {
+          this.description = value;
+          this.file.fileAttribute.set('description', value);
+          this.onFileChanged.emit(this.file);
+        }
+      });
       this.mappings = this.getMapping(this.file.individualToFileIdentifier);
       this.mappingDataSource.data = this.mappings;
       this.attributes = this.getAttribute(this.file.fileAttribute);

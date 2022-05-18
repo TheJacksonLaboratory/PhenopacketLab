@@ -13,7 +13,7 @@
                     <div class="col-md-6">
                         <mat-form-field appearance="fill">
                             <mat-label>Description</mat-label>
-                            <textarea matInput>{{description}}</textarea>
+                            <textarea matInput [formControl]="descriptionControl">{{description}}</textarea>
                         </mat-form-field>
                     </div>
                 </div>
