@@ -123,14 +123,13 @@ export class FileComponent implements OnInit {
     return key + " -> " + value;
   }
   getAttributeKeys(file: File) {
-    let attributesKeys = file.fileAttribute.keys();
     let resultKeys = [];
     // remove description key
-    for (let key in attributesKeys) {
+    file.fileAttribute.forEach((value: string, key: string) => {
       if (key !== 'description') {
         resultKeys.push(key);
       }
-    }
+    });
     return resultKeys;
   }
   getColor(key: string) {
