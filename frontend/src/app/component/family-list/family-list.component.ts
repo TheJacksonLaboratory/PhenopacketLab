@@ -130,12 +130,11 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     return dialogRef;
 
   }
-  changeProband(element: any, index: number) {
-    let relatives = this.family.relatives;
+  changeProband(element: any, phenopacket: Phenopacket) {
     let currentProband = this.family.proband;
     let isProband = element.checked !== undefined ? element.checked : false;
     this.individualTabsMap.forEach((value: Phenopacket, key: String) => {
-      if (isProband && value.id === element.id) {
+      if (isProband && value.id === phenopacket.id) {
         // if proband then we select
         this.selectionProband.select(value);
         value.isProband = true;
@@ -147,7 +146,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
           this.family.relatives.set(currentProband.id, currentProband);
         }
       }
-      else if (!isProband && value.id === element.id) {
+      else if (!isProband && value.id === phenopacket.id) {
          // if not proband, we deselect
          value.isProband = false;
          this.selectionProband.deselect(value);

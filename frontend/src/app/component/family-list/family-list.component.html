@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="row margin">
-                    <mat-checkbox (change)="changeProband($event, index)" [checked]="phenopacket.isProband">Proband</mat-checkbox>
+                    <mat-checkbox (change)="changeProband($event, phenopacket)" [checked]="phenopacket.isProband">Proband</mat-checkbox>
                 </div>
 
                 <app-phenopacket [phenopacket]="phenopacket" (onIdChanged)="changeId($event, phenopacket)"
