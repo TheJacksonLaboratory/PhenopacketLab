@@ -30,7 +30,11 @@ export class SearchFilterComponent {
 
   private _filterOptions(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(val => val.toLowerCase().includes(filterValue));
+    let result = this.options.filter(val => val.toLowerCase().includes(filterValue));
+    if (result.length === 0) {
+      return [ value ];
+    }
+    return result;
   }
 
   selectItem(selected?: any) {
