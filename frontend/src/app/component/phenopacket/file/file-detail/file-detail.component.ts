@@ -91,6 +91,8 @@ export class FileDetailComponent {
     fileDetailData['comboTitle'] = 'ID';
     fileDetailData['comboItems'] = Attribute.getValues();//['File format', 'Genome assembly'];
     fileDetailData['txtFieldTitle'] = 'Value';
+    fileDetailData['placeholderId'] = 'eg. VCF, BAM, SAM, BED, FASTQ, PED';
+    fileDetailData['placeholderValue'] = 'eg. GRCh37, GRCh38, GRCm38, GRCm39';
     fileDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(FileDetailDialogComponent, {
       width: '400px',

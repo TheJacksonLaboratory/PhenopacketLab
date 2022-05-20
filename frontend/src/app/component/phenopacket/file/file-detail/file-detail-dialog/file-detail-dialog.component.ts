@@ -17,7 +17,9 @@ export class FileDetailDialogComponent {
   fileDetailDescription: string;
   displayCancelButton = true;
   selectedKey;
-  txtFieldValue;
+  txtFieldValue: string;
+  placeholderId: string;
+  placeholderValue: string;
 
   constructor(public dialogRef: MatDialogRef<FileDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -25,7 +27,8 @@ export class FileDetailDialogComponent {
       this.fileDetailDescription = data['description'];
       this.comboTitle = data['comboTitle'];
       this.comboItems = data['comboItems'];
-      console.log(this.comboItems);
+      this.placeholderId = data['placeholderId'];
+      this.placeholderValue = data['placeholderValue'];
       this.txtFieldTitle = data['txtFieldTitle'];
       if (data['displayCancelButton'] != undefined){
         this.displayCancelButton = data['displayCancelButton'];
@@ -47,6 +50,15 @@ export class FileDetailDialogComponent {
 
   getDialogResult() {
     return { 'key': this.selectedKey, 'value': this.txtFieldValue };
+  }
+  getPlaceholderTxt() {
+    if (this.selectedKey === this.comboItems[0]) {
+      return this.placeholderId;
+    }
+    if (this.selectedKey === this.comboItems[1]) {
+      return this.placeholderValue;
+    }
+    return '';
   }
 }
 

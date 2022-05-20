@@ -6,8 +6,8 @@
   </app-search-filter>
   <mat-form-field appearance="fill">
     <mat-label>{{txtFieldTitle}}</mat-label>
-    <input matInput type="text" [(ngModel)]="txtFieldValue">
-    <button *ngIf="txtFieldValue" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+    <input matInput type="text" [(ngModel)]="txtFieldValue" [placeholder]="getPlaceholderTxt()">
+    <button *ngIf="txtFieldValue" matSuffix mat-icon-button aria-label="Clear" (click)="txtFieldValue=''">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>

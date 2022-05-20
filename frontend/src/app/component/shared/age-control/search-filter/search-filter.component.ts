@@ -33,7 +33,11 @@ export class SearchFilterComponent {
     return this.options.filter(val => val.toLowerCase().includes(filterValue));
   }
 
-  selectItem(selected: any) {
-    this.onSelected.emit(selected);
+  selectItem(selected?: any) {
+    if (selected === undefined) {
+      this.onSelected.emit('');
+    } else {
+      this.onSelected.emit(selected);
+    }
   }
 }
