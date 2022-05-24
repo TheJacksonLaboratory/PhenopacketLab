@@ -17,7 +17,7 @@ public class ConceptResources {
 
     public static OntologyConceptResource mondo(InputStream is) {
         CurieUtil newCurie = CurieUtilBuilder.withDefaultsAnd(Map.of("HGNC", "http://identifiers.org/hgnc/"));
-        Ontology ontology = OntologyLoader.loadOntology(is, newCurie, "MONDO", "HGNC");
+        Ontology ontology = OntologyLoader.loadOntology(is, newCurie, "MONDO");
         Resource resource = mondoResource(getOntologyVersion(ontology));
         return OntologyConceptResource.of(ontology, resource);
     }
@@ -117,6 +117,23 @@ public class ConceptResources {
                 .setVersion(version)
                 .setNamespacePrefix("EFO")
                 .setIriPrefix("http://www.ebi.ac.uk/efo/EFO_")
+                .build();
+    }
+
+    public static OntologyConceptResource so(InputStream is) {
+        Ontology ontology = OntologyLoader.loadOntology(is);
+        Resource resource = soResource(getOntologyVersion(ontology));
+        return OntologyConceptResource.of(ontology, resource);
+    }
+
+    private static Resource soResource(String version) {
+        return Resource.newBuilder()
+                .setId("so")
+                .setName("Sequence types and features ontology")
+                .setUrl("http://purl.obolibrary.org/obo/so.owl")
+                .setVersion(version)
+                .setNamespacePrefix("SO")
+                .setIriPrefix("http://purl.obolibrary.org/obo/SO_")
                 .build();
     }
 

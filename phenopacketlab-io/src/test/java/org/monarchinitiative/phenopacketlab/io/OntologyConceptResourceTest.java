@@ -127,4 +127,18 @@ public class OntologyConceptResourceTest {
         assertThat(resource.getIriPrefix(), equalTo("http://www.ebi.ac.uk/efo/EFO_"));
     }
 
+    @Test
+    public void loadSo() throws IOException {
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResources::so);
+
+        assertThat(or.ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = or.resource();
+        assertThat(resource.getId(), equalTo("so"));
+        assertThat(resource.getName(), equalTo("Sequence types and features ontology"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/so.owl"));
+        assertThat(resource.getVersion(), equalTo("UNKNOWN")); // TODO - resolve
+        assertThat(resource.getNamespacePrefix(), equalTo("SO"));
+        assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/SO_"));
+    }
 }
