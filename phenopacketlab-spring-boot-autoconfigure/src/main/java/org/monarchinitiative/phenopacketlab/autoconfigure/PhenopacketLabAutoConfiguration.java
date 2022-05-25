@@ -66,7 +66,7 @@ public class PhenopacketLabAutoConfiguration {
 
     @Bean
     public Ontology hpo(PhenopacketLabDataResolver phenopacketLabDataResolver) {
-        Path hpoPath = phenopacketLabDataResolver.hpoJsonPath();
+        Path hpoPath = phenopacketLabDataResolver.hpJsonPath();
         LOGGER.debug("Reading HPO file at {}", hpoPath.toAbsolutePath());
         return OntologyLoader.loadOntology(hpoPath.toFile());
     }

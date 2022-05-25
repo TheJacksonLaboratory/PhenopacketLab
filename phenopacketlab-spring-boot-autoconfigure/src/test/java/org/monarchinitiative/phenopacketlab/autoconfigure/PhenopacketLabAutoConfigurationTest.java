@@ -16,7 +16,7 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
     @Test
     public void testAllPropertiesSupplied() {
         load(PhenopacketLabAutoConfiguration.class,
-                "phenopacketlab.data-directory=" + TEST_DATA);
+                "phenopacketlab.data-directory=" + DATA_DIR);
 
         Path datadirectory = context.getBean("phenopacketLabDataDirectory", Path.class);
         assertThat(datadirectory.getFileName(), equalTo(Path.of("data")));
@@ -34,13 +34,13 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
 
     @Test
     public void testNonExistingDataDirectory() {
-        BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + TEST_DATA + "/bla"));
+        BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + DATA_DIR + "/bla"));
         assertThat(exception.getMessage(), containsString("Path to PhenopacketLab data directory 'src/test/resources/data/bla' does not point to an existing directory"));
     }
 
     @Test
     public void testMissingResourceFile() {
-        BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + TEST_DATA.getParent()));
-        assertThat(exception.getMessage(), containsString("The file `hp.json` is missing in the data directory"));
+        BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + DATA_DIR.getParent()));
+        assertThat(exception.getMessage(), containsString("The following files are missing in the data directory: 'efo.json', 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json'."));
     }
 }

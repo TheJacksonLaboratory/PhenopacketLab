@@ -33,13 +33,23 @@ cd PhenopacketLab
 
 ## Setup *PhenopacketLab* data directory
 
-*PhenopacketLab* backend requires several data files to be present to run. The files can be downloaded by running the following command:
+*PhenopacketLab* backend requires several data files to be present to run. The data directory is setup in two steps: 
+- preprocess ontologies
+- download of non-ontology resources
 
-```bash
-./mvnw clean package
-PL_VERSION=0.1-SNAPSHOT
-PL_DATADIR=path/to/phenopacket-lab
-java -jar phenopacketlab-ingest/target/phenopacketlab-ingest-${PL_VERSION}.jar ingest ${PL_DATADIR}
+Note, a `obographs-cli` JAR is required for setup. Check out [Obographs](https://github.com/geneontology/obographs) 
+to get ahold of the executable JAR.
+
+```shell
+OBOGRAPHS_JAR=path/to/obographs-cli.jar
+PLAB_DATADIR=path/to/phenopacket-lab
+PLAB_VERSION=0.1-SNAPSHOT
+
+cd PhenopacketLab
+./mvnw --projects phenopacketlab-restapi --also-make --batch-mode package
+java -jar phenopacketlab-ingest/target/phenopacketlab-ingest-${PLAB_VERSION}.jar ingest ${PLAB_DATADIR}
+
+bash scripts/preprocess-ontologies.sh --data-directory ${PLAB_DATADIR} --obographs-jar ${OBOGRAPHS_JAR}
 ```
 
 If not already present, the command will create the `path/to/phenopacket-lab` folder including missing parent directories, and download the data files into the folder.
