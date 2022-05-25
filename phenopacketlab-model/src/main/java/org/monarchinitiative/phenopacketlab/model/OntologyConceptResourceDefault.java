@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacketlab.model;
 
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.phenopackets.schema.v2.core.Resource;
 
 import java.util.Objects;
 

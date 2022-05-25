@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 import org.monarchinitiative.phenopacketlab.model.ConceptResource;
-import org.phenopackets.schema.v2.core.Resource;
+import org.monarchinitiative.phenopacketlab.model.Resource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,11 +35,11 @@ public class HgncConceptLoaderTest {
         assertThat(concepts.getLast(), equalTo(Concept.of(TermId.of("HGNC:21"), "AATK", "apoptosis associated tyrosine kinase", List.of("lemur tyrosine kinase 1", "protein phosphatase 1, regulatory subunit 77"))));
 
         Resource resource = cr.resource();
-        assertThat(resource.getId(), equalTo("hgnc"));
-        assertThat(resource.getName(), equalTo("HUGO Gene Nomenclature Committee"));
-        assertThat(resource.getUrl(), equalTo("http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"));
-        assertThat(resource.getVersion(), equalTo("2022-05-17"));
-        assertThat(resource.getNamespacePrefix(), equalTo("HGNC"));
-        assertThat(resource.getIriPrefix(), equalTo("http://identifiers.org/hgnc/HGNC:"));
+        assertThat(resource.id(), equalTo("hgnc"));
+        assertThat(resource.name(), equalTo("HUGO Gene Nomenclature Committee"));
+        assertThat(resource.url(), equalTo("http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"));
+        assertThat(resource.version(), equalTo("2022-05-17"));
+        assertThat(resource.namespacePrefix(), equalTo("HGNC"));
+        assertThat(resource.iriPrefix(), equalTo("http://identifiers.org/hgnc/HGNC:"));
     }
 }

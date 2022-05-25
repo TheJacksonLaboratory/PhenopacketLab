@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacketlab.io;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 import org.monarchinitiative.phenopacketlab.model.ConceptResource;
-import org.phenopackets.schema.v2.core.Resource;
+import org.monarchinitiative.phenopacketlab.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class HgncConceptLoader {
     }
 
     private static Resource createHgncResource(String version) {
-        return Resource.newBuilder()
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
                 .setId("hgnc")
                 .setName("HUGO Gene Nomenclature Committee")
                 .setUrl("http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt")
@@ -56,6 +56,7 @@ public class HgncConceptLoader {
                 .setNamespacePrefix("HGNC")
                 .setIriPrefix("http://identifiers.org/hgnc/HGNC:")
                 .build();
+        return new PhenopacketResource(resource);
     }
 
     private static Function<String, Optional<Concept>> toConcept() {

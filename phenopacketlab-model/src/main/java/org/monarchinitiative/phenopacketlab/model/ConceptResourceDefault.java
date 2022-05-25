@@ -1,7 +1,5 @@
 package org.monarchinitiative.phenopacketlab.model;
 
-import org.phenopackets.schema.v2.core.Resource;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
