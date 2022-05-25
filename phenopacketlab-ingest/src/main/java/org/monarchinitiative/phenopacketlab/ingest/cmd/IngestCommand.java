@@ -66,10 +66,11 @@ public class IngestCommand implements Callable<Integer> {
     private void downloadResources(Path dataDirectory) throws FileDownloadException {
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
-                .hpoJson()
-                .mondoJson()
-                .uberonJson()
-                .genoJson()
+                // TODO - remove
+//                .hpoJson()
+//                .mondoJson()
+//                .uberonJson()
+//                .genoJson()
                 .hgnc()
                 .hpDiseaseAnnotations()
                 .build();
