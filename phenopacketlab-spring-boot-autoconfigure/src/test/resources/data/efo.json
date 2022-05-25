@@ -1,3 +1,525 @@
 {
-  "message": "Empty JSON file for testing."
+  "graphs" : [ {
+    "id" : "http://www.ebi.ac.uk/efo/efo.owl",
+    "meta" : {
+      "basicPropertyValues" : [ {
+        "pred" : "http://purl.obolibrary.org/obo/format-version",
+        "val" : "1.4"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Gautier Koscielny"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Laura Huerta Martinez"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Olamidipupo Ajigboye"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Paola Roncaglia"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Trish Whetzel"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Zoe May Pendlington"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/rights",
+        "val" : "Copyright [2014] EMBL - European Bioinformatics Institute\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the\nLicense. "
+      }, {
+        "pred" : "http://purl.org/dc/terms/license",
+        "val" : "www.apache.org/licenses/LICENSE-2.0"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Catherine Leroy"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Dani Welter"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Drashtti Vasant"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Ele Holloway"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Eleanor Williams"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Emma Kate Hastings"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Helen Parkinson"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "James Malone"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Jon Ison"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Natalja Kurbatova"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Simon Jupp"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Sirarat Sarntivijai"
+      }, {
+        "pred" : "http://www.ebi.ac.uk/efo/creator",
+        "val" : "Tomasz Adamusiak"
+      }, {
+        "pred" : "http://www.w3.org/2000/01/rdf-schema#comment",
+        "val" : "2022-05-16"
+      }, {
+        "pred" : "http://www.w3.org/2002/07/owl#versionInfo",
+        "val" : "3.42.0"
+      } ]
+    },
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/BFO_0000019",
+      "lbl" : "quality",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A quality is an entity that describes some aspect which is intrinsic to that particular object and is dependent on or more material entities in which it inheres in or is borne by. Example the color of a tomato, the ambient temperature of air, the circumference of a waist, the shape of a nose, the mass of a piece of gold, the weight of a chimpanzee"
+        },
+        "xrefs" : [ {
+          "val" : "NCIt:C25283"
+        }, {
+          "val" : "SNOMEDCT:263496004"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/EFO_URI",
+          "val" : "http://www.ebi.ac.uk/efo/EFO_0001436"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/organizational_class",
+          "val" : "true"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/source_definition",
+          "val" : "A specifically dependent continuant [snap:SpecificallyDependentContinuant] that is exhibited if it inheres in an entity or entities at all (a categorical property)."
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "http://www.ifomis.org/bfo/1.1/snap#Quality"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/BFO_0000020",
+      "lbl" : "material property",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An experimental factor which is a property or characteristic of some other entity.  For example, the mouse has the colour white."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "SpecificallyDependentContinuant"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "specifically dependent continuant"
+        } ],
+        "xrefs" : [ {
+          "val" : "BFO:0000020"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Sirarat Sarntivijai"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/ArrayExpress_label",
+          "val" : "sample characteristic"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/EFO_URI",
+          "val" : "http://www.ebi.ac.uk/efo/EFO_0001443"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/organizational_class",
+          "val" : "true"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/source_definition",
+          "val" : "A continuant [snap:Continuant] that inheres in or is borne by other entities. Every instance of A requires some specific instance of B which must always be the same."
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "http://www.ifomis.org/bfo/1.1/snap#SpecificallyDependentContinuant"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/BFO_0000040",
+      "lbl" : "material entity",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A material entity is an entity that exists in full during the length of time of its existence, persists through this time while maintaining its identity and has no temporal parts. For example a heart, a human, a fly, a microarray."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "material type"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000112",
+          "val" : "A heart, a human, a fly, a microarray."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/ArrayExpress_label",
+          "val" : "sample factor"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/EFO_URI",
+          "val" : "http://www.ebi.ac.uk/efo/EFO_0001434"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/organizational_class",
+          "val" : "true"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/source_definition",
+          "val" : "An independent continuant [snap:IndependentContinuant] that is spatially extended whose identity is independent of that of other entities and can be maintained through time. Note: Material entity [snap:MaterialEntity] subsumes object [snap:Object], fiat object part [snap:FiatObjectPart], and object aggregate [snap:ObjectAggregate], which assume a three level theory of granularity, which is inadequate for some domains, such as biology."
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "http://www.ifomis.org/bfo/1.1/snap#MaterialEntity"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/CHEBI_16991",
+      "lbl" : "DNA",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "High molecular weight, linear polymers, composed of nucleotides containing deoxyribose and linked by phosphodiester bonds; DNA contain the genetic information of organisms."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "(Deoxyribonucleotide)m"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "(Deoxyribonucleotide)n"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "(Deoxyribonucleotide)n+m"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "DNAn"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "DNAn+1"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "DNS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Desoxyribonukleinsaeure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "deoxyribonucleic acid"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "deoxyribonucleic acids"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "desoxyribose nucleic acid"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "thymus nucleic acid"
+        } ],
+        "xrefs" : [ {
+          "val" : "MO:945"
+        }, {
+          "val" : "MeSH:D004247"
+        }, {
+          "val" : "NCIt:C449"
+        }, {
+          "val" : "NIFSTD:sao454034570"
+        }, {
+          "val" : "SNOMEDCT:24851008"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Jie Zheng"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Tomasz Adamusiak"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/EFO_URI",
+          "val" : "http://www.ebi.ac.uk/efo/EFO_0001453"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/CHEBI_24431",
+      "lbl" : "chemical entity",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A molecular entity consisting of two or more chemical elements."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "chemical compound"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "heteroatomic molecular entities"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "heteroatomic molecular entity"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Tomasz Adamusiak"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/branch_class",
+          "val" : "true"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0004",
+      "lbl" : "ancestry category",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Population category defined using ancestry informative markers (AIMs) based on genetic/genomic data"
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "ancestral group"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0290",
+      "lbl" : "genetically isolated population",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A population with increased genetic homogeneity and reduced genetic variation due to cultural or geographic isolation"
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "founder population"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "population isolate"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0301",
+      "lbl" : "hasAncestryStatus",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0304",
+      "lbl" : "ancestry status",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "General characterisation of the ancestry of a population or individual"
+        }
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0305",
+      "lbl" : "genetically isolated ancestry",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Ancestry that is the result of cultural or geographic isolation. Generally characterised by increased genetic homogeneity and reduced genetic variation"
+        }
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HANCESTRO_0306",
+      "lbl" : "admixed ancestry",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Ancestry which is an admixture of more than one defined ancestral population. The degree and type of admixture may vary within a population and the accuracy of classification requires well-defined reference samples"
+        }
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/OBI_0000181",
+      "lbl" : "population",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "a population is a collection of individuals from the same taxonomic class living, counted or sampled at a particular site or in a particular area"
+        },
+        "xrefs" : [ {
+          "val" : "MeSH:D011153"
+        }, {
+          "val" : "NIFSTD:sao2254405550"
+        }, {
+          "val" : "SNOMEDCT:385436007"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000111",
+          "val" : "population"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000112",
+          "val" : "PMID12564891. Environ Sci Technol. 2003 Jan 15;37(2):223-8. Effects of historic PCB exposures on the reproductive success of the Hudson River striped bass population."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000114",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000125"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "1/28/2013, BP, on the call it was raised that we may want to switch to an external ontology for all populatin terms: \nhttp://code.google.com/p/popcomm-ontology/"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone modified from original OBI definition"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "PERSON: Philippe Rocca-Serra"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Tomasz Adamusiak modified from original OBI definition"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000119",
+          "val" : "adapted from Oxford English Dictionnary"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000232",
+          "val" : "rem1: collection somehow always involve a selection process"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/EFO_URI",
+          "val" : "http://www.ebi.ac.uk/efo/EFO_0000664"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/branch_class",
+          "val" : "true"
+        } ]
+      }
+    }, {
+      "id" : "http://www.ebi.ac.uk/efo/EFO_0000001",
+      "lbl" : "experimental factor",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An experimental factor in Array Express which are essentially the variable aspects of an experiment design which can be used to describe an experiment, or set of experiments, in an increasingly detailed manner. This upper level class is really used to give a root class from which applications can rely on and not be tied to upper ontology classses which do change."
+        },
+        "comments" : [ "Concept naming convention is lower case natural naming with spaces, when necessary captials should be used, for example disease factor, HIV, breast carcinoma, Ewing's sarcoma" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "ExperimentalFactor"
+        } ],
+        "xrefs" : [ {
+          "val" : "MO:10"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Helen Parkinson"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Jie Zheng"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Tomasz Adamusiak"
+        }, {
+          "pred" : "http://www.ebi.ac.uk/efo/organizational_class",
+          "val" : "true"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "Helen Parkinson"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "James Malone"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "Tomasz Adamusiak"
+        } ]
+      }
+    }, {
+      "id" : "http://www.ebi.ac.uk/efo/EFO_0004446",
+      "lbl" : "biological macromolecule",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Anatomical structure which has as its parts one or more ordered aggregates of nucleotide, amino acid fatty acid or sugar molecules bonded to one another."
+        }
+      }
+    }, {
+      "id" : "http://www.ebi.ac.uk/efo/EFO_0008479",
+      "lbl" : "genomic DNA",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "The DNA that is part of the normal chromosomal complement of an organism."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "gDNA"
+        } ],
+        "xrefs" : [ {
+          "val" : "BAO:0000316"
+        }, {
+          "val" : "NCIm:C3272453"
+        }, {
+          "val" : "NCIt:C95940"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Dani Welter"
+        } ]
+      }
+    } ],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/BFO_0000019",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/BFO_0000020"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/BFO_0000020",
+      "pred" : "is_a",
+      "obj" : "http://www.ebi.ac.uk/efo/EFO_0000001"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/BFO_0000040",
+      "pred" : "is_a",
+      "obj" : "http://www.ebi.ac.uk/efo/EFO_0000001"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/CHEBI_16991",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/CHEBI_24431"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/CHEBI_16991",
+      "pred" : "is_a",
+      "obj" : "http://www.ebi.ac.uk/efo/EFO_0004446"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/CHEBI_24431",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/BFO_0000040"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HANCESTRO_0004",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/OBI_0000181"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HANCESTRO_0290",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HANCESTRO_0004"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HANCESTRO_0304",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/BFO_0000019"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HANCESTRO_0305",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HANCESTRO_0304"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HANCESTRO_0306",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HANCESTRO_0304"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/OBI_0000181",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/BFO_0000040"
+    }, {
+      "sub" : "http://www.ebi.ac.uk/efo/EFO_0004446",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/BFO_0000040"
+    }, {
+      "sub" : "http://www.ebi.ac.uk/efo/EFO_0008479",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/CHEBI_16991"
+    } ]
+  } ]
 }
