@@ -3,6 +3,8 @@ phenopacketlab:
   data-directory:
   # Disease databases to use
   #disease-databases: ['OMIM', 'ORPHANET', 'DECIPHER']
+  # Numer of threads used to load resources during startup.
+  loader-threads: 4
 
 api:
   version: /api/v1

@@ -9,6 +9,7 @@ import java.util.Set;
 public class PhenopacketLabProperties {
 
     private String dataDirectory;
+    private int loaderThreads;
     private Set<DiseaseDatabase> diseaseDatabases = DiseaseDatabase.allKnownDiseaseDatabases();
 
     public String getDataDirectory() {
@@ -17,6 +18,14 @@ public class PhenopacketLabProperties {
 
     public void setDataDirectory(String dataDirectory) {
         this.dataDirectory = dataDirectory;
+    }
+
+    public int getLoaderThreads() {
+        return loaderThreads;
+    }
+
+    public void setLoaderThreads(int loaderThreads) {
+        this.loaderThreads = loaderThreads;
     }
 
     public Set<DiseaseDatabase> diseaseDatabases() {

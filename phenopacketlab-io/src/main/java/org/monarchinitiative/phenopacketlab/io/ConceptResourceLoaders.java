@@ -10,9 +10,9 @@ import org.monarchinitiative.phenopacketlab.model.Resource;
 import java.io.InputStream;
 import java.util.Map;
 
-public class ConceptResources {
+public class ConceptResourceLoaders {
 
-    private ConceptResources() {
+    private ConceptResourceLoaders() {
     }
 
     public static OntologyConceptResource mondo(InputStream is) {

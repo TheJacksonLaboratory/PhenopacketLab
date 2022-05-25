@@ -28,7 +28,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadMondo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResources::mondo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResourceLoaders::mondo);
 
         // Test the `Ontology`.
         Ontology ontology = or.ontology();
@@ -54,7 +54,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadHpo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResources::hpo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResourceLoaders::hpo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -69,7 +69,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadGeno() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResources::geno);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResourceLoaders::geno);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -84,7 +84,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUberon() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResources::uberon);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResourceLoaders::uberon);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -99,7 +99,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResources::uo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -114,7 +114,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadEfo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResources::efo);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
@@ -129,7 +129,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadSo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResources::so);
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
 
         assertThat(or.ontology(), is(notNullValue(Ontology.class)));
 
