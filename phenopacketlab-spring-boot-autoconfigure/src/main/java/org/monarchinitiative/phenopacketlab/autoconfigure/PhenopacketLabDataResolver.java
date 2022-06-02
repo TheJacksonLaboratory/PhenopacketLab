@@ -17,7 +17,7 @@ public class PhenopacketLabDataResolver {
 
         List<String> errors = new LinkedList<>();
         List<Path> paths = List.of(efoJsonPath(), genoJsonPath(), hgncCompleteSetPath(), hpJsonPath(), mondoJsonPath(),
-                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), ncitPath());
+                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), ncitJsonPath());
         for (Path path : paths) {
             if (!(Files.isRegularFile(path) && Files.isReadable(path))) {
                 errors.add(path.toFile().getName());
@@ -63,7 +63,7 @@ public class PhenopacketLabDataResolver {
         return phenopacketLabDataDirectory.resolve("uberon.json");
     }
 
-    public Path ncitPath() {
-        return phenopacketLabDataDirectory.resolve("NCIT.csv.gz");
+    public Path ncitJsonPath() {
+        return phenopacketLabDataDirectory.resolve("ncit.json");
     }
 }

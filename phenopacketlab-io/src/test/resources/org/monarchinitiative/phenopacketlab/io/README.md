@@ -47,5 +47,12 @@ The folder contains toy versions of real resources for testing.
   obographs convert -f json so.module.owl
   ```
 
+- `ncit.module.json` - NCIT module containing ancestors of `http://purl.obolibrary.org/obo/NCIT_C156482` *Genitourinary System Neoplasm* prepared by running:
+  ```shell
+  robot extract --input-iri http://purl.obolibrary.org/obo/ncit.owl --term http://purl.obolibrary.org/obo/NCIT_C156482 --output ncit.module.owl --method BOT --copy-ontology-annotations true 
+  obographs convert -f json ncit.module.owl
+  rm ncit.module.owl
+  ```
+
 > Note: `robot` and `obographs` expand to `java -jar robot.jar` (`v1.8.3`) and `java -jar obographs-cli.jar` (`v0.3.0`).
  

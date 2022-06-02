@@ -17,6 +17,7 @@ HP_PURL=http://purl.obolibrary.org/obo/hp.owl
 MONDO_PURL=http://purl.obolibrary.org/obo/mondo.owl
 SO_PURL=http://purl.obolibrary.org/obo/so.owl
 UBERON_PURL=http://purl.obolibrary.org/obo/uberon.owl
+NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
 #UO_PURL=http://purl.obolibrary.org/obo/uo.owl # TODO - fails, resolve
 
 ONTOLOGIES=(
@@ -26,6 +27,7 @@ ONTOLOGIES=(
     "${MONDO_PURL}"
     "${SO_PURL}"
     "${UBERON_PURL}"
+    "${NCIT_PURL}"
 #    "${UO_PURL}"
   )
 

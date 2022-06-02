@@ -90,18 +90,19 @@ public class IngestCommand implements Callable<Integer> {
 
     private void downloadResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
         String nciThesaurusZipName = "NciThesaurus.zip";
-        URL ncitUrl = new URL(properties.getProperty(NCIT_URL));
+        String url = properties.getProperty(NCIT_URL);
+        URL ncitUrl = new URL(url);
         String ncitVersion = properties.getProperty(NCIT_VERSION);
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
                 .hgnc()
                 .hpDiseaseAnnotations()
-                .custom(nciThesaurusZipName, ncitUrl)
+//                .custom(nciThesaurusZipName, ncitUrl)
                 .build();
 
         downloader.download();
-        Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
-        toDelete.add(thesaurusZip);
-        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.csv.gz"), ncitVersion);
+//        Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
+//        toDelete.add(thesaurusZip);
+//        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.tsv.gz"), url, ncitVersion);
     }
 }

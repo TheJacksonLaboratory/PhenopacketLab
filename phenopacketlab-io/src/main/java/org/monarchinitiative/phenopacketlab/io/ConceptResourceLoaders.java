@@ -144,6 +144,24 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
+    public static OntologyConceptResource ncit(InputStream is) {
+        Ontology ontology = OntologyLoader.loadOntology(is);
+        Resource resource = ncitResource(getOntologyVersion(ontology));
+        return OntologyConceptResource.of(ontology, resource);
+    }
+
+    private static Resource ncitResource(String version) {
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
+                .setId("ncit")
+                .setName("NCI Thesaurus")
+                .setUrl("http://purl.obolibrary.org/obo/ncit.owl")
+                .setVersion(version)
+                .setNamespacePrefix("NCIT")
+                .setIriPrefix("http://purl.obolibrary.org/obo/NCIT_")
+                .build();
+        return new PhenopacketResource(resource);
+    }
+
     private static String getOntologyVersion(Ontology ontology) {
         return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
     }

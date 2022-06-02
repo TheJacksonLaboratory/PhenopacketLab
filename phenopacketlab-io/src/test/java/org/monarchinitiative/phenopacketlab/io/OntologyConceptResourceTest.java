@@ -141,4 +141,19 @@ public class OntologyConceptResourceTest {
         assertThat(resource.namespacePrefix(), equalTo("SO"));
         assertThat(resource.iriPrefix(), equalTo("http://purl.obolibrary.org/obo/SO_"));
     }
+
+    @Test
+    public void loadNcit() throws IOException {
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
+
+        assertThat(or.ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = or.resource();
+        assertThat(resource.id(), equalTo("ncit"));
+        assertThat(resource.name(), equalTo("NCI Thesaurus"));
+        assertThat(resource.url(), equalTo("http://purl.obolibrary.org/obo/ncit.owl"));
+        assertThat(resource.version(), equalTo("22.03d"));
+        assertThat(resource.namespacePrefix(), equalTo("NCIT"));
+        assertThat(resource.iriPrefix(), equalTo("http://purl.obolibrary.org/obo/NCIT_"));
+    }
 }
