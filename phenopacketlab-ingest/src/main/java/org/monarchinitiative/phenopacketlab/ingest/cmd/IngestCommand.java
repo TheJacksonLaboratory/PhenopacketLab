@@ -3,12 +3,17 @@ package org.monarchinitiative.phenopacketlab.ingest.cmd;
 import org.monarchinitiative.biodownload.BioDownloader;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.monarchinitiative.phenopacketlab.ingest.Main;
+import org.monarchinitiative.phenopacketlab.ingest.transform.NciThesaurusTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
@@ -39,9 +44,18 @@ public class IngestCommand implements Callable<Integer> {
 
         if (existingDataDirectory.isPresent()) {
             Path dataDirectory = existingDataDirectory.get();
+            List<Path> toDelete = new LinkedList<>();
             try {
-                downloadResources(dataDirectory);
-            } catch (FileDownloadException e) {
+                // First, download.
+                downloadResources(dataDirectory, toDelete);
+
+                // Then, cleanup.
+                LOGGER.info("Removing temporary files.");
+                for (Path del : toDelete) {
+                    LOGGER.debug("Removing {}", del.toAbsolutePath());
+                    Files.deleteIfExists(del);
+                }
+            } catch (IOException | FileDownloadException e) {
                 LOGGER.error("Error occurred during the download: {}", e.getMessage(), e);
                 return 1;
             }
@@ -63,18 +77,19 @@ public class IngestCommand implements Callable<Integer> {
         return Optional.of(destinationPath);
     }
 
-    private void downloadResources(Path dataDirectory) throws FileDownloadException {
+    private void downloadResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
+        String nciThesaurusZipName = "NciThesaurus.zip";
+        URL ncitUrl = new URL("https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Thesaurus_22.04d.FLAT.zip");
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
-                // TODO - remove
-//                .hpoJson()
-//                .mondoJson()
-//                .uberonJson()
-//                .genoJson()
                 .hgnc()
                 .hpDiseaseAnnotations()
+                .custom(nciThesaurusZipName, ncitUrl)
                 .build();
 
         downloader.download();
+        Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
+        toDelete.add(thesaurusZip);
+        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.csv.gz"));
     }
 }

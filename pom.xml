@@ -121,6 +121,11 @@
                 <artifactId>guava</artifactId>
                 <version>30.1.1-jre</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>1.9.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.monarchinitiative.biodownload</groupId>
