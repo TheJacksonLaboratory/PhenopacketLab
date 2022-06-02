@@ -5,6 +5,9 @@ phenopacketlab:
   #disease-databases: ['OMIM', 'ORPHANET', 'DECIPHER']
   # Numer of threads used to load resources during startup.
   loader-threads: 4
+  # Keep track of used Phenopacket Schema artifact.
+  phenopacket-schema-version: @phenopacket.version@
+
 
 api:
   version: /api/v1
