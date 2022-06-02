@@ -25,7 +25,7 @@ public class NciThesaurusTransformerTest {
     @Test
     public void transform() throws Exception  {
         Path zip = TestBase.TEST_BASE.resolve("transform").resolve("Thesaurus.50lines.zip");
-        Path destination = tempDir.resolve("output.csv.gz");
+        Path destination = tempDir.resolve("NCIT.csv.gz");
         assertThat(Files.isRegularFile(destination), equalTo(false));
 
         NciThesaurusTransformer.transform(zip, destination, "04.D");
