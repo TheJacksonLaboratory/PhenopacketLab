@@ -3,6 +3,7 @@ phenopacketlab:
   data-directory:
   # Disease databases to use
   #disease-databases: ['OMIM', 'ORPHANET', 'DECIPHER']
+  phenopacket-schema-version: @phenopacket.version@
 
 api:
   version: /api/v1

@@ -7,6 +7,7 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
+import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
@@ -86,6 +87,11 @@ public class PhenopacketLabAutoConfiguration {
         } catch (IOException e) {
             throw new InvalidResourceException(e);
         }
+    }
+
+    @Bean
+    public PhenopacketLabMetadata phenopacketLabMetadata() {
+        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
     }
 
     private static Properties readProperties() {

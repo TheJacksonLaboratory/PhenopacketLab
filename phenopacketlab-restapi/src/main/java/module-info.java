@@ -1,7 +1,9 @@
 module phenopacketlab.restapi {
     requires phenopacketlab.autoconfigure;
 
-    requires phenopacket.schema;
+    // TODO - no transitive requirement despite exposing schema elements in the public API since the module is terminal.
+    //  Reassess if necessary.
+    requires org.phenopackets.schema;
 
     requires org.slf4j;
 

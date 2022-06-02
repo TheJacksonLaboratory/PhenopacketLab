@@ -11,6 +11,8 @@ public class PhenopacketLabProperties {
     private String dataDirectory;
     private Set<DiseaseDatabase> diseaseDatabases = DiseaseDatabase.allKnownDiseaseDatabases();
 
+    private String phenopacketSchemaVersion;
+
     public String getDataDirectory() {
         return dataDirectory;
     }
@@ -26,4 +28,13 @@ public class PhenopacketLabProperties {
     public void setDiseaseDatabases(Set<DiseaseDatabase> diseaseDatabases) {
         this.diseaseDatabases = diseaseDatabases;
     }
+
+    public String phenopacketSchemaVersion() {
+        return phenopacketSchemaVersion;
+    }
+
+    public void setPhenopacketSchemaVersion(String phenopacketSchemaVersion) {
+        this.phenopacketSchemaVersion = phenopacketSchemaVersion;
+    }
+
 }
