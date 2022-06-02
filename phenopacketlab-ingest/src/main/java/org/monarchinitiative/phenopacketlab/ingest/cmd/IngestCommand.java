@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "ingest",
@@ -27,6 +28,10 @@ import java.util.concurrent.Callable;
 public class IngestCommand implements Callable<Integer> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestCommand.class);
+    private static final String NCIT_URL = "ncit.url";
+    private static final String NCIT_VERSION = "ncit.version";
+
+    private final Properties properties;
 
     @CommandLine.Parameters(index = "0",
             description = "path to the destination folder")
@@ -35,6 +40,12 @@ public class IngestCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-f", "--force-overwrite"},
             description = "overwrite the existing resource files (default: ${DEFAULT-VALUE})")
     public boolean overwrite = false;
+
+    public IngestCommand(Properties properties) {
+        this.properties = properties;
+        if (!properties.containsKey(NCIT_URL) && !properties.containsKey(NCIT_VERSION))
+            throw new IllegalStateException("NCI Thesaurus URL and version must be specified!");
+    }
 
     @Override
     public Integer call() {
@@ -79,7 +90,8 @@ public class IngestCommand implements Callable<Integer> {
 
     private void downloadResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
         String nciThesaurusZipName = "NciThesaurus.zip";
-        URL ncitUrl = new URL("https://evs.nci.nih.gov/ftp1/NCI_Thesaurus/Thesaurus_22.04d.FLAT.zip");
+        URL ncitUrl = new URL(properties.getProperty(NCIT_URL));
+        String ncitVersion = properties.getProperty(NCIT_VERSION);
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
                 .hgnc()
@@ -90,6 +102,6 @@ public class IngestCommand implements Callable<Integer> {
         downloader.download();
         Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
         toDelete.add(thesaurusZip);
-        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.csv.gz"));
+        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.csv.gz"), ncitVersion);
     }
 }

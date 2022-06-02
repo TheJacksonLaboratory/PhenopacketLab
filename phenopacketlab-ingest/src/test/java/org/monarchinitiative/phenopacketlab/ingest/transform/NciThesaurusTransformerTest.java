@@ -28,7 +28,7 @@ public class NciThesaurusTransformerTest {
         Path destination = tempDir.resolve("output.csv.gz");
         assertThat(Files.isRegularFile(destination), equalTo(false));
 
-        NciThesaurusTransformer.transform(zip, destination);
+        NciThesaurusTransformer.transform(zip, destination, "04.D");
 
         assertThat(Files.isRegularFile(destination), equalTo(true));
         List<String> lines = readLines(destination);

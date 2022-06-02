@@ -20,16 +20,14 @@ public class NciThesaurusTransformer {
     private NciThesaurusTransformer() {
     }
 
-    public static void transform(Path thesaurusZip, Path destinationPath) throws IOException {
-        String format = "04.D";
-
+    public static void transform(Path thesaurusZip, Path destinationPath, String version) throws IOException {
         try (ZipFile zipFile = new ZipFile(thesaurusZip.toFile());
              CSVParser parser = openThesaurus(openReaderForZipEntry(zipFile, "Thesaurus.txt"));
              BufferedWriter writer = openWriterForOutput(destinationPath);
              CSVPrinter printer = CSVFormat.DEFAULT.builder()
                      .setHeader("code", "label", "definition")
                      .setCommentMarker('#')
-                     .setHeaderComments(String.format("version: %s", format))
+                     .setHeaderComments(String.format("version: %s", version))
                      .build()
                      .print(writer)) {
 
