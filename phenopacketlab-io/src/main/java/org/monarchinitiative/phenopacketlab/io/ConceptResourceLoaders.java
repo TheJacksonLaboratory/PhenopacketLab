@@ -163,7 +163,8 @@ public class ConceptResourceLoaders {
     }
 
     public static OntologyConceptResource gsso(InputStream is) {
-        Ontology ontology = OntologyLoader.loadOntology(is);
+        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("GSSO", "http://purl.obolibrary.org/obo/GSSO_"));
+        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "GSSO");
         Resource resource = gssoResource(getOntologyVersion(ontology));
         return OntologyConceptResource.of(ontology, resource);
     }
