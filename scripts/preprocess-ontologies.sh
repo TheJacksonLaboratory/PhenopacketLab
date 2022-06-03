@@ -18,6 +18,7 @@ MONDO_PURL=http://purl.obolibrary.org/obo/mondo.owl
 SO_PURL=http://purl.obolibrary.org/obo/so.owl
 UBERON_PURL=http://purl.obolibrary.org/obo/uberon.owl
 NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
+GSSO_PURL=http://purl.obolibrary.org/obo/gsso.owl
 #UO_PURL=http://purl.obolibrary.org/obo/uo.owl # TODO - fails, resolve
 
 ONTOLOGIES=(
@@ -28,6 +29,7 @@ ONTOLOGIES=(
     "${SO_PURL}"
     "${UBERON_PURL}"
     "${NCIT_PURL}"
+    "${GSSO_PURL}"
 #    "${UO_PURL}"
   )
 
@@ -74,7 +76,16 @@ download () {
   DESTINATION=$2
   if [ ! -f "${DESTINATION}" ] || [ "$OVERWRITE" = true ]; then
     printf "\nDownloading %s to '%s'.\n" "${PURL}" "${DESTINATION}"
-    curl --location --output "${DESTINATION}" "${PURL}"
+    if [ "${PURL}" == "${GSSO_PURL}" ]; then
+      # GSSO requires a special gentle touch.
+      ${JAVA} -jar ${ROBOT_JAR} extract --input-iri "${PURL}" \
+        --term http://purl.obolibrary.org/obo/GSSO_009468 \
+        --output "${DESTINATION}" \
+        --method TOP \
+        --copy-ontology-annotations true
+    else
+      curl --location --output "${DESTINATION}" "${PURL}"
+    fi
     # TODO - remove if UO is fixed
 #    if [ "${PURL}" == "${UO_PURL}" ]; then
 #      fix_unit_ontology "${DESTINATION}"
@@ -135,11 +146,10 @@ USAGE:
   -d | --data-directory 	Where to store the preprocessed files
   -w | --overwrite		Force overwrite the files
   --obographs-jar		Path to obographs JAR file
+  --robot-jar 	                Path to ROBOT JAR file
   -h | --help		        Print this message
   --version			Print version of script\n\n" "$(basename ${0%.sh})" "${VERSION}"
 }
-
-#   --robot-jar 	                Path to ROBOT JAR file
 
 ######################## MAIN ####################### MAIN ####################
 if [ "$1" = "" ]; then
@@ -149,7 +159,7 @@ else
     case $1 in
       -d | --data-directory ) shift; DATA_DIR=$1;;
       -w | --overwrite ) OVERWRITE=true;;
-#      --robot-jar ) shift; ROBOT_JAR=$1;;
+      --robot-jar ) shift; ROBOT_JAR=$1;;
       --obographs-jar ) shift; OBOGRAPHS_JAR=$1;;
       -h | --help ) usage; exit 0;;
       --version ) echo "$(basename "${0%.sh}") $VERSION"; exit 0;;

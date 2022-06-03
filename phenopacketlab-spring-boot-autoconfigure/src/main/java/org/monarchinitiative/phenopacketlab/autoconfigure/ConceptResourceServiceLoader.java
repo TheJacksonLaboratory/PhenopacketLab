@@ -51,7 +51,9 @@ class ConceptResourceServiceLoader {
                 new ResourceTuple<>(dataResolver.hpJsonPath(), ConceptResourceLoaders::hpo, result::setHp),
                 new ResourceTuple<>(dataResolver.mondoJsonPath(), ConceptResourceLoaders::mondo, result::setMondo),
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
-                new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon)
+                new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
+                new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
+                new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso)
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -68,7 +70,7 @@ class ConceptResourceServiceLoader {
         if (!errors.isEmpty())
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
-        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc);
+        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
@@ -93,6 +95,9 @@ class ConceptResourceServiceLoader {
         private OntologyConceptResource so;
         private OntologyConceptResource uberon;
         private IdentifiedConceptResource hgnc;
+        private OntologyConceptResource ncit;
+        private OntologyConceptResource gsso;
+
 
         public void setEfo(OntologyConceptResource efo) {
             this.efo = efo;
@@ -120,6 +125,14 @@ class ConceptResourceServiceLoader {
 
         public void setHgnc(IdentifiedConceptResource hgnc) {
             this.hgnc = hgnc;
+        }
+
+        public void setNcit(OntologyConceptResource ncit) {
+            this.ncit = ncit;
+        }
+
+        public void setGsso(OntologyConceptResource gsso) {
+            this.gsso = gsso;
         }
     }
 

@@ -15,6 +15,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     private final OntologyConceptResource so;
     private final OntologyConceptResource uberon;
     private final IdentifiedConceptResource hgnc;
+    private final OntologyConceptResource ncit;
+    private final OntologyConceptResource gsso;
 
     public ConceptResourceServiceImpl(OntologyConceptResource efo,
                                       OntologyConceptResource geno,
@@ -22,7 +24,9 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
                                       OntologyConceptResource mondo,
                                       OntologyConceptResource so,
                                       OntologyConceptResource uberon,
-                                      IdentifiedConceptResource hgnc) {
+                                      IdentifiedConceptResource hgnc,
+                                      OntologyConceptResource ncit,
+                                      OntologyConceptResource gsso) {
         this.efo = Objects.requireNonNull(efo);
         this.geno = Objects.requireNonNull(geno);
         this.hp = Objects.requireNonNull(hp);
@@ -30,6 +34,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         this.so = Objects.requireNonNull(so);
         this.uberon = Objects.requireNonNull(uberon);
         this.hgnc = Objects.requireNonNull(hgnc);
+        this.ncit = Objects.requireNonNull(ncit);
+        this.gsso = Objects.requireNonNull(gsso);
     }
 
     public OntologyConceptResource efo() {
@@ -60,6 +66,14 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         return hgnc;
     }
 
+    public OntologyConceptResource ncit() {
+        return ncit;
+    }
+
+    public OntologyConceptResource gsso() {
+        return gsso;
+    }
+
     @Override
     public Optional<IdentifiedConceptResource> forPrefix(String prefix) {
         switch (prefix.toUpperCase()) {
@@ -77,6 +91,10 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
                 return Optional.of(uberon);
             case "HGNC":
                 return Optional.of(hgnc);
+            case "NCIT":
+                return Optional.of(ncit);
+            case "GSSO":
+                return Optional.of(gsso);
             default:
                 return Optional.empty();
         }

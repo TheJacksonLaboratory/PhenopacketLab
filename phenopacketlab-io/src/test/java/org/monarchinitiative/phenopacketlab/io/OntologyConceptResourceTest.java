@@ -156,4 +156,19 @@ public class OntologyConceptResourceTest {
         assertThat(resource.namespacePrefix(), equalTo("NCIT"));
         assertThat(resource.iriPrefix(), equalTo("http://purl.obolibrary.org/obo/NCIT_"));
     }
+
+    @Test
+    public void loadGsso() throws IOException {
+        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
+
+        assertThat(or.ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = or.resource();
+        assertThat(resource.id(), equalTo("gsso"));
+        assertThat(resource.name(), equalTo("GSSO - the Gender, Sex, and Sexual Orientation ontology"));
+        assertThat(resource.url(), equalTo("http://purl.obolibrary.org/obo/gsso.owl"));
+        assertThat(resource.version(), equalTo("UNKNOWN"));
+        assertThat(resource.namespacePrefix(), equalTo("GSSO"));
+        assertThat(resource.iriPrefix(), equalTo("http://purl.obolibrary.org/obo/GSSO_"));
+    }
 }

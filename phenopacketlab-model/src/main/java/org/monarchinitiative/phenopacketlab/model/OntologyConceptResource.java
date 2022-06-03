@@ -32,7 +32,7 @@ public interface OntologyConceptResource extends IdentifiedConceptResource {
 
     @Override
     default Optional<IdentifiedConcept> conceptForTermId(TermId termId) {
-        return Optional.of(ontology().getTermMap().get(termId))
+        return Optional.ofNullable(ontology().getTermMap().get(termId))
                 .flatMap(termToConcept());
     }
 

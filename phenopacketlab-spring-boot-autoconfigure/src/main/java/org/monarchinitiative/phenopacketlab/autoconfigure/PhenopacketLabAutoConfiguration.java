@@ -6,9 +6,7 @@ import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaders;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
-import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabException;
+import org.monarchinitiative.phenopacketlab.core.*;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
@@ -74,9 +72,14 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public ConceptResourceService conceptResources(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
+    public ConceptResourceService conceptResourceService(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
         ConceptResourceServiceLoader loader = new ConceptResourceServiceLoader(executorService, phenopacketLabDataResolver);
         return loader.load();
+    }
+
+    @Bean
+    public ConceptConstantsService conceptConstantsService(ConceptResourceService conceptResourceService) {
+        return ConceptConstantsServiceConfigurer.configure(conceptResourceService);
     }
 
     @Bean
