@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // @CrossOrigin // TODO - do we need this here?
+@Deprecated(forRemoval = true)
 @RestController
 @RequestMapping(value = "${api.version}/ontology")
 public class OntologyConstantsController {
