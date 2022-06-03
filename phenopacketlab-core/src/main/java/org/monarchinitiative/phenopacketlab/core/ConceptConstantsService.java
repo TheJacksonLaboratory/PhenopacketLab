@@ -17,6 +17,10 @@ public interface ConceptConstantsService {
 
     List<IdentifiedConcept> modifierConstants();
 
+    List<IdentifiedConcept> severityConstants();
+
+    List<IdentifiedConcept> onsetConstants();
+
     List<Concept> structuralTypeConstants();
 
     List<Concept> contigConstants(String genomeAssembly);

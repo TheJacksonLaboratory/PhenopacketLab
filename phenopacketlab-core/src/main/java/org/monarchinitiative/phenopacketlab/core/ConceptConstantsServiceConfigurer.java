@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core;
 
+import org.monarchinitiative.phenol.constants.hpo.HpoOnsetTermIds;
 import org.monarchinitiative.phenol.constants.hpo.HpoSubOntologyRootTermIds;
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
@@ -32,6 +33,8 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
+        List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
+        List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -40,6 +43,8 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateConstants,
                 lateralityConstants,
                 modifierConstants,
+                severityConstants,
+                onsetConstants,
                 structuralTypeConstants,
                 contigConstants);
     }
@@ -137,7 +142,47 @@ public class ConceptConstantsServiceConfigurer {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
             return List.of();
         }
+    }
 
+    private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure onset constants due to missing HP concept resource!");
+            return List.of();
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        if (hp instanceof OntologyConceptResource) {
+            Ontology hpo = ((OntologyConceptResource) hp).ontology();
+            Set<TermId> onsetIds = OntologyAlgorithm.getChildTerms(hpo, HpoOnsetTermIds.ONSET, false);
+
+            return onsetIds.stream()
+                    .map(hp::conceptForTermId)
+                    .flatMap(Optional::stream)
+                    .collect(Collectors.toList());
+        } else {
+            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            return List.of();
+        }
+    }
+
+    private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure severity constants due to missing HP concept resource!");
+            return List.of();
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        List<IdentifiedConcept> concepts = new ArrayList<>(5);
+
+        retrieveIdentifiedConcept(hp, "HP:0012829", concepts, "Missing Profound HP:0012829");
+        retrieveIdentifiedConcept(hp, "HP:0012828", concepts, "Missing Severe HP:0012828");
+        retrieveIdentifiedConcept(hp, "HP:0012826", concepts, "Missing Moderate HP:0012826");
+        retrieveIdentifiedConcept(hp, "HP:0012825", concepts, "Missing Mild HP:0012825");
+        retrieveIdentifiedConcept(hp, "HP:0012827", concepts, "Missing Borderline HP:0012827");
+
+        return Collections.unmodifiableList(concepts);
     }
 
     private static List<Concept> configureStructuralTypes() {

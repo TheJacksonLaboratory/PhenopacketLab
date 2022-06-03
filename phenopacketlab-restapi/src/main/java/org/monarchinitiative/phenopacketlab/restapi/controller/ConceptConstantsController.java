@@ -52,6 +52,16 @@ public class ConceptConstantsController {
         return ResponseEntity.ok(conceptConstantsService.modifierConstants());
     }
 
+    @GetMapping(value = "severity", headers = "Accept=application/json")
+    public ResponseEntity<List<IdentifiedConcept>> getSeverityValues() {
+        return ResponseEntity.ok(conceptConstantsService.severityConstants());
+    }
+
+    @GetMapping(value = "onset", headers = "Accept=application/json")
+    public ResponseEntity<List<IdentifiedConcept>> getOnsetValues() {
+        return ResponseEntity.ok(conceptConstantsService.onsetConstants());
+    }
+
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")
     public ResponseEntity<List<Concept>> getContigs(@PathVariable("genomeAssembly") String genomeAssembly) {
         List<Concept> concepts = conceptConstantsService.contigConstants(genomeAssembly);
