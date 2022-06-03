@@ -2,16 +2,16 @@ package org.monarchinitiative.phenopacketlab.model;
 
 public interface Resource {
 
-    String id();
+    String getId();
 
-    String name();
+    String getName();
 
-    String url();
+    String getUrl();
 
-    String version();
+    String getVersion();
 
-    String namespacePrefix();
+    String getNamespacePrefix();
 
-    String iriPrefix();
+    String getIriPrefix();
 
 }

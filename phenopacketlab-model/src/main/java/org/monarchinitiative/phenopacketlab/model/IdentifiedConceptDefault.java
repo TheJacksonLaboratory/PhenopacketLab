@@ -35,9 +35,9 @@ class IdentifiedConceptDefault extends ConceptDefault implements IdentifiedConce
     public String toString() {
         return "IdentifiedConcept{" +
                 "id=" + id +
-                ", name='" + name() + '\'' +
-                ", definition='" + definition().orElse("") + '\'' +
-                ", synonyms=" + synonyms() +
+                ", name='" + getName() + '\'' +
+                ", definition='" + getDefinition().orElse("") + '\'' +
+                ", synonyms=" + getSynonyms() +
                 '}';
     }
 }

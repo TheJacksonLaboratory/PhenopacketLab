@@ -131,7 +131,7 @@ public class ConceptConstantsServiceConfigurer {
 
         IdentifiedConceptResource hp = hpOptional.get();
         if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).ontology();
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
             Set<TermId> modifierIds = OntologyAlgorithm.getChildTerms(hpo, HpoSubOntologyRootTermIds.CLINICAL_MODIFIER, false);
 
             return modifierIds.stream()
@@ -153,7 +153,7 @@ public class ConceptConstantsServiceConfigurer {
 
         IdentifiedConceptResource hp = hpOptional.get();
         if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).ontology();
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
             Set<TermId> onsetIds = OntologyAlgorithm.getChildTerms(hpo, HpoOnsetTermIds.ONSET, false);
 
             return onsetIds.stream()

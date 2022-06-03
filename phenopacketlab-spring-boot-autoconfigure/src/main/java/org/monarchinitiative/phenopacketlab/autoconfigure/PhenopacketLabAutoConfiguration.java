@@ -92,7 +92,7 @@ public class PhenopacketLabAutoConfiguration {
 
     @Bean
     public HpoService hpoService(OntologyConceptResource hpo) {
-        return new PhenolHpoService(hpo.ontology());
+        return new PhenolHpoService(hpo.getOntology());
     }
 
     @Bean
@@ -101,7 +101,7 @@ public class PhenopacketLabAutoConfiguration {
         try {
             Path annotationPath = resolver.hpoAnnotationPath();
             LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
-            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo.ontology(), HpoDiseaseLoaderOptions.defaultOptions())
+            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo.getOntology(), HpoDiseaseLoaderOptions.defaultOptions())
                     .load(annotationPath);
             return new PhenolDiseaseService(diseases);
         } catch (IOException e) {

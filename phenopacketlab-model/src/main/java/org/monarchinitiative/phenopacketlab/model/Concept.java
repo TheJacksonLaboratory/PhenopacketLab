@@ -9,10 +9,10 @@ public interface Concept {
         return new ConceptDefault(name, definition, synonyms);
     }
 
-    String name();
+    String getName();
 
-    Optional<String> definition();
+    Optional<String> getDefinition();
 
-    List<String> synonyms();
+    List<String> getSynonyms();
 
 }

@@ -17,22 +17,22 @@ public interface OntologyConceptResource extends IdentifiedConceptResource {
         return new OntologyConceptResourceDefault(ontology, resource);
     }
 
-    Ontology ontology();
+    Ontology getOntology();
 
     @Override
     default Iterator<IdentifiedConcept> iterator() {
         // TODO - how about the obsolete terms?
-        return MappingIterator.of(ontology().getTerms().iterator(), termToConcept());
+        return MappingIterator.of(getOntology().getTerms().iterator(), termToConcept());
     }
 
     @Override
     default int size() {
-        return ontology().countAllTerms();
+        return getOntology().countAllTerms();
     }
 
     @Override
     default Optional<IdentifiedConcept> conceptForTermId(TermId termId) {
-        return Optional.ofNullable(ontology().getTermMap().get(termId))
+        return Optional.ofNullable(getOntology().getTermMap().get(termId))
                 .flatMap(termToConcept());
     }
 

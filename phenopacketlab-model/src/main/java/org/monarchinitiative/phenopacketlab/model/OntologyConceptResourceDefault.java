@@ -15,12 +15,12 @@ class OntologyConceptResourceDefault implements OntologyConceptResource {
     }
 
     @Override
-    public Ontology ontology() {
+    public Ontology getOntology() {
         return ontology;
     }
 
     @Override
-    public Resource resource() {
+    public Resource getResource() {
         return resource;
     }
 

@@ -13,32 +13,32 @@ class PhenopacketResource implements Resource {
     }
 
     @Override
-    public String id() {
+    public String getId() {
         return resource.getId();
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return resource.getName();
     }
 
     @Override
-    public String url() {
+    public String getUrl() {
         return resource.getUrl();
     }
 
     @Override
-    public String version() {
+    public String getVersion() {
         return resource.getVersion();
     }
 
     @Override
-    public String namespacePrefix() {
+    public String getNamespacePrefix() {
         return resource.getNamespacePrefix();
     }
 
     @Override
-    public String iriPrefix() {
+    public String getIriPrefix() {
         return resource.getIriPrefix();
     }
 

@@ -17,17 +17,17 @@ class ConceptDefault implements Concept {
     }
 
     @Override
-    public String name() {
+    public String getName() {
         return name;
     }
 
     @Override
-    public Optional<String> definition() {
+    public Optional<String> getDefinition() {
         return Optional.ofNullable(definition);
     }
 
     @Override
-    public List<String> synonyms() {
+    public List<String> getSynonyms() {
         return synonyms;
     }
 
