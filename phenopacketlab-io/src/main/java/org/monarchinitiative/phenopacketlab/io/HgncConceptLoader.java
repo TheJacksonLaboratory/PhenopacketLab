@@ -1,8 +1,8 @@
 package org.monarchinitiative.phenopacketlab.io;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.model.Concept;
-import org.monarchinitiative.phenopacketlab.model.ConceptResource;
+import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.model.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,24 +27,24 @@ public class HgncConceptLoader {
      * Read HGNC concepts from given {@link InputStream} <code>is</code> decoding by {@link StandardCharsets#UTF_8}.
      *
      * @param is input stream to read.
-     * @return loaded {@link ConceptResource}.
+     * @return loaded {@link IdentifiedConceptResource}.
      */
-    public static ConceptResource load(InputStream is, String version) {
+    public static IdentifiedConceptResource load(InputStream is, String version) {
         return load(new InputStreamReader(is, StandardCharsets.UTF_8), version);
     }
 
-    public static ConceptResource load(Reader reader, String version) {
+    public static IdentifiedConceptResource load(Reader reader, String version) {
         BufferedReader br = reader instanceof BufferedReader
                 ? (BufferedReader) reader
                 : new BufferedReader(reader);
 
-        List<Concept> concepts = br.lines()
+        List<IdentifiedConcept> concepts = br.lines()
                 .skip(1) // header
                 .map(toConcept())
                 .flatMap(Optional::stream)
                 .collect(Collectors.toUnmodifiableList());
 
-        return ConceptResource.of(concepts, createHgncResource(version));
+        return IdentifiedConceptResource.of(concepts, createHgncResource(version));
     }
 
     private static Resource createHgncResource(String version) {
@@ -59,7 +59,7 @@ public class HgncConceptLoader {
         return new PhenopacketResource(resource);
     }
 
-    private static Function<String, Optional<Concept>> toConcept() {
+    private static Function<String, Optional<IdentifiedConcept>> toConcept() {
         return line -> {
             String[] token = line.split("\t", 53);
             // 0 - HGNC ID
@@ -80,7 +80,7 @@ public class HgncConceptLoader {
             String synonyms = token[9];
             List<String> synonymsList = synonyms.isBlank() ? List.of() : Arrays.asList(synonyms.split("\\|"));
 
-            return Optional.of(Concept.of(tid, symbol, name, synonymsList));
+            return Optional.of(IdentifiedConcept.of(tid, symbol, name, synonymsList));
         };
     }
 

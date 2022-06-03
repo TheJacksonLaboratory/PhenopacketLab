@@ -30,6 +30,6 @@ public class PhenopacketLabDataResolverTest {
     @Test
     public void error() {
         MissingPhenopacketLabResourceException e = assertThrows(MissingPhenopacketLabResourceException.class, () -> new PhenopacketLabDataResolver(Path.of("")));
-        assertThat(e.getMessage(), equalTo("The following files are missing in the data directory: 'efo.json', 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'ncit.json'."));
+        assertThat(e.getMessage(), equalTo("The following files are missing in the data directory: 'efo.json', 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'ncit.json', 'gsso.json'."));
     }
 }

@@ -37,11 +37,12 @@ cd PhenopacketLab
 - preprocess ontologies
 - download of non-ontology resources
 
-Note, a `obographs-cli` JAR is required for setup. Check out [Obographs](https://github.com/geneontology/obographs) 
-to get ahold of the executable JAR.
+Note, an `obographs-cli` and `robot` JAR files are required for setup. Check out [Obographs](https://github.com/geneontology/obographs) 
+and [ROBOT](https://robot.obolibrary.org/) to get ahold of the executable JARs.
 
 ```shell
 OBOGRAPHS_JAR=path/to/obographs-cli.jar
+ROBOT_JAR=path/to/robot.jar
 PLAB_DATADIR=path/to/phenopacket-lab
 PLAB_VERSION=0.1-SNAPSHOT
 
@@ -49,7 +50,7 @@ cd PhenopacketLab
 ./mvnw --projects phenopacketlab-restapi --also-make --batch-mode package
 java -jar phenopacketlab-ingest/target/phenopacketlab-ingest-${PLAB_VERSION}.jar ingest ${PLAB_DATADIR}
 
-bash scripts/preprocess-ontologies.sh --data-directory ${PLAB_DATADIR} --obographs-jar ${OBOGRAPHS_JAR}
+bash scripts/preprocess-ontologies.sh --data-directory ${PLAB_DATADIR} --obographs-jar ${OBOGRAPHS_JAR} --robot-jar ${ROBOT_JAR}
 ```
 
 If not already present, the command will create the `path/to/phenopacket-lab` folder including missing parent directories, and download the data files into the folder.

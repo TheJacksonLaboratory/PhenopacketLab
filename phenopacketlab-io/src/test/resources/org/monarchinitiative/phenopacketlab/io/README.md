@@ -54,5 +54,12 @@ The folder contains toy versions of real resources for testing.
   rm ncit.module.owl
   ```
 
+- `gsso.json` - GSSO module containing descendents of `http://purl.obolibrary.org/obo/GSSO_009468` *gender_modality* prepared by running:
+  ```shell
+  robot extract --input-iri http://purl.obolibrary.org/obo/gsso.owl --term http://purl.obolibrary.org/obo/GSSO_009468 --output gsso.module.owl --method TOP --copy-ontology-annotations true
+  obographs convert -f json gsso.module.owl
+  rm gsso.module.owl
+  ```
+
 > Note: `robot` and `obographs` expand to `java -jar robot.jar` (`v1.8.3`) and `java -jar obographs-cli.jar` (`v0.3.0`).
  

@@ -162,6 +162,25 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
+    public static OntologyConceptResource gsso(InputStream is) {
+        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("GSSO", "http://purl.obolibrary.org/obo/GSSO_"));
+        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "GSSO");
+        Resource resource = gssoResource(getOntologyVersion(ontology));
+        return OntologyConceptResource.of(ontology, resource);
+    }
+
+    private static Resource gssoResource(String version) {
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
+                .setId("gsso")
+                .setName("GSSO - the Gender, Sex, and Sexual Orientation ontology")
+                .setUrl("http://purl.obolibrary.org/obo/gsso.owl")
+                .setVersion(version)
+                .setNamespacePrefix("GSSO")
+                .setIriPrefix("http://purl.obolibrary.org/obo/GSSO_")
+                .build();
+        return new PhenopacketResource(resource);
+    }
+
     private static String getOntologyVersion(Ontology ontology) {
         return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
     }

@@ -1,21 +1,18 @@
 package org.monarchinitiative.phenopacketlab.model;
 
-import org.monarchinitiative.phenol.ontology.data.Identified;
-import org.monarchinitiative.phenol.ontology.data.TermId;
-
 import java.util.List;
 import java.util.Optional;
 
-public interface Concept extends Identified {
+public interface Concept {
 
-    static Concept of(TermId id, String name, String definition, List<String> synonyms) {
-        return new ConceptDefault(id, name, definition, synonyms);
+    static Concept of(String name, String definition, List<String> synonyms) {
+        return new ConceptDefault(name, definition, synonyms);
     }
 
-    String name();
+    String getName();
 
-    Optional<String> definition();
+    Optional<String> getDefinition();
 
-    List<String> synonyms();
+    List<String> getSynonyms();
 
 }

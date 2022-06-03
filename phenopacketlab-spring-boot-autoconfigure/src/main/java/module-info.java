@@ -1,5 +1,5 @@
 module phenopacketlab.autoconfigure {
-    requires phenopacketlab.model;
+    requires transitive phenopacketlab.model;
     requires transitive phenopacketlab.core;
     requires phenopacketlab.io;
     requires org.monarchinitiative.phenol.io;

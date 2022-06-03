@@ -1,10 +1,11 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
+import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
-import org.monarchinitiative.phenopacketlab.model.ConceptResource;
-import org.monarchinitiative.phenopacketlab.model.ConceptResources;
+import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.ConceptResourceServiceImpl;
 import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,22 +26,22 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Class for parallel loading of {@link ConceptResources}.
+ * Class for parallel loading of {@link ConceptResourceService}.
  */
-class ConceptResourceLoader {
+class ConceptResourceServiceLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConceptResourceLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConceptResourceServiceLoader.class);
 
     private final ExecutorService executor;
     private final PhenopacketLabDataResolver dataResolver;
 
-    ConceptResourceLoader(ExecutorService executor,
+    ConceptResourceServiceLoader(ExecutorService executor,
                                  PhenopacketLabDataResolver dataResolver) {
         this.executor = Objects.requireNonNull(executor);
         this.dataResolver = Objects.requireNonNull(dataResolver);
     }
 
-    ConceptResources load() throws InvalidResourceException {
+    ConceptResourceService load() throws InvalidResourceException {
         Resources result = new Resources();
         List<String> errors = Collections.synchronizedList(new LinkedList<>());
         List<ResourceTuple<?>> resources = List.of(
@@ -50,7 +51,9 @@ class ConceptResourceLoader {
                 new ResourceTuple<>(dataResolver.hpJsonPath(), ConceptResourceLoaders::hpo, result::setHp),
                 new ResourceTuple<>(dataResolver.mondoJsonPath(), ConceptResourceLoaders::mondo, result::setMondo),
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
-                new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon)
+                new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
+                new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
+                new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso)
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -67,7 +70,7 @@ class ConceptResourceLoader {
         if (!errors.isEmpty())
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
-        return new ConceptResources(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc);
+        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
@@ -91,7 +94,10 @@ class ConceptResourceLoader {
         private OntologyConceptResource mondo;
         private OntologyConceptResource so;
         private OntologyConceptResource uberon;
-        private ConceptResource hgnc;
+        private IdentifiedConceptResource hgnc;
+        private OntologyConceptResource ncit;
+        private OntologyConceptResource gsso;
+
 
         public void setEfo(OntologyConceptResource efo) {
             this.efo = efo;
@@ -117,8 +123,16 @@ class ConceptResourceLoader {
             this.uberon = uberon;
         }
 
-        public void setHgnc(ConceptResource hgnc) {
+        public void setHgnc(IdentifiedConceptResource hgnc) {
             this.hgnc = hgnc;
+        }
+
+        public void setNcit(OntologyConceptResource ncit) {
+            this.ncit = ncit;
+        }
+
+        public void setGsso(OntologyConceptResource gsso) {
+            this.gsso = gsso;
         }
     }
 
