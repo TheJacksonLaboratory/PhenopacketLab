@@ -6,13 +6,14 @@ import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaders;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
+import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
 import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
 import org.monarchinitiative.phenopacketlab.core.PhenopacketLabException;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
-import org.monarchinitiative.phenopacketlab.model.ConceptResources;
+import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,7 +26,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,23 +74,31 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public ConceptResources conceptResources(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
-        ConceptResourceLoader loader = new ConceptResourceLoader(executorService, phenopacketLabDataResolver);
+    public ConceptResourceService conceptResources(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
+        ConceptResourceServiceLoader loader = new ConceptResourceServiceLoader(executorService, phenopacketLabDataResolver);
         return loader.load();
     }
 
     @Bean
-    public HpoService hpoService(ConceptResources conceptResources) {
-        return new PhenolHpoService(conceptResources.hp().ontology());
+    public OntologyConceptResource hpo(ConceptResourceService conceptResourceService) {
+        return conceptResourceService.forPrefix("HP")
+                .filter(i -> i instanceof OntologyConceptResource)
+                .map(icr -> ((OntologyConceptResource) icr))
+                .orElseThrow(() -> new RuntimeException("Missing HP concept resource!"));
+    }
+
+    @Bean
+    public HpoService hpoService(OntologyConceptResource hpo) {
+        return new PhenolHpoService(hpo.ontology());
     }
 
     @Bean
     public DiseaseService diseaseService(PhenopacketLabDataResolver resolver,
-                                         ConceptResources conceptResources) throws InvalidResourceException {
+                                         OntologyConceptResource hpo) throws InvalidResourceException {
         try {
             Path annotationPath = resolver.hpoAnnotationPath();
             LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
-            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(conceptResources.hp().ontology(), HpoDiseaseLoaderOptions.defaultOptions())
+            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo.ontology(), HpoDiseaseLoaderOptions.defaultOptions())
                     .load(annotationPath);
             return new PhenolDiseaseService(diseases);
         } catch (IOException e) {

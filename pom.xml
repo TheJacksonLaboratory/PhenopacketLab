@@ -126,6 +126,11 @@
                 <artifactId>commons-csv</artifactId>
                 <version>1.9.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.monarchinitiative.svart</groupId>
+                <artifactId>svart</artifactId>
+                <version>2.0.0-RC1</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.monarchinitiative.biodownload</groupId>

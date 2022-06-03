@@ -20,12 +20,20 @@ public class OntologyConstantsController {
         this.ontologyService = hpoService;
     }
 
+    /**
+     * @deprecated move to {@link ConceptConstantsController}.
+     */
     @GetMapping(value = "severities", headers = "Accept=application/json")
+    @Deprecated(forRemoval = true)
     public List<Term> getSeverityValues() {
         return new ArrayList<>(ontologyService.severities());
     }
 
+    /**
+     * @deprecated move to {@link ConceptConstantsController}.
+     */
     @GetMapping(value = "onsets", headers = "Accept=application/json")
+    @Deprecated(forRemoval = true)
     public List<Term> getOnsetValues() {
         return new ArrayList<>(ontologyService.onsets());
     }
