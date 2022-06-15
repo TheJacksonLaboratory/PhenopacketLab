@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -61,13 +62,26 @@ class ConceptResourceServiceLoader {
             executor.submit(prepareTask(resource, errors::add, latch));
         }
 
+        LOGGER.info("Loading {} resources.", resources.size());
         try {
-            latch.await();
+            // Wait until all loading tasks are done. Report the loading process each 20 seconds and suggest
+            // killing the app if an exception was thrown on another thread, or if the loading is just taking "too long".
+            int timeout = 20;
+            int elapsedSeconds = 0;
+            boolean resourceLoadingTasksAreFinished = latch.await(timeout, TimeUnit.SECONDS);
+            while (!resourceLoadingTasksAreFinished) {
+                elapsedSeconds += timeout;
+                LOGGER.info("Still loading resources after {}s. Press Ctrl+C to abort if the loading is taking too long or if you see a stack trace in the previous logging output.",
+                        elapsedSeconds);
+                resourceLoadingTasksAreFinished = latch.await(timeout, TimeUnit.SECONDS);
+            }
         } catch (InterruptedException e) { // TODO - handle
             throw new RuntimeException(e);
         }
 
-        if (!errors.isEmpty())
+        if (errors.isEmpty())
+            LOGGER.info("Resources were loaded");
+        else
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
         return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso);
