@@ -16,6 +16,7 @@ public class ConceptResourceLoaders {
     }
 
     public static OntologyConceptResource mondo(InputStream is) {
+        // TODO - consider cleaning up the builder after HGNC is added into phenol.
         CurieUtil newCurie = CurieUtilBuilder.withDefaultsAnd(Map.of("HGNC", "http://identifiers.org/hgnc/"));
         Ontology ontology = OntologyLoader.loadOntology(is, newCurie, "MONDO");
         Resource resource = mondoResource(getOntologyVersion(ontology));
