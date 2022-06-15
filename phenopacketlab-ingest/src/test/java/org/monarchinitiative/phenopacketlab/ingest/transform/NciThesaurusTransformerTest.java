@@ -24,11 +24,17 @@ public class NciThesaurusTransformerTest {
 
     @Test
     public void transform() throws Exception  {
+        /*
+        Test parsing using small local NCIT flat file. Note that we must supply `url` and `version` as the fields
+        are not present in the file.
+         */
         Path zip = TestBase.TEST_BASE.resolve("transform").resolve("Thesaurus.50lines.zip");
         Path destination = tempDir.resolve("NCIT.tsv.gz");
+        String url = "https://evs.nci.nih.gov/Thesaurus.FLAT.zip";
+        String version = "04.D";
         assertThat(Files.isRegularFile(destination), equalTo(false));
 
-        NciThesaurusTransformer.transform(zip, destination, "https://evs.nci.nih.gov/Thesaurus.FLAT.zip", "04.D");
+        NciThesaurusTransformer.transform(zip, destination, url, version);
 
         assertThat(Files.isRegularFile(destination), equalTo(true));
         List<String> lines = readLines(destination);
