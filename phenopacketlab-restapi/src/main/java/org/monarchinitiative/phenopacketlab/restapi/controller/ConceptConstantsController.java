@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * The controller for serving requests for <em>constant</em> values required in the frontend UI elements that allow
+ * a pre-defined range of options (i.e. contigs of a genome assembly for describing variant's position).
+ */
 @RestController
 @RequestMapping(value = "${api.version}/constants")
 public class ConceptConstantsController {

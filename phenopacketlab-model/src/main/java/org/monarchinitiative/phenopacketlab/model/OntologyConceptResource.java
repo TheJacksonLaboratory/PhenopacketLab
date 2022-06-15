@@ -11,6 +11,10 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * On top of the functionality provided by {@link IdentifiedConceptResource}, instances of {@link OntologyConceptResource}
+ * also provide an {@link Ontology}.
+ */
 public interface OntologyConceptResource extends IdentifiedConceptResource {
 
     static OntologyConceptResource of(Ontology ontology, Resource resource) {

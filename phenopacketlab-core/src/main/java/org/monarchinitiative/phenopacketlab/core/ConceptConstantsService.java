@@ -5,6 +5,9 @@ import org.monarchinitiative.phenopacketlab.model.Concept;
 
 import java.util.List;
 
+/**
+ * The service for providing {@link IdentifiedConcept}s and {@link Concept}s for phenopacket attributes.
+ */
 public interface ConceptConstantsService {
 
     List<IdentifiedConcept> sexConstants();

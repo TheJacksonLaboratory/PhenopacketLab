@@ -5,6 +5,9 @@ import org.monarchinitiative.phenol.ontology.data.TermId;
 
 import java.util.List;
 
+/**
+ * {@link IdentifiedConcept} is an entity that has an {@link #id()} and all attributes of a {@link Concept}.
+ */
 public interface IdentifiedConcept extends Identified, Concept {
 
     /**

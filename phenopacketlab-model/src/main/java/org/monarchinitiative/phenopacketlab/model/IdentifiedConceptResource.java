@@ -8,7 +8,10 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * A {@link IdentifiedConcept} container.
+ * The implementors serve as a container of {@link IdentifiedConcept}s coming from a single {@link Resource}.
+ * <p>
+ * The {@link IdentifiedConceptResource} supports iteration through the {@link IdentifiedConcept}s as well as
+ * {@link IdentifiedConcept} lookup using {@link TermId}.
  */
 public interface IdentifiedConceptResource extends Iterable<IdentifiedConcept>, ResourceAware {
 
