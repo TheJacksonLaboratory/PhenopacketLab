@@ -79,7 +79,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     let newPheno = new Phenopacket();
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
-    newPheno.id = "new-patient-" + (this.individualTabs.length + 1);
+    newPheno.id = `new-patient-${this.individualTabs.length + 1}`;
     newPheno.subject = new Individual();
     // add new phenopacket to family
     if (this.family === undefined) {
@@ -98,13 +98,13 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
     this.familyService.setFamily(this.family);
-    console.log("new phenopacket added: " + newPheno.id);
+    console.log(`new phenopacket added: ${newPheno.id}`);
   }
 
   removeIndividual(individual: Phenopacket) {
     // we remove the tab and the individual
     const msgData = { 'title': 'Delete Phenopacket' };
-    msgData['description'] = 'Delete the Phenopacket with id ' + individual.id + '?';
+    msgData['description'] = `Delete the Phenopacket with id ${individual.id} ?`;
     msgData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '400px',

@@ -114,7 +114,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
      */
     deleteFeature(element: PhenotypicFeature) {
         const msgData = { 'title': 'Delete Phenotypic Feature' };
-        msgData['description'] = 'Delete the Phenotypic Feature named "' + element.type.label + '" ?';
+        msgData['description'] = `Delete the Phenotypic Feature named "${element.type.label}" ?`;
         msgData['displayCancelButton'] = true;
         const dialogRef = this.dialog.open(MessageDialogComponent, {
             width: '400px',

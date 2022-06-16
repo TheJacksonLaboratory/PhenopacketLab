@@ -56,7 +56,7 @@ export class CohortListComponent implements OnInit {
 
   addTab() {
     let newPheno = new Phenopacket();
-    newPheno.id = "new-patient-" + (this.individualTabs.length + 1);
+    newPheno.id = `new-patient-${this.individualTabs.length + 1}`;
     newPheno.subject = new Individual();
     this.individualTabs.push(newPheno);
     this.cohortMap.set(newPheno.id, newPheno);
@@ -67,7 +67,7 @@ export class CohortListComponent implements OnInit {
   removeIndividual(individual: Phenopacket) {
     // we remove the tab and the individual
     const msgData = { 'title': 'Delete Phenopacket' };
-    msgData['description'] = 'Delete the Phenopacket with id ' + individual.id + '?';
+    msgData['description'] = `Delete the Phenopacket with id ${individual.id} ?`;
     msgData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '400px',
