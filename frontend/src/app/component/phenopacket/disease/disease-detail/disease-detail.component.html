@@ -1,113 +1,54 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body margin">
-                <div class="row">
-                    <div style="clear: both">
-                        <h2><b>{{diseaseDetailName}} </b></h2>
-                        <h3>{{diseaseId}}</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <p>
-                        {{description}}
-                    </p>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label><b>Type:</b> {{isA}}</label>
-                    </div>
-                </div>
+<div class="card">
+    <div class="card-body margin">
+        <div class="row">
+            <div class="col-md-6" style="clear: both">
+                <h2><b>{{diseaseDetailName}} </b></h2>
+                <h3>{{diseaseId}}</h3>
+            </div>
+            <div class="col-md-6">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit">
+                    <mat-icon mat-fab>edit</mat-icon>
+                </button>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label id="status-radio-group-label"><b>Status:</b></label>
-                            </div>
-                            <div class="col-md-12">
-                                <mat-radio-group aria-labelledby="status-radio-group-label" class="status-radio-group"
-                                    [(ngModel)]="selectedStatus">
-                                    <mat-radio-button class="status-radio-button" *ngFor="let status of statuses"
-                                        (change)="changeStatus($event)" [value]="status">{{status}}</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label id="onset-time-label"><b>Onset:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                    <app-age-control aria-labelledby="onset-time-label"></app-age-control>
-                                </div>
-                            </div>
+        </div>
+        <div class="row">
+            <p>
+                {{description}}
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Type:</b> {{isA}}
+            </div>
+            <div class="col-md-6">
+                <b>Status:</b> {{status}}
+            </div>
+        </div>
 
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Onset:</b> {{onset}}
+            </div>
+            <div class="col-md-6">
+                <b>Resolution:</b> {{resolution}}
+            </div>
+        </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label id="resolution-time-label"><b>Resolution:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                    <app-age-control aria-labelledby="resolution-time-label"></app-age-control>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label id="stage-label"><b>Disease stage:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                    <app-search-filter [options]="stages" title="Add stage"></app-search-filter>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label id="tnm-label"><b>Clinical TNM finding:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                    <app-search-filter [options]="clinicalFindings" title="Add stage"></app-search-filter>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                  <label id="severity-label"><b>Severity:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                  <app-search-filter [options]="severities" title="Add severity"></app-search-filter>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12">
-                                  <label id="laterality-label"><b>Laterality:</b></label>
-                                </div>
-                                <div class="col-md-12">
-                                  <app-search-filter [options]="lateralities" title="Add laterality"></app-search-filter>
-                                </div>
-                              </div>
-                        </div>
-                    </div>
-                    
-                    
-                      
-                </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Disease stage:</b> {{stage}}
+            </div>
+            <div class="col-md-6">
+                <b>Clinical TNM finding:</b> {{finding}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <b>Severity: </b> {{severity}}
+            </div>
+            <div class="col-md-6">
+                <b>Laterality:</b> {{laterality}}
             </div>
         </div>
     </div>

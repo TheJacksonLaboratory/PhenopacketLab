@@ -31,6 +31,8 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { PhenopacketComponent } from './phenopacket.component';
 import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
+import { DiseaseDetailDialogComponent } from './disease/disease-detail/disease-detail-dialog/disease-detail-dialog.component';
+import { PhenotypicDetailDialogComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 
 
 
@@ -66,8 +68,10 @@ import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog
   declarations: [
     DiseaseComponent,
     DiseaseDetailComponent,
+    DiseaseDetailDialogComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
+    PhenotypicDetailDialogComponent,
     FileComponent,
     FileDetailComponent,
     FileDetailDialogComponent,
