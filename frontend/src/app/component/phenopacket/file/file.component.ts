@@ -50,7 +50,7 @@ export class FileComponent implements OnInit {
     if (this.phenopacketFiles) {
       console.log("phenopacketFiles defined")
       this.phenopacketFiles.forEach((element, index) => {
-        let id = "file-" + index;
+        let id = `file-${index}`;
         element.id = id;
         this.filesMap.set(id, element);
       });
@@ -60,7 +60,7 @@ export class FileComponent implements OnInit {
 
   addFile() {
     let newFile = new File('new/file/uri', 'new file description');
-    let id = "file-" + (this.filesMap.size + 1);
+    let id = `file-${this.filesMap.size + 1}`;
     newFile.id = id;
     this.filesMap.set(id, newFile);
     this.updateFiles();
@@ -120,7 +120,7 @@ export class FileComponent implements OnInit {
   }
   getMapping(file: File, key: string) {
     let value = file.individualToFileIdentifier.get(key);
-    return key + " -> " + value;
+    return `${key} -> ${value}`;
   }
   getAttributeKeys(file: File) {
     let resultKeys = [];

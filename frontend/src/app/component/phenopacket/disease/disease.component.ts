@@ -67,7 +67,7 @@ export class DiseaseComponent implements OnInit {
 
   removeDisease(element: Disease) {
     const msgData = { 'title': 'Remove Disease' };
-    msgData['description'] = 'Remove "' + element.term.label + ' from disease list" ?';
+    msgData['description'] = `Remove "${element.term.label}" from disease list ?`;
     msgData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '400px',
