@@ -86,8 +86,8 @@ export class FileDetailComponent {
     return attributes;
   }
   addAttribute() {
-    const fileDetailData = { 'title': 'Attribute' };
-    fileDetailData['description'] = 'Add following attribute to file:';
+    const fileDetailData = { 'title': 'Add attribute to file' };
+    fileDetailData['description'] = 'Select one of the available attribute or add a custom attribute.';
     fileDetailData['comboTitle'] = 'ID';
     fileDetailData['comboItems'] = Attribute.getValues();//['File format', 'Genome assembly'];
     fileDetailData['txtFieldTitle'] = 'Value';
@@ -125,8 +125,8 @@ export class FileDetailComponent {
 
   }
   addMapping() {
-    const fileDetailData = { 'title': 'Mapping' };
-    fileDetailData['description'] = 'Add following mapping to file:';
+    const fileDetailData = { 'title': 'Add mapping to file' };
+    // fileDetailData['description'] = 'Add following mapping to file:';
     fileDetailData['comboTitle'] = 'Subject ID';
     fileDetailData['comboItems'] = Mapping.getValues(); //['I:1', 'I:2', 'I:3']; // TODO get these values from file
     fileDetailData['txtFieldTitle'] = 'ID used in file';
