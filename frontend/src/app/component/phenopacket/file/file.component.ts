@@ -134,12 +134,12 @@ export class FileComponent implements OnInit {
   }
   getColor(key: string) {
     if (key === Attribute.Keys.FileFormat) {
-      return 'accent';
-    }
-    if (key === Attribute.Keys.GenomeAssembly) {
       return 'primary';
     }
-    return '';
+    if (key === Attribute.Keys.GenomeAssembly) {
+      return 'accent';
+    }
+    return 'gray';
   }
   getAttribute(file: File, key: string) {
     return file.fileAttribute.get(key);
