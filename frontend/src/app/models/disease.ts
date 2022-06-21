@@ -9,5 +9,15 @@ export class Disease {
     clinicalTnmFinding: OntologyClass[];
     primarySite: OntologyClass;
     laterality: OntologyClass;
+    // not from the phenopacket schema
+    description: string;
+    isA: string;
 
+    constructor(id?: string, label?: string) {
+        this.term = new OntologyClass(id?? '', label?? '');
+        this.onset = new TimeElement();
+        this.resolution = new TimeElement();
+        this.diseaseStage = [];
+        this.clinicalTnmFinding = [];
+    }
 }

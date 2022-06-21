@@ -105,14 +105,10 @@
                         <mat-form-field appearance="fill">
                             <mat-select [(value)]="gender">
                                 <mat-option value="unknown">Unknown</mat-option>
-                                <mat-option value="Cisgender">Cisgender</mat-option>
-                                <mat-option value="Agender">Agender</mat-option>
-                                <mat-option value="Androgyne">Androgyne</mat-option>
-                                <mat-option value="Bigender">Bigender</mat-option>
-                                <mat-option value="Genderfluid">Genderfluid</mat-option>
-                                <mat-option value="Nonbinary">Nonbinary</mat-option>
-                                <mat-option value="Transgender">Transgender</mat-option>
-                                <mat-option value="Other">Other</mat-option>
+                                <mat-option value="female">Female</mat-option>
+                                <mat-option value="male">Male</mat-option>
+                                <mat-option value="nonbinary">Nonbinary</mat-option>
+                                <mat-option value="other">Other</mat-option>
                             </mat-select>
                             <mat-label>
                                 <b>Gender</b>
@@ -158,7 +154,7 @@
                             <mat-icon class="tab-icon">medical_services</mat-icon> Medical Actions
                         </li>
                         <li (click)="viewMode ='tab7'" [ngClass]="{'active':viewMode =='tab7'}">
-                            <mat-icon class="tab-icon">medical_services</mat-icon> Files
+                            <mat-icon class="tab-icon">text_snippet</mat-icon> Files
                         </li>
                         <li (click)="viewMode ='tab8'" [ngClass]="{'active':viewMode =='tab8'}">
                             <mat-icon class="tab-icon">data_object</mat-icon> Metadata
@@ -185,7 +181,7 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab5'">
-                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"></app-disease>
+                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()" (onDiseasesChanged)="changeDiseases($event)"></app-disease>
                     </div>
                     <div *ngSwitchCase="'tab6'">
                         <div class="main-content">
@@ -194,10 +190,7 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab7'">
-                        <div class="main-content">
-                            <div class="container-fluid">
-                            </div>
-                        </div>
+                        <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)"></app-file>
                     </div>
                     <div *ngSwitchCase="'tab8'">
                         <div class="main-content">

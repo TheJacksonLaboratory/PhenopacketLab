@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 
 @Component({
   selector: 'app-phenotypic-detail',
@@ -15,6 +16,17 @@ export class PhenotypicDetailComponent {
   description: string;
   selectedStatus: string;
   statuses: string[] = ['Included', 'Excluded'];
+  status: string;
+  onset: string;
+  resolution: string;
+  severity: string;
+  modifiers: string;
+  evidenceName: string;
+  evidenceCode: string;
+  evidenceId: string;
+  evidenceReference: string;
+  evidenceDescription: string;
+
 
   // TODO - fetch from backend
   severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
@@ -31,14 +43,51 @@ export class PhenotypicDetailComponent {
   @Input()
   phenotypicFeature: PhenotypicFeature;
 
-  constructor(public router: Router) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.phenotypicDetailName = this.phenotypicFeature.type.label;
-    this.termId = this.phenotypicFeature.type.id;
-    this.description = this.phenotypicFeature.description;
-    this.selectedStatus = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
+    if (this.phenotypicFeature) {
+      this.phenotypicDetailName = this.phenotypicFeature.type.label;
+      this.termId = this.phenotypicFeature.type.id;
+      this.description = this.phenotypicFeature.description;
+      this.updatePhenotypicDetails();
+    }
+  }
 
+  updatePhenotypicDetails() {
+    this.status = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
+    this.onset = this.phenotypicFeature.onset?.timestamp, '';
+    this.resolution = this.phenotypicFeature.resolution?.timestamp, '';
+    this.severity = this.phenotypicFeature.severity.toString();
+    this.modifiers = this.phenotypicFeature.modifiers.toString();
+    this.evidenceName = this.phenotypicFeature.evidence?.evidenceCode?.label, '';
+    this.evidenceId = this.phenotypicFeature.evidence?.evidenceCode?.id, '';
+    this.evidenceReference = this.phenotypicFeature.evidence?.reference?.reference, '';
+    this.evidenceDescription = this.phenotypicFeature.evidence?.reference?.description, '';
+  }
+
+  openEditDialog() {
+    const phenotypicDetailData = { 'title': 'Edit phenotypic feature' };
+    phenotypicDetailData['feature'] = this.phenotypicFeature;
+    phenotypicDetailData['displayCancelButton'] = true;
+    const dialogRef = this.dialog.open(PhenotypicDetailDialogComponent, {
+      width: '750px',
+      data: phenotypicDetailData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        let updatedFeature = result.feature;
+        if (updatedFeature !== undefined) {
+          // update feature
+          this.phenotypicFeature = updatedFeature;
+          console.log(this.phenotypicFeature);
+          this.updatePhenotypicDetails();
+          // emit change
+          // this.onFeatureChanged.emit(this.phenotypicFeature);
+        }
+      }
+    });
+    return dialogRef;
   }
 
 }

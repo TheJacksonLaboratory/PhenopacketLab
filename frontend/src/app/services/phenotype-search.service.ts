@@ -43,7 +43,7 @@ export class PhenotypeSearchService extends BaseSearchService{
     }
 
     public queryPhenotypicFeatureById(id: string): Observable<any> {
-        return this.http.get(phenotypicFeaturesUrl + '/' + id);
+        return this.http.get(`${phenotypicFeaturesUrl}/${id}`);
     }
 
     private sendPhenotypicFeatureQueryRequest(paramsIn: any, url: string): Observable<any> {

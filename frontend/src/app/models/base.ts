@@ -13,11 +13,12 @@ export class ExternalReference {
     description: string;
 }
 export class Evidence {
-    evidence: OntologyClass;
+    evidenceCode: OntologyClass;
+    reference: ExternalReference;
     bodySite: OntologyClass;
     performed: TimeElement;
-    constructor(evidence: OntologyClass, bodySite: OntologyClass, performed: TimeElement) {
-        this.evidence = evidence;
+    constructor(evidenceCode: OntologyClass, bodySite?: OntologyClass, performed?: TimeElement) {
+        this.evidenceCode = evidenceCode;
         this.bodySite = bodySite;
         this.performed = performed;
     }
@@ -59,6 +60,10 @@ export class GestationalAge {
         this.weeks = weeks;
         this.days = days;
     }
+
+    toString() {
+        return `${this.weeks} weeks, ${this.days} days`;
+    }
 }
 export class TimeElement {
     gestationalAge: GestationalAge;
@@ -67,20 +72,26 @@ export class TimeElement {
     ontologyClass: OntologyClass;
     timestamp: string;
     interval: TimeInterval;
-    constructor(gestationalAge: GestationalAge, age: Age, ageRange: AgeRange, ontologyClass: OntologyClass,
-        timestamp: string, interval: TimeInterval) {
+    constructor(gestationalAge?: GestationalAge, age?: Age, ageRange?: AgeRange, ontologyClass?: OntologyClass,
+        timestamp?: string, interval?: TimeInterval) {
         this.gestationalAge = gestationalAge;
         this.age = age;
         this.ageRange = ageRange;
         this.ontologyClass = ontologyClass;
         this.timestamp = timestamp;
         this.interval = interval;
-
     }
 }
 export class File {
+    id: string; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
-    infividualToFileIdentifier: Map<string, string>;
-    fileAttribute: Map<string, string>;
+    individualToFileIdentifier = new Map<string, string>();
+    fileAttribute = new Map<string, string>();
+
+    constructor(uri: string, description: string) {
+        this.uri = uri;
+        this.fileAttribute.set('description', description);
+        
+    }
 }
 

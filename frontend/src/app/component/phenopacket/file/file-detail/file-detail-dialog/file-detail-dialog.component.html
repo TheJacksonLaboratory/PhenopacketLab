@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ fileDetailTitle }}</h1>
+<div mat-dialog-content>
+  <p>{{fileDetailDescription}}</p>
+  <!-- <label id="subject-label"><b>{{comboTitle}}:</b></label> -->
+  <app-search-filter [options]="comboItems" [title]="comboTitle" (onSelected)="setSelected($event)">
+  </app-search-filter>
+  <mat-form-field appearance="fill">
+    <mat-label>{{txtFieldTitle}}</mat-label>
+    <input matInput type="text" [(ngModel)]="txtFieldValue" [placeholder]="getPlaceholderTxt()">
+    <button *ngIf="txtFieldValue" matSuffix mat-icon-button aria-label="Clear" (click)="txtFieldValue=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="getDialogResult()">Ok</button>
+  <!-- <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button> -->
+</div>

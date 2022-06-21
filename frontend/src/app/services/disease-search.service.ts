@@ -42,7 +42,7 @@ export class DiseaseSearchService extends BaseSearchService {
     }
 
     public queryDiseasesById(id: string): Observable<any> {
-        return this.http.get(hpoDiseasesUrl + '/' + id);
+        return this.http.get(`${hpoDiseasesUrl}/${id}`);
     }
 
     private sendDiseaseQueryRequest(paramsIn: any, url: string): Observable<any> {

@@ -17,16 +17,28 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
 import { DiseaseComponent } from './disease/disease.component';
 import { PhenotypicFeatureComponent } from './phenotypic-feature/phenotypic-feature.component';
 import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.component';
 import { SharedModule } from '../shared/shared.module';
+import { FileComponent } from './file/file.component';
+import { FileDetailComponent } from './file/file-detail/file-detail.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { PhenopacketComponent } from './phenopacket.component';
+import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
+import { DiseaseDetailDialogComponent } from './disease/disease-detail/disease-detail-dialog/disease-detail-dialog.component';
+import { PhenotypicDetailDialogComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
+
 
 
 @NgModule({
   imports: [
+    BrowserModule,
     CommonModule,
     RouterModule,
     MatRadioModule,
@@ -48,20 +60,31 @@ import { SharedModule } from '../shared/shared.module';
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatChipsModule,
     SharedModule
   ],
   declarations: [
     DiseaseComponent,
     DiseaseDetailComponent,
+    DiseaseDetailDialogComponent,
     PhenotypicFeatureComponent,
-    PhenotypicDetailComponent
+    PhenotypicDetailComponent,
+    PhenotypicDetailDialogComponent,
+    FileComponent,
+    FileDetailComponent,
+    FileDetailDialogComponent,
+    PhenopacketComponent
   ],
   exports: [
     DiseaseComponent,
     DiseaseDetailComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
-    // PhenopacketComponent
+    FileComponent,
+    FileDetailComponent,
+    PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
