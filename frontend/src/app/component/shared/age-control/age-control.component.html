@@ -1,5 +1,5 @@
 <div class="row">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Select Age Type</mat-label>
     <mat-select [(value)]="selectedAgeType">
       <mat-option *ngFor="let type of ageTypes" [value]="type">
@@ -39,7 +39,7 @@
     <div *ngIf="selectedAgeType === ageTypes[2]">
       <div class="row">
         <div class="col-md-6">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <mat-label>Weeks</mat-label>
             <input matInput type="number" placeholder="Ex. 1" min="0" max="42">
           </mat-form-field>

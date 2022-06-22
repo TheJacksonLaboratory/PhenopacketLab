@@ -4,7 +4,7 @@
   <!-- <label id="subject-label"><b>{{comboTitle}}:</b></label> -->
   <app-search-filter [options]="comboItems" [title]="comboTitle" (onSelected)="setSelected($event)">
   </app-search-filter>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>{{txtFieldTitle}}</mat-label>
     <input matInput type="text" [(ngModel)]="txtFieldValue" [placeholder]="getPlaceholderTxt()">
     <button *ngIf="txtFieldValue" matSuffix mat-icon-button aria-label="Clear" (click)="txtFieldValue=''">
