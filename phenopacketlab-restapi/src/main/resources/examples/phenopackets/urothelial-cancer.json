@@ -1,5 +1,5 @@
 {
-  "id": "arbitrary.id",
+  "id": "urothelial-cancer-phenopacket-id",
   "subject": {
     "id": "patient1",
     "dateOfBirth": "1964-03-15T00:00:00Z",
@@ -95,7 +95,7 @@
       }
     }
   }, {
-    "id": "bladder biopsy id",
+    "id": "bladder-biopsy-id",
     "individualId": "patient1",
     "sampledTissue": {
       "id": "UBERON_0001256",
@@ -123,7 +123,7 @@
     "files": [{
       "uri": "file://data/genomes/urothelial_ca_wgs.vcf.gz",
       "individualToFileIdentifiers": {
-        "sample1": "BS342730"
+        "bladder-biopsy-id": "BS342730"
       },
       "fileAttributes": {
         "genomeAssembly": "GRCh38",
@@ -132,7 +132,7 @@
       }
     }]
   }, {
-    "id": "pelvic lymph node biosample ID",
+    "id": "pelvic-lymph-node-biosample-ID",
     "individualId": "patient1",
     "sampledTissue": {
       "id": "UBERON:0015876",
@@ -156,7 +156,7 @@
     "files": [{
       "uri": "file://data/genomes/metastasis_wgs.vcf.gz",
       "individualToFileIdentifiers": {
-        "sample5": "BS730275"
+        "pelvic-lymph-node-biosample-ID": "BS730275"
       },
       "fileAttributes": {
         "genomeAssembly": "GRCh38",
@@ -188,7 +188,7 @@
   "files": [{
     "uri": "file://data/genomes/germline_wgs.vcf.gz",
     "individualToFileIdentifiers": {
-      "example case": "NA12345"
+      "patient1": "NA12345"
     },
     "fileAttributes": {
       "genomeAssembly": "GRCh38",
