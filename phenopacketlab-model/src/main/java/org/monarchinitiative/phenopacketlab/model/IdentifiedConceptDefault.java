@@ -22,13 +22,14 @@ class IdentifiedConceptDefault extends ConceptDefault implements IdentifiedConce
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         IdentifiedConceptDefault that = (IdentifiedConceptDefault) o;
         return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(super.hashCode(), id);
     }
 
     @Override
