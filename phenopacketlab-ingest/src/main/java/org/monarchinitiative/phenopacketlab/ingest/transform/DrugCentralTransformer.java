@@ -44,6 +44,7 @@ public class DrugCentralTransformer {
     }
 
     public static void transform(Path drugCentralSqlDumpPath, Path destinationPath, String url, String version) throws IOException {
+        LOGGER.info("Extracting DrugCentral concepts from {}", drugCentralSqlDumpPath.toAbsolutePath());
         List<String> structuresLines = readPublicStructuresLines(drugCentralSqlDumpPath);
         LOGGER.info("Read {} structures lines", structuresLines.size());
         LOGGER.info("Writing the DrugCentral concepts to {}", destinationPath.toAbsolutePath());
@@ -70,6 +71,8 @@ public class DrugCentralTransformer {
                         }
                     });
         }
+
+        LOGGER.info("Done!");
     }
 
     private static List<String> readPublicStructuresLines(Path drugCentralSqlDumpPath) throws IOException {

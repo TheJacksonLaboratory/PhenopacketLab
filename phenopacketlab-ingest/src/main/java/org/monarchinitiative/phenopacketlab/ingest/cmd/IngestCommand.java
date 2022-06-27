@@ -1,6 +1,7 @@
 package org.monarchinitiative.phenopacketlab.ingest.cmd;
 
 import org.monarchinitiative.biodownload.BioDownloader;
+import org.monarchinitiative.biodownload.BioDownloaderBuilder;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.monarchinitiative.phenopacketlab.ingest.Main;
 import org.monarchinitiative.phenopacketlab.ingest.transform.DrugCentralTransformer;
@@ -60,7 +61,7 @@ public class IngestCommand implements Callable<Integer> {
             List<Path> toDelete = new LinkedList<>();
             try {
                 // First, download.
-                downloadResources(dataDirectory, toDelete);
+                downloadAndPostprocessResources(dataDirectory, toDelete);
 
                 // Then, cleanup.
                 if (!toDelete.isEmpty()) {
@@ -92,33 +93,29 @@ public class IngestCommand implements Callable<Integer> {
         return Optional.of(destinationPath);
     }
 
-    private void downloadResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
-//        String nciThesaurusZipName = "NciThesaurus.zip";
-//        String url = properties.getProperty(NCIT_URL);
-//        URL ncitUrl = new URL(url);
-//        String ncitVersion = properties.getProperty(NCIT_VERSION);
-
+    private void downloadAndPostprocessResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
         // Temporary name of the DrugCentral SQL dump. The dump is deleted after the processing is done.
         String drugCentralDumpName = "drugcentral.dump.sql.gz";
         String drugCentralUrlString = properties.getProperty(DRUG_CENTRAL_URL);
         URL drugCentralUrl = new URL(drugCentralUrlString);
         String drugCentralVersion = properties.getProperty(DRUG_CENTRAL_VERSION);
+        Path drugCentralDump = dataDirectory.resolve(drugCentralDumpName);
+        boolean processDrugCentral = !Files.isRegularFile(drugCentralDump) || overwrite;
 
-        BioDownloader downloader = BioDownloader.builder(dataDirectory)
+        // Build the downloader.
+        BioDownloaderBuilder builder = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
                 .hgnc()
-                .hpDiseaseAnnotations()
-//                .custom(nciThesaurusZipName, ncitUrl)
-                .custom(drugCentralDumpName, drugCentralUrl)
-                .build();
+                .hpDiseaseAnnotations();
 
+        if (processDrugCentral)
+            builder.custom(drugCentralDumpName, drugCentralUrl);
+
+        // Download the resources.
+        BioDownloader downloader = builder.build();
         downloader.download();
-//        Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
-//        toDelete.add(thesaurusZip);
-//        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.tsv.gz"), url, ncitVersion);
 
         // Post-process DrugCentral.
-        Path drugCentralDump = dataDirectory.resolve(drugCentralDumpName);
         toDelete.add(drugCentralDump);
         DrugCentralTransformer.transform(drugCentralDump, dataDirectory.resolve("drugcentral.csv"), drugCentralUrlString, drugCentralVersion);
     }
