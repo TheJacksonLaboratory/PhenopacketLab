@@ -17,7 +17,8 @@ public class PhenopacketLabDataResolver {
 
         List<String> errors = new LinkedList<>();
         List<Path> paths = List.of(efoJsonPath(), genoJsonPath(), hgncCompleteSetPath(), hpJsonPath(), mondoJsonPath(),
-                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), ncitJsonPath(), gssoJsonPath());
+                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), ncitJsonPath(), gssoJsonPath(),
+                drugCentralPath());
         for (Path path : paths) {
             if (!(Files.isRegularFile(path) && Files.isReadable(path))) {
                 errors.add(path.toFile().getName());
@@ -69,5 +70,9 @@ public class PhenopacketLabDataResolver {
 
     public Path gssoJsonPath() {
         return phenopacketLabDataDirectory.resolve("gsso.json");
+    }
+
+    public Path drugCentralPath() {
+        return phenopacketLabDataDirectory.resolve("drugcentral.csv");
     }
 }
