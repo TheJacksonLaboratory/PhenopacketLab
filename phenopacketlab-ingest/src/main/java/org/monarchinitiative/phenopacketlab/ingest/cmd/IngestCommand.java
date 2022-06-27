@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacketlab.ingest.cmd;
 import org.monarchinitiative.biodownload.BioDownloader;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.monarchinitiative.phenopacketlab.ingest.Main;
-import org.monarchinitiative.phenopacketlab.ingest.transform.NciThesaurusTransformer;
+import org.monarchinitiative.phenopacketlab.ingest.transform.DrugCentralTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -30,6 +30,8 @@ public class IngestCommand implements Callable<Integer> {
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestCommand.class);
     private static final String NCIT_URL = "ncit.url";
     private static final String NCIT_VERSION = "ncit.version";
+    private static final String DRUG_CENTRAL_URL = "drugcentral.url";
+    private static final String DRUG_CENTRAL_VERSION = "drugcentral.version";
 
     private final Properties properties;
 
@@ -61,10 +63,12 @@ public class IngestCommand implements Callable<Integer> {
                 downloadResources(dataDirectory, toDelete);
 
                 // Then, cleanup.
-                LOGGER.info("Removing temporary files.");
-                for (Path del : toDelete) {
-                    LOGGER.debug("Removing {}", del.toAbsolutePath());
-                    Files.deleteIfExists(del);
+                if (!toDelete.isEmpty()) {
+                    LOGGER.info("Removing {} temporary file(s).", toDelete.size());
+                    for (Path del : toDelete) {
+                        LOGGER.debug("Removing {}", del.toAbsolutePath());
+                        Files.deleteIfExists(del);
+                    }
                 }
             } catch (IOException | FileDownloadException e) {
                 LOGGER.error("Error occurred during the download: {}", e.getMessage(), e);
@@ -93,16 +97,29 @@ public class IngestCommand implements Callable<Integer> {
 //        String url = properties.getProperty(NCIT_URL);
 //        URL ncitUrl = new URL(url);
 //        String ncitVersion = properties.getProperty(NCIT_VERSION);
+
+        // Temporary name of the DrugCentral SQL dump. The dump is deleted after the processing is done.
+        String drugCentralDumpName = "drugcentral.dump.sql.gz";
+        String drugCentralUrlString = properties.getProperty(DRUG_CENTRAL_URL);
+        URL drugCentralUrl = new URL(drugCentralUrlString);
+        String drugCentralVersion = properties.getProperty(DRUG_CENTRAL_VERSION);
+
         BioDownloader downloader = BioDownloader.builder(dataDirectory)
                 .overwrite(overwrite)
                 .hgnc()
                 .hpDiseaseAnnotations()
 //                .custom(nciThesaurusZipName, ncitUrl)
+                .custom(drugCentralDumpName, drugCentralUrl)
                 .build();
 
         downloader.download();
 //        Path thesaurusZip = dataDirectory.resolve(nciThesaurusZipName);
 //        toDelete.add(thesaurusZip);
 //        NciThesaurusTransformer.transform(thesaurusZip, dataDirectory.resolve("NCIT.tsv.gz"), url, ncitVersion);
+
+        // Post-process DrugCentral.
+        Path drugCentralDump = dataDirectory.resolve(drugCentralDumpName);
+        toDelete.add(drugCentralDump);
+        DrugCentralTransformer.transform(drugCentralDump, dataDirectory.resolve("drugcentral.csv"), drugCentralUrlString, drugCentralVersion);
     }
 }
