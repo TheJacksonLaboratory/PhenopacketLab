@@ -4,14 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.monarchinitiative.phenopacketlab.ingest.TestBase;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.zip.GZIPInputStream;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -37,7 +32,7 @@ public class NciThesaurusTransformerTest {
         NciThesaurusTransformer.transform(zip, destination, url, version);
 
         assertThat(Files.isRegularFile(destination), equalTo(true));
-        List<String> lines = readLines(destination);
+        List<String> lines = TestBase.readLines(destination);
 
         assertThat(lines, hasSize(52));
         assertThat(lines.get(0), equalTo("# url=https://evs.nci.nih.gov/Thesaurus.FLAT.zip;version=04.D"));
@@ -46,9 +41,4 @@ public class NciThesaurusTransformerTest {
         assertThat(lines.get(45), equalTo("C10003\tMethotrexate/Teniposide\t\tMTX/VM-26\tTherapeutic or Preventive Procedure"));
     }
 
-    private static List<String> readLines(Path destination) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(destination))))) {
-            return reader.lines().collect(Collectors.toList());
-        }
-    }
 }
