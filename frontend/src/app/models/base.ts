@@ -25,8 +25,12 @@ export class Evidence {
 }
 export class Procedure {
     code: OntologyClass;
-    bodySite: OntologyClass;
+    bodySites: OntologyClass[];
+    performedOn: TimeElement[];
 
+    toString() {
+        return "Procedure";
+    }
 }
 export class Age {
     iso8601duration: string;
