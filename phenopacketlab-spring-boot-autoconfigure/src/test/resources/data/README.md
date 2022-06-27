@@ -11,4 +11,5 @@ The files in this folder are subsets of the real data files.
 - `phenotype.hpoa` - a file describing 2 non-existing diseases annotated by terms that are present in the `hp.json` above
 - `so.json` - SO module containing descendents of `http://purl.obolibrary.org/obo/SO_0001537` *silent_mutation*.
 - `uberon.json` - UBERON module containing ancestors of `UBERON:0000468` *multicellular organism*.
+- `uo.json` - complete UO ontology.
 - `drugcentral.csv` - 10 lines of the postprocessed DrugCentral CSV file.

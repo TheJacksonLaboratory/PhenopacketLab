@@ -19,7 +19,7 @@ SO_PURL=http://purl.obolibrary.org/obo/so.owl
 UBERON_PURL=http://purl.obolibrary.org/obo/uberon.owl
 NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
 GSSO_PURL=http://purl.obolibrary.org/obo/gsso.owl
-#UO_PURL=http://purl.obolibrary.org/obo/uo.owl # TODO - fails, resolve
+UO_PURL=http://purl.obolibrary.org/obo/uo.owl
 
 ONTOLOGIES=(
     "${EFO_PURL}"
@@ -30,7 +30,7 @@ ONTOLOGIES=(
     "${UBERON_PURL}"
     "${NCIT_PURL}"
     "${GSSO_PURL}"
-#    "${UO_PURL}"
+    "${UO_PURL}"
   )
 
 check () {
