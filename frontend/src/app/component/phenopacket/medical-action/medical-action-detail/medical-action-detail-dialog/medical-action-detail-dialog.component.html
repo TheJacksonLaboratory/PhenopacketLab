@@ -1,0 +1,323 @@
+<h1 mat-dialog-title>Edit Medical Action details</h1>
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Treatment target</mat-label>
+                <mat-select [(ngModel)]="selectedDisease">
+                    <mat-option *ngFor="let disease of diseases" [value]="disease.term.id">
+                        {{disease.term.id}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Treatment intent</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let intent of intents" [value]="intents">
+                        {{intent}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Response to treatment</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let response of responses" [value]="response">
+                        {{response}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-form-field" appearance="outline">
+                <mat-label>Treatment termination reason</mat-label>
+                <input matInput type="text" [(ngModel)]="terminationReasonStr">
+                <button *ngIf="terminationReasonStr" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Select an actiontype</mat-label>
+                <mat-select (selectionChange)="onActionTypeChange($event)">
+                    <mat-option *ngFor="let type of actionTypes" [value]="actionTypes">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+    </div>
+    <!-- Procedure medical action -->
+    <div *ngIf="action instanceof Procedure" class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Code:</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{procedureCode}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Body sites:</b>
+                </div>
+            </div>
+
+            <div *ngFor="let bodySite of bodySites;">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{bodySite?.label + ' [' + bodySite?.id + ']'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Performed on:</b>
+                </div>
+            </div>
+            <div *ngFor="let perform of performedOn;">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{perform?.toString()}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Treatement medical action -->
+    <div *ngIf="action instanceof Treatment" class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Agent:</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{agent?.label + " [" + agent?.id + "]"}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Route of administration</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{routeOfAdministration?.label + " [" + routeOfAdministration?.id + "]"}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Drug type</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{drugType}}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Dose intervals:</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table mat-table class="table-hover mat-elevation-z2" [dataSource]="doseIntervals" matSort
+                        multiTemplateDataRows>
+                        <ng-container matColumnDef="unit">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.quantity.unit.label}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="value">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.quantity.value}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="frequency">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Schedule frequency </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.scheduleFrequency.label + " [" +
+                                element?.scheduleFrequency.id + "]"}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="interval">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Interval </th>
+                            <td mat-cell *matCellDef="let element"> {{element?.interval.start + " - " +
+                                element?.interval.end }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="remove">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
+                                    class="pull-right" matTooltip="Delete dose interval"
+                                    (click)="deleteDoseInterval(element)">
+                                    <mat-icon matSuffix>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-row *matRowDef="let element; columns: doseIntervalColumns;" class="example-element-row">
+                        </tr>
+                        <tr mat-header-row *matHeaderRowDef="doseIntervalColumns; sticky: true"></tr>
+
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Cumulative dose</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{cumulativeDose?.value + " " + cumulativeDose?.unit.label + " [" + cumulativeDose?.unit.id + "]"}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RadiationTherapy medical action -->
+    <div *ngIf="action instanceof RadiationTherapy" class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Modality</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{modality?.label + " [" + modality?.id + "]"}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Body site</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{bodySite?.label + " [" + bodySite?.id + "]"}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Dosage</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{dosage}} Gy
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Fractions</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{fractions}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TherapeuticRegimen medical action -->
+    <div *ngIf="action instanceof TherapeuticRegimen" class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Identifier</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{getIdentifier()}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Start</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{startTime}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>End</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{endTime}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Regimen status</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{regimenStatus}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
+    <button mat-raised-button (click)="onOkClick()">Ok</button>
+    <!-- <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button> -->
+</div>

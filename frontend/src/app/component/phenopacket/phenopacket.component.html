@@ -133,6 +133,7 @@
         </div>
 
         <br>
+        <br>
         <mat-divider></mat-divider>
 
         <div class="row">
@@ -189,10 +190,8 @@
                             (onDiseasesChanged)="changeDiseases($event)"></app-disease>
                     </div>
                     <div *ngSwitchCase="'tab6'">
-                        <div class="main-content">
-                            <div class="container-fluid">
-                            </div>
-                        </div>
+                        <app-medical-action [phenopacketMedicalAction]="getPhenopacketMedicalActions()" [diseases]="getPhenopacketDiseases()"
+                            (onMedicalActionChanged)="changeMedicalActions($event)"></app-medical-action>
                     </div>
                     <div *ngSwitchCase="'tab7'">
                         <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)">
