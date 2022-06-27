@@ -19,13 +19,16 @@ export class PhenopacketComponent implements OnInit {
   @Output() onIdChanged = new EventEmitter<any>();
   @Output() onSexChanged = new EventEmitter<any>();
   @Output() onDobChanged = new EventEmitter<any>();
+  @Output() onLastEncounterDateChanged = new EventEmitter<any>();
 
   phenoIdControl = new FormControl('', [Validators.required]);
   phenoSexControl = new FormControl('', [Validators.required]);
   phenoDobControl = new FormControl(new Date(), [Validators.required]);
+  lastEncounterDateControl = new FormControl(new Date());
   phenopacketIdSubscription: Subscription;
   phenopacketSexSubscription: Subscription;
   phenopacketDobSubscription: Subscription;
+  lastEncounterDateSubscription: Subscription;
 
   summary: string;
   sex: any;
@@ -33,6 +36,12 @@ export class PhenopacketComponent implements OnInit {
   gender: any;
   dob: Date;
   individual: Individual;
+  lastEncounterDate: Date;
+
+  status: string;
+  timeOfDeath: string;
+  causeOfDeath: string;
+  survivalTime: string;
 
   active = 'top';
   viewMode;
@@ -77,6 +86,15 @@ export class PhenopacketComponent implements OnInit {
       this.phenopacketDobSubscription = this.phenoDobControl.valueChanges.subscribe(value => {
         this.onDobChanged.emit(value);
       });
+      // date of last encounter update
+      // Dob update
+      this.lastEncounterDateControl.setValue(this.lastEncounterDate);
+      if (this.lastEncounterDateSubscription) {
+        this.lastEncounterDateSubscription.unsubscribe();
+      }
+      this.lastEncounterDateSubscription = this.lastEncounterDateControl.valueChanges.subscribe(value => {
+        this.onLastEncounterDateChanged.emit(value);
+      });
     }
   }
 
@@ -118,4 +136,7 @@ export class PhenopacketComponent implements OnInit {
     this.phenopacket.files = files;
   }
  
+  editStatus() {
+    // todo
+  }
 }

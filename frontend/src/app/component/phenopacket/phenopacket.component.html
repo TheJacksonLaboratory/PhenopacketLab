@@ -3,14 +3,14 @@
     <div class="card-body margin">
         <div class="row">
             <div class="col-md-3">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Phenopacket id</mat-label>
                     <input matInput placeholder="e.g. patient-I" [formControl]="phenoIdControl" required>
                     <mat-error *ngIf="phenoIdControl.invalid">Please enter a phenopacket id.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-9">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Summary</mat-label>
                     <textarea matInput>{{summary}}</textarea>
                 </mat-form-field>
@@ -25,110 +25,114 @@
             <h3>Individual</h3>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Date of birth</mat-label>
-                            <input matInput [matDatepicker]="datepicker" [formControl]="phenoDobControl">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #datepicker>
-                                <mat-datepicker-actions>
-                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                </mat-datepicker-actions>
-                            </mat-datepicker>
-                        </mat-form-field>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Time at last encounter</mat-label>
-                            <input matInput>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Vital status</mat-label>
-                            <input matInput>
-                        </mat-form-field>
-                    </div>
-                </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of birth</mat-label>
+                    <input matInput [matDatepicker]="datepicker" [formControl]="phenoDobControl">
+                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>Cancel</button>
+                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                        </mat-datepicker-actions>
+                    </mat-datepicker>
+                </mat-form-field>
             </div>
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-10">
-                        <mat-form-field appearance="fill">
-                            <mat-select [(value)]="sex" [formControl]="phenoSexControl">
-                                <mat-option *ngFor="let sex of getSexes()" [value]="sex">
-                                    {{sex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <button mat-mini-fab disabled class="pull-right"
-                            matTooltip="Observed apparent sex of the individual">
-                            <mat-icon mat-fab>question_mark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <mat-form-field appearance="fill">
-                            <mat-select [(value)]="karyotypicSex">
-                                <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
-                                    {{karyotypicSex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Karyotypic sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <button mat-mini-fab disabled class="pull-right"
-                            matTooltip="The karyotypic sex of the individual">
-                            <mat-icon>question_mark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <mat-form-field appearance="fill">
-                            <mat-select [(value)]="gender">
-                                <mat-option value="unknown">Unknown</mat-option>
-                                <mat-option value="female">Female</mat-option>
-                                <mat-option value="male">Male</mat-option>
-                                <mat-option value="nonbinary">Nonbinary</mat-option>
-                                <mat-option value="other">Other</mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Gender</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <button mat-mini-fab disabled class="pull-right" matTooltip="Self-identified gender">
-                            <mat-icon>question_mark</mat-icon>
-                        </button>
-                    </div>
-                </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" matTooltip="Observed apparent sex of the individual">
+                    <mat-select [(value)]="sex" [formControl]="phenoSexControl">
+                        <mat-option *ngFor="let sex of getSexes()" [value]="sex">
+                            {{sex}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-label>
+                        <mat-icon>question_mark</mat-icon> <b> Sex</b>
+                    </mat-label>
+                </mat-form-field>
             </div>
-
-            <div class="col-md-4">
-
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" matTooltip="The karyotypic sex of the individual">
+                    <mat-select [(value)]="karyotypicSex">
+                        <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
+                            {{karyotypicSex}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-label>
+                        <mat-icon>question_mark</mat-icon> <b> Karyotypic sex</b>
+                    </mat-label>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" matTooltip="Self-identified gender">
+                    <mat-select [(value)]="gender">
+                        <mat-option value="unknown">Unknown</mat-option>
+                        <mat-option value="female">Female</mat-option>
+                        <mat-option value="male">Male</mat-option>
+                        <mat-option value="nonbinary">Nonbinary</mat-option>
+                        <mat-option value="other">Other</mat-option>
+                    </mat-select>
+                    <mat-label>
+                        <mat-icon>question_mark</mat-icon> <b> Gender</b>
+                    </mat-label>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of last encounter</mat-label>
+                    <input matInput [matDatepicker]="datepicker" [formControl]="lastEncounterDateControl">
+                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>Cancel</button>
+                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                        </mat-datepicker-actions>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+        </div>
+        <div id="vital-status" class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><b>Vital Status</b></h5>
+                    </div>
+                    <div class="col-md-6">
+                        <button (click)="editStatus()" mat-icon-button type="submit" class="pull-right"
+                            matTooltip="Edit Vital Status">
+                            <mat-icon mat-fab>edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Status: {{status}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Time of death: {{timeOfDeath}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Cause of death: {{causeOfDeath}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        Survival time (days): {{survivalTime}}
+                    </div>
+                </div>
             </div>
 
         </div>
 
+        <br>
         <mat-divider></mat-divider>
 
         <div class="row">
@@ -181,7 +185,8 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab5'">
-                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()" (onDiseasesChanged)="changeDiseases($event)"></app-disease>
+                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"
+                            (onDiseasesChanged)="changeDiseases($event)"></app-disease>
                     </div>
                     <div *ngSwitchCase="'tab6'">
                         <div class="main-content">
@@ -190,7 +195,8 @@
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab7'">
-                        <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)"></app-file>
+                        <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)">
+                        </app-file>
                     </div>
                     <div *ngSwitchCase="'tab8'">
                         <div class="main-content">

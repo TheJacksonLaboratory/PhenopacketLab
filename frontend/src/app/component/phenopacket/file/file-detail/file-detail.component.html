@@ -2,14 +2,14 @@
     <div class="card-body margin">
         <div class="row">
             <div class="col-md-6">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>URI</mat-label>
                     <input matInput placeholder="e.g. path/to/file" [formControl]="uriControl" required>
                     <mat-error *ngIf="uriControl.invalid">Please enter a URI.</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline">
                     <mat-label>Description</mat-label>
                     <textarea matInput [formControl]="descriptionControl">{{description}}</textarea>
                 </mat-form-field>

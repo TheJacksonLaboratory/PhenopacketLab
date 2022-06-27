@@ -1,27 +1,26 @@
 h3 {
   margin-left: 15px;
 }
-.column-1{
+.column-1 {
   width: 200px;
   float: left;
 }
-.column-2{
+.column-2 {
   float: none;
   overflow: hidden;
   background-color: #fff;
-  div{
+  div {
     padding: 20px;
   }
 }
 
-.active{
+.active {
   outline: 1px solid #ddd;
   cursor: pointer;
-  background-color:#ecf0f1;
+  background-color: #ecf0f1;
   color: #017171; //#2980b9
 }
 .vertical-menu {
-  
   display: block !important;
   width: 100%;
   text-align: center;
@@ -46,12 +45,22 @@ li:after {
 a {
   padding: 8px;
 }
-@media(max-width:550px){
-  .column-1{
+@media (max-width: 550px) {
+  .column-1 {
     width: 40% !important;
-    
   }
-  .column-2{
+  .column-2 {
     width: 60% !important;
   }
+}
+#vital-status {
+  border-radius: 4px !important;
+  border: 2px solid lightgrey;
+  padding: 10px;
+  margin: 0px;
+}
+#vital-status:hover {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 0px;
 }
