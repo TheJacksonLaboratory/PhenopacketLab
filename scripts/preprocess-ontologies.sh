@@ -3,7 +3,7 @@
 #######################################    README    ###################################################################
 # A script for downloading ontology OWL files and conversion the OWLs to JSON (Obographs) format.
 #
-# The script requires obographs-cli JAR.
+# The script requires obographs-cli and ROBOT JARs.
 #
 ########################################################################################################################
 
@@ -44,6 +44,15 @@ check () {
   fi
 
   ###
+  # Check we have ROBOT JAR file.
+  if [ -f "${ROBOT_JAR}" ]; then
+    printf "Using robot JAR at '%s'.\n" "${ROBOT_JAR}"
+  else
+    ERROR=true
+    printf "Missing robot JAR!\n"
+  fi
+
+  ###
   # Check we have the data directory and it points an existing directory.
   if [ -z "${DATA_DIR}" ]; then
     ERROR=true
@@ -77,7 +86,7 @@ download () {
   if [ ! -f "${DESTINATION}" ] || [ "$OVERWRITE" = true ]; then
     printf "\nDownloading %s to '%s'.\n" "${PURL}" "${DESTINATION}"
     if [ "${PURL}" == "${GSSO_PURL}" ]; then
-      # GSSO requires a special gentle touch.
+      # GSSO requires a special gentle touch, we use a module using `GSSO_009468` as the top anchor.
       ${JAVA} -jar ${ROBOT_JAR} extract --input-iri "${PURL}" \
         --term http://purl.obolibrary.org/obo/GSSO_009468 \
         --output "${DESTINATION}" \
@@ -86,28 +95,10 @@ download () {
     else
       curl --location --output "${DESTINATION}" "${PURL}"
     fi
-    # TODO - remove if UO is fixed
-#    if [ "${PURL}" == "${UO_PURL}" ]; then
-#      fix_unit_ontology "${DESTINATION}"
-#    fi
   else
     printf "\nSkipping download of existing '%s'" "${DESTINATION}"
   fi
 }
-
-fix_unit_ontology () {
-  # A hack to add missing 'dc' namespace into the Units of Measurement Ontology (UO)
-  # TODO - remove if UO is fixed
-  TARGET="xmlns:rdfs=\"http:\/\/www.w3.org\/2000\/01\/rdf-schema#\">"
-  REPLACE_WITH="xmlns:dc=\"http:\/\/purl.org\/dc\/elements\/1.1\/\" ${TARGET}"
-  SOURCE=${1}
-  printf "Fixing UO at '%s'\n" "${SOURCE}"
-  mv "${SOURCE}" temp.owl
-  EXP="s/${TARGET}/${REPLACE_WITH}/"
-  sed -e "${EXP}" temp.owl > "${SOURCE}"
-  rm temp.owl
-}
-
 
 convert () {
   LOCAL_OWL=$1
