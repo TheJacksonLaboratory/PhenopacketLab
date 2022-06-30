@@ -67,7 +67,6 @@ export class SearchBoxComponent implements OnInit {
             this.initSearch(this.searchCriteria);
         }
         this.setSearchBox();
-        // get list of mvar genes and store them in LocalStorage
         this.searchService.getAll().subscribe(data => {
             localStorage.setItem(this.localStorageKey, JSON.stringify(data));
         });
@@ -89,20 +88,20 @@ export class SearchBoxComponent implements OnInit {
         this.myControlSubscription = this.myControl.valueChanges.subscribe(value => {
             this.itemOptions = [];
             if (value && value.length > 0) {
-                this._diseaseFilter(value);
+                this._itemFilter(value);
             }
         });
     }
 
-    private _diseaseFilter(value: string) {
+    private _itemFilter(value: string) {
         const filterValue = value.toLowerCase();
-        this._searchDiseases(filterValue);
+        this._searchItems(filterValue);
     }
 
-    private _searchDiseases(filterValue: string) {
+    private _searchItems(filterValue: string) {
         // get list of items from localStorage TODO replace by localStorageKey
-        let hpoDiseases = JSON.parse(localStorage.getItem(this.localStorageKey));
-        let filteredList = hpoDiseases.filter(item => 
+        let items = JSON.parse(localStorage.getItem(this.localStorageKey));
+        let filteredList = items.filter(item => 
             // console.log(item.name);
             item.name.toLowerCase().includes(filterValue.toLowerCase()));
         // display only a max of 10 items in the combo box
