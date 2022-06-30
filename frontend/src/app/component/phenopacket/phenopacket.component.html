@@ -190,7 +190,7 @@
                             (onDiseasesChanged)="changeDiseases($event)"></app-disease>
                     </div>
                     <div *ngSwitchCase="'tab6'">
-                        <app-medical-action [phenopacketMedicalAction]="getPhenopacketMedicalActions()" [diseases]="getPhenopacketDiseases()"
+                        <app-medical-action [medicalActions]="getPhenopacketMedicalActions()" [diseases]="getPhenopacketDiseases()"
                             (onMedicalActionChanged)="changeMedicalActions($event)"></app-medical-action>
                     </div>
                     <div *ngSwitchCase="'tab7'">

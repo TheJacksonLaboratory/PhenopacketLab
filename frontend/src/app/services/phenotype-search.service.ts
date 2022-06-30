@@ -10,7 +10,7 @@ const phenotypicFeaturesUrl = environment.PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL;
 @Injectable({
     providedIn: 'root'
 })
-export class PhenotypeSearchService extends BaseSearchService{
+export class PhenotypeSearchService extends BaseSearchService {
 
     selectedSearchItems: any;
     selectedSearchItemSubject: BehaviorSubject<any>;
