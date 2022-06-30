@@ -9,7 +9,7 @@ import { DiseaseDetailDialogComponent } from './disease-detail-dialog/disease-de
   templateUrl: './disease-detail.component.html',
   styleUrls: ['./disease-detail.component.scss']
 })
-export class DiseaseDetailComponent {
+export class DiseaseDetailComponent implements OnInit {
 
   @Input() disease: Disease;
   @Output() onDiseaseChanged = new EventEmitter<Disease>();
