@@ -27,6 +27,10 @@ export class Treatment {
     drugType: DrugType;
     cumulativeDose: Quantity;
 
+    constructor() {
+        this.agent = new OntologyClass('', '');
+    }
+
     toString() {
         return "Treatment";
     }
@@ -48,6 +52,9 @@ export class RadiationTherapy {
     dosage: number;
     fractions: number;
 
+    constructor() {
+        this.modality = new OntologyClass('', '');
+    }
     toString() {
         return "Radiation therapy";
     }
@@ -64,7 +71,9 @@ export class TherapeuticRegimen {
     startTime: TimeElement;
     endTime: TimeElement;
     regimenStatus: RegimenStatus;
-
+    constructor() {
+        this.identifier = new OntologyClass('', '');
+    }
     toString() {
         return "Therapeutic regimen";
     }

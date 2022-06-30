@@ -28,6 +28,10 @@ export class Procedure {
     bodySites: OntologyClass[];
     performedOn: TimeElement[];
 
+    constructor() {
+        this.code = new OntologyClass('', '');
+    }
+
     toString() {
         return "Procedure";
     }
