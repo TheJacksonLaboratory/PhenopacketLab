@@ -11,7 +11,7 @@ import { FileDetailDialogComponent } from './file-detail-dialog/file-detail-dial
   templateUrl: './file-detail.component.html',
   styleUrls: ['./file-detail.component.scss']
 })
-export class FileDetailComponent {
+export class FileDetailComponent implements OnInit {
 
   @Input() file: File;
   @Output() onFileChanged = new EventEmitter<File>();
