@@ -1,16 +1,15 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from "@angular/router";
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
-import { MedicalAction } from 'src/app/models/medical-action';
+import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { Disease } from 'src/app/models/disease';
+import { Procedure } from 'src/app/models/base';
 
 @Component({
     selector: 'app-medical-action',
@@ -48,12 +47,12 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     expandedElement: MedicalAction | null;
     @Input()
-    medicalActions: MedicalAction[] = [];
+    medicalActions: MedicalAction[];
     @Input()
     diseases: Disease[];
 
     @Output() onMedicalActionChanged = new EventEmitter<MedicalAction[]>();
-    
+
     dialogRef: any;
     spinnerDialogRef: any;
 
@@ -61,9 +60,9 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit() {
-
-        // load example data
-        // this.phenotypicDataSource = new PhenotypicFeatureData().PHENOTYPIC_DATA;
+        if (this.medicalActions === undefined) {
+            this.medicalActions = [];
+        }
         this.medicalActionDataSource.data = this.medicalActions;
         this.onMedicalActionChanged.emit(this.medicalActions);
 
@@ -79,31 +78,27 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     addMedicalAction(medicalAction?: MedicalAction) {
         if (medicalAction === undefined) {
             // Add through a dialog to choose from type of Actions
-            // let action = new MedicalAction();
             const medicalActionDetailData = { 'title': 'Edit medical action' };
             medicalActionDetailData['diseases'] = this.diseases;
             medicalActionDetailData['displayCancelButton'] = true;
             const dialogRef = this.dialog.open(MedicalActionDetailDialogComponent, {
-              width: '1000px',
-              data: medicalActionDetailData
+                width: '1000px',
+                data: medicalActionDetailData
             });
             dialogRef.afterClosed().subscribe(result => {
-              if (result !== undefined) {
-                let updatedMedicalAction = result.medical_action;
-                if (updatedMedicalAction) {
-                  // update medical action
-                  let medicalAction = updatedMedicalAction;
-                  console.log(medicalAction);
-                  this.medicalActions.push(medicalAction);
-
-                //   this.updateMedicalActionAction();
-                  // emit change
-                  // this.onFeatureChanged.emit(this.phenotypicFeature);
+                if (result !== undefined) {
+                    let updatedMedicalAction = result.medical_action;
+                    if (updatedMedicalAction) {
+                        // update medical action
+                        let medicalAction = updatedMedicalAction;
+                        this.medicalActions.push(medicalAction);
+                        this.medicalActionDataSource.data = this.medicalActions;
+                        // emit change
+                        this.onMedicalActionChanged.emit(this.medicalActions);
+                    }
                 }
-              }
             });
-
-            // this.medicalActions.push(action);
+            return dialogRef;
         } else {
             this.medicalActions.push(medicalAction);
         }
@@ -120,7 +115,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
      */
     deleteMedicalAction(element: MedicalAction) {
         const msgData = { 'title': 'Delete Medical Action' };
-        msgData['description'] = `Delete the Medical Action with the ID "${element.action.id}" ?`;
+        msgData['description'] = `Delete the Medical Action with the ID "${this.getId(element)}" ?`;
         msgData['displayCancelButton'] = true;
         const dialogRef = this.dialog.open(MessageDialogComponent, {
             width: '400px',
@@ -147,6 +142,46 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     private clearSort() {
         this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    }
+
+    /**
+     * Retrieve the correct MedicalAction id
+     * @param medicalAction 
+     * @returns id
+     */
+    getId(medicalAction: MedicalAction) {
+        let action = medicalAction.action;
+        let id = "";
+        if (action instanceof Procedure) {
+            id = action.code.id;
+        } else if (action instanceof Treatment) {
+            id = action.agent.id;
+        } else if (action instanceof RadiationTherapy) {
+            id = action.modality.id;
+        } else if (action instanceof TherapeuticRegimen) {
+            id = action.identifier.id;
+        }
+        return id;
+    }
+
+    /**
+     * Get Procedure, Treatment, RadiationTherapy or TherapeuticRegimen icon
+     * @param medicalAction 
+     * @returns icon name
+     */
+    getIcon(medicalAction: MedicalAction) {
+        if (medicalAction) {
+            if (medicalAction.action.toString() === 'Procedure') {
+                return 'medical_information';
+            } else if (medicalAction.action.toString() === 'Treatment') {
+                return 'vaccines';
+            } else if (medicalAction.action.toString() === 'Radiation therapy') {
+                return 'microwave';
+            } else if (medicalAction.action.toString() === 'Therapeutic regimen') {
+                return 'medication';
+            }
+            return '';
+        }
     }
 
     doPageChange(pageEvent: any) {

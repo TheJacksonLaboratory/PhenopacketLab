@@ -1,8 +1,5 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { throwIfEmpty } from 'rxjs/operators';
 import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Quantity } from 'src/app/models/measurement';
@@ -92,7 +89,7 @@ export class MedicalActionDetailComponent {
     phenotypicDetailData['medical_action'] = this.medicalAction;
     phenotypicDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MedicalActionDetailDialogComponent, {
-      width: '750px',
+      width: '1000px',
       data: phenotypicDetailData
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -101,7 +98,6 @@ export class MedicalActionDetailComponent {
         if (updatedMedicalAction) {
           // update medical action
           this.medicalAction = updatedMedicalAction;
-          console.log(this.medicalAction);
           this.updateMedicalActionAction();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);

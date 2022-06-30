@@ -37,7 +37,7 @@
             <mat-form-field class="example-form-field" appearance="outline">
                 <mat-label>Treatment termination reason</mat-label>
                 <input matInput type="text" [(ngModel)]="terminationReasonStr">
-                <button *ngIf="terminationReasonStr" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <button *ngIf="terminationReasonStr" matSuffix mat-icon-button aria-label="Clear" (click)="terminationReasonStr=''">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
@@ -47,9 +47,9 @@
     <div class="row">
         <div class="col-md-3">
             <mat-form-field appearance="outline">
-                <mat-label>Select an actiontype</mat-label>
+                <mat-label>Select an action type</mat-label>
                 <mat-select (selectionChange)="onActionTypeChange($event)">
-                    <mat-option *ngFor="let type of actionTypes" [value]="actionTypes">
+                    <mat-option *ngFor="let type of actionTypes" [value]="type">
                         {{type}}
                     </mat-option>
                 </mat-select>
@@ -59,23 +59,17 @@
 
         </div>
         <div class="col-md-3">
-            
+
         </div>
-        <div class="col-md-3">
-            
-        </div>
+
     </div>
     <!-- Procedure medical action -->
-    <div *ngIf="action instanceof Procedure" class="row">
+    <div *ngIf="actionType === 'Procedure'" class="row">
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-12">
-                    <b>Code:</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{procedureCode}}
+                    <app-ontology-class [title]="'Code'" [ontologyObject]="procedureCode"
+                        (ontologyObjectEvent)="changeProcedureCode($event)"></app-ontology-class>
                 </div>
             </div>
         </div>
@@ -85,14 +79,34 @@
                     <b>Body sites:</b>
                 </div>
             </div>
-
-            <div *ngFor="let bodySite of bodySites;">
-                <div class="row">
-                    <div class="col-md-12">
-                        {{bodySite?.label + ' [' + bodySite?.id + ']'}}
-                    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <app-search-box [showHint]="false" [itemName]="'Body sites'" [searchLabel]="'Body sites'"
+                        [placeHolderTxt]="'Select/add body site'" [localStorageKey]="bodySitesStorageKey"
+                        [searchService]="searchService" (selectedSearchItem)="onSearchBodySiteChange($event)"
+                        [resetSearch]="false"></app-search-box>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-list *ngFor="let bodySite of bodySites">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <li> {{bodySite?.label + ' [' + bodySite?.id + ']'}}
+                                    <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
+                                        class="pull-right" matTooltip="Delete body site"
+                                        (click)="removeBodySite(bodySite)">
+                                        <mat-icon matSuffix>clear</mat-icon>
+                                    </button>
+                                </li>
+                            </div>
+
+                        </div>
+                    </mat-list>
+                </div>
+            </div>
+
         </div>
         <div class="col-md-4">
             <div class="row">
@@ -111,7 +125,7 @@
         </div>
     </div>
     <!-- Treatement medical action -->
-    <div *ngIf="action instanceof Treatment" class="row">
+    <div *ngIf="actionType === 'Treatment'" class="row">
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-12">
@@ -213,7 +227,7 @@
     </div>
 
     <!-- RadiationTherapy medical action -->
-    <div *ngIf="action instanceof RadiationTherapy" class="row">
+    <div *ngIf="actionType === 'Radiation therapy'" class="row">
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
@@ -265,7 +279,7 @@
     </div>
 
     <!-- TherapeuticRegimen medical action -->
-    <div *ngIf="action instanceof TherapeuticRegimen" class="row">
+    <div *ngIf="actionType === 'Therapeutic regimen'" class="row">
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
@@ -318,6 +332,6 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
-    <button mat-raised-button (click)="onOkClick()">Ok</button>
+    <button mat-raised-button [mat-dialog-close]="onOkClick()">Ok</button>
     <!-- <button mat-button cdkFocusInitial (click)="onOkClick()">Ok</button> -->
 </div>

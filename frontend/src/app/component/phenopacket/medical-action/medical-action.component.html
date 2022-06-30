@@ -5,7 +5,11 @@
                 multiTemplateDataRows>
                 <ng-container matColumnDef="icon">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-                    <td mat-cell *matCellDef="let element"> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-icon>
+                            {{getIcon(element)}}
+                        </mat-icon> 
+                    </td>
                 </ng-container>
 
                 <!-- Status column -->
