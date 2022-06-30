@@ -24,6 +24,7 @@ import { SearchFilterComponent } from './age-control/search-filter/search-filter
 import { AgeControlComponent } from './age-control/age-control.component';
 import { DateComponent } from './age-control/date/date.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     AgeControlComponent,
     SearchFilterComponent,
     DateComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    OntologyClassComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -62,7 +64,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     AgeControlComponent,
     SearchFilterComponent,
     DateComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    OntologyClassComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

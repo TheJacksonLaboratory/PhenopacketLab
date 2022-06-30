@@ -1,0 +1,18 @@
+<div id="ontology-section">
+    <label>{{title}}</label>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Label</mat-label>
+        <input matInput type="text" [formControl]="labelControl">
+        <button *ngIf="label" matSuffix mat-icon-button aria-label="Clear" (click)="label=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>ID</mat-label>
+        <input matInput type="text" [formControl]="idControl">
+        <button *ngIf="id" matSuffix mat-icon-button aria-label="Clear" (click)="id=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
