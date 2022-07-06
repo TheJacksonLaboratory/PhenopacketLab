@@ -164,6 +164,10 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
         return id;
     }
 
+    getTarget(medicalAction: MedicalAction) {
+        return medicalAction.treatmentTarget?.label;
+    }
+
     /**
      * Get Procedure, Treatment, RadiationTherapy or TherapeuticRegimen icon
      * @param medicalAction 

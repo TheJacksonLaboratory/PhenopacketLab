@@ -39,6 +39,7 @@ export class MedicalActionDetailComponent {
   endTime: TimeElement;
   regimenStatus: RegimenStatus;
 
+  actionType: string;
   doseIntervalColumns = ['unit', 'value', 'frquency', 'interval', 'remove'];
   
   @Input()
@@ -99,12 +100,22 @@ export class MedicalActionDetailComponent {
           // update medical action
           this.medicalAction = updatedMedicalAction;
           this.updateMedicalActionAction();
+          this.actionType = this.getActionType();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);
         }
       }
     });
     return dialogRef;
+  }
+
+  getActionType(): string {
+    if (this.medicalAction) {
+      if (this.medicalAction.action) {
+        return this.medicalAction.action.toString();
+      }
+    }
+    return '';
   }
 
   deleteDoseInterval(element: DoseInterval) {

@@ -49,7 +49,6 @@ export class MedicalActionDetailDialogComponent {
 
   medicalAction: MedicalAction;
   diseases: Disease[];
-  selectedDisease: Disease;
   terminationReasonStr: string;
   // actionTypeControl = new FormControl('', Validators.required);
   // actionTypeSubscription: Subscription;
@@ -57,8 +56,12 @@ export class MedicalActionDetailDialogComponent {
   actionTypes = ["Procedure", "Treatment", "Radiation therapy", "Therapeutic regimen"];
   actionType: string;
   // TODO pull data from backend endpoint
-  intents = ["Intent 1", "Intent 2", "Intent 3"];
-  responses = ["Response 1", "Response 2", "Response 3"];
+  intents = [new OntologyClass("intent-1", "Intent 1"), 
+             new OntologyClass("intent-2", "Intent 2"), 
+             new OntologyClass("intent-3", "Intent 3")];
+  responses = [new OntologyClass("resp-1", "Response 1"),
+               new OntologyClass("resp-2", "Response 2"),
+               new OntologyClass("resp-3", "Response 3")];
 
   constructor(public dialogRef: MatDialogRef<MedicalActionDetailDialogComponent>,
     public searchService: MedicalActionService,
@@ -123,19 +126,65 @@ export class MedicalActionDetailDialogComponent {
     this.medicalAction.action = this.action;
   }
 
+  onDiseaseChange(disease: Disease) {
+    console.log(disease);
+    if (this.medicalAction) {
+      this.medicalAction.treatmentTarget = disease.term;
+    }
+    // TODO 
+    // open warning diaog that action type needs to be selected first
+  }
+
+  onIntentChange(intent: OntologyClass) {
+    if (this.medicalAction) {
+      this.medicalAction.treatmentIntent = intent;
+    }
+    // TODO 
+    // open warning diaog that action type needs to be selected first
+  }
+
+  onResponseChange(response: OntologyClass) {
+    if(this.medicalAction) {
+      this.medicalAction.responseToTreatment = response;
+    }
+    // TODO 
+    // open warning diaog that action type needs to be selected first
+  }
+
   onCancelClick(): void {
     this.dialogRef.close('cancel');
   }
 
-  onOkClick() {
+  onOkClick() {    
     return { 'medical_action': this.medicalAction };
   }
 
   changeProcedureCode(eventObj: OntologyClass) {
     this.procedureCode = eventObj;
     // update medicalAction
-    console.log(`change procedure code : ${eventObj}`);
-    this.medicalAction.action.code = this.procedureCode;
+    if (this.medicalAction) {
+      this.medicalAction.action.code = this.procedureCode;
+    }
+    // TODO
+    // open warning diaog that action type needs to be selected first
+  }
+  changeAgent(eventObj: OntologyClass) {
+    this.agent = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.agent = this.agent;
+    }
+    // TODO
+    // open warning diaog that action type needs to be selected first
+  }
+  changeRouteOfAdministration(eventObj: OntologyClass) {
+    this.routeOfAdministration = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.routeOfAdministration = this.routeOfAdministration;
+    }
+    // TODO
+    // open warning diaog that action type needs to be selected first
   }
   // TODO check if this is required
   getIdentifier() {

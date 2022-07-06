@@ -27,7 +27,7 @@
                 <!-- Resolution Column -->
                 <ng-container matColumnDef="target">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Treatment Target </th>
-                    <td mat-cell *matCellDef="let element"> {{element.treatmentTarget?.label + ' [' + element.treatmentTarget?.id + ']'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{getTarget(element)}} </td>
                 </ng-container>
 
                 <!-- Severity genomic -->

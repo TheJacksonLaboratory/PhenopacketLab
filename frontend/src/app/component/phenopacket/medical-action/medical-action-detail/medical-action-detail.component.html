@@ -51,7 +51,7 @@
             </div>
         </div>
         <!-- Procedure medical action -->
-        <div *ngIf="action instanceof Procedure" class="row">
+        <div *ngIf="actionType === 'Procedure'" class="row">
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
@@ -96,7 +96,7 @@
             </div>
         </div>
         <!-- Treatement medical action -->
-        <div *ngIf="action instanceof Treatment" class="row">
+        <div *ngIf="actionType === 'Treatment'" class="row">
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12">
@@ -198,7 +198,7 @@
         </div>
 
         <!-- RadiationTherapy medical action -->
-        <div *ngIf="action instanceof RadiationTherapy" class="row">
+        <div *ngIf="actionType === 'Radiation therapy'" class="row">
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
@@ -250,7 +250,7 @@
         </div>
 
         <!-- TherapeuticRegimen medical action -->
-        <div *ngIf="action instanceof TherapeuticRegimen" class="row">
+        <div *ngIf="actionType === 'Therapeutic regimen'" class="row">
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
