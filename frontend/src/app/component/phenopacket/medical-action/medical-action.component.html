@@ -1,10 +1,10 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <table mat-table class="table-hover mat-elevation-z2" [dataSource]="medicalActionDataSource" matSort
+            <table mat-table class="table-hover mat-elevation-z2" [dataSource]="medicalActionDataSource"
                 multiTemplateDataRows>
                 <ng-container matColumnDef="icon">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                    <th mat-header-cell *matHeaderCellDef>  </th>
                     <td mat-cell *matCellDef="let element">
                         <mat-icon>
                             {{getIcon(element)}}
@@ -12,28 +12,24 @@
                     </td>
                 </ng-container>
 
-                <!-- Status column -->
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element"> {{element.action?.toString()}} </td>
                 </ng-container>
 
-                <!-- Onset Column -->
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
                     <td mat-cell *matCellDef="let element"> {{getId(element)}} </td>
                 </ng-container>
 
-                <!-- Resolution Column -->
                 <ng-container matColumnDef="target">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Treatment Target </th>
+                    <th mat-header-cell *matHeaderCellDef> Treatment Target </th>
                     <td mat-cell *matCellDef="let element"> {{getTarget(element)}} </td>
                 </ng-container>
 
-                <!-- Severity genomic -->
                 <ng-container matColumnDef="intent">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Treatment intent </th>
-                    <td mat-cell *matCellDef="let element"> {{element.treatmentIntent?.label + ' [' + element.treatmentIntent?.id + ']'}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Treatment intent </th>
+                    <td mat-cell *matCellDef="let element"> {{getIntent(element)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="remove">

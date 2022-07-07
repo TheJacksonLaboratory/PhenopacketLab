@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -29,7 +28,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     itemName = "Medical Action";
 
     @ViewChild('medicalActionPaginator', { static: true }) medicalActionPaginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    // @ViewChild(MatSort, { static: true }) sort: MatSort;
 
     //Table items
     displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
@@ -88,6 +87,8 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
                     let updatedMedicalAction = result.medical_action;
+                    console.log('medical_action:');
+                    console.log(updatedMedicalAction);
                     if (updatedMedicalAction) {
                         // update medical action
                         let medicalAction = updatedMedicalAction;
@@ -140,9 +141,9 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     }
 
-    private clearSort() {
-        this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    }
+    // private clearSort() {
+    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    // }
 
     /**
      * Retrieve the correct MedicalAction id
@@ -165,7 +166,19 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     }
 
     getTarget(medicalAction: MedicalAction) {
-        return medicalAction.treatmentTarget?.label;
+        let target = '';
+        if (medicalAction) {
+            target = `${medicalAction.treatmentTarget?.label} [${medicalAction.treatmentTarget?.id}]`;
+        }
+        return target;
+    }
+
+    getIntent(medicalAction: MedicalAction) {
+        let intent = '';
+        if (medicalAction) {
+            intent = `${medicalAction.treatmentIntent?.label} [${medicalAction.treatmentIntent?.id}]`;
+        }
+        return intent;
     }
 
     /**
