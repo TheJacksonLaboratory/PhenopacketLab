@@ -80,6 +80,8 @@ export class MedicalActionDetailComponent {
           this.endTime = this.action.endTime;
           this.regimenStatus = this.action.regimenStatus;
         }
+        // set actionType 
+        this.actionType = this.action.toString();
       }
     }
 
@@ -100,22 +102,12 @@ export class MedicalActionDetailComponent {
           // update medical action
           this.medicalAction = updatedMedicalAction;
           this.updateMedicalActionAction();
-          this.actionType = this.getActionType();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);
         }
       }
     });
     return dialogRef;
-  }
-
-  getActionType(): string {
-    if (this.medicalAction) {
-      if (this.medicalAction.action) {
-        return this.medicalAction.action.toString();
-      }
-    }
-    return '';
   }
 
   deleteDoseInterval(element: DoseInterval) {
