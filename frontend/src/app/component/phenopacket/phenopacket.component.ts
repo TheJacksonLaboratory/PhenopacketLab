@@ -23,8 +23,8 @@ export class PhenopacketComponent implements OnInit {
   @Output() onLastEncounterDateChanged = new EventEmitter<any>();
 
   phenoIdControl = new FormControl('', [Validators.required]);
-  phenoSexControl = new FormControl('', [Validators.required]);
-  phenoDobControl = new FormControl(new Date(), [Validators.required]);
+  phenoSexControl = new FormControl('');
+  phenoDobControl = new FormControl(new Date());
   lastEncounterDateControl = new FormControl(new Date());
   phenopacketIdSubscription: Subscription;
   phenopacketSexSubscription: Subscription;
