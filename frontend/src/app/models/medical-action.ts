@@ -10,14 +10,6 @@ export class MedicalAction {
     responseToTreatment: OntologyClass;
     adverseEvents: OntologyClass;
     treatmentTerminationReason: OntologyClass;
-
-    /**
-     * 
-     * @param action Procedure, Treatment, RadiationTherapy or TherapeuticRegimen
-     */
-    constructor(action: Procedure | Treatment | RadiationTherapy | TherapeuticRegimen) {
-        this.action = action;
-    }
 }
 
 export class Treatment {
