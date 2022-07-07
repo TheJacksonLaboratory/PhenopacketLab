@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from 'src/app/component/shared/spinner-dialog/spinner-dialog.component';
@@ -56,12 +57,18 @@ export class MedicalActionDetailDialogComponent {
   actionTypes = ["Procedure", "Treatment", "Radiation therapy", "Therapeutic regimen"];
   actionType: string;
   // TODO pull data from backend endpoint
-  intents = [new OntologyClass("intent-1", "Intent 1"), 
-             new OntologyClass("intent-2", "Intent 2"), 
-             new OntologyClass("intent-3", "Intent 3")];
+  intents = [new OntologyClass("intent-1", "Intent 1"),
+  new OntologyClass("intent-2", "Intent 2"),
+  new OntologyClass("intent-3", "Intent 3")];
   responses = [new OntologyClass("resp-1", "Response 1"),
-               new OntologyClass("resp-2", "Response 2"),
-               new OntologyClass("resp-3", "Response 3")];
+  new OntologyClass("resp-2", "Response 2"),
+  new OntologyClass("resp-3", "Response 3")];
+
+  // Dose Intervals table
+  doseIntervalDisplayedColumns: string[] = DoseIntervalColumns.map((col) => col.key);
+  doseIntervalColumnsSchema: any = DoseIntervalColumns;
+  doseIntervalDatasource = new MatTableDataSource<DoseIntervalTableModel>();
+  valid: any = {};
 
   constructor(public dialogRef: MatDialogRef<MedicalActionDetailDialogComponent>,
     public searchService: MedicalActionService,
@@ -144,7 +151,7 @@ export class MedicalActionDetailDialogComponent {
   }
 
   onResponseChange(response: OntologyClass) {
-    if(this.medicalAction) {
+    if (this.medicalAction) {
       this.medicalAction.responseToTreatment = response;
     }
     // TODO 
@@ -155,7 +162,7 @@ export class MedicalActionDetailDialogComponent {
     this.dialogRef.close('cancel');
   }
 
-  onOkClick() {    
+  onOkClick() {
     return { 'medical_action': this.medicalAction };
   }
 
@@ -236,4 +243,89 @@ export class MedicalActionDetailDialogComponent {
 
   /** end body site search */
 
+  // Doseinterval table
+  editRow(row: DoseIntervalTableModel) {
+    // if (row.id === 0) {
+    //   this.userService.addUser(row).subscribe((newUser: DoseIntervalTableModel) => {
+    //     row.id = newUser.id;
+    //     row.isEdit = false;
+    //   });
+    // } else {
+    //   this.userService.updateUser(row).subscribe(() => (row.isEdit = false));
+
+    // }
+    row.isEdit = false;
+  }
+
+  addRow() {
+    const newRow: DoseIntervalTableModel = {
+      id: 0,
+      unit: '',
+      value: '',
+      frequency: '',
+      interval: '',
+      isEdit: true
+    };
+    this.doseIntervalDatasource.data = [newRow, ...this.doseIntervalDatasource.data];
+  }
+
+  removeRow(id: number) {
+    // this.userService.deleteUser(id).subscribe(() => {
+    this.doseIntervalDatasource.data = this.doseIntervalDatasource.data.filter(
+      (u: DoseIntervalTableModel) => u.id !== id
+    );
+    // });
+  }
+  inputHandler(e: any, id: number, key: string) {
+    if (!this.valid[id]) {
+      this.valid[id] = {};
+    }
+    this.valid[id][key] = e.target.validity.valid;
+  }
+
+  disableSubmit(id: number) {
+    if (this.valid[id]) {
+      return Object.values(this.valid[id]).some((item) => item === false);
+    }
+    return false;
+  }
 }
+
+export interface DoseIntervalTableModel {
+  id: number;
+  unit: string;
+  value: string;
+  frequency: string;
+  interval: string;
+  isEdit: boolean;
+}
+
+export const DoseIntervalColumns = [
+  {
+    key: 'unit',
+    type: 'text',
+    label: 'Unit',
+    required: true,
+  },
+  {
+    key: 'value',
+    type: 'number',
+    label: 'Value',
+  },
+  {
+    key: 'frequency',
+    type: 'text',
+    label: 'Schedule frequency',
+    required: true,
+  },
+  {
+    key: 'interval',
+    type: 'text',
+    label: 'Interval',
+  },
+  {
+    key: 'isEdit',
+    type: 'isEdit',
+    label: '',
+  },
+];

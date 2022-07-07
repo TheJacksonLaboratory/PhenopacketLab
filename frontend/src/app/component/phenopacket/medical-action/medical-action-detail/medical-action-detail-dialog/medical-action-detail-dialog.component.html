@@ -66,59 +66,64 @@
     </div>
     <!-- Procedure medical action -->
     <div *ngIf="actionType === 'Procedure'" class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12">
-                    <app-ontology-class [title]="'Code'" [ontologyObject]="procedureCode"
-                        (ontologyObjectEvent)="changeProcedureCode($event)"></app-ontology-class>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <b>Body sites:</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <app-search-box [showHint]="false" [itemName]="'Body sites'" [searchLabel]="'Body sites'"
-                        [placeHolderTxt]="'Select/add body site'" [localStorageKey]="bodySitesStorageKey"
-                        [searchService]="searchService" (selectedSearchItem)="onSearchBodySiteChange($event)"
-                        [resetSearch]="false"></app-search-box>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <mat-list *ngFor="let bodySite of bodySites">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <li> {{bodySite?.label + ' [' + bodySite?.id + ']'}}
-                                    <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                        class="pull-right" matTooltip="Delete body site"
-                                        (click)="removeBodySite(bodySite)">
-                                        <mat-icon matSuffix>clear</mat-icon>
-                                    </button>
-                                </li>
-                            </div>
-
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-ontology-class [title]="'Code'" [ontologyObject]="procedureCode"
+                                (ontologyObjectEvent)="changeProcedureCode($event)"></app-ontology-class>
                         </div>
-                    </mat-list>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Body sites:</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-search-box [showHint]="false" [itemName]="'Body sites'" [searchLabel]="'Body sites'"
+                                [placeHolderTxt]="'Select/add body site'" [localStorageKey]="bodySitesStorageKey"
+                                [searchService]="searchService" (selectedSearchItem)="onSearchBodySiteChange($event)"
+                                [resetSearch]="false"></app-search-box>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-list *ngFor="let bodySite of bodySites">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <li> {{bodySite?.label + ' [' + bodySite?.id + ']'}}
+                                            <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
+                                                class="pull-right" matTooltip="Delete body site"
+                                                (click)="removeBodySite(bodySite)">
+                                                <mat-icon matSuffix>clear</mat-icon>
+                                            </button>
+                                        </li>
+                                    </div>
+
+                                </div>
+                            </mat-list>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-        </div>
-        <div class="col-md-4">
+            <br>
             <div class="row">
                 <div class="col-md-12">
-                    <b>Performed on:</b>
-                </div>
-            </div>
-            <div *ngFor="let perform of performedOn;">
-                <div class="row">
-                    <div class="col-md-12">
-                        {{perform?.toString()}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Performed on:</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" *ngFor="let perform of performedOn;">
+                            {{perform?.toString()}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,39 +132,45 @@
     </div>
     <!-- Treatement medical action -->
     <div *ngIf="actionType === 'Treatment'" class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12">
-                    <app-ontology-class [title]="'Agent'" [ontologyObject]="agent"
-                        (ontologyObjectEvent)="changeAgent($event)"></app-ontology-class>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <app-ontology-class [title]="'Route of administration'" [ontologyObject]="routeOfAdministration"
-                        (ontologyObjectEvent)="changeRouteOfAdministration($event)"></app-ontology-class>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <b>Drug type</b>
+                            <app-ontology-class [title]="'Agent'" [ontologyObject]="agent"
+                                (ontologyObjectEvent)="changeAgent($event)"></app-ontology-class>
                         </div>
                     </div>
+                    <br>
+                </div>
+
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            {{drugType}}
+                            <app-ontology-class [title]="'Route of administration'"
+                                [ontologyObject]="routeOfAdministration"
+                                (ontologyObjectEvent)="changeRouteOfAdministration($event)"></app-ontology-class>
                         </div>
                     </div>
                 </div>
-
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <b>Drug type</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{drugType}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
@@ -169,51 +180,78 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table mat-table class="table-hover mat-elevation-z2" [dataSource]="doseIntervals" matSort
-                                multiTemplateDataRows>
-                                <ng-container matColumnDef="unit">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.quantity.unit.label}} </td>
-                                </ng-container>
-        
-                                <ng-container matColumnDef="value">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.quantity.value}} </td>
-                                </ng-container>
-        
-                                <ng-container matColumnDef="frequency">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Schedule frequency </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.scheduleFrequency.label + " [" +
-                                        element?.scheduleFrequency.id + "]"}} </td>
-                                </ng-container>
-        
-                                <ng-container matColumnDef="interval">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Interval </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.interval.start + " - " +
-                                        element?.interval.end }} </td>
-                                </ng-container>
-        
-                                <ng-container matColumnDef="remove">
-                                    <th mat-header-cell *matHeaderCellDef></th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                            class="pull-right" matTooltip="Delete dose interval"
-                                            (click)="deleteDoseInterval(element)">
-                                            <mat-icon matSuffix>delete</mat-icon>
-                                        </button>
-                                    </td>
-                                </ng-container>
-        
-                                <tr mat-row *matRowDef="let element; columns: doseIntervalColumns;" class="example-element-row">
-                                </tr>
-                                <tr mat-header-row *matHeaderRowDef="doseIntervalColumns; sticky: true"></tr>
-        
-                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button mat-raised-button (click)="addRow()" class="add-button mat-elevation-z2">
+                                        Add dose interval
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table mat-table class="table-hover mat-elevation-z2"
+                                        [dataSource]="doseIntervalDatasource">
+                                        <ng-container [matColumnDef]="col.key"
+                                            *ngFor="let col of doseIntervalColumnsSchema">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                {{ col.label }}
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                                                    <div class="pull-right" *ngSwitchCase="'isEdit'">
+                                                        <button mat-button (click)="element.isEdit = !element.isEdit">
+                                                            <mat-icon>edit</mat-icon>
+                                                        </button>
+                                                        <button mat-button class="pull-right"
+                                                            (click)="removeRow(element.id)">
+                                                            <mat-icon>close</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                    <span *ngSwitchCase="'date'">
+                                                        {{ element[col.key] | date: 'mediumDate' }}
+                                                    </span>
+                                                    <span *ngSwitchDefault>
+                                                        {{ element[col.key] }}
+                                                    </span>
+                                                </div>
+                                                <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                                                    <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                                                        <button mat-button (click)="editRow(element)"
+                                                            [disabled]="disableSubmit(element.id)">
+                                                            Done
+                                                        </button>
+                                                    </div>
+                                                    <!-- <mat-form-field class="form-input" *ngSwitchCase="'date'"
+                                                        appearance="fill">
+                                                        <mat-label>Choose a date</mat-label>
+                                                        <input matInput [matDatepicker]="picker"
+                                                            [(ngModel)]="element[col.key]" />
+                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field> -->
+                                                    <mat-form-field class="form-input" *ngSwitchDefault>
+                                                        <input matInput [required]="col.required"
+                                                            [pattern]="col.pattern" [type]="col.type"
+                                                            [(ngModel)]="element[col.key]"
+                                                            (change)="inputHandler($event, element.id, col.key)" />
+                                                    </mat-form-field>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="doseIntervalDisplayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: doseIntervalDisplayedColumns">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
             </div>
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
@@ -223,13 +261,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            {{cumulativeDose?.value + " " + cumulativeDose?.unit.label + " [" + cumulativeDose?.unit.id
+                            {{cumulativeDose?.value + " " + cumulativeDose?.unit.label + " [" +
+                            cumulativeDose?.unit.id
                             + "]"}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
     </div>
 
