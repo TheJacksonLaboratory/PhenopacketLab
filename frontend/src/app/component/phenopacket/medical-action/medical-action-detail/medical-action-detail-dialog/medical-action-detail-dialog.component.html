@@ -5,8 +5,8 @@
             <mat-form-field appearance="outline">
                 <mat-label>Treatment target</mat-label>
                 <mat-select (selectionChange)="onDiseaseChange($event)">
-                    <mat-option *ngFor="let disease of diseases" [value]="disease.term.id">
-                        {{disease.term.id}}
+                    <mat-option *ngFor="let disease of diseases" [value]="disease">
+                        {{disease.term.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -15,7 +15,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Treatment intent</mat-label>
                 <mat-select (selectionChange)="onIntentChange($event)">
-                    <mat-option *ngFor="let intent of intents" [value]="intents">
+                    <mat-option *ngFor="let intent of intents" [value]="intent">
                         {{intent.label}}
                     </mat-option>
                 </mat-select>
@@ -207,9 +207,9 @@
                                                             <mat-icon>close</mat-icon>
                                                         </button>
                                                     </div>
-                                                    <span *ngSwitchCase="'date'">
+                                                    <!-- <span *ngSwitchCase="'date'">
                                                         {{ element[col.key] | date: 'mediumDate' }}
-                                                    </span>
+                                                    </span> -->
                                                     <span *ngSwitchDefault>
                                                         {{ element[col.key] }}
                                                     </span>
@@ -230,7 +230,7 @@
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker #picker></mat-datepicker>
                                                     </mat-form-field> -->
-                                                    <mat-form-field class="form-input" *ngSwitchDefault>
+                                                    <mat-form-field class="form-input" appearance="outline" *ngSwitchDefault>
                                                         <input matInput [required]="col.required"
                                                             [pattern]="col.pattern" [type]="col.type"
                                                             [(ngModel)]="element[col.key]"
@@ -377,7 +377,7 @@
                         <div class="col-md-12">
                             <mat-form-field style="width: 25%" appearance="outline">
                                 <mat-label>Regimen status</mat-label>
-                                <mat-select [(ngModel)]="regimenStatus" name="regimenStatus">
+                                <mat-select (selectionChange)="onRegimenStatusChange($event)" name="regimenStatus">
                                     <mat-option *ngFor="let status of regimenStatuses" [value]="status">
                                         {{status}}
                                     </mat-option>

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
+import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
@@ -109,10 +109,7 @@ export class MedicalActionDetailDialogComponent {
         }
       }
     } else {
-      // default to Procedure and initialize medical action
-      this.action = new Procedure();
-      this.medicalAction = new MedicalAction(this.action);
-      this.actionType = this.actionTypes[0];
+      this.medicalAction = new MedicalAction();
     }
   }
 
@@ -127,28 +124,26 @@ export class MedicalActionDetailDialogComponent {
     } else if (this.actionType === 'Therapeutic regimen') {
       this.action = new TherapeuticRegimen();
     }
-    if (this.medicalAction === undefined) {
-      this.medicalAction = new MedicalAction(this.action);
-    }
     this.medicalAction.action = this.action;
   }
 
-  onDiseaseChange(disease: Disease) {
-    console.log(disease);
+  onDiseaseChange(eventObj: any) {
     if (this.medicalAction) {
-      this.medicalAction.treatmentTarget = disease.term;
+      // retrieve disease term from event obj
+      this.medicalAction.treatmentTarget = eventObj.value?.term;
     }
   }
 
-  onIntentChange(intent: OntologyClass) {
+  onIntentChange(eventObj: any) {
     if (this.medicalAction) {
-      this.medicalAction.treatmentIntent = intent;
+      // retrieve intent from object
+      this.medicalAction.treatmentIntent = eventObj.value;
     }
   }
 
-  onResponseChange(response: OntologyClass) {
+  onResponseChange(eventObj: any) {
     if (this.medicalAction) {
-      this.medicalAction.responseToTreatment = response;
+      this.medicalAction.responseToTreatment = eventObj.value;
     }
   }
 
@@ -224,15 +219,6 @@ export class MedicalActionDetailDialogComponent {
 
   // Doseinterval table
   editRow(row: DoseIntervalTableModel) {
-    // if (row.id === 0) {
-    //   this.userService.addUser(row).subscribe((newUser: DoseIntervalTableModel) => {
-    //     row.id = newUser.id;
-    //     row.isEdit = false;
-    //   });
-    // } else {
-    //   this.userService.updateUser(row).subscribe(() => (row.isEdit = false));
-
-    // }
     row.isEdit = false;
   }
 
@@ -249,11 +235,9 @@ export class MedicalActionDetailDialogComponent {
   }
 
   removeRow(id: number) {
-    // this.userService.deleteUser(id).subscribe(() => {
     this.doseIntervalDatasource.data = this.doseIntervalDatasource.data.filter(
       (u: DoseIntervalTableModel) => u.id !== id
     );
-    // });
   }
   inputHandler(e: any, id: number, key: string) {
     if (!this.valid[id]) {
@@ -268,6 +252,7 @@ export class MedicalActionDetailDialogComponent {
     }
     return false;
   }
+
   // RadiationTherapy
   changeModality(eventObj: OntologyClass) {
     this.modality = eventObj;
@@ -306,8 +291,8 @@ export class MedicalActionDetailDialogComponent {
       this.medicalAction.action.identifier = this.identifier;
     }
   }
-  onRegimenStatusChange(eventObj: RegimenStatus) {
-    this.regimenStatus = eventObj;
+  onRegimenStatusChange(eventObj: any) {
+    this.regimenStatus = eventObj.value;
     // update medicalAction
     if (this.medicalAction) {
       this.medicalAction.action.regimenStatus = this.regimenStatus;
