@@ -61,10 +61,10 @@ export class RadiationTherapy {
 }
 
 export enum RegimenStatus {
-    UNKNOWN_STATUS,
-    STARTED,
-    COMPLETED,
-    DISCONTINUED
+    UNKNOWN_STATUS = "Unknown",
+    STARTED = "Started",
+    COMPLETED = "Completed",
+    DISCONTINUED = "Discontinued"
 }
 export class TherapeuticRegimen {
     identifier: OntologyClass | ExternalReference;

@@ -49,7 +49,7 @@
         <div class="col-md-3">
             <mat-form-field appearance="outline">
                 <mat-label>Select an action type</mat-label>
-                <mat-select (selectionChange)="onActionTypeChange($event)">
+                <mat-select (selectionChange)="onActionTypeChange($event)" [(value)]="actionType">
                     <mat-option *ngFor="let type of actionTypes" [value]="type">
                         {{type}}
                     </mat-option>
@@ -279,24 +279,16 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <b>Modality</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{modality?.label + " [" + modality?.id + "]"}}
+                    <app-ontology-class [title]="'Modality'" [ontologyObject]="modality"
+                        (ontologyObjectEvent)="changeModality($event)"></app-ontology-class>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <b>Body site</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{bodySite?.label + " [" + bodySite?.id + "]"}}
+                    <app-ontology-class [title]="'Body site'" [ontologyObject]="bodySite"
+                        (ontologyObjectEvent)="changeBodySite($event)"></app-ontology-class>
                 </div>
             </div>
         </div>
@@ -308,7 +300,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    {{dosage}} Gy
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <input type="number" class="form-control" matInput name="dosage" placeholder="Dosage in Gy"
+                            (change)="changeDosage($event)" appearance="outline">
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -320,7 +315,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    {{fractions}}
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <input type="number" class="form-control" matInput name="fractions" placeholder="Fractions"
+                            (change)="changeFractions($event)" appearance="outline">
+                    </mat-form-field>
                 </div>
             </div>
         </div>
@@ -328,54 +326,70 @@
 
     <!-- TherapeuticRegimen medical action -->
     <div *ngIf="actionType === 'Therapeutic regimen'" class="row">
-        <div class="col-md-3">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <app-ontology-class [title]="'Identifier'" [ontologyObject]="identifier"
+                        (ontologyObjectEvent)="changeIdentifier($event)"></app-ontology-class>
+
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-md-12">
-                    <b>Identifier</b>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Start time</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-age-control></app-age-control>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>End time</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-age-control></app-age-control>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    {{getIdentifier()}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <b>Status</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field style="width: 25%" appearance="outline">
+                                <mat-label>Regimen status</mat-label>
+                                <mat-select [(ngModel)]="regimenStatus" name="regimenStatus">
+                                    <mat-option *ngFor="let status of regimenStatuses" [value]="status">
+                                        {{status}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <b>Start</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{startTime}}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <b>End</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{endTime}}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <b>Regimen status</b>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{regimenStatus}}
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 <div mat-dialog-actions>

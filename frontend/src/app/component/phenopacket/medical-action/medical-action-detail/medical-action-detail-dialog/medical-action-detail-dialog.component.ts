@@ -1,10 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
-import { SpinnerDialogComponent } from 'src/app/component/shared/spinner-dialog/spinner-dialog.component';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
@@ -43,16 +39,15 @@ export class MedicalActionDetailDialogComponent {
   dosage: number;
   fractions: number;
   // therapeutic regimen
-  identifier: OntologyClass | ExternalReference;;
+  identifier: any;
   startTime: TimeElement;
   endTime: TimeElement;
+  regimenStatuses = Object.values(RegimenStatus);
   regimenStatus: RegimenStatus;
 
   medicalAction: MedicalAction;
   diseases: Disease[];
   terminationReasonStr: string;
-  // actionTypeControl = new FormControl('', Validators.required);
-  // actionTypeSubscription: Subscription;
 
   actionTypes = ["Procedure", "Treatment", "Radiation therapy", "Therapeutic regimen"];
   actionType: string;
@@ -113,6 +108,11 @@ export class MedicalActionDetailDialogComponent {
           this.regimenStatus = this.action.regimenStatus;
         }
       }
+    } else {
+      // default to Procedure and initialize medical action
+      this.action = new Procedure();
+      this.medicalAction = new MedicalAction(this.action);
+      this.actionType = this.actionTypes[0];
     }
   }
 
@@ -138,24 +138,18 @@ export class MedicalActionDetailDialogComponent {
     if (this.medicalAction) {
       this.medicalAction.treatmentTarget = disease.term;
     }
-    // TODO 
-    // open warning diaog that action type needs to be selected first
   }
 
   onIntentChange(intent: OntologyClass) {
     if (this.medicalAction) {
       this.medicalAction.treatmentIntent = intent;
     }
-    // TODO 
-    // open warning diaog that action type needs to be selected first
   }
 
   onResponseChange(response: OntologyClass) {
     if (this.medicalAction) {
       this.medicalAction.responseToTreatment = response;
     }
-    // TODO 
-    // open warning diaog that action type needs to be selected first
   }
 
   onCancelClick(): void {
@@ -172,8 +166,6 @@ export class MedicalActionDetailDialogComponent {
     if (this.medicalAction) {
       this.medicalAction.action.code = this.procedureCode;
     }
-    // TODO
-    // open warning diaog that action type needs to be selected first
   }
   changeAgent(eventObj: OntologyClass) {
     this.agent = eventObj;
@@ -181,8 +173,6 @@ export class MedicalActionDetailDialogComponent {
     if (this.medicalAction) {
       this.medicalAction.action.agent = this.agent;
     }
-    // TODO
-    // open warning diaog that action type needs to be selected first
   }
   changeRouteOfAdministration(eventObj: OntologyClass) {
     this.routeOfAdministration = eventObj;
@@ -190,17 +180,6 @@ export class MedicalActionDetailDialogComponent {
     if (this.medicalAction) {
       this.medicalAction.action.routeOfAdministration = this.routeOfAdministration;
     }
-    // TODO
-    // open warning diaog that action type needs to be selected first
-  }
-  // TODO check if this is required
-  getIdentifier() {
-    if (this.identifier instanceof OntologyClass) {
-      return `${this.identifier.label} [${this.identifier.id}]`;
-    } else if (this.identifier instanceof ExternalReference) {
-      return `${this.identifier.reference} [${this.identifier.id}]`;
-    }
-    return '';
   }
 
   /** Body site search/add */
@@ -288,6 +267,51 @@ export class MedicalActionDetailDialogComponent {
       return Object.values(this.valid[id]).some((item) => item === false);
     }
     return false;
+  }
+  // RadiationTherapy
+  changeModality(eventObj: OntologyClass) {
+    this.modality = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.modality = this.modality;
+    }
+  }
+  changeBodySite(eventObj: OntologyClass) {
+    this.bodySite = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.bodySite = this.bodySite;
+    }
+  }
+  changeDosage(eventObj: number) {
+    this.dosage = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.dosage = this.dosage;
+    }
+  }
+  changeFractions(eventObj: number) {
+    this.fractions = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.fractions = this.fractions;
+    }
+  }
+
+  // Therapeutic regimen
+  changeIdentifier(eventObj: any) {
+    this.identifier = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.identifier = this.identifier;
+    }
+  }
+  onRegimenStatusChange(eventObj: RegimenStatus) {
+    this.regimenStatus = eventObj;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.regimenStatus = this.regimenStatus;
+    }
   }
 }
 
