@@ -1,6 +1,19 @@
 h3 {
   margin-left: 15px;
 }
+// vital status area
+#vital-status {
+  border-radius: 4px !important;
+  border: 2px solid lightgrey;
+  padding: 10px;
+  margin: 0px;
+}
+#vital-status:hover {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 0px;
+}
+// Phenopacket menu/link to Phenopacket objects
 .column-1 {
   width: 200px;
   float: left;
@@ -13,7 +26,6 @@ h3 {
     padding: 20px;
   }
 }
-
 .active {
   border-radius: 4px !important;
   outline: 1px solid #ddd;
@@ -37,6 +49,16 @@ li {
   padding: 12px;
   cursor: pointer;
   font-size: 14px;
+  margin: 5px;
+}
+// li {
+//   font-size : 2em;
+//   margin: 1em 0;
+// }
+
+li > *{
+  display: inline-block;
+  vertical-align: middle;
 }
 
 li:after {
@@ -54,14 +76,8 @@ a {
     width: 60% !important;
   }
 }
-#vital-status {
-  border-radius: 4px !important;
-  border: 2px solid lightgrey;
-  padding: 10px;
-  margin: 0px;
+// hover button
+.hover-icon:hover {
+  color: darkgrey;
 }
-#vital-status:hover {
-  border: 2px solid black;
-  padding: 10px;
-  margin: 0px;
-}
+
