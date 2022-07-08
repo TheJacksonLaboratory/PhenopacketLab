@@ -32,6 +32,7 @@ export class MedicalActionDetailDialogComponent {
   routeOfAdministration: OntologyClass;
   doseIntervals: DoseInterval[];
   drugType: DrugType;
+  drugTypes = Object.values(DrugType);
   cumulativeDose: Quantity;
   // radiationtherapy
   modality: OntologyClass;
@@ -216,6 +217,13 @@ export class MedicalActionDetailDialogComponent {
   // }
 
   /** end body site search */
+  onDrugTypeChange(eventObj: any) {
+    this.drugType = eventObj.value;
+    // update medicalAction
+    if (this.medicalAction) {
+      this.medicalAction.action.drugType = this.drugType;
+    }
+  }
 
   // Doseinterval table
   editRow(row: DoseIntervalTableModel) {

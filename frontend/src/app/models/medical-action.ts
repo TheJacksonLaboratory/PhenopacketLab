@@ -33,10 +33,10 @@ export class DoseInterval {
     interval: TimeInterval;
 }
 export enum DrugType {
-    UNKNOWN_DRUG_TYPE,
-    PRESCRIPTION,
-    EHR_MEDICATION_LIST,
-    ADMINISTRATION_RELATED_TO_PROCEDURE
+    UNKNOWN_DRUG_TYPE = "Unknown",
+    PRESCRIPTION = "Prescription",
+    EHR_MEDICATION_LIST = "EHR medication list",
+    ADMINISTRATION_RELATED_TO_PROCEDURE = "Administration related to procedure"
 }
 export class RadiationTherapy {
     modality: OntologyClass;
