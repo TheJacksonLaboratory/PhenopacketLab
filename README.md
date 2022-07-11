@@ -1,5 +1,7 @@
 # PhenopacketLab
 
+[![Java CI with Maven](https://github.com/TheJacksonLaboratory/PhenopacketLab/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/TheJacksonLaboratory/PhenopacketLab/actions/workflows/maven.yml)
+
 This Maven project is a test project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (`phenopacketlab-restapi`). 
 
 The project can be deployed in  multiple ways: 
