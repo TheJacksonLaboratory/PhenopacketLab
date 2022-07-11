@@ -100,7 +100,7 @@
                                             <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
                                                 class="pull-right" matTooltip="Delete body site"
                                                 (click)="removeBodySite(bodySite)">
-                                                <mat-icon matSuffix>clear</mat-icon>
+                                                <mat-icon matSuffix>delete</mat-icon>
                                             </button>
                                         </li>
                                     </div>
@@ -211,7 +211,7 @@
                                                         </button>
                                                         <button mat-button class="pull-right"
                                                             (click)="removeRow(element.id)">
-                                                            <mat-icon>close</mat-icon>
+                                                            <mat-icon>delete</mat-icon>
                                                         </button>
                                                     </div>
                                                     <!-- <span *ngSwitchCase="'date'">

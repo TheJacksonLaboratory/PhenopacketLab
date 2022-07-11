@@ -193,7 +193,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             } else if (medicalAction.action.toString() === 'Treatment') {
                 return 'vaccines';
             } else if (medicalAction.action.toString() === 'Radiation therapy') {
-                return 'microwave';
+                return 'radiology';
             } else if (medicalAction.action.toString() === 'Therapeutic regimen') {
                 return 'medication';
             }
