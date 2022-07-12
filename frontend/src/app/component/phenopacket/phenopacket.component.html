@@ -66,7 +66,8 @@
                                         <h5><b>Vital Status</b></h5>
                                     </div>
                                     <div class="col-md-6">
-                                        <button  class="hover-icon pull-right" (click)="editStatus()" mat-icon-button type="submit" matTooltip="Edit Vital Status">
+                                        <button class="hover-icon pull-right" (click)="editStatus()" mat-icon-button
+                                            type="submit" matTooltip="Edit Vital Status">
                                             <mat-icon mat-fab>edit</mat-icon>
                                         </button>
                                     </div>
@@ -92,11 +93,11 @@
                                     </div>
                                 </div>
                             </div>
-                
+
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="col-md-4">
                 <div class="row">
@@ -108,12 +109,13 @@
                                 </mat-option>
                             </mat-select>
                             <mat-label>
-                               <b>Sex</b>
+                                <b>Sex</b>
                             </mat-label>
                         </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <mat-icon matTooltip="Observed apparent sex of the individual"  class="hover-icon pull-left help-icon">help_outline</mat-icon>
+                        <mat-icon matTooltip="Observed apparent sex of the individual"
+                            class="hover-icon pull-left help-icon">help_outline</mat-icon>
                     </div>
                 </div>
                 <div class="row">
@@ -130,7 +132,8 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <mat-icon matTooltip="The karyotypic sex of the individual" class="hover-icon pull-left help-icon">help_outline</mat-icon>
+                        <mat-icon matTooltip="The karyotypic sex of the individual"
+                            class="hover-icon pull-left help-icon">help_outline</mat-icon>
                     </div>
                 </div>
                 <div class="row">
@@ -149,11 +152,12 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <mat-icon matTooltip="Self-identified gender" class="hover-icon pull-left help-icon">help_outline</mat-icon>
+                        <mat-icon matTooltip="Self-identified gender" class="hover-icon pull-left help-icon">
+                            help_outline</mat-icon>
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
         <br>
@@ -162,75 +166,164 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="column-1">
-                    <ul class="vertical-menu">
-                        <li (click)="viewMode ='tab1'" [ngClass]="{'active':viewMode =='tab1'}">
-                            <mat-icon class="tab-icon">list</mat-icon>  Phenotypic Features
-                        </li>
-                        <li (click)="viewMode ='tab2'" [ngClass]="{'active':viewMode =='tab2'}">
-                            <mat-icon class="tab-icon">square_foot</mat-icon>  Measurements
-                        </li>
-                        <li (click)="viewMode ='tab3'" [ngClass]="{'active':viewMode =='tab3'}">
-                            <mat-icon class="tab-icon">biotech</mat-icon>  Biosamples
-                        </li>
-                        <li (click)="viewMode ='tab4'" [ngClass]="{'active':viewMode =='tab4'}">
-                            <mat-icon class="tab-icon">interpreter_mode</mat-icon>  Interpretations
-                        </li>
-                        <li (click)="viewMode ='tab5'" [ngClass]="{'active':viewMode =='tab5'}">
-                            <mat-icon class="tab-icon">coronavirus</mat-icon>  Diseases
-                        </li>
-                        <li (click)="viewMode ='tab6'" [ngClass]="{'active':viewMode =='tab6'}">
-                            <mat-icon class="tab-icon">medical_services</mat-icon>  Medical Actions
-                        </li>
-                        <li (click)="viewMode ='tab7'" [ngClass]="{'active':viewMode =='tab7'}">
-                            <mat-icon class="tab-icon">text_snippet</mat-icon>  Files
-                        </li>
-                        <li (click)="viewMode ='tab8'" [ngClass]="{'active':viewMode =='tab8'}">
-                            <mat-icon class="tab-icon">data_object</mat-icon>  Metadata
-                        </li>
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">list</mat-icon> Phenotypic Features
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Describes a phenotype that characterizes the subject of the Phenopacket
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
 
-                    </ul>
-                </div>
-                <div class="column-2" [ngSwitch]="viewMode">
-                    <div *ngSwitchCase="'tab1'">
                         <app-phenotypic-feature></app-phenotypic-feature>
-                    </div>
-                    <div *ngSwitchCase="'tab2'">
-                        <h3>Measurements</h3>
-                        <p></p>
-                    </div>
-                    <div *ngSwitchCase="'tab3'">
-                        <h3>Biosamples</h3>
-                        <p></p>
-                    </div>
-                    <div *ngSwitchCase="'tab4'">
-                        <div class="main-content">
-                            <div class="container-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div *ngSwitchCase="'tab5'">
+
+                        <mat-action-row>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">square_foot</mat-icon> Measurements
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Used to record individual measurements, which can capture quantitative, ordinal (e.g.,
+                                absent/present), or categorical measurements
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <!-- To be implemented -->
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">biotech</mat-icon> Biosamples
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Unit of biological material from which the substrate molecules (e.g. genomic DNA, RNA,
+                                proteins) for molecular analyses (e.g. sequencing, array hybridisation,
+                                mass-spectrometry) are extracted
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <!-- To be implemented -->
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">interpreter_mode</mat-icon> Interpretations
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Represents the interpretation of a genomic analysis, such as the report from a
+                                diagnostic laboratory
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <!-- To be implemented -->
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">coronavirus</mat-icon> Diseases
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Diagnosis, i.e., an inference or hypothesis about the cause underlying the observed
+                                phenotypic abnormalities
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
                         <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"
                             (onDiseasesChanged)="changeDiseases($event)"></app-disease>
-                    </div>
-                    <div *ngSwitchCase="'tab6'">
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">medical_services</mat-icon> Medical Actions
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Describes medications, procedures, other actions taken for clinical management
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
                         <app-medical-action [medicalActions]="getPhenopacketMedicalActions()"
                             [diseases]="getPhenopacketDiseases()"
                             (onMedicalActionChanged)="changeMedicalActions($event)"></app-medical-action>
-                    </div>
-                    <div *ngSwitchCase="'tab7'">
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">text_snippet</mat-icon> Files
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                External files linked with the structured phenotypic data, which can be used to inform
+                                analyses
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
                         <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)">
                         </app-file>
-                    </div>
-                    <div *ngSwitchCase="'tab8'">
-                        <div class="main-content">
-                            <div class="container-fluid">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon class="tab-icon">data_object</mat-icon> Metadata
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Structured definitions of the resources and ontologies used within the phenopacket
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <!-- To be implemented -->
+
+                        <mat-action-row>
+                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
+
+                </mat-accordion>
+
             </div>
         </div>
 
-
     </div>
+</div>

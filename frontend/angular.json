@@ -22,8 +22,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/assets/scss/material-dashboard.scss",
-              "src/styles.css"
+              "src/assets/scss/material-dashboard.scss"
             ],
             "scripts": []
           },

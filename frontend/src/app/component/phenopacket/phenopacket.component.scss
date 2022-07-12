@@ -15,69 +15,25 @@ h3 {
   // margin: 0px;
 }
 
-// Phenopacket menu/link to Phenopacket objects
-.column-1 {
-  width: 200px;
-  float: left;
-}
-.column-2 {
-  float: none;
-  overflow: hidden;
-  background-color: #fff;
-  div {
-    padding: 5px;
-  }
-}
-.active {
-  border-radius: 4px !important;
-  outline: 1px solid #ddd;
-  cursor: pointer;
-  background-color: #ecf0f1;
-  color: #017171; //#2980b9
-}
-.vertical-menu {
-  display: block !important;
-  width: 100%;
-  text-align: center;
-  list-style-type: none;
-  padding: 0px;
-}
-
-li {
-  color: darkgrey; //#212121
-  font-style: normal;
-  font-weight: normal;
-  text-align: left;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  margin: 5px;
-}
-// li {
-//   font-size : 2em;
-//   margin: 1em 0;
+// accordion
+// .example-headers-align .mat-expansion-panel-header-title,
+// .example-headers-align .mat-expansion-panel-header-description {
+//   flex-basis: 0;
 // }
 
-li > *{
-  display: inline-block;
-  vertical-align: middle;
+.example-headers-align .mat-expansion-panel-header-description {
+  // justify-content: space-between;
+  align-items: left;
 }
 
-li:after {
-  display: none;
+// .example-headers-align .mat-form-field + .mat-form-field {
+//   margin-left: 8px;
+// }
+.mat-accordion .mat-icon {
+  padding-right: 2em;
 }
 
-a {
-  padding: 8px;
-}
-@media (max-width: 550px) {
-  .column-1 {
-    width: 40% !important;
-  }
-  .column-2 {
-    width: 60% !important;
-  }
-}
+
 // hover button
 .hover-icon:hover {
   color: darkgrey;

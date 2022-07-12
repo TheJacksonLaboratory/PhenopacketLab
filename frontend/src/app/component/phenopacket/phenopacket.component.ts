@@ -152,4 +152,18 @@ export class PhenopacketComponent implements OnInit {
   editStatus() {
     // todo
   }
+  // accordion
+  step = 0;
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }
