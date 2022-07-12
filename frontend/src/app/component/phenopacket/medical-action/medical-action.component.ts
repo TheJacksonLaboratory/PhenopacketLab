@@ -9,6 +9,7 @@ import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from '
 import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-medical-action',
@@ -34,6 +35,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
 
     medicalActionDataSource = new MatTableDataSource<MedicalAction>();
+    dataPresent = this.medicalActionDataSource.connect().pipe(map(data => data.length > 0));
     medicalActionCount: number;
 
     // MatPaginator Inputs
@@ -63,6 +65,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             this.medicalActions = [];
         }
         this.medicalActionDataSource.data = this.medicalActions;
+        this.medicalActionDataSource.data
         this.onMedicalActionChanged.emit(this.medicalActions);
 
     }

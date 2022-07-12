@@ -9,6 +9,7 @@ import { MondoDisease } from 'src/app/models/mondo-disease';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-disease',
@@ -41,6 +42,8 @@ export class DiseaseComponent implements OnInit {
 
   // diseases: MondoDisease[] = [];
   datasource = new MatTableDataSource<Disease>();
+  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+
   diseaseCount: number;
   //searchparams
   currSearchParams: any = {}

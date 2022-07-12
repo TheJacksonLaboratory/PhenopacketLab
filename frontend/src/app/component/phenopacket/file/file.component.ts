@@ -9,6 +9,7 @@ import { File } from 'src/app/models/base';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { Attribute } from './file-detail/file-detail.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file',
@@ -36,6 +37,8 @@ export class FileComponent implements OnInit {
 
   filesMap = new Map<string, File>();
   datasource = new MatTableDataSource<File>();
+  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+
   diseaseCount: number;
   //searchparams
   currSearchParams: any = {}

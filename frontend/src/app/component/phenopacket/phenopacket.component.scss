@@ -4,15 +4,17 @@ h3 {
 // vital status area
 #vital-status {
   border-radius: 4px !important;
-  border: 2px solid lightgrey;
+  border: 0.5px solid lightgrey;
   padding: 10px;
   margin: 0px;
 }
 #vital-status:hover {
   border: 2px solid black;
-  padding: 10px;
-  margin: 0px;
+  margin: -1px;
+  // padding: 10px;
+  // margin: 0px;
 }
+
 // Phenopacket menu/link to Phenopacket objects
 .column-1 {
   width: 200px;
