@@ -7,13 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenol.annotations.base.Ratio;
-import org.monarchinitiative.phenol.annotations.base.Sex;
 import org.monarchinitiative.phenol.annotations.base.temporal.Age;
+import org.monarchinitiative.phenol.annotations.base.temporal.PointInTime;
 import org.monarchinitiative.phenol.annotations.base.temporal.TemporalInterval;
+import org.monarchinitiative.phenol.annotations.constants.hpo.HpoModeOfInheritanceTermIds;
 import org.monarchinitiative.phenol.annotations.formats.AnnotationReference;
 import org.monarchinitiative.phenol.annotations.formats.EvidenceCode;
 import org.monarchinitiative.phenol.annotations.formats.hpo.*;
-import org.monarchinitiative.phenol.constants.hpo.HpoModeOfInheritanceTermIds;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -104,22 +104,20 @@ public class DiseaseControllerTest {
     }
 
     private static HpoDiseaseAnnotation arachnodactyly() {
-        return HpoDiseaseAnnotation.of(TermId.of("HP:0001166"), List.of(
-                HpoDiseaseAnnotationMetadata.of(
-                        AnnotationReference.of(TermId.of("PMID:123456"), EvidenceCode.PCS),
-                        TemporalInterval.openEnd(Age.birth()),
-                        AnnotationFrequency.of(Ratio.of(1, 1)),
-                        List.of(),
-                        Sex.MALE)));
+        return new TestHpoDiseaseAnnotation(TermId.of("HP:0001166"),
+                Ratio.of(1, 1),
+                List.of(TemporalInterval.openEnd(PointInTime.birth())),
+                List.of(),
+                List.of(AnnotationReference.of(TermId.of("PMID:123456"), EvidenceCode.PCS))
+        );
     }
 
     private static HpoDiseaseAnnotation hypertension() {
-        return HpoDiseaseAnnotation.of(TermId.of("HP:0000822"), List.of(
-                HpoDiseaseAnnotationMetadata.of(
-                        AnnotationReference.of(TermId.of("PMID:987456"), EvidenceCode.PCS),
-                        TemporalInterval.openEnd(Age.postnatal(42, 3, 0)),
-                        AnnotationFrequency.of(Ratio.of(1, 1)),
-                        List.of(),
-                        Sex.FEMALE)));
+        return new TestHpoDiseaseAnnotation(TermId.of("HP:0000822"),
+                Ratio.of(1, 1),
+                List.of(TemporalInterval.openEnd(Age.postnatal(42, 3, 0))),
+                List.of(),
+                List.of(AnnotationReference.of(TermId.of("PMID:987456"), EvidenceCode.PCS))
+        );
     }
 }

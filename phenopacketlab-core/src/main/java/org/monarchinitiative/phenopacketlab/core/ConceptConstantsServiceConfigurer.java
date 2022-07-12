@@ -1,7 +1,7 @@
 package org.monarchinitiative.phenopacketlab.core;
 
-import org.monarchinitiative.phenol.constants.hpo.HpoOnsetTermIds;
-import org.monarchinitiative.phenol.constants.hpo.HpoSubOntologyRootTermIds;
+import org.monarchinitiative.phenol.annotations.constants.hpo.HpoOnsetTermIds;
+import org.monarchinitiative.phenol.annotations.constants.hpo.HpoSubOntologyRootTermIds;
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
