@@ -31,7 +31,7 @@ export class OntologyClassComponent implements OnInit {
             this.id = this.ontologyObject.id;
             this.idControl.setValue(this.id);
         } else {
-            this.ontologyObject = new OntologyClass(this.id, this.label);
+            this.ontologyObject = {id: this.id, label:this.label};
         }
 
         if (this.labelSubscription) {

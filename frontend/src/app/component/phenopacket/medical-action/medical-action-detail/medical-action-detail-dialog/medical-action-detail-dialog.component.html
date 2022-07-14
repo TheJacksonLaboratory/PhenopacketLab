@@ -25,7 +25,7 @@
         <div class="col-md-3">
             <mat-form-field appearance="outline">
                 <mat-label>Response to treatment</mat-label>
-                <mat-select (selectionChange)="onResponseChange($event)">
+                <mat-select (selectionChange)="onResponseChange($event)" [(value)]="responseToTreatmentVal">
                     <mat-option *ngFor="let response of responses" [value]="response">
                         {{response.label}}
                     </mat-option>
@@ -228,15 +228,6 @@
                                                             Done
                                                         </button>
                                                     </div>
-                                                    <!-- <mat-form-field class="form-input" *ngSwitchCase="'date'"
-                                                        appearance="fill">
-                                                        <mat-label>Choose a date</mat-label>
-                                                        <input matInput [matDatepicker]="picker"
-                                                            [(ngModel)]="element[col.key]" />
-                                                        <mat-datepicker-toggle matSuffix [for]="picker">
-                                                        </mat-datepicker-toggle>
-                                                        <mat-datepicker #picker></mat-datepicker>
-                                                    </mat-form-field> -->
                                                     <mat-form-field class="form-input" appearance="outline"
                                                         *ngSwitchDefault>
                                                         <input matInput [required]="col.required"
@@ -295,8 +286,24 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <app-ontology-class [title]="'Body site'" [ontologyObject]="bodySite"
-                        (ontologyObjectEvent)="changeBodySite($event)"></app-ontology-class>
+                    <form>
+                        <mat-form-field appearance="outline">
+                          <mat-label>Body site</mat-label>
+                          <input type="text"
+                                 placeholder="Select body site"
+                                 aria-label="Body site"
+                                 matInput
+                                 [formControl]="bodySiteControl"
+                                 [matAutocomplete]="auto">
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let bodySite of filteredBodySites | async | slice : 0 : 10" [value]="getBodySiteDisplay(bodySite)"
+                                (onSelectionChange)="changeBodySite(bodySite)" [matTooltip]="getBodySiteDisplay(bodySite)">
+                              {{getBodySiteDisplay(bodySite)}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </form>
+                      
                 </div>
             </div>
         </div>

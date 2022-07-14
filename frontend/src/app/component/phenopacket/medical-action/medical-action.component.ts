@@ -157,13 +157,13 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
         let action = medicalAction.action;
         let id = "";
         if (action instanceof Procedure) {
-            id = action.code.id;
+            id = action.code?.id;
         } else if (action instanceof Treatment) {
-            id = action.agent.id;
+            id = action.agent?.id;
         } else if (action instanceof RadiationTherapy) {
-            id = action.modality.id;
+            id = action.modality?.id;
         } else if (action instanceof TherapeuticRegimen) {
-            id = action.identifier.id;
+            id = action.identifier?.id;
         }
         return id;
     }

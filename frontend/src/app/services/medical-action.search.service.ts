@@ -30,6 +30,9 @@ export class MedicalActionService extends BaseSearchService {
     getAll(): Observable<any> {
         return this.getAllBodySites();
     }
+    getAllFromLocalStorage(key: string) {
+        return JSON.parse(localStorage.getItem(key));
+    }
 
     public getAllBodySites(): Observable<any> {
         return this.http.get(bodySitesUrl);

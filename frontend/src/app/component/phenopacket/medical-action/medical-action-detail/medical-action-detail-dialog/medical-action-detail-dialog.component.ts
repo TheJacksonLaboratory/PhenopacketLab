@@ -1,6 +1,9 @@
 import { Component, Inject } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
@@ -19,6 +22,7 @@ export class MedicalActionDetailDialogComponent {
   treatmentTarget: OntologyClass;
   treatmentIntent: OntologyClass;
   responseToTreatment: OntologyClass;
+  responseToTreatmentVal: string;
   terminationReason: OntologyClass;
   // procedure
   procedureCode: OntologyClass;
@@ -37,6 +41,9 @@ export class MedicalActionDetailDialogComponent {
   // radiationtherapy
   modality: OntologyClass;
   bodySite: OntologyClass;
+  bodySiteControl = new FormControl('');
+  radiationTherapyBodySites: OntologyClass[];
+  filteredBodySites: Observable<OntologyClass[]>;
   dosage: number;
   fractions: number;
   // therapeutic regimen
@@ -53,12 +60,12 @@ export class MedicalActionDetailDialogComponent {
   actionTypes = ["Procedure", "Treatment", "Radiation therapy", "Therapeutic regimen"];
   actionType: string;
   // TODO pull data from backend endpoint
-  intents = [new OntologyClass("intent-1", "Intent 1"),
-  new OntologyClass("intent-2", "Intent 2"),
-  new OntologyClass("intent-3", "Intent 3")];
-  responses = [new OntologyClass("resp-1", "Response 1"),
-  new OntologyClass("resp-2", "Response 2"),
-  new OntologyClass("resp-3", "Response 3")];
+  intents = [{id: "intent-1", label: "Intent 1"},
+            {id: "intent-2", label: "Intent 2"},
+            {id: "intent-3", label: "Intent 3"}];
+  responses = [{id: "resp-1", label: "Response 1"},
+              {id: "resp-2", label: "Response 2"},
+              {id: "resp-3", label: "Response 3"}];
 
   // Dose Intervals table
   doseIntervalDisplayedColumns: string[] = DoseIntervalColumns.map((col) => col.key);
@@ -76,7 +83,13 @@ export class MedicalActionDetailDialogComponent {
   ngOnInit() {
     this.updateMedicalAction();
 
-
+    // bodySite filter for RadiationTherapy
+    this.radiationTherapyBodySites = this.searchService.getAllFromLocalStorage(this.bodySitesStorageKey);
+    this.filteredBodySites = this.bodySiteControl.valueChanges.pipe(
+        startWith(''),
+        map(bodySite => (bodySite ? this._filter(bodySite) : this.radiationTherapyBodySites.slice())),
+      );
+    
   }
 
   updateMedicalAction() {
@@ -86,6 +99,7 @@ export class MedicalActionDetailDialogComponent {
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
+      this.responseToTreatmentVal = this.responseToTreatment?.label;
       if (this.action) {
         if (this.action instanceof Procedure) {
           this.procedureCode = this.action.code;
@@ -102,12 +116,14 @@ export class MedicalActionDetailDialogComponent {
           this.bodySite = this.action.bodySite;
           this.dosage = this.action.dosage;
           this.fractions = this.action.fractions;
+          this.bodySiteControl.setValue(this.getBodySiteDisplay(this.bodySite));
         } else if (this.action instanceof TherapeuticRegimen) {
           this.identifier = this.action.identifier;
           this.startTime = this.action.startTime;
           this.endTime = this.action.endTime;
           this.regimenStatus = this.action.regimenStatus;
         }
+        this.actionType = this.action.toString();
       }
     } else {
       this.medicalAction = new MedicalAction();
@@ -184,7 +200,7 @@ export class MedicalActionDetailDialogComponent {
     this.currSearchParams.offset = 0;
     let id = searchBodySite.selectedItems[0].selectedValue.id;
     let label = searchBodySite.selectedItems[0].selectedValue.name;
-    let bodySite = new OntologyClass(id, label);
+    let bodySite = {id: id, label: label};
     if (this.bodySites === undefined) {
       this.bodySites = [];
     }
@@ -269,13 +285,25 @@ export class MedicalActionDetailDialogComponent {
       this.medicalAction.action.modality = this.modality;
     }
   }
-  changeBodySite(eventObj: OntologyClass) {
+  changeBodySite(eventObj: any) {
     this.bodySite = eventObj;
     // update medicalAction
     if (this.medicalAction) {
       this.medicalAction.action.bodySite = this.bodySite;
     }
   }
+  getBodySiteDisplay(bodySite: any) {
+    return `${bodySite.name} [${bodySite.id}]`;
+  }
+
+  private _filter(value: any): OntologyClass[] {
+    const filterValue = value.toLowerCase();
+    
+    return this.radiationTherapyBodySites.filter(option => {
+      return (option as any).name.toLowerCase().includes(filterValue)
+    });
+  }
+
   changeDosage(eventObj: number) {
     this.dosage = eventObj;
     // update medicalAction

@@ -130,10 +130,10 @@ export class MedicalActionDetailComponent {
   }
 
   getIdentifier() {
-    if (this.identifier instanceof OntologyClass) {
-      return `${this.identifier.label} [${this.identifier.id}]`;
-    } else if (this.identifier instanceof ExternalReference) {
-      return `${this.identifier.reference} [${this.identifier.id}]`;
+    if ((this.identifier as OntologyClass).label) {
+      return `${(this.identifier as OntologyClass).label} [${this.identifier.id}]`;
+    } else if ((this.identifier as ExternalReference).reference) {
+      return `${(this.identifier as ExternalReference).reference} [${this.identifier.id}]`;
     }
     return '';
   }
