@@ -100,6 +100,7 @@ export class MedicalActionDetailDialogComponent {
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
       this.responseToTreatmentVal = this.responseToTreatment?.label;
+      this.actionType = this.action.toString();
       if (this.action) {
         if (this.action instanceof Procedure) {
           this.procedureCode = this.action.code;
@@ -123,7 +124,6 @@ export class MedicalActionDetailDialogComponent {
           this.endTime = this.action.endTime;
           this.regimenStatus = this.action.regimenStatus;
         }
-        this.actionType = this.action.toString();
       }
     } else {
       this.medicalAction = new MedicalAction();
@@ -293,7 +293,10 @@ export class MedicalActionDetailDialogComponent {
     }
   }
   getBodySiteDisplay(bodySite: any) {
-    return `${bodySite.name} [${bodySite.id}]`;
+    if (bodySite) {
+      return `${bodySite.name} [${bodySite.id}]`;
+    }
+    return '';
   }
 
   private _filter(value: any): OntologyClass[] {

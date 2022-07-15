@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { map } from 'rxjs/operators';
 import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Quantity } from 'src/app/models/measurement';
@@ -25,7 +27,10 @@ export class MedicalActionDetailComponent {
   // Treatment
   agent: OntologyClass;
   routeOfAdministration: OntologyClass;
-  doseIntervals: DoseInterval[];
+  doseIntervals: DoseInterval[] = [];
+  doseIntervalDatasource = new MatTableDataSource<DoseInterval>();
+  dataPresent = this.doseIntervalDatasource.connect().pipe(map(data => data.length > 0));
+  doseIntervalColumns = ['unit', 'value', 'frequency', 'interval'];
   drugType: DrugType;
   cumulativeDose: Quantity;
   // radiationtherapy
@@ -40,7 +45,6 @@ export class MedicalActionDetailComponent {
   regimenStatus: RegimenStatus;
 
   actionType: string;
-  doseIntervalColumns = ['unit', 'value', 'frquency', 'interval', 'remove'];
   
   @Input()
   medicalAction: MedicalAction;
@@ -58,6 +62,8 @@ export class MedicalActionDetailComponent {
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
+      // set actionType 
+      this.actionType = this.action.toString();
       if (this.action) {
         if (this.action instanceof Procedure) {
           this.procedureCode = this.action.code;
@@ -67,6 +73,9 @@ export class MedicalActionDetailComponent {
           this.agent = this.action.agent;
           this.routeOfAdministration = this.action.routeOfAdministration;
           this.doseIntervals = this.action.doseIntervals;
+          if (this.doseIntervals) {
+            this.doseIntervalDatasource.data = this.doseIntervals;
+          }
           this.drugType = this.action.drugType;
           this.cumulativeDose = this.action.cumulativeDose;
         } else if (this.action instanceof RadiationTherapy) {
@@ -80,8 +89,7 @@ export class MedicalActionDetailComponent {
           this.endTime = this.action.endTime;
           this.regimenStatus = this.action.regimenStatus;
         }
-        // set actionType 
-        this.actionType = this.action.toString();
+        
       }
     }
 
@@ -110,30 +118,94 @@ export class MedicalActionDetailComponent {
     return dialogRef;
   }
 
-  deleteDoseInterval(element: DoseInterval) {
-    const msgData = { 'title': 'Delete Dose Interval' };
-    msgData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: msgData
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
-        this.doseIntervals.forEach((val, index) => {
-          if (val == element) {
-              this.doseIntervals.splice(index, 1);
-          }
-      });
+  getIdentifier() {
+    if (this.identifier) {
+      if ((this.identifier as OntologyClass).label) {
+        return `${(this.identifier as OntologyClass).label} [${this.identifier.id}]`;
+      } else if ((this.identifier as ExternalReference).reference) {
+        return `${(this.identifier as ExternalReference).reference} [${this.identifier.id}]`;
       }
-    });
-    return dialogRef;
+    }
+    return '';
   }
 
-  getIdentifier() {
-    if ((this.identifier as OntologyClass).label) {
-      return `${(this.identifier as OntologyClass).label} [${this.identifier.id}]`;
-    } else if ((this.identifier as ExternalReference).reference) {
-      return `${(this.identifier as ExternalReference).reference} [${this.identifier.id}]`;
+  getProcedureCodeDisplay() {
+    if (this.procedureCode) {
+      return `${this.procedureCode.label} [${this.procedureCode.id}]`;
+    }
+    return '';
+  }
+  // treatment
+  getAgentDisplay() {
+    if (this.agent) {
+      return `${this.agent.label} [${this.agent.id}]`;
+    }
+    return '';
+  }
+  getRouteOfAdministrationDisplay() {
+    if (this.routeOfAdministration) {
+      return `${this.routeOfAdministration.label} [${this.routeOfAdministration.id}]`;
+    }
+    return '';
+  }
+
+  getCumulativeDoseDisplay() {
+    if (this.cumulativeDose) {
+      return `${this.cumulativeDose.value} ${this.cumulativeDose.unit?.label} [${this.cumulativeDose.unit?.id}]`;
+    }
+    return '';
+  }
+
+  getQuantityUnitDisplay(element) {
+    if (element) {
+      return `${element.quantity?.unit?.label}`;
+    }
+    return '';
+  }
+
+  getQuantityValueDisplay(element) {
+    console.log("value");
+    console.log(element);
+    if (element) {
+      return `${element.quantity?.value}`;
+    }
+    return '';
+  }
+  getScheduleFrequencyDisplay(element) {
+    console.log("schedulefrequency");
+    console.log(element);
+    if (element) {
+      return `${element.scheduleFrequency?.label} [${element.squeduleFrequency?.id}]`;
+    }
+    return '';
+  }
+
+  getIntervalDisplay(element) {
+    console.log("interval");
+    console.log(element);
+    if (element) {
+      return `${element.interval.start} - ${element.interval.end}]`;
+    }
+    return '';
+  }
+
+  // radiation therapy
+  getModalityDisplay() {
+    if (this.modality) {
+      return `${this.modality.label} [${this.modality.id}]`;
+    }
+    return '';
+  }
+
+  getOntologyClassDisplay(ontObj: OntologyClass) {
+    if (ontObj) {
+      return `${ontObj.label} [${ontObj.id}]`;
+    }
+    return '';
+  }
+  getBodySiteDisplay() {
+    if (this.bodySite) {
+      return `${this.bodySite.label} [${this.bodySite.id}]`;
     }
     return '';
   }

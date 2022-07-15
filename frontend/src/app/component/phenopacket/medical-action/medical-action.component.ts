@@ -65,7 +65,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             this.medicalActions = [];
         }
         this.medicalActionDataSource.data = this.medicalActions;
-        this.medicalActionDataSource.data
         this.onMedicalActionChanged.emit(this.medicalActions);
 
     }
@@ -170,7 +169,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     getTarget(medicalAction: MedicalAction) {
         let target = '';
-        if (medicalAction) {
+        if (medicalAction && medicalAction.treatmentTarget) {
             target = `${medicalAction.treatmentTarget?.label} [${medicalAction.treatmentTarget?.id}]`;
         }
         return target;
@@ -178,7 +177,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     getIntent(medicalAction: MedicalAction) {
         let intent = '';
-        if (medicalAction) {
+        if (medicalAction && medicalAction.treatmentIntent) {
             intent = `${medicalAction.treatmentIntent?.label} [${medicalAction.treatmentIntent?.id}]`;
         }
         return intent;
