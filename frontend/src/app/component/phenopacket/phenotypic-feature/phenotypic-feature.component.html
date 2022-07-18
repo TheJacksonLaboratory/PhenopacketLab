@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table mat-table *ngIf="dataPresent | async" class="table-hover mat-elevation-z2"
+        <table mat-table *ngIf="phenotypicDataSource.isDataPresent() | async" class="table-hover mat-elevation-z2"
             [dataSource]="phenotypicDataSource" multiTemplateDataRows>
             <ng-container matColumnDef="label">
                 <th mat-header-cell *matHeaderCellDef> Label </th>

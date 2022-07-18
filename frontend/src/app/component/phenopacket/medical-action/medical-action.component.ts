@@ -2,14 +2,13 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChil
 import { MatPaginator } from '@angular/material/paginator';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
     selector: 'app-medical-action',
@@ -34,8 +33,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     //Table items
     displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
 
-    medicalActionDataSource = new MatTableDataSource<MedicalAction>();
-    dataPresent = this.medicalActionDataSource.connect().pipe(map(data => data.length > 0));
+    medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
     medicalActionCount: number;
 
     // MatPaginator Inputs

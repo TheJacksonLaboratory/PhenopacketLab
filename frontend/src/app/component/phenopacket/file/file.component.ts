@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { FileService } from 'src/app/services/file.service';
 import { File } from 'src/app/models/base';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { Attribute } from './file-detail/file-detail.component';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
   selector: 'app-file',
@@ -36,8 +33,7 @@ export class FileComponent implements OnInit {
   onFilesChanged = new EventEmitter<File[]>();
 
   filesMap = new Map<string, File>();
-  datasource = new MatTableDataSource<File>();
-  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+  datasource = new DataPresentMatTableDataSource<File>();
 
   diseaseCount: number;
   //searchparams

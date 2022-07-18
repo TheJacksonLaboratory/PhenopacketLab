@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-12">
         <!-- Table summary of individuals -->
-        <table mat-table *ngIf="dataPresent | async" class="table-hover mat-elevation-z2" [dataSource]="datasource"
+        <table mat-table *ngIf="datasource.isDataPresent() | async" class="table-hover mat-elevation-z2" [dataSource]="datasource"
             multiTemplateDataRows>
             <ng-container matColumnDef="uri">
                 <th mat-header-cell *matHeaderCellDef> URI </th>

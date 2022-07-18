@@ -2,17 +2,15 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from "@angular/router";
-import { MatTableDataSource } from '@angular/material/table';
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from 'src/app/models/base';
+import { Age, AgeRange, Evidence, GestationalAge, TimeElement, TimeInterval } from 'src/app/models/base';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -40,8 +38,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     //Table items
     displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'category', 'remove'];
 
-    phenotypicDataSource = new MatTableDataSource<PhenotypicFeature>();
-    dataPresent = this.phenotypicDataSource.connect().pipe(map(data => data.length > 0));
+    phenotypicDataSource = new DataPresentMatTableDataSource<PhenotypicFeature>();
 
     phenotypicCount: number;
 

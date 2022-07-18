@@ -5,11 +5,11 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyData } from '../family-list/family-data';
+import { DataPresentMatTableDataSource } from '../shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 
 
@@ -38,7 +38,7 @@ export class CohortListComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [10, 50, 100];
 
-  datasource = new MatTableDataSource<Phenopacket>();
+  datasource = new DataPresentMatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe) {

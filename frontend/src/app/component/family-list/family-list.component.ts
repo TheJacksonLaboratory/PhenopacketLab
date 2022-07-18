@@ -5,11 +5,11 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Family } from 'src/app/models/family';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
+import { DataPresentMatTableDataSource } from '../shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 
 @Component({
@@ -39,7 +39,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   pageSize = 10;
   pageSizeOptions: number[] = [10, 50, 100];
 
-  datasource = new MatTableDataSource<Phenopacket>();
+  datasource = new DataPresentMatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
   // familySubscription: Subscription;
@@ -163,7 +163,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeId(id: string, phenopacket: Phenopacket) {
-    console.log(this.individualTabsMap);
     let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     selectedIndividual.id = id;
     // change id in map
