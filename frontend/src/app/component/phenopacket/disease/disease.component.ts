@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Disease } from 'src/app/models/disease';
 
 import { MondoDisease } from 'src/app/models/mondo-disease';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
   selector: 'app-disease',
@@ -39,8 +37,7 @@ export class DiseaseComponent implements OnInit {
   @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
   // diseases: MondoDisease[] = [];
-  datasource = new MatTableDataSource<Disease>();
-  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+  datasource = new DataPresentMatTableDataSource<Disease>();
 
   diseaseCount: number;
   //searchparams
@@ -96,8 +93,6 @@ export class DiseaseComponent implements OnInit {
   onSearchCriteriaChange(searchCriteria: any) {
     const params: any = {};
     this.currSearchParams.offset = 0;
-    console.log("selectedItems[]");
-    console.log(searchCriteria.selectedItems[0].selectedValue.id);
     let id = searchCriteria.selectedItems[0].selectedValue.id;
     this.diseasePaginator.pageIndex = 0;
 
@@ -142,15 +137,8 @@ export class DiseaseComponent implements OnInit {
     }
   }
 
-  updateStatus(status: boolean, disease: Disease) {
-    console.log(status);
-    for (let i =0; i < this.phenopacketDiseases.length; i++) {
-      if (disease.term.id === this.phenopacketDiseases[i].term.id) {
-        this.phenopacketDiseases[i].excluded = !status;
-        this.datasource.data = this.phenopacketDiseases;
-        this.onDiseasesChanged.emit(this.phenopacketDiseases);
-      }
-    }
+  getStatus(disease: Disease) {
+    return disease.excluded ? 'Excluded' : 'Included';
   }
 }
 
