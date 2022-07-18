@@ -34,7 +34,7 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
 
     @Test
     public void testNonExistingDataDirectory() {
-        Path nonExistingDataDirectory = TEST_DATA.resolve("bla");
+        Path nonExistingDataDirectory = DATA_DIR.resolve("bla");
         BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + nonExistingDataDirectory));
         assertThat(exception.getMessage(), containsString(String.format("Path to PhenopacketLab data directory '%s' does not point to an existing directory", nonExistingDataDirectory)));
     }
