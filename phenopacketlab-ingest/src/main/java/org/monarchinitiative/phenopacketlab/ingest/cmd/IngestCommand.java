@@ -1,19 +1,23 @@
 package org.monarchinitiative.phenopacketlab.ingest.cmd;
 
 import org.monarchinitiative.biodownload.BioDownloader;
+import org.monarchinitiative.biodownload.BioDownloaderBuilder;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.monarchinitiative.phenopacketlab.ingest.Main;
+import org.monarchinitiative.phenopacketlab.ingest.transform.DrugCentralTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
-import java.io.*;
+import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.concurrent.Callable;
-import java.util.zip.GZIPInputStream;
 
 @CommandLine.Command(name = "ingest",
         aliases = "I",
@@ -25,6 +29,12 @@ import java.util.zip.GZIPInputStream;
 public class IngestCommand implements Callable<Integer> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestCommand.class);
+    private static final String NCIT_URL = "ncit.url";
+    private static final String NCIT_VERSION = "ncit.version";
+    private static final String DRUG_CENTRAL_URL = "drugcentral.url";
+    private static final String DRUG_CENTRAL_VERSION = "drugcentral.version";
+
+    private final Properties properties;
 
     @CommandLine.Parameters(index = "0",
             description = "path to the destination folder")
@@ -34,6 +44,12 @@ public class IngestCommand implements Callable<Integer> {
             description = "overwrite the existing resource files (default: ${DEFAULT-VALUE})")
     public boolean overwrite = false;
 
+    public IngestCommand(Properties properties) {
+        this.properties = properties;
+        if (!properties.containsKey(NCIT_URL) && !properties.containsKey(NCIT_VERSION))
+            throw new IllegalStateException("NCI Thesaurus URL and version must be specified!");
+    }
+
     @Override
     public Integer call() {
         LOGGER.info("Running `ingest` command");
@@ -42,9 +58,20 @@ public class IngestCommand implements Callable<Integer> {
 
         if (existingDataDirectory.isPresent()) {
             Path dataDirectory = existingDataDirectory.get();
+            List<Path> toDelete = new LinkedList<>();
             try {
-                downloadResources(dataDirectory);
-            } catch (FileDownloadException e) {
+                // First, download.
+                downloadAndPostprocessResources(dataDirectory, toDelete);
+
+                // Then, cleanup.
+                if (!toDelete.isEmpty()) {
+                    LOGGER.info("Removing {} temporary file(s).", toDelete.size());
+                    for (Path del : toDelete) {
+                        LOGGER.debug("Removing {}", del.toAbsolutePath());
+                        Files.deleteIfExists(del);
+                    }
+                }
+            } catch (IOException | FileDownloadException e) {
                 LOGGER.error("Error occurred during the download: {}", e.getMessage(), e);
                 return 1;
             }
@@ -66,13 +93,30 @@ public class IngestCommand implements Callable<Integer> {
         return Optional.of(destinationPath);
     }
 
-    private void downloadResources(Path dataDirectory) throws FileDownloadException {
-        BioDownloader downloader = BioDownloader.builder(dataDirectory)
-                .overwrite(overwrite)
-                .hpoJson()
-                .hpDiseaseAnnotations()
-                .build();
+    private void downloadAndPostprocessResources(Path dataDirectory, List<Path> toDelete) throws FileDownloadException, IOException {
+        // Temporary name of the DrugCentral SQL dump. The dump is deleted after the processing is done.
+        String drugCentralDumpName = "drugcentral.dump.sql.gz";
+        String drugCentralUrlString = properties.getProperty(DRUG_CENTRAL_URL);
+        URL drugCentralUrl = new URL(drugCentralUrlString);
+        String drugCentralVersion = properties.getProperty(DRUG_CENTRAL_VERSION);
+        Path drugCentralDump = dataDirectory.resolve(drugCentralDumpName);
+        boolean processDrugCentral = !Files.isRegularFile(drugCentralDump) || overwrite;
 
+        // Build the downloader.
+        BioDownloaderBuilder builder = BioDownloader.builder(dataDirectory)
+                .overwrite(overwrite)
+                .hgnc()
+                .hpDiseaseAnnotations();
+
+        if (processDrugCentral)
+            builder.custom(drugCentralDumpName, drugCentralUrl);
+
+        // Download the resources.
+        BioDownloader downloader = builder.build();
         downloader.download();
+
+        // Post-process DrugCentral.
+        toDelete.add(drugCentralDump);
+        DrugCentralTransformer.transform(drugCentralDump, dataDirectory.resolve("drugcentral.csv"), drugCentralUrlString, drugCentralVersion);
     }
 }

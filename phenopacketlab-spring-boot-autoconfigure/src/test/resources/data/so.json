@@ -1,0 +1,154 @@
+{
+  "graphs" : [ {
+    "id" : "http://purl.obolibrary.org/obo/so.owl",
+    "meta" : {
+      "basicPropertyValues" : [ {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#auto-generated-by",
+        "val" : "OBO-Edit 2.3.1"
+      }, {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#date",
+        "val" : "22:11:2021 06:31"
+      }, {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#default-namespace",
+        "val" : "sequence"
+      }, {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBOFormatVersion",
+        "val" : "1.2"
+      }, {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#saved-by",
+        "val" : "Evan Christensen"
+      } ]
+    },
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/SO_0001017",
+      "lbl" : "silent_mutation",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A sequence variant that does not affect protein function. Silent mutations may occur in genic ( CDS, UTR, intron etc) and intergenic regions. Silent mutations may have affects on processes such as splicing and regulation.",
+          "xrefs" : [ "SO:ke" ]
+        },
+        "comments" : [ "Added in March 2007 in after meeting with PharmGKB. Although this term is in common usage, it is better to annotate with the most specific term possible, such as synonymous codon, intron variant etc." ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "silent mutation"
+        } ],
+        "xrefs" : [ {
+          "val" : "http://en.wikipedia.org/wiki/Silent_mutation"
+        }, {
+          "val" : "loinc:LA6700-4"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "sequence"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/SO_0001060",
+      "lbl" : "sequence_variant",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A sequence_variant is a non exact copy of a sequence_feature or genome exhibiting one or more sequence_alteration.",
+          "xrefs" : [ "SO:ke" ]
+        },
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/so#VAR",
+          "pred" : "hasExactSynonym",
+          "val" : "Jannovar:sequence_variant",
+          "xrefs" : [ "http://doc-openbio.readthedocs.org/projects/jannovar/en/master/var_effects.html" ]
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/so#VAR",
+          "pred" : "hasExactSynonym",
+          "val" : "VAAST:sequence_variant"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "sequence variant"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/so#VAR",
+          "pred" : "hasRelatedSynonym",
+          "val" : "ANNOVAR:unknown",
+          "xrefs" : [ "http://www.openbioinformatics.org/annovar/annovar_download.html" ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "sequence"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/SO_0001537",
+      "lbl" : "structural_variant",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A sequence variant that changes one or more structural features.",
+          "xrefs" : [ "SO:ke" ]
+        },
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/so#VAR",
+          "pred" : "hasExactSynonym",
+          "val" : "Jannovar:structural_variant",
+          "xrefs" : [ "http://doc-openbio.readthedocs.org/projects/jannovar/en/master/var_effects.html" ]
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/so#VAR",
+          "pred" : "hasExactSynonym",
+          "val" : "VAT:svOverlap"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "structural variant"
+        } ],
+        "xrefs" : [ {
+          "val" : "http://vat.gersteinlab.org/formats.php"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "kareneilbeck"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2010-03-22T11:31:01Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "sequence"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/SO_0001878",
+      "lbl" : "feature_variant",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A sequence variant that falls entirely or partially within a genomic feature.",
+          "xrefs" : [ "EBI:fc", "SO:ke" ]
+        },
+        "comments" : [ "Created in conjunction with the EBI." ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "feature alteration"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "kareneilbeck"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-04-03T11:27:27Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "sequence"
+        } ]
+      }
+    } ],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/SO_0001017",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/SO_0001878"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/SO_0001537",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/SO_0001060"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/SO_0001878",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/SO_0001537"
+    } ]
+  } ]
+}

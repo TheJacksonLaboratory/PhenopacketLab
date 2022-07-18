@@ -1,0 +1,978 @@
+{
+  "graphs" : [ {
+    "id" : "http://purl.obolibrary.org/obo/ncit.owl",
+    "meta" : {
+      "basicPropertyValues" : [ {
+        "pred" : "http://protege.stanford.edu/plugins/owl/protege#defaultLanguage",
+        "val" : "en"
+      }, {
+        "pred" : "http://purl.org/dc/terms/description",
+        "val" : "The NCIt OBO Edition project aims to increase integration of the NCIt with OBO Library ontologies. NCIt is a reference terminology that includes broad coverage of the cancer domain, including cancer related diseases, findings and abnormalities."
+      }, {
+        "pred" : "http://purl.org/dc/terms/isVersionOf",
+        "val" : "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl"
+      }, {
+        "pred" : "http://purl.org/dc/terms/title",
+        "val" : "NCI Thesaurus OBO Edition"
+      }, {
+        "pred" : "http://www.w3.org/2000/01/rdf-schema#comment",
+        "val" : "NCI Thesaurus, a controlled vocabulary in support of NCI administrative and scientific activities. Produced by the Enterprise Vocabulary System (EVS), a project by the NCI Center for Biomedical Informatics and Information Technology. National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, U.S.A."
+      }, {
+        "pred" : "http://www.w3.org/2002/07/owl#versionInfo",
+        "val" : "22.03d"
+      } ]
+    },
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12219",
+      "lbl" : "Anatomic Structure, System, or Substance",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A human biological structure, fluid or other substance; excludes single molecular entities."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C90259" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Anatomic Structure, System, or Substance"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Anatomic Structure, System, or Substance"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Anatomic Structures and Systems"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12219"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Classification"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Anatomical Concepts"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Anatomic Structure, System, or Substance"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1515976"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "NICHD"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Anatomic_Structure_System_or_Substance"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12810",
+      "lbl" : "Genitourinary System",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "The body system that includes all organs involved in reproduction and in the formation and voidance of urine."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C175517", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C66830", "http://purl.obolibrary.org/obo/NCIT_C74456", "http://purl.obolibrary.org/obo/NCIT_C77526" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "GENITOURINARY SYSTEM"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary System"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary Tract"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urogenital System"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urogenital Tract"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "genitourinary system"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12810"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Body System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Genitourinary System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Genitourinary System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0042066"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "The body system that includes all organs involved in reproduction and in the formation and voidance of urine."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "The parts of the body that play a role in reproduction, getting rid of waste products in the form of urine, or both."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Genitourinary_System"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12913",
+      "lbl" : "Abnormal Cell",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormal human cell type which can occur in either disease states or disease models."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal Cell"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12913"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Abnormal Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0333717"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Abnormal_Cell"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12919",
+      "lbl" : "Organ System",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An anatomical structure that consists of organs and organ subclasses responsible for certain body functions.  Representative examples are the gastrointestinal system, urinary system, and hematopoietic system."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C166373" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Body Systems"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Organ System"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "body system"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "body_system"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12378"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12686"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12705"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12746"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12754"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12755"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12810"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12841"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C12907"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16326"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17649"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C42300"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12919"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Body System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Organ System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Organ System"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0460002"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Organ_System"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12922",
+      "lbl" : "Neoplastic Cell",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Cells of, or derived from, a tumor."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C168655", "http://purl.obolibrary.org/obo/NCIT_C168656", "http://purl.obolibrary.org/obo/NCIT_C168657", "http://purl.obolibrary.org/obo/NCIT_C168658", "http://purl.obolibrary.org/obo/NCIT_C168661", "http://purl.obolibrary.org/obo/NCIT_C168662", "http://purl.obolibrary.org/obo/NCIT_C177537" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplastic Cell"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Tumor Cell"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Tumor cells, NOS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Tumor cells, uncertain whether benign or malignant"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C176985"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C177621"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12922"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Neoplastic Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0597032"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Neoplastic_Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "8001/1"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Tumor cells, NOS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Tumor cells, uncertain whether benign or malignant"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Tumor cells, uncertain whether benign or malignant"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Tumor cells, uncertain whether benign or malignant"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C156482",
+      "lbl" : "Genitourinary System Neoplasm",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A benign or malignant neoplasm that affects the genitourinary system."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C118168" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary System Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary System Neoplasm"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C156482"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Neoplastic Process"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Genitourinary System Neoplasm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Genitourinary System Neoplasm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P208",
+          "val" : "CL935675"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P363",
+          "val" : "Undetermined"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C156660",
+      "lbl" : "Genitourinary System Disorder",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A non-neoplastic or neoplastic disorder that affects the genitourinary system."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C156952", "http://purl.obolibrary.org/obo/NCIT_C158035", "http://purl.obolibrary.org/obo/NCIT_C158520", "http://purl.obolibrary.org/obo/NCIT_C186336", "http://purl.obolibrary.org/obo/NCIT_C186341" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary System Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urogenital Disease"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C156660"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Disease or Syndrome"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Genitourinary System Disorder"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0080276"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CPTAC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "PCDC"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C27551",
+      "lbl" : "Disorder by Site",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A term that refers to the classification of a disorder according to the anatomic site that is involved in the pathologic process."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease by Site"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disorder by Site"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C27551"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Disease or Syndrome"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disorder by Site"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1333305"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P310",
+          "val" : "Header_Concept"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Disorder_by_Site"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C2991",
+      "lbl" : "Disease or Disorder",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Any abnormal condition of the body or mind that causes discomfort, dysfunction, or distress to the person affected or those in contact with the person. The term is often used broadly to include injuries, disabilities, syndromes, symptoms, deviant behaviors, and atypical variations of structure and function."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C118168", "http://purl.obolibrary.org/obo/NCIT_C138188", "http://purl.obolibrary.org/obo/NCIT_C138189", "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C166373", "http://purl.obolibrary.org/obo/NCIT_C173072", "http://purl.obolibrary.org/obo/NCIT_C175324", "http://purl.obolibrary.org/obo/NCIT_C177536", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C67497", "http://purl.obolibrary.org/obo/NCIT_C90259", "http://purl.obolibrary.org/obo/NCIT_C99147" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Diagnosis"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease or Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease or Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease or Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease or Disorder, Non-Neoplastic"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Diseases"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Diseases and Disorders"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disorder"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disorders"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Other Disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "condition"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease term"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease type"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease_term"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease_type"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disorder"
+        } ],
+        "xrefs" : [ {
+          "val" : "IMDRF:E23"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C184783"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C184784"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3055"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3059"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3161"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3172"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3208"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3230"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3247"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3262"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3286"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3411"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3422"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3468"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3708"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3709"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3723"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3743"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3784"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3786"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3787"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C3792"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C40141"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4063"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4197"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4198"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4248"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4345"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4463"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4665"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C48660"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4972"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C7056"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C7387"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C7539"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C9295"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C9343"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C9357"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C9360"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C2991"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Disease or Syndrome"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Disease or Disorder"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease or Disorder"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0012634"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC-GLOSS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "NICHD"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "Any abnormal condition of the body or mind that causes discomfort, dysfunction, or distress to the affected person. NOTE: The term is often used broadly to include injuries, disabilities, syndromes, symptoms, deviant behaviors, and atypical variations of structure and function. [After NCI Thesaurus] See also diagnosis."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "In medicine, a health problem with certain characteristics or symptoms."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Diseases_and_Disorders"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C3262",
+      "lbl" : "Neoplasm",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A benign or malignant tissue growth resulting from uncontrolled cell proliferation. Benign neoplastic cells resemble normal cells without exhibiting significant cytologic atypia, while malignant cells exhibit overt signs such as dysplastic features, atypical mitotic figures, necrosis, nuclear pleomorphism, and anaplasia. Representative examples of benign neoplasms include papillomas, cystadenomas, and lipomas; malignant neoplasms include carcinomas, sarcomas, lymphomas, and leukemias."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C138188", "http://purl.obolibrary.org/obo/NCIT_C138189", "http://purl.obolibrary.org/obo/NCIT_C142799", "http://purl.obolibrary.org/obo/NCIT_C156952", "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C158035", "http://purl.obolibrary.org/obo/NCIT_C158520", "http://purl.obolibrary.org/obo/NCIT_C165258", "http://purl.obolibrary.org/obo/NCIT_C175324", "http://purl.obolibrary.org/obo/NCIT_C177537", "http://purl.obolibrary.org/obo/NCIT_C90259", "http://purl.obolibrary.org/obo/NCIT_C99147" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasia"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm, NOS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasms, NOS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplastic Disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplastic Growth"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Other Neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Tumor, NOS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "neoplasia"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "neoplasm"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "tumor"
+        } ],
+        "xrefs" : [ {
+          "val" : "IMDRF:E18"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C176985"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C177621"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C2991"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C3262"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Neoplastic Process"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0375111"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CPTAC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "Cellosaurus"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "NICHD"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "An abnormal mass of tissue that results when cells divide more than they should or do not die when they should. Neoplasms may be benign (not cancer), or malignant (cancer)."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P363",
+          "val" : "Undetermined"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Neoplasm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P372",
+          "val" : "Yes"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "8000/1"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Neoplasm of unspecified nature, site unspecified"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Neoplasm, NOS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Neoplasms of unspecified nature"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Neoplasms, NOS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Tumor, NOS"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C3263",
+      "lbl" : "Neoplasm by Site",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A term that refers to the classification of a neoplastic process according to the anatomic site that is involved."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C118168" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm by Site"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm by Site"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neoplasm by Site"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C3263"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Neoplastic Process"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Neoplasm by Site"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Neoplasm by Site"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0027653"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P310",
+          "val" : "Header_Concept"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Neoplasm_by_Site"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C7057",
+      "lbl" : "Disease, Disorder or Finding",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A condition that is relevant to human neoplasms and non-neoplastic disorders.  This includes observations, test results, history and other concepts relevant to the characterization of human pathologic conditions."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease, Disorder or Finding"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C7057"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Conceptual Entity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease, Disorder or Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1511989"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Diseases_Disorders_and_Findings"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_R100",
+      "lbl" : "Disease_Has_Associated_Anatomic_Site",
+      "type" : "PROPERTY",
+      "meta" : {
+        "definition" : {
+          "val" : "A role used to relate a disease to the general site, structure or system where the specific pathological process is located. The domain and the range for this role are 'Disease, Disorder or Finding' and 'Anatomic Structure, System, or Substance', respectively."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease_Has_Associated_Anatomic_Site"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "R100"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Conceptual Entity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Has Associated Anatomic Site"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease_Has_Associated_Anatomic_Site"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P98",
+          "val" : "The role, Disease_Has_Associated_Anatomic_Site, is more general than the role, Disease_Has_Primary_Anatomic_Site.  Furthermore, when viewed with the role, Disease_Has_Metastatic_Anatomic_Site, there emerges a role hierarchy, where one role specializes the meaning of another, more general role.  Roles relating disease to anatomy start with a general assertion of association, often at very high level (e.g. Skin Disorder and Skin), and then add more specific primary/metastatic associations where appropriate for more specific concepts."
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_R105",
+      "lbl" : "Disease_Has_Abnormal_Cell",
+      "type" : "PROPERTY",
+      "meta" : {
+        "definition" : {
+          "val" : "A role used to relate a disease to the type of neoplastic cell present in and characteristic of the disease. The domain and the range for this role are 'Disease, Disorder or Finding' and 'Abnormal Cell', respectively."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease_Has_Abnormal_Cell"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "R105"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Conceptual Entity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Has Abnormal Cell"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease_Has_Abnormal_Cell"
+        } ]
+      }
+    } ],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C12810",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C12919"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C12919",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C12219"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C12922",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C12913"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C156482",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C156660"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C156482",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C3263"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C156660",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C27551"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C156660",
+      "pred" : "http://purl.obolibrary.org/obo/NCIT_R100",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C12810"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C27551",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C2991"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C2991",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C7057"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C3262",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C2991"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C3262",
+      "pred" : "http://purl.obolibrary.org/obo/NCIT_R105",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C12922"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C3263",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C3262"
+    } ],
+    "logicalDefinitionAxioms" : [ {
+      "definedClassId" : "http://purl.obolibrary.org/obo/NCIT_C156482",
+      "genusIds" : [ "http://purl.obolibrary.org/obo/NCIT_C156660", "http://purl.obolibrary.org/obo/NCIT_C3263" ]
+    } ],
+    "domainRangeAxioms" : [ {
+      "predicateId" : "http://purl.obolibrary.org/obo/NCIT_R100",
+      "domainClassIds" : [ "http://purl.obolibrary.org/obo/NCIT_C7057" ],
+      "rangeClassIds" : [ "http://purl.obolibrary.org/obo/NCIT_C12219" ]
+    }, {
+      "predicateId" : "http://purl.obolibrary.org/obo/NCIT_R105",
+      "domainClassIds" : [ "http://purl.obolibrary.org/obo/NCIT_C7057" ],
+      "rangeClassIds" : [ "http://purl.obolibrary.org/obo/NCIT_C12913" ]
+    } ]
+  } ]
+}
