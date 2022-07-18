@@ -7,6 +7,7 @@ import { Individual, KaryotypicSex, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
+import { Measurement } from 'src/app/models/measurement';
 
 @Component({
   selector: 'app-phenopacket',
@@ -111,6 +112,13 @@ export class PhenopacketComponent implements OnInit {
     return [];
   }
 
+  getPhenopacketMeasurements() {
+    if (this.phenopacket) {
+      return this.phenopacket.measurements;
+    }
+    return [];
+  }
+
   getPhenopacketMedicalActions() {
     if (this.phenopacket) {
       return this.phenopacket.medicalActions;
@@ -138,6 +146,10 @@ export class PhenopacketComponent implements OnInit {
   changeDiseases(diseases: Disease[]) {
     console.log(diseases);
     this.phenopacket.diseases = diseases;
+  }
+
+  changeMeasurements(measurements: Measurement[]) {
+    this.phenopacket.measurements = measurements;
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {

@@ -194,7 +194,8 @@
                                 absent/present), or categorical measurements
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <!-- To be implemented -->
+                        <app-measurement [measurements]="getPhenopacketMeasurements()"
+                            (onMeasurementsChanged)="changeMeasurements($event)"></app-measurement>
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>

@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-body margin">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Assay:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getAssay()}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Measurement value:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getMeasurementValue()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Time of measurement:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getTimeOfMeasurement()}}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Procedure:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getProcedure()}}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Description:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getDescription()}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

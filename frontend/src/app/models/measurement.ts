@@ -2,13 +2,10 @@ import { OntologyClass, Procedure, TimeElement } from "./base";
 
 export class Measurement {
     description: string;
-
     assay: OntologyClass;
-
+    measurementValue: Value | ComplexValue;
     timeObserved: TimeElement;
-
     procedure: Procedure;
-
 }
 
 export class Value {
@@ -17,7 +14,7 @@ export class Value {
 }
 
 export class ComplexValue {
-    typedQuantities: TypedQuantity;
+    typedQuantities: TypedQuantity[];
 }
 
 export class Quantity {
