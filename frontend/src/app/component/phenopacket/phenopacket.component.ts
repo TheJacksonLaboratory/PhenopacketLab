@@ -6,6 +6,7 @@ import { Disease } from 'src/app/models/disease';
 import { Individual, KaryotypicSex, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
+import { MedicalAction } from 'src/app/models/medical-action';
 
 @Component({
   selector: 'app-phenopacket',
@@ -22,8 +23,8 @@ export class PhenopacketComponent implements OnInit {
   @Output() onLastEncounterDateChanged = new EventEmitter<any>();
 
   phenoIdControl = new FormControl('', [Validators.required]);
-  phenoSexControl = new FormControl('', [Validators.required]);
-  phenoDobControl = new FormControl(new Date(), [Validators.required]);
+  phenoSexControl = new FormControl('');
+  phenoDobControl = new FormControl(new Date());
   lastEncounterDateControl = new FormControl(new Date());
   phenopacketIdSubscription: Subscription;
   phenopacketSexSubscription: Subscription;
@@ -110,6 +111,13 @@ export class PhenopacketComponent implements OnInit {
     return [];
   }
 
+  getPhenopacketMedicalActions() {
+    if (this.phenopacket) {
+      return this.phenopacket.medicalActions;
+    }
+    return [];
+  }
+
   getPhenopacketFiles() {
     if (this.phenopacket) {
       return this.phenopacket.files;
@@ -132,11 +140,30 @@ export class PhenopacketComponent implements OnInit {
     this.phenopacket.diseases = diseases;
   }
 
+  changeMedicalActions(medicalActions: MedicalAction[]) {
+    console.log(medicalActions);
+    this.phenopacket.medicalActions = medicalActions;
+  }
+
   changeFiles(files: File[]) {
     this.phenopacket.files = files;
   }
  
   editStatus() {
     // todo
+  }
+  // accordion
+  step = 0;
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
   }
 }

@@ -14,7 +14,7 @@ export class Disease {
     isA: string;
 
     constructor(id?: string, label?: string) {
-        this.term = new OntologyClass(id?? '', label?? '');
+        this.term = {id: id, label: label};
         this.onset = new TimeElement();
         this.resolution = new TimeElement();
         this.diseaseStage = [];

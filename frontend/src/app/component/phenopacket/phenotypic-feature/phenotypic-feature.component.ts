@@ -12,6 +12,7 @@ import { PhenotypeSearchService } from 'src/app/services/phenotype-search.servic
 import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from 'src/app/models/base';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -34,12 +35,14 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     localStorageKey = "phenotypic_features";
 
     @ViewChild('phenotypicPaginator', { static: true }) phenotypicPaginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    // @ViewChild(MatSort, { static: true }) sort: MatSort;
 
     //Table items
     displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'category', 'remove'];
 
     phenotypicDataSource = new MatTableDataSource<PhenotypicFeature>();
+    dataPresent = this.phenotypicDataSource.connect().pipe(map(data => data.length > 0));
+
     phenotypicCount: number;
 
     // MatPaginator Inputs
@@ -92,13 +95,13 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         if (phenotypicFeature === undefined) {
             let feature = new PhenotypicFeature();
             feature.description = 'Phenotypic Feature description';
-            feature.type = new OntologyClass('id ', 'Name');
-            feature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', ''));
-            feature.evidence = new Evidence(new OntologyClass('', ''), new OntologyClass('', ''), new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', '')));
+            feature.type = {id: 'id', label: 'Name'};
+            feature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
+            feature.evidence = new Evidence({id: '', label: ''}, {id: '', label: ''}, new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', '')));
             feature.excluded = false;
-            feature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', ''));
-            feature.severity = new OntologyClass('', '');
-            feature.modifiers = new OntologyClass('', '');
+            feature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
+            feature.severity = {id: '', label: ''};
+            feature.modifiers = {id: '', label: ''};
             this.phenotypicFeatures.push(feature);
         } else {
             this.phenotypicFeatures.push(phenotypicFeature);
@@ -137,9 +140,9 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         this.phenotypicDataSource.data = this.phenotypicFeatures;
     }
 
-    private clearSort() {
-        this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    }
+    // private clearSort() {
+    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    // }
 
     onSearchCriteriaChange(searchCriteria: any) {
         const params: any = {};
@@ -148,7 +151,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         console.log(searchCriteria.selectedItems[0].selectedValue.id);
         let id = searchCriteria.selectedItems[0].selectedValue.id;
         this.phenotypicPaginator.pageIndex = 0;
-        this.clearSort();
+        // this.clearSort();
 
         if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
             this.currSearchParams = searchCriteria;
@@ -160,14 +163,14 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             let phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.name);
+            phenotypicFeature.type = {id: data.id, label: data.name};
             phenotypicFeature.description = data.description;
-            phenotypicFeature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', ''));
-            phenotypicFeature.evidence = new Evidence(new OntologyClass('', ''), new OntologyClass('', ''), new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', '')));
+            phenotypicFeature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
+            phenotypicFeature.evidence = new Evidence({id: '', label: ''}, {id: '', label: ''}, new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', '')));
             phenotypicFeature.excluded = false;
-            phenotypicFeature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), new OntologyClass('', ''), '', new TimeInterval('', ''));
-            phenotypicFeature.severity = new OntologyClass('', '');
-            phenotypicFeature.modifiers = new OntologyClass('', '');
+            phenotypicFeature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
+            phenotypicFeature.severity = {id: '', label: ''};
+            phenotypicFeature.modifiers = {id: '', label: ''};
             this.addPhenotypicFeature(phenotypicFeature);
             this.spinnerDialogRef.close();
         },

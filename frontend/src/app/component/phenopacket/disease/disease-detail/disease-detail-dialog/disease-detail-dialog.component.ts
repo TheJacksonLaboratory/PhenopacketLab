@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { Disease } from 'src/app/models/disease';
@@ -8,7 +8,7 @@ import { Disease } from 'src/app/models/disease';
   templateUrl: './disease-detail-dialog.component.html',
   styleUrls: ['./disease-detail-dialog.component.scss']
 })
-export class DiseaseDetailDialogComponent {
+export class DiseaseDetailDialogComponent implements OnInit {
 
   disease: Disease;
 

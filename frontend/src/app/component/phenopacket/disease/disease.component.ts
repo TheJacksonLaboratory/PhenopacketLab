@@ -9,6 +9,7 @@ import { MondoDisease } from 'src/app/models/mondo-disease';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-disease',
@@ -30,8 +31,6 @@ export class DiseaseComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [10, 50, 100];
   @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  // @ViewChild('diseaseTable', { static: false }) diseaseTable: MatTable<HpoDisease>;
 
   expandedElement: Disease | null;
   @Input()
@@ -41,6 +40,8 @@ export class DiseaseComponent implements OnInit {
 
   // diseases: MondoDisease[] = [];
   datasource = new MatTableDataSource<Disease>();
+  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+
   diseaseCount: number;
   //searchparams
   currSearchParams: any = {}
@@ -99,7 +100,6 @@ export class DiseaseComponent implements OnInit {
     console.log(searchCriteria.selectedItems[0].selectedValue.id);
     let id = searchCriteria.selectedItems[0].selectedValue.id;
     this.diseasePaginator.pageIndex = 0;
-    this.clearSort();
 
     if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
       this.currSearchParams = searchCriteria;
@@ -120,10 +120,6 @@ export class DiseaseComponent implements OnInit {
       (error) => {
         this.spinnerDialogRef.close();
       });
-  }
-
-  private clearSort() {
-    this.sort.sort({ id: '', start: 'asc', disableClear: false });
   }
 
   openSpinnerDialog() {

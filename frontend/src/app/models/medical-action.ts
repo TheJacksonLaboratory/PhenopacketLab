@@ -1,14 +1,10 @@
 import { ExternalReference, OntologyClass, Procedure, TimeElement, TimeInterval } from "./base";
 import { Quantity } from "./measurement";
 
-export class Action {
-    procedure: Procedure;
-    treatment: Treatment;
-    radiationTherapy: RadiationTherapy;
-    therapeuticRegimen: TherapeuticRegimen;
-}
 
-export class MedicalAction extends Action {
+export class MedicalAction {
+    // can be Procedure, Treatment, RadiationTherapy or TherapeuticRegimen
+    action: any;
     treatmentTarget: OntologyClass;
     treatmentIntent: OntologyClass;
     responseToTreatment: OntologyClass;
@@ -19,8 +15,13 @@ export class MedicalAction extends Action {
 export class Treatment {
     agent: OntologyClass;
     routeOfAdministration: OntologyClass;
-    doseIntervals: DoseInterval;
+    doseIntervals: DoseInterval[];
     drugType: DrugType;
+    cumulativeDose: Quantity;
+
+    toString() {
+        return "Treatment";
+    }
 }
 export class DoseInterval {
     quantity: Quantity;
@@ -28,29 +29,35 @@ export class DoseInterval {
     interval: TimeInterval;
 }
 export enum DrugType {
-    UNKNOWN_DRUG_TYPE,
-    PRESCRIPTION,
-    EHR_MEDICATION_LIST,
-    ADMINISTRATION_RELATED_TO_PROCEDURE
+    UNKNOWN_DRUG_TYPE = "Unknown",
+    PRESCRIPTION = "Prescription",
+    EHR_MEDICATION_LIST = "EHR medication list",
+    ADMINISTRATION_RELATED_TO_PROCEDURE = "Administration related to procedure"
 }
 export class RadiationTherapy {
     modality: OntologyClass;
     bodySite: OntologyClass;
     dosage: number;
     fractions: number;
+
+    toString() {
+        return "Radiation therapy";
+    }
 }
-export class Identifier {
-    externalReference: ExternalReference;
-    ontologyClass: OntologyClass;
-}
+
 export enum RegimenStatus {
-    UNKNOWN_STATUS,
-    STARTED,
-    COMPLETED,
-    DISCONTINUED
+    UNKNOWN_STATUS = "Unknown",
+    STARTED = "Started",
+    COMPLETED = "Completed",
+    DISCONTINUED = "Discontinued"
 }
-export class TherapeuticRegimen extends Identifier {
+export class TherapeuticRegimen {
+    identifier: OntologyClass | ExternalReference;
     startTime: TimeElement;
     endTime: TimeElement;
     regimenStatus: RegimenStatus;
+
+    toString() {
+        return "Therapeutic regimen";
+    }
 }

@@ -1,0 +1,297 @@
+<div class="card">
+    <div class="card-body margin">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Treatment target:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{treatmentTarget?.label}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Treatment intent:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{treatmentIntent?.label}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Response to treatment:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{responseToTreatment?.label}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Treatment termination reason:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{terminationReason?.label}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+        <br>
+        <!-- Procedure medical action -->
+        <div *ngIf="actionType === 'Procedure'" class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Code:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getProcedureCodeDisplay()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Body sites:</b>
+                    </div>
+                </div>
+
+                <div *ngFor="let bodySite of bodySites;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{getOntologyClassDisplay(bodySite)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Performed on:</b>
+                    </div>
+                </div>
+                <div *ngFor="let perform of performedOn;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{perform?.toString()}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Treatement medical action -->
+        <div *ngIf="actionType === 'Treatment'" class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Agent:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getAgentDisplay()}}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Route of administration:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getRouteOfAdministrationDisplay()}}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Drug type:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{drugType}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Dose intervals:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table mat-table *ngIf="dataPresent | async" [dataSource]="doseIntervalDatasource"
+                            class="mat-elevation-z2">
+
+                            <ng-container matColumnDef="unit">
+                                <th mat-header-cell *matHeaderCellDef> Unit </th>
+                                <td mat-cell *matCellDef="let element"> {{getQuantityUnitDisplay(element)}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="value">
+                                <th mat-header-cell *matHeaderCellDef> Value </th>
+                                <td mat-cell *matCellDef="let element"> {{getQuantityValueDisplay(element)}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="frequency">
+                                <th mat-header-cell *matHeaderCellDef> Schedule frequency </th>
+                                <td mat-cell *matCellDef="let element"> {{getScheduleFrequencyDisplay(element)}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="interval">
+                                <th mat-header-cell *matHeaderCellDef> Interval </th>
+                                <td mat-cell *matCellDef="let element"> {{getIntervalDisplay(element)}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="doseIntervalColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: doseIntervalColumns;"></tr>
+                        </table>
+
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Cumulative dose:</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getCumulativeDoseDisplay()}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RadiationTherapy medical action -->
+        <div *ngIf="actionType === 'Radiation therapy'" class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Modality</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getModalityDisplay()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Body site</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getBodySiteDisplay()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Dosage</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{dosage}} Gy
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Fractions</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{fractions}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TherapeuticRegimen medical action -->
+        <div *ngIf="actionType === 'Therapeutic regimen'" class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Identifier</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{getIdentifier()}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Start</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{startTime}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>End</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{endTime}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Regimen status</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{regimenStatus}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,12 +27,6 @@ h3 {
   width: 50%;
 }
 
-/* .example-form {
-   min-width: 150px;
-   max-width: 500px;
-   width: 100%;
- } */
-
 .example-full-width {
   width: 100%;
 }
@@ -41,20 +35,6 @@ h3 {
   height: 800px;
   overflow: auto;
 }
-
-/* .mat-table {
-     overflow: auto;
-     width: 100%;
-     max-height: 100px;
-     table-layout: fixed;
-   } */
-
-/* th, td {
-     overflow: hidden;
-     width: 60px;
-     text-overflow: ellipsis;
-     white-space: nowrap;
-   } */
 
 .example-element-detail {
   overflow: hidden;
@@ -79,4 +59,7 @@ tr.example-detail-row {
 }
 .mat-cell {
   padding: 8px 8px 8px 0;
+}
+table {
+  width: 100%;
 }

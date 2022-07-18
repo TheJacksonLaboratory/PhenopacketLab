@@ -1,8 +1,7 @@
-.add-tab-button,
-.delete-tab-button {
+.add-tab-button {
   margin: 8px;
 }
-.delete-tab-button:hover {
+.hover-icon:hover {
   color: darkgrey;
 }
 .mat-row .mat-cell {
@@ -30,7 +29,7 @@
 }
 .close-icon {
   float: right;
-  margin-right: 5px;
+  margin-right: 1px;
 }
 .margin {
   margin-left: 10px;

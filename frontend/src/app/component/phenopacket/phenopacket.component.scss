@@ -1,66 +1,41 @@
 h3 {
   margin-left: 15px;
 }
-.column-1 {
-  width: 200px;
-  float: left;
-}
-.column-2 {
-  float: none;
-  overflow: hidden;
-  background-color: #fff;
-  div {
-    padding: 20px;
-  }
-}
-
-.active {
-  outline: 1px solid #ddd;
-  cursor: pointer;
-  background-color: #ecf0f1;
-  color: #017171; //#2980b9
-}
-.vertical-menu {
-  display: block !important;
-  width: 100%;
-  text-align: center;
-  list-style-type: none;
-  padding: 0px;
-}
-
-li {
-  color: darkgrey; //#212121
-  font-style: normal;
-  font-weight: normal;
-  text-align: left;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-li:after {
-  display: none;
-}
-
-a {
-  padding: 8px;
-}
-@media (max-width: 550px) {
-  .column-1 {
-    width: 40% !important;
-  }
-  .column-2 {
-    width: 60% !important;
-  }
-}
+// vital status area
 #vital-status {
   border-radius: 4px !important;
-  border: 2px solid lightgrey;
+  border: 0.5px solid lightgrey;
   padding: 10px;
   margin: 0px;
 }
 #vital-status:hover {
   border: 2px solid black;
-  padding: 10px;
-  margin: 0px;
+  margin: -1px;
+  // padding: 10px;
+  // margin: 0px;
 }
+
+// accordion
+// .example-headers-align .mat-expansion-panel-header-title,
+// .example-headers-align .mat-expansion-panel-header-description {
+//   flex-basis: 0;
+// }
+
+.example-headers-align .mat-expansion-panel-header-description {
+  // justify-content: space-between;
+  align-items: left;
+}
+
+// .example-headers-align .mat-form-field + .mat-form-field {
+//   margin-left: 8px;
+// }
+.mat-accordion .mat-icon {
+  padding-right: 2em;
+}
+
+
+// hover button
+.hover-icon:hover {
+  color: darkgrey;
+}
+

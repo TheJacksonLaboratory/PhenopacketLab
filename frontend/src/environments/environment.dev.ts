@@ -5,5 +5,6 @@ export const environment = {
   MESSAGE_URL: `${API_URL}/message`,
   PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL: `${API_URL}/phenotypic-features`,
   PHENOPACKETLAB_DISEASE_URL: `${API_URL}/diseases`,
+  PHENOPACKETLAB_BODY_SITE_URL: `${API_URL}/medical-actions/bodysites`,
   HPO_DISEASE_URL: `${API_URL}/diseases`
 };

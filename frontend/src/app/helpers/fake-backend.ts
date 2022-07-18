@@ -9,6 +9,7 @@ let diseases = require('../../assets/data/mondo.json');
 let diseaseNames = require('../../assets/data/mondo-id-names.json');
 let phenotypicFeatures = require('../../assets/data/hp.json');
 let phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
+let bodySites = require('../../assets/data/human-view.json');
 
 
 @Injectable()
@@ -35,6 +36,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getPhenotypicFeatures();
                 case url.match(/\/phenotypic-features\/.*/) && method === 'GET':
                     return getPhenotypicFeatureById();
+                case url.endsWith('/bodysites') && method === 'GET':
+                    console.log("fakebackend bodysites");
+                    return getBodySites();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -58,6 +62,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getPhenotypicFeatureById() {
             const phenotypicFeature = phenotypicFeatures.find(x => x.id === idFromUrl());
             return ok(phenotypicFeature);
+        }
+
+        function getBodySites() {
+            return ok(bodySites);
         }
 
         // helper functions

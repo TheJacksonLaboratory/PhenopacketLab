@@ -1,11 +1,7 @@
 
-export class OntologyClass {
+export interface OntologyClass {
     id: string;
     label: string;
-    constructor(id: string, label: string) {
-        this.id = id;
-        this.label = label;
-    }
 }
 export class ExternalReference {
     id: string;
@@ -25,8 +21,16 @@ export class Evidence {
 }
 export class Procedure {
     code: OntologyClass;
-    bodySite: OntologyClass;
+    bodySites: OntologyClass[];
+    performedOn: TimeElement[];
 
+    constructor() {
+        this.code = {id: '', label: ''};
+    }
+
+    toString() {
+        return "Procedure";
+    }
 }
 export class Age {
     iso8601duration: string;
