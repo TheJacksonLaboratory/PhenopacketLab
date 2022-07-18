@@ -1,17 +1,17 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDiseases;
-import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseAnnotationLoader;
-import org.monarchinitiative.phenol.io.OntologyLoader;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
+import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaderOptions;
+import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaders;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
+import org.monarchinitiative.phenopacketlab.core.*;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
+import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,6 +25,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -65,24 +67,42 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public Ontology hpo(PhenopacketLabDataResolver phenopacketLabDataResolver) {
-        Path hpoPath = phenopacketLabDataResolver.hpoJsonPath();
-        LOGGER.debug("Reading HPO file at {}", hpoPath.toAbsolutePath());
-        return OntologyLoader.loadOntology(hpoPath.toFile());
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(properties.getLoaderThreads(), new PhenopacketLabThreadFactory());
     }
 
     @Bean
-    public HpoService hpoService(Ontology hpo) {
-        return new PhenolHpoService(hpo);
+    public ConceptResourceService conceptResourceService(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
+        ConceptResourceServiceLoader loader = new ConceptResourceServiceLoader(executorService, phenopacketLabDataResolver);
+        return loader.load();
+    }
+
+    @Bean
+    public ConceptConstantsService conceptConstantsService(ConceptResourceService conceptResourceService) {
+        return ConceptConstantsServiceConfigurer.configure(conceptResourceService);
+    }
+
+    @Bean
+    public OntologyConceptResource hpo(ConceptResourceService conceptResourceService) {
+        return conceptResourceService.forPrefix("HP")
+                .filter(i -> i instanceof OntologyConceptResource)
+                .map(icr -> ((OntologyConceptResource) icr))
+                .orElseThrow(() -> new RuntimeException("Missing HP concept resource!"));
+    }
+
+    @Bean
+    public HpoService hpoService(OntologyConceptResource hpo) {
+        return new PhenolHpoService(hpo.getOntology());
     }
 
     @Bean
     public DiseaseService diseaseService(PhenopacketLabDataResolver resolver,
-                                         Ontology hpo) throws InvalidResourceException {
+                                         OntologyConceptResource hpo) throws InvalidResourceException {
         try {
             Path annotationPath = resolver.hpoAnnotationPath();
             LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
-            HpoDiseases diseases = HpoDiseaseAnnotationLoader.loadHpoDiseases(annotationPath, hpo, properties.diseaseDatabases());
+            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo.getOntology(), HpoDiseaseLoaderOptions.defaultOptions())
+                    .load(annotationPath);
             return new PhenolDiseaseService(diseases);
         } catch (IOException e) {
             throw new InvalidResourceException(e);

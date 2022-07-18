@@ -33,7 +33,17 @@
     <dependencies>
         <dependency>
             <groupId>org.monarchinitiative.phenopacketlab</groupId>
+            <artifactId>phenopacketlab-model</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.monarchinitiative.phenopacketlab</groupId>
             <artifactId>phenopacketlab-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.monarchinitiative.phenopacketlab</groupId>
+            <artifactId>phenopacketlab-io</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

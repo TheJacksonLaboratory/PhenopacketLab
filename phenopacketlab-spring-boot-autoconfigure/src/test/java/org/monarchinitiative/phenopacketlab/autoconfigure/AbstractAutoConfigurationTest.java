@@ -10,7 +10,8 @@ import java.nio.file.Paths;
 
 public class AbstractAutoConfigurationTest {
 
-    protected static final Path TEST_DATA = Paths.get("src/test/resources/data");
+    public static final Path BASE_DIR = Paths.get("src/test/resources");
+    public static final Path DATA_DIR = BASE_DIR.resolve("data");
 
     protected ConfigurableApplicationContext context;
 
