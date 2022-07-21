@@ -17,7 +17,8 @@ export class Family {
         this.relatives = new Map<String, Phenopacket>();
         this.pedigree = new Pedigree();
         this.files = [];
-        this.metaData = new MetaData(new Date().toISOString(), "", "");
+        this.metaData = new MetaData();
+        this.metaData.created = new Date().toISOString();
     }
 
 }
