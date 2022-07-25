@@ -6,7 +6,14 @@ import { map } from 'rxjs/operators';
  */
 export class DataPresentMatTableDataSource<T> extends MatTableDataSource<T> {
     
-    dataPresent = this.connect().pipe(map(data => data.length > 0));
+    dataPresent = this.connect().pipe(map(data => {
+        if (data) {
+            return data.length > 0;
+        } else {
+            return false;
+        }
+        
+    }));
 
     public isDataPresent() {
         return this.dataPresent;
