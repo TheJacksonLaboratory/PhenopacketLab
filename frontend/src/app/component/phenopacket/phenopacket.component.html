@@ -177,7 +177,7 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <app-phenotypic-feature></app-phenotypic-feature>
+                        <app-phenotypic-feature [phenotypicFeatures]="getPhenotypicFeatures()" (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"></app-phenotypic-feature>
 
                         <mat-action-row>
                             <button mat-button color="primary" (click)="nextStep()">Next</button>
@@ -219,7 +219,7 @@
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 
@@ -238,7 +238,7 @@
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 
@@ -258,7 +258,7 @@
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 
@@ -278,7 +278,7 @@
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 
@@ -298,7 +298,7 @@
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
+                            <button mat-button color="primary" (click)="nextStep()">Next</button>
                         </mat-action-row>
                     </mat-expansion-panel>
 

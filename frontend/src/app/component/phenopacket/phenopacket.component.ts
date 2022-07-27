@@ -8,6 +8,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
+import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 @Component({
   selector: 'app-phenopacket',
@@ -43,7 +44,7 @@ export class PhenopacketComponent implements OnInit {
   status: string;
   timeOfDeath: string;
   causeOfDeath: string;
-  survivalTime: string;
+  survivalTime: number;
 
   active = 'top';
   viewMode;
@@ -55,11 +56,17 @@ export class PhenopacketComponent implements OnInit {
     this.viewMode = "tab1";
     if (this.phenopacket) {
       this.individual = this.phenopacket.subject;
-      this.dob = this.individual.dateOfBirth;
+      this.dob = this.individual.dateOfBirth? new Date(this.individual.dateOfBirth) : new Date();
       this.sex = this.individual.sex;
       this.karyotypicSex = this.individual.karyotypicSex;
       this.gender = this.individual.gender;
-  
+      // status
+      this.status = this.individual?.vitalStatus?.status?.toString();
+      console.log(this.individual?.vitalStatus?.causeOfDeath);
+      this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath?.toString();
+      this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
+      this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;
+
       // id update
       this.phenoIdControl.setValue(this.phenopacket.id);
       if (this.phenopacketIdSubscription) {
@@ -89,7 +96,7 @@ export class PhenopacketComponent implements OnInit {
         this.onDobChanged.emit(value);
       });
       // date of last encounter update
-      // Dob update
+      this.lastEncounterDate = new Date(this.individual.timeAtLastEncounter?.toString());
       this.lastEncounterDateControl.setValue(this.lastEncounterDate);
       if (this.lastEncounterDateSubscription) {
         this.lastEncounterDateSubscription.unsubscribe();
@@ -105,6 +112,12 @@ export class PhenopacketComponent implements OnInit {
     return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
   }
 
+  getPhenotypicFeatures() {
+    if (this.phenopacket) {
+      return this.phenopacket.phenotypicFeatures? this.phenopacket.phenotypicFeatures : [];
+    }
+    return [];
+  }
   getPhenopacketDiseases() {
     if (this.phenopacket) {
       return this.phenopacket.diseases;
@@ -143,6 +156,9 @@ export class PhenopacketComponent implements OnInit {
     
   }
 
+  changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
+    this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+  }
   changeDiseases(diseases: Disease[]) {
     console.log(diseases);
     this.phenopacket.diseases = diseases;

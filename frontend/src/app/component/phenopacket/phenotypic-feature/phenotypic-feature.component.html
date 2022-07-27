@@ -32,28 +32,26 @@
             <!-- Onset Column -->
             <ng-container matColumnDef="onset">
                 <th mat-header-cell *matHeaderCellDef> Onset </th>
-                <td mat-cell *matCellDef="let element"> {{element.onset.weeks + ' weeks - ' +
-                    element.onset.days + ' days'}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.onset}} </td>
             </ng-container>
 
             <!-- Resolution Column -->
             <ng-container matColumnDef="resolution">
                 <th mat-header-cell *matHeaderCellDef> Resolution </th>
-                <td mat-cell *matCellDef="let element"> {{element.resolution.weeks + ' weeks - ' +
-                    element.resolution.days + ' days' }} </td>
+                <td mat-cell *matCellDef="let element"> {{element.resolution}} </td>
             </ng-container>
 
             <!-- Severity genomic -->
             <ng-container matColumnDef="severity">
                 <th mat-header-cell *matHeaderCellDef> Severity </th>
-                <td mat-cell *matCellDef="let element"> {{element.severity.label}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.severity?.label}} </td>
             </ng-container>
 
 
             <!-- Modifiers Column -->
             <ng-container matColumnDef="modifiers">
                 <th mat-header-cell *matHeaderCellDef> Modifiers </th>
-                <td mat-cell *matCellDef="let element"> {{element.modifiers.label}} </td>
+                <td mat-cell *matCellDef="let element"> {{getModifiers(element)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="evidence">
@@ -62,8 +60,8 @@
             </ng-container>
 
             <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef> Category </th>
-                <td mat-cell *matCellDef="let element"> {{'None'}} </td>
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.type?.label}} </td>
             </ng-container>
 
             <ng-container matColumnDef="remove">

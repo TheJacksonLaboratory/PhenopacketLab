@@ -56,10 +56,10 @@ export class PhenotypicDetailComponent {
 
   updatePhenotypicDetails() {
     this.status = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
-    this.onset = this.phenotypicFeature.onset?.timestamp, '';
-    this.resolution = this.phenotypicFeature.resolution?.timestamp, '';
-    this.severity = this.phenotypicFeature.severity.toString();
-    this.modifiers = this.phenotypicFeature.modifiers.toString();
+    this.onset = this.phenotypicFeature.onset?.element, '';
+    this.resolution = this.phenotypicFeature.resolution?.element, '';
+    this.severity = this.phenotypicFeature.severity?.toString();
+    this.modifiers = this.phenotypicFeature.modifiers?.toString();
     this.evidenceName = this.phenotypicFeature.evidence?.evidenceCode?.label, '';
     this.evidenceId = this.phenotypicFeature.evidence?.evidenceCode?.id, '';
     this.evidenceReference = this.phenotypicFeature.evidence?.reference?.reference, '';
