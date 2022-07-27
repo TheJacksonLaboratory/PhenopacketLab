@@ -14,25 +14,33 @@ export class MedicalAction extends Convert {
     static create(obj: any): MedicalAction {
         const medicalAction = new MedicalAction();
         // action
-        let action = obj['action'];
-        if (action['code']) {
-            medicalAction.action = Procedure.convert(action);
-        } else if (action['agent']) {
-            medicalAction.action = Treatment.convert(action);
-        } else if (action['modality']) {
-            medicalAction.action = RadiationTherapy.convert(action);
-        } else if (action['identifier']) {
-            medicalAction.action = TherapeuticRegimen.convert(action);
+        if (obj['procedure']) {
+            medicalAction.action = Procedure.convert(obj['procedure']);
+        } else if (obj['treatment']) {
+            medicalAction.action = Treatment.convert(obj['treatment']);
+        } else if (obj['radiationTherapy']) {
+            medicalAction.action = RadiationTherapy.convert(obj['radiationTherapy']);
+        } else if (obj['therapeuticRegimen']) {
+            medicalAction.action = TherapeuticRegimen.convert(obj['therapeuticRegimen']);
         }
-        medicalAction.treatmentTarget = OntologyClass.convert(obj['treatmentTarget']);
-        medicalAction.treatmentIntent = OntologyClass.convert(obj['treatmentIntent']);
-        medicalAction.adverseEvents = OntologyClass.convert(obj['adversEvents']);
-        medicalAction.treatmentTerminationReason = OntologyClass.convert(obj['treatmentTerminationReason']);
+        if (obj['treatmentTarget']) {
+            medicalAction.treatmentTarget = OntologyClass.convert(obj['treatmentTarget']);
+        }
+        if (obj['treatmentIntent']) {
+            medicalAction.treatmentIntent = OntologyClass.convert(obj['treatmentIntent']);
+        }
+        if (obj['adverseEvents']) {
+            medicalAction.adverseEvents = OntologyClass.convert(obj['adverseEvents']);
+        }
+        if (obj['treatmentTerminationReason']) {
+            medicalAction.treatmentTerminationReason = OntologyClass.convert(obj['treatmentTerminationReason']);
+        }
         return medicalAction;
     }
 }
 
 export class Treatment {
+    static actionName = 'Treatment';
     agent: OntologyClass;
     routeOfAdministration: OntologyClass;
     doseIntervals: DoseInterval[];
@@ -45,11 +53,22 @@ export class Treatment {
 
     static convert(obj: any): Treatment {
         const treatment = new Treatment();
-        treatment.agent = OntologyClass.convert(obj['agent']);
-        treatment.routeOfAdministration = OntologyClass.convert(obj['routeOfAdministration']);
-        treatment.doseIntervals = DoseInterval.convert(obj['doseIntervals']);
-        treatment.drugType = obj['drugType'];
-        treatment.cumulativeDose = Quantity.convert(obj['cumulativeDose']);
+        if (obj['agent']) {
+            treatment.agent = OntologyClass.convert(obj['agent']);
+        }
+        if (obj['routeOfAdministration']) {
+            treatment.routeOfAdministration = OntologyClass.convert(obj['routeOfAdministration']);
+        }
+        if (obj['doseIntervals']) {
+            treatment.doseIntervals = DoseInterval.convert(obj['doseIntervals']);
+        }
+        if (obj['drugType']) {
+            treatment.drugType = obj['drugType'];
+        }
+        if (obj['cumulativeDose']) {
+            treatment.cumulativeDose = Quantity.convert(obj['cumulativeDose']);
+        }
+        
         return treatment;
     } 
 }
@@ -60,9 +79,15 @@ export class DoseInterval extends Convert {
 
     static create(obj: any): DoseInterval {
         const doseInterval = new DoseInterval();
-        doseInterval.quantity = Quantity.convert(obj['quantity']);
-        doseInterval.scheduleFrequency = OntologyClass.convert(obj['scheduleFrequency']);
-        doseInterval.interval = TimeInterval.convert(obj['interval']);
+        if (obj['quantity']) {
+            doseInterval.quantity = Quantity.convert(obj['quantity']);
+        }
+        if (obj['scheduleFrequency']) {
+            doseInterval.scheduleFrequency = OntologyClass.convert(obj['scheduleFrequency']);
+        }
+        if (obj['interval']) {
+            doseInterval.interval = TimeInterval.convert(obj['interval']);
+        }
         return doseInterval;
     }
 }
@@ -73,6 +98,7 @@ export enum DrugType {
     ADMINISTRATION_RELATED_TO_PROCEDURE = "Administration related to procedure"
 }
 export class RadiationTherapy {
+   static actionName = 'Radiation therapy';
     modality: OntologyClass;
     bodySite: OntologyClass;
     dosage: number;
@@ -84,10 +110,18 @@ export class RadiationTherapy {
 
     static convert(obj: any): RadiationTherapy {
         const radiationTherapy = new RadiationTherapy();
-        radiationTherapy.modality = OntologyClass.convert(obj['modality']);
-        radiationTherapy.bodySite = OntologyClass.convert(obj['bodySite']);
-        radiationTherapy.dosage = obj['dosage'];
-        radiationTherapy.fractions = obj['fractions'];
+        if (obj['modality']) {
+            radiationTherapy.modality = OntologyClass.convert(obj['modality']);
+        }
+        if (obj['bodySite']) {
+            radiationTherapy.bodySite = OntologyClass.convert(obj['bodySite']);
+        }
+        if (obj['dosage']) {
+            radiationTherapy.dosage = obj['dosage'];
+        }
+        if (obj['fractions']) {
+            radiationTherapy.fractions = obj['fractions'];
+        }
         return radiationTherapy;
     }
 }
@@ -99,6 +133,7 @@ export enum RegimenStatus {
     DISCONTINUED = "Discontinued"
 }
 export class TherapeuticRegimen {
+    static actionName = 'Therapeutic regimen';
     identifier: OntologyClass | ExternalReference;
     startTime: TimeElement;
     endTime: TimeElement;
@@ -116,9 +151,15 @@ export class TherapeuticRegimen {
         } else {
             therapeuticRegimen.identifier = ExternalReference.convert(identifier);
         }
-        therapeuticRegimen.startTime = TimeElement.convert(obj['startTime']);
-        therapeuticRegimen.endTime = TimeElement.convert(obj['endTime']);
-        therapeuticRegimen.status = obj['status'];
+        if (obj['startTime']) {
+            therapeuticRegimen.startTime = TimeElement.convert(obj['startTime']);
+        }
+        if (obj['endTime']) {
+            therapeuticRegimen.endTime = TimeElement.convert(obj['endTime']);
+        }
+        if (obj['status']) {
+            therapeuticRegimen.status = obj['status'];
+        }
         return therapeuticRegimen;
     }
 }

@@ -26,24 +26,61 @@ export class BioSample extends Convert {
 
     static create(obj: any): BioSample {
         const bioSample = new BioSample();
-        bioSample.id = obj['id'];
-        bioSample.derivedFromId = obj['derivedFromId'];
-        bioSample.description = obj['description'];
-        bioSample.sampledTissue = OntologyClass.convert(obj['sampledTissue']);
-        bioSample.sampleType = OntologyClass.convert(obj['sampleType']);
-        bioSample.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
-        bioSample.measurements = Measurement.convert(obj['measurements']);
-        bioSample.taxonomy = OntologyClass.convert(obj['taxonomy']);
-        bioSample.timeOfCollection = TimeElement.convert(obj['timeOfCollection']);
-        bioSample.histologicalDiagnosis = OntologyClass.convert(obj['histologicalDiagnosis']);
-        bioSample.tumorProgression = OntologyClass.convert(obj['tumorProgression']);
-        bioSample.tumorGrade = OntologyClass.convert(obj['tumorGrade']);
-        bioSample.pathologicalStage = OntologyClass.convert(obj['pathologicalStage']);
-        bioSample.diagnosticMarkers = OntologyClass.convert(obj['diagnosticMarkers']);
-        bioSample.files = File.convert(obj['files']);
-        bioSample.materialSample = OntologyClass.convert(obj['materialSample']);
-        bioSample.sampleProcessing = OntologyClass.convert(obj['sampleProcessing']);
-        bioSample.sampleStorage = OntologyClass.convert(obj['sampleStorage']);
+        if (obj['id']) {
+            bioSample.id = obj['id'];
+        }
+        if (obj['derivedFromId']) {
+            bioSample.derivedFromId = obj['derivedFromId'];
+        }
+        if (obj['description']) {
+            bioSample.description = obj['description'];
+        }
+        if (obj['sampledTissue']) {
+            bioSample.sampledTissue = OntologyClass.convert(obj['sampledTissue']);
+        }
+        if (obj['sampleType']) {
+            bioSample.sampleType = OntologyClass.convert(obj['sampleType']);
+        }
+        if (obj['phenotypicFeatures']) {
+            bioSample.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
+        }
+        if (obj['measurements']) {
+            bioSample.measurements = Measurement.convert(obj['measurements']);
+        }
+        if (obj['taxonomy']) {
+            bioSample.taxonomy = OntologyClass.convert(obj['taxonomy']);
+        }
+        if (obj['timeOfCollection']) {
+            bioSample.timeOfCollection = TimeElement.convert(obj['timeOfCollection']);
+        }
+        if (obj['histologicalDiagnosis']) {
+            bioSample.histologicalDiagnosis = OntologyClass.convert(obj['histologicalDiagnosis']);
+        }
+        if (obj['tumorProgression']) {
+            bioSample.tumorProgression = OntologyClass.convert(obj['tumorProgression']);
+        }
+        if (obj['tumorGrade']) {
+            bioSample.tumorGrade = OntologyClass.convert(obj['tumorGrade']);
+        }
+        if (obj['pathologicalStage']) {
+            bioSample.pathologicalStage = OntologyClass.convert(obj['pathologicalStage']);
+        }
+        if (obj['diagnosticMarkers']) {
+            bioSample.diagnosticMarkers = OntologyClass.convert(obj['diagnosticMarkers']);
+        }
+        if (obj['files']) {
+            bioSample.files = File.convert(obj['files']);
+        }
+        if (obj['materialSample']) {
+            bioSample.materialSample = OntologyClass.convert(obj['materialSample']);
+        }
+        if (obj['sampleProcessing']) {
+            bioSample.sampleProcessing = OntologyClass.convert(obj['sampleProcessing']);
+        }
+        if (obj['sampleStorage']) {
+            bioSample.sampleStorage = OntologyClass.convert(obj['sampleStorage']);
+        }
+        
         return bioSample;
     }
 }

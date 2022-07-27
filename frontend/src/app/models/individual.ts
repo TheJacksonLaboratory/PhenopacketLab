@@ -2,7 +2,7 @@ import { OntologyClass, TimeElement } from "./base";
 
 export class Individual {
     id: string;
-    alternateId: string;
+    alternateIds: string[];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
     vitalStatus: VitalStatus;
@@ -18,20 +18,36 @@ export class Individual {
      */
     public static convert(obj: any): Individual {
         const individual = new Individual();
-        individual.id = obj['id'];
-        individual.alternateId = obj['alternateId'];
-        individual.dateOfBirth = obj['dateOfBirth'];
-        individual.timeAtLastEncounter = TimeElement.convert(obj['timeAtLastEncounter']);
-        individual.vitalStatus = VitalStatus.convert(obj['vitalStatus']);
-        individual.sex = obj['sex'];
-        individual.karyotypicSex = obj['karyotypicSex'];
-        individual.gender = OntologyClass.convert(obj['gender']);
-        individual.taxonomy = OntologyClass.convert(obj['taxonomy']);
+        if(obj['id']) {
+            individual.id = obj['id'];
+        }
+        if(obj['alternateId']) {
+            individual.alternateIds = obj['alternateIds'];
+        }
+        if(obj['dateOfBirth']) {
+            individual.dateOfBirth = obj['dateOfBirth'];
+        }
+        if(obj['timeAtLastEncounter']) {
+            individual.timeAtLastEncounter = TimeElement.convert(obj['timeAtLastEncounter']);
+        }
+        if(obj['vitalStatus']) {
+            individual.vitalStatus = VitalStatus.convert(obj['vitalStatus']);
+        }
+        if(obj['sex']) {
+            individual.sex = obj['sex'];
+        }
+        if(obj['karyotypicSex']) {
+            individual.karyotypicSex = obj['karyotypicSex'];
+        }
+        if(obj['gender']) {
+            individual.gender = OntologyClass.convert(obj['gender']);
+        }
+        if(obj['taxonomy']) {
+            individual.taxonomy = OntologyClass.convert(obj['taxonomy']);
+        }
         return individual;
     }
 }
-
-
 
 export enum Status {
     UNKNOWN_STATUS,
@@ -46,18 +62,23 @@ export class VitalStatus {
 
     public static convert(obj: any): VitalStatus {
         const vitalSatus = new VitalStatus();
-        vitalSatus.status = obj['status'];
-        vitalSatus.timeOfDeath = TimeElement.convert(obj['timeOfDeath']);
-        vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-        vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
+        if(obj['status']) {
+            vitalSatus.status = obj['status'];
+        } else if(obj['timeOfDeath']) {
+            vitalSatus.timeOfDeath = TimeElement.convert(obj['timeOfDeath']);
+        } else if(obj['causeOfDeath']) {
+            vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
+        } else if(obj['survivalTimeInDays']) {
+            vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
+        }
         return vitalSatus;
     }
 }
 export enum Sex {
-    UNKNOWN_SEX = "Unknown sex",
-    FEMALE = "Female",
-    MALE = "Male",
-    OTHER_SEX = "Other sex"
+    UNKNOWN_SEX = "UNKNOWN_SEX",
+    FEMALE = "FEMALE",
+    MALE = "MALE",
+    OTHER_SEX = "OTHER_SEX"
 }
 export enum KaryotypicSex {
     UNKNOWN_KARYOTYPE = "Unknown karyotype",

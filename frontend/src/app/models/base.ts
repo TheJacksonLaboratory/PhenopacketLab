@@ -36,10 +36,23 @@ export class OntologyClass extends Convert {
         this.id = id;
         this.label = label;
     }
+
+    toString() {
+        if (this.label && this.id) {
+            return `${this.label} [${this.id}]`;
+        }
+        return '';
+        
+    }
+
     static create(obj: any): OntologyClass {
         const ontologyClass = new OntologyClass();
-        ontologyClass.id = obj['id'];
-        ontologyClass.label = obj['label'];
+        if (obj['id']) {
+            ontologyClass.id = obj['id'];
+        }
+        if (obj['label']) {
+            ontologyClass.label = obj['label'];
+        }
         return ontologyClass;
     }
 
@@ -51,9 +64,15 @@ export class ExternalReference {
 
     static convert(obj: any): ExternalReference {
         const externalReference = new ExternalReference();
-        externalReference.id = obj['id'];
-        externalReference.reference = obj['reference'];
-        externalReference.description = obj['description'];
+        if (obj['id']) {
+            externalReference.id = obj['id'];
+        }
+        if (obj['reference']) {
+            externalReference.reference = obj['reference'];
+        }
+        if (obj['description']) {
+            externalReference.description = obj['description'];
+        }
         return externalReference;
     }
 }
@@ -68,12 +87,17 @@ export class Evidence {
 
     public static convert(obj: any): Evidence {
         const evidence = new Evidence();
-        evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
-        evidence.reference = ExternalReference.convert(obj['reference']);
+        if (obj['evidenceCode']) {
+            evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
+        }
+        if (obj['reference']) {
+            evidence.reference = ExternalReference.convert(obj['reference']);
+        }
         return evidence;
     }
 }
 export class Procedure {
+    static actionName = 'Procedure';
     code: OntologyClass;
     bodySites: OntologyClass[];
     performedOn: TimeElement[];
@@ -88,12 +112,19 @@ export class Procedure {
 
     static convert(obj: any): Procedure {
         const procedure = new Procedure();
-        procedure.code = OntologyClass.convert(obj['code']);
-        procedure.bodySites = OntologyClass.convert(obj['bodySites']);
-        procedure.performedOn = TimeElement.convert(obj['performedOn']);
+        if (obj['code']) {
+            procedure.code = OntologyClass.convert(obj['code']);
+        }
+        if (obj['bodySites']) {
+            procedure.bodySites = OntologyClass.convert(obj['bodySites']);
+        }
+        if (obj['performedOn']) {
+            procedure.performedOn = TimeElement.convert(obj['performedOn']);
+        }
+
         return procedure;
     }
- }
+}
 export class Age {
     iso8601duration: string;
 
@@ -103,7 +134,9 @@ export class Age {
 
     public static convert(obj: any): Age {
         const age = new Age();
-        age.iso8601duration = obj['iso8601duration'];
+        if (obj['iso8601duration']) {
+            age.iso8601duration = obj['iso8601duration'];
+        }
         return age;
     }
 }
@@ -118,8 +151,12 @@ export class AgeRange {
 
     public static convert(obj: any): AgeRange {
         const ageRange = new AgeRange();
-        ageRange.start = Age.convert(obj['start']);
-        ageRange.end = Age.convert(obj['end']);
+        if (obj['start']) {
+            ageRange.start = Age.convert(obj['start']);
+        }
+        if (obj['end']) {
+            ageRange.end = Age.convert(obj['end']);
+        }
         return ageRange;
     }
 }
@@ -134,8 +171,12 @@ export class TimeInterval {
 
     public static convert(obj: any): TimeInterval {
         const interval = new TimeInterval();
-        interval.start = obj['start'];
-        interval.end = obj['end'];
+        if (obj['start']) {
+            interval.start = obj['start'];
+        }
+        if (obj['end']) {
+            interval.end = obj['end'];
+        }
         return interval;
     }
 }
@@ -150,41 +191,58 @@ export class GestationalAge {
 
     public static convert(obj: any): GestationalAge {
         const gestationalAge = new GestationalAge();
-        gestationalAge.weeks = obj['weeks'];
-        gestationalAge.days = obj['days'];
+        if (obj['weeks']) {
+            gestationalAge.weeks = obj['weeks'];
+        }
+        if (obj['days']) {
+            gestationalAge.days = obj['days'];
+        }
         return gestationalAge;
-    }
-
-    toString() {
-        return `${this.weeks} weeks, ${this.days} days`;
     }
 }
 export class TimeElement extends Convert {
-    gestationalAge: GestationalAge;
-    age: Age;
-    ageRange: AgeRange;
-    ontologyClass: OntologyClass;
-    timestamp: string;
-    interval: TimeInterval;
-    constructor(gestationalAge?: GestationalAge, age?: Age, ageRange?: AgeRange, ontologyClass?: OntologyClass,
-        timestamp?: string, interval?: TimeInterval) {
+    element: any;
+
+    /**
+     * 
+     * @param element can be instance of GestationalAge, Age, AgeRange, string or TimeInterval
+     */
+    constructor(element?: any) {
         super();
-        this.gestationalAge = gestationalAge;
-        this.age = age;
-        this.ageRange = ageRange;
-        this.ontologyClass = ontologyClass;
-        this.timestamp = timestamp;
-        this.interval = interval;
+        this.element = element;
+    }
+
+    toString() {
+        if (this.element instanceof GestationalAge) {
+            return `${this.element.days} days, ${this.element.weeks} weeks`;
+        } else if (this.element instanceof Age) {
+            return this.element.iso8601duration;
+        } else if (this.element instanceof OntologyClass) {
+            return this.element.toString();
+        } else if (this.element instanceof AgeRange) {
+            return `${this.element.start} - ${this.element.start}`;
+        } else if (typeof this.element === 'string') {
+            return this.element;
+        } else if (this.element instanceof TimeInterval) {
+            return `${this.element.start} - ${this.element.end}`;
+        }
     }
 
     static create(obj: any): TimeElement {
         const timeElement = new TimeElement();
-        timeElement.age = Age.convert(obj['age']);
-        timeElement.ageRange = AgeRange.convert(obj['ageRange']);
-        timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
-        timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
-        timeElement.timestamp = obj['timestamp'];
-        timeElement.interval = TimeInterval.convert(obj['interval']);
+        if (obj['age']) {
+            timeElement.element = Age.convert(obj['age']);
+        } else if (obj['ageRange']) {
+            timeElement.element = AgeRange.convert(obj['ageRange']);
+        } else if (obj['gestationalAge']) {
+            timeElement.element = GestationalAge.convert(obj['gestationalAge']);
+        } else if (obj['ontologyClass']) {
+            timeElement.element = OntologyClass.convert(obj['ontologyClass']);
+        } else if (obj['timestamp']) {
+            timeElement.element = obj['timestamp'];
+        } else if (obj['interval']) {
+            timeElement.element = TimeInterval.convert(obj['interval']);
+        }
         return timeElement;
     }
 }
@@ -202,9 +260,16 @@ export class File extends Convert {
     }
     static create(obj: any): File {
         const file = new File();
-        file.uri = obj['uri'];
-        file.individualToFileIdentifier = obj['individualToFileIdentifier'];
-        file.fileAttribute = obj['fileAttribute'];
+        if (obj['uri']) {
+            file.uri = obj['uri'];
+        }
+        if (obj['individualToFileIdentifier']) {
+            file.individualToFileIdentifier = obj['individualToFileIdentifier'];
+        }
+        if (obj['fileAttribute']) {
+            file.fileAttribute = obj['fileAttribute'];
+        }
+        
         return file;
     }
 }

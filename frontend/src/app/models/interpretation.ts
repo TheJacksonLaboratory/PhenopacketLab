@@ -1,4 +1,4 @@
-import exp from "constants";
+import { idText } from "typescript";
 import { Convert, OntologyClass } from "./base";
 
 export class Interpretation extends Convert {
@@ -9,10 +9,18 @@ export class Interpretation extends Convert {
 
     static create(obj: any): Interpretation {
         const interpretation = new Interpretation();
-        interpretation.id = obj['id'];
-        interpretation.progressStatus = obj['progressStatus'];
-        interpretation.diagnosis = Diagnosis.convert(obj['disagnosis']);
-        interpretation.summary = obj['summary'];
+        if (obj['id']) {
+            interpretation.id = obj['id'];
+        }
+        if (obj['progressStatus']) {
+            interpretation.progressStatus = obj['progressStatus'];
+        }
+        if (obj['diagnosis']) {
+            interpretation.diagnosis = Diagnosis.convert(obj['diagnosis']);
+        }
+        if (obj['summary']) {
+            interpretation.summary = obj['summary'];
+        }
         return interpretation;
     }
 }
@@ -30,8 +38,12 @@ export class Diagnosis {
 
     static convert(obj: any): Diagnosis {
         const diagnosis = new Diagnosis();
-        diagnosis.disease = OntologyClass.convert(obj['disease']);
-        diagnosis.genomicInterpretations = GenomicInterpretation.convert(obj['genomicInterpretations']);
+        if (obj['disease']) {
+            diagnosis.disease = OntologyClass.convert(obj['disease']);
+        }
+        if (obj['genomicInterpretations']) {
+            diagnosis.genomicInterpretations = GenomicInterpretation.convert(obj['genomicInterpretations']);
+        }
         return diagnosis;
     }
 }
@@ -52,11 +64,11 @@ export class GenomicInterpretation extends Convert {
         const genomicInterpretation = new GenomicInterpretation();
         genomicInterpretation.subjectOrBiosampleId = obj['subjectOrBiosampleId'];
         genomicInterpretation.interpretationStatus = obj['interpretationStatus'];
-        let call = obj['call'];
-        if (call['symbol']) {
-            genomicInterpretation.call = GeneDescriptor.convert(call);
-        } else {
-            genomicInterpretation.call = VariantInterpretation.convert(call);
+        // call
+        if (obj['geneDescriptor']) {
+            genomicInterpretation.call = GeneDescriptor.convert(obj['geneDescriptor']);
+        } else if (obj['variantInterpretation']) {
+            genomicInterpretation.call = VariantInterpretation.convert(obj['variantInterpretation']);
         }
         return genomicInterpretation;
     }
@@ -94,15 +106,33 @@ export class VcfRecord {
 
     static convert(obj: any): VcfRecord {
         const vcfRecord = new VcfRecord();
-        vcfRecord.genomeAssembly = obj['genomeAssembly'];
-        vcfRecord.chrom = obj['chrom'];
-        vcfRecord.pos = obj['pos'];
-        vcfRecord.id = obj['id'];
-        vcfRecord.ref = obj['ref'];
-        vcfRecord.alt = obj['alt'];
-        vcfRecord.qual = obj['qual'];
-        vcfRecord.filter = obj['filter'];
-        vcfRecord.info = obj['info'];
+        if (obj['genomeAssembly']) {
+            vcfRecord.genomeAssembly = obj['genomeAssembly'];
+        }
+        if (obj['chrom']) {
+            vcfRecord.chrom = obj['chrom'];
+        }
+        if (obj['pos']) {
+            vcfRecord.pos = obj['pos'];
+        }
+        if (obj['id']) {
+            vcfRecord.id = obj['id'];
+        }
+        if (obj['ref']) {
+            vcfRecord.ref = obj['ref'];
+        }
+        if (obj['alt']) {
+            vcfRecord.alt = obj['alt'];
+        }
+        if (obj['qual']) {
+            vcfRecord.qual = obj['qual'];
+        }
+        if (obj['filter']) {
+            vcfRecord.filter = obj['filter'];
+        }
+        if (obj['info']) {
+            vcfRecord.info = obj['info'];
+        }
         return vcfRecord;
     }
 }
@@ -112,8 +142,12 @@ export class Extension extends Convert {
 
     static create(obj: any): Extension {
         const extension = new Extension();
-        extension.name = obj['name'];
-        extension.value = obj['value'];
+        if (obj['name']) {
+            extension.name = obj['name'];
+        }
+        if (obj['value']) {
+            extension.value = obj['value'];
+        }
         return extension;
     }
 }
@@ -124,9 +158,16 @@ export class Expression extends Convert {
 
     static create(obj: any): Expression {
         const expression = new Expression();
-        expression.syntax = obj['syntax'];
-        expression.value = obj['value'];
-        expression.version = obj['version'];
+        if (obj['syntax']) {
+            expression.syntax = obj['syntax'];
+        }
+        if (obj['value']) {
+            expression.value = obj['value'];
+        }
+        if (obj['version']) {
+            expression.version = obj['version'];
+        }
+
         return expression;
     }
 }
@@ -148,22 +189,49 @@ export class VariantDescriptor {
 
     static convert(obj: any): VariantDescriptor {
         const variantDescriptor = new VariantDescriptor();
-        variantDescriptor.id = obj['id'];
-        // TODO use VRS model
-        variantDescriptor.variation = obj['variation'];
-        variantDescriptor.label = obj['label'];
-        variantDescriptor.description = obj['description'];
-        variantDescriptor.geneContext = GeneDescriptor.convert(obj['geneContext']);
-        variantDescriptor.expressions = Expression.convert(obj['expressions']);
-        variantDescriptor.vcfRecord = VcfRecord.convert(obj['vcfRecord']);
-        variantDescriptor.xrefs = obj['xrefs'];
-        variantDescriptor.alternateLabels = obj['alternateLabels'];
-        variantDescriptor.extensions = Extension.convert(obj['extensions']);
-        variantDescriptor.moleculeContext = obj['moleculeContext'];
-        variantDescriptor.structuralType = OntologyClass.convert(obj['structuralType']);
-        variantDescriptor.vrsRefAlleleSeq = obj['vrsRefAlleleSeq'];
-        variantDescriptor.allelicState = OntologyClass.convert(obj['allelicState']);
-
+        if (obj['id']) {
+            variantDescriptor.id = obj['id'];
+        }
+        if (obj['variation']) {
+            // TODO use VRS model
+            variantDescriptor.variation = obj['variation'];
+        }
+        if (obj['label']) {
+            variantDescriptor.label = obj['label'];
+        }
+        if (obj['description']) {
+            variantDescriptor.description = obj['description'];
+        }
+        if (obj['geneContext']) {
+            variantDescriptor.geneContext = GeneDescriptor.convert(obj['geneContext']);
+        }
+        if (obj['expressions']) {
+            variantDescriptor.expressions = Expression.convert(obj['expressions']);
+        }
+        if (obj['vcfRecord']) {
+            variantDescriptor.vcfRecord = VcfRecord.convert(obj['vcfRecord']);
+        }
+        if (obj['xrefs']) {
+            variantDescriptor.xrefs = obj['xrefs'];
+        }
+        if (obj['alternateLabels']) {
+            variantDescriptor.alternateLabels = obj['alternateLabels'];
+        }
+        if (obj['extensions']) {
+            variantDescriptor.extensions = Extension.convert(obj['extensions']);
+        }
+        if (obj['moleculeContext']) {
+            variantDescriptor.moleculeContext = obj['moleculeContext'];
+        }
+        if (obj['structuralType']) {
+            variantDescriptor.structuralType = OntologyClass.convert(obj['structuralType']);
+        }
+        if (obj['vrsRefAlleleSeq']) {
+            variantDescriptor.vrsRefAlleleSeq = obj['vrsRefAlleleSeq'];
+        }
+        if (obj['allelicState']) {
+            variantDescriptor.allelicState = OntologyClass.convert(obj['allelicState']);
+        }
         return variantDescriptor;
     }
 }
@@ -174,9 +242,16 @@ export class VariantInterpretation {
 
     static convert(obj: any): VariantInterpretation {
         const variantInterpretation = new VariantInterpretation();
-        variantInterpretation.acmgPathogenicityClassification = obj['acmgPathogenicityClassification'];
-        variantInterpretation.therapeuticActionability = obj['therapeuticActionability'];
-        variantInterpretation.variant = VariantDescriptor.convert(obj['variant']);
+        if (obj['acmgPathogenicityClassification']) {
+            variantInterpretation.acmgPathogenicityClassification = obj['acmgPathogenicityClassification'];
+        }
+        if (obj['therapeuticActionability']) {
+            variantInterpretation.therapeuticActionability = obj['therapeuticActionability'];
+        }
+        if (obj['variant']) {
+            variantInterpretation.variant = VariantDescriptor.convert(obj['variant']);
+        }
+        
         return variantInterpretation;
     }
 }
@@ -191,12 +266,25 @@ export class GeneDescriptor {
 
     static convert(obj: any): GeneDescriptor {
         const geneDesciptor = new GeneDescriptor();
-        geneDesciptor.valueId = obj['valueId'];
-        geneDesciptor.symbol = obj['symbol'];
-        geneDesciptor.description = obj['description'];
-        geneDesciptor.alternateIds = obj['alternateIds'];
-        geneDesciptor.xrefs = obj['xrefs'];
-        geneDesciptor.alternateSymbols = obj['alternateSymbols'];
+        if (obj['valueId']) {
+            geneDesciptor.valueId = obj['valueId'];
+        }
+        if (obj['symbol']) {
+            geneDesciptor.symbol = obj['symbol'];
+        }
+        if (obj['description']) {
+            geneDesciptor.description = obj['description'];
+        }
+        if (obj['alternateIds']) {
+            geneDesciptor.alternateIds = obj['alternateIds'];
+        }
+        if (obj['xrefs']) {
+            geneDesciptor.xrefs = obj['xrefs'];
+        }
+        if (obj['alternateSymbols']) {
+            geneDesciptor.alternateSymbols = obj['alternateSymbols'];
+        }
+        
         return geneDesciptor;
     }
 }

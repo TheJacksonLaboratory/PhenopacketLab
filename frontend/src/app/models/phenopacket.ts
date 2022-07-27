@@ -30,16 +30,48 @@ export class Phenopacket {
      */
     public static convert(obj: any): Phenopacket {
         const phenopacket = new Phenopacket();
-        phenopacket.id = obj['id'];
-        phenopacket.subject = Individual.convert(obj['subject']);
-        phenopacket.measurements = Measurement.convert(obj['measurements']);
-        phenopacket.diseases = Disease.convert(obj['diseases']);
-        phenopacket.biosamples = BioSample.convert(obj['bioSamples']);
-        phenopacket.medicalActions = MedicalAction.convert(obj['medicalActions']);
-        phenopacket.interpretations = Interpretation.convert(obj['interpretations']);
-        phenopacket.files = File.convert(obj['files']);
-        phenopacket.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
-        phenopacket.metadata = MetaData.convert(obj['metaData']);
+        console.log("original obj");
+        console.log(obj);
+        if (obj['id']) {
+            phenopacket.id = obj['id'];
+            console.log('converted id');
+        }
+        if (obj['subject']) {
+            phenopacket.subject = Individual.convert(obj['subject']);
+            console.log('converted subject');
+        }
+        if (obj['measurements']) {
+            phenopacket.measurements = Measurement.convert(obj['measurements']);
+            console.log('converted measurements');
+        }
+        if (obj['diseases']) {
+            phenopacket.diseases = Disease.convert(obj['diseases']);
+            console.log('converted diseases');
+        }
+        if (obj['bioSamples']) {
+            phenopacket.biosamples = BioSample.convert(obj['bioSamples']);
+            console.log('converted biosamples');
+        }
+        if (obj['medicalActions']) {
+            phenopacket.medicalActions = MedicalAction.convert(obj['medicalActions']);
+            console.log('converted medicalActions');
+        }
+        if (obj['interpretations']) {
+            phenopacket.interpretations = Interpretation.convert(obj['interpretations']);
+            console.log('converted interpretations');
+        }
+        if (obj['files']) {
+            phenopacket.files = File.convert(obj['files']);
+            console.log('converted files');
+        }
+        if (obj['phenotypicFeatures']) {
+            phenopacket.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
+            console.log('converted phenotypicFeatures');
+        }
+        if (obj['metaData']) {
+            phenopacket.metadata = MetaData.convert(obj['metaData']);
+            console.log('converted metadata');
+        }
         return phenopacket;
     }
 

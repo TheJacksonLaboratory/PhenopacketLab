@@ -11,13 +11,28 @@ export class MetaData {
 
     static convert(obj: any): MetaData {
         const metaData = new MetaData();
-        metaData.created = obj['created'];
-        metaData.createdBy = obj['createdBy'];
-        metaData.submittedBy = obj['submittedBy'];
-        metaData.resources = Resource.convert(obj['resources']);
-        metaData.updates = Update.convert(obj['updates']);
-        metaData.phenopacketSchemaVersion = obj['phenopacketSchemaVersion'];
-        metaData.externalReferences = ExternalReference.convert(obj['externalReferences']);
+        if (obj['created']) {
+            metaData.created = obj['created'];
+        }
+        if (obj['createdBy']) {
+            metaData.createdBy = obj['createdBy'];
+        }
+        if (obj['submittedBy']) {
+            metaData.submittedBy = obj['submittedBy'];
+        }
+        if (obj['resources']) {
+            metaData.resources = Resource.convert(obj['resources']);
+        }
+        if (obj['updates']) {
+            metaData.updates = Update.convert(obj['updates']);
+        }
+        if (obj['phenopacketSchemaVersion']) {
+            metaData.phenopacketSchemaVersion = obj['phenopacketSchemaVersion'];
+        }
+        if (obj['externalReferences']) {
+            metaData.externalReferences = ExternalReference.convert(obj['externalReferences']);
+        }
+        
         return metaData;
     }
 }
@@ -32,12 +47,24 @@ export class Resource extends Convert {
 
     static create(obj: any): Resource {
         const resource = new Resource();
-        resource.id = obj['id'];
-        resource.name = obj['name'];
-        resource.url = obj['url'];
-        resource.version = obj['version'];
-        resource.namespacePrefix = obj['namespacePrefix'];
-        resource.iriPrefix = obj['iriPrefix'];
+        if (obj['id']) {
+            resource.id = obj['id'];
+        }
+        if (obj['name']) {
+            resource.name = obj['name'];
+        }
+        if (obj['url']) {
+            resource.url = obj['url'];
+        }
+        if (obj['version']) {
+            resource.version = obj['version'];
+        }
+        if (obj['namespacePrefix']) {
+            resource.namespacePrefix = obj['namespacePrefix'];
+        }
+        if (obj['iriPrefix']) {
+            resource.iriPrefix = obj['iriPrefix'];
+        }
         return resource;
     }
 }
@@ -48,9 +75,15 @@ export class Update extends Convert {
 
     static create(obj: any): Update {
         const update = new Update();
-        update.timestamp = obj['timestamp'];
-        update.updatedBy = obj['updatedBy'];
-        update.comment = obj['comment'];
+        if (obj['timestamp']) {
+            update.timestamp = obj['timestamp'];
+        }
+        if (obj['updatedBy']) {
+            update.updatedBy = obj['updatedBy'];
+        }
+        if (obj['comment']) {
+            update.comment = obj['comment'];
+        }
         return update;
     }
 }
@@ -61,9 +94,15 @@ export class ExternalReference extends Convert {
 
     static create(obj: any): ExternalReference {
         const externalReference = new ExternalReference();
-        externalReference.id = obj['id'];
-        externalReference.reference = obj['reference'];
-        externalReference.description = obj['description'];
+        if (obj['id']) {
+            externalReference.id = obj['id'];
+        }
+        if (obj['reference']) {
+            externalReference.reference = obj['reference'];
+        }
+        if (obj['description']) {
+            externalReference.description = obj['description'];
+        }
         return externalReference;
     }
 }

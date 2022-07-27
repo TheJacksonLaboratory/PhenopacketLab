@@ -16,23 +16,42 @@ export class Disease extends Convert {
     constructor(id?: string, label?: string) {
         super();
         this.term = {id: id, label: label};
-        this.onset = new TimeElement();
-        this.resolution = new TimeElement();
+        this.onset = new TimeElement('');
+        this.resolution = new TimeElement('');
         this.diseaseStage = [];
         this.clinicalTnmFinding = [];
     }
 
     static create(obj: any): Disease {
         const disease = new Disease();
-        disease.term = OntologyClass.convert(obj['term']);
-        disease.excluded = obj['excluded'];
-        disease.onset = TimeElement.convert(obj['onset']);
-        disease.resolution = TimeElement.convert(obj['resolution']);
-        disease.diseaseStage = OntologyClass.convert(obj['diseaseStage']);
-        disease.clinicalTnmFinding = OntologyClass.convert(obj['clinicalTnmFinding']);
-        disease.primarySite = OntologyClass.convert(obj['primarySite']);
-        disease.laterality = OntologyClass.convert(obj['laterality']);
-        disease.description = obj['description'];
+        if (obj['term']) {
+            disease.term = OntologyClass.convert(obj['term']);
+        }
+        if (obj['excluded']) {
+            disease.excluded = obj['excluded'];
+        }
+        if (obj['onset']) {
+            disease.onset = TimeElement.convert(obj['onset']);
+        }
+        if (obj['resolution']) {
+            disease.resolution = TimeElement.convert(obj['resolution']);
+        }
+        if (obj['diseaseStage']) {
+            disease.diseaseStage = OntologyClass.convert(obj['diseaseStage']);
+        }
+        if (obj['clinicalTnmFinding']) {
+            disease.clinicalTnmFinding = OntologyClass.convert(obj['clinicalTnmFinding']);
+        }
+        if (obj['primarySite']) {
+            disease.primarySite = OntologyClass.convert(obj['primarySite']);
+        }
+        if (obj['laterality']) {
+            disease.laterality = OntologyClass.convert(obj['laterality']);
+        }
+        if (obj['description']) {
+            disease.description = obj['description'];
+        }
+        
         return disease;
     }
 }

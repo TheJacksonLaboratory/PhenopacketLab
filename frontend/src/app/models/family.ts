@@ -1,5 +1,3 @@
-import { Meta } from "@angular/platform-browser";
-import { Params } from "@angular/router";
 import { MetaData } from "./metadata";
 import { Pedigree } from "./pedigree";
 import { Phenopacket } from "./phenopacket";
