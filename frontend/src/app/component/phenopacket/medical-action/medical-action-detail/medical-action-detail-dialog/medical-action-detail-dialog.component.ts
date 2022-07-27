@@ -122,7 +122,7 @@ export class MedicalActionDetailDialogComponent {
           this.identifier = this.action.identifier;
           this.startTime = this.action.startTime;
           this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.regimenStatus;
+          this.regimenStatus = this.action.status;
         }
       }
     } else {
@@ -132,13 +132,13 @@ export class MedicalActionDetailDialogComponent {
 
   onActionTypeChange(obj: any) {
     this.actionType = obj.value;
-    if (this.actionType === 'Procedure') {
+    if (this.actionType === Procedure.actionName) {
       this.action = new Procedure();
-    } else if (this.actionType === 'Treatment') {
+    } else if (this.actionType === Treatment.actionName) {
       this.action = new Treatment();
-    } else if (this.actionType === 'Radiation therapy') {
+    } else if (this.actionType === RadiationTherapy.actionName) {
       this.action = new RadiationTherapy();
-    } else if (this.actionType === 'Therapeutic regimen') {
+    } else if (this.actionType === TherapeuticRegimen.actionName) {
       this.action = new TherapeuticRegimen();
     }
     this.medicalAction.action = this.action;
