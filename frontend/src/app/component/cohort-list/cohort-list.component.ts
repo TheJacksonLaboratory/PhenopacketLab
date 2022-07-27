@@ -104,7 +104,7 @@ export class CohortListComponent implements OnInit {
   }
   changeDob(dob: Date, index: number) {
     let selectedIndividual = this.individualTabs[index];
-    selectedIndividual.subject.dateOfBirth = dob;
+    selectedIndividual.subject.dateOfBirth = dob.toISOString();
   }
 
   openTab(element: any) {
