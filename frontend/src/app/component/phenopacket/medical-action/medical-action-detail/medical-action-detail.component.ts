@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
-import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
+import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog/medical-action-detail-dialog.component';
@@ -48,7 +48,9 @@ export class MedicalActionDetailComponent {
   
   @Input()
   medicalAction: MedicalAction;
-
+  @Input()
+  diseases: Disease[];
+  
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -62,14 +64,14 @@ export class MedicalActionDetailComponent {
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
-      // set actionType 
-      this.actionType = this.action.toString();
       if (this.action) {
         if (this.action instanceof Procedure) {
+          this.actionType = Procedure.actionName;
           this.procedureCode = this.action.code;
           this.bodySites = this.action.bodySites;
           this.performedOn = this.action.performedOn;
         } else if (this.action instanceof Treatment) {
+          this.actionType = Treatment.actionName;
           this.agent = this.action.agent;
           this.routeOfAdministration = this.action.routeOfAdministration;
           this.doseIntervals = this.action.doseIntervals;
@@ -79,15 +81,17 @@ export class MedicalActionDetailComponent {
           this.drugType = this.action.drugType;
           this.cumulativeDose = this.action.cumulativeDose;
         } else if (this.action instanceof RadiationTherapy) {
+          this.actionType = RadiationTherapy.actionName;
           this.modality = this.action.modality;
           this.bodySite = this.action.bodySite;
           this.dosage = this.action.dosage;
           this.fractions = this.action.fractions;
         } else if (this.action instanceof TherapeuticRegimen) {
+          this.actionType = TherapeuticRegimen.actionName;
           this.identifier = this.action.identifier;
           this.startTime = this.action.startTime;
           this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.regimenStatus;
+          this.regimenStatus = this.action.status;
         }
         
       }
@@ -98,6 +102,7 @@ export class MedicalActionDetailComponent {
   openEditDialog() {
     const phenotypicDetailData = { 'title': 'Edit medical action' };
     phenotypicDetailData['medical_action'] = this.medicalAction;
+    phenotypicDetailData['diseases'] = this.diseases;
     phenotypicDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MedicalActionDetailDialogComponent, {
       width: '1000px',
@@ -164,27 +169,21 @@ export class MedicalActionDetailComponent {
   }
 
   getQuantityValueDisplay(element) {
-    console.log("value");
-    console.log(element);
     if (element) {
       return `${element.quantity?.value}`;
     }
     return '';
   }
   getScheduleFrequencyDisplay(element) {
-    console.log("schedulefrequency");
-    console.log(element);
-    if (element) {
-      return `${element.scheduleFrequency?.label} [${element.squeduleFrequency?.id}]`;
+    if (element.scheduleFrequency) {
+      return element.scheduleFrequency.label;
     }
     return '';
   }
 
   getIntervalDisplay(element) {
-    console.log("interval");
-    console.log(element);
     if (element) {
-      return `${element.interval.start} - ${element.interval.end}]`;
+      return `${element.interval.start} - ${element.interval.end}`;
     }
     return '';
   }

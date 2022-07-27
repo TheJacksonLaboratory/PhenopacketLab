@@ -22,7 +22,7 @@
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element"> {{element.action?.toString()}} </td>
+                <td mat-cell *matCellDef="let element"> {{getActionName(element)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="id">
@@ -55,7 +55,7 @@
                     <div *ngIf="element === expandedElement" class="example-element-detail"
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <div style="width: 100%">
-                            <app-medical-action-detail [medicalAction]="element"></app-medical-action-detail>
+                            <app-medical-action-detail [medicalAction]="element" [diseases]="diseases"></app-medical-action-detail>
                         </div>
                     </div>
                 </td>

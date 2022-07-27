@@ -145,6 +145,19 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
     // }
 
+    getActionName(medicalAction: MedicalAction) {
+        let action = medicalAction.action;
+        if (action instanceof Procedure) {
+            return Procedure.actionName;
+        } else if (action instanceof Treatment) {
+            return Treatment.actionName;
+        } else if (action instanceof RadiationTherapy) {
+            return RadiationTherapy.actionName;
+        } else if (action instanceof TherapeuticRegimen) {
+            return TherapeuticRegimen.actionName;
+        }
+        return '';    
+    }
     /**
      * Retrieve the correct MedicalAction id
      * @param medicalAction 
@@ -152,17 +165,16 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
      */
     getId(medicalAction: MedicalAction) {
         let action = medicalAction.action;
-        let id = "";
         if (action instanceof Procedure) {
-            id = action.code?.id;
+            return action.code?.id;
         } else if (action instanceof Treatment) {
-            id = action.agent?.id;
+            return action.agent?.id;
         } else if (action instanceof RadiationTherapy) {
-            id = action.modality?.id;
+            return action.modality?.id;
         } else if (action instanceof TherapeuticRegimen) {
-            id = action.identifier?.id;
+            return action.identifier?.id;
         }
-        return id;
+        return '';
     }
 
     getTarget(medicalAction: MedicalAction) {
