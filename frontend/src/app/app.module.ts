@@ -41,6 +41,7 @@ import { FamilyListComponent } from './component/family-list/family-list.compone
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { PhenopacketComponent } from './component/phenopacket/phenopacket.component';
+import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 
 @NgModule({
   imports: [
@@ -84,7 +85,7 @@ import { PhenopacketComponent } from './component/phenopacket/phenopacket.compon
     SelectableOntologyTreeComponent,
     CohortListComponent,
     FamilyListComponent,
-    // PhenopacketComponent,
+    UploadDialogComponent
   ],
 
   exports: [RouterModule],
