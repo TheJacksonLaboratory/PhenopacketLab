@@ -52,10 +52,10 @@ export class DiseaseDetailComponent implements OnInit {
   updateDiseaseDetails() {
     this.isA = this.disease.isA;
     this.status = this.disease.excluded ? 'Excluded' : 'Included';
-    this.onset = this.disease.onset?.timestamp, '';
-    this.resolution = this.disease.resolution?.timestamp, '';
-    this.stage = this.disease.diseaseStage.toString();
-    this.finding = this.disease.clinicalTnmFinding.toString();
+    this.onset = this.disease.onset?.element, '';
+    this.resolution = this.disease.resolution?.element, '';
+    this.stage = this.disease.diseaseStage?.toString();
+    this.finding = this.disease.clinicalTnmFinding?.toString();
     this.laterality = this.disease.laterality?.label, '';
   }
 
