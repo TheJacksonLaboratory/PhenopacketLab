@@ -80,7 +80,7 @@ export class MeasurementDetailComponent {
   }
   getTimeOfMeasurement() {
     if (this.timeObserved) {
-      return this.timeObserved.timestamp;
+      return this.timeObserved.element;
     }
     return '';
   }

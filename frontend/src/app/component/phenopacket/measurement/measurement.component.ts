@@ -4,9 +4,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog } from '@angular/material/dialog';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
-import { ComplexValue, Measurement, Value } from 'src/app/models/measurement';
+import { ComplexValue, Measurement, Quantity, Value } from 'src/app/models/measurement';
 import { MeasurementDetailDialogComponent } from './measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { OntologyClass } from 'src/app/models/base';
 
 @Component({
     selector: 'app-measurement',
@@ -155,30 +156,15 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     getAssay(measurement: Measurement) {
         let assay = measurement.assay;
         if (assay) {
-            return `${assay.label} [${assay.id}]`;
+            return assay.toString();
         }
         return '';
     }
 
     getValue(measurement: Measurement) {
         if (measurement.measurementValue) {
-            let value = measurement.measurementValue;
-
-            if (value instanceof Value) {
-                let unit = value.quantity?.unit;
-                let val = value.quantity?.value;
-                return `${val} ${unit?.label} [${unit?.id}]`;
-            } else if (value instanceof ComplexValue) {
-                let quantities = value.typedQuantities;
-                let result = '';
-                for (let typedQuantity of quantities) {
-                    let unit = typedQuantity?.quantity?.unit;
-                    let val = typedQuantity?.quantity?.value;
-                    let type = typedQuantity?.type
-                    result += `${val} ${unit?.label} [${unit?.id}], `;
-                }
-                return result;
-            }
+            let measurementValue = measurement.measurementValue;
+            return measurementValue.toString();  
         }
         return '';
     }
@@ -186,7 +172,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     getProcedure(measurement: Measurement) {
         let procedure = measurement.procedure;
         if (procedure) {
-            return `${procedure.code?.label} [${procedure.code?.id}]`;
+            return procedure.toString();
         }
         return '';
     }
@@ -194,7 +180,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     getTimeOfMeasurement(measurement: Measurement) {
         let tom = measurement.timeObserved;
         if (tom) {
-            return `${tom.timestamp}`;
+            return `${tom.toString()}`;
         }
         return '';
     }
