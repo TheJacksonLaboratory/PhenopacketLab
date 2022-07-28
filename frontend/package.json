@@ -8,7 +8,7 @@
     "os": false
   },
   "scripts": {
-    "ng": "ng",
+    "ng": "node --max_old_space_size=4096 ./node_modules/.bin/ng",
     "start": "ng serve",
     "build": "ng build --aot --configuration=dev --base-href /app/",
     "buildProd": "ng build --prod=true --aot --configuration=production --base-href /app/",
