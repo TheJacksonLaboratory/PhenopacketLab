@@ -45,7 +45,8 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=4096"
         run: npm run build
 
+      - run: sudo apt-get install xvfb
       - name: Test
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
-        run: npm test
+        run: xvfb-run --auto-servernum npm test
