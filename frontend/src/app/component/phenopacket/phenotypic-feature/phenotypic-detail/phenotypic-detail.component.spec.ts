@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
 
 
@@ -6,9 +7,17 @@ describe('PhenotypicDetailComponent', () => {
   let component: PhenotypicDetailComponent;
   let fixture: ComponentFixture<PhenotypicDetailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhenotypicDetailComponent ]
+      declarations: [ PhenotypicDetailComponent ],
+      imports: [
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialog, useValue: {} },
+        // { provide: MAT_DIALOG_DATA, useValue: {} },
+        // { provide: MatDialogRef,useValue: {} }
+      ]
     })
     .compileComponents();
   }));

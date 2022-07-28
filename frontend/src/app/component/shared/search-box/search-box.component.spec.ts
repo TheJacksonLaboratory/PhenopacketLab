@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SearchBoxComponent } from './search-box.component';
 
@@ -6,9 +7,12 @@ describe('SearchBoxComponent', () => {
   let component: SearchBoxComponent;
   let fixture: ComponentFixture<SearchBoxComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchBoxComponent ]
+      declarations: [ SearchBoxComponent ],
+      imports: [
+        MatAutocompleteModule
+      ]
     })
     .compileComponents();
   }));
