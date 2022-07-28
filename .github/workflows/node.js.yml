@@ -41,7 +41,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm build
+        run: ng build --configuration dev
 
       - name: Test
-        run: npm test
+        run: ng test
