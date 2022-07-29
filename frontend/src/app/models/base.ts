@@ -62,6 +62,17 @@ export class ExternalReference {
     reference: string;
     description: string;
 
+    toTring() {
+        if(this.id && this.reference) {
+            return `${this.reference} [${this.id}]`;
+        } else if (this.id && this.reference === undefined) {
+            return this.id;
+        } else if (this.id === undefined && this.reference) {
+            return this.reference;
+        }
+        return "";
+    }
+
     static convert(obj: any): ExternalReference {
         const externalReference = new ExternalReference();
         if (obj['id']) {
@@ -109,7 +120,10 @@ export class Procedure {
     }
 
     toString() {
-        return "Procedure";
+        if (this.code) {
+            return this.code.toString();
+        }
+        return "";
     }
 
     static convert(obj: any): Procedure {

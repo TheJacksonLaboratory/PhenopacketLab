@@ -50,7 +50,10 @@ export class Treatment {
     cumulativeDose: Quantity;
 
     toString() {
-        return "Treatment";
+        if (this.agent) {
+            return this.agent.toString();
+        }
+       return ''
     }
 
     static convert(obj: any): Treatment {
@@ -115,7 +118,10 @@ export class RadiationTherapy {
     fractions: number;
 
     toString() {
-        return "Radiation therapy";
+        if (this.modality) {
+            return this.modality.toString();
+        }
+        return "";
     }
 
     static convert(obj: any): RadiationTherapy {
@@ -158,7 +164,10 @@ export class TherapeuticRegimen {
     status: RegimenStatus;
 
     toString() {
-        return "Therapeutic regimen";
+        if (this.identifier) {
+            return this.identifier.toString();
+        }
+        return "";
     }
 
     static convert(obj: any): TherapeuticRegimen {
