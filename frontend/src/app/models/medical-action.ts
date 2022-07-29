@@ -22,6 +22,8 @@ export class MedicalAction extends Convert {
             medicalAction.action = RadiationTherapy.convert(obj['radiationTherapy']);
         } else if (obj['therapeuticRegimen']) {
             medicalAction.action = TherapeuticRegimen.convert(obj['therapeuticRegimen']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'procedure', 'treatment', 'radiationTherapy' or 'therapeuticRegimen' field in 'medicalActions' object.`)
         }
         if (obj['treatmentTarget']) {
             medicalAction.treatmentTarget = OntologyClass.convert(obj['treatmentTarget']);
@@ -55,6 +57,8 @@ export class Treatment {
         const treatment = new Treatment();
         if (obj['agent']) {
             treatment.agent = OntologyClass.convert(obj['agent']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'agent' field in 'treatment' object.`)
         }
         if (obj['routeOfAdministration']) {
             treatment.routeOfAdministration = OntologyClass.convert(obj['routeOfAdministration']);
@@ -81,12 +85,18 @@ export class DoseInterval extends Convert {
         const doseInterval = new DoseInterval();
         if (obj['quantity']) {
             doseInterval.quantity = Quantity.convert(obj['quantity']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'quantity' field in 'doseInterval' object.`)
         }
         if (obj['scheduleFrequency']) {
             doseInterval.scheduleFrequency = OntologyClass.convert(obj['scheduleFrequency']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'scheduleFrequency' field in 'doseInterval' object.`)
         }
         if (obj['interval']) {
             doseInterval.interval = TimeInterval.convert(obj['interval']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'interval' field in 'doseInterval' object.`)
         }
         return doseInterval;
     }
@@ -112,15 +122,23 @@ export class RadiationTherapy {
         const radiationTherapy = new RadiationTherapy();
         if (obj['modality']) {
             radiationTherapy.modality = OntologyClass.convert(obj['modality']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'modality' field in 'radiationTherapy' object.`)
         }
         if (obj['bodySite']) {
             radiationTherapy.bodySite = OntologyClass.convert(obj['bodySite']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'bodySite' field in 'radiationTherapy' object.`)
         }
         if (obj['dosage']) {
             radiationTherapy.dosage = obj['dosage'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'dosage' field in 'radiationTherapy' object.`)
         }
         if (obj['fractions']) {
             radiationTherapy.fractions = obj['fractions'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'fractions' field in 'radiationTherapy' object.`)
         }
         return radiationTherapy;
     }
@@ -145,11 +163,12 @@ export class TherapeuticRegimen {
 
     static convert(obj: any): TherapeuticRegimen {
         const therapeuticRegimen = new TherapeuticRegimen();
-        let identifier = obj['identifier'];
-        if (identifier['label']) {
-            therapeuticRegimen.identifier = OntologyClass.convert(identifier);
+        if (obj['ontologyClass']) {
+            therapeuticRegimen.identifier = OntologyClass.convert(obj['ontologyClass']);
+        } else if (obj['externalReference']) {
+            therapeuticRegimen.identifier = ExternalReference.convert(obj['externalReference']);
         } else {
-            therapeuticRegimen.identifier = ExternalReference.convert(identifier);
+            throw new Error(`Phenopacket file is missing 'ontologyClass' or 'externalReference' field in 'therapeuticRegimen' object.`)
         }
         if (obj['startTime']) {
             therapeuticRegimen.startTime = TimeElement.convert(obj['startTime']);
@@ -159,6 +178,8 @@ export class TherapeuticRegimen {
         }
         if (obj['status']) {
             therapeuticRegimen.status = obj['status'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'status' field in 'therapeuticRegimen' object.`)
         }
         return therapeuticRegimen;
     }

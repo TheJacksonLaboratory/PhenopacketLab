@@ -20,6 +20,8 @@ export class Individual {
         const individual = new Individual();
         if(obj['id']) {
             individual.id = obj['id'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`)
         }
         if(obj['alternateId']) {
             individual.alternateIds = obj['alternateIds'];

@@ -9,7 +9,7 @@ export class Convert {
         if (Array.isArray(obj)) {
             const array = [];
             for (let item of obj) {
-                const it = this.create(item);;
+                const it = this.create(item);
                 array.push(it);
             }
             return array;
@@ -89,6 +89,8 @@ export class Evidence {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`)
         }
         if (obj['reference']) {
             evidence.reference = ExternalReference.convert(obj['reference']);
@@ -114,6 +116,8 @@ export class Procedure {
         const procedure = new Procedure();
         if (obj['code']) {
             procedure.code = OntologyClass.convert(obj['code']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'code' field in 'procedure' object.`)
         }
         if (obj['bodySites']) {
             procedure.bodySites = OntologyClass.convert(obj['bodySites']);
@@ -173,9 +177,13 @@ export class TimeInterval {
         const interval = new TimeInterval();
         if (obj['start']) {
             interval.start = obj['start'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'start' field in 'timeInterval' object.`)
         }
         if (obj['end']) {
             interval.end = obj['end'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'end' field in 'timeInterval' object.`)
         }
         return interval;
     }
@@ -193,6 +201,8 @@ export class GestationalAge {
         const gestationalAge = new GestationalAge();
         if (obj['weeks']) {
             gestationalAge.weeks = obj['weeks'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'weeks' field in 'gestationalAge' object.`)
         }
         if (obj['days']) {
             gestationalAge.days = obj['days'];
@@ -262,6 +272,8 @@ export class File extends Convert {
         const file = new File();
         if (obj['uri']) {
             file.uri = obj['uri'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'uri' field in 'file' object.`)
         }
         if (obj['individualToFileIdentifier']) {
             file.individualToFileIdentifier = obj['individualToFileIdentifier'];

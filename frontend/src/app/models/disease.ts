@@ -26,6 +26,8 @@ export class Disease extends Convert {
         const disease = new Disease();
         if (obj['term']) {
             disease.term = OntologyClass.convert(obj['term']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'term' field in 'disease' object.`)
         }
         if (obj['excluded']) {
             disease.excluded = obj['excluded'];

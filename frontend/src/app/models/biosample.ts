@@ -28,6 +28,8 @@ export class BioSample extends Convert {
         const bioSample = new BioSample();
         if (obj['id']) {
             bioSample.id = obj['id'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'id' field in 'bioSample' object.`)
         }
         if (obj['derivedFromId']) {
             bioSample.derivedFromId = obj['derivedFromId'];

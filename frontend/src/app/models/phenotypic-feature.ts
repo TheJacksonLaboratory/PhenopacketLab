@@ -22,6 +22,8 @@ export class PhenotypicFeature extends Convert {
         if (obj['type']) {
             phenotypicFeature.type = OntologyClass.convert(obj['type']);         
             console.log("pheno type");
+        } else {
+            throw new Error(`Phenopacket file is missing 'type' field in 'phenotypicFeatures' object.`)
         }
         if (obj['excluded']) {
             phenotypicFeature.excluded = obj['excluded'];

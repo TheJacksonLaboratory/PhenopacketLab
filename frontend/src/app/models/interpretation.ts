@@ -1,4 +1,3 @@
-import { idText } from "typescript";
 import { Convert, OntologyClass } from "./base";
 
 export class Interpretation extends Convert {
@@ -11,9 +10,13 @@ export class Interpretation extends Convert {
         const interpretation = new Interpretation();
         if (obj['id']) {
             interpretation.id = obj['id'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'id' field in 'interpretation' object.`)
         }
         if (obj['progressStatus']) {
             interpretation.progressStatus = obj['progressStatus'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'progressStatus' field in 'interpretation' object.`)
         }
         if (obj['diagnosis']) {
             interpretation.diagnosis = Diagnosis.convert(obj['diagnosis']);
@@ -62,13 +65,23 @@ export class GenomicInterpretation extends Convert {
 
     static create(obj: any): GenomicInterpretation {
         const genomicInterpretation = new GenomicInterpretation();
-        genomicInterpretation.subjectOrBiosampleId = obj['subjectOrBiosampleId'];
-        genomicInterpretation.interpretationStatus = obj['interpretationStatus'];
+        if (obj['subjectOrBiosampleId']) {
+            genomicInterpretation.subjectOrBiosampleId = obj['subjectOrBiosampleId'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'subjectOrBiosampleId' field in 'genomicInterpretation' object.`)
+        }
+        if (obj['interpretationStatus']) {
+            genomicInterpretation.interpretationStatus = obj['interpretationStatus'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'interpretationStatus' field in 'genomicInterpretation' object.`)
+        }
         // call
         if (obj['geneDescriptor']) {
             genomicInterpretation.call = GeneDescriptor.convert(obj['geneDescriptor']);
         } else if (obj['variantInterpretation']) {
             genomicInterpretation.call = VariantInterpretation.convert(obj['variantInterpretation']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'geneDescriptor' or 'variantInterpretation' field in 'genomicInterpretation' object.`)
         }
         return genomicInterpretation;
     }
@@ -171,7 +184,7 @@ export class Expression extends Convert {
         return expression;
     }
 }
-export class VariantDescriptor {
+export class VariationDescriptor {
     id: string;
     variation: Variation;
     label: string;
@@ -187,10 +200,12 @@ export class VariantDescriptor {
     vrsRefAlleleSeq: string;
     allelicState: OntologyClass;
 
-    static convert(obj: any): VariantDescriptor {
-        const variantDescriptor = new VariantDescriptor();
+    static convert(obj: any): VariationDescriptor {
+        const variantDescriptor = new VariationDescriptor();
         if (obj['id']) {
             variantDescriptor.id = obj['id'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'id' field in 'variationDescriptor' object.`)
         }
         if (obj['variation']) {
             // TODO use VRS model
@@ -238,7 +253,7 @@ export class VariantDescriptor {
 export class VariantInterpretation {
     acmgPathogenicityClassification: AcmgPathogenicityClassification;
     therapeuticActionability: TherapeuticActionability;
-    variant: VariantDescriptor;
+    variant: VariationDescriptor;
 
     static convert(obj: any): VariantInterpretation {
         const variantInterpretation = new VariantInterpretation();
@@ -249,7 +264,7 @@ export class VariantInterpretation {
             variantInterpretation.therapeuticActionability = obj['therapeuticActionability'];
         }
         if (obj['variant']) {
-            variantInterpretation.variant = VariantDescriptor.convert(obj['variant']);
+            variantInterpretation.variant = VariationDescriptor.convert(obj['variant']);
         }
         
         return variantInterpretation;
@@ -268,9 +283,13 @@ export class GeneDescriptor {
         const geneDesciptor = new GeneDescriptor();
         if (obj['valueId']) {
             geneDesciptor.valueId = obj['valueId'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'valueId' field in 'geneDescriptor' object.`)
         }
         if (obj['symbol']) {
             geneDesciptor.symbol = obj['symbol'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'symbol' field in 'geneDescriptor' object.`)
         }
         if (obj['description']) {
             geneDesciptor.description = obj['description'];
