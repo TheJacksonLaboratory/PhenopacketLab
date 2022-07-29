@@ -32,15 +32,12 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { SelectableOntologyTreeComponent } from './component/ontology-tree/selectable/selectable-ontology-tree.component';
-import { SimpleOntologyTreeComponent } from './component/ontology-tree/simple/simple-ontology-tree.component';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './component/components.module';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
 import { FamilyListComponent } from './component/family-list/family-list.component';
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
-import { PhenopacketComponent } from './component/phenopacket/phenopacket.component';
 import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 
 @NgModule({
@@ -81,8 +78,6 @@ import { UploadDialogComponent } from './component/shared/upload-dialog/upload-d
   declarations: [
     AppComponent,
     DashboardComponent,
-    SimpleOntologyTreeComponent,
-    SelectableOntologyTreeComponent,
     CohortListComponent,
     FamilyListComponent,
     UploadDialogComponent

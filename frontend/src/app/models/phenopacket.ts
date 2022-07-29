@@ -35,6 +35,8 @@ export class Phenopacket {
         if (obj['id']) {
             phenopacket.id = obj['id'];
             console.log('converted id');
+        } else {
+            throw new Error(`Phenopacket file is missing 'id' field.`);
         }
         if (obj['subject']) {
             phenopacket.subject = Individual.convert(obj['subject']);
@@ -71,6 +73,8 @@ export class Phenopacket {
         if (obj['metaData']) {
             phenopacket.metadata = MetaData.convert(obj['metaData']);
             console.log('converted metadata');
+        } else {
+            throw new Error(`Phenopacket file is missing 'metaData' field.`);
         }
         return phenopacket;
     }

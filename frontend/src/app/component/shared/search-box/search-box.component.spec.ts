@@ -3,6 +3,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { SearchBoxComponent } from './search-box.component';
 
+
 describe('SearchBoxComponent', () => {
   let component: SearchBoxComponent;
   let fixture: ComponentFixture<SearchBoxComponent>;

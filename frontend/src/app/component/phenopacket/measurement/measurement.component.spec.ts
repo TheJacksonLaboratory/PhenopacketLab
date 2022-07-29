@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MeasurementComponent } from './measurement.component';
 
@@ -12,11 +12,6 @@ describe('MeasurementComponent', () => {
       declarations: [ MeasurementComponent ],
       imports: [
         MatDialogModule
-      ],
-      providers: [
-        { provide: MatDialog, useValue: {} },
-        // { provide: MAT_DIALOG_DATA, useValue: {} },
-        // { provide: MatDialogRef,useValue: {} }
       ]
     })
     .compileComponents();

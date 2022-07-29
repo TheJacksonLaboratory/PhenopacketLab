@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
 
 
@@ -12,11 +12,6 @@ describe('PhenotypicDetailComponent', () => {
       declarations: [ PhenotypicDetailComponent ],
       imports: [
         MatDialogModule
-      ],
-      providers: [
-        { provide: MatDialog, useValue: {} },
-        // { provide: MAT_DIALOG_DATA, useValue: {} },
-        // { provide: MatDialogRef,useValue: {} }
       ]
     })
     .compileComponents();

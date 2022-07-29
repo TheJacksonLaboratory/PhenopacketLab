@@ -52,11 +52,13 @@ export class FileDetailDialogComponent {
     return { 'key': this.selectedKey, 'value': this.txtFieldValue };
   }
   getPlaceholderTxt() {
-    if (this.selectedKey === this.comboItems[0]) {
-      return this.placeholderId;
-    }
-    if (this.selectedKey === this.comboItems[1]) {
-      return this.placeholderValue;
+    if (this.comboItems) {
+      if (this.selectedKey === this.comboItems[0]) {
+        return this.placeholderId;
+      }
+      if (this.selectedKey === this.comboItems[1]) {
+        return this.placeholderValue;
+      }
     }
     return '';
   }

@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, Output } from "@angular/core";
 import { FormControl, FormGroupDirective, NgForm, Validators } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
+import { Age } from "src/app/models/base";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -18,6 +19,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 export class DateComponent {
 
+    @Output() date: Age;
     yearFormControl = new FormControl('', [
         Validators.required,
         Validators.pattern(/^([0-9]|[1-9][0-9]|1[0-4][0-9]|150)$/)
@@ -33,4 +35,10 @@ export class DateComponent {
 
     matcher = new MyErrorStateMatcher();
 
+    constructor() {
+        this.yearFormControl.valueChanges.subscribe(val => {
+            console.log("year change:");
+            console.log(val);
+        });
+    }
 }

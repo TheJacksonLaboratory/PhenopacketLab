@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { FileDetailComponent } from './file-detail.component';
 
@@ -12,11 +12,6 @@ describe('FileDetailComponent', () => {
       declarations: [ FileDetailComponent ],
       imports: [
         MatDialogModule
-      ],
-      providers: [
-        { provide: MatDialog, useValue: {} },
-        // { provide: MAT_DIALOG_DATA, useValue: {} },
-        // { provide: MatDialogRef,useValue: {} }
       ]
     })
     .compileComponents();
