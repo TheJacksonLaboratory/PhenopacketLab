@@ -391,7 +391,15 @@
           "start": "2020-10-01T00:00:00Z",
           "end": "2020-10-31T00:00:00Z"
         }
-      }]
+      }],
+      "drugType": "PRESCRIPTION",
+      "cumulativeDose": {
+        "unit": {
+          "id": "UO:0000022",
+          "label": "milligram"
+        },
+        "value": 180.0
+      }
     }
   }],
   "metaData": {
