@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -23,20 +22,11 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 })
 export class MeasurementComponent implements AfterViewInit, OnInit {
 
-
-    @ViewChild('measurementPaginator', { static: true }) measurementPaginator: MatPaginator;
-    // @ViewChild(MatSort, { static: true }) sort: MatSort;
-
     //Table items
     displayedColumns = ['assay', 'value', 'procedure', 'time', 'remove'];
 
     measurementDataSource = new DataPresentMatTableDataSource<Measurement>();
     measurementCount: number;
-
-    // MatPaginator Inputs
-    pageLength = 0;
-    pageSize = 10;
-    pageSizeOptions: number[] = [10, 50, 100];
 
     //searchparams
     currSearchParams: any = {}
@@ -181,15 +171,6 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
             return tom.toString();
         }
         return '';
-    }
-
-    doPageChange(pageEvent: any) {
-
-        // if (this.currSearchParams) {
-        //     this.currSearchParams.offset = pageEvent.pageIndex * pageEvent.pageSize;
-        //     this.currSearchParams.max = pageEvent.pageSize;
-        //     this._getPhenotypicFeatures(this.currSearchParams);
-        // }
     }
 
     expandCollapse(element: any) {

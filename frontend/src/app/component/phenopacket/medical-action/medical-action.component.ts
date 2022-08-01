@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -27,19 +26,11 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     // search params
     itemName = "Medical Action";
 
-    @ViewChild('medicalActionPaginator', { static: true }) medicalActionPaginator: MatPaginator;
-    // @ViewChild(MatSort, { static: true }) sort: MatSort;
-
     //Table items
     displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
 
     medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
     medicalActionCount: number;
-
-    // MatPaginator Inputs
-    pageLength = 0;
-    pageSize = 10;
-    pageSizeOptions: number[] = [10, 50, 100];
 
     //searchparams
     currSearchParams: any = {}
@@ -91,8 +82,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
                     console.log(updatedMedicalAction);
                     if (updatedMedicalAction) {
                         // update medical action
-                        let medicalAction = updatedMedicalAction;
-                        this.medicalActions.push(medicalAction);
+                        this.medicalActions.push(updatedMedicalAction);
                         this.medicalActionDataSource.data = this.medicalActions;
                         // emit change
                         this.onMedicalActionChanged.emit(this.medicalActions);
@@ -140,10 +130,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
         this.onMedicalActionChanged.emit(this.medicalActions);
 
     }
-
-    // private clearSort() {
-    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    // }
 
     getActionName(medicalAction: MedicalAction) {
         let action = medicalAction.action;
@@ -211,15 +197,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             }
             return '';
         }
-    }
-
-    doPageChange(pageEvent: any) {
-
-        // if (this.currSearchParams) {
-        //     this.currSearchParams.offset = pageEvent.pageIndex * pageEvent.pageSize;
-        //     this.currSearchParams.max = pageEvent.pageSize;
-        //     this._getPhenotypicFeatures(this.currSearchParams);
-        // }
     }
 
     expandCollapse(element: any) {

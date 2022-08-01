@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { Disease } from 'src/app/models/disease';
 
 import { MondoDisease } from 'src/app/models/mondo-disease';
@@ -23,12 +22,6 @@ export class DiseaseComponent implements OnInit {
 
   //Table items
   displayedColumns = ['id', 'name', 'status', 'onset', 'resolution', 'metadata', 'remove'];
-
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
-  @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
 
   expandedElement: Disease | null;
   @Input()
@@ -86,15 +79,10 @@ export class DiseaseComponent implements OnInit {
     return dialogRef;
   }
 
-  doPageChange(pageEvent: any) {
-
-  }
-
   onSearchCriteriaChange(searchCriteria: any) {
     const params: any = {};
     this.currSearchParams.offset = 0;
     let id = searchCriteria.selectedItems[0].selectedValue.id;
-    this.diseasePaginator.pageIndex = 0;
 
     if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
       this.currSearchParams = searchCriteria;

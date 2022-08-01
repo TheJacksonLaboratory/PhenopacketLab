@@ -18,14 +18,6 @@ export class FileComponent implements OnInit {
   //Table items
   displayedColumns = ['uri', 'description', 'mapping', 'attribute', 'remove'];
 
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
-  // @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) sort: MatSort;
-  // @ViewChild('diseaseTable', { static: false }) diseaseTable: MatTable<HpoDisease>;
-
   expandedElement: File | null;
   @Input()
   phenopacketFiles: File[] = [];
@@ -87,14 +79,6 @@ export class FileComponent implements OnInit {
     // update files
     this.updateFiles();
   }
-
-  doPageChange(pageEvent: any) {
-
-  }
-
-  // private clearSort() {
-  //   this.sort.sort({ id: '', start: 'asc', disableClear: false });
-  // }
 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {

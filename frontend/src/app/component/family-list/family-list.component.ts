@@ -1,16 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { Family } from 'src/app/models/family';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
-import { forEachChild } from 'typescript';
 import { DataPresentMatTableDataSource } from '../shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
@@ -31,16 +28,8 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   familyMap = new Map<string, Phenopacket>();
   selected = new FormControl(0);
 
-  @ViewChild('varPaginator', { static: true }) varPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];
-
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
 
   datasource = new DataPresentMatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
@@ -206,10 +195,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.individualTabs = Array.from(this.individualTabsMap.values());
   }
 
-  doPageChange(pageEvent: any) {
-
-  }
-
   formatDate(date: Date, format: string) {
     return this.datePipe.transform(date, format);
   }
@@ -221,7 +206,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.dataFilesService.getDataFilesAndParameters().subscribe(resp => {
     //   // let jsonObj = JSON.parse(resp)
     //   this.dataSource = new MatTableDataSource(resp);
-    //   this.dataSource.paginator = this.paginator;
     //   this.dataSource.sort = this.sort;
     // }, err => {
     //   // TODO: display our server error dialog?

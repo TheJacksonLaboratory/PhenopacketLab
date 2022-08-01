@@ -37,9 +37,6 @@ export class PhenotypicDetailComponent {
   // TODO - fetch from backend
   evidenceValues: string[] = ['evidence 1', 'evidence 2'];
 
-  // @ViewChild('phenotypicFeaturePaginator', { static: true }) phenotypicFeaturePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) phenotypicFeatureSort: MatSort;
-
   @Input()
   phenotypicFeature: PhenotypicFeature;
 
