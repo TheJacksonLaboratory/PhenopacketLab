@@ -62,7 +62,6 @@ export class PhenopacketComponent implements OnInit {
       this.gender = this.individual.gender;
       // status
       this.status = this.individual?.vitalStatus?.status?.toString();
-      console.log(this.individual?.vitalStatus?.causeOfDeath);
       this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath?.toString();
       this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
       this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;

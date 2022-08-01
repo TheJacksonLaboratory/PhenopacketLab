@@ -68,7 +68,7 @@
                                     <div class="col-md-6">
                                         <button class="hover-icon pull-right" (click)="editStatus()" mat-icon-button
                                             type="submit" matTooltip="Edit Vital Status">
-                                            <mat-icon mat-fab>edit</mat-icon>
+                                            <mat-icon>edit</mat-icon>
                                         </button>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <mat-accordion class="example-headers-align">
+                <mat-accordion class="accordion-headers-align">
                     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
                         <mat-expansion-panel-header>
                             <mat-panel-title>

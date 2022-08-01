@@ -4,10 +4,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog } from '@angular/material/dialog';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
-import { ComplexValue, Measurement, Quantity, Value } from 'src/app/models/measurement';
+import { Measurement } from 'src/app/models/measurement';
 import { MeasurementDetailDialogComponent } from './measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
-import { OntologyClass } from 'src/app/models/base';
 
 @Component({
     selector: 'app-measurement',
@@ -86,8 +85,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
                     console.log(updatedMeasurement);
                     if (updatedMeasurement) {
                         // update measurement
-                        let medicalAction = updatedMeasurement;
-                        this.measurements.push(medicalAction);
+                        this.measurements.push(updatedMeasurement);
                         this.measurementDataSource.data = this.measurements;
                         // emit change
                         this.onMeasurementsChanged.emit(this.measurements);
@@ -180,7 +178,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     getTimeOfMeasurement(measurement: Measurement) {
         let tom = measurement.timeObserved;
         if (tom) {
-            return `${tom.toString()}`;
+            return tom.toString();
         }
         return '';
     }

@@ -12,7 +12,7 @@ import { MeasurementDetailDialogComponent } from './measurement-detail-dialog/me
 
 export class MeasurementDetailComponent {
   description: string;
-  assay:  OntologyClass;
+  assay: OntologyClass;
   measurementValue: Value | ComplexValue;
   timeObserved: TimeElement;
   // procedure
@@ -23,7 +23,7 @@ export class MeasurementDetailComponent {
   // Value
   value: Quantity | OntologyClass;
   complexValue: TypedQuantity[];
-  
+
   @Input()
   measurement: Measurement;
 
@@ -38,7 +38,7 @@ export class MeasurementDetailComponent {
       this.measurementValue = this.measurement.measurementValue;
       this.description = this.measurement.description;
       this.assay = this.measurement.assay;
-     
+
     }
 
   }
@@ -68,27 +68,29 @@ export class MeasurementDetailComponent {
 
   getAssay() {
     if (this.assay) {
-        return `${this.assay.label} [${this.assay.id}]`;
+      return this.assay.toString();
     }
     return '';
   }
 
   getMeasurementValue() {
-
-    //TODO
+    if (this.measurementValue) {
+      return this.measurementValue.toString();
+    }
     return '';
   }
+
   getTimeOfMeasurement() {
     if (this.timeObserved) {
-      return this.timeObserved.element;
+      return this.timeObserved.toString();
     }
     return '';
   }
   getProcedure() {
+    if (this.procedure) {
+      return this.procedure.toString();
+    }
     return '';
   }
-  getDescription() {
-    return '';
-  }
-  
+
 }

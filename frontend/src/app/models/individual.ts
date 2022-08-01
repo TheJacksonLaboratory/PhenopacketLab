@@ -66,11 +66,14 @@ export class VitalStatus {
         const vitalSatus = new VitalStatus();
         if(obj['status']) {
             vitalSatus.status = obj['status'];
-        } else if(obj['timeOfDeath']) {
+        }
+        if(obj['timeOfDeath']) {
             vitalSatus.timeOfDeath = TimeElement.convert(obj['timeOfDeath']);
-        } else if(obj['causeOfDeath']) {
+        }
+        if(obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-        } else if(obj['survivalTimeInDays']) {
+        }
+        if(obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
         }
         return vitalSatus;

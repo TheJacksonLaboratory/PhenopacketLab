@@ -6,29 +6,29 @@ h3 {
   border-radius: 4px !important;
   border: 0.5px solid lightgrey;
   padding: 10px;
-  margin: 0px;
+  margin: 0;
 }
 #vital-status:hover {
   border: 2px solid black;
-  margin: -1px;
+  margin: 0;
   // padding: 10px;
   // margin: 0px;
 }
 
 // accordion
-// .example-headers-align .mat-expansion-panel-header-title,
-// .example-headers-align .mat-expansion-panel-header-description {
-//   flex-basis: 0;
-// }
-
-.example-headers-align .mat-expansion-panel-header-description {
-  // justify-content: space-between;
-  align-items: left;
+.accordion-headers-align .mat-expansion-panel-header-title,
+.accordion-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
 }
 
-// .example-headers-align .mat-form-field + .mat-form-field {
-//   margin-left: 8px;
-// }
+.accordion-headers-align .mat-expansion-panel-header-description {
+  // justify-content: space-between;
+  align-items: flex-start;
+}
+
+.accordion-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
 .mat-accordion .mat-icon {
   padding-right: 2em;
 }
