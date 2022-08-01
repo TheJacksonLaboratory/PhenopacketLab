@@ -351,6 +351,24 @@
       }]
     }
   }],
+  "diseases": [{
+    "term": {
+      "id": "OMIM:158810",
+      "label": "Bethlem myopathy 1"
+    },
+    "onset": {
+      "age": {
+        "iso8601duration": "P3Y"
+      }
+    }
+  },
+  {
+    "term": {
+      "id": "OMIM:616471",
+      "label": "Bethlem myopathy 2"
+    },
+    "excluded": true
+  }],
   "medicalActions": [{
     "treatment": {
       "agent": {

@@ -194,6 +194,11 @@
       "id": "NCIT:C39853",
       "label": "Infiltrating Urothelial Carcinoma"
     },
+    "onset": {
+      "age": {
+        "iso8601duration": "P52Y"
+      }
+    },
     "diseaseStage": [{
       "id": "NCIT:C27971",
       "label": "Stage IV"
@@ -207,7 +212,15 @@
     }, {
       "id": "NCIT:C48700",
       "label": "M1 Stage Finding"
-    }]
+    }],
+    "primary_site": {
+      "id": "UBERON:0001255",
+      "label": "urinary bladder"
+    },
+    "laterality": {
+      "id": "HP:0012832",
+      "label": "Bilateral"
+    }
   }],
   "files": [{
     "uri": "file://data/genomes/germline_wgs.vcf.gz",
