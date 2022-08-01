@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,7 +6,7 @@ import { Router } from "@angular/router";
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from 'src/app/models/base';
+import { Evidence, OntologyClass, TimeElement } from 'src/app/models/base';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
@@ -32,20 +31,12 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     placeHolderTxt = "Enter a phenotypic feature name";
     localStorageKey = "phenotypic_features";
 
-    @ViewChild('phenotypicPaginator', { static: true }) phenotypicPaginator: MatPaginator;
-    // @ViewChild(MatSort, { static: true }) sort: MatSort;
-
     //Table items
-    displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'category', 'remove'];
+    displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'remove'];
 
     phenotypicDataSource = new DataPresentMatTableDataSource<PhenotypicFeature>();
 
     phenotypicCount: number;
-
-    // MatPaginator Inputs
-    pageLength = 0;
-    pageSize = 10;
-    pageSizeOptions: number[] = [10, 50, 100];
 
     //searchparams
     currSearchParams: any = {}
@@ -64,27 +55,10 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit() {
-
-        // load example data
-        // this.phenotypicDataSource = new PhenotypicFeatureData().PHENOTYPIC_DATA;
         this.phenotypicDataSource.data = this.phenotypicFeatures;
     }
 
     ngAfterViewInit() {
-
-        // this.sort.sortChange.subscribe(() => {
-
-        //     this.currSearchParams.sortBy = this.sort.active;
-        //     this.currSearchParams.sortDirection = this.sort.direction;
-        //     this.currSearchParams.offset = 0;
-        //     this.varPaginator.pageIndex = 0;
-
-        //     if (this.currSearchParams.selectedItems) {
-        //         if (this.sort.active && this.currSearchParams.selectedItems.length > 0) {
-        //             this._getPhenotypicFeatures(this.currSearchParams)
-        //         }
-        //     }
-        // });
     }
 
     /**
@@ -141,18 +115,12 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
-    // private clearSort() {
-    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    // }
-
     onSearchCriteriaChange(searchCriteria: any) {
         const params: any = {};
         this.currSearchParams.offset = 0;
         console.log("selectedItems[]");
         console.log(searchCriteria.selectedItems[0].selectedValue.id);
         let id = searchCriteria.selectedItems[0].selectedValue.id;
-        this.phenotypicPaginator.pageIndex = 0;
-        // this.clearSort();
 
         if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
             this.currSearchParams = searchCriteria;
@@ -178,15 +146,6 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             (error) => {
                 this.spinnerDialogRef.close();
             });
-    }
-
-    doPageChange(pageEvent: any) {
-
-        // if (this.currSearchParams) {
-        //     this.currSearchParams.offset = pageEvent.pageIndex * pageEvent.pageSize;
-        //     this.currSearchParams.max = pageEvent.pageSize;
-        //     this._getPhenotypicFeatures(this.currSearchParams);
-        // }
     }
 
     expandCollapse(element: any) {
