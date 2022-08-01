@@ -2,8 +2,32 @@
   "id": "urothelial-cancer-phenopacket-id",
   "subject": {
     "id": "patient1",
+    "alternateIds": ["patient", "propositus"],
     "dateOfBirth": "1964-03-15T00:00:00Z",
-    "sex": "MALE"
+    "timeAtLastEncounter": {
+      "age": {
+        "iso8601duration": "P55Y"
+      }
+    },
+    "vitalStatus": {
+      "status": "DECEASED",
+      "timeOfDeath": {
+        "age": {
+          "iso8601duration": "P55Y"
+        }
+      },
+      "causeOfDeath": {
+        "id": "NCIT:C39853",
+        "label": "Infiltrating Urothelial Carcinoma"
+      },
+      "survivalTimeInDays": 1460
+    },
+    "sex": "MALE",
+    "karyotypicSex": "XY",
+    "taxonomy": {
+      "id": "NCBITaxon:9606",
+      "label": "Homo sapiens"
+    }
   },
   "phenotypicFeatures": [{
     "type": {

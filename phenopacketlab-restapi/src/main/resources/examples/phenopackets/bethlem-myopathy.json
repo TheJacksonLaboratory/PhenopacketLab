@@ -2,12 +2,22 @@
   "id": "bethlem-myopathy-phenopacket-id",
   "subject": {
     "id": "proband A",
+    "alternateIds": ["son", "patient"],
+    "dateOfBirth": "1992-05-12T00:00:00Z",
     "timeAtLastEncounter": {
       "age": {
-        "iso8601duration": "P6Y3M"
+        "iso8601duration": "P14Y"
       }
     },
-    "sex": "MALE"
+    "vitalStatus": {
+      "status": "ALIVE"
+    },
+    "sex": "MALE",
+    "karyotypicSex": "XY",
+    "taxonomy": {
+      "id": "NCBITaxon:9606",
+      "label": "Homo sapiens"
+    }
   },
   "phenotypicFeatures": [{
     "type": {
