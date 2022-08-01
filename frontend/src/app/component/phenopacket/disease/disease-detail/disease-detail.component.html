@@ -6,8 +6,8 @@
                 <h3>{{diseaseId}}</h3>
             </div>
             <div class="col-md-6">
-                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit">
-                    <mat-icon mat-fab>edit</mat-icon>
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit" [matTooltipShowDelay]="2000">
+                    <mat-icon>edit</mat-icon>
                 </button>
             </div>
 
@@ -52,3 +52,4 @@
             </div>
         </div>
     </div>
+</div>

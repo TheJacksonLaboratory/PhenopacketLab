@@ -33,7 +33,7 @@
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
                             <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                class="pull-right" matTooltip="Delete ID mapping" (click)="deleteMapping(element)">
+                                class="pull-right" matTooltip="Delete ID mapping" [matTooltipShowDelay]="2000" (click)="deleteMapping(element)">
                                 <mat-icon matSuffix>delete</mat-icon>
                             </button>
                         </td>
@@ -72,7 +72,7 @@
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
                             <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                class="pull-right" matTooltip="Delete Attribute" (click)="deleteAttribute(element)">
+                                class="pull-right" matTooltip="Delete Attribute" [matTooltipShowDelay]="2000" (click)="deleteAttribute(element)">
                                 <mat-icon matSuffix>delete</mat-icon>
                             </button>
                         </td>
@@ -92,3 +92,4 @@
             </div>
         </div>
     </div>
+</div>

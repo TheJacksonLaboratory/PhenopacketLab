@@ -48,7 +48,7 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
                     <button (click)="$event.stopPropagation()" mat-icon-button type="submit" class="pull-right"
-                        matTooltip="Remove file" (click)="removeFile(element)">
+                        matTooltip="Remove file" [matTooltipShowDelay]="2000" (click)="removeFile(element)">
                         <mat-icon matSuffix>delete</mat-icon>
                     </button>
                 </td>
@@ -79,13 +79,7 @@
 
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
-
         </table>
-
-        <mat-paginator #diseasePaginator [length]="pageLength" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-            (page)="doPageChange($event)">
-        </mat-paginator>
 
     </div>
 </div>

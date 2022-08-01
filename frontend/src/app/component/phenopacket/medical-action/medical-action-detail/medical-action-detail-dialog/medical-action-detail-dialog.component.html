@@ -98,7 +98,7 @@
                                     <div class="col-md-12">
                                         <li> {{bodySite?.label + ' [' + bodySite?.id + ']'}}
                                             <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                                class="pull-right" matTooltip="Delete body site"
+                                                class="pull-right" matTooltip="Delete body site" [matTooltipShowDelay]="2000"
                                                 (click)="removeBodySite(bodySite)">
                                                 <mat-icon matSuffix>delete</mat-icon>
                                             </button>
@@ -297,7 +297,7 @@
                                  [matAutocomplete]="auto">
                           <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let bodySite of filteredBodySites | async | slice : 0 : 10" [value]="getBodySiteDisplay(bodySite)"
-                                (onSelectionChange)="changeBodySite(bodySite)" [matTooltip]="getBodySiteDisplay(bodySite)">
+                                (onSelectionChange)="changeBodySite(bodySite)" [matTooltip]="getBodySiteDisplay(bodySite)" [matTooltipShowDelay]="2000">
                               {{getBodySiteDisplay(bodySite)}}
                             </mat-option>
                           </mat-autocomplete>
