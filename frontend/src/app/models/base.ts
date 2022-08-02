@@ -87,16 +87,17 @@ export class ExternalReference {
         return externalReference;
     }
 }
-export class Evidence {
+export class Evidence extends Convert {
     evidenceCode: OntologyClass;
     reference: ExternalReference;
 
     constructor(evidenceCode?: OntologyClass, reference?: ExternalReference) {
+        super();
         this.evidenceCode = evidenceCode;
         this.reference = reference;
     }
 
-    public static convert(obj: any): Evidence {
+    public static create(obj: any): Evidence {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
