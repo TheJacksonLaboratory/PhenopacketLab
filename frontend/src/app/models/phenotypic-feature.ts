@@ -9,7 +9,7 @@ export class PhenotypicFeature extends Convert {
     modifiers: OntologyClass[];
     onset: TimeElement;
     resolution: TimeElement;
-    evidence: Evidence;
+    evidence: Evidence[];
     children: PhenotypicFeature[];
     parent: PhenotypicFeature;
 

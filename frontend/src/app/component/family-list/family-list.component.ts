@@ -118,8 +118,10 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // remove from family
         this.family.relatives.delete(individual.id);
-        if (this.family.proband.subject.id === individual.id) {
-          this.family.proband = undefined;
+        if (this.family.proband) {
+          if (this.family.proband.subject.id === individual.id) {
+            this.family.proband = undefined;
+          }
         }
         this.familyService.setFamily(this.family);
       }

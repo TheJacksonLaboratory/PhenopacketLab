@@ -1,8 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from "@angular/router";
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
@@ -51,7 +49,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     dialogRef: any;
     spinnerDialogRef: any;
 
-    constructor(public searchService: PhenotypeSearchService, private route: ActivatedRoute, public dialog: MatDialog, private router: Router) {
+    constructor(public searchService: PhenotypeSearchService, public dialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -70,7 +68,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             feature.description = 'Phenotypic Feature description';
             feature.type = new OntologyClass('id', 'name');
             feature.onset = new TimeElement('');
-            feature.evidence = new Evidence(new OntologyClass('', ''));
+            feature.evidence = [new Evidence(new OntologyClass('', ''))];
             feature.excluded = false;
             feature.resolution = new TimeElement('');
             feature.severity = new OntologyClass('', '');
@@ -116,7 +114,6 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     }
 
     onSearchCriteriaChange(searchCriteria: any) {
-        const params: any = {};
         this.currSearchParams.offset = 0;
         console.log("selectedItems[]");
         console.log(searchCriteria.selectedItems[0].selectedValue.id);
@@ -135,7 +132,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             phenotypicFeature.type = {id: data.id, label: data.name};
             phenotypicFeature.description = data.description;
             phenotypicFeature.onset = new TimeElement('');
-            phenotypicFeature.evidence = new Evidence(new OntologyClass('', ''));
+            phenotypicFeature.evidence = [new Evidence(new OntologyClass('', ''))];
             phenotypicFeature.excluded = false;
             phenotypicFeature.resolution = new TimeElement('');
             phenotypicFeature.severity = new OntologyClass('', '');

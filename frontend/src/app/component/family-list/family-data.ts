@@ -1,4 +1,4 @@
-import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from "src/app/models/base";
+import { Evidence, OntologyClass, TimeElement } from "src/app/models/base";
 import { Cohort } from "src/app/models/cohort";
 import { Family } from "src/app/models/family";
 import { Individual, KaryotypicSex, Sex } from "src/app/models/individual";
@@ -16,7 +16,7 @@ export class FamilyData {
         phenotypicFeature0.description = 'Any anomaly of a cranial suture, that is one of the six membrane-covered openings in the incompletely ossified skull of the fetus or newborn infant.';
         phenotypicFeature0.type = {id: 'HP:0011329', label: 'Abnormality of cranial sutures'};
         phenotypicFeature0.onset = new TimeElement('');
-        phenotypicFeature0.evidence = new Evidence({id: '', label: ''});
+        phenotypicFeature0.evidence = [new Evidence({id: '', label: ''})];
         phenotypicFeature0.excluded = true;
         phenotypicFeature0.resolution = new TimeElement('');
         phenotypicFeature0.severity = new OntologyClass('', '');
@@ -26,7 +26,7 @@ export class FamilyData {
         phenotypicFeature3.description = 'An increased density in the cranial sutures following obliteration.';
         phenotypicFeature3.type = {id: 'HP:0005441', label: 'Sclerotic cranial sutures'};
         phenotypicFeature3.onset = new TimeElement('');
-        phenotypicFeature3.evidence = new Evidence({id: '', label: ''});
+        phenotypicFeature3.evidence = [new Evidence({id: '', label: ''})];
         phenotypicFeature3.excluded = false;
         phenotypicFeature3.resolution = new TimeElement('');
         phenotypicFeature3.severity = {id: '', label: ''};
@@ -36,7 +36,7 @@ export class FamilyData {
         phenotypicFeature4.description = 'An overlap of the bony plates of the skull in an infant, with or without early closure.';
         phenotypicFeature4.type = {id: 'HP:0010823', label: 'Ridged cranial sutures'};
         phenotypicFeature4.onset = new TimeElement('');
-        phenotypicFeature4.evidence = new Evidence({id: '', label: ''});
+        phenotypicFeature4.evidence = [new Evidence({id: '', label: ''})];
         phenotypicFeature4.excluded = false;
         phenotypicFeature4.resolution = new TimeElement('');
         phenotypicFeature4.severity = {id: '', label: ''};
@@ -46,7 +46,7 @@ export class FamilyData {
         phenotypicFeature2.description = 'An abnormally increased width of the cranial sutures for age-related norms (generally resulting from delayed closure).';
         phenotypicFeature2.type = {id: 'HP:0010537 ', label: 'Wide cranial sutures'};
         phenotypicFeature2.onset = new TimeElement('');
-        phenotypicFeature2.evidence = new Evidence({id: '', label: ''});
+        phenotypicFeature2.evidence = [new Evidence({id: '', label: ''})];
         phenotypicFeature2.excluded = false;
         phenotypicFeature2.resolution = new TimeElement('');
         phenotypicFeature2.severity = {id: '', label: ''};
