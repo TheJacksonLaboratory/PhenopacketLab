@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
@@ -28,8 +27,7 @@ export class MedicalActionDetailComponent {
   agent: OntologyClass;
   routeOfAdministration: OntologyClass;
   doseIntervals: DoseInterval[] = [];
-  doseIntervalDatasource = new MatTableDataSource<DoseInterval>();
-  dataPresent = this.doseIntervalDatasource.connect().pipe(map(data => data.length > 0));
+  doseIntervalDatasource = new DataPresentMatTableDataSource<DoseInterval>();
   doseIntervalColumns = ['unit', 'value', 'frequency', 'interval'];
   drugType: DrugType;
   cumulativeDose: Quantity;
@@ -39,7 +37,7 @@ export class MedicalActionDetailComponent {
   dosage: number;
   fractions: number;
   // therapeutic regimen
-  identifier: OntologyClass | ExternalReference;;
+  identifier: OntologyClass | ExternalReference;
   startTime: TimeElement;
   endTime: TimeElement;
   regimenStatus: RegimenStatus;

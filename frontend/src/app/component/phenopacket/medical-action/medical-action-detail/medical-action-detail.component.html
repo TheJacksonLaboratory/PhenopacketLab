@@ -146,7 +146,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table mat-table *ngIf="dataPresent | async" [dataSource]="doseIntervalDatasource"
+                        <table mat-table *ngIf="doseIntervalDatasource.isDataPresent() | async" [dataSource]="doseIntervalDatasource"
                             class="mat-elevation-z2">
 
                             <ng-container matColumnDef="unit">
