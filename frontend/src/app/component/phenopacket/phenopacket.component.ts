@@ -22,7 +22,6 @@ export class PhenopacketComponent implements OnInit {
   @Output() onIdChanged = new EventEmitter<any>();
   @Output() onSexChanged = new EventEmitter<any>();
   @Output() onDobChanged = new EventEmitter<any>();
-  @Output() onLastEncounterDateChanged = new EventEmitter<any>();
 
   phenoIdControl = new FormControl('', [Validators.required]);
   phenoSexControl = new FormControl('');
@@ -31,7 +30,6 @@ export class PhenopacketComponent implements OnInit {
   phenopacketIdSubscription: Subscription;
   phenopacketSexSubscription: Subscription;
   phenopacketDobSubscription: Subscription;
-  lastEncounterDateSubscription: Subscription;
 
   summary: string;
   sex: any;
@@ -39,7 +37,7 @@ export class PhenopacketComponent implements OnInit {
   gender: any;
   dob: Date;
   individual: Individual;
-  lastEncounterDate: Date;
+  lastEncounterDate: string;
 
   status: string;
   timeOfDeath: string;
@@ -56,7 +54,7 @@ export class PhenopacketComponent implements OnInit {
     this.viewMode = "tab1";
     if (this.phenopacket) {
       this.individual = this.phenopacket.subject;
-      this.dob = this.individual.dateOfBirth? new Date(this.individual.dateOfBirth) : new Date();
+      this.lastEncounterDate = this.individual.timeAtLastEncounter? this.individual.timeAtLastEncounter.toString() : '';
       this.sex = this.individual.sex;
       this.karyotypicSex = this.individual.karyotypicSex;
       this.gender = this.individual.gender;
@@ -87,21 +85,13 @@ export class PhenopacketComponent implements OnInit {
         }
       });
       // Dob update
+      this.dob = this.individual.dateOfBirth? new Date(this.individual.dateOfBirth) : new Date();
       this.phenoDobControl.setValue(this.dob);
       if (this.phenopacketDobSubscription) {
         this.phenopacketDobSubscription.unsubscribe();
       }
       this.phenopacketDobSubscription = this.phenoDobControl.valueChanges.subscribe(value => {
         this.onDobChanged.emit(value);
-      });
-      // date of last encounter update
-      this.lastEncounterDate = new Date(this.individual.timeAtLastEncounter?.toString());
-      this.lastEncounterDateControl.setValue(this.lastEncounterDate);
-      if (this.lastEncounterDateSubscription) {
-        this.lastEncounterDateSubscription.unsubscribe();
-      }
-      this.lastEncounterDateSubscription = this.lastEncounterDateControl.valueChanges.subscribe(value => {
-        this.onLastEncounterDateChanged.emit(value);
       });
     }
   }
@@ -177,7 +167,10 @@ export class PhenopacketComponent implements OnInit {
   }
  
   editStatus() {
-    // todo
+    // TODO
+  }
+  editTimeOfLastEncounter() {
+    // TODO
   }
   // accordion
   step = 0;

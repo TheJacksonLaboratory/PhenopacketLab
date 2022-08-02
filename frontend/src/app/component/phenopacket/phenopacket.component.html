@@ -26,37 +26,87 @@
             <h3>Individual</h3>
         </div>
         <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Date of birth</mat-label>
+                                    <input matInput [matDatepicker]="datepicker" [formControl]="phenoDobControl">
+                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #datepicker>
+                                        <mat-datepicker-actions>
+                                            <button mat-button matDatepickerCancel>Cancel</button>
+                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                                        </mat-datepicker-actions>
+                                    </mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <b>Time of last encounter: </b>{{lastEncounterDate}}
+                                <button class="hover-icon" (click)="editTimeOfLastEncounter()" mat-icon-button
+                                    type="submit" matTooltip="Edit time of last encounter" [matTooltipShowDelay]="2000">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" matTooltip="Observed apparent sex of the individual"
+                            [matTooltipShowDelay]="2000">
+                            <mat-select [(value)]="sex" [formControl]="phenoSexControl">
+                                <mat-option *ngFor="let sex of getSexes()" [value]="sex">
+                                    {{sex}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <b>Sex</b>
+                            </mat-label>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" matTooltip="The karyotypic sex of the individual"
+                            [matTooltipShowDelay]="2000">
+                            <mat-select [(value)]="karyotypicSex">
+                                <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
+                                    {{karyotypicSex}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <b>Karyotypic sex</b>
+                            </mat-label>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" matTooltip="Self-identified gender"
+                            [matTooltipShowDelay]="2000">
+                            <mat-select [(value)]="gender">
+                                <mat-option value="unknown">Unknown</mat-option>
+                                <mat-option value="female">Female</mat-option>
+                                <mat-option value="male">Male</mat-option>
+                                <mat-option value="nonbinary">Nonbinary</mat-option>
+                                <mat-option value="other">Other</mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <b>Gender</b>
+                            </mat-label>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Date of birth</mat-label>
-                            <input matInput [matDatepicker]="datepicker" [formControl]="phenoDobControl">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #datepicker>
-                                <mat-datepicker-actions>
-                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                </mat-datepicker-actions>
-                            </mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Date of last encounter</mat-label>
-                            <input matInput [matDatepicker]="datepicker" [formControl]="lastEncounterDateControl">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #datepicker>
-                                <mat-datepicker-actions>
-                                    <button mat-button matDatepickerCancel>Cancel</button>
-                                    <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                </mat-datepicker-actions>
-                            </mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <div id="vital-status" class="row">
@@ -99,58 +149,13 @@
                 </div>
 
             </div>
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="outline" matTooltip="Observed apparent sex of the individual" [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="sex" [formControl]="phenoSexControl">
-                                <mat-option *ngFor="let sex of getSexes()" [value]="sex">
-                                    {{sex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="outline" matTooltip="The karyotypic sex of the individual" [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="karyotypicSex">
-                                <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
-                                    {{karyotypicSex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Karyotypic sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <mat-form-field appearance="outline" matTooltip="Self-identified gender" [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="gender">
-                                <mat-option value="unknown">Unknown</mat-option>
-                                <mat-option value="female">Female</mat-option>
-                                <mat-option value="male">Male</mat-option>
-                                <mat-option value="nonbinary">Nonbinary</mat-option>
-                                <mat-option value="other">Other</mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Gender</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 
         <br>
         <br>
-        <mat-divider></mat-divider>
+        <!-- <mat-divider></mat-divider> -->
 
         <div class="row">
             <div class="col-md-12">
@@ -165,7 +170,8 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <app-phenotypic-feature [phenotypicFeatures]="getPhenotypicFeatures()" (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"></app-phenotypic-feature>
+                        <app-phenotypic-feature [phenotypicFeatures]="getPhenotypicFeatures()"
+                            (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"></app-phenotypic-feature>
 
                         <mat-action-row>
                             <button mat-button color="primary" (click)="nextStep()">Next</button>
