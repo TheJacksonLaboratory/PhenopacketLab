@@ -89,7 +89,7 @@ export class MedicalActionDetailComponent {
           this.identifier = this.action.identifier;
           this.startTime = this.action.startTime;
           this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.status;
+          this.regimenStatus = this.action.regimenStatus;
         }
         
       }

@@ -161,7 +161,7 @@ export class TherapeuticRegimen {
     identifier: OntologyClass | ExternalReference;
     startTime: TimeElement;
     endTime: TimeElement;
-    status: RegimenStatus;
+    regimenStatus: RegimenStatus;
 
     toString() {
         if (this.identifier) {
@@ -185,10 +185,10 @@ export class TherapeuticRegimen {
         if (obj['endTime']) {
             therapeuticRegimen.endTime = TimeElement.convert(obj['endTime']);
         }
-        if (obj['status']) {
-            therapeuticRegimen.status = obj['status'];
+        if (obj['regimenStatus']) {
+            therapeuticRegimen.regimenStatus = obj['regimenStatus'];
         } else {
-            throw new Error(`Phenopacket file is missing 'status' field in 'therapeuticRegimen' object.`)
+            throw new Error(`Phenopacket file is missing 'regimenStatus' field in 'therapeuticRegimen' object.`)
         }
         return therapeuticRegimen;
     }

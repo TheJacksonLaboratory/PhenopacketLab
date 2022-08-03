@@ -122,7 +122,7 @@ export class MedicalActionDetailDialogComponent {
           this.identifier = this.action.identifier;
           this.startTime = this.action.startTime;
           this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.status;
+          this.regimenStatus = this.action.regimenStatus;
         }
       }
     } else {
@@ -196,7 +196,6 @@ export class MedicalActionDetailDialogComponent {
 
   /** Body site search/add */
   onSearchBodySiteChange(searchBodySite: any) {
-    const params: any = {};
     this.currSearchParams.offset = 0;
     let id = searchBodySite.selectedItems[0].selectedValue.id;
     let label = searchBodySite.selectedItems[0].selectedValue.name;
