@@ -39,7 +39,6 @@ export class FileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.phenopacketFiles) {
-      console.log("phenopacketFiles defined")
       this.phenopacketFiles.forEach((element, index) => {
         let id = `file-${index}`;
         element.id = id;

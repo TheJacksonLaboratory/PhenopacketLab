@@ -149,7 +149,6 @@ export class PhenopacketComponent implements OnInit {
     this.phenopacket.phenotypicFeatures = phenotypicFeatures;
   }
   changeDiseases(diseases: Disease[]) {
-    console.log(diseases);
     this.phenopacket.diseases = diseases;
   }
 
@@ -158,7 +157,6 @@ export class PhenopacketComponent implements OnInit {
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
-    console.log(medicalActions);
     this.phenopacket.medicalActions = medicalActions;
   }
 

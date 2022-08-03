@@ -71,8 +71,6 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
                     let updatedMeasurement = result.measurement;
-                    console.log('measurement:');
-                    console.log(updatedMeasurement);
                     if (updatedMeasurement) {
                         // update measurement
                         this.measurements.push(updatedMeasurement);

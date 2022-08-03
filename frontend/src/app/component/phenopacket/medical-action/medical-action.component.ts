@@ -78,8 +78,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
                     let updatedMedicalAction = result.medical_action;
-                    console.log('medical_action:');
-                    console.log(updatedMedicalAction);
                     if (updatedMedicalAction) {
                         // update medical action
                         this.medicalActions.push(updatedMedicalAction);

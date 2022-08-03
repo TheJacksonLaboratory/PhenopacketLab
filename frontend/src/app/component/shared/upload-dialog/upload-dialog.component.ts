@@ -92,7 +92,6 @@ export class UploadDialogComponent implements OnInit {
   }
 
   uploadError(error: string) {
-    console.log(error);
     this.errorMessage = error;
     this.uploadSuccessful = false;
     this.showProgress = false;

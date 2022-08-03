@@ -62,7 +62,6 @@ export class PhenotypicDetailComponent {
     this.resolution = this.phenotypicFeature.resolution?.toString(), '';
     this.severity = this.phenotypicFeature.severity?.toString();
     this.modifiers = this.phenotypicFeature.modifiers?.toString();
-    console.log(this.phenotypicFeature.evidence);
     this.evidences = this.phenotypicFeature.evidence;
     this.evidenceDatasource.data = this.evidences;
   }
@@ -111,7 +110,6 @@ export class PhenotypicDetailComponent {
         if (updatedFeature !== undefined) {
           // update feature
           this.phenotypicFeature = updatedFeature;
-          console.log(this.phenotypicFeature);
           this.updatePhenotypicDetails();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);

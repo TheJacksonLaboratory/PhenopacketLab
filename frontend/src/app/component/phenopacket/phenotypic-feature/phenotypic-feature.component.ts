@@ -115,8 +115,6 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
 
     onSearchCriteriaChange(searchCriteria: any) {
         this.currSearchParams.offset = 0;
-        console.log("selectedItems[]");
-        console.log(searchCriteria.selectedItems[0].selectedValue.id);
         let id = searchCriteria.selectedItems[0].selectedValue.id;
 
         if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
@@ -141,6 +139,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             this.spinnerDialogRef.close();
         },
             (error) => {
+                console.log(error);
                 this.spinnerDialogRef.close();
             });
     }

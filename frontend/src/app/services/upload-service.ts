@@ -32,8 +32,6 @@ export class UploadService {
                     let result = [];
                     if (type === 'json') {
                         let phenopacket = Phenopacket.convert(JSON.parse(binary as string));
-                        console.log("converted phenopacket:");
-                        console.log(phenopacket);
                         result.push(phenopacket);
                         return result;
                     } else if (type === 'yaml') {

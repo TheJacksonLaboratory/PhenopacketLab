@@ -227,7 +227,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.family.relatives?.forEach(val => currPhenopackets.push(val));
     }
-    console.log(currPhenopackets);
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       width: '40%',
       height: '30%',
