@@ -38,6 +38,8 @@ export class MeasurementDetailComponent {
       this.measurementValue = this.measurement.measurementValue;
       this.description = this.measurement.description;
       this.assay = this.measurement.assay;
+      this.timeObserved = this.measurement.timeObserved;
+      this.procedure = this.measurement.procedure;
 
     }
 
