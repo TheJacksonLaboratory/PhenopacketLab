@@ -3,11 +3,11 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyData } from '../family-list/family-data';
-import { DataPresentMatTableDataSource } from '../shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 
 
@@ -28,7 +28,7 @@ export class CohortListComponent implements OnInit {
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'remove'];
 
-  datasource = new DataPresentMatTableDataSource<Phenopacket>();
+  datasource = new MatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe) {

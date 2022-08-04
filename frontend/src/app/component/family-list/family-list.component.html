@@ -17,8 +17,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Table summary of individuals -->
-                        <table *ngIf="datasource.isDataPresent() | async" #varTable mat-table
-                            class="table-hover mat-elevation-z2" [dataSource]="datasource" matSort
+                        <table #varTable mat-table class="table-hover mat-elevation-z2" [dataSource]="datasource" matSort
                             multiTemplateDataRows>
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -39,11 +38,6 @@
                             <ng-container matColumnDef="proband">
                                 <th mat-header-cell *matHeaderCellDef> Proband </th>
                                 <td mat-cell *matCellDef="let element; let i = index">
-                                    <!-- <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="$event ? selectionProband.toggle(element) : null"
-                                    [checked]="selectionProband.isSelected(element)"
-                                    [aria-label]="checkboxLabel(element)">
-                                </mat-checkbox> -->
                                     <mat-checkbox [checked]="element.isProband" disabled="true">
                                     </mat-checkbox>
                                 </td>
@@ -64,7 +58,6 @@
                                 class="example-element-row" matTooltip="Click to open in new tab" [matTooltipShowDelay]="2000">
                             </tr>
 
-                            <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
                         </table>

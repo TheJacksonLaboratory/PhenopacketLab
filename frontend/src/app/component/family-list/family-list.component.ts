@@ -3,12 +3,12 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Family } from 'src/app/models/family';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
-import { DataPresentMatTableDataSource } from '../shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
 
@@ -31,7 +31,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];
 
-  datasource = new DataPresentMatTableDataSource<Phenopacket>();
+  datasource = new MatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
   familySubscription: Subscription;
@@ -79,7 +79,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
       phenopacket.subject = new Individual();
     }
     this.individualTabs = Array.from(this.individualTabsMap.values());
-
     // add new phenopacket to family
     if (this.family === undefined) {
       this.family = new Family("family-id");
@@ -89,7 +88,11 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.family.relatives.set(phenopacket.id, phenopacket);
 
     this.individualTabsMap.set(phenopacket.id, phenopacket);
+    console.log("phenopacket:");
+    console.log(phenopacket);
     this.familyMap.set(phenopacket.id, phenopacket);
+    console.log("familyMap");
+    console.log(this.familyMap);
     this.selected.setValue(this.individualTabs.keys.length);
     this.datasource.data = Array.from(this.familyMap.values());
     this.individualTabs = Array.from(this.individualTabsMap.values());

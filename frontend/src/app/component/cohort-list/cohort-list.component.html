@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Table summary of individuals -->
-                        <table mat-table *ngIf="datasource.isDataPresent() | async" #varTable class="table-hover mat-elevation-z2" [dataSource]="datasource"
+                        <table mat-table #varTable class="table-hover mat-elevation-z2" [dataSource]="datasource"
                             matSort multiTemplateDataRows>
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -44,7 +44,6 @@
                                 class="example-element-row" matTooltip="Click to open in new tab" [matTooltipShowDelay]="2000">
                             </tr>
 
-                            <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
                         </table>
