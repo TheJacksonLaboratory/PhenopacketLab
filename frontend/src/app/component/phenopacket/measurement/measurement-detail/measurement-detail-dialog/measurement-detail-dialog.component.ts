@@ -19,8 +19,8 @@ export class MeasurementDetailDialogComponent {
   // procedure
   procedure: Procedure;
   procedureCode: OntologyClass;
-  bodySites: OntologyClass[];
-  performedOn: TimeElement[];
+  bodySite: OntologyClass;
+  performed: TimeElement;
   // Value
   value: Quantity | OntologyClass;
   complexValue: TypedQuantity[];

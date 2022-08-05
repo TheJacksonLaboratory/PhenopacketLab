@@ -18,8 +18,8 @@ export class MeasurementDetailComponent {
   // procedure
   procedure: Procedure;
   procedureCode: OntologyClass;
-  bodySites: OntologyClass[];
-  performedOn: TimeElement[];
+  bodySite: OntologyClass;
+  performed: TimeElement;
   // Value
   value: Quantity | OntologyClass;
   complexValue: TypedQuantity[];
@@ -40,7 +40,9 @@ export class MeasurementDetailComponent {
       this.assay = this.measurement.assay;
       this.timeObserved = this.measurement.timeObserved;
       this.procedure = this.measurement.procedure;
-
+      this.procedureCode = this.procedure.code;
+      this.bodySite = this.procedure.bodySite;
+      this.performed = this.procedure.performed;
     }
 
   }

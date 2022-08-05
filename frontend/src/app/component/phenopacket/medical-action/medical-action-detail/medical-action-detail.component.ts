@@ -21,8 +21,7 @@ export class MedicalActionDetailComponent {
   terminationReason: OntologyClass;
   // procedure
   procedureCode: OntologyClass;
-  bodySites: OntologyClass[];
-  performedOn: TimeElement[];
+  performed: TimeElement;
   // Treatment
   agent: OntologyClass;
   routeOfAdministration: OntologyClass;
@@ -66,8 +65,8 @@ export class MedicalActionDetailComponent {
         if (this.action instanceof Procedure) {
           this.actionType = Procedure.actionName;
           this.procedureCode = this.action.code;
-          this.bodySites = this.action.bodySites;
-          this.performedOn = this.action.performedOn;
+          this.bodySite = this.action.bodySite;
+          this.performed = this.action.performed;
         } else if (this.action instanceof Treatment) {
           this.actionType = Treatment.actionName;
           this.agent = this.action.agent;
@@ -132,12 +131,6 @@ export class MedicalActionDetailComponent {
     return '';
   }
 
-  getProcedureCodeDisplay() {
-    if (this.procedureCode) {
-      return `${this.procedureCode.label} [${this.procedureCode.id}]`;
-    }
-    return '';
-  }
   // treatment
   getAgentDisplay() {
     if (this.agent) {
@@ -194,16 +187,5 @@ export class MedicalActionDetailComponent {
     return '';
   }
 
-  getOntologyClassDisplay(ontObj: OntologyClass) {
-    if (ontObj) {
-      return `${ontObj.label} [${ontObj.id}]`;
-    }
-    return '';
-  }
-  getBodySiteDisplay() {
-    if (this.bodySite) {
-      return `${this.bodySite.label} [${this.bodySite.id}]`;
-    }
-    return '';
-  }
+
 }

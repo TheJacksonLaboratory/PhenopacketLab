@@ -113,8 +113,8 @@ export class Evidence extends Convert {
 export class Procedure {
     static actionName = 'Procedure';
     code: OntologyClass;
-    bodySites: OntologyClass[];
-    performedOn: TimeElement[];
+    bodySite: OntologyClass;
+    performed: TimeElement;
 
     constructor() {
         this.code = { id: '', label: '' };
@@ -134,11 +134,11 @@ export class Procedure {
         } else {
             throw new Error(`Phenopacket file is missing 'code' field in 'procedure' object.`)
         }
-        if (obj['bodySites']) {
-            procedure.bodySites = OntologyClass.convert(obj['bodySites']);
+        if (obj['bodySite']) {
+            procedure.bodySite = OntologyClass.convert(obj['bodySite']);
         }
-        if (obj['performedOn']) {
-            procedure.performedOn = TimeElement.convert(obj['performedOn']);
+        if (obj['performed']) {
+            procedure.performed = TimeElement.convert(obj['performed']);
         }
 
         return procedure;

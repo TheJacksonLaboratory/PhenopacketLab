@@ -26,8 +26,8 @@ export class MedicalActionDetailDialogComponent {
   terminationReason: OntologyClass;
   // procedure
   procedureCode: OntologyClass;
-  bodySites: OntologyClass[];
-  performedOn: TimeElement[];
+  performed: TimeElement;
+  bodySite: OntologyClass;
   bodySitesStorageKey = "body_sites";
   currSearchParams: any = {}
   spinnerDialogRef: any;
@@ -40,7 +40,6 @@ export class MedicalActionDetailDialogComponent {
   cumulativeDose: Quantity;
   // radiationtherapy
   modality: OntologyClass;
-  bodySite: OntologyClass;
   bodySiteControl = new FormControl('');
   radiationTherapyBodySites: OntologyClass[];
   filteredBodySites: Observable<OntologyClass[]>;
@@ -104,8 +103,8 @@ export class MedicalActionDetailDialogComponent {
       if (this.action) {
         if (this.action instanceof Procedure) {
           this.procedureCode = this.action.code;
-          this.bodySites = this.action.bodySites;
-          this.performedOn = this.action.performedOn;
+          this.bodySite = this.action.bodySite;
+          this.performed = this.action.performed;
         } else if (this.action instanceof Treatment) {
           this.agent = this.action.agent;
           this.routeOfAdministration = this.action.routeOfAdministration;
@@ -199,37 +198,15 @@ export class MedicalActionDetailDialogComponent {
     this.currSearchParams.offset = 0;
     let id = searchBodySite.selectedItems[0].selectedValue.id;
     let label = searchBodySite.selectedItems[0].selectedValue.name;
-    let bodySite = {id: id, label: label};
-    if (this.bodySites === undefined) {
-      this.bodySites = [];
-    }
-    this.bodySites.push(bodySite);
+    this.bodySite = {id: id, label: label};
     // push changes to medicalAction
-    this.medicalAction.action.bodySites = this.action.bodySites;
+    this.medicalAction.action.bodySite = this.bodySite;
   }
 
-  removeBodySite(bodySite: OntologyClass) {
-    this.bodySites.forEach((element, index) => {
-      if (element == bodySite) {
-        this.bodySites.splice(index, 1);
-        // push changes to medicalAction
-        this.medicalAction.action.bodySites = this.bodySites;
-      }
-    });
+  removeBodySite() {
+    this.bodySite = undefined;
+    this.medicalAction.action.bodySite = this.bodySite;
   }
-  /**
-     * Add a new body site with default values or no values
-     */
-  // addBodySite(bodySite?: OntologyClass) {
-  //   if (bodySite === undefined) {
-  //     let bodySite = new OntologyClass('id ', 'Name');
-  //     this.bodySites.push(bodySite);
-  //   } else {
-  //     this.bodySites.push(bodySite);
-  //   }
-  //   // this.phenotypicDataSource.data = this.phenotypicFeatures;
-  //   // TODO push changes to api
-  // }
 
   /** end body site search */
   onDrugTypeChange(eventObj: any) {
