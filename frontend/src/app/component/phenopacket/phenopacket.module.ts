@@ -40,6 +40,7 @@ import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import {MatDividerModule} from "@angular/material/divider";
+import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
 
 
 
@@ -89,6 +90,8 @@ import {MatDividerModule} from "@angular/material/divider";
     FileComponent,
     FileDetailComponent,
     FileDetailDialogComponent,
+    MetadataComponent,
+    ResourceDetailComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -103,6 +106,8 @@ import {MatDividerModule} from "@angular/material/divider";
     PhenotypicDetailComponent,
     FileComponent,
     FileDetailComponent,
+    MetadataComponent,
+    ResourceDetailComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -57,12 +57,12 @@ export class OntologyClass extends Convert {
     }
 
 }
-export class ExternalReference {
+export class ExternalReference extends Convert {
     id: string;
     reference: string;
     description: string;
 
-    toTring() {
+    toString() {
         if(this.id && this.reference) {
             return `${this.reference} [${this.id}]`;
         } else if (this.id && this.reference === undefined) {
@@ -73,7 +73,7 @@ export class ExternalReference {
         return "";
     }
 
-    static convert(obj: any): ExternalReference {
+    static create(obj: any): ExternalReference {
         const externalReference = new ExternalReference();
         if (obj['id']) {
             externalReference.id = obj['id'];

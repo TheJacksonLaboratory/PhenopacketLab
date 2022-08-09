@@ -1,4 +1,4 @@
-import { Convert } from "./base";
+import { Convert, ExternalReference } from "./base";
 
 export class MetaData {
     created: string;
@@ -85,24 +85,5 @@ export class Update extends Convert {
             update.comment = obj['comment'];
         }
         return update;
-    }
-}
-export class ExternalReference extends Convert {
-    id: string;
-    reference: string;
-    description: string;
-
-    static create(obj: any): ExternalReference {
-        const externalReference = new ExternalReference();
-        if (obj['id']) {
-            externalReference.id = obj['id'];
-        }
-        if (obj['reference']) {
-            externalReference.reference = obj['reference'];
-        }
-        if (obj['description']) {
-            externalReference.description = obj['description'];
-        }
-        return externalReference;
     }
 }
