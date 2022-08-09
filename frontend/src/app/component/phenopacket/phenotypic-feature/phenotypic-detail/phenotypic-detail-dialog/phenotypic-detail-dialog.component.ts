@@ -1,7 +1,6 @@
-import { Component, Inject, Input, ViewChild } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
-import { Router } from '@angular/router';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 @Component({
@@ -26,9 +25,6 @@ export class PhenotypicDetailDialogComponent {
 
   // TODO - fetch from backend
   evidenceValues: string[] = ['evidence 1', 'evidence 2'];
-
-  // @ViewChild('phenotypicFeaturePaginator', { static: true }) phenotypicFeaturePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) phenotypicFeatureSort: MatSort;
 
   @Input()
   phenotypicFeature: PhenotypicFeature;

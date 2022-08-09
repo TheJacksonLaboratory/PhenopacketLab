@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { FileService } from 'src/app/services/file.service';
 import { File } from 'src/app/models/base';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { Attribute } from './file-detail/file-detail.component';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
   selector: 'app-file',
@@ -21,14 +18,6 @@ export class FileComponent implements OnInit {
   //Table items
   displayedColumns = ['uri', 'description', 'mapping', 'attribute', 'remove'];
 
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
-  // @ViewChild('diseasePaginator', { static: true }) diseasePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) sort: MatSort;
-  // @ViewChild('diseaseTable', { static: false }) diseaseTable: MatTable<HpoDisease>;
-
   expandedElement: File | null;
   @Input()
   phenopacketFiles: File[] = [];
@@ -36,8 +25,7 @@ export class FileComponent implements OnInit {
   onFilesChanged = new EventEmitter<File[]>();
 
   filesMap = new Map<string, File>();
-  datasource = new MatTableDataSource<File>();
-  dataPresent = this.datasource.connect().pipe(map(data => data.length > 0));
+  datasource = new DataPresentMatTableDataSource<File>();
 
   diseaseCount: number;
   //searchparams
@@ -51,7 +39,6 @@ export class FileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.phenopacketFiles) {
-      console.log("phenopacketFiles defined")
       this.phenopacketFiles.forEach((element, index) => {
         let id = `file-${index}`;
         element.id = id;
@@ -91,14 +78,6 @@ export class FileComponent implements OnInit {
     // update files
     this.updateFiles();
   }
-
-  doPageChange(pageEvent: any) {
-
-  }
-
-  // private clearSort() {
-  //   this.sort.sort({ id: '', start: 'asc', disableClear: false });
-  // }
 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {

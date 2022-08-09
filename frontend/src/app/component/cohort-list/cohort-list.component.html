@@ -11,21 +11,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Table summary of individuals -->
-                        <table #varTable mat-table class="table-hover mat-elevation-z2" [dataSource]="datasource"
+                        <table mat-table #varTable class="table-hover mat-elevation-z2" [dataSource]="datasource"
                             matSort multiTemplateDataRows>
                             <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                                <th mat-header-cell *matHeaderCellDef> Id </th>
                                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="dob">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of birth </th>
+                                <th mat-header-cell *matHeaderCellDef> Date of birth </th>
                                 <td mat-cell *matCellDef="let element"> {{formatDate(element.subject?.dateOfBirth,
                                     'MM-dd-yyyy')}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="sex">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sex </th>
+                                <th mat-header-cell *matHeaderCellDef> Sex </th>
                                 <td mat-cell *matCellDef="let element"> {{element.subject?.sex}} </td>
                             </ng-container>
 
@@ -33,32 +33,27 @@
                                 <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell *matCellDef="let element">
                                     <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                        color="primary" class="pull-right" matTooltip="Remove individual"
+                                        class="pull-right" matTooltip="Remove individual" [matTooltipShowDelay]="2000"
                                         (click)="removeIndividual(element)">
-                                        <mat-icon matSuffix>close</mat-icon>
+                                        <mat-icon matSuffix>delete</mat-icon>
                                     </button>
                                 </td>
                             </ng-container>
 
                             <tr mat-row (click)="openTab(element)" *matRowDef="let element; columns: displayedColumns;"
-                                class="example-element-row" matTooltip="Click to open in new tab">
+                                class="example-element-row" matTooltip="Click to open in new tab" [matTooltipShowDelay]="2000">
                             </tr>
 
-                            <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
                         </table>
-
-                        <mat-paginator #varPaginator [length]="pageLength" [pageSize]="pageSize"
-                            [pageSizeOptions]="pageSizeOptions" (page)="doPageChange($event)">
-                        </mat-paginator>
                     </div>
                 </div>
 
             </mat-tab>
             <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
                 <ng-template mat-tab-label>{{ phenopacket.id }}<i class="material-icons close-icon"
-                        matTooltip="Close this tab" (click)="closeTab(index)">close</i>
+                        matTooltip="Close this tab" [matTooltipShowDelay]="2000" (click)="closeTab(index)">close</i>
                 </ng-template>
 
                 <div class="row">
@@ -67,8 +62,8 @@
                     </div>
                     <div class="col-md-6">
                         <button (click)="closeTab(index)" mat-icon-button type="submit"
-                            class="pull-right delete-tab-button" matTooltip="Close this tab">
-                            <mat-icon mat-fab>close</mat-icon>
+                            class="pull-right delete-tab-button" matTooltip="Close this tab" [matTooltipShowDelay]="2000">
+                            <mat-icon>close</mat-icon>
                         </button>
                     </div>
                 </div>

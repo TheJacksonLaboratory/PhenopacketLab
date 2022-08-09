@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { CohortListComponent } from './cohort-list.component';
 
@@ -8,7 +9,10 @@ describe('CohortListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CohortListComponent ]
+      declarations: [ CohortListComponent ],
+      imports: [
+        MatDialogModule
+      ]
     })
     .compileComponents();
   });

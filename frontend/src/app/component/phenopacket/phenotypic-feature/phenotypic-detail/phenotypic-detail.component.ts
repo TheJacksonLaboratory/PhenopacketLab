@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
+import { Evidence } from 'src/app/models/base';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 
@@ -21,12 +23,15 @@ export class PhenotypicDetailComponent {
   resolution: string;
   severity: string;
   modifiers: string;
+  evidences: Evidence[];
   evidenceName: string;
   evidenceCode: string;
   evidenceId: string;
   evidenceReference: string;
   evidenceDescription: string;
 
+  evidenceDatasource = new DataPresentMatTableDataSource<Evidence>();
+  evidenceColumns = ['id', 'name', 'refid', 'refname', 'description'];
 
   // TODO - fetch from backend
   severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
@@ -36,9 +41,6 @@ export class PhenotypicDetailComponent {
 
   // TODO - fetch from backend
   evidenceValues: string[] = ['evidence 1', 'evidence 2'];
-
-  // @ViewChild('phenotypicFeaturePaginator', { static: true }) phenotypicFeaturePaginator: MatPaginator;
-  // @ViewChild(MatSort, { static: true }) phenotypicFeatureSort: MatSort;
 
   @Input()
   phenotypicFeature: PhenotypicFeature;
@@ -56,16 +58,44 @@ export class PhenotypicDetailComponent {
 
   updatePhenotypicDetails() {
     this.status = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
-    this.onset = this.phenotypicFeature.onset?.timestamp, '';
-    this.resolution = this.phenotypicFeature.resolution?.timestamp, '';
-    this.severity = this.phenotypicFeature.severity.toString();
-    this.modifiers = this.phenotypicFeature.modifiers.toString();
-    this.evidenceName = this.phenotypicFeature.evidence?.evidenceCode?.label, '';
-    this.evidenceId = this.phenotypicFeature.evidence?.evidenceCode?.id, '';
-    this.evidenceReference = this.phenotypicFeature.evidence?.reference?.reference, '';
-    this.evidenceDescription = this.phenotypicFeature.evidence?.reference?.description, '';
+    this.onset = this.phenotypicFeature.onset?.toString(), '';
+    this.resolution = this.phenotypicFeature.resolution?.toString(), '';
+    this.severity = this.phenotypicFeature.severity?.toString();
+    this.modifiers = this.phenotypicFeature.modifiers?.toString();
+    this.evidences = this.phenotypicFeature.evidence;
+    this.evidenceDatasource.data = this.evidences;
   }
 
+  getEvidenceName(evidence: Evidence) {
+    if (evidence.evidenceCode) {
+      return evidence.evidenceCode.label;
+    }
+    return '';
+  }
+  getEvidenceId(evidence: Evidence) {
+    if (evidence.evidenceCode) {
+      return evidence.evidenceCode.id;
+    }
+    return '';
+  }
+  getReferenceId(evidence: Evidence) {
+    if (evidence.reference) {
+      return evidence.reference.id;
+    }
+    return '';
+  }
+  getReferenceName(evidence: Evidence) {
+    if (evidence.reference) {
+      return evidence.reference.reference;
+    }
+    return '';
+  }
+  getReferenceDescription(evidence: Evidence) {
+    if (evidence.reference) {
+      return evidence.reference.description;
+    }
+    return '';
+  }
   openEditDialog() {
     const phenotypicDetailData = { 'title': 'Edit phenotypic feature' };
     phenotypicDetailData['feature'] = this.phenotypicFeature;
@@ -80,7 +110,6 @@ export class PhenotypicDetailComponent {
         if (updatedFeature !== undefined) {
           // update feature
           this.phenotypicFeature = updatedFeature;
-          console.log(this.phenotypicFeature);
           this.updatePhenotypicDetails();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);

@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog.component';
 
 describe('MedicalActionDetailDialogComponent', () => {
@@ -7,7 +9,16 @@ describe('MedicalActionDetailDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MedicalActionDetailDialogComponent ]
+      declarations: [ MedicalActionDetailDialogComponent ],
+      imports: [
+        MatDialogModule,
+        HttpClientModule
+      ],
+      providers: [
+        { provide: MatDialog, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef,useValue: {} }
+      ]
     })
     .compileComponents();
   });

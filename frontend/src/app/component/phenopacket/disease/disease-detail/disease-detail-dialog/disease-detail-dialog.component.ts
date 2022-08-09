@@ -34,13 +34,11 @@ export class DiseaseDetailDialogComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.disease) {
-      console.log(this.disease);
       this.diseaseDetailName = this.disease.term.label;
       this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
       this.isA = this.disease.isA;
       this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';
-      console.log(this.selectedStatus);
     }
   }
 

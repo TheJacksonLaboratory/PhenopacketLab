@@ -59,17 +59,19 @@ export class SearchBoxComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (!this.resetSearch) {
-            this.searchCriteria = this.searchService.getSelectedSearchItems();
+        if (this.searchService) {
+            if (!this.resetSearch) {
+                this.searchCriteria = this.searchService.getSelectedSearchItems();
+            }
+            if (this.searchCriteria.selectedSearchBy) {
+                this.selectedSearchBy = this.searchCriteria.selectedSearchBy;
+                this.initSearch(this.searchCriteria);
+            }
+            this.setSearchBox();
+            this.searchService.getAll().subscribe(data => {
+                localStorage.setItem(this.localStorageKey, JSON.stringify(data));
+            });
         }
-        if (this.searchCriteria.selectedSearchBy) {
-            this.selectedSearchBy = this.searchCriteria.selectedSearchBy;
-            this.initSearch(this.searchCriteria);
-        }
-        this.setSearchBox();
-        this.searchService.getAll().subscribe(data => {
-            localStorage.setItem(this.localStorageKey, JSON.stringify(data));
-        });
     }
 
 

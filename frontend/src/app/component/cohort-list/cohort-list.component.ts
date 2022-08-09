@@ -1,10 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
@@ -27,16 +25,8 @@ export class CohortListComponent implements OnInit {
   cohortMap: Map<String, Phenopacket>;
   selected = new FormControl(0);
 
-  @ViewChild('varPaginator', { static: true }) varPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'remove'];
-
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
 
   datasource = new MatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
@@ -104,7 +94,7 @@ export class CohortListComponent implements OnInit {
   }
   changeDob(dob: Date, index: number) {
     let selectedIndividual = this.individualTabs[index];
-    selectedIndividual.subject.dateOfBirth = dob;
+    selectedIndividual.subject.dateOfBirth = dob.toISOString();
   }
 
   openTab(element: any) {
@@ -120,10 +110,6 @@ export class CohortListComponent implements OnInit {
   }
   closeTab(index: number) {
     this.individualTabs.splice(index, 1)
-  }
-
-  doPageChange(pageEvent: any) {
-
   }
 
   formatDate(date: Date, format: string) {

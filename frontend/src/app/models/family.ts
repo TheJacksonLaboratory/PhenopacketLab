@@ -1,5 +1,3 @@
-import { Meta } from "@angular/platform-browser";
-import { Params } from "@angular/router";
 import { MetaData } from "./metadata";
 import { Pedigree } from "./pedigree";
 import { Phenopacket } from "./phenopacket";
@@ -17,7 +15,8 @@ export class Family {
         this.relatives = new Map<String, Phenopacket>();
         this.pedigree = new Pedigree();
         this.files = [];
-        this.metaData = new MetaData(new Date().toISOString(), "", "");
+        this.metaData = new MetaData();
+        this.metaData.created = new Date().toISOString();
     }
 
 }

@@ -1,16 +1,16 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { Family } from 'src/app/models/family';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
+import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
 
 @Component({
   selector: 'app-family-list',
@@ -28,26 +28,22 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   familyMap = new Map<string, Phenopacket>();
   selected = new FormControl(0);
 
-  @ViewChild('varPaginator', { static: true }) varPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];
-
-  // MatPaginator Inputs
-  pageLength = 0;
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 50, 100];
 
   datasource = new MatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
-  // familySubscription: Subscription;
+  familySubscription: Subscription;
 
   constructor(private familyService: FamilyService, public dialog: MatDialog, private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
+    this.familySubscription = this.familyService.getPhenopacket().subscribe(phenopacket => {
+      this.addTab(phenopacket);
+      this.updateFamily(this.familyService.family);
+    });
     this.updateFamily(this.familyService.family);
   }
 
@@ -55,15 +51,17 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.familySubscription.unsubscribe();
+    this.familySubscription.unsubscribe();
   }
 
   updateFamily(family: Family) {
     this.family = family;
     if (this.family) {
       if (this.individualTabsMap.keys.length < this.family.relatives.keys.length + 1) {
-        this.individualTabsMap.set(this.family.proband.id, this.family.proband);
-        this.familyMap.set(this.family.proband.id, this.family.proband);
+        if (this.family.proband) {
+          this.individualTabsMap.set(this.family.proband.id, this.family.proband);
+          this.familyMap.set(this.family.proband.id, this.family.proband);
+        }
         this.family.relatives.forEach((value: Phenopacket, key: string) => {
           this.individualTabsMap.set(value.id, value);
           this.familyMap.set(value.id, value);
@@ -74,30 +72,33 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  addTab() {
-    let newPheno = new Phenopacket();
+  addTab(phenopacket?: Phenopacket) {
+    if (phenopacket === undefined) {
+      phenopacket = new Phenopacket();
+      phenopacket.id = `new-patient-${this.individualTabs.length + 1}`;
+      phenopacket.subject = new Individual();
+    }
     this.individualTabs = Array.from(this.individualTabsMap.values());
-
-    newPheno.id = `new-patient-${this.individualTabs.length + 1}`;
-    newPheno.subject = new Individual();
     // add new phenopacket to family
     if (this.family === undefined) {
       this.family = new Family("family-id");
     }
-    if (this.family.proband === undefined) {
-      newPheno.isProband = true;
-      this.family.proband = newPheno;
-    } else {
-      this.family.relatives.set(newPheno.id, newPheno);
-    }
-    this.individualTabsMap.set(newPheno.id, newPheno);
-    this.familyMap.set(newPheno.id, newPheno);
+
+    phenopacket.isProband = false;
+    this.family.relatives.set(phenopacket.id, phenopacket);
+
+    this.individualTabsMap.set(phenopacket.id, phenopacket);
+    console.log("phenopacket:");
+    console.log(phenopacket);
+    this.familyMap.set(phenopacket.id, phenopacket);
+    console.log("familyMap");
+    console.log(this.familyMap);
     this.selected.setValue(this.individualTabs.keys.length);
     this.datasource.data = Array.from(this.familyMap.values());
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
     this.familyService.setFamily(this.family);
-    console.log(`new phenopacket added: ${newPheno.id}`);
+    console.log(`new phenopacket added: ${phenopacket.id}`);
   }
 
   removeIndividual(individual: Phenopacket) {
@@ -120,8 +121,10 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // remove from family
         this.family.relatives.delete(individual.id);
-        if (this.family.proband.subject.id === individual.id) {
-          this.family.proband = undefined;
+        if (this.family.proband) {
+          if (this.family.proband.subject.id === individual.id) {
+            this.family.proband = undefined;
+          }
         }
         this.familyService.setFamily(this.family);
       }
@@ -146,10 +149,10 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       else if (!isProband && value.id === phenopacket.id) {
-         // if not proband, we deselect
-         value.isProband = false;
-         this.selectionProband.deselect(value);
-         this.family.relatives.set(value.id, value);
+        // if not proband, we deselect
+        value.isProband = false;
+        this.selectionProband.deselect(value);
+        this.family.relatives.set(value.id, value);
       } else {
         // all other indices: If not originally selected then deselect
         if (!this.selectionProband.isSelected) {
@@ -163,7 +166,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeId(id: string, phenopacket: Phenopacket) {
-    console.log(this.individualTabsMap);
     let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     selectedIndividual.id = id;
     // change id in map
@@ -176,7 +178,9 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   changeDob(dob: Date, phenopacket: Phenopacket) {
     let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
-    selectedIndividual.subject.dateOfBirth = dob;
+    if (dob) {
+      selectedIndividual.subject.dateOfBirth = dob.toISOString();
+    }
   }
 
   openTab(element: any) {
@@ -196,12 +200,51 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.individualTabs = Array.from(this.individualTabsMap.values());
   }
 
-  doPageChange(pageEvent: any) {
-
-  }
-
   formatDate(date: Date, format: string) {
     return this.datePipe.transform(date, format);
   }
+
+  /**
+   * Refresh the datasource
+   */
+  refresh() {
+    // this.dataFilesService.getDataFilesAndParameters().subscribe(resp => {
+    //   // let jsonObj = JSON.parse(resp)
+    //   this.dataSource = new MatTableDataSource(resp);
+    //   this.dataSource.sort = this.sort;
+    // }, err => {
+    //   // TODO: display our server error dialog?
+    //   console.log(err);
+    // });
+    // this.changeDetectorRefs.detectChanges();
+  }
+
+  /**
+   * Open dialog to upload a new file
+   */
+  public openFileUploadDialog() {
+    let currPhenopackets = [];
+    if (this.family) {
+      if (this.family.proband) {
+        currPhenopackets.push(this.family.proband);
+      }
+      this.family.relatives?.forEach(val => currPhenopackets.push(val));
+    }
+    const dialogRef = this.dialog.open(UploadDialogComponent, {
+      width: '40%',
+      height: '30%',
+      data: { fileType: 'JSON, yaml', titleText: 'Upload Phenopacket file(s)', currentPhenopackets: currPhenopackets }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // refresh datasource
+      this.refresh();
+      //wait 2 sec
+      // (async () => {
+      // await this.delay(2000);
+      // this.refresh();
+      // })();
+    });
+  }
+
 
 }

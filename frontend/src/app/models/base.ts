@@ -1,101 +1,303 @@
+/**
+ * Class to convert to list or list of phenopacket model objects.
+ * the Phenopacket model objects that can have more than one instance should
+ * extend this class.
+ */
+export class Convert {
 
-export interface OntologyClass {
+    public static convert(obj: any): any {
+        if (Array.isArray(obj)) {
+            const array = [];
+            for (let item of obj) {
+                const it = this.create(item);
+                array.push(it);
+            }
+            return array;
+        } else {
+            return this.create(obj);
+        }
+    }
+
+    /**
+     * To be overriden
+     * @param obj 
+     */
+    static create(obj: any): any {
+        return new Error("this function needs to be overriden");
+    }
+}
+
+export class OntologyClass extends Convert {
     id: string;
     label: string;
+
+    constructor(id?: string, label?: string) {
+        super();
+        this.id = id;
+        this.label = label;
+    }
+
+    toString() {
+        if (this.label && this.id) {
+            return `${this.label} [${this.id}]`;
+        }
+        return '';
+        
+    }
+
+    static create(obj: any): OntologyClass {
+        const ontologyClass = new OntologyClass();
+        if (obj['id']) {
+            ontologyClass.id = obj['id'];
+        }
+        if (obj['label']) {
+            ontologyClass.label = obj['label'];
+        }
+        return ontologyClass;
+    }
+
 }
 export class ExternalReference {
     id: string;
     reference: string;
     description: string;
+
+    toTring() {
+        if(this.id && this.reference) {
+            return `${this.reference} [${this.id}]`;
+        } else if (this.id && this.reference === undefined) {
+            return this.id;
+        } else if (this.id === undefined && this.reference) {
+            return this.reference;
+        }
+        return "";
+    }
+
+    static convert(obj: any): ExternalReference {
+        const externalReference = new ExternalReference();
+        if (obj['id']) {
+            externalReference.id = obj['id'];
+        }
+        if (obj['reference']) {
+            externalReference.reference = obj['reference'];
+        }
+        if (obj['description']) {
+            externalReference.description = obj['description'];
+        }
+        return externalReference;
+    }
 }
-export class Evidence {
+export class Evidence extends Convert {
     evidenceCode: OntologyClass;
     reference: ExternalReference;
-    bodySite: OntologyClass;
-    performed: TimeElement;
-    constructor(evidenceCode: OntologyClass, bodySite?: OntologyClass, performed?: TimeElement) {
+
+    constructor(evidenceCode?: OntologyClass, reference?: ExternalReference) {
+        super();
         this.evidenceCode = evidenceCode;
-        this.bodySite = bodySite;
-        this.performed = performed;
+        this.reference = reference;
+    }
+
+    public static create(obj: any): Evidence {
+        const evidence = new Evidence();
+        if (obj['evidenceCode']) {
+            evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`)
+        }
+        if (obj['reference']) {
+            evidence.reference = ExternalReference.convert(obj['reference']);
+        }
+        return evidence;
     }
 }
 export class Procedure {
+    static actionName = 'Procedure';
     code: OntologyClass;
-    bodySites: OntologyClass[];
-    performedOn: TimeElement[];
+    bodySite: OntologyClass;
+    performed: TimeElement;
 
     constructor() {
-        this.code = {id: '', label: ''};
+        this.code = { id: '', label: '' };
     }
 
     toString() {
-        return "Procedure";
+        if (this.code) {
+            return this.code.toString();
+        }
+        return "";
+    }
+
+    static convert(obj: any): Procedure {
+        const procedure = new Procedure();
+        if (obj['code']) {
+            procedure.code = OntologyClass.convert(obj['code']);
+        } else {
+            throw new Error(`Phenopacket file is missing 'code' field in 'procedure' object.`)
+        }
+        if (obj['bodySite']) {
+            procedure.bodySite = OntologyClass.convert(obj['bodySite']);
+        }
+        if (obj['performed']) {
+            procedure.performed = TimeElement.convert(obj['performed']);
+        }
+
+        return procedure;
     }
 }
 export class Age {
     iso8601duration: string;
 
-    constructor(val: string) {
+    constructor(val?: string) {
         this.iso8601duration = val;
+    }
+
+    public static convert(obj: any): Age {
+        const age = new Age();
+        if (obj['iso8601duration']) {
+            age.iso8601duration = obj['iso8601duration'];
+        }
+        return age;
     }
 }
 
 export class AgeRange {
     start = new Age("1");
     end = new Age("2");
-    constructor(start: Age, end: Age) {
+    constructor(start?: Age, end?: Age) {
         this.start = start;
         this.end = end;
+    }
+
+    public static convert(obj: any): AgeRange {
+        const ageRange = new AgeRange();
+        if (obj['start']) {
+            ageRange.start = Age.convert(obj['start']);
+        }
+        if (obj['end']) {
+            ageRange.end = Age.convert(obj['end']);
+        }
+        return ageRange;
     }
 }
 
 export class TimeInterval {
     start: string;
     end: string;
-    constructor(start: string, end: string) {
+    constructor(start?: string, end?: string) {
         this.start = start;
         this.end = end;
     }
+
+    public static convert(obj: any): TimeInterval {
+        const interval = new TimeInterval();
+        if (obj['start']) {
+            interval.start = obj['start'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'start' field in 'timeInterval' object.`)
+        }
+        if (obj['end']) {
+            interval.end = obj['end'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'end' field in 'timeInterval' object.`)
+        }
+        return interval;
+    }
 }
+
 export class GestationalAge {
     weeks: number;
     days: number;
-    constructor(weeks: number, days: number) {
+    constructor(weeks?: number, days?: number) {
         this.weeks = weeks;
         this.days = days;
     }
 
+    public static convert(obj: any): GestationalAge {
+        const gestationalAge = new GestationalAge();
+        if (obj['weeks']) {
+            gestationalAge.weeks = obj['weeks'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'weeks' field in 'gestationalAge' object.`)
+        }
+        if (obj['days']) {
+            gestationalAge.days = obj['days'];
+        }
+        return gestationalAge;
+    }
+}
+export class TimeElement extends Convert {
+    element: any;
+
+    /**
+     * 
+     * @param element can be instance of GestationalAge, Age, AgeRange, string or TimeInterval
+     */
+    constructor(element?: any) {
+        super();
+        this.element = element;
+    }
+
     toString() {
-        return `${this.weeks} weeks, ${this.days} days`;
+        if (this.element instanceof GestationalAge) {
+            return `${this.element.days} days, ${this.element.weeks} weeks`;
+        } else if (this.element instanceof Age) {
+            return this.element.iso8601duration;
+        } else if (this.element instanceof OntologyClass) {
+            return this.element.toString();
+        } else if (this.element instanceof AgeRange) {
+            return `${this.element.start} - ${this.element.start}`;
+        } else if (typeof this.element === 'string') {
+            return this.element;
+        } else if (this.element instanceof TimeInterval) {
+            return `${this.element.start} - ${this.element.end}`;
+        }
+    }
+
+    static create(obj: any): TimeElement {
+        const timeElement = new TimeElement();
+        if (obj['age']) {
+            timeElement.element = Age.convert(obj['age']);
+        } else if (obj['ageRange']) {
+            timeElement.element = AgeRange.convert(obj['ageRange']);
+        } else if (obj['gestationalAge']) {
+            timeElement.element = GestationalAge.convert(obj['gestationalAge']);
+        } else if (obj['ontologyClass']) {
+            timeElement.element = OntologyClass.convert(obj['ontologyClass']);
+        } else if (obj['timestamp']) {
+            timeElement.element = obj['timestamp'];
+        } else if (obj['interval']) {
+            timeElement.element = TimeInterval.convert(obj['interval']);
+        }
+        return timeElement;
     }
 }
-export class TimeElement {
-    gestationalAge: GestationalAge;
-    age: Age;
-    ageRange: AgeRange;
-    ontologyClass: OntologyClass;
-    timestamp: string;
-    interval: TimeInterval;
-    constructor(gestationalAge?: GestationalAge, age?: Age, ageRange?: AgeRange, ontologyClass?: OntologyClass,
-        timestamp?: string, interval?: TimeInterval) {
-        this.gestationalAge = gestationalAge;
-        this.age = age;
-        this.ageRange = ageRange;
-        this.ontologyClass = ontologyClass;
-        this.timestamp = timestamp;
-        this.interval = interval;
-    }
-}
-export class File {
+export class File extends Convert {
     id: string; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
     individualToFileIdentifier = new Map<string, string>();
     fileAttribute = new Map<string, string>();
 
-    constructor(uri: string, description: string) {
+    constructor(uri?: string, description?: string) {
+        super();
         this.uri = uri;
         this.fileAttribute.set('description', description);
+
+    }
+    static create(obj: any): File {
+        const file = new File();
+        if (obj['uri']) {
+            file.uri = obj['uri'];
+        } else {
+            throw new Error(`Phenopacket file is missing 'uri' field in 'file' object.`)
+        }
+        if (obj['individualToFileIdentifier']) {
+            file.individualToFileIdentifier = obj['individualToFileIdentifier'];
+        }
+        if (obj['fileAttribute']) {
+            file.fileAttribute = obj['fileAttribute'];
+        }
         
+        return file;
     }
 }
 

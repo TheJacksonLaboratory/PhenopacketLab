@@ -1,18 +1,13 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from "@angular/router";
-import { MatTableDataSource } from '@angular/material/table';
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { Age, AgeRange, Evidence, GestationalAge, OntologyClass, TimeElement, TimeInterval } from 'src/app/models/base';
+import { Evidence, OntologyClass, TimeElement } from 'src/app/models/base';
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -34,58 +29,34 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     placeHolderTxt = "Enter a phenotypic feature name";
     localStorageKey = "phenotypic_features";
 
-    @ViewChild('phenotypicPaginator', { static: true }) phenotypicPaginator: MatPaginator;
-    // @ViewChild(MatSort, { static: true }) sort: MatSort;
-
     //Table items
-    displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'category', 'remove'];
+    displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'remove'];
 
-    phenotypicDataSource = new MatTableDataSource<PhenotypicFeature>();
-    dataPresent = this.phenotypicDataSource.connect().pipe(map(data => data.length > 0));
+    phenotypicDataSource = new DataPresentMatTableDataSource<PhenotypicFeature>();
 
     phenotypicCount: number;
-
-    // MatPaginator Inputs
-    pageLength = 0;
-    pageSize = 10;
-    pageSizeOptions: number[] = [10, 50, 100];
 
     //searchparams
     currSearchParams: any = {}
 
     expandedElement: PhenotypicFeature | null;
+
     @Input()
-    phenotypicFeatures: PhenotypicFeature[] = [];
-    // @ViewChild('phenotypicTable', {static:false}) table: MatTable<PhenotypicFeature>;
+    phenotypicFeatures: PhenotypicFeature[];
+    @Output()
+    onPhenotypicFeaturesChanged = new EventEmitter<PhenotypicFeature[]>();
 
     dialogRef: any;
     spinnerDialogRef: any;
 
-    constructor(public searchService: PhenotypeSearchService, private route: ActivatedRoute, public dialog: MatDialog, private router: Router) {
+    constructor(public searchService: PhenotypeSearchService, public dialog: MatDialog) {
     }
 
     ngOnInit() {
-
-        // load example data
-        // this.phenotypicDataSource = new PhenotypicFeatureData().PHENOTYPIC_DATA;
         this.phenotypicDataSource.data = this.phenotypicFeatures;
     }
 
     ngAfterViewInit() {
-
-        // this.sort.sortChange.subscribe(() => {
-
-        //     this.currSearchParams.sortBy = this.sort.active;
-        //     this.currSearchParams.sortDirection = this.sort.direction;
-        //     this.currSearchParams.offset = 0;
-        //     this.varPaginator.pageIndex = 0;
-
-        //     if (this.currSearchParams.selectedItems) {
-        //         if (this.sort.active && this.currSearchParams.selectedItems.length > 0) {
-        //             this._getPhenotypicFeatures(this.currSearchParams)
-        //         }
-        //     }
-        // });
     }
 
     /**
@@ -95,18 +66,19 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
         if (phenotypicFeature === undefined) {
             let feature = new PhenotypicFeature();
             feature.description = 'Phenotypic Feature description';
-            feature.type = {id: 'id', label: 'Name'};
-            feature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
-            feature.evidence = new Evidence({id: '', label: ''}, {id: '', label: ''}, new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', '')));
+            feature.type = new OntologyClass('id', 'name');
+            feature.onset = new TimeElement('');
+            feature.evidence = [new Evidence(new OntologyClass('', ''))];
             feature.excluded = false;
-            feature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
-            feature.severity = {id: '', label: ''};
-            feature.modifiers = {id: '', label: ''};
+            feature.resolution = new TimeElement('');
+            feature.severity = new OntologyClass('', '');
+            feature.modifiers = [new OntologyClass('', '')];
             this.phenotypicFeatures.push(feature);
         } else {
             this.phenotypicFeatures.push(phenotypicFeature);
         }
         this.phenotypicDataSource.data = this.phenotypicFeatures;
+        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
         // TODO push changes to api
     }
 
@@ -138,20 +110,12 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             }
         });
         this.phenotypicDataSource.data = this.phenotypicFeatures;
+        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
-    // private clearSort() {
-    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    // }
-
     onSearchCriteriaChange(searchCriteria: any) {
-        const params: any = {};
         this.currSearchParams.offset = 0;
-        console.log("selectedItems[]");
-        console.log(searchCriteria.selectedItems[0].selectedValue.id);
         let id = searchCriteria.selectedItems[0].selectedValue.id;
-        this.phenotypicPaginator.pageIndex = 0;
-        // this.clearSort();
 
         if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
             this.currSearchParams = searchCriteria;
@@ -165,27 +129,19 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             let phenotypicFeature = new PhenotypicFeature();
             phenotypicFeature.type = {id: data.id, label: data.name};
             phenotypicFeature.description = data.description;
-            phenotypicFeature.onset = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
-            phenotypicFeature.evidence = new Evidence({id: '', label: ''}, {id: '', label: ''}, new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', '')));
+            phenotypicFeature.onset = new TimeElement('');
+            phenotypicFeature.evidence = [new Evidence(new OntologyClass('', ''))];
             phenotypicFeature.excluded = false;
-            phenotypicFeature.resolution = new TimeElement(new GestationalAge(0, 0), new Age(''), new AgeRange(new Age(''), new Age('')), {id: '', label: ''}, '', new TimeInterval('', ''));
-            phenotypicFeature.severity = {id: '', label: ''};
-            phenotypicFeature.modifiers = {id: '', label: ''};
+            phenotypicFeature.resolution = new TimeElement('');
+            phenotypicFeature.severity = new OntologyClass('', '');
+            phenotypicFeature.modifiers = [new OntologyClass('', '')];
             this.addPhenotypicFeature(phenotypicFeature);
             this.spinnerDialogRef.close();
         },
             (error) => {
+                console.log(error);
                 this.spinnerDialogRef.close();
             });
-    }
-
-    doPageChange(pageEvent: any) {
-
-        // if (this.currSearchParams) {
-        //     this.currSearchParams.offset = pageEvent.pageIndex * pageEvent.pageSize;
-        //     this.currSearchParams.max = pageEvent.pageSize;
-        //     this._getPhenotypicFeatures(this.currSearchParams);
-        // }
     }
 
     expandCollapse(element: any) {
@@ -198,6 +154,17 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             panelClass: 'transparent',
             disableClose: true
         });
+    }
+
+    getModifiers(phenotypicFeature: PhenotypicFeature) {
+        if (phenotypicFeature.modifiers) {
+            let modifierStr = '';
+            for (let modifier of phenotypicFeature.modifiers) {
+                modifierStr += `${modifier.label}, `;
+            }
+            return modifierStr;
+        }
+        return '';
     }
 
 }

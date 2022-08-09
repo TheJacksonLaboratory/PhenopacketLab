@@ -1,37 +1,108 @@
+import { Convert } from "./base";
+
 export class MetaData {
     created: string;
     createdBy: string;
     submittedBy: string;
-    resources: Resource;
-    updates: Update;
+    resources: Resource[];
+    updates: Update[];
     phenopacketSchemaVersion: string;
-    externalReferences: ExternalReference;
+    externalReferences: ExternalReference[];
 
-    constructor(created: string, createdBy: string, submittedBy: string) {
-        this.created = created;
-        this.createdBy = createdBy;
-        this.submittedBy = submittedBy;
-        this.resources = new Resource();
-        this.updates = new Update();
-        this.externalReferences = new ExternalReference();
+    static convert(obj: any): MetaData {
+        const metaData = new MetaData();
+        if (obj['created']) {
+            metaData.created = obj['created'];
+        }
+        if (obj['createdBy']) {
+            metaData.createdBy = obj['createdBy'];
+        }
+        if (obj['submittedBy']) {
+            metaData.submittedBy = obj['submittedBy'];
+        }
+        if (obj['resources']) {
+            metaData.resources = Resource.convert(obj['resources']);
+        }
+        if (obj['updates']) {
+            metaData.updates = Update.convert(obj['updates']);
+        }
+        if (obj['phenopacketSchemaVersion']) {
+            metaData.phenopacketSchemaVersion = obj['phenopacketSchemaVersion'];
+        }
+        if (obj['externalReferences']) {
+            metaData.externalReferences = ExternalReference.convert(obj['externalReferences']);
+        }
+        
+        return metaData;
     }
 }
 
-export class Resource {
+export class Resource extends Convert {
     id: string;
     name: string;
     url: string;
     version: string;
     namespacePrefix: string;
     iriPrefix: string;
+
+    static create(obj: any): Resource {
+        const resource = new Resource();
+        if (obj['id']) {
+            resource.id = obj['id'];
+        }
+        if (obj['name']) {
+            resource.name = obj['name'];
+        }
+        if (obj['url']) {
+            resource.url = obj['url'];
+        }
+        if (obj['version']) {
+            resource.version = obj['version'];
+        }
+        if (obj['namespacePrefix']) {
+            resource.namespacePrefix = obj['namespacePrefix'];
+        }
+        if (obj['iriPrefix']) {
+            resource.iriPrefix = obj['iriPrefix'];
+        }
+        return resource;
+    }
 }
-export class Update {
+export class Update extends Convert {
     timestamp: string;
     updatedBy: string;
     comment: string;
+
+    static create(obj: any): Update {
+        const update = new Update();
+        if (obj['timestamp']) {
+            update.timestamp = obj['timestamp'];
+        }
+        if (obj['updatedBy']) {
+            update.updatedBy = obj['updatedBy'];
+        }
+        if (obj['comment']) {
+            update.comment = obj['comment'];
+        }
+        return update;
+    }
 }
-export class ExternalReference {
+export class ExternalReference extends Convert {
     id: string;
     reference: string;
     description: string;
+
+    static create(obj: any): ExternalReference {
+        const externalReference = new ExternalReference();
+        if (obj['id']) {
+            externalReference.id = obj['id'];
+        }
+        if (obj['reference']) {
+            externalReference.reference = obj['reference'];
+        }
+        if (obj['description']) {
+            externalReference.description = obj['description'];
+        }
+        return externalReference;
+    }
 }

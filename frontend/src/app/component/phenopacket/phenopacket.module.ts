@@ -36,39 +36,47 @@ import { PhenotypicDetailDialogComponent } from './phenotypic-feature/phenotypic
 import { MedicalActionComponent } from './medical-action/medical-action.component';
 import { MedicalActionDetailComponent } from './medical-action/medical-action-detail/medical-action-detail.component';
 import { MedicalActionDetailDialogComponent } from './medical-action/medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
+import { MeasurementComponent } from './measurement/measurement.component';
+import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
+import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
+import {MatDividerModule} from "@angular/material/divider";
 
 
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    CommonModule,
-    RouterModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatCardModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatTabsModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatTableModule,
-    MatIconModule,
-    MatSortModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatChipsModule,
-    SharedModule
-  ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        RouterModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatCardModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatTabsModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatExpansionModule,
+        MatTableModule,
+        MatIconModule,
+        MatSortModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatChipsModule,
+        SharedModule,
+        MatDividerModule
+    ],
   declarations: [
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    MeasurementDetailDialogComponent,
     DiseaseComponent,
     DiseaseDetailComponent,
     DiseaseDetailDialogComponent,
@@ -84,6 +92,9 @@ import { MedicalActionDetailDialogComponent } from './medical-action/medical-act
     PhenopacketComponent
   ],
   exports: [
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    MeasurementDetailDialogComponent,
     DiseaseComponent,
     DiseaseDetailComponent,
     MedicalActionComponent,

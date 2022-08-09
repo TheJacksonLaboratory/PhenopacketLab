@@ -95,7 +95,6 @@
             "tsConfig": "tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/assets/themes/jax-palette.scss",
               "src/assets/scss/material-dashboard.scss"
             ],
             "assets": [

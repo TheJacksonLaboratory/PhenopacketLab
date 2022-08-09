@@ -77,9 +77,9 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12">
-                            <b>Body sites:</b>
+                            <b>Body site:</b>
                         </div>
                     </div>
                     <div class="row">
@@ -89,44 +89,44 @@
                                 [searchService]="searchService" (selectedSearchItem)="onSearchBodySiteChange($event)"
                                 [resetSearch]="false"></app-search-box>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row">
                         <div class="col-md-12">
-                            <mat-list *ngFor="let bodySite of bodySites">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <li> {{bodySite?.label + ' [' + bodySite?.id + ']'}}
-                                            <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                                class="pull-right" matTooltip="Delete body site"
-                                                (click)="removeBodySite(bodySite)">
-                                                <mat-icon matSuffix>delete</mat-icon>
-                                            </button>
-                                        </li>
-                                    </div>
-
+                            <mat-form-field appearance="outline">
+                                <mat-label>Body site</mat-label>
+                                <input type="text" placeholder="Select body site" aria-label="Body site" matInput
+                                    [formControl]="bodySiteControl" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let bodySite of filteredBodySites | async | slice : 0 : 10"
+                                        [value]="getBodySiteDisplay(bodySite)"
+                                        (onSelectionChange)="changeBodySite(bodySite)"
+                                        [matTooltip]="getBodySiteDisplay(bodySite)" [matTooltipShowDelay]="2000">
+                                        {{getBodySiteDisplay(bodySite)}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <b>Performed on:</b>
                                 </div>
-                            </mat-list>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{performed?.toString()}}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <b>Performed on:</b>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12" *ngFor="let perform of performedOn;">
-                            {{perform?.toString()}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
         </div>
     </div>
@@ -286,24 +286,22 @@
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <form>
+                    <!-- <form> -->
                         <mat-form-field appearance="outline">
-                          <mat-label>Body site</mat-label>
-                          <input type="text"
-                                 placeholder="Select body site"
-                                 aria-label="Body site"
-                                 matInput
-                                 [formControl]="bodySiteControl"
-                                 [matAutocomplete]="auto">
-                          <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let bodySite of filteredBodySites | async | slice : 0 : 10" [value]="getBodySiteDisplay(bodySite)"
-                                (onSelectionChange)="changeBodySite(bodySite)" [matTooltip]="getBodySiteDisplay(bodySite)">
-                              {{getBodySiteDisplay(bodySite)}}
-                            </mat-option>
-                          </mat-autocomplete>
+                            <mat-label>Body site</mat-label>
+                            <input type="text" placeholder="Select body site" aria-label="Body site" matInput
+                                [formControl]="bodySiteControl" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let bodySite of filteredBodySites | async | slice : 0 : 10"
+                                    [value]="getBodySiteDisplay(bodySite)"
+                                    (onSelectionChange)="changeBodySite(bodySite)"
+                                    [matTooltip]="getBodySiteDisplay(bodySite)" [matTooltipShowDelay]="2000">
+                                    {{getBodySiteDisplay(bodySite)}}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
-                      </form>
-                      
+                    <!-- </form> -->
+
                 </div>
             </div>
         </div>

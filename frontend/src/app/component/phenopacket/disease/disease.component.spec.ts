@@ -1,4 +1,7 @@
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { DiseaseComponent } from './disease.component';
 
@@ -8,7 +11,15 @@ describe('DiseaseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiseaseComponent ]
+      declarations: [ DiseaseComponent ],
+      imports: [
+        BrowserModule,
+        HttpClientModule,
+        MatDialogModule
+      ],
+      providers: [
+        HttpClient
+      ]
     })
     .compileComponents();
   });

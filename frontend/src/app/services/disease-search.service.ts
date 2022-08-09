@@ -46,7 +46,6 @@ export class DiseaseSearchService extends BaseSearchService {
     }
 
     private sendDiseaseQueryRequest(paramsIn: any, url: string): Observable<any> {
-        //console.log(paramsIn)
         const nameList: string[] = [];
         if (paramsIn.selectedItems) {
             paramsIn.selectedItems.forEach(item => {

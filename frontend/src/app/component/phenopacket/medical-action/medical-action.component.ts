@@ -1,15 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
-import { map } from 'rxjs/operators';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 
 @Component({
     selector: 'app-medical-action',
@@ -28,20 +26,11 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     // search params
     itemName = "Medical Action";
 
-    @ViewChild('medicalActionPaginator', { static: true }) medicalActionPaginator: MatPaginator;
-    // @ViewChild(MatSort, { static: true }) sort: MatSort;
-
     //Table items
     displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
 
-    medicalActionDataSource = new MatTableDataSource<MedicalAction>();
-    dataPresent = this.medicalActionDataSource.connect().pipe(map(data => data.length > 0));
+    medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
     medicalActionCount: number;
-
-    // MatPaginator Inputs
-    pageLength = 0;
-    pageSize = 10;
-    pageSizeOptions: number[] = [10, 50, 100];
 
     //searchparams
     currSearchParams: any = {}
@@ -89,12 +78,9 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
                     let updatedMedicalAction = result.medical_action;
-                    console.log('medical_action:');
-                    console.log(updatedMedicalAction);
                     if (updatedMedicalAction) {
                         // update medical action
-                        let medicalAction = updatedMedicalAction;
-                        this.medicalActions.push(medicalAction);
+                        this.medicalActions.push(updatedMedicalAction);
                         this.medicalActionDataSource.data = this.medicalActions;
                         // emit change
                         this.onMedicalActionChanged.emit(this.medicalActions);
@@ -143,10 +129,19 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     }
 
-    // private clearSort() {
-    //     this.sort.sort({ id: '', start: 'asc', disableClear: false });
-    // }
-
+    getActionName(medicalAction: MedicalAction) {
+        let action = medicalAction.action;
+        if (action instanceof Procedure) {
+            return Procedure.actionName;
+        } else if (action instanceof Treatment) {
+            return Treatment.actionName;
+        } else if (action instanceof RadiationTherapy) {
+            return RadiationTherapy.actionName;
+        } else if (action instanceof TherapeuticRegimen) {
+            return TherapeuticRegimen.actionName;
+        }
+        return '';    
+    }
     /**
      * Retrieve the correct MedicalAction id
      * @param medicalAction 
@@ -154,17 +149,16 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
      */
     getId(medicalAction: MedicalAction) {
         let action = medicalAction.action;
-        let id = "";
         if (action instanceof Procedure) {
-            id = action.code?.id;
+            return action.code?.id;
         } else if (action instanceof Treatment) {
-            id = action.agent?.id;
+            return action.agent?.id;
         } else if (action instanceof RadiationTherapy) {
-            id = action.modality?.id;
+            return action.modality?.id;
         } else if (action instanceof TherapeuticRegimen) {
-            id = action.identifier?.id;
+            return action.identifier?.id;
         }
-        return id;
+        return '';
     }
 
     getTarget(medicalAction: MedicalAction) {
@@ -201,15 +195,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             }
             return '';
         }
-    }
-
-    doPageChange(pageEvent: any) {
-
-        // if (this.currSearchParams) {
-        //     this.currSearchParams.offset = pageEvent.pageIndex * pageEvent.pageSize;
-        //     this.currSearchParams.max = pageEvent.pageSize;
-        //     this._getPhenotypicFeatures(this.currSearchParams);
-        // }
     }
 
     expandCollapse(element: any) {

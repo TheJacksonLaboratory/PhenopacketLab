@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { FileDetailComponent } from './file-detail.component';
 
@@ -8,7 +9,10 @@ describe('FileDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileDetailComponent ]
+      declarations: [ FileDetailComponent ],
+      imports: [
+        MatDialogModule
+      ]
     })
     .compileComponents();
   });

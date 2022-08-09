@@ -50,7 +50,8 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit"
+                    [matTooltipShowDelay]="2000">
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>
@@ -66,7 +67,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        {{getProcedureCodeDisplay()}}
+                        {{procedureCode?.toString()}}
                     </div>
                 </div>
             </div>
@@ -77,11 +78,9 @@
                     </div>
                 </div>
 
-                <div *ngFor="let bodySite of bodySites;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{getOntologyClassDisplay(bodySite)}}
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{bodySite?.toString()}}
                     </div>
                 </div>
             </div>
@@ -91,11 +90,9 @@
                         <b>Performed on:</b>
                     </div>
                 </div>
-                <div *ngFor="let perform of performedOn;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{perform?.toString()}}
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{performed?.toString()}}
                     </div>
                 </div>
 
@@ -146,8 +143,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table mat-table *ngIf="dataPresent | async" [dataSource]="doseIntervalDatasource"
-                            class="mat-elevation-z2">
+                        <table mat-table *ngIf="doseIntervalDatasource.isDataPresent() | async"
+                            [dataSource]="doseIntervalDatasource" class="mat-elevation-z2">
 
                             <ng-container matColumnDef="unit">
                                 <th mat-header-cell *matHeaderCellDef> Unit </th>
@@ -212,7 +209,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        {{getBodySiteDisplay()}}
+                        {{bodySite?.toString()}}
                     </div>
                 </div>
             </div>

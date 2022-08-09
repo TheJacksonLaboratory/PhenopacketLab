@@ -41,7 +41,6 @@ export class DiseaseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.disease) {
-      console.log(this.disease);
       this.diseaseDetailName = this.disease.term.label;
       this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
@@ -52,10 +51,10 @@ export class DiseaseDetailComponent implements OnInit {
   updateDiseaseDetails() {
     this.isA = this.disease.isA;
     this.status = this.disease.excluded ? 'Excluded' : 'Included';
-    this.onset = this.disease.onset?.timestamp, '';
-    this.resolution = this.disease.resolution?.timestamp, '';
-    this.stage = this.disease.diseaseStage.toString();
-    this.finding = this.disease.clinicalTnmFinding.toString();
+    this.onset = this.disease.onset?.toString(), '';
+    this.resolution = this.disease.resolution?.toString(), '';
+    this.stage = this.disease.diseaseStage?.toString();
+    this.finding = this.disease.clinicalTnmFinding?.toString();
     this.laterality = this.disease.laterality?.label, '';
   }
 
@@ -80,7 +79,6 @@ export class DiseaseDetailComponent implements OnInit {
         if (updatedDisease !== undefined) {
           // update disease
           this.disease = updatedDisease;
-          console.log(this.disease);
           this.updateDiseaseDetails();
           // emit change
           this.onDiseaseChanged.emit(this.disease);
