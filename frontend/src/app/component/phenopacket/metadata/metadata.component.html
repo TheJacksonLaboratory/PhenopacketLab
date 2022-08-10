@@ -48,7 +48,7 @@
 
                             <ng-container matColumnDef="updatedby">
                                 <th mat-header-cell *matHeaderCellDef> Updated by </th>
-                                <td mat-cell *matCellDef="let element"> {{element.updatedby}} </td>
+                                <td mat-cell *matCellDef="let element"> {{element.updatedBy}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="comment">
@@ -58,23 +58,58 @@
 
                             <ng-container matColumnDef="updatesExpandedDetail">
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="updatesDisplayedColumns.length">
-                                    <div *ngIf="element === updatesExpandedElement"
+                                    <div class="example-element-detail"
                                         [@detailExpand]="element == updatesExpandedElement ? 'expanded' : 'collapsed'">
                                         <div style="width: 100%">
-                                            <!-- <app-measurement-detail [measurement]="element"></app-measurement-detail> -->
+                                            <div class="card">
+                                                <div class="card-body margin">
+                                                    <div class="row">
+                                                        <div class="wrap col-md-6">
+                                                            <b>Timestamp:</b>
+                                                            <br>
+                                                            {{element.timestamp}}
+                                                            <br>
+                                                        </div>
+                                                        <div class="wrap col-md-6">
+                                                            <b>Updated by:</b>
+                                                            <br>
+                                                            {{element.updatedBy}}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="wrap col-md-12">
+                                                            <b>Comment:</b>
+                                                            <br>
+                                                            {{element.comment}}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
                             </ng-container>
 
+                            <tr mat-header-row *matHeaderRowDef="updatesDisplayedColumns"></tr>
                             <tr mat-row *matRowDef="let element; columns: updatesDisplayedColumns;"
+                                class="example-element-row"
+                                [class.example-expanded-row]="updatesExpandedElement === element"
+                                (click)="updatesExpandedElement = updatesExpandedElement === element ? null : element">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['updatesExpandedDetail']"
+                                class="example-detail-row">
+                            </tr>
+
+                            <!-- <tr mat-row *matRowDef="let element; columns: updatesDisplayedColumns;"
                                 [class.example-expanded-row]="updatesExpandedElement === element"
                                 (click)="updatesExpandCollapse(element)">
                             </tr>
 
                             <tr mat-row *matRowDef="let row; columns: ['updatesExpandedDetail']">
                             </tr>
-                            <tr mat-header-row *matHeaderRowDef="updatesDisplayedColumns; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="updatesDisplayedColumns; sticky: true"></tr> -->
 
                         </table>
                     </div>
@@ -174,7 +209,7 @@
                                                                     <br>
                                                                 </div>
                                                             </div>
-                                                           
+
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="row">
@@ -185,7 +220,7 @@
                                                                     <br>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -195,7 +230,7 @@
                                                             {{element.description}}
                                                         </div>
                                                     </div>
-                                            
+
                                                 </div>
                                             </div>
                                         </div>
