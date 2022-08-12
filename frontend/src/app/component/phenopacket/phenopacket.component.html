@@ -228,7 +228,7 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <!-- To be implemented -->
+                        <app-interpretation [interpretations]="getInterpretations()"></app-interpretation>
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>

@@ -29,15 +29,22 @@ export class Interpretation extends Convert {
 }
 
 export enum ProgressStatus {
-    UNKNOWN_PROGRESS,
-    IN_PROGRESS,
-    COMPLETED,
-    SOLVED,
-    UNSOLVED
+    UNKNOWN_PROGRESS = "UNKNOWN_PROGRESS",
+    IN_PROGRESS = "IN_PROGRESS",
+    COMPLETED = "COMPLETED",
+    SOLVED = "SOLVED",
+    UNSOLVED = "UNSOLVED"
 }
 export class Diagnosis {
     disease: OntologyClass;
     genomicInterpretations: GenomicInterpretation[];
+
+    toString() {
+        if (this.disease) {
+            return this.disease.toString();
+        }
+        return '';
+    }
 
     static convert(obj: any): Diagnosis {
         const diagnosis = new Diagnosis();
@@ -200,6 +207,10 @@ export class VariationDescriptor {
     vrsRefAlleleSeq: string;
     allelicState: OntologyClass;
 
+    toString() {
+        return `${this.label} [${this.id}]`;
+    }
+
     static convert(obj: any): VariationDescriptor {
         const variantDescriptor = new VariationDescriptor();
         if (obj['id']) {
@@ -255,6 +266,13 @@ export class VariantInterpretation {
     therapeuticActionability: TherapeuticActionability;
     variant: VariationDescriptor;
 
+    toString() {
+        if (this.variant) {
+            return this.variant.toString();
+        }
+        return '';
+    }
+
     static convert(obj: any): VariantInterpretation {
         const variantInterpretation = new VariantInterpretation();
         if (obj['acmgPathogenicityClassification']) {
@@ -278,6 +296,10 @@ export class GeneDescriptor {
     alternateIds: string[];
     xrefs: string[];
     alternateSymbols: string[];
+
+    toString() {
+        return `${this.symbol} [${this.valueId}]`;
+    }
 
     static convert(obj: any): GeneDescriptor {
         const geneDesciptor = new GeneDescriptor();

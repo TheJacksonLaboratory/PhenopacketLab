@@ -42,6 +42,7 @@ import { UploadDialogComponent } from './component/shared/upload-dialog/upload-d
 
 @NgModule({
   imports: [
+    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     routing,
@@ -63,7 +64,6 @@ import { UploadDialogComponent } from './component/shared/upload-dialog/upload-d
     MatSortModule,
     MatTreeModule,
     MatTabsModule,
-    BrowserModule,
     MatButtonToggleModule,
     MatExpansionModule,
     MatTableModule,

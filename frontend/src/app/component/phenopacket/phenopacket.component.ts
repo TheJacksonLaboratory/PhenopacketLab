@@ -121,6 +121,12 @@ export class PhenopacketComponent implements OnInit {
     return [];
   }
 
+  getInterpretations() {
+    if (this.phenopacket) {
+      return this.phenopacket.interpretations;
+    }
+    return [];
+  }
   getPhenopacketMedicalActions() {
     if (this.phenopacket) {
       return this.phenopacket.medicalActions;

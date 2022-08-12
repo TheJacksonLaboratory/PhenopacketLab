@@ -28,7 +28,6 @@ import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.
 import { SharedModule } from '../shared/shared.module';
 import { FileComponent } from './file/file.component';
 import { FileDetailComponent } from './file/file-detail/file-detail.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { PhenopacketComponent } from './phenopacket.component';
 import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
 import { DiseaseDetailDialogComponent } from './disease/disease-detail/disease-detail-dialog/disease-detail-dialog.component';
@@ -41,12 +40,15 @@ import { MeasurementDetailComponent } from './measurement/measurement-detail/mea
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
+import { InterpretationComponent } from './interpretation/interpretation.component';
+import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
+import { InterpretationDetailDialogComponent } from './interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
+import { GenoInterpretationDetailComponent } from './interpretation/interpretation-detail/geno-interpretation-detail.component';
 
 
 
 @NgModule({
     imports: [
-        BrowserModule,
         CommonModule,
         RouterModule,
         MatRadioModule,
@@ -92,6 +94,10 @@ import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.
     FileDetailDialogComponent,
     MetadataComponent,
     ResourceDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    GenoInterpretationDetailComponent,
+    InterpretationDetailDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -108,6 +114,10 @@ import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.
     FileDetailComponent,
     MetadataComponent,
     ResourceDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    GenoInterpretationDetailComponent,
+    InterpretationDetailDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
