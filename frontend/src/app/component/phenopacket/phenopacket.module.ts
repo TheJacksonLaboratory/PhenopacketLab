@@ -43,7 +43,10 @@ import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
 import { InterpretationDetailDialogComponent } from './interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
-import { GenoInterpretationDetailComponent } from './interpretation/interpretation-detail/geno-interpretation-detail.component';
+import { GenoInterpretationDetailComponent } from './interpretation/interpretation-detail/geno-interpretation/geno-interpretation-detail.component';
+import { VariantInterpretationComponent } from './interpretation/interpretation-detail/geno-interpretation/variant-interpretation/variant-interpretation.component';
+import { GeneDescriptorComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-descriptor.component';
+import { GeneContextDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-context-dialog/gene-context-dialog.component';
 
 
 
@@ -98,6 +101,9 @@ import { GenoInterpretationDetailComponent } from './interpretation/interpretati
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,
     InterpretationDetailDialogComponent,
+    VariantInterpretationComponent,
+    GeneDescriptorComponent,
+    GeneContextDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -118,6 +124,9 @@ import { GenoInterpretationDetailComponent } from './interpretation/interpretati
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,
     InterpretationDetailDialogComponent,
+    VariantInterpretationComponent,
+    GeneDescriptorComponent,
+    GeneContextDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

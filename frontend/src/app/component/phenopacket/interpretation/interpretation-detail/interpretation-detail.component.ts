@@ -52,6 +52,9 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
 
     ngOnInit() {
         this.updateInterpretation();
+        if (this.statusSubscription) {
+            this.statusSubscription.unsubscribe();
+        }
         this.statusSubscription = this.statusControl.valueChanges.subscribe(value => {
             if (value && value.length > 0) {
                 if (this.interpretation) {
@@ -98,9 +101,6 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
             this.interpretationId = this.interpretation.id;
             this.status = this.interpretation.progressStatus;
             this.statusControl.setValue(this.status);
-            if (this.statusSubscription) {
-                this.statusSubscription.unsubscribe();
-            }
             this.summary = this.interpretation.summary;
             this.onInterpretationChanged.emit(this.interpretation);
         }
