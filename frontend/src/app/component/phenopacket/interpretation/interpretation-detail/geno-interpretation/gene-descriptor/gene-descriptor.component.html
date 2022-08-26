@@ -14,41 +14,36 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="wrap col-md-12">
                 {{description}}
                 <br>
             </div>
         </div>
         <div class="row">
-            <div style="overflow-wrap: break-word;" class="col-md-12">
+            <div class="wrap col-md-12">
                 <b>Alternate IDs:</b>
                 <br>
-                <div class="wrap">
-                    {{getStringArrayDisplay(alternateIds)}}
-                </div>
+                {{getStringArrayDisplay(alternateIds)}}
+                <br>
                 <br>
             </div>
-            <div style="overflow-wrap: break-word;" class="col-md-12">
+            <div class="wrap col-md-12">
                 <b>Alternate symbols:</b>
                 <br>
                 <!-- <div *ngFor="let symbol of alternateSymbols">
                     {{symbol}}, 
                 </div> -->
-                <div class="wrap">
-                    {{getStringArrayDisplay(alternateSymbols)}}
-                </div>
+                {{getStringArrayDisplay(alternateSymbols)}}
+                <br>
                 <br>
             </div>
-            <div class="col-md-12">
+            <div class="wrap col-md-12">
                 <b>cross-references:</b>
                 <br>
-                <div class="wrap">
-                    {{getStringArrayDisplay(xrefs)}}
-                </div>
-
+                {{getStringArrayDisplay(xrefs)}}
                 <br>
             </div>
         </div>
-
+        
     </div>
 </div>
