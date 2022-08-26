@@ -7,6 +7,7 @@ import { InterpretationDetailDialogComponent } from 'src/app/component/phenopack
 import { OntologyClass } from 'src/app/models/base';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { GeneContextDialogComponent } from '../gene-descriptor/gene-context-dialog/gene-context-dialog.component';
+import { VcfRecordDialogComponent } from '../vcf-record/vcf-record-dialog/vcf-record-dialog.component';
 
 @Component({
   selector: 'app-variant-interpretation',
@@ -123,12 +124,11 @@ export class VariantInterpretationComponent {
     return dialogRef;
   }
   openAddGeneContextDialog() {
-    const genoInterpretationDetailData = { 'title': 'Add Gene Context' };
-    // genoInterpretationDetailData['interpretation'] = this.genoInterpretation;
-    genoInterpretationDetailData['displayCancelButton'] = true;
+    const geneContextData = { 'title': 'Add Gene Context' };
+    geneContextData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(GeneContextDialogComponent, {
       width: '1000px',
-      data: genoInterpretationDetailData
+      data: geneContextData
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
@@ -136,6 +136,28 @@ export class VariantInterpretationComponent {
         if (updatedGeneContext) {
           // update interpretation
           this.geneContext = updatedGeneContext;
+          this.updateCall();
+          // emit change
+          // this.onFeatureChanged.emit(this.phenotypicFeature);
+        }
+      }
+    });
+    return dialogRef;
+  }
+
+  openAddVcfRecordDialog() {
+    const vcfRecordData = { 'title': 'Add VCF Record' };
+    vcfRecordData['displayCancelButton'] = true;
+    const dialogRef = this.dialog.open(VcfRecordDialogComponent, {
+      width: '1000px',
+      data: vcfRecordData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        let updatedVcfRecord = result.vcfRecord;
+        if (updatedVcfRecord) {
+          // update interpretation
+          this.vcfRecord = updatedVcfRecord;
           this.updateCall();
           // emit change
           // this.onFeatureChanged.emit(this.phenotypicFeature);
@@ -210,6 +232,14 @@ export class VariantInterpretationComponent {
       return Object.values(this.validXrefs[id]).some((item) => item === false);
     }
     return false;
+  }
+
+  // vcf records
+  changeVcfRecord(vcfRecord: VcfRecord) {
+    this.vcfRecord = vcfRecord;
+    if (this.call.variationDescriptor) {
+      this.call.variationDescriptor.vcfRecord = vcfRecord;
+    }
   }
 
 }

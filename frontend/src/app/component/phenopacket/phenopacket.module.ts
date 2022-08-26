@@ -47,6 +47,8 @@ import { GenoInterpretationDetailComponent } from './interpretation/interpretati
 import { VariantInterpretationComponent } from './interpretation/interpretation-detail/geno-interpretation/variant-interpretation/variant-interpretation.component';
 import { GeneDescriptorComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-descriptor.component';
 import { GeneContextDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-context-dialog/gene-context-dialog.component';
+import { VcfRecordComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record.component';
+import { VcfRecordDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record-dialog/vcf-record-dialog.component';
 
 
 
@@ -104,6 +106,8 @@ import { GeneContextDialogComponent } from './interpretation/interpretation-deta
     VariantInterpretationComponent,
     GeneDescriptorComponent,
     GeneContextDialogComponent,
+    VcfRecordComponent,
+    VcfRecordDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -127,6 +131,8 @@ import { GeneContextDialogComponent } from './interpretation/interpretation-deta
     VariantInterpretationComponent,
     GeneDescriptorComponent,
     GeneContextDialogComponent,
+    VcfRecordComponent,
+    VcfRecordDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

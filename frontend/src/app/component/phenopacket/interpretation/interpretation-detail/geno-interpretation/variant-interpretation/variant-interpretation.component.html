@@ -220,7 +220,8 @@
                                     <app-gene-descriptor [geneDescriptor]="geneContext"></app-gene-descriptor>
                                 </div>
                                 <div *ngIf="geneContext==undefined">
-                                    <button mat-raised-button (click)="openAddGeneContextDialog()" type="submit" class="add-button mat-elevation-z2">
+                                    <button mat-raised-button (click)="openAddGeneContextDialog()" type="submit"
+                                        class="add-button mat-elevation-z2">
                                         Add gene context <mat-icon>search</mat-icon>
                                     </button>
                                 </div>
@@ -233,15 +234,22 @@
                                     </mat-panel-title>
                                     <mat-panel-description>
                                         A VCF Record of the variant
-                                        <!-- <mat-icon>date_range</mat-icon> -->
                                     </mat-panel-description>
-                                </mat-expansion-panel-header>
+                                </mat-expansion-panel-header> 
 
-<!--                                <app-vcf-record [vcfRecord]="vcfRecord"></app-vcf-record>-->
+                                <div *ngIf="vcfRecord">
+                                    <app-vcf-record [vcfRecord]="vcfRecord" (onVcfRecordChanged)="changeVcfRecord($event)"></app-vcf-record>
+                                </div>
+                                <div *ngIf="vcfRecord==undefined">
+                                    <button mat-raised-button (click)="openAddVcfRecordDialog()" type="submit"
+                                        class="add-button mat-elevation-z2">
+                                        Add VCF Record <mat-icon>add</mat-icon>
+                                    </button>
+                                </div>
+
                             </mat-expansion-panel>
+                            
                         </mat-accordion>
-
-
 
                     </div>
                 </div>
