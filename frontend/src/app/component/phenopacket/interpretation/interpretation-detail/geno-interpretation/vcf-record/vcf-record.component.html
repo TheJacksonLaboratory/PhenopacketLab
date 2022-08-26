@@ -3,32 +3,32 @@
 
     <ng-container matColumnDef="assembly">
         <th mat-header-cell *matHeaderCellDef> Genomic assembly </th>
-        <td mat-cell *matCellDef="let element"> {{element.genomeAssembly}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Genomic assembly', element.genomeAssembly)" [matTooltipShowDelay]="2000"> {{element.genomeAssembly}} </td>
     </ng-container>
     <ng-container matColumnDef="chrom">
         <th mat-header-cell *matHeaderCellDef> Contig </th>
-        <td mat-cell *matCellDef="let element"> {{element.chrom}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Chromosome', element.chrom)" [matTooltipShowDelay]="2000"> {{element.chrom}} </td>
     </ng-container>
     <ng-container matColumnDef="pos">
         <th mat-header-cell *matHeaderCellDef> Position </th>
-        <td mat-cell *matCellDef="let element"> {{element.pos}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Position', element.pos)" [matTooltipShowDelay]="2000"> {{element.pos}} </td>
     </ng-container>
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Id', element.id)" [matTooltipShowDelay]="2000"> {{element.id}} </td>
     </ng-container>
     <ng-container matColumnDef="ref">
         <th mat-header-cell *matHeaderCellDef> Reference allele </th>
-        <td mat-cell *matCellDef="let element"> {{element.ref}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Reference allele', element.ref)" [matTooltipShowDelay]="2000"> {{element.ref}} </td>
     </ng-container>
     <ng-container matColumnDef="alt">
         <th mat-header-cell *matHeaderCellDef> Alternate allele </th>
-        <td mat-cell *matCellDef="let element"> {{element.alt}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Alternate allele', element.alt)" [matTooltipShowDelay]="2000"> {{element.alt}} </td>
     </ng-container>
 
     <ng-container matColumnDef="qual">
         <th mat-header-cell *matHeaderCellDef> Quality </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Quality', element.qual)" [matTooltipShowDelay]="2000"> 
             <div *ngIf="element.qual">
                 {{element.qual}}
             </div>
@@ -40,11 +40,11 @@
 
     <ng-container matColumnDef="filter">
         <th mat-header-cell *matHeaderCellDef> Filter </th>
-        <td mat-cell *matCellDef="let element"> {{element.filter}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Filter', element.filter)" [matTooltipShowDelay]="2000"> {{element.filter}} </td>
     </ng-container>
     <ng-container matColumnDef="info">
         <th mat-header-cell *matHeaderCellDef> Info </th>
-        <td mat-cell *matCellDef="let element"> {{element.info}} </td>
+        <td mat-cell *matCellDef="let element" [matTooltip]="getTooltip('Info', element.info)" [matTooltipShowDelay]="2000"> {{element.info}} </td>
     </ng-container>
 
     <ng-container matColumnDef="remove">

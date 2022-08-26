@@ -15,7 +15,7 @@ export class VcfRecordComponent {
 
   vcfRecordDisplayedColumns = ['assembly', 'chrom', 'pos', 'id', 'ref', 'alt', 'qual', 'filter', 'info', 'remove'];
   vcfRecordDataSource = new DataPresentMatTableDataSource<VcfRecord>();
-  
+
   @Output()
   onVcfRecordChanged = new EventEmitter<VcfRecord>();
 
@@ -60,7 +60,7 @@ export class VcfRecordComponent {
   getStringArrayDisplay(array: string[]) {
     let displayResult = '';
     if (array) {
-      for(let i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
         if (i < array.length - 1) {
           displayResult += `${array[i]}, `;
         } else {
@@ -76,22 +76,26 @@ export class VcfRecordComponent {
      * @param element 
      * @returns 
      */
-   deleteVcfRecord(element: VcfRecord) {
+  deleteVcfRecord(element: VcfRecord) {
     const msgData = { 'title': 'Delete VCF record' };
     msgData['description'] = 'Please confirm that you want to delete the VCF Record.';
     msgData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(MessageDialogComponent, {
-        width: '400px',
-        data: msgData
+      width: '400px',
+      data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-        if (result === 'ok') {
-            this.vcfRecordDataSource.data = [];
-            this.onVcfRecordChanged.emit(undefined);
-        }
+      if (result === 'ok') {
+        this.vcfRecordDataSource.data = [];
+        this.onVcfRecordChanged.emit(undefined);
+      }
     });
     return dialogRef;
-}
+  }
+
+  getTooltip(columnName, element) {
+    return `${columnName}: ${element}`;
+  }
 
 }
 
