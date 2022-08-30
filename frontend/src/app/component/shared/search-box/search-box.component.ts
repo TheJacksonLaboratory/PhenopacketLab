@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { BaseSearchService } from 'src/app/services/base-search.service';
 
 
@@ -42,7 +42,7 @@ export class SearchBoxComponent implements OnInit {
 
     searchCriteria: any = { selectedItems: [] };
 
-    myControl = new FormControl();
+    myControl = new UntypedFormControl();
     myControlSubscription: any;
 
     itemOptions: any[] = [];

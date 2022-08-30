@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Measurement } from 'src/app/models/measurement';
 import { GenomicInterpretation, Interpretation, ProgressStatus } from 'src/app/models/interpretation';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { InterpretationDetailDialogComponent } from './interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
@@ -29,7 +29,7 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
     interpretationId: string;
     status: any;
     summary: string;
-    statusControl = new FormControl('');
+    statusControl = new UntypedFormControl('');
     statusSubscription: Subscription;
 
     //Table items

@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ComponentsModule } from 'src/app/component/components.module';
 
 @Component({
   selector: 'app-search-filter',
@@ -11,7 +10,7 @@ import { ComponentsModule } from 'src/app/component/components.module';
 })
 
 export class SearchFilterComponent {
-  myFormControl = new FormControl();
+  myFormControl = new UntypedFormControl();
   @Input()
   title: string;
   @Input()

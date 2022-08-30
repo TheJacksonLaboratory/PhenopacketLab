@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 
@@ -16,9 +16,9 @@ export class OntologyClassComponent implements OnInit {
     // title of the OntologyClass Object
     @Input()
     title: string;
-    labelControl = new FormControl('', [Validators.required]);
+    labelControl = new UntypedFormControl('', [Validators.required]);
     labelSubscription: Subscription;
-    idControl = new FormControl('', [Validators.required]);
+    idControl = new UntypedFormControl('', [Validators.required]);
     idSubscription: Subscription;
 
     label = "";

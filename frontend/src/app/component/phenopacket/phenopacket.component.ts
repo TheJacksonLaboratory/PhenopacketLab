@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Subscription } from 'rxjs';
 import { Disease } from 'src/app/models/disease';
@@ -23,10 +23,10 @@ export class PhenopacketComponent implements OnInit {
   @Output() onSexChanged = new EventEmitter<any>();
   @Output() onDobChanged = new EventEmitter<any>();
 
-  phenoIdControl = new FormControl('', [Validators.required]);
-  phenoSexControl = new FormControl('');
-  phenoDobControl = new FormControl(new Date());
-  lastEncounterDateControl = new FormControl(new Date());
+  phenoIdControl = new UntypedFormControl('', [Validators.required]);
+  phenoSexControl = new UntypedFormControl('');
+  phenoDobControl = new UntypedFormControl(new Date());
+  lastEncounterDateControl = new UntypedFormControl(new Date());
   phenopacketIdSubscription: Subscription;
   phenopacketSexSubscription: Subscription;
   phenopacketDobSubscription: Subscription;

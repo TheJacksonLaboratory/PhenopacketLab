@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { GeneDescriptor, GenomicInterpretation, InterpretationStatus, VariantInterpretation } from 'src/app/models/interpretation';
@@ -15,7 +15,7 @@ export class GenoInterpretationDetailComponent {
 
   subjectOrBiosampleId: string;
   interpretationStatus: any;
-  statusControl = new FormControl('');
+  statusControl = new UntypedFormControl('');
   statusSubscription: Subscription;
 
   @Input()

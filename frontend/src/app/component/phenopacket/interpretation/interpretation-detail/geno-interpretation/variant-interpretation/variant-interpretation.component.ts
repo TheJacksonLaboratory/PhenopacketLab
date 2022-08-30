@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AcmgPathogenicityClassification, Expression, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VcfRecord } from 'src/app/models/interpretation';
@@ -19,9 +19,9 @@ export class VariantInterpretationComponent {
 
   acmgPathogenicityClassification: any;
   therapeuticActionability: any;
-  acmgControl = new FormControl('');
+  acmgControl = new UntypedFormControl('');
   acmgSubscription: Subscription;
-  therapeuticControl = new FormControl('');
+  therapeuticControl = new UntypedFormControl('');
   therapeuticSubscription: Subscription;
 
   //VariantDescriptor fields

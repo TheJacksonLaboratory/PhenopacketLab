@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -19,9 +19,9 @@ export class FileDetailComponent implements OnInit {
   uri: string;
   description: string;
 
-  uriControl = new FormControl('', [Validators.required]);
+  uriControl = new UntypedFormControl('', [Validators.required]);
   uriSubscription: Subscription;
-  descriptionControl = new FormControl('');
+  descriptionControl = new UntypedFormControl('');
   descriptionSubscription: Subscription;
 
   mappingColumns = ['subjectid', 'fileid', 'remove'];
