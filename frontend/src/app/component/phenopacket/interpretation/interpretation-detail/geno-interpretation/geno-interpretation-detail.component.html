@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-body margin">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Subject or biosample ID:</b>
+                        <br>
+                        {{subjectOrBiosampleId}}
+                    </div>
+                    <div class="col-md-7">
+                        <mat-form-field appearance="outline" matTooltip="Interpretation status" [matTooltipShowDelay]="2000">
+                            <mat-select [(value)]="interpretationStatus" [formControl]="statusControl">
+                                <mat-option *ngFor="let status of getInterpretationStatus()" [value]="status">
+                                    {{status}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-label>
+                                <b>Interpretation status</b>
+                            </mat-label>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit"
+                    [matTooltipShowDelay]="2000">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="isVariantInterpretation()" class="col-md-12">
+                <app-variant-interpretation [call]="genoInterpretation?.call"></app-variant-interpretation>
+            </div>
+            <!--or gene (TODO)-->
+            
+
+        </div>
+
+    </div>
+</div>

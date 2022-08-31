@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-body margin">
+        <div class="row">
+            <div class="col-md-11">
+                <h4><b>{{symbol}}</b></h4>
+                <h5>{{valueId}}</h5>
+            </div>
+
+            <div class="col-md-1">
+                <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit"
+                    [matTooltipShowDelay]="2000">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="wrap col-md-12">
+                {{description}}
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="wrap col-md-12">
+                <b>Alternate IDs:</b>
+                <br>
+                {{getStringArrayDisplay(alternateIds)}}
+                <br>
+                <br>
+            </div>
+            <div class="wrap col-md-12">
+                <b>Alternate symbols:</b>
+                <br>
+                <!-- <div *ngFor="let symbol of alternateSymbols">
+                    {{symbol}}, 
+                </div> -->
+                {{getStringArrayDisplay(alternateSymbols)}}
+                <br>
+                <br>
+            </div>
+            <div class="wrap col-md-12">
+                <b>cross-references:</b>
+                <br>
+                {{getStringArrayDisplay(xrefs)}}
+                <br>
+            </div>
+        </div>
+        
+    </div>
+</div>

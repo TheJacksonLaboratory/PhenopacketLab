@@ -1,0 +1,45 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th,
+td {
+    overflow: hidden;
+    width: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+.wrap {
+    overflow-wrap: break-word;
+}
+// tr.example-element-row:not(.example-expanded-row):hover {
+//   background: whitesmoke;
+// }
+
+// tr.example-element-row:not(.example-expanded-row):active {
+//   background: #efefef;
+// }
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.add-button-container {
+    padding-bottom: 8px;
+    padding-top: 10px;
+}
+
+.add-button + .add-button {
+    margin-left: 8px;
+}

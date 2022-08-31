@@ -28,7 +28,6 @@ import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.
 import { SharedModule } from '../shared/shared.module';
 import { FileComponent } from './file/file.component';
 import { FileDetailComponent } from './file/file-detail/file-detail.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { PhenopacketComponent } from './phenopacket.component';
 import { FileDetailDialogComponent } from './file/file-detail/file-detail-dialog/file-detail-dialog.component';
 import { DiseaseDetailDialogComponent } from './disease/disease-detail/disease-detail-dialog/disease-detail-dialog.component';
@@ -40,12 +39,21 @@ import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import {MatDividerModule} from "@angular/material/divider";
+import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
+import { InterpretationComponent } from './interpretation/interpretation.component';
+import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
+import { InterpretationDetailDialogComponent } from './interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
+import { GenoInterpretationDetailComponent } from './interpretation/interpretation-detail/geno-interpretation/geno-interpretation-detail.component';
+import { VariantInterpretationComponent } from './interpretation/interpretation-detail/geno-interpretation/variant-interpretation/variant-interpretation.component';
+import { GeneDescriptorComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-descriptor.component';
+import { GeneContextDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-context-dialog/gene-context-dialog.component';
+import { VcfRecordComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record.component';
+import { VcfRecordDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record-dialog/vcf-record-dialog.component';
 
 
 
 @NgModule({
     imports: [
-        BrowserModule,
         CommonModule,
         RouterModule,
         MatRadioModule,
@@ -89,6 +97,17 @@ import {MatDividerModule} from "@angular/material/divider";
     FileComponent,
     FileDetailComponent,
     FileDetailDialogComponent,
+    MetadataComponent,
+    ResourceDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    GenoInterpretationDetailComponent,
+    InterpretationDetailDialogComponent,
+    VariantInterpretationComponent,
+    GeneDescriptorComponent,
+    GeneContextDialogComponent,
+    VcfRecordComponent,
+    VcfRecordDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -103,6 +122,17 @@ import {MatDividerModule} from "@angular/material/divider";
     PhenotypicDetailComponent,
     FileComponent,
     FileDetailComponent,
+    MetadataComponent,
+    ResourceDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    GenoInterpretationDetailComponent,
+    InterpretationDetailDialogComponent,
+    VariantInterpretationComponent,
+    GeneDescriptorComponent,
+    GeneContextDialogComponent,
+    VcfRecordComponent,
+    VcfRecordDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   individualTabs = [];
   /** Array used to hold the list of individuals present in the summary tab **/
   familyMap = new Map<string, Phenopacket>();
-  selected = new FormControl(0);
+  selected = new UntypedFormControl(0);
 
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];

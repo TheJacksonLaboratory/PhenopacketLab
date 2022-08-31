@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Cohort } from 'src/app/models/cohort';
@@ -23,7 +23,7 @@ export class CohortListComponent implements OnInit {
   individualTabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
   cohortMap: Map<String, Phenopacket>;
-  selected = new FormControl(0);
+  selected = new UntypedFormControl(0);
 
   //Table items
   displayedColumns = ['id', 'dob', 'sex', 'remove'];

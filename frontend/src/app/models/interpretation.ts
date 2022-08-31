@@ -29,15 +29,22 @@ export class Interpretation extends Convert {
 }
 
 export enum ProgressStatus {
-    UNKNOWN_PROGRESS,
-    IN_PROGRESS,
-    COMPLETED,
-    SOLVED,
-    UNSOLVED
+    UNKNOWN_PROGRESS = "UNKNOWN_PROGRESS",
+    IN_PROGRESS = "IN_PROGRESS",
+    COMPLETED = "COMPLETED",
+    SOLVED = "SOLVED",
+    UNSOLVED = "UNSOLVED"
 }
 export class Diagnosis {
     disease: OntologyClass;
     genomicInterpretations: GenomicInterpretation[];
+
+    toString() {
+        if (this.disease) {
+            return this.disease.toString();
+        }
+        return '';
+    }
 
     static convert(obj: any): Diagnosis {
         const diagnosis = new Diagnosis();
@@ -52,11 +59,11 @@ export class Diagnosis {
 }
 
 export enum InterpretationStatus {
-    UNKNOWN_STATUS,
-    REJECTED,
-    CANDIDATE,
-    CONTRIBUTORY,
-    CAUSATIVE
+    UNKNOWN_STATUS = 'UNKNWON_STATUS',
+    REJECTED = 'REJECTED',
+    CANDIDATE = 'CANDIDATE',
+    CONTRIBUTORY = 'CONTRIBUTORY',
+    CAUSATIVE = 'CAUSATIVE'
 }
 export class GenomicInterpretation extends Convert {
     subjectOrBiosampleId: string;
@@ -87,18 +94,18 @@ export class GenomicInterpretation extends Convert {
     }
 }
 export enum AcmgPathogenicityClassification {
-    NOT_PROVIDED,
-    BENIGN,
-    LIKELY_BENIGN,
-    UNCERTAIN_SIGNIFICANCE,
-    LIKELY_PATHOGENIC,
-    PATHOGENIC
+    NOT_PROVIDED = 'NOT_PROVIDED',
+    BENIGN = 'BENIGN',
+    LIKELY_BENIGN = 'LIKELY_BENIGN',
+    UNCERTAIN_SIGNIFICANCE = 'UNCERTAIN_SIGNIFICANCE',
+    LIKELY_PATHOGENIC = 'LIKELY_PATHOGENIC',
+    PATHOGENIC = 'PATHOGENIC'
 }
 
 export enum TherapeuticActionability {
-    UNKNOWN_ACTIONABILITY,
-    NOT_ACTIONABLE,
-    ACTIONABLE
+    UNKNOWN_ACTIONABILITY = 'UNKNOWN_ACTIONABILITY',
+    NOT_ACTIONABLE = 'NOT_ACTIONABLE',
+    ACTIONABLE = 'ACTIONABLE'
 }
 /**
  * VRS object : https://vrs.ga4gh.org/en/stable/schema.html
@@ -200,6 +207,10 @@ export class VariationDescriptor {
     vrsRefAlleleSeq: string;
     allelicState: OntologyClass;
 
+    toString() {
+        return `${this.label} [${this.id}]`;
+    }
+
     static convert(obj: any): VariationDescriptor {
         const variantDescriptor = new VariationDescriptor();
         if (obj['id']) {
@@ -251,9 +262,14 @@ export class VariationDescriptor {
     }
 }
 export class VariantInterpretation {
+    static className = 'VariantInterpretation';
     acmgPathogenicityClassification: AcmgPathogenicityClassification;
     therapeuticActionability: TherapeuticActionability;
-    variant: VariationDescriptor;
+    variationDescriptor: VariationDescriptor;
+
+    toString() {
+        return VariantInterpretation.className;
+    }
 
     static convert(obj: any): VariantInterpretation {
         const variantInterpretation = new VariantInterpretation();
@@ -263,8 +279,8 @@ export class VariantInterpretation {
         if (obj['therapeuticActionability']) {
             variantInterpretation.therapeuticActionability = obj['therapeuticActionability'];
         }
-        if (obj['variant']) {
-            variantInterpretation.variant = VariationDescriptor.convert(obj['variant']);
+        if (obj['variationDescriptor']) {
+            variantInterpretation.variationDescriptor = VariationDescriptor.convert(obj['variationDescriptor']);
         }
         
         return variantInterpretation;
@@ -272,12 +288,17 @@ export class VariantInterpretation {
 }
 
 export class GeneDescriptor {
+    static className = "GeneDescriptor";
     valueId: string;
     symbol: string;
     description: string;
     alternateIds: string[];
     xrefs: string[];
     alternateSymbols: string[];
+
+    toString() {
+        return GeneDescriptor.className;
+    }
 
     static convert(obj: any): GeneDescriptor {
         const geneDesciptor = new GeneDescriptor();

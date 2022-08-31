@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
@@ -40,7 +40,7 @@ export class MedicalActionDetailDialogComponent {
   cumulativeDose: Quantity;
   // radiationtherapy
   modality: OntologyClass;
-  bodySiteControl = new FormControl('');
+  bodySiteControl = new UntypedFormControl('');
   radiationTherapyBodySites: OntologyClass[];
   filteredBodySites: Observable<OntologyClass[]>;
   dosage: number;

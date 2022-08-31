@@ -41,58 +41,54 @@ import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 
 @NgModule({
-  imports: [
-    BrowserAnimationsModule,
-    HttpClientModule,
-    routing,
-    ComponentsModule,
-    RouterModule,
-    CommonModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    HttpClientModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatSortModule,
-    MatTreeModule,
-    MatTabsModule,
-    BrowserModule,
-    MatButtonToggleModule,
-    MatExpansionModule,
-    MatTableModule,
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    PhenopacketModule
-
-  ],
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    CohortListComponent,
-    FamilyListComponent,
-    UploadDialogComponent
-  ],
-
-  exports: [RouterModule],
-  providers: [{ provide: MatDialogRef, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // provider used to create a fake backend
-    fakeBackendProvider
-
-  ],
-  entryComponents: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        routing,
+        ComponentsModule,
+        RouterModule,
+        CommonModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        HttpClientModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        MatSortModule,
+        MatTreeModule,
+        MatTabsModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
+        MatTableModule,
+        FormsModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        PhenopacketModule
+    ],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        CohortListComponent,
+        FamilyListComponent,
+        UploadDialogComponent
+    ],
+    exports: [RouterModule],
+    providers: [{ provide: MatDialogRef, useValue: {} },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        // provider used to create a fake backend
+        fakeBackendProvider
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
