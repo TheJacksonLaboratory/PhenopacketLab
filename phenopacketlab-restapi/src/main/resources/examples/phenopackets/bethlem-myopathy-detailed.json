@@ -374,7 +374,7 @@
             "vcfRecord": {
               "genomeAssembly": "GRCh38",
               "chrom": "Y",
-              "pos": 123.456,
+              "pos": 123456,
               "id": "sequence-v-id",
               "ref": "TGCTGT",
               "alt": "T",
