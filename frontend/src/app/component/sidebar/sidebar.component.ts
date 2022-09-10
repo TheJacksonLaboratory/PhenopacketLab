@@ -8,12 +8,10 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    // { path: '/selectable-ontology-tree', title: 'Selectable Ontology Tree',  icon: 'account_tree', class: '' },
-    // { path: '/simple-ontology-tree', title: 'Simple Ontology Tree',  icon:'account_tree', class: '' },
+    { path: '/dashboard', title: 'Phenopacket Lab', icon: 'dashboard', class: ''},
     { path: '/families', title: 'Families',  icon:'family_restroom', class: '' },
     { path: '/cohorts', title: 'cohorts', icon: 'groups', class: '' },
-    { path: '/phenopackets', title: 'Phenopackets', icon: 'medical_information', class: ''},
-    { path: '/aboutUs', title: 'About', icon: 'info', class: '' },
+    { path: '/about', title: 'About', icon: 'info', class: '' },
     // { path: '/aboutUs', title: 'About',  icon:'explore', class: '' },
 ];
 
