@@ -50,8 +50,8 @@ export class Phenopacket {
             phenopacket.diseases = Disease.convert(obj['diseases']);
             console.log('converted diseases');
         }
-        if (obj['bioSamples']) {
-            phenopacket.biosamples = BioSample.convert(obj['bioSamples']);
+        if (obj['biosamples']) {
+            phenopacket.biosamples = BioSample.convert(obj['biosamples']);
             console.log('converted biosamples');
         }
         if (obj['medicalActions']) {

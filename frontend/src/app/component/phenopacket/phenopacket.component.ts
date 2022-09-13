@@ -9,6 +9,7 @@ import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { BioSample } from 'src/app/models/biosample';
 
 @Component({
   selector: 'app-phenopacket',
@@ -113,6 +114,14 @@ export class PhenopacketComponent implements OnInit {
     }
     return [];
   }
+  getBiosamples() {
+    if (this.phenopacket) {
+      console.log("biosamples");
+      console.log(this.phenopacket.biosamples);
+      return this.phenopacket.biosamples;
+    }
+    return [];
+  }
 
   getPhenopacketMeasurements() {
     if (this.phenopacket) {
@@ -158,6 +167,9 @@ export class PhenopacketComponent implements OnInit {
     this.phenopacket.diseases = diseases;
   }
 
+  changeBiosamples(biosamples: BioSample[]) {
+    this.phenopacket.biosamples = biosamples;
+  }
   changeMeasurements(measurements: Measurement[]) {
     this.phenopacket.measurements = measurements;
   }

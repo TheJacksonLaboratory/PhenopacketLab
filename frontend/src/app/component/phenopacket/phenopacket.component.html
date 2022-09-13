@@ -209,7 +209,8 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-                        <!-- To be implemented -->
+                        <app-biosample [biosamples]="getBiosamples()"
+                        (onBiosampleChanged)="changeBiosamples($event)"></app-biosample>
 
                         <mat-action-row>
                             <button mat-button color="warn" (click)="prevStep()">Previous</button>
