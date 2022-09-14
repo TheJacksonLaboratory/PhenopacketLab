@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PhenotypicDetailComponent } from './phenotypic-detail.component';
+import { BiosampleDetailComponent } from './biosample-detail.component';
 
 
-describe('PhenotypicDetailComponent', () => {
-  let component: PhenotypicDetailComponent;
-  let fixture: ComponentFixture<PhenotypicDetailComponent>;
+describe('BiosampleDetailComponent', () => {
+  let component: BiosampleDetailComponent;
+  let fixture: ComponentFixture<BiosampleDetailComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhenotypicDetailComponent ],
+      declarations: [ BiosampleDetailComponent ],
       imports: [
         MatDialogModule
       ]
@@ -18,7 +18,7 @@ describe('PhenotypicDetailComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhenotypicDetailComponent);
+    fixture = TestBed.createComponent(BiosampleDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

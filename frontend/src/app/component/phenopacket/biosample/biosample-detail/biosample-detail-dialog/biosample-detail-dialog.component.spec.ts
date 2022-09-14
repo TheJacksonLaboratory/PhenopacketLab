@@ -3,7 +3,7 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { BiosampleDetailDialogComponent } from './biosample-detail-dialog.component';
 
 
-describe('PhenotypicDetailDialogComponent', () => {
+describe('BiosampleDetailDialogComponent', () => {
   let component: BiosampleDetailDialogComponent;
   let fixture: ComponentFixture<BiosampleDetailDialogComponent>;
 
