@@ -19,7 +19,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.id}}
+            {{biosample?.id}}
           </div>
         </div>
         <br>
@@ -30,7 +30,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.individualId}}
+            {{biosample?.individualId}}
           </div>
         </div>
         <br>
@@ -41,7 +41,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.sampleType}}
+            {{biosample?.sampleType}}
           </div>
         </div>
         <br>
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.taxonomy}}
+            {{biosample?.taxonomy}}
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.derivedFromId}}
+            {{biosample?.derivedFromId}}
           </div>
         </div>
         <br>
@@ -75,7 +75,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.sampledTissue}}
+            {{biosample?.sampledTissue}}
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.description}}
+            {{biosample?.description}}
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.materialSample?.toString()}}
+            {{biosample?.materialSample?.toString()}}
           </div>
         </div>
         <br>
@@ -117,7 +117,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.sampleProcessing?.toString()}}
+            {{biosample?.sampleProcessing?.toString()}}
           </div>
         </div>
         <br>
@@ -128,7 +128,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.sampleStorage?.toString()}}
+            {{biosample?.sampleStorage?.toString()}}
           </div>
         </div>
       </div>
@@ -170,7 +170,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.histologicalDiagnosis?.toString()}}
+            {{biosample?.histologicalDiagnosis?.toString()}}
           </div>
         </div>
         <br>
@@ -181,7 +181,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.tumorGrade?.toString()}}
+            {{biosample?.tumorGrade?.toString()}}
           </div>
         </div>
       </div>
@@ -193,7 +193,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.tumorProgression?.toString()}}
+            {{biosample?.tumorProgression?.toString()}}
           </div>
         </div>
         <br>
@@ -204,7 +204,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            {{biosample.pathologicalStage?.toString()}}
+            {{biosample?.pathologicalStage?.toString()}}
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@
         <div class="row">
           <div  class="col-md-12">
             <mat-list role="list">
-              <mat-list-item *ngFor="let finding of biosample.pathologicalTnmFinding" role="listitem">
+              <mat-list-item *ngFor="let finding of biosample?.pathologicalTnmFinding" role="listitem">
                 {{finding.toString()}}
               </mat-list-item>
             </mat-list>
@@ -233,7 +233,7 @@
         <div class="row">
           <div  class="col-md-12">
             <mat-list role="list">
-              <mat-list-item *ngFor="let marker of biosample.diagnosticMarkers" role="listitem">
+              <mat-list-item *ngFor="let marker of biosample?.diagnosticMarkers" role="listitem">
                 {{marker.toString()}}
               </mat-list-item>
             </mat-list>
