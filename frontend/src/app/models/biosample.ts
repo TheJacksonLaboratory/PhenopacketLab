@@ -1,6 +1,6 @@
-import { OntologyClass, TimeElement, File, Convert } from "./base";
-import { Measurement } from "./measurement";
-import { PhenotypicFeature } from "./phenotypic-feature";
+import { OntologyClass, TimeElement, File, Convert } from './base';
+import { Measurement } from './measurement';
+import { PhenotypicFeature } from './phenotypic-feature';
 
 export class BioSample extends Convert {
     id: string;
@@ -29,7 +29,7 @@ export class BioSample extends Convert {
         if (obj['id']) {
             bioSample.id = obj['id'];
         } else {
-            throw new Error(`Phenopacket file is missing 'id' field in 'bioSample' object.`)
+            throw new Error(`Phenopacket file is missing 'id' field in 'bioSample' object.`);
         }
         if (obj['derivedFromId']) {
             bioSample.derivedFromId = obj['derivedFromId'];
@@ -82,7 +82,7 @@ export class BioSample extends Convert {
         if (obj['sampleStorage']) {
             bioSample.sampleStorage = OntologyClass.convert(obj['sampleStorage']);
         }
-        
+
         return bioSample;
     }
 }
