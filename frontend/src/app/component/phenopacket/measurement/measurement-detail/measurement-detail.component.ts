@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { ComplexValue, Measurement, Quantity, TypedQuantity, Value } from 'src/app/models/measurement';
@@ -10,7 +10,10 @@ import { MeasurementDetailDialogComponent } from './measurement-detail-dialog/me
   styleUrls: ['./measurement-detail.component.scss']
 })
 
-export class MeasurementDetailComponent {
+export class MeasurementDetailComponent implements OnInit {
+  @Input()
+  measurement: Measurement;
+
   description: string;
   assay: OntologyClass;
   measurementValue: Value | ComplexValue;
@@ -23,9 +26,6 @@ export class MeasurementDetailComponent {
   // Value
   value: Quantity | OntologyClass;
   complexValue: TypedQuantity[];
-
-  @Input()
-  measurement: Measurement;
 
   constructor(public dialog: MatDialog) { }
 
@@ -57,7 +57,7 @@ export class MeasurementDetailComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedMedicalAction = result.medical_action;
+        const updatedMedicalAction = result.medical_action;
         if (updatedMedicalAction) {
           // update medical action
           this.measurement = updatedMedicalAction;

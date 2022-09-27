@@ -22,20 +22,21 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 })
 export class MeasurementComponent implements AfterViewInit, OnInit {
 
-    //Table items
+    @Input()
+    measurements: Measurement[];
+
+    @Output() onMeasurementsChanged = new EventEmitter<Measurement[]>();
+
+    // Table items
     displayedColumns = ['assay', 'value', 'procedure', 'time', 'remove'];
 
     measurementDataSource = new DataPresentMatTableDataSource<Measurement>();
     measurementCount: number;
 
-    //searchparams
-    currSearchParams: any = {}
+    // searchparams
+    currSearchParams: any = {};
 
     expandedElement: Measurement | null;
-    @Input()
-    measurements: Measurement[];
-
-    @Output() onMeasurementsChanged = new EventEmitter<Measurement[]>();
 
     dialogRef: any;
     spinnerDialogRef: any;
@@ -70,7 +71,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
-                    let updatedMeasurement = result.measurement;
+                    const updatedMeasurement = result.measurement;
                     if (updatedMeasurement) {
                         // update measurement
                         this.measurements.push(updatedMeasurement);
@@ -92,8 +93,8 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
     deleteMeasurement(element: Measurement) {
         const msgData = { 'title': 'Delete Measurement' };
@@ -113,7 +114,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
 
     removeFromDatasource(measurement: Measurement) {
         this.measurements.forEach((element, index) => {
-            if (element == measurement) {
+            if (element === measurement) {
                 this.measurements.splice(index, 1);
             }
         });
@@ -124,7 +125,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
 
     /**
      * Retrieve the correct measurement id
-     * @param measurement 
+     * @param measurement
      * @returns id
      */
     getId(measurement: Measurement) {
@@ -136,11 +137,11 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
 
     /**
      * Retrieve the assay
-     * @param measurement 
+     * @param measurement
      * @returns assay
      */
     getAssay(measurement: Measurement) {
-        let assay = measurement.assay;
+        const assay = measurement.assay;
         if (assay) {
             return assay.toString();
         }
@@ -149,14 +150,14 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
 
     getValue(measurement: Measurement) {
         if (measurement.measurementValue) {
-            let measurementValue = measurement.measurementValue;
-            return measurementValue.toString();  
+            const measurementValue = measurement.measurementValue;
+            return measurementValue.toString();
         }
         return '';
     }
 
     getProcedure(measurement: Measurement) {
-        let procedure = measurement.procedure;
+        const procedure = measurement.procedure;
         if (procedure) {
             return procedure.toString();
         }
@@ -164,7 +165,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     }
 
     getTimeOfMeasurement(measurement: Measurement) {
-        let tom = measurement.timeObserved;
+        const tom = measurement.timeObserved;
         if (tom) {
             return tom.toString();
         }
@@ -172,7 +173,7 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     }
 
     expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element
+        this.expandedElement = this.expandedElement === element ? null : element;
 
     }
 

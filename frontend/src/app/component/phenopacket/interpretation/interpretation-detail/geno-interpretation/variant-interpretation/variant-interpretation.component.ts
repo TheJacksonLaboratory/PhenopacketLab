@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AcmgPathogenicityClassification, Expression, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VcfRecord } from 'src/app/models/interpretation';
-import { InterpretationDetailDialogComponent } from 'src/app/component/phenopacket/interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component'
+import { InterpretationDetailDialogComponent } from 'src/app/component/phenopacket/interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { OntologyClass } from 'src/app/models/base';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { GeneContextDialogComponent } from '../gene-descriptor/gene-context-dialog/gene-context-dialog.component';
@@ -15,7 +15,10 @@ import { VcfRecordDialogComponent } from '../vcf-record/vcf-record-dialog/vcf-re
   styleUrls: ['./variant-interpretation.component.scss']
 })
 
-export class VariantInterpretationComponent {
+export class VariantInterpretationComponent implements OnInit {
+
+  @Input()
+  call: VariantInterpretation;
 
   acmgPathogenicityClassification: any;
   therapeuticActionability: any;
@@ -24,7 +27,7 @@ export class VariantInterpretationComponent {
   therapeuticControl = new UntypedFormControl('');
   therapeuticSubscription: Subscription;
 
-  //VariantDescriptor fields
+  // VariantDescriptor fields
   id: string;
   label: string;
   description: string;
@@ -35,7 +38,7 @@ export class VariantInterpretationComponent {
   structuralType: OntologyClass;
   expressions: Expression[];
   geneContext: GeneDescriptor;
-  vcfRecord: VcfRecord;0
+  vcfRecord: VcfRecord;
 
   // alternate labels table
   labelsDisplayedColumns: string[] = LabelStringColumns.map((col) => col.key);
@@ -47,9 +50,6 @@ export class VariantInterpretationComponent {
   xrefsColumnsSchema: any = XrefsStringColumns;
   xrefsDatasource = new DataPresentMatTableDataSource<StringTableModel>();
   validXrefs: any = {};
-
-  @Input()
-  call: VariantInterpretation;
 
   constructor(public dialog: MatDialog) { }
 
@@ -111,7 +111,7 @@ export class VariantInterpretationComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedInterpretation = result.interpretation;
+        const updatedInterpretation = result.interpretation;
         if (updatedInterpretation) {
           // update interpretation
           // this.genoInterpretation = updatedInterpretation;
@@ -132,7 +132,7 @@ export class VariantInterpretationComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedGeneContext = result.geneContext;
+        const updatedGeneContext = result.geneContext;
         if (updatedGeneContext) {
           // update interpretation
           this.geneContext = updatedGeneContext;
@@ -154,7 +154,7 @@ export class VariantInterpretationComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedVcfRecord = result.vcfRecord;
+        const updatedVcfRecord = result.vcfRecord;
         if (updatedVcfRecord) {
           // update interpretation
           this.vcfRecord = updatedVcfRecord;
@@ -168,9 +168,11 @@ export class VariantInterpretationComponent {
   }
 
   getAcmgPathogenicityClassification() {
+    // tslint:disable-next-line:radix
     return Object.values(AcmgPathogenicityClassification).filter(x => !(parseInt(x) >= 0));
   }
   getTherapeuticActionability() {
+    // tslint:disable-next-line:radix
     return Object.values(TherapeuticActionability).filter(x => !(parseInt(x) >= 0));
   }
   // alternate labels

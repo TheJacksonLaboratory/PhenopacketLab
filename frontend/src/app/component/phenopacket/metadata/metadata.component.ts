@@ -18,6 +18,9 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 })
 export class MetadataComponent implements OnInit {
 
+  @Input()
+  metadata: MetaData;
+
   created: string;
   createdBy: string;
   submittedBy: string;
@@ -38,9 +41,6 @@ export class MetadataComponent implements OnInit {
   externalRefDataSource = new DataPresentMatTableDataSource<ExternalReference>();
   externalRefExpandedElement: ExternalReference | null;
 
-  @Input()
-  metadata: MetaData;
-
   constructor() { }
 
   ngOnInit() {
@@ -56,17 +56,17 @@ export class MetadataComponent implements OnInit {
       this.updatesDataSource.data = this.updates;
       this.resourcesDataSource.data = this.resources;
       this.externalRefDataSource.data = this.externalReferences;
-    
+
     }
   }
 
   updatesExpandCollapse(element: any) {
-    this.updatesExpandedElement = this.updatesExpandedElement === element ? null : element
+    this.updatesExpandedElement = this.updatesExpandedElement === element ? null : element;
 
   }
 
   resourcesExpandCollapse(element: any) {
-    this.resourcesExpandedElement = this.resourcesExpandedElement === element ? null : element
+    this.resourcesExpandedElement = this.resourcesExpandedElement === element ? null : element;
 
   }
 

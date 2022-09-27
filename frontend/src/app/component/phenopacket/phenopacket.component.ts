@@ -9,6 +9,7 @@ import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { BioSample } from 'src/app/models/biosample';
 
 @Component({
   selector: 'app-phenopacket',
@@ -16,6 +17,9 @@ import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
   styleUrls: ['./phenopacket.component.scss']
 })
 export class PhenopacketComponent implements OnInit {
+
+  constructor() {
+  }
   @Input()
   phenopacket: Phenopacket;
 
@@ -46,15 +50,15 @@ export class PhenopacketComponent implements OnInit {
 
   active = 'top';
   viewMode;
+  // accordion
+  step = 0;
 
-  constructor() {
-  }
   ngOnInit(): void {
 
-    this.viewMode = "tab1";
+    this.viewMode = 'tab1';
     if (this.phenopacket) {
       this.individual = this.phenopacket.subject;
-      this.lastEncounterDate = this.individual.timeAtLastEncounter? this.individual.timeAtLastEncounter.toString() : '';
+      this.lastEncounterDate = this.individual.timeAtLastEncounter ? this.individual.timeAtLastEncounter.toString() : '';
       this.sex = this.individual.sex;
       this.karyotypicSex = this.individual.karyotypicSex;
       this.gender = this.individual.gender;
@@ -85,7 +89,7 @@ export class PhenopacketComponent implements OnInit {
         }
       });
       // Dob update
-      this.dob = this.individual.dateOfBirth? new Date(this.individual.dateOfBirth) : new Date();
+      this.dob = this.individual.dateOfBirth ? new Date(this.individual.dateOfBirth) : new Date();
       this.phenoDobControl.setValue(this.dob);
       if (this.phenopacketDobSubscription) {
         this.phenopacketDobSubscription.unsubscribe();
@@ -98,18 +102,25 @@ export class PhenopacketComponent implements OnInit {
 
 
   getKaryotypicSexes() {
+    // tslint:disable-next-line:radix
     return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
   }
 
   getPhenotypicFeatures() {
     if (this.phenopacket) {
-      return this.phenopacket.phenotypicFeatures? this.phenopacket.phenotypicFeatures : [];
+      return this.phenopacket.phenotypicFeatures ? this.phenopacket.phenotypicFeatures : [];
     }
     return [];
   }
   getPhenopacketDiseases() {
     if (this.phenopacket) {
       return this.phenopacket.diseases;
+    }
+    return [];
+  }
+  getBiosamples() {
+    if (this.phenopacket) {
+      return this.phenopacket.biosamples;
     }
     return [];
   }
@@ -142,13 +153,14 @@ export class PhenopacketComponent implements OnInit {
   }
 
   getSexes() {
+    // tslint:disable-next-line:radix
     return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
   }
   deletePhenopacket() {
 
   }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    
+
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
@@ -158,6 +170,9 @@ export class PhenopacketComponent implements OnInit {
     this.phenopacket.diseases = diseases;
   }
 
+  changeBiosamples(biosamples: BioSample[]) {
+    this.phenopacket.biosamples = biosamples;
+  }
   changeMeasurements(measurements: Measurement[]) {
     this.phenopacket.measurements = measurements;
   }
@@ -169,15 +184,13 @@ export class PhenopacketComponent implements OnInit {
   changeFiles(files: File[]) {
     this.phenopacket.files = files;
   }
- 
+
   editStatus() {
     // TODO
   }
   editTimeOfLastEncounter() {
     // TODO
   }
-  // accordion
-  step = 0;
 
   setStep(index: number) {
     this.step = index;

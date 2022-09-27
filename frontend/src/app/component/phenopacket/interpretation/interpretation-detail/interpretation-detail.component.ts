@@ -25,6 +25,11 @@ import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/
 })
 export class InterpretationDetailComponent implements AfterViewInit, OnInit {
 
+    @Input()
+    interpretation: Interpretation;
+
+    @Output() onInterpretationChanged = new EventEmitter<Interpretation>();
+
     disease: string;
     interpretationId: string;
     status: any;
@@ -32,16 +37,12 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
     statusControl = new UntypedFormControl('');
     statusSubscription: Subscription;
 
-    //Table items
+    // Table items
     displayedColumns = ['id', 'status', 'call', 'remove'];
 
     genoInterpretationDataSource = new DataPresentMatTableDataSource<GenomicInterpretation>();
 
     expandedElement: Measurement | null;
-    @Input()
-    interpretation: Interpretation;
-
-    @Output() onInterpretationChanged = new EventEmitter<Interpretation>();
 
     dialogRef: any;
     spinnerDialogRef: any;
@@ -81,7 +82,7 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
-                let updatedInterpretation = result.interpretation;
+                const updatedInterpretation = result.interpretation;
                 if (updatedInterpretation) {
                     // update interpretation
                     this.interpretation = updatedInterpretation;
@@ -120,7 +121,7 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
-                    let updatedInterpretation = result.interpretation;
+                    const updatedInterpretation = result.interpretation;
                     if (updatedInterpretation) {
                         // update measurement
                         this.interpretation = updatedInterpretation;
@@ -142,8 +143,8 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
     deleteInterpretation(element: GenomicInterpretation) {
         const msgData = { 'title': 'Delete Genomic Interpretation' };
@@ -164,7 +165,7 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
     removeFromDatasource(interpretation: GenomicInterpretation) {
         if (this.interpretation.diagnosis) {
             this.interpretation.diagnosis.genomicInterpretations.forEach((element, index) => {
-                if (element == interpretation) {
+                if (element === interpretation) {
                     this.interpretation.diagnosis.genomicInterpretations.splice(index, 1);
                 }
             });
@@ -174,17 +175,17 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
     }
 
     expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element
-
+        this.expandedElement = this.expandedElement === element ? null : element;
     }
 
     getId(element: GenomicInterpretation) {
         if (element) {
             return element.subjectOrBiosampleId;
         }
-        return "";
+        return '';
     }
     getProgressStatus() {
+        // tslint:disable-next-line:radix
         return Object.values(ProgressStatus).filter(x => !(parseInt(x) >= 0));
     }
 }

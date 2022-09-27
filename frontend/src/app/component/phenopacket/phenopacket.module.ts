@@ -49,6 +49,9 @@ import { GeneDescriptorComponent } from './interpretation/interpretation-detail/
 import { GeneContextDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-context-dialog/gene-context-dialog.component';
 import { VcfRecordComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record.component';
 import { VcfRecordDialogComponent } from './interpretation/interpretation-detail/geno-interpretation/vcf-record/vcf-record-dialog/vcf-record-dialog.component';
+import { BiosampleComponent } from './biosample/biosample.component';
+import { BiosampleDetailComponent } from './biosample/biosample-detail/biosample-detail.component';
+import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/biosample-detail-dialog/biosample-detail-dialog.component';
 
 
 
@@ -108,6 +111,9 @@ import { VcfRecordDialogComponent } from './interpretation/interpretation-detail
     GeneContextDialogComponent,
     VcfRecordComponent,
     VcfRecordDialogComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent,
+    BiosampleDetailDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -133,6 +139,9 @@ import { VcfRecordDialogComponent } from './interpretation/interpretation-detail
     GeneContextDialogComponent,
     VcfRecordComponent,
     VcfRecordDialogComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent,
+    BiosampleDetailDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

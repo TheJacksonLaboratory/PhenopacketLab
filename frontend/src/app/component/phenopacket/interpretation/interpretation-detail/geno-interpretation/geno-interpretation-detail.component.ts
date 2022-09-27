@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -11,15 +11,15 @@ import { InterpretationDetailDialogComponent } from '../interpretation-detail-di
   styleUrls: ['./geno-interpretation-detail.component.scss']
 })
 
-export class GenoInterpretationDetailComponent {
+export class GenoInterpretationDetailComponent implements OnInit {
+
+  @Input()
+  genoInterpretation: GenomicInterpretation;
 
   subjectOrBiosampleId: string;
   interpretationStatus: any;
   statusControl = new UntypedFormControl('');
   statusSubscription: Subscription;
-
-  @Input()
-  genoInterpretation: GenomicInterpretation;
 
   constructor(public dialog: MatDialog) { }
 
@@ -59,7 +59,7 @@ export class GenoInterpretationDetailComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedInterpretation = result.interpretation;
+        const updatedInterpretation = result.interpretation;
         if (updatedInterpretation) {
           // update interpretation
           this.genoInterpretation = updatedInterpretation;
@@ -72,17 +72,18 @@ export class GenoInterpretationDetailComponent {
     return dialogRef;
   }
   getInterpretationStatus() {
+    // tslint:disable-next-line:radix
     return Object.values(InterpretationStatus).filter(x => !(parseInt(x) >= 0));
   }
 
   isVariantInterpretation() {
     if (this.genoInterpretation) {
-      return this.genoInterpretation.call.toString() == VariantInterpretation.className;
+      return this.genoInterpretation.call.toString() === VariantInterpretation.className;
     }
   }
   isGeneDescriptor() {
     if (this.genoInterpretation) {
-      return this.genoInterpretation.call.toString() == GeneDescriptor.className;
+      return this.genoInterpretation.call.toString() === GeneDescriptor.className;
     }
   }
 }

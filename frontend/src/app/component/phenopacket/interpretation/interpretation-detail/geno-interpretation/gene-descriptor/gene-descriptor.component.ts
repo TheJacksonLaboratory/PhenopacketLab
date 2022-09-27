@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GeneDescriptor } from 'src/app/models/interpretation';
 import { GeneContextDialogComponent } from './gene-context-dialog/gene-context-dialog.component';
@@ -9,7 +9,10 @@ import { GeneContextDialogComponent } from './gene-context-dialog/gene-context-d
   styleUrls: ['./gene-descriptor.component.scss']
 })
 
-export class GeneDescriptorComponent {
+export class GeneDescriptorComponent implements OnInit {
+
+  @Input()
+  geneDescriptor: GeneDescriptor;
 
   valueId: string;
   symbol: string;
@@ -17,10 +20,6 @@ export class GeneDescriptorComponent {
   alternateIds: string[];
   xrefs: string[];
   alternateSymbols: string[];
-
-
-  @Input()
-  geneDescriptor: GeneDescriptor;
 
   constructor(public dialog: MatDialog) { }
 
@@ -50,7 +49,7 @@ export class GeneDescriptorComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedInterpretation = result.geneDescriptor;
+        const updatedInterpretation = result.geneDescriptor;
         if (updatedInterpretation) {
           // update interpretation
           this.geneDescriptor = updatedInterpretation;
@@ -66,7 +65,7 @@ export class GeneDescriptorComponent {
   getStringArrayDisplay(array: string[]) {
     let displayResult = '';
     if (array) {
-      for(let i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
         if (i < array.length - 1) {
           displayResult += `${array[i]}, `;
         } else {

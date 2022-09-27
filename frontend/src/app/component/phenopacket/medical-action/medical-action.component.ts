@@ -23,25 +23,27 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
     ],
 })
 export class MedicalActionComponent implements AfterViewInit, OnInit {
-    // search params
-    itemName = "Medical Action";
 
-    //Table items
-    displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
-
-    medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
-    medicalActionCount: number;
-
-    //searchparams
-    currSearchParams: any = {}
-
-    expandedElement: MedicalAction | null;
     @Input()
     medicalActions: MedicalAction[];
     @Input()
     diseases: Disease[];
 
     @Output() onMedicalActionChanged = new EventEmitter<MedicalAction[]>();
+
+    // search params
+    itemName = 'Medical Action';
+
+    // Table items
+    displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
+
+    medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
+    medicalActionCount: number;
+
+    // searchparams
+    currSearchParams: any = {};
+
+    expandedElement: MedicalAction | null;
 
     dialogRef: any;
     spinnerDialogRef: any;
@@ -77,7 +79,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
-                    let updatedMedicalAction = result.medical_action;
+                    const updatedMedicalAction = result.medical_action;
                     if (updatedMedicalAction) {
                         // update medical action
                         this.medicalActions.push(updatedMedicalAction);
@@ -99,8 +101,8 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
     deleteMedicalAction(element: MedicalAction) {
         const msgData = { 'title': 'Delete Medical Action' };
@@ -120,7 +122,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     removeFromDatasource(medicalAction: MedicalAction) {
         this.medicalActions.forEach((element, index) => {
-            if (element == medicalAction) {
+            if (element === medicalAction) {
                 this.medicalActions.splice(index, 1);
             }
         });
@@ -130,7 +132,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     }
 
     getActionName(medicalAction: MedicalAction) {
-        let action = medicalAction.action;
+        const action = medicalAction.action;
         if (action instanceof Procedure) {
             return Procedure.actionName;
         } else if (action instanceof Treatment) {
@@ -140,15 +142,15 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
         } else if (action instanceof TherapeuticRegimen) {
             return TherapeuticRegimen.actionName;
         }
-        return '';    
+        return '';
     }
     /**
      * Retrieve the correct MedicalAction id
-     * @param medicalAction 
+     * @param medicalAction
      * @returns id
      */
     getId(medicalAction: MedicalAction) {
-        let action = medicalAction.action;
+        const action = medicalAction.action;
         if (action instanceof Procedure) {
             return action.code?.id;
         } else if (action instanceof Treatment) {
@@ -179,7 +181,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
 
     /**
      * Get Procedure, Treatment, RadiationTherapy or TherapeuticRegimen icon
-     * @param medicalAction 
+     * @param medicalAction
      * @returns icon name
      */
     getIcon(medicalAction: MedicalAction) {
@@ -198,8 +200,7 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     }
 
     expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element
-
+        this.expandedElement = this.expandedElement === element ? null : element;
     }
 
 }

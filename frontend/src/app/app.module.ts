@@ -39,6 +39,7 @@ import { FamilyListComponent } from './component/family-list/family-list.compone
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
+import { AboutComponent } from './component/about/about.component';
 
 @NgModule({
     imports: [
@@ -77,6 +78,7 @@ import { UploadDialogComponent } from './component/shared/upload-dialog/upload-d
     declarations: [
         AppComponent,
         DashboardComponent,
+        AboutComponent,
         CohortListComponent,
         FamilyListComponent,
         UploadDialogComponent

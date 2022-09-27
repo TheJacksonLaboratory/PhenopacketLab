@@ -22,14 +22,15 @@ import { InterpretationDetailDialogComponent } from './interpretation-detail/int
 })
 export class InterpretationComponent implements AfterViewInit, OnInit {
 
-    //Table items
+    @Input()
+    interpretations: Interpretation[];
+
+    // Table items
     displayedColumns = ['id', 'status', 'diagnosis', 'summary', 'remove'];
 
     interpretationDataSource = new DataPresentMatTableDataSource<Interpretation>();
 
     expandedElement: Interpretation | null;
-    @Input()
-    interpretations: Interpretation[];
 
     dialogRef: any;
     spinnerDialogRef: any;
@@ -67,7 +68,7 @@ export class InterpretationComponent implements AfterViewInit, OnInit {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result !== undefined) {
-                    let updatedInterpretation = result.interpretation;
+                    const updatedInterpretation = result.interpretation;
                     if (updatedInterpretation) {
                         // update measurement
                         this.interpretations.push(updatedInterpretation);
@@ -87,8 +88,8 @@ export class InterpretationComponent implements AfterViewInit, OnInit {
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
     deleteInterpretation(element: Interpretation) {
         const msgData = { 'title': 'Delete Genomic Interpretation' };
@@ -109,7 +110,7 @@ export class InterpretationComponent implements AfterViewInit, OnInit {
     removeFromDatasource(interpretation: Interpretation) {
         if (this.interpretations) {
             this.interpretations.forEach((element, index) => {
-                if (element == interpretation) {
+                if (element === interpretation) {
                     this.interpretations.splice(index, 1);
                 }
             });
@@ -118,8 +119,7 @@ export class InterpretationComponent implements AfterViewInit, OnInit {
     }
 
     expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element
-
+        this.expandedElement = this.expandedElement === element ? null : element;
     }
 
 }

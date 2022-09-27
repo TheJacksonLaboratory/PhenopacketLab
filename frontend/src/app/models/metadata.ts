@@ -1,4 +1,4 @@
-import { Convert, ExternalReference } from "./base";
+import { Convert, ExternalReference } from './base';
 
 export class MetaData {
     created: string;
@@ -32,7 +32,7 @@ export class MetaData {
         if (obj['externalReferences']) {
             metaData.externalReferences = ExternalReference.convert(obj['externalReferences']);
         }
-        
+
         return metaData;
     }
 }

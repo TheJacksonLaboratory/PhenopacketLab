@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
@@ -13,7 +13,13 @@ import { MedicalActionDetailDialogComponent } from './medical-action-detail-dial
   styleUrls: ['./medical-action-detail.component.scss']
 })
 
-export class MedicalActionDetailComponent {
+export class MedicalActionDetailComponent implements OnInit {
+
+  @Input()
+  medicalAction: MedicalAction;
+  @Input()
+  diseases: Disease[];
+
   action: Procedure | Treatment | RadiationTherapy | TherapeuticRegimen;
   treatmentTarget: OntologyClass;
   treatmentIntent: OntologyClass;
@@ -42,12 +48,7 @@ export class MedicalActionDetailComponent {
   regimenStatus: RegimenStatus;
 
   actionType: string;
-  
-  @Input()
-  medicalAction: MedicalAction;
-  @Input()
-  diseases: Disease[];
-  
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -90,7 +91,7 @@ export class MedicalActionDetailComponent {
           this.endTime = this.action.endTime;
           this.regimenStatus = this.action.regimenStatus;
         }
-        
+
       }
     }
 
@@ -107,7 +108,7 @@ export class MedicalActionDetailComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedMedicalAction = result.medical_action;
+        const updatedMedicalAction = result.medical_action;
         if (updatedMedicalAction) {
           // update medical action
           this.medicalAction = updatedMedicalAction;
@@ -186,6 +187,5 @@ export class MedicalActionDetailComponent {
     }
     return '';
   }
-
 
 }
