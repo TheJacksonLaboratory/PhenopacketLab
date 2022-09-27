@@ -1,4 +1,4 @@
-import { Sex } from "./individual";
+import { Sex } from './individual';
 
 export enum AffectedStatus {
     MISSING,

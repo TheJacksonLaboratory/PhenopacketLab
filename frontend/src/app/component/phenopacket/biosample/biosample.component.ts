@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { OntologyClass } from "src/app/models/base";
-import { BioSample } from "src/app/models/biosample";
-import { DataPresentMatTableDataSource } from "../../shared/DataPresentMatTableDataSource";
-import { MessageDialogComponent } from "../../shared/message-dialog/message-dialog.component";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { OntologyClass } from 'src/app/models/base';
+import { BioSample } from 'src/app/models/biosample';
+import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
 
 
 @Component({
@@ -13,19 +13,18 @@ import { MessageDialogComponent } from "../../shared/message-dialog/message-dial
 })
 export class BiosampleComponent implements OnInit {
 
-  //Table items
-  displayedColumns = ['id', 'individualid', 'tissue', 'type', 'description', 'remove'];
-
-  expandedElement: BioSample | null;
-
-  biosampleDataSource = new DataPresentMatTableDataSource<BioSample>();
-
-  biosampleCount: number;
   @Input()
   biosamples: BioSample[];
 
   @Output()
   onBiosampleChanged = new EventEmitter<BioSample[]>();
+
+  // Table items
+  displayedColumns = ['id', 'individualid', 'tissue', 'type', 'description', 'remove'];
+
+  expandedElement: BioSample | null;
+
+  biosampleDataSource = new DataPresentMatTableDataSource<BioSample>();
 
   constructor(public dialog: MatDialog) {
 
@@ -43,22 +42,23 @@ export class BiosampleComponent implements OnInit {
      * Add a new phenotypic feature with default values or no values
      */
   addBiosample(biosample?: BioSample) {
-    if (biosample === undefined) {
-      let biosample = new BioSample();
+    let newBiosample = biosample;
+    if (newBiosample === undefined) {
+      newBiosample = new BioSample();
       let newId = 'id-';
       if (this.biosamples.length > 0) {
         newId = `${newId}${this.biosamples.length}`;
       } else {
-        newId = `${newId}0`
+        newId = `${newId}0`;
       }
-      biosample.id = newId;
-      biosample.individualId = '';
-      biosample.derivedFromId = '';
-      biosample.description = '';
-      biosample.sampledTissue = new OntologyClass('', '');
-      biosample.sampleType = new OntologyClass('', '');
-      
-      this.biosamples.push(biosample);
+      newBiosample.id = newId;
+      newBiosample.individualId = '';
+      newBiosample.derivedFromId = '';
+      newBiosample.description = '';
+      newBiosample.sampledTissue = new OntologyClass('', '');
+      newBiosample.sampleType = new OntologyClass('', '');
+
+      this.biosamples.push(newBiosample);
     } else {
       this.biosamples.push(biosample);
     }
@@ -69,8 +69,8 @@ export class BiosampleComponent implements OnInit {
 
   /**
    * Removes the chosen element, if ok is pressed on the popup window.
-   * @param element 
-   * @returns 
+   * @param element
+   * @returns
    */
   deleteBiosample(element: BioSample) {
     const msgData = { 'title': 'Delete Biosample' };
@@ -98,7 +98,7 @@ export class BiosampleComponent implements OnInit {
 
   removeFromDatasource(biosample: BioSample) {
     this.biosamples.forEach((element, index) => {
-      if (element == biosample) {
+      if (element === biosample) {
         this.biosamples.splice(index, 1);
       }
     });
@@ -107,7 +107,7 @@ export class BiosampleComponent implements OnInit {
   }
 
   expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element
+    this.expandedElement = this.expandedElement === element ? null : element;
 
   }
 

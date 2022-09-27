@@ -1,5 +1,5 @@
-import { MetaData } from "./metadata";
-import { Phenopacket } from "./phenopacket";
+import { MetaData } from './metadata';
+import { Phenopacket } from './phenopacket';
 
 export class Cohort {
     id: string;

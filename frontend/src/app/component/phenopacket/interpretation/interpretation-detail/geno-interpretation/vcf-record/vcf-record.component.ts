@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
@@ -11,16 +11,16 @@ import { VcfRecordDialogComponent } from './vcf-record-dialog/vcf-record-dialog.
   styleUrls: ['./vcf-record.component.scss']
 })
 
-export class VcfRecordComponent {
+export class VcfRecordComponent implements OnInit {
 
-  vcfRecordDisplayedColumns = ['assembly', 'chrom', 'pos', 'id', 'ref', 'alt', 'qual', 'filter', 'info', 'remove'];
-  vcfRecordDataSource = new DataPresentMatTableDataSource<VcfRecord>();
+  @Input()
+  vcfRecord: VcfRecord;
 
   @Output()
   onVcfRecordChanged = new EventEmitter<VcfRecord>();
 
-  @Input()
-  vcfRecord: VcfRecord;
+  vcfRecordDisplayedColumns = ['assembly', 'chrom', 'pos', 'id', 'ref', 'alt', 'qual', 'filter', 'info', 'remove'];
+  vcfRecordDataSource = new DataPresentMatTableDataSource<VcfRecord>();
 
   constructor(public dialog: MatDialog) { }
 
@@ -46,7 +46,7 @@ export class VcfRecordComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedVcfRecord = result.vcfRecord;
+        const updatedVcfRecord = result.vcfRecord;
         if (updatedVcfRecord) {
           // update interpretation
           this.vcfRecord = updatedVcfRecord;
@@ -73,8 +73,8 @@ export class VcfRecordComponent {
 
   /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
   deleteVcfRecord(element: VcfRecord) {
     const msgData = { 'title': 'Delete VCF record' };

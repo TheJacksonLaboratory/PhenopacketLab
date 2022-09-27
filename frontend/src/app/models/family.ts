@@ -1,6 +1,6 @@
-import { MetaData } from "./metadata";
-import { Pedigree } from "./pedigree";
-import { Phenopacket } from "./phenopacket";
+import { MetaData } from './metadata';
+import { Pedigree } from './pedigree';
+import { Phenopacket } from './phenopacket';
 
 export class Family {
     id: string;

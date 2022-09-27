@@ -15,21 +15,22 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 })
 export class FileComponent implements OnInit {
 
-  //Table items
-  displayedColumns = ['uri', 'description', 'mapping', 'attribute', 'remove'];
-
-  expandedElement: File | null;
   @Input()
   phenopacketFiles: File[] = [];
   @Output()
   onFilesChanged = new EventEmitter<File[]>();
 
+  // Table items
+  displayedColumns = ['uri', 'description', 'mapping', 'attribute', 'remove'];
+
+  expandedElement: File | null;
+
   filesMap = new Map<string, File>();
   datasource = new DataPresentMatTableDataSource<File>();
 
   diseaseCount: number;
-  //searchparams
-  currSearchParams: any = {}
+  // searchparams
+  currSearchParams: any = {};
 
   dialogRef: any;
   spinnerDialogRef: any;
@@ -40,7 +41,7 @@ export class FileComponent implements OnInit {
   ngOnInit(): void {
     if (this.phenopacketFiles) {
       this.phenopacketFiles.forEach((element, index) => {
-        let id = `file-${index}`;
+        const id = `file-${index}`;
         element.id = id;
         this.filesMap.set(id, element);
       });
@@ -49,8 +50,8 @@ export class FileComponent implements OnInit {
   }
 
   addFile() {
-    let newFile = new File('new/file/uri', 'new file description');
-    let id = `file-${this.filesMap.size + 1}`;
+    const newFile = new File('new/file/uri', 'new file description');
+    const id = `file-${this.filesMap.size + 1}`;
     newFile.id = id;
     this.filesMap.set(id, newFile);
     this.updateFiles();
@@ -87,12 +88,12 @@ export class FileComponent implements OnInit {
   }
 
   expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element
+    this.expandedElement = this.expandedElement === element ? null : element;
 
   }
 
   updateFiles() {
-    let filesArray = Array.from(this.filesMap.values());
+    const filesArray = Array.from(this.filesMap.values());
     this.datasource.data = filesArray;
     this.onFilesChanged.emit(filesArray);
   }
@@ -101,11 +102,11 @@ export class FileComponent implements OnInit {
     return file.individualToFileIdentifier.keys();
   }
   getMapping(file: File, key: string) {
-    let value = file.individualToFileIdentifier.get(key);
+    const value = file.individualToFileIdentifier.get(key);
     return `${key} -> ${value}`;
   }
   getAttributeKeys(file: File) {
-    let resultKeys = [];
+    const resultKeys = [];
     // remove description key
     file.fileAttribute.forEach((value: string, key: string) => {
       if (key !== 'description') {

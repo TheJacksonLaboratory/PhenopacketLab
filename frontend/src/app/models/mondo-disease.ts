@@ -1,5 +1,5 @@
-import { TimeElement } from "./base";
-import { Disease } from "./disease";
+import { TimeElement } from './base';
+import { Disease } from './disease';
 
 export class MondoDisease {
     id: string;
@@ -29,7 +29,7 @@ export class MondoDisease {
      * Returns the corresponding pheno Disease
      */
     public getPhenoDisease(): Disease {
-        let disease = new Disease(this.id, this.name);
+        const disease = new Disease(this.id, this.name);
         disease.excluded = this.excluded;
         disease.onset = this.onset;
         disease.description = this.description;

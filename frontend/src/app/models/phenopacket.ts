@@ -1,12 +1,12 @@
-import { BioSample } from "./biosample";
-import { Disease } from "./disease";
-import { Individual } from "./individual";
-import { Interpretation } from "./interpretation";
-import { Measurement } from "./measurement";
-import { MedicalAction } from "./medical-action";
-import { MetaData } from "./metadata";
-import { File } from "./base"
-import { PhenotypicFeature } from "./phenotypic-feature";
+import { BioSample } from './biosample';
+import { Disease } from './disease';
+import { Individual } from './individual';
+import { Interpretation } from './interpretation';
+import { Measurement } from './measurement';
+import { MedicalAction } from './medical-action';
+import { MetaData } from './metadata';
+import { File } from './base';
+import { PhenotypicFeature } from './phenotypic-feature';
 
 export class Phenopacket {
     id: string;
@@ -24,13 +24,13 @@ export class Phenopacket {
     isProband = false;
 
     /**
-     * 
-     * @param obj 
-     * @returns 
+     *
+     * @param obj
+     * @returns
      */
     public static convert(obj: any): Phenopacket {
         const phenopacket = new Phenopacket();
-        console.log("original obj");
+        console.log('original obj');
         console.log(obj);
         if (obj['id']) {
             phenopacket.id = obj['id'];

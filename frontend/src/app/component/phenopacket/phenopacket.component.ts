@@ -17,6 +17,9 @@ import { BioSample } from 'src/app/models/biosample';
   styleUrls: ['./phenopacket.component.scss']
 })
 export class PhenopacketComponent implements OnInit {
+
+  constructor() {
+  }
   @Input()
   phenopacket: Phenopacket;
 
@@ -47,15 +50,15 @@ export class PhenopacketComponent implements OnInit {
 
   active = 'top';
   viewMode;
+  // accordion
+  step = 0;
 
-  constructor() {
-  }
   ngOnInit(): void {
 
-    this.viewMode = "tab1";
+    this.viewMode = 'tab1';
     if (this.phenopacket) {
       this.individual = this.phenopacket.subject;
-      this.lastEncounterDate = this.individual.timeAtLastEncounter? this.individual.timeAtLastEncounter.toString() : '';
+      this.lastEncounterDate = this.individual.timeAtLastEncounter ? this.individual.timeAtLastEncounter.toString() : '';
       this.sex = this.individual.sex;
       this.karyotypicSex = this.individual.karyotypicSex;
       this.gender = this.individual.gender;
@@ -86,7 +89,7 @@ export class PhenopacketComponent implements OnInit {
         }
       });
       // Dob update
-      this.dob = this.individual.dateOfBirth? new Date(this.individual.dateOfBirth) : new Date();
+      this.dob = this.individual.dateOfBirth ? new Date(this.individual.dateOfBirth) : new Date();
       this.phenoDobControl.setValue(this.dob);
       if (this.phenopacketDobSubscription) {
         this.phenopacketDobSubscription.unsubscribe();
@@ -99,12 +102,13 @@ export class PhenopacketComponent implements OnInit {
 
 
   getKaryotypicSexes() {
+    // tslint:disable-next-line:radix
     return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
   }
 
   getPhenotypicFeatures() {
     if (this.phenopacket) {
-      return this.phenopacket.phenotypicFeatures? this.phenopacket.phenotypicFeatures : [];
+      return this.phenopacket.phenotypicFeatures ? this.phenopacket.phenotypicFeatures : [];
     }
     return [];
   }
@@ -116,8 +120,6 @@ export class PhenopacketComponent implements OnInit {
   }
   getBiosamples() {
     if (this.phenopacket) {
-      console.log("biosamples");
-      console.log(this.phenopacket.biosamples);
       return this.phenopacket.biosamples;
     }
     return [];
@@ -151,13 +153,14 @@ export class PhenopacketComponent implements OnInit {
   }
 
   getSexes() {
+    // tslint:disable-next-line:radix
     return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
   }
   deletePhenopacket() {
 
   }
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    
+
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
@@ -181,15 +184,13 @@ export class PhenopacketComponent implements OnInit {
   changeFiles(files: File[]) {
     this.phenopacket.files = files;
   }
- 
+
   editStatus() {
     // TODO
   }
   editTimeOfLastEncounter() {
     // TODO
   }
-  // accordion
-  step = 0;
 
   setStep(index: number) {
     this.step = index;

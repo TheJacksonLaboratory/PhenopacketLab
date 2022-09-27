@@ -1,4 +1,4 @@
-import { OntologyClass, TimeElement } from "./base";
+import { OntologyClass, TimeElement } from './base';
 
 export class Individual {
     id: string;
@@ -12,39 +12,39 @@ export class Individual {
     taxonomy: OntologyClass;
 
     /**
-     * 
-     * @param obj 
-     * @returns 
+     *
+     * @param obj
+     * @returns
      */
     public static convert(obj: any): Individual {
         const individual = new Individual();
-        if(obj['id']) {
+        if (obj['id']) {
             individual.id = obj['id'];
         } else {
-            throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`)
+            throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`);
         }
-        if(obj['alternateId']) {
+        if (obj['alternateId']) {
             individual.alternateIds = obj['alternateIds'];
         }
-        if(obj['dateOfBirth']) {
+        if (obj['dateOfBirth']) {
             individual.dateOfBirth = obj['dateOfBirth'];
         }
-        if(obj['timeAtLastEncounter']) {
+        if (obj['timeAtLastEncounter']) {
             individual.timeAtLastEncounter = TimeElement.convert(obj['timeAtLastEncounter']);
         }
-        if(obj['vitalStatus']) {
+        if  (obj['vitalStatus']) {
             individual.vitalStatus = VitalStatus.convert(obj['vitalStatus']);
         }
-        if(obj['sex']) {
+        if (obj['sex']) {
             individual.sex = obj['sex'];
         }
-        if(obj['karyotypicSex']) {
+        if (obj['karyotypicSex']) {
             individual.karyotypicSex = obj['karyotypicSex'];
         }
-        if(obj['gender']) {
+        if (obj['gender']) {
             individual.gender = OntologyClass.convert(obj['gender']);
         }
-        if(obj['taxonomy']) {
+        if (obj['taxonomy']) {
             individual.taxonomy = OntologyClass.convert(obj['taxonomy']);
         }
         return individual;
@@ -52,9 +52,9 @@ export class Individual {
 }
 
 export enum Status {
-    UNKNOWN_STATUS,
-    ALIVE,
-    DECEASED
+    UNKNOWN_STATUS = 'UNKNOWN_STATUS',
+    ALIVE = 'ALIVE',
+    DECEASED = 'DECEASED'
 }
 export class VitalStatus {
     status: Status;
@@ -64,37 +64,37 @@ export class VitalStatus {
 
     public static convert(obj: any): VitalStatus {
         const vitalSatus = new VitalStatus();
-        if(obj['status']) {
+        if (obj['status']) {
             vitalSatus.status = obj['status'];
         }
-        if(obj['timeOfDeath']) {
+        if (obj['timeOfDeath']) {
             vitalSatus.timeOfDeath = TimeElement.convert(obj['timeOfDeath']);
         }
-        if(obj['causeOfDeath']) {
+        if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
         }
-        if(obj['survivalTimeInDays']) {
+        if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
         }
         return vitalSatus;
     }
 }
 export enum Sex {
-    UNKNOWN_SEX = "UNKNOWN_SEX",
-    FEMALE = "FEMALE",
-    MALE = "MALE",
-    OTHER_SEX = "OTHER_SEX"
+    UNKNOWN_SEX = 'UNKNOWN_SEX',
+    FEMALE = 'FEMALE',
+    MALE = 'MALE',
+    OTHER_SEX = 'OTHER_SEX'
 }
 export enum KaryotypicSex {
-    UNKNOWN_KARYOTYPE = "Unknown karyotype",
-    XX = "XX",
-    XY = "XY",
-    XO = "XO",
-    XXY = "XXY",
-    XXX = "XXX",
-    XXYY = "XXYY",
-    XXXY = "XXXY",
-    XXXX = "XXXX",
-    XYY = "XYY",
-    OTHER_KARYOTYPE = "Other karyotype"
+    UNKNOWN_KARYOTYPE = 'Unknown karyotype',
+    XX = 'XX',
+    XY = 'XY',
+    XO = 'XO',
+    XXY = 'XXY',
+    XXX = 'XXX',
+    XXYY = 'XXYY',
+    XXXY = 'XXXY',
+    XXXX = 'XXXX',
+    XYY = 'XYY',
+    OTHER_KARYOTYPE = 'Other karyotype'
 }

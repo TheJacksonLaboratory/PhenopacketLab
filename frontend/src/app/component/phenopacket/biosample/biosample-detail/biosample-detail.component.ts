@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BioSample } from 'src/app/models/biosample';
 import { Measurement } from 'src/app/models/measurement';
@@ -12,12 +12,12 @@ import { BiosampleDetailDialogComponent } from './biosample-detail-dialog/biosam
   styleUrls: ['./biosample-detail.component.scss']
 })
 
-export class BiosampleDetailComponent {
-
-  id: string;
+export class BiosampleDetailComponent implements OnInit {
 
   @Input()
   biosample: BioSample;
+
+  id: string;
 
   constructor(public dialog: MatDialog) { }
 
@@ -34,7 +34,7 @@ export class BiosampleDetailComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedBiosample = result.biosample;
+        const updatedBiosample = result.biosample;
         if (updatedBiosample !== undefined) {
           // update feature
           this.biosample = updatedBiosample;
@@ -48,20 +48,20 @@ export class BiosampleDetailComponent {
 
   getPhenotypicFeatures() {
     if (this.biosample) {
-      return this.biosample.phenotypicFeatures? this.biosample.phenotypicFeatures : [];
+      return this.biosample.phenotypicFeatures ? this.biosample.phenotypicFeatures : [];
     }
     return [];
   }
-  
+
   getPhenopacketMeasurements() {
     if (this.biosample) {
-      return this.biosample.measurements? this.biosample.measurements : [];
+      return this.biosample.measurements ? this.biosample.measurements : [];
     }
     return [];
   }
   getPhenopacketFiles() {
     if (this.biosample) {
-      return this.biosample.files? this.biosample.files : [];
+      return this.biosample.files ? this.biosample.files : [];
     }
     return [];
   }

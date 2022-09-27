@@ -1,4 +1,4 @@
-import { Convert, OntologyClass, Procedure, TimeElement } from "./base";
+import { Convert, OntologyClass, Procedure, TimeElement } from './base';
 
 export class Measurement extends Convert {
     description: string;
@@ -16,7 +16,7 @@ export class Measurement extends Convert {
         if (obj['assay']) {
             measurement.assay = OntologyClass.convert(obj['assay']);
         } else {
-            throw new Error(`Phenopacket file is missing 'assay' field in 'measurements' object.`)
+            throw new Error(`Phenopacket file is missing 'assay' field in 'measurements' object.`);
         }
         // measurement value
         if (obj['value']) {
@@ -24,7 +24,7 @@ export class Measurement extends Convert {
         } else if (obj['complexValue']) {
             measurement.measurementValue = ComplexValue.convert(obj['complexValue']);
         } else {
-            throw new Error(`Phenopacket file is missing 'value' or 'complexValue' field in 'measurements' object.`)
+            throw new Error(`Phenopacket file is missing 'value' or 'complexValue' field in 'measurements' object.`);
         }
         if (obj['timeObserved']) {
             measurement.timeObserved = TimeElement.convert(obj['timeObserved']);
@@ -39,19 +39,6 @@ export class Measurement extends Convert {
 export class Value {
     value: Quantity | OntologyClass;
 
-    toString() {
-        if (this.value instanceof Quantity) {
-            let unit = this.value.unit;
-            let val = this.value.value;
-            return `${val} ${unit?.label} [${unit?.id}]`;
-        } else if (this.value instanceof OntologyClass) {
-            let label = this.value?.label;
-            let id = this.value?.id;
-            return `${label} [${id}]`;
-        }
-        return '';
-    }
-
     static convert(obj: any): Value {
         const val = new Value();
         // if value is quantity
@@ -61,34 +48,47 @@ export class Value {
             // value is ontology class
             val.value = OntologyClass.convert(obj['ontologyClass']);
         } else {
-            throw new Error(`Phenopacket file is missing 'quantity' or 'ontologyClass' field in 'value' object.`)
+            throw new Error(`Phenopacket file is missing 'quantity' or 'ontologyClass' field in 'value' object.`);
         }
         return val;
+    }
+
+    toString() {
+        if (this.value instanceof Quantity) {
+            const unit = this.value.unit;
+            const val = this.value.value;
+            return `${val} ${unit?.label} [${unit?.id}]`;
+        } else if (this.value instanceof OntologyClass) {
+            const label = this.value?.label;
+            const id = this.value?.id;
+            return `${label} [${id}]`;
+        }
+        return '';
     }
 }
 
 export class ComplexValue {
     typedQuantities: TypedQuantity[];
-
-    toString() {
-        let quantities = this.typedQuantities;
-        let result = '';
-        for (let typedQuantity of quantities) {
-            let unit = typedQuantity?.quantity?.unit;
-            let val = typedQuantity?.quantity?.value;
-            // let type = typedQuantity?.type
-            result += `${val} ${unit?.label} [${unit?.id}], `;
-        }
-        return result;
-    }
     static convert(obj: any): ComplexValue {
         const complexValue = new ComplexValue();
         if (obj['typedQuantities']) {
             complexValue.typedQuantities = TypedQuantity.convert(obj['typedQuantities']);
         } else {
-            throw new Error(`Phenopacket file is missing 'typedQuantities' field in 'complexValue' object.`)
+            throw new Error(`Phenopacket file is missing 'typedQuantities' field in 'complexValue' object.`);
         }
         return complexValue;
+    }
+
+    toString() {
+        const quantities = this.typedQuantities;
+        let result = '';
+        for (const typedQuantity of quantities) {
+            const unit = typedQuantity?.quantity?.unit;
+            const val = typedQuantity?.quantity?.value;
+            // let type = typedQuantity?.type
+            result += `${val} ${unit?.label} [${unit?.id}], `;
+        }
+        return result;
     }
 }
 
@@ -102,12 +102,12 @@ export class Quantity {
         if (obj['unit']) {
             quantity.unit = OntologyClass.convert(obj['unit']);
         } else {
-            throw new Error(`Phenopacket file is missing 'unit' field in 'quantity' object.`)
+            throw new Error(`Phenopacket file is missing 'unit' field in 'quantity' object.`);
         }
         if (obj['value']) {
             quantity.value = obj['value'];
         } else {
-            throw new Error(`Phenopacket file is missing 'value' field in 'quantity' object.`)
+            throw new Error(`Phenopacket file is missing 'value' field in 'quantity' object.`);
         }
         if (obj['referenceRange']) {
             quantity.referenceRange = ReferenceRange.convert(obj['referenceRange']);
@@ -123,7 +123,7 @@ export class TypedQuantity {
     public static convert(obj: any): any {
         if (Array.isArray(obj)) {
             const typedQuantities = [];
-            for (let typed of obj) {
+            for (const typed of obj) {
                 const typedQuantity = this.create(typed);
                 typedQuantities.push(typedQuantity);
             }
@@ -138,12 +138,12 @@ export class TypedQuantity {
         if (obj['type']) {
             typedQuantity.type = OntologyClass.convert(obj['type']);
         } else {
-            throw new Error(`Phenopacket file is missing 'type' field in 'typedQuantities' object.`)
+            throw new Error(`Phenopacket file is missing 'type' field in 'typedQuantities' object.`);
         }
         if (obj['quantity']) {
             typedQuantity.quantity = Quantity.convert(obj['quantity']);
         } else {
-            throw new Error(`Phenopacket file is missing 'quantity' field in 'typedQuantities' object.`)
+            throw new Error(`Phenopacket file is missing 'quantity' field in 'typedQuantities' object.`);
         }
         return typedQuantity;
     }
@@ -159,17 +159,17 @@ export class ReferenceRange {
         if (obj['unit']) {
             referenceRange.unit = OntologyClass.convert(obj['unit']);
         } else {
-            throw new Error(`Phenopacket file is missing 'unit' field in 'referenceRange' object.`)
+            throw new Error(`Phenopacket file is missing 'unit' field in 'referenceRange' object.`);
         }
         if (obj['low']) {
             referenceRange.low = obj['low'];
         } else {
-            throw new Error(`Phenopacket file is missing 'low' field in 'referenceRange' object.`)
+            throw new Error(`Phenopacket file is missing 'low' field in 'referenceRange' object.`);
         }
         if (obj['high']) {
             referenceRange.high = obj['high'];
         } else {
-            throw new Error(`Phenopacket file is missing 'high' field in 'referenceRange' object.`)
+            throw new Error(`Phenopacket file is missing 'high' field in 'referenceRange' object.`);
         }
         return referenceRange;
     }

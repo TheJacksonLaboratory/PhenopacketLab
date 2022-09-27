@@ -14,27 +14,28 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
   styleUrls: ['./disease.component.scss']
 })
 export class DiseaseComponent implements OnInit {
-  // search box params
-  itemName = "Disease";
-  searchLabel = "Disease name";
-  placeHolderTxt = "Enter disease name";
-  localStorageKey = "hpo_diseases";
+  @Input()
+  phenopacketDiseases: Disease[] = [];
 
-  //Table items
+  @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
+
+  // search box params
+  itemName = 'Disease';
+  searchLabel = 'Disease name';
+  placeHolderTxt = 'Enter disease name';
+  localStorageKey = 'hpo_diseases';
+
+  // Table items
   displayedColumns = ['id', 'name', 'status', 'onset', 'resolution', 'metadata', 'remove'];
 
   expandedElement: Disease | null;
-  @Input()
-  phenopacketDiseases: Disease[] = [];
-  
-  @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
   // diseases: MondoDisease[] = [];
   datasource = new DataPresentMatTableDataSource<Disease>();
 
   diseaseCount: number;
-  //searchparams
-  currSearchParams: any = {}
+  // searchparams
+  currSearchParams: any = {};
 
   dialogRef: any;
   spinnerDialogRef: any;
@@ -67,7 +68,7 @@ export class DiseaseComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'ok') {
         this.phenopacketDiseases.forEach((disease, index) => {
-          if (disease == element) {
+          if (disease === element) {
             this.phenopacketDiseases.splice(index, 1);
 
           }
@@ -80,9 +81,8 @@ export class DiseaseComponent implements OnInit {
   }
 
   onSearchCriteriaChange(searchCriteria: any) {
-    const params: any = {};
     this.currSearchParams.offset = 0;
-    let id = searchCriteria.selectedItems[0].selectedValue.id;
+    const id = searchCriteria.selectedItems[0].selectedValue.id;
 
     if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
       this.currSearchParams = searchCriteria;
@@ -94,9 +94,9 @@ export class DiseaseComponent implements OnInit {
   private _queryDiseasesById(id: string) {
     this.openSpinnerDialog();
     this.searchService.queryDiseasesById(id).subscribe(data => {
-      let dis = new MondoDisease(data);
+      const dis = new MondoDisease(data);
       // convert MondoDisease to phenopacket Disease
-      let disease = dis.getPhenoDisease();
+      const disease = dis.getPhenoDisease();
       this.addDisease(disease);
       this.spinnerDialogRef.close();
     },
@@ -113,7 +113,7 @@ export class DiseaseComponent implements OnInit {
   }
 
   expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element
+    this.expandedElement = this.expandedElement === element ? null : element;
   }
 
   changeDisease(disease: Disease) {
