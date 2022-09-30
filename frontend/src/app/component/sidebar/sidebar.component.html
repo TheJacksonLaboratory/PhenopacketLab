@@ -1,18 +1,62 @@
-<div class="logo">
-    <a href="localhost:4200" class="simple-text">
-        <div class="logo-img">
-            <img src="/assets/img/PhenoPackets_Logo.png"/>
-        </div>
-       Phenopacket Lab
-    </a>
-</div>
-<div class="sidebar-wrapper">
-    <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
-            </a>
-        </li>
-    </ul>
-</div>
+<!-- <div>
+  <a href="localhost:4200" class="simple-text">
+    <img src="/assets/img/PhenoPackets_Logo.png" />
+    Phenopacket Lab
+  </a>
+</div> -->
+<!-- <div class="sidebar-wrapper">
+  <ul class="nav">
+    <li
+      routerLinkActive="active"
+      *ngFor="let menuItem of menuItems"
+      class="{{ menuItem.class }} nav-item"
+    >
+      <a class="nav-link" [routerLink]="[menuItem.path]">
+        <i class="material-icons">{{ menuItem.icon }}</i>
+        <p>{{ menuItem.title }}</p>
+      </a>
+    </li>
+  </ul>
+</div> -->
+<mat-nav-list>
+  <mat-list-item
+    id="nav-dashboard"
+    [routerLink]="['/dashboard']"
+    routerLinkActive="active"
+    [matTooltip]="!open ? 'Dashboard' : null">
+    <mat-icon mat-list-icon>dashboard</mat-icon>
+    <p matLine *ngIf="open">Dashboard</p>
+  </mat-list-item>
+  <mat-list-item
+    id="nav-families"
+    [routerLink]="['/families']"
+    routerLinkActive="active"
+    [matTooltip]="!open ? 'Families' : null">
+    <mat-icon mat-list-icon>family_restroom</mat-icon>
+    <p matLine *ngIf="open">Families</p>
+  </mat-list-item>
+  <mat-list-item
+    id="nav-cohorts"
+    [routerLink]="['/cohorts']"
+    routerLinkActive="active"
+    [matTooltip]="!open ? 'Cohorts' : null">
+    <mat-icon mat-list-icon>groups</mat-icon>
+    <p matLine *ngIf="open">Cohorts</p>
+  </mat-list-item>
+  <mat-list-item
+    id="nav-pheno-creator"
+    [routerLink]="['/pheno-creator']"
+    routerLinkActive="active"
+    [matTooltip]="!open ? 'Create Phenopacket' : null">
+    <mat-icon mat-list-icon>library_add</mat-icon>
+    <p matLine *ngIf="open">Create Phenopacket</p>
+  </mat-list-item>
+  <mat-list-item
+    id="nav-about"
+    [routerLink]="['/about']"
+    routerLinkActive="active"
+    [matTooltip]="!open ? 'About' : null">
+    <mat-icon mat-list-icon>info</mat-icon>
+    <p matLine *ngIf="open">About</p>
+  </mat-list-item>
+</mat-nav-list>

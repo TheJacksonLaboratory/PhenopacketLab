@@ -20,12 +20,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatListModule} from '@angular/material/list';
+import {MatDividerModule} from '@angular/material/divider';
 
+import { SharedModule } from '../shared/shared.module';
 import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
 import { DiseaseComponent } from './disease/disease.component';
 import { PhenotypicFeatureComponent } from './phenotypic-feature/phenotypic-feature.component';
 import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.component';
-import { SharedModule } from '../shared/shared.module';
 import { FileComponent } from './file/file.component';
 import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { PhenopacketComponent } from './phenopacket.component';
@@ -38,7 +40,6 @@ import { MedicalActionDetailDialogComponent } from './medical-action/medical-act
 import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
-import {MatDividerModule} from "@angular/material/divider";
 import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
@@ -82,7 +83,8 @@ import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/bio
         MatDialogModule,
         MatChipsModule,
         SharedModule,
-        MatDividerModule
+        MatDividerModule,
+        MatListModule
     ],
   declarations: [
     MeasurementComponent,

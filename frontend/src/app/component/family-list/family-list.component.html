@@ -1,98 +1,146 @@
 <div>
-    <button mat-raised-button class="add-tab-button" (click)="addTab()">
-        Add new individual
-    </button>
-    <button mat-raised-button type="submit" matTooltip="Upload one or more phenopacket files in JSON or Yaml format" [matTooltipShowDelay]="2000"
-        (click)="openFileUploadDialog()">
-        <mat-icon matSuffix>cloud_upload</mat-icon>
-        Upload Phenopacket File
-    </button>
-
+  <a routerLink="/pheno-creator"
+    ><button mat-raised-button class="add-tab-button">
+      Add new individual
+    </button></a
+  >
+  <!-- <button mat-raised-button routerLink="/pheno-creator" class="add-tab-button">Add new individual</button> -->
+  <button
+    mat-raised-button
+    type="submit"
+    matTooltip="Upload one or more phenopacket files in JSON or Yaml format"
+    [matTooltipShowDelay]="2000"
+    (click)="openFileUploadDialog()"
+  >
+    <mat-icon matSuffix>cloud_upload</mat-icon>
+    Upload Phenopacket File
+  </button>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-            <mat-tab label="Summary">
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- Table summary of individuals -->
-                        <table #varTable mat-table class="table-hover mat-elevation-z2" [dataSource]="datasource" matSort
-                            multiTemplateDataRows>
-                            <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef> Id </th>
-                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                            </ng-container>
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="selected.setValue($event)"
+>
+  <mat-tab label="Summary">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Table summary of individuals -->
+        <table
+          #varTable
+          mat-table
+          class="table-hover mat-elevation-z2"
+          [dataSource]="datasource"
+          matSort
+          multiTemplateDataRows
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Id</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
 
-                            <ng-container matColumnDef="dob">
-                                <th mat-header-cell *matHeaderCellDef> Date of birth </th>
-                                <td mat-cell *matCellDef="let element"> {{formatDate(element.subject?.dateOfBirth,
-                                    'MM-dd-yyyy')}} </td>
-                            </ng-container>
+          <ng-container matColumnDef="dob">
+            <th mat-header-cell *matHeaderCellDef>Date of birth</th>
+            <td mat-cell *matCellDef="let element">
+              {{ formatDate(element.subject?.dateOfBirth, "MM-dd-yyyy") }}
+            </td>
+          </ng-container>
 
-                            <ng-container matColumnDef="sex">
-                                <th mat-header-cell *matHeaderCellDef> Sex </th>
-                                <td mat-cell *matCellDef="let element"> {{element.subject?.sex}} </td>
-                            </ng-container>
+          <ng-container matColumnDef="sex">
+            <th mat-header-cell *matHeaderCellDef>Sex</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.subject?.sex }}
+            </td>
+          </ng-container>
 
-                            <ng-container matColumnDef="proband">
-                                <th mat-header-cell *matHeaderCellDef> Proband </th>
-                                <td mat-cell *matCellDef="let element; let i = index">
-                                    <mat-checkbox [checked]="element.isProband" disabled="true">
-                                    </mat-checkbox>
-                                </td>
-                            </ng-container>
+          <ng-container matColumnDef="proband">
+            <th mat-header-cell *matHeaderCellDef>Proband</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <mat-checkbox [checked]="element.isProband" disabled="true">
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
-                            <ng-container matColumnDef="remove">
-                                <th mat-header-cell *matHeaderCellDef></th>
-                                <td mat-cell *matCellDef="let element">
-                                    <button (click)="$event.stopPropagation()" mat-icon-button type="submit"
-                                        class="pull-right" matTooltip="Remove individual" [matTooltipShowDelay]="2000"
-                                        (click)="removeIndividual(element)">
-                                        <mat-icon matSuffix>delete</mat-icon>
-                                    </button>
-                                </td>
-                            </ng-container>
+          <ng-container matColumnDef="remove">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                (click)="$event.stopPropagation()"
+                mat-icon-button
+                type="submit"
+                class="pull-right"
+                matTooltip="Remove individual"
+                [matTooltipShowDelay]="2000"
+                (click)="removeIndividual(element)"
+              >
+                <mat-icon matSuffix>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-                            <tr mat-row (click)="openTab(element)" *matRowDef="let element; columns: displayedColumns;"
-                                class="example-element-row" matTooltip="Click to open in new tab" [matTooltipShowDelay]="2000">
-                            </tr>
+          <tr
+            mat-row
+            (click)="openTab(element)"
+            *matRowDef="let element; columns: displayedColumns"
+            class="example-element-row"
+            matTooltip="Click to open in new tab"
+            [matTooltipShowDelay]="2000"
+          ></tr>
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
-                        </table>
-                    </div>
-                </div>
-
-            </mat-tab>
-            <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
-                <ng-template mat-tab-label>{{ phenopacket.id }}
-                    <button mat-icon-button type="submit" class="close-icon" matTooltip="Close this tab" [matTooltipShowDelay]="2000"
-                        (click)="closeTab(phenopacket)">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </ng-template>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Phenopacket</h3>
-                    </div>
-                    <div class="col-md-6">
-                        <button (click)="closeTab(phenopacket)" mat-icon-button type="submit"
-                            class="pull-right hover-icon" matTooltip="Close this tab" [matTooltipShowDelay]="2000">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="row margin">
-                    <mat-checkbox (change)="changeProband($event, phenopacket)" [checked]="phenopacket.isProband">
-                        Proband</mat-checkbox>
-                </div>
-
-                <app-phenopacket [phenopacket]="phenopacket" (onIdChanged)="changeId($event, phenopacket)"
-                    (onSexChanged)="changeSex($event, phenopacket)" (onDobChanged)="changeDob($event, phenopacket)">
-                </app-phenopacket>
-            </mat-tab>
-        </mat-tab-group>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+        </table>
+      </div>
     </div>
-</div>
+  </mat-tab>
+  <mat-tab *ngFor="let phenopacket of individualTabs; let index = index">
+    <ng-template mat-tab-label
+      >{{ phenopacket.id }}
+      <button
+        mat-icon-button
+        type="submit"
+        class="close-icon"
+        matTooltip="Close this tab"
+        [matTooltipShowDelay]="2000"
+        (click)="closeTab(phenopacket)"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </ng-template>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Phenopacket</h3>
+      </div>
+      <div class="col-md-6">
+        <button
+          (click)="closeTab(phenopacket)"
+          mat-icon-button
+          type="submit"
+          class="pull-right hover-icon"
+          matTooltip="Close this tab"
+          [matTooltipShowDelay]="2000"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="row margin">
+      <mat-checkbox
+        (change)="changeProband($event, phenopacket)"
+        [checked]="phenopacket.isProband"
+      >
+        Proband</mat-checkbox
+      >
+    </div>
+
+    <app-phenopacket
+      [phenopacket]="phenopacket"
+      (onIdChanged)="changeId($event, phenopacket)"
+      (onSexChanged)="changeSex($event, phenopacket)"
+      (onDobChanged)="changeDob($event, phenopacket)"
+    >
+    </app-phenopacket>
+  </mat-tab>
+</mat-tab-group>

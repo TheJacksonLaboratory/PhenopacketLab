@@ -28,7 +28,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   familyMap = new Map<string, Phenopacket>();
   selected = new UntypedFormControl(0);
 
-  //Table items
+  // Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];
 
   datasource = new MatTableDataSource<Phenopacket>();
@@ -72,6 +72,28 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  // createNewPhenopacket() {
+  //   let phenopacket;
+  //   // add new phenopacket using wizard creator
+  //   const phenopacketCreatorData = {};
+  //   phenopacketCreatorData['displayCancelButton'] = true;
+  //   const dialogRef = this.dialog.open(PhenoCreatorComponent, {
+  //     width: '800px',
+  //     data: phenopacketCreatorData
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result !== undefined) {
+  //       let newPhenopacket = result.phenopacket;
+  //       if (newPhenopacket !== undefined) {
+  //         phenopacket = newPhenopacket;
+  //         // emit change
+  //         // this.onFeatureChanged.emit(this.phenotypicFeature);
+  //       }
+  //     }
+  //   });
+  //   this.addTab(phenopacket);
+  // }
+
   addTab(phenopacket?: Phenopacket) {
     if (phenopacket === undefined) {
       phenopacket = new Phenopacket();
@@ -81,17 +103,17 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.individualTabs = Array.from(this.individualTabsMap.values());
     // add new phenopacket to family
     if (this.family === undefined) {
-      this.family = new Family("family-id");
+      this.family = new Family('family-id');
     }
 
     phenopacket.isProband = false;
     this.family.relatives.set(phenopacket.id, phenopacket);
 
     this.individualTabsMap.set(phenopacket.id, phenopacket);
-    console.log("phenopacket:");
+    console.log('phenopacket:');
     console.log(phenopacket);
     this.familyMap.set(phenopacket.id, phenopacket);
-    console.log("familyMap");
+    console.log('familyMap');
     console.log(this.familyMap);
     this.selected.setValue(this.individualTabs.keys.length);
     this.datasource.data = Array.from(this.familyMap.values());
@@ -133,8 +155,8 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   changeProband(element: any, phenopacket: Phenopacket) {
-    let currentProband = this.family.proband;
-    let isProband = element.checked !== undefined ? element.checked : false;
+    const currentProband = this.family.proband;
+    const isProband = element.checked !== undefined ? element.checked : false;
     this.individualTabsMap.forEach((value: Phenopacket, key: String) => {
       if (isProband && value.id === phenopacket.id) {
         // if proband then we select
@@ -147,8 +169,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
         if (currentProband) {
           this.family.relatives.set(currentProband.id, currentProband);
         }
-      }
-      else if (!isProband && value.id === phenopacket.id) {
+      } else if (!isProband && value.id === phenopacket.id) {
         // if not proband, we deselect
         value.isProband = false;
         this.selectionProband.deselect(value);
@@ -166,18 +187,18 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   changeId(id: string, phenopacket: Phenopacket) {
-    let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
+    const selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     selectedIndividual.id = id;
     // change id in map
     this.individualTabsMap.delete(phenopacket.id);
     this.individualTabsMap.set(selectedIndividual.id, selectedIndividual);
   }
   changeSex(sex: Sex, phenopacket: Phenopacket) {
-    let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
+    const selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     selectedIndividual.subject.sex = sex;
   }
   changeDob(dob: Date, phenopacket: Phenopacket) {
-    let selectedIndividual = this.individualTabsMap.get(phenopacket.id);
+    const selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     if (dob) {
       selectedIndividual.subject.dateOfBirth = dob.toISOString();
     }
@@ -223,7 +244,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
    * Open dialog to upload a new file
    */
   public openFileUploadDialog() {
-    let currPhenopackets = [];
+    const currPhenopackets = [];
     if (this.family) {
       if (this.family.proband) {
         currPhenopackets.push(this.family.proband);
@@ -238,7 +259,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       // refresh datasource
       this.refresh();
-      //wait 2 sec
+      // wait 2 sec
       // (async () => {
       // await this.delay(2000);
       // this.refresh();

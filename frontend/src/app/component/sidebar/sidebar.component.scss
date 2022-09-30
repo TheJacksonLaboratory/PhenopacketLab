@@ -1,10 +1,11 @@
-img {
-    border-radius: 1px;
-    padding: 2px;
-    width: 10px;
-    margin-right: 5px;
+.active * {
+    color: #004D40 !important;
 }
 
-img:hover {
-    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+mat-list-item * {
+    color: #00796B;
+}
+
+p {
+    margin-right: 1rem !important;
 }

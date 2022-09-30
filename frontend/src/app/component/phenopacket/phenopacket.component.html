@@ -1,325 +1,391 @@
-<div class="card">
-
-    <div class="card-body margin">
+<div class="row">
+  <div class="col-md-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Phenopacket id</mat-label>
+      <input
+        matInput
+        placeholder="e.g. patient-I"
+        [formControl]="phenoIdControl"
+        required
+      />
+      <mat-error *ngIf="phenoIdControl.invalid"
+        >Please enter a phenopacket id.</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="col-md-9">
+    <mat-form-field appearance="outline">
+      <mat-label>Summary</mat-label>
+      <textarea matInput>{{ summary }}</textarea>
+    </mat-form-field>
+  </div>
+ 
+</div>
+<div class="row">
+  <h3>Individual</h3>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-12">
         <div class="row">
-            <div class="col-md-3">
-                <mat-form-field appearance="outline">
-                    <mat-label>Phenopacket id</mat-label>
-                    <input matInput placeholder="e.g. patient-I" [formControl]="phenoIdControl" required>
-                    <mat-error *ngIf="phenoIdControl.invalid">Please enter a phenopacket id.</mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-md-9">
-                <mat-form-field appearance="outline">
-                    <mat-label>Summary</mat-label>
-                    <textarea matInput>{{summary}}</textarea>
-                </mat-form-field>
-
-            </div>
-            <!-- <div class="col-md-3">
-                <div *ngIf="isFamily">
-                    <mat-checkbox [formControl]="phenoProbandControl">Proband</mat-checkbox>
-                </div>
-            </div> -->
+          <div class="col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Date of birth</mat-label>
+              <input
+                matInput
+                [matDatepicker]="datepicker"
+                [formControl]="phenoDobControl"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="datepicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>
+                    Apply
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <b>Time of last encounter: </b>{{ lastEncounterDate }}
+            <button
+              class="hover-icon"
+              (click)="editTimeOfLastEncounter()"
+              mat-icon-button
+              type="submit"
+              matTooltip="Edit time of last encounter"
+              [matTooltipShowDelay]="2000"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
         </div>
-        <div class="row">
-            <h3>Individual</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Date of birth</mat-label>
-                                    <input matInput [matDatepicker]="datepicker" [formControl]="phenoDobControl">
-                                    <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                                    <mat-datepicker #datepicker>
-                                        <mat-datepicker-actions>
-                                            <button mat-button matDatepickerCancel>Cancel</button>
-                                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                                        </mat-datepicker-actions>
-                                    </mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6">
-                                <b>Time of last encounter: </b>{{lastEncounterDate}}
-                                <button class="hover-icon" (click)="editTimeOfLastEncounter()" mat-icon-button
-                                    type="submit" matTooltip="Edit time of last encounter" [matTooltipShowDelay]="2000">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" matTooltip="Observed apparent sex of the individual"
-                            [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="sex" [formControl]="phenoSexControl">
-                                <mat-option *ngFor="let sex of getSexes()" [value]="sex">
-                                    {{sex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" matTooltip="The karyotypic sex of the individual"
-                            [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="karyotypicSex">
-                                <mat-option *ngFor="let karyotypicSex of getKaryotypicSexes()" [value]="karyotypicSex">
-                                    {{karyotypicSex}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Karyotypic sex</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" matTooltip="Self-identified gender"
-                            [matTooltipShowDelay]="2000">
-                            <mat-select [(value)]="gender">
-                                <mat-option value="unknown">Unknown</mat-option>
-                                <mat-option value="female">Female</mat-option>
-                                <mat-option value="male">Male</mat-option>
-                                <mat-option value="nonbinary">Nonbinary</mat-option>
-                                <mat-option value="other">Other</mat-option>
-                            </mat-select>
-                            <mat-label>
-                                <b>Gender</b>
-                            </mat-label>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="vital-status" class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h5><b>Vital Status</b></h5>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button class="hover-icon pull-right" (click)="editStatus()" mat-icon-button
-                                            type="submit" matTooltip="Edit Vital Status" [matTooltipShowDelay]="2000">
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Status: {{status}}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Time of death: {{timeOfDeath}}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Cause of death: {{causeOfDeath}}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        Survival time (days): {{survivalTime}}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-        </div>
-
-        <br>
-        <br>
-        <!-- <mat-divider></mat-divider> -->
-
-        <div class="row">
-            <div class="col-md-12">
-                <mat-accordion class="accordion-headers-align">
-                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">list</mat-icon> Phenotypic Features
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Describes a phenotype that characterizes the subject of the Phenopacket
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-phenotypic-feature [phenotypicFeatures]="getPhenotypicFeatures()"
-                            (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"></app-phenotypic-feature>
-
-                        <mat-action-row>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">square_foot</mat-icon> Measurements
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Used to record individual measurements, which can capture quantitative, ordinal (e.g.,
-                                absent/present), or categorical measurements
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <app-measurement [measurements]="getPhenopacketMeasurements()"
-                            (onMeasurementsChanged)="changeMeasurements($event)"></app-measurement>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">biotech</mat-icon> Biosamples
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Unit of biological material from which the substrate molecules (e.g. genomic DNA, RNA,
-                                proteins) for molecular analyses (e.g. sequencing, array hybridisation,
-                                mass-spectrometry) are extracted
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-biosample [biosamples]="getBiosamples()"
-                        (onBiosampleChanged)="changeBiosamples($event)"></app-biosample>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">interpreter_mode</mat-icon> Interpretations
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Represents the interpretation of a genomic analysis, such as the report from a
-                                diagnostic laboratory
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-interpretation [interpretations]="getInterpretations()"></app-interpretation>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">coronavirus</mat-icon> Diseases
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Diagnosis, i.e., an inference or hypothesis about the cause underlying the observed
-                                phenotypic abnormalities
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-disease [phenopacketDiseases]="getPhenopacketDiseases()"
-                            (onDiseasesChanged)="changeDiseases($event)"></app-disease>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">medical_services</mat-icon> Medical Actions
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Describes medications, procedures, other actions taken for clinical management
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-medical-action [medicalActions]="getPhenopacketMedicalActions()"
-                            [diseases]="getPhenopacketDiseases()"
-                            (onMedicalActionChanged)="changeMedicalActions($event)"></app-medical-action>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">text_snippet</mat-icon> Files
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                External files linked with the structured phenotypic data, which can be used to inform
-                                analyses
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)">
-                        </app-file>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">Next</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon class="tab-icon">data_object</mat-icon> Metadata
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                Structured definitions of the resources and ontologies used within the phenopacket
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <app-metadata [metadata]="phenopacket?.metadata"></app-metadata>
-
-                        <mat-action-row>
-                            <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                            <button mat-button color="primary" (click)="nextStep()">End</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
-
-
-                </mat-accordion>
-
-            </div>
-        </div>
-
+      </div>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field
+          appearance="outline"
+          matTooltip="Observed apparent sex of the individual"
+          [matTooltipShowDelay]="2000"
+        >
+          <mat-select [(value)]="sex" [formControl]="phenoSexControl">
+            <mat-option *ngFor="let sex of getSexes()" [value]="sex">
+              {{ sex }}
+            </mat-option>
+          </mat-select>
+          <mat-label>
+            <b>Sex</b>
+          </mat-label>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field
+          appearance="outline"
+          matTooltip="The karyotypic sex of the individual"
+          [matTooltipShowDelay]="2000"
+        >
+          <mat-select [(value)]="karyotypicSex">
+            <mat-option
+              *ngFor="let karyotypicSex of getKaryotypicSexes()"
+              [value]="karyotypicSex"
+            >
+              {{ karyotypicSex }}
+            </mat-option>
+          </mat-select>
+          <mat-label>
+            <b>Karyotypic sex</b>
+          </mat-label>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field
+          appearance="outline"
+          matTooltip="Self-identified gender"
+          [matTooltipShowDelay]="2000"
+        >
+          <mat-select [(value)]="gender">
+            <mat-option value="unknown">Unknown</mat-option>
+            <mat-option value="female">Female</mat-option>
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="nonbinary">Nonbinary</mat-option>
+            <mat-option value="other">Other</mat-option>
+          </mat-select>
+          <mat-label>
+            <b>Gender</b>
+          </mat-label>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="vital-status" class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <h5><b>Vital Status</b></h5>
+              </div>
+              <div class="col-md-6">
+                <button
+                  class="hover-icon pull-right"
+                  (click)="editStatus()"
+                  mat-icon-button
+                  type="submit"
+                  matTooltip="Edit Vital Status"
+                  [matTooltipShowDelay]="2000"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">Status: {{ status }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">Time of death: {{ timeOfDeath }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">Cause of death: {{ causeOfDeath }}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                Survival time (days): {{ survivalTime }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+<br />
+<!-- <mat-divider></mat-divider> -->
+
+<div class="row">
+  <div class="col-md-12">
+    <mat-accordion class="accordion-headers-align">
+      <mat-expansion-panel
+        [expanded]="step === 0"
+        (opened)="setStep(0)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">list</mat-icon> Phenotypic Features
+          </mat-panel-title>
+          <mat-panel-description>
+            Describes a phenotype that characterizes the subject of the
+            Phenopacket
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-phenotypic-feature
+          [phenotypicFeatures]="getPhenotypicFeatures()"
+          (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
+        ></app-phenotypic-feature>
+
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 1"
+        (opened)="setStep(1)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">square_foot</mat-icon> Measurements
+          </mat-panel-title>
+          <mat-panel-description>
+            Used to record individual measurements, which can capture
+            quantitative, ordinal (e.g., absent/present), or categorical
+            measurements
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-measurement
+          [measurements]="getPhenopacketMeasurements()"
+          (onMeasurementsChanged)="changeMeasurements($event)"
+        ></app-measurement>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 2"
+        (opened)="setStep(2)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">biotech</mat-icon> Biosamples
+          </mat-panel-title>
+          <mat-panel-description>
+            Unit of biological material from which the substrate molecules (e.g.
+            genomic DNA, RNA, proteins) for molecular analyses (e.g. sequencing,
+            array hybridisation, mass-spectrometry) are extracted
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-biosample
+          [biosamples]="getBiosamples()"
+          (onBiosampleChanged)="changeBiosamples($event)"
+        ></app-biosample>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 3"
+        (opened)="setStep(3)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">interpreter_mode</mat-icon>
+            Interpretations
+          </mat-panel-title>
+          <mat-panel-description>
+            Represents the interpretation of a genomic analysis, such as the
+            report from a diagnostic laboratory
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-interpretation
+          [interpretations]="getInterpretations()"
+        ></app-interpretation>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 4"
+        (opened)="setStep(4)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">coronavirus</mat-icon> Diseases
+          </mat-panel-title>
+          <mat-panel-description>
+            Diagnosis, i.e., an inference or hypothesis about the cause
+            underlying the observed phenotypic abnormalities
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-disease
+          [phenopacketDiseases]="getPhenopacketDiseases()"
+          (onDiseasesChanged)="changeDiseases($event)"
+        ></app-disease>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 5"
+        (opened)="setStep(5)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">medical_services</mat-icon> Medical
+            Actions
+          </mat-panel-title>
+          <mat-panel-description>
+            Describes medications, procedures, other actions taken for clinical
+            management
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-medical-action
+          [medicalActions]="getPhenopacketMedicalActions()"
+          [diseases]="getPhenopacketDiseases()"
+          (onMedicalActionChanged)="changeMedicalActions($event)"
+        ></app-medical-action>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 6"
+        (opened)="setStep(6)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">text_snippet</mat-icon> Files
+          </mat-panel-title>
+          <mat-panel-description>
+            External files linked with the structured phenotypic data, which can
+            be used to inform analyses
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-file
+          [phenopacketFiles]="getPhenopacketFiles()"
+          (onFilesChanged)="changeFiles($event)"
+        >
+        </app-file>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        [expanded]="step === 7"
+        (opened)="setStep(7)"
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon class="tab-icon">data_object</mat-icon> Metadata
+          </mat-panel-title>
+          <mat-panel-description>
+            Structured definitions of the resources and ontologies used within
+            the phenopacket
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <app-metadata [metadata]="phenopacket?.metadata"></app-metadata>
+
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">End</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

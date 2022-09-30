@@ -1,0 +1,63 @@
+app-header {
+  position: fixed;
+  width: 100vw;
+  z-index: 10;
+}
+
+mat-sidenav-container {
+  margin-top: 64px;
+  height: 90vh;
+
+  mat-sidenav {
+    overflow-x: hidden;
+    transform: none;
+    visibility: visible !important;
+
+    side-nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+  }
+
+  mat-sidenav-content {
+    margin-left: 64px;
+  }
+}
+
+@media (min-height: 710px) {
+  mat-sidenav-container {
+    height: 91vh;
+  }
+}
+
+@media (min-height: 800px) {
+  mat-sidenav-container {
+    height: 92vh;
+  }
+}
+
+@media (min-height: 850px) {
+  mat-sidenav-container {
+    height: 92.5vh;
+  }
+}
+
+@media (min-height: 910px) {
+  mat-sidenav-container {
+    height: 93vh;
+  }
+}
+
+@media (min-height: 980px) {
+  mat-sidenav-container {
+    height: 93.5vh;
+  }
+}
+
+@media (min-height: 1060px) {
+  mat-sidenav-container {
+    height: 94vh;
+  }
+}

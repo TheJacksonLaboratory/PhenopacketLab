@@ -86,4 +86,9 @@ export class GenoInterpretationDetailComponent implements OnInit {
       return this.genoInterpretation.call.toString() === GeneDescriptor.className;
     }
   }
+  getCall() {
+    if (this.genoInterpretation) {
+      return this.genoInterpretation.call;
+    }
+  }
 }

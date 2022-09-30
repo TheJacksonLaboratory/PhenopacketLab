@@ -1,160 +1,218 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <br>
-                    <div class="card-body">
-                        <mat-tab-group [selectedIndex]="selectedTab" mat-stretch-tabs>
-                            <mat-tab label="Phenopacket Lab">
-                                <h3>PHENOPACKET LAB</h3>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <br />
+      <div class="card-body">
+        <mat-tab-group [selectedIndex]="selectedTab" mat-stretch-tabs>
+          <mat-tab label="Phenopacket Lab">
+            <h3>PHENOPACKET LAB</h3>
 
-                                <p> The Phenopacket Lab application is meant to be a user interface to upload, edit and 
-                                    save Phenopackets. Phenopackets are JSON or YAML files with a structure that follows 
-                                    the <a href="https://phenopacket-schema.readthedocs.io/en/master/basics.html" target="_blank">Phenopacket 
-                                    Schema</a> standard. It is an open standard for sharing disease and phenotype 
-                                    information to improve our ability to understand, diagnose and treat both rare and 
-                                    common diseases.
-                                </p>
+            <p>
+              The Phenopacket Lab application is meant to be a user interface to
+              upload, edit and save Phenopackets. Phenopackets are JSON or YAML
+              files with a structure that follows the
+              <a
+                href="https://phenopacket-schema.readthedocs.io/en/master/basics.html"
+                target="_blank"
+                >Phenopacket Schema</a
+              >
+              standard. It is an open standard for sharing disease and phenotype
+              information to improve our ability to understand, diagnose and
+              treat both rare and common diseases.
+            </p>
 
-                                <p>
-                                    This application is still under development and allows currently only the upload of JSON 
-                                    phenopacket files. Future features will include Phenopacket saving, export and search. A user
-                                    authentication will also be implemented in order to enable users to save their phenopackets on
-                                    the website.
-
-                                </p>
-                            </mat-tab>
-                            <mat-tab label="Team">
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <ul>
-                                            <li>
-                                                <h3>
-                                                    <a href="https://www.jax.org/research-and-faculty/faculty/peter-robinson"
-                                                        target="_blank">Peter Robinson, M.D., MSc.</a>
-                                                </h3>
-                                                <span>{{ 'Professor of Computational Biology' | uppercase
-                                                    }}</span>
-                                            </li>
-                                            <li>
-                                                <h3>
-                                                    <a href="https://www.jax.org/people/daniel-danis"
-                                                        target="_blank">Daniel Danis, Ph.D.</a>
-                                                </h3>
-                                                <span>{{ 'Associate Computational Scientist' | uppercase
-                                                    }}</span>
-                                            </li>
-                                            <li>
-                                                <h3>
-                                                    <a href="https://www.jax.org/people/michael-gargano"
-                                                        target="_blank">Michael Gargano, B.S.</a>
-                                                </h3>
-                                                <span>{{ 'Scientific Software Engineer' | uppercase}}</span>
-                                            </li>
-                                            <li>
-                                                <h3>
-                                                    <a href="https://www.jax.org/people/baha-el-kassaby"
-                                                        target="_blank">Bah&aacute; El Kassaby, MSc.</a>
-                                                </h3>
-                                                <span>{{ 'Senior Scientific Software Engineer' | uppercase
-                                                    }}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </mat-tab>
-
-
-                            <mat-tab label="Publications">
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <ul>
-                                            <li>
-                                                <h4>
-                                                    <a href="https://doi.org/10.1002/ggn2.202200016"
-                                                        target="_blank">
-                                                        GA4GH Phenopackets: A Practical Introduction
-                                                    </a>
-                                                </h4>
-                                                <p>
-                                                    Ladewig, M. S., Jacobsen, J. O. B., Wagner, A. H., Danis, D., El Kassaby, B., Gargano, M., Groza, T., Baudis, M., Steinhaus, R., Seelow, D., Bechrakis, N. E., Mungall, C. J., Schofield, P. N., Elemento, O., Smith, L., McMurry, J. A., Munoz-Torres, M., Haendel, M. A., Robinson, P. N.  
-                                                    <br>
-                                                    Advanced Genetics 2022, 2200016. https://doi.org/10.1002/ggn2.202200016
-                                                </p>
-                                            </li>
-                                            <br>
-                                            <li>
-                                                <h4>
-                                                    <a href="https://doi.org/10.1038/s41587-022-01357-4" target="_blank">
-                                                        The GA4GH Phenopacket schema defines a computable representation of clinical data
-                                                    </a>
-                                                </h4>
-                                                <p>
-                                                    Jacobsen, J.O.B, Baudis, M., Baynam, G.S., Beckmann, J.S., Beltran, S., Buske, O.J., Callahan, T.J., Chute, C.J., Courtot, M., Danis, D., Elemento, O., Essenwanger A., Freimuth, R.R., Gargano, M.A, Groza, T., Hamosh, A., Harris, N.L., Kaliyaperumal, R., Kent Lloyd, K.C., Khalifa, A., Krawitz, P.M., Köhler, S., Laraway, B.J., Lehväslaiho, H., Matalonga, L., McMurry, J.A., Metke-Jimenez, A., Mungall, C.J., Munoz-Torres, M.C., Ogishima, S., Papakonstantinou, A., Piscia, D., Pontikos, N., Queralt-Rosinach, N., Roos, M., Sass, J., Schofield, P.N, Seelow, D., Siapos, A., Smedley, D., Smith, L.D., Steinhaus, R., Chandrabose Sundaramurthi, J., Swietlik, E.M., Thun, S., Vasilevsky, N.A., Wagner, A.H., Warner, J.L., Weiland, C., The GAGH Phenopacket Modeling Consortium, Haendel, M.A., Robinson, P.N.
-                                                    <br>
-                                                    Nat Biotechnol 40, 817–820 (2022). https://doi.org/10.1038/s41587-022-01357-4
-                                                </p>
-                                            </li>
-                                            <br>
-                                            
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                            </mat-tab>
-
-                            <mat-tab label="Contact Us">
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <p>
-                                            For program, data and/or web application related questions, please contact
-                                            Bah&aacute; El Kassaby, M.S.
-                                            <a href="mailto:baha.elkassaby@jax.org">baha.elkassaby@jax.org</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </mat-tab>
-
-                            <mat-tab label="License">
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
-                                        <p>Phenopacket Lab is licensed under the <a href="https://www.mit.edu/~amini/LICENSE.md"
-                                                target="_blank">MIT</a> license.</p>
-                                        <p>Copyright(c) 2022 The Jackson Laboratory</p>
-                                        <p>
-                                            Permission is hereby granted, free of charge, to any person obtaining a copy
-                                            of this software and associated documentation files (the "Software"), to
-                                            deal in the Software without restriction, including without limitation the
-                                            rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-                                            sell copies of the Software, and to permit persons to whom the Software is
-                                            furnished to do so, subject to the following conditions:</p>
-                                        <p>
-                                            The above copyright notice and this permission notice shall be included in
-                                            all copies or substantial portions of the Software.</p>
-                                        <p>
-                                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                                            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                                            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                                            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                                            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-                                            FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-                                            IN THE SOFTWARE.</p>
-                                    </div>
-                                </div>
-                            </mat-tab>
-                        </mat-tab-group>
-                    </div>
-                </div>
+            <p>
+              This application is still under development and allows currently
+              only the upload of JSON phenopacket files. Future features will
+              include Phenopacket saving, export and search. A user
+              authentication will also be implemented in order to enable users
+              to save their phenopackets on the website.
+            </p>
+          </mat-tab>
+          <mat-tab label="Team">
+            <br />
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <ul>
+                  <li>
+                    <h3>
+                      <a
+                        href="https://www.jax.org/research-and-faculty/faculty/peter-robinson"
+                        target="_blank"
+                        >Peter Robinson, M.D., MSc.</a
+                      >
+                    </h3>
+                    <span>{{
+                      "Professor of Computational Biology" | uppercase
+                    }}</span>
+                  </li>
+                  <li>
+                    <h3>
+                      <a
+                        href="https://www.jax.org/people/daniel-danis"
+                        target="_blank"
+                        >Daniel Danis, Ph.D.</a
+                      >
+                    </h3>
+                    <span>{{
+                      "Associate Computational Scientist" | uppercase
+                    }}</span>
+                  </li>
+                  <li>
+                    <h3>
+                      <a
+                        href="https://www.jax.org/people/michael-gargano"
+                        target="_blank"
+                        >Michael Gargano, B.S.</a
+                      >
+                    </h3>
+                    <span>{{
+                      "Scientific Software Engineer" | uppercase
+                    }}</span>
+                  </li>
+                  <li>
+                    <h3>
+                      <a
+                        href="https://www.jax.org/people/baha-el-kassaby"
+                        target="_blank"
+                        >Bah&aacute; El Kassaby, MSc.</a
+                      >
+                    </h3>
+                    <span>{{
+                      "Senior Scientific Software Engineer" | uppercase
+                    }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </div>
+          </mat-tab>
+
+          <mat-tab label="Publications">
+            <br />
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <ul>
+                  <li>
+                    <h4>
+                      <a
+                        href="https://doi.org/10.1002/ggn2.202200016"
+                        target="_blank"
+                      >
+                        GA4GH Phenopackets: A Practical Introduction
+                      </a>
+                    </h4>
+                    <p>
+                      Ladewig, M. S., Jacobsen, J. O. B., Wagner, A. H., Danis,
+                      D., El Kassaby, B., Gargano, M., Groza, T., Baudis, M.,
+                      Steinhaus, R., Seelow, D., Bechrakis, N. E., Mungall, C.
+                      J., Schofield, P. N., Elemento, O., Smith, L., McMurry, J.
+                      A., Munoz-Torres, M., Haendel, M. A., Robinson, P. N.
+                      <br />
+                      Advanced Genetics 2022, 2200016.
+                      https://doi.org/10.1002/ggn2.202200016
+                    </p>
+                  </li>
+                  <br />
+                  <li>
+                    <h4>
+                      <a
+                        href="https://doi.org/10.1038/s41587-022-01357-4"
+                        target="_blank"
+                      >
+                        The GA4GH Phenopacket schema defines a computable
+                        representation of clinical data
+                      </a>
+                    </h4>
+                    <p>
+                      Jacobsen, J.O.B, Baudis, M., Baynam, G.S., Beckmann, J.S.,
+                      Beltran, S., Buske, O.J., Callahan, T.J., Chute, C.J.,
+                      Courtot, M., Danis, D., Elemento, O., Essenwanger A.,
+                      Freimuth, R.R., Gargano, M.A, Groza, T., Hamosh, A.,
+                      Harris, N.L., Kaliyaperumal, R., Kent Lloyd, K.C.,
+                      Khalifa, A., Krawitz, P.M., Köhler, S., Laraway, B.J.,
+                      Lehväslaiho, H., Matalonga, L., McMurry, J.A.,
+                      Metke-Jimenez, A., Mungall, C.J., Munoz-Torres, M.C.,
+                      Ogishima, S., Papakonstantinou, A., Piscia, D., Pontikos,
+                      N., Queralt-Rosinach, N., Roos, M., Sass, J., Schofield,
+                      P.N, Seelow, D., Siapos, A., Smedley, D., Smith, L.D.,
+                      Steinhaus, R., Chandrabose Sundaramurthi, J., Swietlik,
+                      E.M., Thun, S., Vasilevsky, N.A., Wagner, A.H., Warner,
+                      J.L., Weiland, C., The GAGH Phenopacket Modeling
+                      Consortium, Haendel, M.A., Robinson, P.N.
+                      <br />
+                      Nat Biotechnol 40, 817–820 (2022).
+                      https://doi.org/10.1038/s41587-022-01357-4
+                    </p>
+                  </li>
+                  <br />
+                </ul>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Contact Us">
+            <br />
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <p>
+                  For program, data and/or web application related questions,
+                  please contact Bah&aacute; El Kassaby, M.S.
+                  <a href="mailto:baha.elkassaby@jax.org"
+                    >baha.elkassaby@jax.org</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="License">
+            <br />
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <p>
+                  Phenopacket Lab is licensed under the
+                  <a
+                    href="https://www.mit.edu/~amini/LICENSE.md"
+                    target="_blank"
+                    >MIT</a
+                  >
+                  license.
+                </p>
+                <p>Copyright(c) 2022 The Jackson Laboratory</p>
+                <p>
+                  Permission is hereby granted, free of charge, to any person
+                  obtaining a copy of this software and associated documentation
+                  files (the "Software"), to deal in the Software without
+                  restriction, including without limitation the rights to use,
+                  copy, modify, merge, publish, distribute, sublicense, and/or
+                  sell copies of the Software, and to permit persons to whom the
+                  Software is furnished to do so, subject to the following
+                  conditions:
+                </p>
+                <p>
+                  The above copyright notice and this permission notice shall be
+                  included in all copies or substantial portions of the
+                  Software.
+                </p>
+                <p>
+                  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+                  KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+                  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+                  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+                  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+                  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+                  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
+  </div>
 </div>

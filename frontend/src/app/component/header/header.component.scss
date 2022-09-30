@@ -1,0 +1,38 @@
+mat-toolbar-row {
+  color: #004D40;
+  background: #26A69A;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  justify-content: space-between;
+
+  #static-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h2 {
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+
+    #jax-logo {
+      height: 50px;
+      margin-right: 1rem;
+      margin-left: 1rem;
+      margin-top: 10px;
+      vertical-align: baseline;
+    }
+    #jax-logo:hover {
+      box-shadow: 0 0 2px 1px #00695C;
+    }
+  }
+
+  #user-items button {
+    font-size: 17.6px;
+  }
+
+  .mat-menu-item {
+    font-size: 14px;
+  }
+}
+
+

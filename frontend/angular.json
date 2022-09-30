@@ -22,13 +22,13 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/assets/scss/material-dashboard.scss",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
           "configurations": {
             "dev": {
+              "optimization": false,
               "budgets": [
                 {
                   "type": "anyComponentStyle",
@@ -96,7 +96,7 @@
             "tsConfig": "tsconfig.spec.json",
             "scripts": [],
             "styles": [
-              "src/assets/scss/material-dashboard.scss"
+              "src/styles.scss"
             ],
             "assets": [
               "src/assets",
@@ -147,7 +147,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "style": "css"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"

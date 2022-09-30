@@ -1,14 +1,14 @@
-<div class="wrapper">
-    <div class="sidebar" data-color="blue" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
-        <app-sidebar></app-sidebar>
-    </div>
-    <div class="main-panel">
-        <app-navbar></app-navbar>
-        <br>
-        <br>
-        <router-outlet></router-outlet>
-        <app-footer></app-footer>
+<app-header
+  (toggleNav)="sideNavOpen = $event"
+  [route]="router.url">
+</app-header>
 
-    </div>
-</div>
-
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [(opened)]="sideNavOpen">
+    <app-sidebar [route]="router.url" [open]="sideNavOpen"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

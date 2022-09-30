@@ -18,7 +18,7 @@ import { VcfRecordDialogComponent } from '../vcf-record/vcf-record-dialog/vcf-re
 export class VariantInterpretationComponent implements OnInit {
 
   @Input()
-  call: VariantInterpretation;
+  call: GeneDescriptor | VariantInterpretation;
 
   acmgPathogenicityClassification: any;
   therapeuticActionability: any;
@@ -61,7 +61,9 @@ export class VariantInterpretationComponent implements OnInit {
     this.acmgSubscription = this.acmgControl.valueChanges.subscribe(value => {
       if (value && value.length > 0) {
         if (this.call) {
-          this.call.acmgPathogenicityClassification = value;
+          if (this.call instanceof VariantInterpretation) {
+            this.call.acmgPathogenicityClassification = value;
+          }
           // this.onInterpretationChanged.emit(this.interpretation);
         }
       }
@@ -72,7 +74,9 @@ export class VariantInterpretationComponent implements OnInit {
     this.therapeuticSubscription = this.therapeuticControl.valueChanges.subscribe(value => {
       if (value && value.length > 0) {
         if (this.call) {
-          this.call.therapeuticActionability = value;
+          if (this.call instanceof VariantInterpretation) {
+            this.call.therapeuticActionability = value;
+          }
           // this.onInterpretationChanged.emit(this.interpretation);
         }
       }
@@ -81,24 +85,24 @@ export class VariantInterpretationComponent implements OnInit {
 
   updateCall() {
     if (this.call) {
-      this.acmgPathogenicityClassification = this.call.acmgPathogenicityClassification;
-      this.acmgControl.setValue(this.acmgPathogenicityClassification);
-      this.therapeuticActionability = this.call.therapeuticActionability;
-      this.therapeuticControl.setValue(this.therapeuticActionability);
-      this.id = this.call.variationDescriptor?.id;
-      this.label = this.call.variationDescriptor?.label;
-      this.description = this.call.variationDescriptor?.description;
-      this.allelicState = this.call.variationDescriptor?.allelicState;
-      this.expressions = this.call.variationDescriptor?.expressions;
-      this.xrefs = this.call.variationDescriptor?.xrefs;
-      this.alternateLabels = this.call.variationDescriptor?.alternateLabels;
-      this.vrsRefAlleleSeq = this.call.variationDescriptor?.vrsRefAlleleSeq;
-      this.structuralType = this.call.variationDescriptor?.structuralType;
-      this.geneContext = this.call.variationDescriptor?.geneContext;
-      this.vcfRecord = this.call.variationDescriptor?.vcfRecord;
-
+      if (this.call instanceof VariantInterpretation) {
+        this.acmgPathogenicityClassification = this.call.acmgPathogenicityClassification;
+        this.acmgControl.setValue(this.acmgPathogenicityClassification);
+        this.therapeuticActionability = this.call.therapeuticActionability;
+        this.therapeuticControl.setValue(this.therapeuticActionability);
+        this.id = this.call.variationDescriptor?.id;
+        this.label = this.call.variationDescriptor?.label;
+        this.description = this.call.variationDescriptor?.description;
+        this.allelicState = this.call.variationDescriptor?.allelicState;
+        this.expressions = this.call.variationDescriptor?.expressions;
+        this.xrefs = this.call.variationDescriptor?.xrefs;
+        this.alternateLabels = this.call.variationDescriptor?.alternateLabels;
+        this.vrsRefAlleleSeq = this.call.variationDescriptor?.vrsRefAlleleSeq;
+        this.structuralType = this.call.variationDescriptor?.structuralType;
+        this.geneContext = this.call.variationDescriptor?.geneContext;
+        this.vcfRecord = this.call.variationDescriptor?.vcfRecord;
+      }
     }
-
   }
 
   openEditDialog() {
@@ -239,8 +243,10 @@ export class VariantInterpretationComponent implements OnInit {
   // vcf records
   changeVcfRecord(vcfRecord: VcfRecord) {
     this.vcfRecord = vcfRecord;
-    if (this.call.variationDescriptor) {
-      this.call.variationDescriptor.vcfRecord = vcfRecord;
+    if (this.call instanceof VariantInterpretation) {
+      if (this.call.variationDescriptor) {
+        this.call.variationDescriptor.vcfRecord = vcfRecord;
+      }
     }
   }
 
