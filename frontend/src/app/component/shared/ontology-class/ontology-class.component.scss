@@ -6,16 +6,39 @@
     border-radius: 4px !important;
     border: 2px solid lightgrey;
     padding: 10px;
-    margin: 0px;
+    margin: 0;
 }
-#ontology-section > label {
+
+#ontology-section>label {
     position: absolute;
     top: -10px;
     left: 25px;
     background-color: white;
 }
+
 // #ontology-section:hover {
 //     border: 2px solid black;
 //     padding: 10px;
 //     margin: 0px;
 // }
+.ontology-input-container {
+    display: flex;
+}
+
+.ontology-input-element {
+    border: none;
+    background: none;
+    padding: 0;
+    outline: none;
+    font: inherit;
+    text-align: center;
+}
+
+.ontology-input-spacer {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+:host.floating .ontology-input-spacer {
+    opacity: 1;
+}
