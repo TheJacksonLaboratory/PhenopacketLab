@@ -13,7 +13,7 @@ mat-sidenav-container {
     transform: none;
     visibility: visible !important;
 
-    side-nav {
+    app-sidebar {
       display: flex;
       flex-direction: column;
       justify-content: space-between;

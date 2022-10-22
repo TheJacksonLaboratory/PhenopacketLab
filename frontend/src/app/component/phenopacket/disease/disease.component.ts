@@ -7,11 +7,20 @@ import { MessageDialogComponent } from '../../shared/message-dialog/message-dial
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-disease',
   templateUrl: './disease.component.html',
-  styleUrls: ['./disease.component.scss']
+  styleUrls: ['./disease.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+        state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+        state('expanded', style({ height: '*' })),
+        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+],
 })
 export class DiseaseComponent implements OnInit {
   @Input()

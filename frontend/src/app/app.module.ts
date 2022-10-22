@@ -27,7 +27,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { GridModule } from '@angular/flex-layout/grid';
 
 import { routing } from './app.routing';
 import { ErrorInterceptor } from './helpers/error.interceptor';
@@ -41,12 +43,15 @@ import { FamilyListComponent } from './component/family-list/family-list.compone
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 import { AboutComponent } from './component/about/about.component';
-import { PhenoCreatorComponent } from './component/pheno-creator/pheno-creator.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from './component/header/header.component';
 import { SharedModule } from './component/shared/shared.module';
+import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.module';
+import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
     imports: [
@@ -81,9 +86,15 @@ import { SharedModule } from './component/shared/shared.module';
         ReactiveFormsModule,
         MatAutocompleteModule,
         MatDatepickerModule,
-        PhenopacketModule,
         MatMenuModule,
-        SharedModule
+        FlexLayoutModule,
+        GridModule,
+        PhenoCreatorModule,
+        PhenopacketModule,
+        SharedModule,
+        TabViewModule,
+        ButtonModule,
+        CheckboxModule
     ],
     declarations: [
         AppComponent,
@@ -94,8 +105,8 @@ import { SharedModule } from './component/shared/shared.module';
         AboutComponent,
         CohortListComponent,
         FamilyListComponent,
-        UploadDialogComponent,
-        PhenoCreatorComponent
+        UploadDialogComponent
+
     ],
     exports: [RouterModule],
     providers: [{ provide: MatDialogRef, useValue: {} },

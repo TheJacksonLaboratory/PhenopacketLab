@@ -13,7 +13,7 @@ export class HeaderComponent {
   @Input() route?: string;
 
   // tracks whether the navigation sidebar is open
-  sideNavOpen = false;
+  sideNavOpen = true;
 
   // emits when the navigation should be opened or closed with status of sideNavOpen
   @Output() toggleNav: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -9,6 +9,7 @@ import { Family } from 'src/app/models/family';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
 
@@ -28,18 +29,33 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   familyMap = new Map<string, Phenopacket>();
   selected = new UntypedFormControl(0);
 
+  isProband: boolean;
+  activeIndex = 0;
+
   // Table items
   displayedColumns = ['id', 'dob', 'sex', 'proband', 'remove'];
 
   datasource = new MatTableDataSource<Phenopacket>();
   selectionProband = new SelectionModel<Phenopacket>(false, []);
 
+  phenopacketSubscription: Subscription;
   familySubscription: Subscription;
 
-  constructor(private familyService: FamilyService, public dialog: MatDialog, private datePipe: DatePipe) {
+  constructor(private familyService: FamilyService,
+              public phenopacketService: PhenopacketService,
+              public dialog: MatDialog, private datePipe: DatePipe) {
   }
 
   ngOnInit(): void {
+    // add created phenopacket
+    // console.log(this.phenopacketService.phenopacket);
+    // this.addTab(this.phenopacketService.phenopacket);
+    // this.updateFamily(this.familyService.family);
+    this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
+      this.addTab(phenopacket);
+      this.updateFamily(this.familyService.family);
+    });
+
     this.familySubscription = this.familyService.getPhenopacket().subscribe(phenopacket => {
       this.addTab(phenopacket);
       this.updateFamily(this.familyService.family);
@@ -52,6 +68,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.familySubscription.unsubscribe();
+    this.phenopacketSubscription.unsubscribe();
   }
 
   updateFamily(family: Family) {
@@ -205,6 +222,8 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openTab(element: any) {
+    console.log('element');
+    console.log(element);
     if (!this.individualTabsMap.has(element)) {
       this.individualTabsMap.set(element.id, element);
     }

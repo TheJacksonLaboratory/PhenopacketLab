@@ -4,6 +4,7 @@ import 'rxjs/add/operator/filter';
 import { Router } from '@angular/router';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { HeaderComponent } from './component/header/header.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -22,11 +23,10 @@ export class AppComponent implements OnInit {
   // status of whether the sidebar is open or closed
   sideNavOpen = false;
 
-  constructor(public location: Location, public router: Router) { }
+  constructor(public location: Location, public http: HttpClient, public router: Router) { }
 
   ngOnInit() {
-    this.sideNavOpen = this.header?.sideNavOpen || false;
-    this.router.navigate(['/dashboard']);
+    this.sideNavOpen = this.header?.sideNavOpen || true;
   }
 
 }
