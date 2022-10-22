@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AgeControlComponent } from './age-control.component';
+import { TimeElementComponent } from './time-element.component';
 
-describe('AgeControlComponent', () => {
-  let component: AgeControlComponent;
-  let fixture: ComponentFixture<AgeControlComponent>;
+describe('TimeElementComponent', () => {
+  let component: TimeElementComponent;
+  let fixture: ComponentFixture<TimeElementComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgeControlComponent ]
+      declarations: [ TimeElementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AgeControlComponent);
+    fixture = TestBed.createComponent(TimeElementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

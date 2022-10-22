@@ -1,51 +1,12 @@
-<!-- <div id="ontology-section">
-  <label>{{ title }}</label>
-  <br />
-  <mat-form-field appearance="outline">
-    <mat-label>Label</mat-label>
-    <input matInput type="text" [formControl]="labelControl" />
-    <button
-      *ngIf="label"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="label = ''"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>ID</mat-label>
-    <input matInput type="text" [formControl]="idControl" />
-    <button
-      *ngIf="id"
-      matSuffix
-      mat-icon-button
-      aria-label="Clear"
-      (click)="id = ''"
-    >
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</div> -->
-<div role="group" class="ontology-input-container"
-     [formGroup]="parts"
-     [attr.aria-labelledby]="_formField?.getLabelId()"
-     (focusin)="onFocusIn($event)"
-     (focusout)="onFocusOut($event)">
-  <input class="ontology-input-element"
-         formControlName="label" size="10"
-         maxLength="100"
-         aria-label="Label"
-         (input)="_handleInput(parts.controls.label, ontoid)"
-         #label>
-  <span class="ontology-input-spacer">&ndash;</span>
-  <input class="ontology-input-element"
-         formControlName="ontid"
-         maxLength="100"
-         size="10"
-         aria-label="Id"
-         (input)="_handleInput(parts.controls.ontid)"
-         (keyup.backspace)="autoFocusPrev(parts.controls.ontid, label)"
-         #ontoid>
+<div class="p-fluid grid formgrid">
+  <div class="field col-12 md:col-6">
+    <label for="label" class="block">Label</label>
+    <input id="label" aria-describedby="label-help" pInputText [(ngModel)]="label" (change)="updateOntologyClass()"/>
+    <small id="label-help" class="block">Enter the label for the ontology class.</small>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="id" class="block">Id</label>
+    <input id="id" aria-describedby="id-help" pInputText [(ngModel)]="id" (change)="updateOntologyClass()"/>
+    <small id="id-help" class="block">Enter the ID for the ontology class.</small>
+  </div>
 </div>

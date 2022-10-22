@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DateComponent } from './date.component';
+import { AgeComponent } from './age.component';
 
 describe('DateComponent', () => {
-  let component: DateComponent;
-  let fixture: ComponentFixture<DateComponent>;
+  let component: AgeComponent;
+  let fixture: ComponentFixture<AgeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateComponent ]
+      declarations: [ AgeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateComponent);
+    fixture = TestBed.createComponent(AgeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

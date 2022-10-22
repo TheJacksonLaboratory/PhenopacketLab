@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./search-filter.component.scss']
 })
 
-export class SearchFilterComponent {
+export class SearchFilterComponent implements OnInit {
   myFormControl = new UntypedFormControl();
   @Input()
   title: string;
@@ -30,7 +30,11 @@ export class SearchFilterComponent {
   private _filterOptions(value: string): string[] {
     const filterValue = value.toLowerCase();
     if (this.options) {
-      let result = this.options.filter(val => val.toLowerCase().includes(filterValue));
+      const result = this.options.filter(val => {
+        console.log('val');
+        console.log(val);
+        val.toLowerCase().includes(filterValue);
+      });
       if (result.length === 0) {
         return [ value ];
       }
