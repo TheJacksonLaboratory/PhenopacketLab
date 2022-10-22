@@ -3,9 +3,9 @@ import { Convert, Evidence, OntologyClass, TimeElement } from './base';
 export class PhenotypicFeature extends Convert {
 
     description: string;
-    type: OntologyClass;
-    excluded: boolean;
-    severity: OntologyClass;
+    type: OntologyClass = new OntologyClass('', '');
+    excluded = false;
+    severity: OntologyClass = new OntologyClass('', '');
     modifiers: OntologyClass[];
     onset: TimeElement;
     resolution: TimeElement;

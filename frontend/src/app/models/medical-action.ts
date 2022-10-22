@@ -104,6 +104,13 @@ export class DoseInterval extends Convert {
         return doseInterval;
     }
 }
+export class ScheduleFrequency {
+    static VALUES = [new OntologyClass('NCIT:C64576', 'Once'),
+                new OntologyClass('NCIT:C125004', 'Once Daily'),
+                new OntologyClass('NCIT:C64496', 'Twice Daily'),
+                new OntologyClass('NCIT:C64527', 'Three Times Daily'),
+                new OntologyClass('NCIT:C64530', 'Four Times Daily')];
+}
 export enum DrugType {
     UNKNOWN_DRUG_TYPE = 'Unknown',
     PRESCRIPTION = 'Prescription',
