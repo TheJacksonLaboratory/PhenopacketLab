@@ -16,15 +16,26 @@ import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 
+import { DropdownModule } from 'primeng/dropdown';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import {TreeSelectModule} from 'primeng/treeselect';
+
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { SearchFilterComponent } from './age-control/search-filter/search-filter.component';
-import { AgeControlComponent } from './age-control/age-control.component';
-import { DateComponent } from './age-control/date/date.component';
+import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
+import { TimeElementComponent } from './time-element/time-element.component';
+import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
 
 
 @NgModule({
@@ -47,26 +58,37 @@ import { OntologyClassComponent } from './ontology-class/ontology-class.componen
     MatButtonModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    DropdownModule,
+    InputNumberModule,
+    MessagesModule,
+    MessageModule,
+    CalendarModule,
+    InputTextModule,
+    TreeSelectModule
+
   ],
   declarations: [
     MessageDialogComponent,
     SpinnerDialogComponent,
-    AgeControlComponent,
+    TimeElementComponent,
     SearchFilterComponent,
-    DateComponent,
+    AgeComponent,
     SearchBoxComponent,
+    TreeSelectComponent,
     OntologyClassComponent
   ],
   exports: [
     MessageDialogComponent,
     SpinnerDialogComponent,
-    AgeControlComponent,
+    TimeElementComponent,
     SearchFilterComponent,
-    DateComponent,
+    AgeComponent,
     SearchBoxComponent,
+    TreeSelectComponent,
     OntologyClassComponent
   ],
+  providers: [MessageService, PhenopacketService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule { }

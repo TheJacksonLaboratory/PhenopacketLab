@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,7 +16,7 @@ import { MedicalActionService } from 'src/app/services/medical-action.search.ser
   styleUrls: ['./medical-action-detail-dialog.component.scss']
 })
 
-export class MedicalActionDetailDialogComponent {
+export class MedicalActionDetailDialogComponent implements OnInit {
 
   action: any;
   treatmentTarget: OntologyClass;
@@ -28,8 +28,8 @@ export class MedicalActionDetailDialogComponent {
   procedureCode: OntologyClass;
   performed: TimeElement;
   bodySite: OntologyClass;
-  bodySitesStorageKey = "body_sites";
-  currSearchParams: any = {}
+  bodySitesStorageKey = 'body_sites';
+  currSearchParams: any = {};
   spinnerDialogRef: any;
   // Treatment
   agent: OntologyClass;
@@ -56,15 +56,15 @@ export class MedicalActionDetailDialogComponent {
   diseases: Disease[];
   terminationReasonStr: string;
 
-  actionTypes = ["Procedure", "Treatment", "Radiation therapy", "Therapeutic regimen"];
+  actionTypes = ['Procedure', 'Treatment', 'Radiation therapy', 'Therapeutic regimen'];
   actionType: string;
   // TODO pull data from backend endpoint
-  intents = [{id: "intent-1", label: "Intent 1"},
-            {id: "intent-2", label: "Intent 2"},
-            {id: "intent-3", label: "Intent 3"}];
-  responses = [{id: "resp-1", label: "Response 1"},
-              {id: "resp-2", label: "Response 2"},
-              {id: "resp-3", label: "Response 3"}];
+  intents = [{id: 'intent-1', label: 'Intent 1'},
+            {id: 'intent-2', label: 'Intent 2'},
+            {id: 'intent-3', label: 'Intent 3'}];
+  responses = [{id: 'resp-1', label: 'Response 1'},
+              {id: 'resp-2', label: 'Response 2'},
+              {id: 'resp-3', label: 'Response 3'}];
 
   // Dose Intervals table
   doseIntervalDisplayedColumns: string[] = DoseIntervalColumns.map((col) => col.key);
@@ -88,7 +88,7 @@ export class MedicalActionDetailDialogComponent {
         startWith(''),
         map(bodySite => (bodySite ? this._filter(bodySite) : this.radiationTherapyBodySites.slice())),
       );
-    
+
   }
 
   updateMedicalAction() {
@@ -196,9 +196,9 @@ export class MedicalActionDetailDialogComponent {
   /** Body site search/add */
   onSearchBodySiteChange(searchBodySite: any) {
     this.currSearchParams.offset = 0;
-    let id = searchBodySite.selectedItems[0].selectedValue.id;
-    let label = searchBodySite.selectedItems[0].selectedValue.name;
-    this.bodySite = {id: id, label: label};
+    const id = searchBodySite.selectedItems[0].selectedValue.id;
+    const label = searchBodySite.selectedItems[0].selectedValue.name;
+    this.bodySite = new OntologyClass(id, label);
     // push changes to medicalAction
     this.medicalAction.action.bodySite = this.bodySite;
   }
@@ -277,9 +277,9 @@ export class MedicalActionDetailDialogComponent {
 
   private _filter(value: any): OntologyClass[] {
     const filterValue = value.toLowerCase();
-    
+
     return this.radiationTherapyBodySites.filter(option => {
-      return (option as any).name.toLowerCase().includes(filterValue)
+      return (option as any).name.toLowerCase().includes(filterValue);
     });
   }
 

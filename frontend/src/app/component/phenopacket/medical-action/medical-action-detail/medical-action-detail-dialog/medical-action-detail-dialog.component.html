@@ -197,7 +197,6 @@
                     <mat-label>Drug type</mat-label>
                     <mat-select
                       (selectionChange)="onDrugTypeChange($event)"
-                      name="drugType"
                     >
                       <mat-option
                         *ngFor="let drugType of drugTypes"
@@ -460,7 +459,6 @@
                 <mat-label>Regimen status</mat-label>
                 <mat-select
                   (selectionChange)="onRegimenStatusChange($event)"
-                  name="regimenStatus"
                 >
                   <mat-option
                     *ngFor="let status of regimenStatuses"
@@ -485,7 +483,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-age-control></app-age-control>
+              <app-time-element></app-time-element>
             </div>
           </div>
         </div>
@@ -499,7 +497,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <app-age-control></app-age-control>
+              <app-time-element></app-time-element>
             </div>
           </div>
         </div>
@@ -508,7 +506,7 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="onCancelClick()" cdkFocusInitial>
+  <button mat-raised-button (click)="onCancelClick()">
     Cancel
   </button>
   <button mat-raised-button [mat-dialog-close]="onOkClick()">Ok</button>

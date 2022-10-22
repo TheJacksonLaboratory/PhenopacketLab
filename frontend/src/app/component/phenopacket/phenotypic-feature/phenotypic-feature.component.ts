@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -22,25 +22,31 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
         ]),
     ],
 })
-export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
+export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChanges {
     // search params
-    itemName = "Phenotypic feature";
-    searchLabel = "Phenotypic feature";
-    placeHolderTxt = "Enter a phenotypic feature name";
-    localStorageKey = "phenotypic_features";
+    itemName = 'Phenotypic feature';
+    searchLabel = 'Phenotypic feature';
+    placeHolderTxt = 'Enter a phenotypic feature name';
+    localStorageKey = 'phenotypic_features';
 
-    //Table items
+    // Table items
     displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'remove'];
 
     phenotypicDataSource = new DataPresentMatTableDataSource<PhenotypicFeature>();
 
     phenotypicCount: number;
 
-    //searchparams
-    currSearchParams: any = {}
+    // searchparams
+    currSearchParams: any = {};
 
     expandedElement: PhenotypicFeature | null;
 
+    /**
+     * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
+     * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
+     */
+    @Input()
+    showAddButton = true;
     @Input()
     phenotypicFeatures: PhenotypicFeature[];
     @Output()
@@ -50,6 +56,14 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     spinnerDialogRef: any;
 
     constructor(public searchService: PhenotypeSearchService, public dialog: MatDialog) {
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('change:');
+        console.log(changes);
+        // this.phenotypicFeatures = changes.phenotypicFeatures.currentValue;
+        console.log(this.phenotypicFeatures);
+        this.phenotypicDataSource.data = this.phenotypicFeatures;
+        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
     ngOnInit() {
@@ -64,7 +78,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
      */
     addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
         if (phenotypicFeature === undefined) {
-            let feature = new PhenotypicFeature();
+            const feature = new PhenotypicFeature();
             feature.description = 'Phenotypic Feature description';
             feature.type = new OntologyClass('id', 'name');
             feature.onset = new TimeElement('');
@@ -74,18 +88,23 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
             feature.severity = new OntologyClass('', '');
             feature.modifiers = [new OntologyClass('', '')];
             this.phenotypicFeatures.push(feature);
-        } else {
+        } else if (phenotypicFeature && this.showAddButton) {
             this.phenotypicFeatures.push(phenotypicFeature);
         }
-        this.phenotypicDataSource.data = this.phenotypicFeatures;
-        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+        if (this.showAddButton) {
+            this.phenotypicDataSource.data = this.phenotypicFeatures;
+            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+        } else {
+            this.onPhenotypicFeaturesChanged.emit([phenotypicFeature]);
+        }
+
         // TODO push changes to api
     }
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element 
-     * @returns 
+     * @param element
+     * @returns
      */
     deleteFeature(element: PhenotypicFeature) {
         const msgData = { 'title': 'Delete Phenotypic Feature' };
@@ -105,7 +124,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
 
     removeFromDatasource(phenoFeature: PhenotypicFeature) {
         this.phenotypicFeatures.forEach((element, index) => {
-            if (element == phenoFeature) {
+            if (element === phenoFeature) {
                 this.phenotypicFeatures.splice(index, 1);
             }
         });
@@ -115,7 +134,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
 
     onSearchCriteriaChange(searchCriteria: any) {
         this.currSearchParams.offset = 0;
-        let id = searchCriteria.selectedItems[0].selectedValue.id;
+        const id = searchCriteria.selectedItems[0].selectedValue.id;
 
         if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
             this.currSearchParams = searchCriteria;
@@ -126,8 +145,8 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     private _queryPhenotypicFeatureById(id: string) {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
-            let phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = {id: data.id, label: data.name};
+            const phenotypicFeature = new PhenotypicFeature();
+            phenotypicFeature.type = new OntologyClass(data.id, data.name);
             phenotypicFeature.description = data.description;
             phenotypicFeature.onset = new TimeElement('');
             phenotypicFeature.evidence = [new Evidence(new OntologyClass('', ''))];
@@ -145,7 +164,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     }
 
     expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element
+        this.expandedElement = this.expandedElement === element ? null : element;
 
     }
 
@@ -159,7 +178,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit {
     getModifiers(phenotypicFeature: PhenotypicFeature) {
         if (phenotypicFeature.modifiers) {
             let modifierStr = '';
-            for (let modifier of phenotypicFeature.modifiers) {
+            for (const modifier of phenotypicFeature.modifiers) {
                 modifierStr += `${modifier.label}, `;
             }
             return modifierStr;
