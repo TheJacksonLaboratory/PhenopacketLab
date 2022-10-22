@@ -1,0 +1,191 @@
+<p-card>
+  <ng-template pTemplate="title"> Phenotypic Feature </ng-template>
+  <ng-template pTemplate="subtitle">
+    Press on "Add phenotypic feature"  after each phenotypic feature characteristic is set.
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="grid p-fluid">
+      <div class="field col-12">
+        <app-phenotypic-feature
+          [showAddButton]="false"
+          [phenotypicFeatures]="phenotypicFeatures"
+          (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
+        ></app-phenotypic-feature>
+      </div>
+      <div class="field col-12">
+        <div class="flex justify-content-start flex-wrap">
+          <p-button
+            (onClick)="addPhenotypicFeature()"
+            label="Add phenotypic feature"
+            icon="pi pi-plus"
+            styleClass="p-button"
+          ></p-button>
+        </div>
+      </div>
+      
+      <div class="field col-12">
+        <p-accordion [multiple]="true">
+          <p-accordionTab header="Type" [selected]="true">
+            <div class="grid p-fluid">
+              <div class="field col-6">
+                <label for="label">Label</label>
+                <input
+                  id="label"
+                  type="text"
+                  required
+                  pInputText
+                  [(ngModel)]="label"
+                  [ngClass]="{
+                    'ng-dirty':
+                      (label.invalid && submitted) ||
+                      (label.dirty && label.invalid)
+                  }"
+                />
+                <small
+                  *ngIf="
+                    (label.invalid && submitted) ||
+                    (label.dirty && label?.invalid)
+                  "
+                  class="p-error"
+                  >Label is required.</small
+                >
+              </div>
+              <div class="field col-6">
+                <label for="id">ID</label>
+                <input
+                  id="id"
+                  type="text"
+                  required
+                  pInputText
+                  [(ngModel)]="id"
+                  [ngClass]="{
+                    'ng-dirty':
+                      (id.invalid && submitted) || (id.dirty && id.invalid)
+                  }"
+                />
+                <small
+                  class="p-error"
+                  *ngIf="(id.invalid && submitted) || (id.dirty && id.invalid)"
+                  >ID is required.</small
+                >
+              </div>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Onset">
+            <app-time-element
+              aria-labelledby="onset-time-label"
+            ></app-time-element>
+          </p-accordionTab>
+          <p-accordionTab header="Resolution">
+            <app-time-element
+              aria-labelledby="resolution-time-label"
+            ></app-time-element>
+          </p-accordionTab>
+          <p-accordionTab header="Severity & Modifiers">
+            <div class="grid p-fluid">
+              <div class="field col-6">
+                <label for="severity">Severities</label>
+
+                <app-search-filter id="severity"
+                  [options]="severities"
+                  title="Add severity"
+                ></app-search-filter>
+              </div>
+              <div class="field col-6">
+                <label for="modifier">Modifiers</label>
+
+                <ontology-tree-select id="modifier" (ontologyObjectEvent)="updateModifiers($event)"></ontology-tree-select>
+              </div>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Evidence">
+            <div class="grid p-fluid">
+              <div class="field col-6">
+                <label for="evidence">Evidence</label>
+                <app-search-filter id="evidence"
+                  [options]="evidenceValues"
+                  title="Choose evidence"
+                ></app-search-filter>
+              </div>
+              <div class="field col-6">
+
+              </div>
+
+              <div class="field col-4">
+                <label for="evidenceCode">Code</label>
+                <input
+                  id="evidenceCode"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="evidenceCode"
+                />
+              </div>
+              <div class="field col-4">
+                <label for="evidenceId">ID</label>
+                <input
+                  id="evidenceId"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="evidenceId"
+                />
+              </div>
+              <div class="field col-4">
+                <label for="evidenceReference">Reference</label>
+                <input
+                  id="evidenceReference"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="evidenceReference"
+                />
+              </div>
+
+              <div class="field col-12">
+                <label for="evidenceDescription">Description</label>
+                <textarea
+                  id="evidenceDescription"
+                  type="text"
+                  rows="4"
+                  [(ngModel)]="evidenceDescription"
+                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                ></textarea>
+              </div>
+            </div>
+
+          </p-accordionTab>
+        </p-accordion>
+        
+      </div>
+      
+    </div>
+    <div class="flex justify-content-start flex-wrap">
+      <p-button
+        (onClick)="addPhenotypicFeature()"
+        label="Add phenotypic feature"
+        icon="pi pi-plus"
+        styleClass="p-button"
+      ></p-button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-between flex-wrap">
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+        label="Back"
+        (onClick)="prevPage()"
+        icon="pi pi-angle-left"
+        iconPos="left"
+      ></p-button>
+      </div>
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+        label="Next"
+        (onClick)="nextPage()"
+        icon="pi pi-angle-right"
+        iconPos="right"
+      ></p-button>
+      </div>
+      
+      
+    </div>
+  </ng-template>
+</p-card>
