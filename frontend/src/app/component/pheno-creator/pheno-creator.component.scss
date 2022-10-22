@@ -1,18 +1,7 @@
-.mat-stepper-horizontal {
-    margin-top: 8px;
+:host ::ng-deep b {
+    display: block
 }
 
-.mat-form-field {
-    margin-top: 16px;
-}
-::ng-deep.mat-dialog-container {
-    //  border-radius: 13px !important;
-    resize: both !important; //Not working
-    overflow: auto;
-    background: #fff;
-}
-
-::ng-deep.cdk-overlay-pane {
-    min-width: 256px;
-    min-height: 555px;
+:host ::ng-deep .p-card-body {
+    padding: 2rem;
 }
