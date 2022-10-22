@@ -1,0 +1,834 @@
+{
+  "data": [
+    {
+      "label": "Clinical course",
+      "id": "HP:0031797",
+      "children": [
+        {
+          "label": "Onset",
+          "id": "HP:0003674",
+          "children": [
+            {
+              "label": "Adult onset",
+              "id": "HP:0003581",
+              "children": [
+                {
+                  "label": "Young adult onset",
+                  "id": "HP:0011462",
+                  "children": [
+                    {
+                      "label": "Early young adult onset",
+                      "id": "HP:0025708"
+                    },
+                    {
+                      "label": "Late young adult onset",
+                      "id": "HP:0025710"
+                    },
+                    {
+                      "label": "Intermediate young adult onset",
+                      "id": "HP:0025709"
+                    }
+                  ]
+                },
+                {
+                  "label": "Middle age onset",
+                  "id": "HP:0003596"
+                },
+                {
+                  "label": "Late onset",
+                  "id": "HP:0003584"
+                }
+              ]
+            },
+            {
+              "label": "Antenatal onset",
+              "id": "HP:0030674",
+              "children": [
+                {
+                  "label": "Fetal onset",
+                  "id": "HP:0011461",
+                  "children": [
+                    {
+                      "label": "Late first trimester onset",
+                      "id": "HP:0034199"
+                    },
+                    {
+                      "label": "Second trimester onset",
+                      "id": "HP:0034198"
+                    },
+                    {
+                      "label": "Third trimester onset",
+                      "id": "P:0034197"
+                    }
+                  ]
+                },
+                {
+                  "label": "Embryonal onset",
+                  "id": "HP:0011460"
+                }
+              ]
+            },
+            {
+              "label": "Pediatric onset",
+              "id": "HP:0410280",
+              "children": [
+                {
+                  "label": "Infantile onset",
+                  "id": "HP:0003593"
+                },
+                {
+                  "label": "Juvenile onset",
+                  "id": "HP:0003621"
+                },
+                {
+                  "label": "Childhood onset",
+                  "id": "HP:0011463"
+                }
+              ]
+            },
+            {
+              "label": "Congenital onset",
+              "id": "HP:0003577"
+            },
+            {
+              "label": "Puerpural onset",
+              "id": "HP:4000040"
+            },
+            {
+              "label": "Neonatal onset",
+              "id": "HP:0003623"
+            }
+          ]
+        },
+        {
+          "label": "Temporal pattern",
+          "id": "HP:0011008",
+          "children": [
+            {
+              "label": "Recurrent",
+              "id": "HP:0031796",
+              "children": [
+                {
+                  "label": "Periodic",
+                  "id": "HP:0025304",
+                  "children": [
+                    {
+                      "label": "Quotidian",
+                      "id": "HP:0025305"
+                    }
+                  ]
+                },
+                {
+                  "label": "Episodic",
+                  "id": "HP:0025303"
+                },
+                {
+                  "label": "Seizure cluster",
+                  "id": "HP:0033349"
+                }
+              ]
+            },
+            {
+              "label": "Acute",
+              "id": "HP:0011009",
+              "children": [
+                {
+                  "label": "Acute emergence over days",
+                  "id": "HP:0025308"
+                },
+                {
+                  "label": "Acute emergence over minutes",
+                  "id": "HP:0025306"
+                },
+                {
+                  "label": "Acute emergence over hours",
+                  "id": "HP:0025307"
+                }
+              ]
+            },
+            {
+              "label": "Nocturnal",
+              "id": "HP:0025301"
+            },
+            {
+              "label": "Stable",
+              "id": "HP:0031915"
+            },
+            {
+              "label": "Diurnal",
+              "id": "HP:0025302"
+            },
+            {
+              "label": "Fluctuating",
+              "id": "HP:0031914"
+            },
+            {
+              "label": "Subacute",
+              "id": "HP:0011011"
+            },
+            {
+              "label": "Prolonged",
+              "id": "HP:0025297"
+            },
+            {
+              "label": "Insidious onset",
+              "id": "HP:0003587"
+            },
+            {
+              "label": "Transient",
+              "id": "HP:0025153"
+            },
+            {
+              "label": "Migratory",
+              "id": "HP:0025279"
+            },
+            {
+              "label": "Chronic",
+              "id": "HP:0011010"
+            }
+          ]
+        },
+        {
+          "label": "Mortality/Aging",
+          "id": "HP:0040006",
+          "children": [
+            {
+              "label": "Age of death",
+              "id": "HP:0011420",
+              "children": [
+                {
+                  "label": "Death in adulthood",
+                  "id": "HP:0033763",
+                  "chidlren": [
+                    {
+                      "label": "Death in early adulthood",
+                      "id": "HP:0100613"
+                    },
+                    {
+                      "label": "Death in middle age",
+                      "id": "HP:0033764"
+                    },
+                    {
+                      "label": "Death in late adulthood",
+                      "id": "HP:0033765"
+                    }
+                  ]
+                },
+                {
+                  "label": "Prenatal death",
+                  "id": "HP:0034241",
+                  "chidlren": [
+                    {
+                      "label": "Miscarriage",
+                      "id": "HP:0005268"
+                    },
+                    {
+                      "label": "Stillbirth",
+                      "id": "HP:0003826"
+                    }
+                  ]
+                },
+                {
+                  "label": "Neonatal death",
+                  "id": "HP:0003811"
+                },
+                {
+                  "label": "Death in infancy",
+                  "id": "HP:0001522"
+                },
+                {
+                  "label": "Death in childhood",
+                  "id": "HP:0003819"
+                },
+                {
+                  "label": "Death in adolescence",
+                  "id": "HP:0011421"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Pace of progression",
+          "id": "HP:0003679",
+          "children": [
+            {
+              "label": "Nonprogressive",
+              "id": "HP:0003680"
+            },
+            {
+              "label": "Slowly progressive ",
+              "id": "HP:0003677"
+            },
+            {
+              "label": "Rapidly progressive",
+              "id": "HP:0003678"
+            },
+            {
+              "label": "Progressive",
+              "id": "HP:0003676"
+            },
+            {
+              "label": "Variable progression rate",
+              "id": "HP:0003682"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Position",
+      "id": "HP:0012830",
+      "children": [
+        {
+          "label": "Spatial pattern",
+          "id": "HP:0012836",
+          "children": [
+            {
+              "label": "Centrilobular",
+              "id": "HP:0033816"
+            },
+            {
+              "label": "Multifocal",
+              "id": "HP:0030651"
+            },
+            {
+              "label": "Bronchocentric",
+              "id": "HP:0033815"
+            },
+            {
+              "label": "Dermatomal",
+              "id": "HP:0025294"
+            },
+            {
+              "label": "Acral",
+              "id": "HP:0025292"
+            },
+            {
+              "label": "Distal",
+              "id": "HP:0012839"
+            },
+            {
+              "label": "Diffuse",
+              "id": "HP:0020034"
+            },
+            {
+              "label": "Pericentral",
+              "id": "HP:0030649"
+            },
+            {
+              "label": "Joint flexor surface localization",
+              "id": "HP:0032540"
+            },
+            {
+              "label": "Peripheral",
+              "id": "HP:0030646"
+            },
+            {
+              "label": "Axial",
+              "id": "HP:0025287"
+            },
+            {
+              "label": "Apical",
+              "id": "HP:0033820"
+            },
+            {
+              "label": "Joint extensor surface localization",
+              "id": "HP:0032539"
+            },
+            {
+              "label": "Paracentral",
+              "id": "HP:0030647"
+            },
+            {
+              "label": "Reticular",
+              "id": "HP:0033818"
+            },
+            {
+              "label": "Predominant small joint localization",
+              "id": "HP:0032544"
+            },
+            {
+              "label": "Herpetiform",
+              "id": "HP:0025295"
+            },
+            {
+              "label": "Proximal",
+              "id": "HP:0012840"
+            },
+            {
+              "label": "Perilymphatic",
+              "id": "HP:0033819"
+            },
+            {
+              "label": "Midperipheral",
+              "id": "HP:0030648"
+            },
+            {
+              "label": "Paraseptal",
+              "id": "HP:0033814"
+            },
+            {
+              "label": "Polycyclic",
+              "id": "HP:0031450"
+            },
+            {
+              "label": "Miliary",
+              "id": "HP:0033817"
+            },
+            {
+              "label": "Cervical (neck)",
+              "id": "HP:0032535"
+            },
+            {
+              "label": "Distributed along Blaschko lines",
+              "id": "HP:0025293"
+            },
+            {
+              "label": "Morbilliform",
+              "id": "HP:0025296"
+            },
+            {
+              "label": "Lower-body predominance",
+              "id": "HP:0025291"
+            },
+            {
+              "label": "Upper-body predominance",
+              "id": "HP:0025290"
+            },
+            {
+              "label": "Perilobular",
+              "id": "HP:0033813"
+            },
+            {
+              "label": "Central",
+              "id": "HP:0030645"
+            },
+            {
+              "label": "Focal",
+              "id": "HP:0030650"
+            },
+            {
+              "label": "Lateral",
+              "id": "HP:0025275"
+            },
+            {
+              "label": "Localized",
+              "id": "HP:0033817"
+            },
+            {
+              "label": "Generalized",
+              "id": "HP:0012837"
+            }
+          ]
+        },
+        {
+          "label": "Laterality",
+          "id": "HP:0012831",
+          "children": [
+            {
+              "label": "Bilateral",
+              "id": "HP:0012832"
+            },
+            {
+              "label": "Unilateral",
+              "id": "HP:0012833"
+            },
+            {
+              "label": "Right",
+              "id": "HP:0012834"
+            },
+            {
+              "label": "Left",
+              "id": "HP:0012835"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Triggered by",
+      "id": "HP:0025204",
+      "children": [
+        {
+          "label": "Triggered by food ingestion",
+          "id": "HP:0033793",
+          "children": [
+            {
+              "label": "Triggered by carbohydrate ingestion",
+              "id": "HP:0025208",
+              "children": [
+                {
+                  "label": "Triggered by galactose ingestion",
+                  "id": "HP:0025213"
+                },
+                {
+                  "label": "Triggered by glucose ingestion",
+                  "id": "HP:0025210"
+                },
+                {
+                  "label": "Triggered by fructose ingestion",
+                  "id": "HP:0025209"
+                }
+              ]
+            },
+            {
+              "label": "Triggered by heavy meal",
+              "id": "HP:0025216"
+            },
+            {
+              "label": "Triggered by fava bean ingestion",
+              "id": "HP:0034060"
+            },
+            {
+              "label": "Triggered by cheese ingestion",
+              "id": "HP:0033789"
+            },
+            {
+              "label": "Triggered by sodium ingestion",
+              "id": "HP:0025224"
+            },
+            {
+              "label": "Triggered by high-fat diet",
+              "id": "HP:0025217"
+            },
+            {
+              "label": "Triggered by ingestion of potassium-rich food",
+              "id": "HP:0031167"
+            },
+            {
+              "label": "Triggered by breast feeding",
+              "id": "HP:0025205"
+            },
+            {
+              "label": "Triggered by ethanol ingestion",
+              "id": "HP:0025211"
+            }
+          ]
+        },
+        {
+          "label": "Triggered by infection",
+          "id": "HP:0033184",
+          "children": [
+            {
+              "label": "Triggered by viral infection",
+              "id": "HP:0033198",
+              "children": [
+                {
+                  "label": "Triggered by EBV infection",
+                  "id": "HP:0033185"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Triggered by physical trauma",
+          "id": "HP:0031135",
+          "children": [
+            {
+              "label": "Triggered by head trauma",
+              "id": "HP:0500260"
+            }
+          ]
+        },
+        {
+          "label": "Triggered by dehydration",
+          "id": "HP:0025207"
+        },
+        {
+          "label": "Triggered by anesthetics",
+          "id": "HP:0500261"
+        },
+        {
+          "label": "Triggered by emotion",
+          "id": "HP:0025334"
+        },
+        {
+          "label": "Triggered by menstruation",
+          "id": "HP:0025220"
+        },
+        {
+          "label": "Triggered by vestibular stimulation",
+          "id": "HP:0025229"
+        },
+        {
+          "label": "Triggered by stress",
+          "id": "HP:0025226"
+        },
+        {
+          "label": "Triggered by vaccination",
+          "id": "HP:0025219"
+        },
+        {
+          "label": "Triggered by febrile illness",
+          "id": "HP:0025215"
+        },
+        {
+          "label": "Triggered by cold",
+          "id": "HP:0025206"
+        },
+        {
+          "label": "Triggered by smoking",
+          "id": "HP:0025223"
+        },
+        {
+          "label": "Triggered by sudden movement",
+          "id": "HP:0025228"
+        },
+        {
+          "label": "Triggered by heat",
+          "id": "HP:0025214"
+        },
+        {
+          "label": "Triggered by excitement",
+          "id": "HP:0025227"
+        },
+        {
+          "label": "Triggered by sleep deprivation",
+          "id": "HP:0025222"
+        },
+        {
+          "label": "Triggered by sound",
+          "id": "HP:0025225"
+        },
+        {
+          "label": "Triggered by muscle relaxant",
+          "id": "HP:0034195"
+        },
+        {
+          "label": "Triggered by exertion",
+          "id": "HP:0025377"
+        },
+        {
+          "label": "Triggered by an abusive adult",
+          "id": "HP:0033032"
+        },
+        {
+          "label": "Triggered by hyperventilation",
+          "id": "HP:0025218"
+        },
+        {
+          "label": "Triggered by fasting",
+          "id": "HP:0025212"
+        },
+        {
+          "label": "Triggered by pregnancy",
+          "id": "HP:0025221"
+        }
+      ]
+    },
+    {
+      "label": "Fracture type",
+      "id": "HP:4000042",
+      "children": [
+        {
+          "label": "Compression fracture",
+          "id": "HP:4000047"
+        },
+        {
+          "label": "Closed fracture",
+          "id": "HP:4000051"
+        },
+        {
+          "label": "Greenstick fracture",
+          "id": "HP:4000043"
+        },
+        {
+          "label": "Avulsion fracture",
+          "id": "HP:4000052"
+        },
+        {
+          "label": "Transverse fracture",
+          "id": "HP:4000044"
+        },
+        {
+          "label": "Open fracture",
+          "id": "HP:4000050"
+        },
+        {
+          "label": "Segmental fracture",
+          "id": "HP:4000049"
+        },
+        {
+          "label": "Oblique fracture",
+          "id": "HP:4000046"
+        },
+        {
+          "label": "Displaced fracture",
+          "id": "HP:4000053"
+        },
+        {
+          "label": "Comminuted fracture",
+          "id": "HP:4000048"
+        },
+        {
+          "label": "Spiral fracture",
+          "id": "HP:4000045"
+        }
+      ]
+    },
+    {
+      "label": "Aggravated by",
+      "id": "HP:0025285",
+      "children": [
+        {
+          "label": "Exacerbated by aspirin ingestion",
+          "id": "HP:0032365"
+        },
+        {
+          "label": "Aggravated by acetylcholinesterase inhibitor",
+          "id": "HP:0032525"
+        },
+        {
+          "label": "Exacerbated by methylxanthine ingestion",
+          "id": "HP:0032534"
+        },
+        {
+          "label": "Exacerbated by barbiturate medication",
+          "id": "HP:0032502"
+        },
+        {
+          "label": "Exacerbated by contraceptive medication",
+          "id": "HP:0032501"
+        },
+        {
+          "label": "Aggravated by activity",
+          "id": "HP:0025286"
+        },
+        {
+          "label": "Exacerbated by pregnancy",
+          "id": "HP:0032542"
+        },
+        {
+          "label": "Exacerbated by tobacco use",
+          "id": "HP:0032500"
+        },
+        {
+          "label": "Exacerbated by head trauma",
+          "id": "HP:0025315"
+        }
+      ]
+    },
+    {
+      "label": "Ameliorated by",
+      "id": "HP:0025254",
+      "children": [
+        {
+          "label": "Ameliorated by immunosuppresion",
+          "id": "HP:0032522"
+        },
+        {
+          "label": "Ameliorated by ethanol ingestion",
+          "id": "HP:0032503"
+        },
+        {
+          "label": "Ameliorated by acetylcholinesterase inhibitor",
+          "id": "HP:0032526"
+        },
+        {
+          "label": "Ameliorated by carbohydrate ingestion",
+          "id": "HP:0025257"
+        },
+        {
+          "label": "Ameliorated by heat",
+          "id": "HP:0025256"
+        },
+        {
+          "label": "Ameliorated by pregnancy",
+          "id": "HP:0025255"
+        }
+      ]
+    },
+    {
+      "label": "Severity",
+      "id": "HP:0012824",
+      "children": [
+        {
+          "label": "Mild",
+          "id": "HP:0012825"
+        },
+        {
+          "label": "Moderate",
+          "id": "HP:0012826"
+        },
+        {
+          "label": "Borderline",
+          "id": "HP:0012827"
+        },
+        {
+          "label": "Profound",
+          "id": "HP:0012829"
+        },
+        {
+          "label": "Severe",
+          "id": "HP:0012828"
+        }
+      ]
+    },
+    {
+      "label": "Pain characteristic",
+      "id": "HP:0025280",
+      "children": [
+        {
+          "label": "Tender",
+          "id": "HP:0025283"
+        },
+        {
+          "label": "Dull",
+          "id": "HP:0025282"
+        },
+        {
+          "label": "Sleep-interrupting",
+          "id": "HP:0025284"
+        },
+        {
+          "label": "Sharp",
+          "id": "HP:0025281"
+        }
+      ]
+    },
+    {
+      "label": "Phenotypic variability",
+      "id": "HP:0003812",
+      "children": [
+        {
+          "label": "Incomplete penetrance",
+          "id": "HP:0003829",
+          "children": [
+            {
+              "label": "Age-dependent penetrance",
+              "id": "HP:0003831"
+            }
+          ]
+        },
+        {
+          "label": "Variable expressivity",
+          "id": "HP:0003828"
+        }
+      ]
+    },
+    {
+      "label": "Clinical relevance",
+      "id": "HP:0045088",
+      "children": [
+        {
+          "label": "Minor finding",
+          "id": "HP:0045090"
+        },
+        {
+          "label": "Distinctive finding",
+          "id": "HP:0045089"
+        }
+      ]
+    },
+    {
+      "label": "Worse in evening",
+      "id": "HP:0410401"
+    },
+    {
+      "label": "Refractory",
+      "id": "HP:0031375"
+    }
+  ]
+}

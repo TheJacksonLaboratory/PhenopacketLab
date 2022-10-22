@@ -5,11 +5,12 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 // array in local storage for list of diseases
 // let diseasesf = JSON.parse("") || [];
-let diseases = require('../../assets/data/mondo.json');
-let diseaseNames = require('../../assets/data/mondo-id-names.json');
-let phenotypicFeatures = require('../../assets/data/hp.json');
-let phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
-let bodySites = require('../../assets/data/human-view.json');
+const diseases = require('../../assets/data/mondo.json');
+const diseaseNames = require('../../assets/data/mondo-id-names.json');
+const phenotypicFeatures = require('../../assets/data/hp.json');
+const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
+const bodySites = require('../../assets/data/human-view.json');
+const modifiers = require('../../assets/data/modifiers.json');
 
 
 @Injectable()
@@ -20,6 +21,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
+            // tslint:disable-next-line:max-line-length
             .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
             .pipe(delay(500))
             .pipe(dematerialize());
@@ -27,18 +29,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function handleRoute() {
             switch (true) {
                 case url.endsWith('/diseases') && method === 'GET':
-                    console.log("fakebackend disease");
+                    console.log('fakebackend disease');
                     return getDiseases();
                 case url.match(/\/diseases\/.*/) && method === 'GET':
                     return getDiseaseById();
                 case url.endsWith('/phenotypic-features') && method === 'GET':
-                    console.log("fakebackend phenotypic features");
+                    console.log('fakebackend phenotypic features');
                     return getPhenotypicFeatures();
                 case url.match(/\/phenotypic-features\/.*/) && method === 'GET':
                     return getPhenotypicFeatureById();
                 case url.endsWith('/bodysites') && method === 'GET':
-                    console.log("fakebackend bodysites");
+                    console.log('fakebackend bodysites');
                     return getBodySites();
+                case url.endsWith('modifiers') && method === 'GET':
+                    console.log('fakebackend modifiers');
+                    return getModifiers();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -68,10 +73,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(bodySites);
         }
 
+        function getModifiers() {
+            return ok(modifiers);
+        }
         // helper functions
 
+        // tslint:disable-next-line:no-shadowed-variable
         function ok(body?) {
-            return of(new HttpResponse({ status: 200, body }))
+            return of(new HttpResponse({ status: 200, body }));
         }
 
         function error(message) {
