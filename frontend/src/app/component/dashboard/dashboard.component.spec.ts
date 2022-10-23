@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -8,8 +9,11 @@ describe('DashboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatCardModule
+      ],
       declarations: [ DashboardComponent ]
-     
+
     })
     .compileComponents();
   }));
