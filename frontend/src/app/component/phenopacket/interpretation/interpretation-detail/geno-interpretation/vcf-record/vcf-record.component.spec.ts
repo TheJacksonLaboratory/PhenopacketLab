@@ -15,7 +15,8 @@ describe('VcfRecordComponent', () => {
       imports: [
         MatDialogModule,
         CommonModule,
-        BrowserModule
+        BrowserModule,
+        CommonModule
       ]
     })
     .compileComponents();

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TimeElementComponent } from './time-element.component';
 
@@ -10,7 +11,8 @@ describe('TimeElementComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TimeElementComponent ],
       imports: [
-        DropdownModule
+        DropdownModule,
+        FormsModule
       ]
     })
     .compileComponents();

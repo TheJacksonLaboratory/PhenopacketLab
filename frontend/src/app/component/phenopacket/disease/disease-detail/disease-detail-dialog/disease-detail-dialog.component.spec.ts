@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiseaseDetailDialogComponent } from './disease-detail-dialog.component';
 
 describe('DiseaseDetailDialogComponent', () => {
@@ -15,7 +16,9 @@ describe('DiseaseDetailDialogComponent', () => {
       providers: [
         { provide: MatDialog, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef,useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
+        DynamicDialogRef,
+        DynamicDialogConfig
       ]
     })
     .compileComponents();

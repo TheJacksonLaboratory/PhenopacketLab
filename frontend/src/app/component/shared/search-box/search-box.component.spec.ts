@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 import { SearchBoxComponent } from './search-box.component';
 
@@ -16,7 +17,8 @@ describe('SearchBoxComponent', () => {
       imports: [
         MatAutocompleteModule,
         MatFormFieldModule,
-        FormsModule
+        FormsModule,
+        MatIconModule
       ]
     })
     .compileComponents();

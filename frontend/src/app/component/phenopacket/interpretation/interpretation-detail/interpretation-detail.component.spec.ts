@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,6 +23,7 @@ describe('InterpretationDetailComponent', () => {
         MatDialogModule,
         MatIconModule,
         MatFormFieldModule,
+        FormsModule,
         MatSelectModule,
         MatInputModule,
         MatTooltipModule,

@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 import { TreeSelectComponent } from './tree-select.component';
 
@@ -8,7 +10,13 @@ describe('TreeSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreeSelectComponent ]
+      imports: [
+        HttpClientModule
+      ],
+      declarations: [ TreeSelectComponent ],
+      providers: [
+        PhenopacketService
+      ]
     })
     .compileComponents();
   });

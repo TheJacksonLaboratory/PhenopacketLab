@@ -13,6 +13,7 @@ export class SidebarComponent {
   // current url
   @Input() route?: string;
 
-  constructor() { }
+  constructor() {
+  }
 
 }
