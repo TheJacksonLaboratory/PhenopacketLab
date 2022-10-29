@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { OntologyClassComponent } from './ontology-class.component';
 
@@ -8,6 +9,9 @@ describe('OntologyClassComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        FormsModule
+      ],
       declarations: [ OntologyClassComponent ]
     })
     .compileComponents();

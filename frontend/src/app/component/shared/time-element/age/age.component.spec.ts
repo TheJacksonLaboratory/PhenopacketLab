@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { AgeComponent } from './age.component';
 
 describe('DateComponent', () => {
@@ -7,6 +8,9 @@ describe('DateComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [
+        InputNumberModule
+      ],
       declarations: [ AgeComponent ]
     })
     .compileComponents();

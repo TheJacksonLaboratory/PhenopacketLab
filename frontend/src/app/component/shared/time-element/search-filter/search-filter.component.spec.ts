@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SearchFilterComponent } from './search-filter.component';
@@ -12,7 +13,8 @@ describe('SearchFilterComponent', () => {
       declarations: [ SearchFilterComponent ],
       imports: [
         MatAutocompleteModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        FormsModule
       ]
     })
     .compileComponents();

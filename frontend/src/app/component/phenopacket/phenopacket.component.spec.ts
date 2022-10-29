@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { DividerModule } from 'primeng/divider';
 
 import { PhenopacketComponent } from './phenopacket.component';
+import { PhenopacketModule } from './phenopacket.module';
 
 describe('PhenopacketComponent', () => {
   let component: PhenopacketComponent;
@@ -8,7 +12,13 @@ describe('PhenopacketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhenopacketComponent ]
+      declarations: [ PhenopacketComponent ],
+      imports: [
+        DividerModule,
+        MatExpansionModule,
+        MatIconModule,
+        PhenopacketModule
+      ]
     })
     .compileComponents();
   });
