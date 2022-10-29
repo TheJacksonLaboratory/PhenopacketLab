@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { GeneDescriptorComponent } from './gene-descriptor.component';
 
 
@@ -11,7 +13,9 @@ describe('GeneDescriptorComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ GeneDescriptorComponent ],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule,
+        MatTooltipModule
       ]
     })
     .compileComponents();

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { DropdownModule } from 'primeng/dropdown';
 import { TimeElementComponent } from './time-element.component';
 
 describe('TimeElementComponent', () => {
@@ -7,7 +8,10 @@ describe('TimeElementComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeElementComponent ]
+      declarations: [ TimeElementComponent ],
+      imports: [
+        DropdownModule
+      ]
     })
     .compileComponents();
   }));
