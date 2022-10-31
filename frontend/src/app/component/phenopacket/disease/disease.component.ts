@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Disease } from 'src/app/models/disease';
 
@@ -8,6 +8,7 @@ import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dial
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { OntologyClass } from 'src/app/models/base';
 
 @Component({
   selector: 'app-disease',
@@ -15,14 +16,22 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: ['./disease.component.scss'],
   animations: [
     trigger('detailExpand', [
-        state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-        state('expanded', style({ height: '*' })),
-        transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
-],
+  ],
 })
-export class DiseaseComponent implements OnInit {
+export class DiseaseComponent implements OnInit, OnChanges {
+
+  /**
+  * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
+  * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
+  */
+  @Input()
+  showAddButton = true;
+
   @Input()
   phenopacketDiseases: Disease[] = [];
 
@@ -52,18 +61,42 @@ export class DiseaseComponent implements OnInit {
 
   constructor(public searchService: DiseaseSearchService, public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    if (this.phenopacketDiseases === undefined) {
-      this.phenopacketDiseases = [];
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('change:');
+    console.log(changes);
+    // this.phenotypicFeatures = changes.phenotypicFeatures.currentValue;
+    console.log(this.phenopacketDiseases);
     this.datasource.data = this.phenopacketDiseases;
     this.onDiseasesChanged.emit(this.phenopacketDiseases);
   }
 
-  addDisease(disease: Disease) {
-    this.phenopacketDiseases.push(disease);
+  ngOnInit(): void {
+    // if (this.phenopacketDiseases === undefined) {
+    //   this.phenopacketDiseases = [];
+    // }
     this.datasource.data = this.phenopacketDiseases;
-    this.onDiseasesChanged.emit(this.phenopacketDiseases);
+    // this.onDiseasesChanged.emit(this.phenopacketDiseases);
+  }
+
+  addDisease(disease: Disease) {
+    // this.phenopacketDiseases.push(disease);
+    // this.datasource.data = this.phenopacketDiseases;
+    // this.onDiseasesChanged.emit(this.phenopacketDiseases);
+
+    if (disease === undefined) {
+      const newDisease = new Disease();
+      newDisease.term = new OntologyClass('id', 'name');
+      newDisease.excluded = false;
+      this.phenopacketDiseases.push(newDisease);
+      this.datasource.data = this.phenopacketDiseases;
+      this.onDiseasesChanged.emit(this.phenopacketDiseases);
+    } else if (disease && this.showAddButton) {
+      this.phenopacketDiseases.push(disease);
+      this.datasource.data = this.phenopacketDiseases;
+      this.onDiseasesChanged.emit(this.phenopacketDiseases);
+    } else if (disease && !this.showAddButton) {
+      this.onDiseasesChanged.emit([disease]);
+    }
   }
 
   removeDisease(element: Disease) {
@@ -135,7 +168,7 @@ export class DiseaseComponent implements OnInit {
   }
 
   getStatus(disease: Disease) {
-    return disease.excluded ? 'Excluded' : 'Included';
+    return disease.excluded ? 'Excluded' : 'Observed';
   }
 }
 

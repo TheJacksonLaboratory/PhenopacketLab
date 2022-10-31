@@ -24,8 +24,8 @@
       </div>
       
       <div class="field col-12">
-        <p-accordion [multiple]="true">
-          <p-accordionTab header="Type" [selected]="true">
+        <!-- <p-accordion [multiple]="true">
+          <p-accordionTab header="Type" [selected]="true"> -->
             <div class="grid p-fluid">
               <div class="field col-6">
                 <label for="label">Label</label>
@@ -34,6 +34,7 @@
                   type="text"
                   required
                   pInputText
+                  [disabled]="true"
                   [(ngModel)]="label"
                   [ngClass]="{
                     'ng-dirty':
@@ -57,6 +58,7 @@
                   type="text"
                   required
                   pInputText
+                  [disabled]="true"
                   [(ngModel)]="id"
                   [ngClass]="{
                     'ng-dirty':
@@ -69,39 +71,42 @@
                   >ID is required.</small
                 >
               </div>
-            </div>
-          </p-accordionTab>
-          <p-accordionTab header="Onset">
-            <app-time-element
-              aria-labelledby="onset-time-label"
-            ></app-time-element>
-          </p-accordionTab>
-          <p-accordionTab header="Resolution">
-            <app-time-element
-              aria-labelledby="resolution-time-label"
-            ></app-time-element>
-          </p-accordionTab>
-          <p-accordionTab header="Severity & Modifiers">
-            <div class="grid p-fluid">
-              <div class="field col-6">
-                <label for="severity">Severities</label>
 
-                <app-search-filter id="severity"
-                  [options]="severities"
-                  title="Add severity"
-                ></app-search-filter>
+              <div class="field col-12">
+                <label for="onset"><b>Onset</b></label>
+                <app-time-element id="onset"
+                aria-labelledby="onset-time-label"
+              ></app-time-element>
+              </div>
+
+              <div class="field col-12">
+                <label for="resolution"><b>Resolution</b></label>
+                <app-time-element id="resolution"
+                  aria-labelledby="resolution-time-label"
+                ></app-time-element>
+              </div>
+
+              <div class="field col-6">
+                <label for="severity"><b>Severity</b></label>
+                <p-dropdown id="severity"
+                  placeholder="Select severity"
+                  [options]="getSeverities()"
+                  [(ngModel)]="severity"
+                  pTooltip="The intensity or degree of a manifestation"
+                  showDelay="2000"
+                  class="w-full"
+                ></p-dropdown>
               </div>
               <div class="field col-6">
-                <label for="modifier">Modifiers</label>
+                <label for="modifier"><b>Modifiers</b></label>
 
-                <ontology-tree-select id="modifier" (ontologyObjectEvent)="updateModifiers($event)"></ontology-tree-select>
+                <ontology-tree-select id="modifier" pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects." showDelay="2000"
+                (ontologyObjectEvent)="updateModifiers($event)"></ontology-tree-select>
               </div>
-            </div>
-          </p-accordionTab>
-          <p-accordionTab header="Evidence">
-            <div class="grid p-fluid">
+
+
               <div class="field col-6">
-                <label for="evidence">Evidence</label>
+                <label for="evidence"><b>Evidence</b></label>
                 <app-search-filter id="evidence"
                   [options]="evidenceValues"
                   title="Choose evidence"
@@ -149,10 +154,25 @@
                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
                 ></textarea>
               </div>
-            </div>
 
-          </p-accordionTab>
-        </p-accordion>
+            </div>
+          <!-- </p-accordionTab>
+          <p-accordionTab header="Onset"> -->
+            
+            
+          <!-- </p-accordionTab>
+          <p-accordionTab header="Resolution"> -->
+            
+            
+          <!-- </p-accordionTab>
+          <p-accordionTab header="Severity & Modifiers"> -->
+
+          <!-- </p-accordionTab>
+          <p-accordionTab header="Evidence"> -->
+
+
+          <!-- </p-accordionTab>
+        </p-accordion> -->
         
       </div>
       

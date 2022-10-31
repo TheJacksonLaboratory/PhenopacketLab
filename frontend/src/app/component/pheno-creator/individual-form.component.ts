@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OntologyClass, TimeElement } from 'src/app/models/base';
+import { OntologyClass } from 'src/app/models/base';
 import { Gender, Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -68,11 +68,20 @@ export class IndividualFormComponent implements OnInit, OnDestroy {
 
     }
 
-    updateTimeOfLastEncounter(timeOfLastEncouter: TimeElement) {
+    /**
+     *
+     * @param timeOfLastEncouter a TimeElement
+     */
+    updateTimeOfLastEncounter(timeOfLastEncouter: any) {
         this.phenopacket.subject.timeAtLastEncounter = timeOfLastEncouter;
         this.phenopacketService.setPhenopacket(this.phenopacket);
     }
-    updateTimeOfDeath(timeOfDeath: TimeElement) {
+
+    /**
+     *
+     * @param timeOfDeath a TimeElement
+     */
+    updateTimeOfDeath(timeOfDeath: any) {
         if (this.phenopacket.subject.vitalStatus === undefined) {
             this.phenopacket.subject.vitalStatus = new VitalStatus();
         }

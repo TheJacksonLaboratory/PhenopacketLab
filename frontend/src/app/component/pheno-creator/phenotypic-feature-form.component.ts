@@ -28,10 +28,9 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
     evidenceId: string;
     evidenceReference: string;
     evidenceDescription: string;
-    // TODO - fetch from backend
-    severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
-    // TODO - fetch from backend
-    modifierValues: string[] = ['modifier 1', 'modifier 2'];
+
+    severity: OntologyClass;
+    modifiers: OntologyClass[];
     // TODO - fetch from backend
     evidenceValues: string[] = ['evidence 1', 'evidence 2'];
 
@@ -111,7 +110,7 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         this.phenopacketService.setPhenopacket(this.phenopacket);
         // this.router.navigate(['pheno-creator/measurements']);
         // TODO temp while measuremtn is not done
-        this.router.navigate(['pheno-creator/validate']);
+        this.router.navigate(['pheno-creator/diseases']);
         this.submitted = true;
 
         // console.log(this.phenopacketService.getPhenopacket());

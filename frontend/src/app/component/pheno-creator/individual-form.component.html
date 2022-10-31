@@ -6,7 +6,7 @@
   <ng-template pTemplate="content">
     <div class="grid p-fluid">
       <div class="field col-12">
-        <label for="id">Phenopacket ID</label>
+        <label for="id"><b>Phenopacket ID</b></label>
         <input
           id="id"
           #id="ngModel"
@@ -25,8 +25,10 @@
         >
       </div>
       <div class="field col-12">
-        <label for="lastEncounterDate">Time of last encounter </label>
-        <app-time-element id="lastEncounterDate" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
+        <label for="lastEncounterDate"><b>Time of last encounter</b></label>
+        <app-age id="lastEncounterDate" (ageEvent)="updateTimeOfLastEncounter($event)"></app-age>
+
+        <!-- <app-time-element id="lastEncounterDate" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element> -->
       </div>
       
       <div class="field col-12 md:col-4">
@@ -83,11 +85,12 @@
         <p-inputNumber id="survivalTime" [(ngModel)]="survivalTime"></p-inputNumber>
       </div>
 
-      <div class="field col-12">
+      <div class="field col-12" *ngIf="status === 'DECEASED'">
         <label for="timeOfDeath">Time of death</label>
-        <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element>
+        <!-- <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element> -->
+        <app-age id="timeOfDeath" (ageEvent)="updateTimeOfDeath($event)"></app-age>
       </div>
-      <div class="field col-12">
+      <div class="field col-12" *ngIf="status === 'DECEASED'">
         <label for="causeOfDeath">Cause of death</label>
         <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input>
         

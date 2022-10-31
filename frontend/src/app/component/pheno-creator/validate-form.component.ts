@@ -113,7 +113,7 @@ export class ValidateFormComponent implements OnInit {
     }
 
     prevPage() {
-        this.router.navigate(['pheno-creator/phenotypic-features']);
+        this.router.navigate(['pheno-creator/diseases']);
         // this.router.navigate(['pheno-creator/files']);
     }
 

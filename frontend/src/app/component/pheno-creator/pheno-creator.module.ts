@@ -14,6 +14,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
 // import { EditorModule } from 'primeng/editor';
 // import { QuillModule } from 'ngx-quill'
 
@@ -77,7 +79,8 @@ import { PhenopacketModule } from '../phenopacket/phenopacket.module';
         AccordionModule,
         PhenopacketModule,
         SharedModule,
-        InputTextareaModule
+        InputTextareaModule,
+        RadioButtonModule
 
         // EditorModule,
         // QuillModule.forRoot()
