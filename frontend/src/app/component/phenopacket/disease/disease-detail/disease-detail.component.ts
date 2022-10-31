@@ -32,7 +32,7 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
-  statuses: string[] = ['Included', 'Excluded'];
+  statuses: string[] = ['Observed', 'Excluded'];
   selectedStatus: string;
 
   // TODO - fetch from backend
@@ -54,12 +54,12 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
 
   updateDiseaseDetails() {
     this.isA = this.disease.isA;
-    this.status = this.disease.excluded ? 'Excluded' : 'Included';
-    this.onset = this.disease.onset?.toString(), '';
-    this.resolution = this.disease.resolution?.toString(), '';
+    this.status = this.disease.excluded ? 'Excluded' : 'Observed';
+    this.onset = this.disease.onset?.toString();
+    this.resolution = this.disease.resolution?.toString();
     this.stage = this.disease.diseaseStage?.toString();
     this.finding = this.disease.clinicalTnmFinding?.toString();
-    this.laterality = this.disease.laterality?.label, '';
+    this.laterality = this.disease.laterality?.label;
   }
 
   changeStatus(evt: MatRadioChange) {

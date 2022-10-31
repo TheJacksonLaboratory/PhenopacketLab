@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatRadioChange } from '@angular/material/radio';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -9,13 +9,13 @@ import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
   styleUrls: ['./phenotypic-detail-dialog.component.scss']
 })
 
-export class PhenotypicDetailDialogComponent {
+export class PhenotypicDetailDialogComponent implements OnInit {
 
   phenotypicDetailName: string;
   termId: string;
   description: string;
   selectedStatus: string;
-  statuses: string[] = ['Included', 'Excluded'];
+  statuses: string[] = ['Observed', 'Excluded'];
 
   // TODO - fetch from backend
   severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
@@ -35,11 +35,11 @@ export class PhenotypicDetailDialogComponent {
      }
 
   ngOnInit() {
-    if(this.phenotypicFeature) {
+    if (this.phenotypicFeature) {
       this.phenotypicDetailName = this.phenotypicFeature.type.label;
       this.termId = this.phenotypicFeature.type.id;
       this.description = this.phenotypicFeature.description;
-      this.selectedStatus = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
+      this.selectedStatus = this.phenotypicFeature.excluded ? 'Excluded' : 'Observed';
     }
 
   }

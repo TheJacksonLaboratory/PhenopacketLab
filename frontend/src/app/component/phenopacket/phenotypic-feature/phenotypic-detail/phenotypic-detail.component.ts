@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { Evidence } from 'src/app/models/base';
@@ -11,7 +11,7 @@ import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog/phen
   styleUrls: ['./phenotypic-detail.component.scss']
 })
 
-export class PhenotypicDetailComponent {
+export class PhenotypicDetailComponent implements OnInit {
 
   phenotypicDetailName: string;
   termId: string;
@@ -57,9 +57,9 @@ export class PhenotypicDetailComponent {
   }
 
   updatePhenotypicDetails() {
-    this.status = this.phenotypicFeature.excluded ? 'Excluded' : 'Included';
-    this.onset = this.phenotypicFeature.onset?.toString(), '';
-    this.resolution = this.phenotypicFeature.resolution?.toString(), '';
+    this.status = this.phenotypicFeature.excluded ? 'Excluded' : 'Observed';
+    this.onset = this.phenotypicFeature.onset?.toString();
+    this.resolution = this.phenotypicFeature.resolution?.toString();
     this.severity = this.phenotypicFeature.severity?.toString();
     this.modifiers = this.phenotypicFeature.modifiers?.toString();
     this.evidences = this.phenotypicFeature.evidence;
@@ -106,7 +106,7 @@ export class PhenotypicDetailComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let updatedFeature = result.feature;
+        const updatedFeature = result.feature;
         if (updatedFeature !== undefined) {
           // update feature
           this.phenotypicFeature = updatedFeature;
