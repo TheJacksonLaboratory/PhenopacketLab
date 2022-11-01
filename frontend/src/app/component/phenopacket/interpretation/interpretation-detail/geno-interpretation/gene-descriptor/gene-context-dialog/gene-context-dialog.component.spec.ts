@@ -1,4 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GeneContextDialogComponent } from './gene-context-dialog.component';
@@ -12,12 +14,16 @@ describe('GeneContextDialogComponent', () => {
       declarations: [ GeneContextDialogComponent ],
       imports: [
         MatDialogModule,
-        HttpClientModule
+        HttpClientTestingModule,
+        CommonModule
       ],
       providers: [
         { provide: MatDialog, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef,useValue: {} }
+        { provide: MatDialogRef, useValue: {} }
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA
       ]
     })
     .compileComponents();

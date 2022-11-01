@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GenoInterpretationDetailComponent } from './geno-interpretation-detail.component';
 
 
@@ -20,7 +21,9 @@ describe('GenoInterpretationDetailComponent', () => {
       declarations: [ GenoInterpretationDetailComponent ],
       imports: [
         MatDialogModule,
+        NoopAnimationsModule,
         MatFormFieldModule,
+        ReactiveFormsModule,
         FormsModule,
         MatSelectModule,
         MatInputModule,

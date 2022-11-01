@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -23,7 +24,8 @@ describe('CohortListComponent', () => {
         MatIconModule,
         PhenopacketModule,
         MatTooltipModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientTestingModule
       ]
     })
     .compileComponents();

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import { Disease } from 'src/app/models/disease';
 import { Gender, Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -11,7 +13,15 @@ import { BioSample } from 'src/app/models/biosample';
 @Component({
   selector: 'app-phenopacket',
   templateUrl: './phenopacket.component.html',
-  styleUrls: ['./phenopacket.component.scss']
+  styleUrls: ['./phenopacket.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class PhenopacketComponent implements OnInit {
 
@@ -135,25 +145,37 @@ export class PhenopacketComponent implements OnInit {
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-    this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    if (this.phenopacket) {
+      this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    }
   }
   changeDiseases(diseases: Disease[]) {
-    this.phenopacket.diseases = diseases;
+    if (this.phenopacket) {
+      this.phenopacket.diseases = diseases;
+    }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
-    this.phenopacket.biosamples = biosamples;
+    if (this.phenopacket) {
+      this.phenopacket.biosamples = biosamples;
+    }
   }
   changeMeasurements(measurements: Measurement[]) {
-    this.phenopacket.measurements = measurements;
+    if (this.phenopacket) {
+      this.phenopacket.measurements = measurements;
+    }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
-    this.phenopacket.medicalActions = medicalActions;
+    if (this.phenopacket) {
+      this.phenopacket.medicalActions = medicalActions;
+    }
   }
 
   changeFiles(files: File[]) {
-    this.phenopacket.files = files;
+    if (this.phenopacket) {
+      this.phenopacket.files = files;
+    }
   }
 
   editStatus() {

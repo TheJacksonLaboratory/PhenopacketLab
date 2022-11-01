@@ -1,5 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { TreeSelectModule } from 'primeng/treeselect';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 import { TreeSelectComponent } from './tree-select.component';
@@ -11,7 +13,9 @@ describe('TreeSelectComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientModule
+        HttpClientTestingModule,
+        TreeSelectModule,
+        FormsModule
       ],
       declarations: [ TreeSelectComponent ],
       providers: [

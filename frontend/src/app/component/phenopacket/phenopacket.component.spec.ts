@@ -3,9 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DividerModule } from 'primeng/divider';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
+import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { PhenopacketComponent } from './phenopacket.component';
 import { PhenopacketModule } from './phenopacket.module';
 
@@ -22,7 +23,8 @@ describe('PhenopacketComponent', () => {
         MatIconModule,
         PhenopacketModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       providers: [
         PhenotypeSearchService
