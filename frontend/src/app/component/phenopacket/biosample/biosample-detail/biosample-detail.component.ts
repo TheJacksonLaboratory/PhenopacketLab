@@ -75,13 +75,19 @@ export class BiosampleDetailComponent implements OnInit {
     return [];
   }
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-    this.biosample.phenotypicFeatures = phenotypicFeatures;
+    if (this.biosample) {
+      this.biosample.phenotypicFeatures = phenotypicFeatures;
+    }
   }
   changeMeasurements(measurements: Measurement[]) {
-    this.biosample.measurements = measurements;
+    if (this.biosample) {
+      this.biosample.measurements = measurements;
+    }
   }
 
   changeFiles(files: File[]) {
-    this.biosample.files = files;
+    if (this.biosample) {
+      this.biosample.files = files;
+    }
   }
 }

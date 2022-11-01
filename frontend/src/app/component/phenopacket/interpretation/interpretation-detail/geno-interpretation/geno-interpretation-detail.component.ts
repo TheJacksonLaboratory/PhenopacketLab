@@ -10,7 +10,6 @@ import { InterpretationDetailDialogComponent } from '../interpretation-detail-di
   templateUrl: './geno-interpretation-detail.component.html',
   styleUrls: ['./geno-interpretation-detail.component.scss']
 })
-
 export class GenoInterpretationDetailComponent implements OnInit {
 
   @Input()

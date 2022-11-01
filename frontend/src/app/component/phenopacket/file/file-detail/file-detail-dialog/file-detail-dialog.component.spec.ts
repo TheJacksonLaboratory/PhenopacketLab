@@ -6,6 +6,7 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'src/app/component/shared/shared.module';
 import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FileDetailDialogComponent', () => {
   let component: FileDetailDialogComponent;
@@ -16,6 +17,7 @@ describe('FileDetailDialogComponent', () => {
       imports: [
         FormsModule,
         MatDialogModule,
+        NoopAnimationsModule,
         SharedModule,
         MatInputModule,
         MatFormFieldModule,
