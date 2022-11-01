@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { SearchFilterComponent } from './search-filter.component';
 
 describe('SearchFilterComponent', () => {
@@ -15,6 +16,7 @@ describe('SearchFilterComponent', () => {
         MatAutocompleteModule,
         MatFormFieldModule,
         FormsModule,
+        MatInputModule,
         ReactiveFormsModule
       ]
     })

@@ -26,7 +26,7 @@ export class DiseaseDetailDialogComponent implements OnInit {
   stage: OntologyClass;
 
 
-  statuses: string[] = ['Observed', 'Included'];
+  statuses: string[] = ['Observed', 'Excluded'];
   selectedStatus: string;
 
   // TODO - fetch from backend
@@ -43,13 +43,15 @@ export class DiseaseDetailDialogComponent implements OnInit {
       this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
       this.isA = this.disease.isA;
-      this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';
+      this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Observed';
     }
   }
 
   changeStatus(evt: MatRadioChange) {
     this.selectedStatus = evt.value;
-    this.disease.excluded = evt.value === 'Excluded';
+    if (this.disease) {
+      this.disease.excluded = evt.value === 'Excluded';
+    }
   }
 
   getLateralities() {

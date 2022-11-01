@@ -25,7 +25,7 @@ describe('UploadService', () => {
         expect(phenopacket.phenotypicFeatures.length).toBe(8);
         expect(phenopacket.measurements[0].assay.id).toBe('LOINC:26474-7');
         expect(phenopacket.medicalActions.length).toBe(6);
-        expect(phenopacket.interpretations).toBe([]);
+        expect(phenopacket.interpretations).toEqual([]);
 
     }));
 

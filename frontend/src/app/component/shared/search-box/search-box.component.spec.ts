@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,7 @@ describe('SearchBoxComponent', () => {
       imports: [
         MatAutocompleteModule,
         MatFormFieldModule,
+        ReactiveFormsModule,
         FormsModule,
         MatIconModule
       ]

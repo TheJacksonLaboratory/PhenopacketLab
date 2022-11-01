@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FileDetailDialogComponent } from './file-detail-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'src/app/component/shared/shared.module';
@@ -16,7 +16,8 @@ describe('FileDetailDialogComponent', () => {
         FormsModule,
         MatDialogModule,
         SharedModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        ReactiveFormsModule
       ],
       declarations: [ FileDetailDialogComponent ],
       providers: [
