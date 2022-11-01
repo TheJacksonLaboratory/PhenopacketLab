@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'src/app/component/shared/shared.module';
+import { MatInputModule } from '@angular/material/input';
 
 describe('FileDetailDialogComponent', () => {
   let component: FileDetailDialogComponent;
@@ -16,6 +17,7 @@ describe('FileDetailDialogComponent', () => {
         FormsModule,
         MatDialogModule,
         SharedModule,
+        MatInputModule,
         MatFormFieldModule,
         ReactiveFormsModule
       ],

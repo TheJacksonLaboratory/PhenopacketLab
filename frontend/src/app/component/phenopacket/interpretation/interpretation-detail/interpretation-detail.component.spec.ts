@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InterpretationDetailComponent } from './interpretation-detail.component';
 
 
@@ -21,6 +22,7 @@ describe('InterpretationDetailComponent', () => {
       declarations: [ InterpretationDetailComponent ],
       imports: [
         MatDialogModule,
+        NoopAnimationsModule,
         MatIconModule,
         MatFormFieldModule,
         ReactiveFormsModule,

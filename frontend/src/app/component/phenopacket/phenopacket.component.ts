@@ -145,25 +145,37 @@ export class PhenopacketComponent implements OnInit {
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-    this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    if (this.phenopacket) {
+      this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    }
   }
   changeDiseases(diseases: Disease[]) {
-    this.phenopacket.diseases = diseases;
+    if (this.phenopacket) {
+      this.phenopacket.diseases = diseases;
+    }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
-    this.phenopacket.biosamples = biosamples;
+    if (this.phenopacket) {
+      this.phenopacket.biosamples = biosamples;
+    }
   }
   changeMeasurements(measurements: Measurement[]) {
-    this.phenopacket.measurements = measurements;
+    if (this.phenopacket) {
+      this.phenopacket.measurements = measurements;
+    }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
-    this.phenopacket.medicalActions = medicalActions;
+    if (this.phenopacket) {
+      this.phenopacket.medicalActions = medicalActions;
+    }
   }
 
   changeFiles(files: File[]) {
-    this.phenopacket.files = files;
+    if (this.phenopacket) {
+      this.phenopacket.files = files;
+    }
   }
 
   editStatus() {

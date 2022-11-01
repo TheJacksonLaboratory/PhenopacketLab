@@ -34,7 +34,7 @@ export class DiseaseDetailDialogComponent implements OnInit {
   stages: string[] = ['Stage 0 - carcinoma in situ', 'Stage I - localized cancer', 'Stage II - locally advanced cancer, early stages', 'Stage III - locally advanced cancer, later stages', 'Stage IV - metastatic cancer'];
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
-    this.disease = config.data.disease;
+    this.disease = config.data?.disease;
   }
 
   ngOnInit(): void {

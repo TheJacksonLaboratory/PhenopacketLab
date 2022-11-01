@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 import { SearchBoxComponent } from './search-box.component';
 
@@ -18,6 +19,7 @@ describe('SearchBoxComponent', () => {
         MatAutocompleteModule,
         MatFormFieldModule,
         ReactiveFormsModule,
+        MatInputModule,
         FormsModule,
         MatIconModule
       ]
