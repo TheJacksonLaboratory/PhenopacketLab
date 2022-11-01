@@ -65,7 +65,7 @@ import { BiosampleDetailComponent } from './biosample/biosample-detail/biosample
 import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/biosample-detail-dialog/biosample-detail-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -78,6 +78,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatAutocompleteModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule,
     MatCardModule,
     MatRippleModule,
     MatSelectModule,
