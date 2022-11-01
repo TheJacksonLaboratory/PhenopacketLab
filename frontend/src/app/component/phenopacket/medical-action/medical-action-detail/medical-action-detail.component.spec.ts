@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MedicalActionDetailComponent } from './medical-action-detail.component';
@@ -17,7 +18,8 @@ describe('MedicalActionDetailComponent', () => {
         MatDialogModule,
         MatIconModule,
         MatTooltipModule,
-        MatButtonModule
+        MatButtonModule,
+        MatInputModule
       ]
     })
     .compileComponents();

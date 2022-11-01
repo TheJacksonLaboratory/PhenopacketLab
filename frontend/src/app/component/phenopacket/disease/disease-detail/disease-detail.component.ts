@@ -7,11 +7,20 @@ import { MessageService } from 'primeng/api';
 
 import { Disease } from 'src/app/models/disease';
 import { DiseaseDetailDialogComponent } from './disease-detail-dialog/disease-detail-dialog.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-disease-detail',
   templateUrl: './disease-detail.component.html',
-  styleUrls: ['./disease-detail.component.scss']
+  styleUrls: ['./disease-detail.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class DiseaseDetailComponent implements OnInit, OnDestroy {
 

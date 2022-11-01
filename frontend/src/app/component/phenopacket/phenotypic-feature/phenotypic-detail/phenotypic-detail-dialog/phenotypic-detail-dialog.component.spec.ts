@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { SharedModule } from 'src/app/component/shared/shared.module';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog.component';
@@ -19,7 +20,8 @@ describe('PhenotypicDetailDialogComponent', () => {
         MatRadioModule,
         SharedModule,
         MatFormFieldModule,
-        FormsModule
+        FormsModule,
+        MatInputModule
       ],
       providers: [
         { provide: MatDialog, useValue: {} },

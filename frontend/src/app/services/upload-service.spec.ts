@@ -20,12 +20,12 @@ describe('UploadService', () => {
 
     it('covid.json phenopacket should be correctly imported as a Phenopacket object', inject([UploadService], (service: UploadService) => {
         // convert loaded JSON to Phenopacket object
-        let phenopacket = Phenopacket.convert(covid);
+        const phenopacket = Phenopacket.convert(covid);
         expect(phenopacket.id).toBe('arbitrary.phenopacket.id');
         expect(phenopacket.phenotypicFeatures.length).toBe(8);
         expect(phenopacket.measurements[0].assay.id).toBe('LOINC:26474-7');
         expect(phenopacket.medicalActions.length).toBe(6);
-        expect(phenopacket.interpretations).toBe(undefined);
+        expect(phenopacket.interpretations).toBe([]);
 
     }));
 

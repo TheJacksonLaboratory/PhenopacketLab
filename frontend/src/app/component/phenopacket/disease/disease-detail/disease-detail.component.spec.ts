@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { DiseaseDetailComponent } from './disease-detail.component';
@@ -15,7 +16,8 @@ describe('DiseaseDetailComponent', () => {
         MatDialogModule
       ],
       providers: [
-        DialogService
+        DialogService,
+        MessageService
       ]
     })
     .compileComponents();
