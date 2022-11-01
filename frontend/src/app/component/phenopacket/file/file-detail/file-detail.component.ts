@@ -5,20 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { File } from 'src/app/models/base';
 import { FileDetailDialogComponent } from './file-detail-dialog/file-detail-dialog.component';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-file-detail',
   templateUrl: './file-detail.component.html',
   styleUrls: ['./file-detail.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
 })
 export class FileDetailComponent implements OnInit {
 
