@@ -4,6 +4,7 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'src/app/component/shared/shared.module';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog.component';
 
@@ -16,6 +17,7 @@ describe('PhenotypicDetailDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PhenotypicDetailDialogComponent ],
       imports: [
+        NoopAnimationsModule,
         MatDialogModule,
         MatRadioModule,
         SharedModule,

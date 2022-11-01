@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog.component';
 
 describe('MedicalActionDetailDialogComponent', () => {
@@ -17,6 +18,7 @@ describe('MedicalActionDetailDialogComponent', () => {
       declarations: [ MedicalActionDetailDialogComponent ],
       imports: [
         MatDialogModule,
+        NoopAnimationsModule,
         HttpClientModule,
         MatFormFieldModule,
         MatInputModule,
