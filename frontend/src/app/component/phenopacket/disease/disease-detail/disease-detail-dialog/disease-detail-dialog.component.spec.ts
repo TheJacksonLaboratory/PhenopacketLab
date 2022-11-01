@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -15,7 +15,8 @@ describe('DiseaseDetailDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailDialogComponent ],
       imports: [
-        MatDialogModule,
+        ReactiveFormsModule,
+        FormsModule,
         DropdownModule,
         RadioButtonModule,
         ButtonModule,
