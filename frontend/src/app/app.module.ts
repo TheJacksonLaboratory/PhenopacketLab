@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -57,7 +57,6 @@ import { CheckboxModule } from 'primeng/checkbox';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        NoopAnimationsModule,
         HttpClientModule,
         routing,
         RouterModule,
