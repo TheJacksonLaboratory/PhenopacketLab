@@ -86,7 +86,7 @@
                 ></app-time-element>
               </div>
 
-              <div class="field col-6">
+              <div class="field col-12">
                 <label for="severity"><b>Severity</b></label>
                 <p-dropdown id="severity"
                   placeholder="Select severity"
@@ -97,11 +97,13 @@
                   class="w-full"
                 ></p-dropdown>
               </div>
-              <div class="field col-6">
+              <div class="field col-12">
                 <label for="modifier"><b>Modifiers</b></label>
 
                 <ontology-tree-select id="modifier" pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects." showDelay="2000"
-                (ontologyObjectEvent)="updateModifiers($event)"></ontology-tree-select>
+                (ontologyObjectEvent)="updateModifiers($event)" [selectionMode]="'checkbox'" [nodes]="modifiersNodes"></ontology-tree-select>
+
+                <!-- <app-tree-search></app-tree-search> -->
               </div>
 
 

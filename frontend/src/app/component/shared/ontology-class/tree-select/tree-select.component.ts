@@ -1,65 +1,95 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 
 @Component({
     // tslint:disable-next-line:component-selector
     selector: 'ontology-tree-select',
     templateUrl: './tree-select.component.html',
     styleUrls: ['./tree-select.component.scss'],
-    // tslint:disable-next-line:no-host-metadata-property
-    // host: {
-    //     '[class.floating]': 'shouldLabelFloat',
-    //     '[id]': 'id',
-    // },
 })
-export class TreeSelectComponent implements OnInit, OnDestroy {
+export class TreeSelectComponent {
     // tslint:disable-next-line:no-input-rename
     @Output()
     ontologyObjectEvent = new EventEmitter<OntologyClass[]>();
     @Input()
     ontologyObjects: OntologyClass[];
 
-    phenopacketSubscription: Subscription;
-
-    selectedNodes: any[] = [];
+    /**
+     * Ontology nodes
+     */
+    @Input()
     nodes: any[];
 
-    // label: string;
-    // id: string;
+    /**
+     * Selection mode: can be single, checkbox, multiple or tricheckbox
+     */
+    @Input()
+    selectionMode = 'checkbox';
 
-    constructor(public phenopacketService: PhenopacketService) {
+    phenopacketSubscription: Subscription;
 
+    selectedNodesStr: string[] = [];
+    selectedNodes: OntologyTreeNode[] = [];
+
+    constructor() {}
+
+    nodeSelect(event) {
+        // needed so that the programmatic changes to chips value are reflected in the UI
+        const clonedArrayStr = Object.assign([], this.selectedNodesStr);
+        clonedArrayStr.push(event.node.label);
+
+        this.selectedNodesStr = clonedArrayStr;
+        this.ontologyObjectEvent.emit(this.toOntologyClass(this.selectedNodes));
     }
-    ngOnInit(): void {
-        // make modifiers more generic
-        this.phenopacketSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
-            console.log(nodes);
-            this.nodes = <TreeNode[]>nodes.data;
+
+    nodeUnselect(event) {
+        // needed so that the programmatic changes to chips value are reflected in the UI
+        const clonedArrayStr = Object.assign([], this.selectedNodesStr);
+        const indexStr = this.selectedNodesStr.indexOf(event.node.label);
+
+        console.log(indexStr);
+        if (indexStr !== -1) {
+            clonedArrayStr.splice(indexStr, 1);
+            this.selectedNodesStr = clonedArrayStr;
         }
-        );
-        // if (this.ontologyObject) {
-        //     this.label = this.ontologyObject.label;
-        //     this.id = this.ontologyObject.id;
-        // }
+        this.ontologyObjectEvent.emit(this.toOntologyClass(this.selectedNodes));
     }
 
-    ngOnDestroy() {
-        if (this.phenopacketSubscription) {
-            this.phenopacketSubscription.unsubscribe();
+    /**
+     *
+     * @param ontologyNodes Transform to OntologyClass
+     * @returns
+     */
+    toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
+        const ontologyList = [];
+        for (const node of ontologyNodes) {
+            ontologyList.push(new OntologyClass(node['key'], node['label']));
         }
+        return ontologyList;
     }
-    updateOntologyClass() {
-        // if (this.ontologyObject === undefined) {
-        //     this.ontologyObject = new OntologyClass(this.id, this.label);
 
-        // } else {
-        //     this.ontologyObject.id = this.id;
-        //     this.ontologyObject.label = this.label;
-        // }
-        this.ontologyObjectEvent.emit(this.selectedNodes);
+    /**
+     * Used if selectionMode equals 'tricheckbox'
+     * @param node
+     */
+    nodeSelectionChange(node: any) {
+        // needed so that the programmatic changes to chips value are reflected in the UI
+        const clonedArray = Object.assign([], this.selectedNodesStr);
+
+        if (node.state) {
+            clonedArray.push(node.label);
+            this.selectedNodesStr = clonedArray;
+            this.selectedNodes.push(node);
+        } else {
+            const index = this.selectedNodes.indexOf(node);
+            if (index !== -1) {
+                clonedArray.splice(index, 1);
+                this.selectedNodesStr = clonedArray;
+                this.selectedNodes.splice(index, 1);
+            }
+        }
     }
 
 }

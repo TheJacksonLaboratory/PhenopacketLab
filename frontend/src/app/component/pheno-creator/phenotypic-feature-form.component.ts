@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -30,7 +31,8 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
     evidenceDescription: string;
 
     severity: OntologyClass;
-    modifiers: OntologyClass[];
+    modifiersNodes: OntologyTreeNode[];
+    modifiersSubscription: Subscription;
     // TODO - fetch from backend
     evidenceValues: string[] = ['evidence 1', 'evidence 2'];
 
@@ -45,19 +47,27 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
             this.router.navigate(['pheno-creator/individual']);
+        } else {
+            this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
         }
-        this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
-        // this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
-        //     console.log("phenopacket");
-        //     console.log(phenopacket);
-        //     this.phenopacket = phenopacket;
-        //     this.phenotypicFeatures = phenopacket.phenotypicFeatures;
-        // });
+
+        // Get modifiers
+        this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
+            this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
+        }
+        );
+        this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
+            this.phenopacket = phenopacket;
+            this.phenotypicFeatures = phenopacket.phenotypicFeatures;
+        });
     }
 
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
+        }
+        if (this.modifiersSubscription) {
+            this.modifiersSubscription.unsubscribe();
         }
     }
 
@@ -76,7 +86,17 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         // this.phenotypicFeatures = phenotypicFeatures;
     }
     updateModifiers(modifiers: any[]) {
+        // TOFIX
+        console.log('updatemodifiers');
         console.log(modifiers);
+        if (this.phenopacket?.phenotypicFeatures) {
+            for (const feature of this.phenopacket.phenotypicFeatures) {
+                if (feature.type.id === this.id) {
+                    feature.modifiers = modifiers;
+                    this.phenotypicFeatures = this.phenotypicFeatures.slice();
+                }
+            }
+        }
     }
     /**
      * Adds a new phenotypic feature.

@@ -1,5 +1,52 @@
 <div class="p-fluid grid formgrid">
   <div class="field col-12">
-    <p-treeSelect [(ngModel)]="selectedNodes" [options]="nodes" [metaKeySelection]="false" selectionMode="checkbox" placeholder="Select Item" [filter]="true" [filterInputAutoFocus]="true" [propagateSelectionDown]="false" [propagateSelectionUp]="false"></p-treeSelect>
+    <p-chips
+      ngDefaultControl
+      [(ngModel)]="selectedNodesStr"
+      [allowDuplicate]="false"
+      [addOnTab]="true"
+      [addOnBlur]="true"
+      [disabled]="true"
+    ></p-chips>
+    <p-tree
+      ngDefaultControl
+      [(selection)]="selectedNodes"
+      [value]="nodes"
+      placeholder="Select Item"
+      [filter]="true"
+      [selectionMode]="selectionMode"
+      [propagateSelectionDown]="false"
+      [propagateSelectionUp]="false"
+      (onNodeSelect)="nodeSelect($event)"
+      (onNodeUnselect)="nodeUnselect($event)"
+    >
+      <div *ngIf="selectionMode === 'tricheckbox'">
+        <ng-template let-node pTemplate="default">
+          <p-triStateCheckbox
+            (onChange)="nodeSelectionChange(node)"
+            [(ngModel)]="node.state"
+          ></p-triStateCheckbox>
+  
+          {{ node.label }}
+        </ng-template>
+      </div>
+      
+    </p-tree>
+    <p-accordion>
+      <p-accordionTab header="Horizontal tree view">
+        <p-tree
+          ngDefaultControl
+          [(ngModel)]="selectedNodes"
+          [value]="nodes"
+          layout="horizontal"
+          [selectionMode]="selectionMode"
+          [filter]="true"
+          [propagateSelectionDown]="false"
+          [propagateSelectionUp]="false"
+          (onNodeSelect)="nodeSelect($event)"
+          (onNodeUnselect)="nodeUnselect($event)"
+        ></p-tree>
+      </p-accordionTab>
+    </p-accordion>
   </div>
 </div>

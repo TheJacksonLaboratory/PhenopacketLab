@@ -23,7 +23,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
-import {TreeSelectModule} from 'primeng/treeselect';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { ChipsModule } from 'primeng/chips';
+import { TreeModule } from 'primeng/tree';
+import { AccordionModule } from 'primeng/accordion';
 
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -36,6 +39,10 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -65,8 +72,17 @@ import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.co
     MessageModule,
     CalendarModule,
     InputTextModule,
-    TreeSelectModule
-
+    TriStateCheckboxModule,
+    ChipsModule,
+    AccordionModule,
+    // TreeSelectModule,
+    TreeModule,
+    MatCardModule,
+    MatTreeModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatProgressBarModule
   ],
   declarations: [
     MessageDialogComponent,
@@ -76,7 +92,8 @@ import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.co
     AgeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
-    OntologyClassComponent
+    OntologyClassComponent,
+    TreeSearchComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -86,7 +103,8 @@ import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.co
     AgeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
-    OntologyClassComponent
+    OntologyClassComponent,
+    TreeSearchComponent
   ],
   providers: [MessageService, PhenopacketService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
