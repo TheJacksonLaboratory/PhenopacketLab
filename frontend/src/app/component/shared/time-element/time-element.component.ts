@@ -21,7 +21,10 @@ export class TimeElementComponent {
 
   rangeDates: Date[];
 
-  ageTypes: string[] = ['Age', 'Age Range', 'Gestational Age', 'Ontology Class'];
+  // No need to show the Ontology class UI as anytime an ontology class is shown, we should just show a selection of
+  // corresponding ontology classes
+  ageTypes: string[] = ['Age', 'Age Range', 'Gestational Age'];
+  // ageTypes: string[] = ['Age', 'Age Range', 'Gestational Age', 'Ontology Class'];
   // days: string[] = ['0', '1', '2', '3', '4', '5', '6'];
 
   // TODO - fetch from backend

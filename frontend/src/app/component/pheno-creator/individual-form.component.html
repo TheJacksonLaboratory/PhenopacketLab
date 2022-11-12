@@ -26,9 +26,7 @@
       </div>
       <div class="field col-12">
         <label for="lastEncounterDate"><b>Age of clinical examination</b> (Time of last encounter)</label>
-        <app-age id="lastEncounterDate" (ageEvent)="updateTimeOfLastEncounter($event)"></app-age>
-
-        <!-- <app-time-element id="lastEncounterDate" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element> -->
+        <app-time-element id="lastEncounterDate" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
       </div>
       
       <div class="field col-12 md:col-4">
@@ -87,8 +85,7 @@
 
       <div class="field col-12" *ngIf="status === 'DECEASED'">
         <label for="timeOfDeath">Time of death</label>
-        <!-- <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element> -->
-        <app-age id="timeOfDeath" (ageEvent)="updateTimeOfDeath($event)"></app-age>
+        <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element>
       </div>
       <div class="field col-12" *ngIf="status === 'DECEASED'">
         <label for="causeOfDeath">Cause of death</label>
