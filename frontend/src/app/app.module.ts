@@ -52,6 +52,7 @@ import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.modu
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
     imports: [
@@ -93,8 +94,9 @@ import { CheckboxModule } from 'primeng/checkbox';
         PhenopacketModule,
         SharedModule,
         TabViewModule,
+        CardModule,
         ButtonModule,
-        CheckboxModule
+        CheckboxModule,
     ],
     declarations: [
         AppComponent,
