@@ -48,8 +48,9 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
             this.router.navigate(['pheno-creator/individual']);
+        } else {
+            this.diseases = this.phenopacket.diseases;
         }
-        this.diseases = this.phenopacket.diseases;
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
