@@ -9,6 +9,7 @@ import { DividerModule } from 'primeng/divider';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { PhenopacketComponent } from './phenopacket.component';
 import { PhenopacketModule } from './phenopacket.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PhenopacketComponent', () => {
   let component: PhenopacketComponent;
@@ -18,6 +19,7 @@ describe('PhenopacketComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ PhenopacketComponent ],
       imports: [
+        NoopAnimationsModule,
         DividerModule,
         MatExpansionModule,
         MatIconModule,
