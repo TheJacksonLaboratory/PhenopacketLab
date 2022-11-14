@@ -26,7 +26,7 @@
       </div>
       <div class="field col-12">
         <label for="lastEncounterDate"><b>Age of clinical examination</b> (Time of last encounter)</label>
-        <app-time-element id="lastEncounterDate" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
+        <app-time-element id="lastEncounterDate" [timeElement]="timeOfLastEncounter" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
       </div>
       
       <div class="field col-12 md:col-4">
@@ -89,7 +89,10 @@
       </div>
       <div class="field col-12" *ngIf="status === 'DECEASED'">
         <label for="causeOfDeath">Cause of death</label>
-        <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input>
+
+        <p-treeSelect id="causeOfDeath" [(ngModel)]="selectedCauseOfDeath" [options]="causeOfDeaths" [metaKeySelection]="false" placeholder="Select cause of death" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
+
+        <!-- <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input> -->
         
         
       </div>

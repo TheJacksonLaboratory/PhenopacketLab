@@ -6,6 +6,8 @@ import { Phenopacket } from '../models/phenopacket';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
+const mondoDiseasesUrl = environment.MONDO_DISEASES_URL;
+const onsetsUrl = environment.ONSETS_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -38,4 +40,10 @@ export class PhenopacketService {
     getModifiers(): Observable<any> {
         return this.http.get(modifiersUrl);
     }
-}
+    getMondoDiseases(): Observable<any> {
+        return this.http.get(mondoDiseasesUrl);
+    }
+    getOnsets(): Observable<any> {
+        return this.http.get(onsetsUrl);
+    }
+ }

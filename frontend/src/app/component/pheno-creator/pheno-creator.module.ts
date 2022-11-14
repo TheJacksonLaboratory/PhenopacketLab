@@ -45,6 +45,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 @NgModule({
     imports: [
@@ -80,7 +81,8 @@ import { PhenopacketModule } from '../phenopacket/phenopacket.module';
         PhenopacketModule,
         SharedModule,
         InputTextareaModule,
-        RadioButtonModule
+        RadioButtonModule,
+        TreeSelectModule,
 
         // EditorModule,
         // QuillModule.forRoot()
