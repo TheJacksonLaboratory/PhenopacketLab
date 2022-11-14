@@ -161,6 +161,37 @@ export class Age {
         }
         return age;
     }
+
+    public getYears() {
+        if (this.iso8601duration) {
+            const prefix = this.iso8601duration.split('Y');
+            if (prefix) {
+                // tslint:disable-next-line:radix
+                return parseInt(prefix[0].substring(1));
+            }
+        }
+    }
+    public getMonths() {
+        if (this.iso8601duration) {
+            let prefix = this.iso8601duration.split('M');
+            if (prefix.length > 0) {
+                prefix = prefix[0].split('Y');
+                if (prefix.length > 0) {
+                    // tslint:disable-next-line:radix
+                    return parseInt(prefix[1]);
+                }
+            }
+        }
+    }
+    public getDays() {
+        if (this.iso8601duration) {
+            const prefix = this.iso8601duration.split('M');
+            if (prefix.length > 0) {
+                // tslint:disable-next-line:radix
+                return parseInt(prefix[1].substring(0, prefix[1].length - 1));
+            }
+        }
+    }
 }
 
 export class AgeRange {

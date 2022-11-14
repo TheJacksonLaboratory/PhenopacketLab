@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Age } from 'src/app/models/base';
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -15,16 +15,25 @@ import { Age } from 'src/app/models/base';
     styleUrls: ['./age.component.scss']
 })
 
-export class AgeComponent {
+export class AgeComponent implements OnInit {
 
     @Output() ageEvent = new EventEmitter<Age>();
 
+    @Input()
+    age: Age;
     years: number;
     months: number;
     days: number;
 
     constructor() {
 
+    }
+    ngOnInit(): void {
+        if (this.age) {
+            this.years = this.age.getYears();
+            this.months = this.age.getMonths();
+            this.days = this.age.getDays();
+        }
     }
 
     updateAge() {
@@ -44,6 +53,6 @@ export class AgeComponent {
         const age = new Age();
         age.iso8601duration = `P${yearsStr}${monthsStr}${daysStr}`;
         this.ageEvent.emit(age);
-
+        console.log(age);
     }
 }
