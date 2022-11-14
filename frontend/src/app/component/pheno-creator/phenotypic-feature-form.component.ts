@@ -29,10 +29,15 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
     evidenceId: string;
     evidenceReference: string;
     evidenceDescription: string;
+    evidenceNodes: OntologyTreeNode[];
 
     severity: OntologyClass;
     modifiersNodes: OntologyTreeNode[];
     modifiersSubscription: Subscription;
+
+    onsetsNodes: OntologyTreeNode[];
+    selectedOnset: any;
+    onsetsSubscription: Subscription;
     // TODO - fetch from backend
     evidenceValues: string[] = ['evidence 1', 'evidence 2'];
 
@@ -56,6 +61,12 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
             this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
         }
         );
+        // get onsets
+        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+            console.log('onsetnodes:');
+            console.log(this.onsetsNodes);
+        });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
@@ -68,6 +79,9 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         }
         if (this.modifiersSubscription) {
             this.modifiersSubscription.unsubscribe();
+        }
+        if (this.onsetsSubscription) {
+            this.onsetsSubscription.unsubscribe();
         }
     }
 
@@ -97,6 +111,10 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
                 }
             }
         }
+    }
+
+    updateEvidence(evidence: any[]) {
+        // TODO
     }
     /**
      * Adds a new phenotypic feature.

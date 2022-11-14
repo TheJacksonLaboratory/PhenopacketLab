@@ -11,7 +11,8 @@ const phenotypicFeatures = require('../../assets/data/hp.json');
 const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
 const bodySites = require('../../assets/data/human-view.json');
 const modifiers = require('../../assets/data/modifiers.json');
-
+const onsets = require('../../assets/data/onset.json');
+const mondoDiseases = require('../../assets/data/disease-mondo.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -44,6 +45,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.endsWith('modifiers') && method === 'GET':
                     console.log('fakebackend modifiers');
                     return getModifiers();
+                case url.endsWith('onsets') && method === 'GET':
+                    console.log('fakebackend onsets');
+                    return getOnsets();
+                case url.endsWith('mondo-diseases') && method === 'GET':
+                    console.log('fakebackend mondo-diseases');
+                    return getMondoDiseases();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -75,6 +82,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getModifiers() {
             return ok(modifiers);
+        }
+        function getOnsets() {
+            return ok(onsets);
+        }
+        function getMondoDiseases() {
+            return ok(mondoDiseases);
         }
         // helper functions
 

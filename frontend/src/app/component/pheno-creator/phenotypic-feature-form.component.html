@@ -1,7 +1,8 @@
 <p-card>
   <ng-template pTemplate="title"> Phenotypic Feature </ng-template>
   <ng-template pTemplate="subtitle">
-    Press on "Add phenotypic feature"  after each phenotypic feature characteristic is set.
+    Press on "Add phenotypic feature" after each phenotypic feature
+    characteristic is set.
   </ng-template>
   <ng-template pTemplate="content">
     <div class="grid p-fluid">
@@ -22,162 +23,160 @@
           ></p-button>
         </div>
       </div>
-      
+
       <div class="field col-12">
         <!-- <p-accordion [multiple]="true">
           <p-accordionTab header="Type" [selected]="true"> -->
-            <div class="grid p-fluid">
-              <div class="field col-6">
-                <label for="label">Label</label>
-                <input
-                  id="label"
-                  type="text"
-                  required
-                  pInputText
-                  [disabled]="true"
-                  [(ngModel)]="label"
-                  [ngClass]="{
-                    'ng-dirty':
-                      (label.invalid && submitted) ||
-                      (label.dirty && label.invalid)
-                  }"
-                />
-                <small
-                  *ngIf="
-                    (label.invalid && submitted) ||
-                    (label.dirty && label?.invalid)
-                  "
-                  class="p-error"
-                  >Label is required.</small
-                >
-              </div>
-              <div class="field col-6">
-                <label for="id">ID</label>
-                <input
-                  id="id"
-                  type="text"
-                  required
-                  pInputText
-                  [disabled]="true"
-                  [(ngModel)]="id"
-                  [ngClass]="{
-                    'ng-dirty':
-                      (id.invalid && submitted) || (id.dirty && id.invalid)
-                  }"
-                />
-                <small
-                  class="p-error"
-                  *ngIf="(id.invalid && submitted) || (id.dirty && id.invalid)"
-                  >ID is required.</small
-                >
-              </div>
+        <div class="grid p-fluid">
+          <div class="field col-6">
+            <label for="label">Label</label>
+            <input
+              id="label"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="label"
+              [ngClass]="{
+                'ng-dirty':
+                  (label.invalid && submitted) || (label.dirty && label.invalid)
+              }"
+            />
+            <small
+              *ngIf="
+                (label.invalid && submitted) || (label.dirty && label?.invalid)
+              "
+              class="p-error"
+              >Label is required.</small
+            >
+          </div>
+          <div class="field col-6">
+            <label for="id">ID</label>
+            <input
+              id="id"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="id"
+              [ngClass]="{
+                'ng-dirty':
+                  (id.invalid && submitted) || (id.dirty && id.invalid)
+              }"
+            />
+            <small
+              class="p-error"
+              *ngIf="(id.invalid && submitted) || (id.dirty && id.invalid)"
+              >ID is required.</small
+            >
+          </div>
 
-              <div class="field col-12">
-                <label for="onset"><b>Onset</b></label>
-                <app-time-element id="onset"
-                aria-labelledby="onset-time-label"
-              ></app-time-element>
-              </div>
+          <div class="field col-12">
+            <p-accordion>
+              <p-accordionTab header="Set phenotypic feature details">
+                <!-- <div class="grid p-fluid"> -->
+                  <div class="field col-12">
+                    <label for="onset"><b>Onset</b></label>
+                    <p-treeSelect id="onset" [(ngModel)]="selectedOnset" [options]="onsetsNodes" [metaKeySelection]="false" placeholder="Select onset" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
 
-              <div class="field col-12">
-                <label for="resolution"><b>Resolution</b></label>
-                <app-time-element id="resolution"
-                  aria-labelledby="resolution-time-label"
-                ></app-time-element>
-              </div>
+                    <!-- <app-time-element
+                      id="onset"
+                      aria-labelledby="onset-time-label"
+                      [ontologyNodes]="onsetsNodes"
+                    ></app-time-element> -->
+                  </div>
 
-              <div class="field col-12">
-                <label for="severity"><b>Severity</b></label>
-                <p-dropdown id="severity"
-                  placeholder="Select severity"
-                  [options]="getSeverities()"
-                  [(ngModel)]="severity"
-                  pTooltip="The intensity or degree of a manifestation"
-                  showDelay="2000"
-                  class="w-full"
-                ></p-dropdown>
-              </div>
-              <div class="field col-12">
-                <label for="modifier"><b>Modifiers</b></label>
+                  <div class="field col-12">
+                    <label for="resolution"><b>Resolution</b></label>
+                    <app-time-element
+                      id="resolution"
+                      aria-labelledby="resolution-time-label"
+                    ></app-time-element>
+                  </div>
 
-                <ontology-tree-select id="modifier" pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects." showDelay="2000"
-                (ontologyObjectEvent)="updateModifiers($event)" [selectionMode]="'checkbox'" [nodes]="modifiersNodes"></ontology-tree-select>
+                  <div class="field col-12">
+                    <label for="severity"><b>Severity</b></label>
+                    <p-dropdown
+                      id="severity"
+                      placeholder="Select severity"
+                      [options]="getSeverities()"
+                      [(ngModel)]="severity"
+                      pTooltip="The intensity or degree of a manifestation"
+                      showDelay="2000"
+                      class="w-full"
+                    ></p-dropdown>
+                  </div>
+                  <div class="field col-12">
+                    <label for="modifier"><b>Modifiers</b></label>
 
-                <!-- <app-tree-search></app-tree-search> -->
-              </div>
+                    <ontology-tree-select
+                      id="modifier"
+                      pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects."
+                      showDelay="2000"
+                      (ontologyObjectEvent)="updateModifiers($event)"
+                      [selectionMode]="'checkbox'"
+                      [nodes]="modifiersNodes"
+                    ></ontology-tree-select>
 
+                    <!-- <app-tree-search></app-tree-search> -->
+                  </div>
 
-              <div class="field col-6">
-                <label for="evidence"><b>Evidence</b></label>
-                <app-search-filter id="evidence"
-                  [options]="evidenceValues"
-                  title="Choose evidence"
-                ></app-search-filter>
-              </div>
-              <div class="field col-6">
+                  <div class="field col-12">
+                    <label for="evidence"><b>Evidence</b></label>
+                    <ontology-tree-select
+                      id="evidence"
+                      pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
+                      showDelay="2000"
+                      (ontologyObjectEvent)="updateEvidence($event)"
+                      [selectionMode]="'checkbox'"
+                      [nodes]="evidenceNodes"
+                    ></ontology-tree-select>
+                  </div>
 
-              </div>
+                  <!-- <div class="field col-4">
+                    <label for="evidenceCode">Code</label>
+                    <input
+                      id="evidenceCode"
+                      type="text"
+                      pInputText
+                      [(ngModel)]="evidenceCode"
+                    />
+                  </div>
+                  <div class="field col-4">
+                    <label for="evidenceId">ID</label>
+                    <input
+                      id="evidenceId"
+                      type="text"
+                      pInputText
+                      [(ngModel)]="evidenceId"
+                    />
+                  </div>
+                  <div class="field col-4">
+                    <label for="evidenceReference">Reference</label>
+                    <input
+                      id="evidenceReference"
+                      type="text"
+                      pInputText
+                      [(ngModel)]="evidenceReference"
+                    />
+                  </div>
 
-              <div class="field col-4">
-                <label for="evidenceCode">Code</label>
-                <input
-                  id="evidenceCode"
-                  type="text"
-                  pInputText
-                  [(ngModel)]="evidenceCode"
-                />
-              </div>
-              <div class="field col-4">
-                <label for="evidenceId">ID</label>
-                <input
-                  id="evidenceId"
-                  type="text"
-                  pInputText
-                  [(ngModel)]="evidenceId"
-                />
-              </div>
-              <div class="field col-4">
-                <label for="evidenceReference">Reference</label>
-                <input
-                  id="evidenceReference"
-                  type="text"
-                  pInputText
-                  [(ngModel)]="evidenceReference"
-                />
-              </div>
-
-              <div class="field col-12">
-                <label for="evidenceDescription">Description</label>
-                <textarea
-                  id="evidenceDescription"
-                  type="text"
-                  rows="4"
-                  [(ngModel)]="evidenceDescription"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-                ></textarea>
-              </div>
-
-            </div>
-          <!-- </p-accordionTab>
-          <p-accordionTab header="Onset"> -->
-            
-            
-          <!-- </p-accordionTab>
-          <p-accordionTab header="Resolution"> -->
-            
-            
-          <!-- </p-accordionTab>
-          <p-accordionTab header="Severity & Modifiers"> -->
-
-          <!-- </p-accordionTab>
-          <p-accordionTab header="Evidence"> -->
-
-
-          <!-- </p-accordionTab>
-        </p-accordion> -->
-        
+                  <div class="field col-12">
+                    <label for="evidenceDescription">Description</label>
+                    <textarea
+                      id="evidenceDescription"
+                      type="text"
+                      rows="4"
+                      [(ngModel)]="evidenceDescription"
+                      class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                    ></textarea>
+                  </div> -->
+                <!-- </div> -->
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+        </div>
       </div>
-      
     </div>
     <div class="flex justify-content-start flex-wrap">
       <p-button
@@ -192,22 +191,20 @@
     <div class="flex justify-content-between flex-wrap">
       <div class="flex align-items-center justify-content-center">
         <p-button
-        label="Back"
-        (onClick)="prevPage()"
-        icon="pi pi-angle-left"
-        iconPos="left"
-      ></p-button>
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+          iconPos="left"
+        ></p-button>
       </div>
       <div class="flex align-items-center justify-content-center">
         <p-button
-        label="Next"
-        (onClick)="nextPage()"
-        icon="pi pi-angle-right"
-        iconPos="right"
-      ></p-button>
+          label="Next"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
       </div>
-      
-      
     </div>
   </ng-template>
 </p-card>
