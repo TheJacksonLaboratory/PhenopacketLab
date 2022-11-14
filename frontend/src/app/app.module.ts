@@ -53,6 +53,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CardModule } from 'primeng/card';
+import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
 
 @NgModule({
     imports: [
@@ -105,6 +106,7 @@ import { CardModule } from 'primeng/card';
         SidebarComponent,
         FooterComponent,
         AboutComponent,
+        PhenopacketListComponent,
         CohortListComponent,
         FamilyListComponent,
         UploadDialogComponent

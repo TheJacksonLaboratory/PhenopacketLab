@@ -27,18 +27,18 @@ export class UploadDialogComponent implements OnInit {
   errorMessage: string;
   messageSuccess: string;
 
-  percentCompleted: number = 0;
+  percentCompleted = 0;
   isMultipleUploaded = false;
   isSingleUploaded = false;
   showProgress = false;
-  acceptedExtensions = "JSON, Yaml";
+  acceptedExtensions = 'JSON, Yaml';
   phenopacketSchemaUrl = 'https://phenopacket-schema.readthedocs.io/en/master/schema.html';
 
   phenopackets = [];
   currentPhenopackets: Phenopacket[];
 
   constructor(public dialogRef: MatDialogRef<UploadDialogComponent>,
-    public uploadService: UploadService, public familyService: FamilyService, 
+    public uploadService: UploadService, public familyService: FamilyService,
     public cohortService: CohortService, @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog) {
 
@@ -67,10 +67,10 @@ export class UploadDialogComponent implements OnInit {
           // }
 
           // Check that the pheno id does not already exist
-          for (let newPheno of event) {
-            for (let currPheno of this.currentPhenopackets) {
+          for (const newPheno of event) {
+            for (const currPheno of this.currentPhenopackets) {
               if (newPheno.id === currPheno.id) {
-                let errorMessage = `Phenopacket id '${newPheno.id}' already exists. Choose another phenopacket or edit the phenopacket id so it is unique.`;
+                const errorMessage = `Phenopacket id '${newPheno.id}' already exists. Choose another phenopacket or edit the phenopacket id so it is unique.`;
                 this.uploadError(errorMessage);
                 throw new Error();
               }
@@ -78,13 +78,13 @@ export class UploadDialogComponent implements OnInit {
           }
 
           this.phenopackets = event;
-          this.familyService.addPhenopacket(event[0]);
+          this.cohortService.addPhenopacket(event[0]);
           this.showProgress = true;
           this.uploading = true;
           this.percentCompleted = 100;
-          if (this.percentCompleted == 100) {
+          if (this.percentCompleted === 100) {
             this.uploadSuccessful = true;
-            this.messageSuccess = "File successfully uploaded";
+            this.messageSuccess = 'File successfully uploaded';
           }
         }, (error) => {
           this.uploadError(error);
@@ -99,8 +99,9 @@ export class UploadDialogComponent implements OnInit {
   }
 
   cancelUpload() {
-    if (this.uploadSub != null)
+    if (this.uploadSub != null) {
       this.uploadSub.unsubscribe();
+    }
     this.reset();
   }
 

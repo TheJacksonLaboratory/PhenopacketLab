@@ -127,17 +127,12 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.family.relatives.set(phenopacket.id, phenopacket);
 
     this.individualTabsMap.set(phenopacket.id, phenopacket);
-    console.log('phenopacket:');
-    console.log(phenopacket);
     this.familyMap.set(phenopacket.id, phenopacket);
-    console.log('familyMap');
-    console.log(this.familyMap);
     this.selected.setValue(this.individualTabs.keys.length);
     this.datasource.data = Array.from(this.familyMap.values());
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
     this.familyService.setFamily(this.family);
-    console.log(`new phenopacket added: ${phenopacket.id}`);
   }
 
   removeIndividual(individual: Phenopacket) {
@@ -222,8 +217,6 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openTab(element: any) {
-    console.log('element');
-    console.log(element);
     if (!this.individualTabsMap.has(element)) {
       this.individualTabsMap.set(element.id, element);
     }

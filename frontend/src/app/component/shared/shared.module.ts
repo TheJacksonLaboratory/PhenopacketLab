@@ -27,6 +27,7 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ChipsModule } from 'primeng/chips';
 import { TreeModule } from 'primeng/tree';
 import { AccordionModule } from 'primeng/accordion';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -75,7 +76,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     TriStateCheckboxModule,
     ChipsModule,
     AccordionModule,
-    // TreeSelectModule,
+    TreeSelectModule,
     TreeModule,
     MatCardModule,
     MatTreeModule,
