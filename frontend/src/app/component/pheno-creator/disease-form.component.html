@@ -1,188 +1,199 @@
+<as-split direction="horizontal">
+  <as-split-area [size]="50">
+    <p-toast></p-toast>
+    <p-card>
+      <ng-template pTemplate="title"> Disease search </ng-template>
+      <ng-template pTemplate="subtitle">
+        Search for a disease using the search field below.
+      </ng-template>
+      <ng-template pTemplate="content">
+        <app-search-box
+          [showHint]="false"
+          [itemName]="'Disease'"
+          [searchLabel]="'Disease'"
+          [placeHolderTxt]="'Enter a disease name'"
+          [localStorageKey]="'diseases'"
+          [searchService]="searchService"
+          (selectedSearchItem)="onSearchCriteriaChange($event)"
+          [resetSearch]="false"
+        ></app-search-box>
+
+        <p-table
+          *ngIf="visible"
+          [value]="diseases"
+          [(selection)]="selectedDisease"
+          dataKey="key"
+          selectionMode="single"
+          (onRowSelect)="onRowSelect($event)"
+          [scrollable]="true"
+          [resizableColumns]="true"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-header">Added diseases</div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Label</th>
+              <th pResizableColumn>Status</th>
+              <!-- <th>Onset</th> -->
+              <th pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-disease>
+            <tr [pSelectableRow]="disease">
+              <td>{{ disease.term?.label }}</td>
+              <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
+              <!-- <td>{{feature.onset?.toString()}}</td> -->
+              <td>
+                <p-confirmDialog
+                  header="Confirmation"
+                  width="425"
+                ></p-confirmDialog>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteDisease(disease)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-card>
+  </as-split-area>
+  <as-split-area [size]="50">
+    <p-card>
+      <ng-template pTemplate="title"> Disease details </ng-template>
+      <ng-template pTemplate="subtitle">
+        Edit the disease details of the selected disease
+        in the left table.      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="grid p-fluid">
+
+          <div class="field col-12 md:col-6">
+            <label for="label">Label</label>
+            <input
+              id="label"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="label"
+            />
+
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="id">ID</label>
+            <input
+              id="id"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="id"
+            />
+          </div>
+          <div class="fiewl col-12">
+            <div class="field-checkbox">
+              <p-checkbox
+                      id="observed"
+                [(ngModel)]="observed"
+                [binary]="true"
+                inputId="observed"
+                (onChange)="updateExcluded($event)"
+              ></p-checkbox>
+              <label for="observed">{{
+                observed ? "Observed" : "Excluded"
+              }}</label>
+            </div>
+          </div>
+
+          <div class="field col-6">
+            <label for="onset"><b>Onset:</b></label>
+            <app-time-element id="onset"></app-time-element>
+          </div>
+          <br />
+          <div class="field col-6">
+            <label for="resolution"><b>Resolution:</b></label>
+            <app-time-element
+              id="resolution"
+              aria-labelledby="resolution-time-label"
+            ></app-time-element>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="stages"><b>Disease stage:</b></label>
+            <p-dropdown
+              appendTo="body"
+              id="stages"
+              [options]="getStages()"
+              [(ngModel)]="stage"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select disease stage"
+            >
+            </p-dropdown>
+          </div>
+          <div class="field col-12 md:col-6">
+            <label for="findings"><b>Clinical TNM finding:</b></label>
+            <p-dropdown
+              appendTo="body"
+              id="findings"
+              [options]="getClinicalFindings()"
+              [(ngModel)]="finding"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select clinical findings"
+            >
+            </p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="severity"><b>Severity:</b></label>
+            <p-dropdown
+              appendTo="body"
+              id="severity"
+              [options]="getSeverities()"
+              [(ngModel)]="severity"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select severity"
+            >
+            </p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="laterality"><b>Laterality:</b></label>
+            <p-dropdown
+              id="laterality"
+              appendTo="body"
+              [options]="getLateralities()"
+              [(ngModel)]="laterality"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select a laterality"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+    
+      </ng-template>
+    </p-card>
+  </as-split-area>
+</as-split>
+
 <p-card>
-  <ng-template pTemplate="title"> Disease </ng-template>
-  <ng-template pTemplate="subtitle">
-    Press on "Add disease" after each disease characteristic is set.
-  </ng-template>
-  <ng-template pTemplate="content">
-    <div class="grid p-fluid">
-      <div class="field col-12">
-        <app-disease
-          [showAddButton]="false"
-          [phenopacketDiseases]="diseases"
-          (onDiseasesChanged)="changeDiseases($event)"
-        ></app-disease>
-      </div>
-
-      <div class="field col-12">
-        <div class="flex justify-content-start flex-wrap">
-          <p-button
-            (onClick)="addDisease()"
-            label="Add disease"
-            icon="pi pi-plus"
-            styleClass="p-button"
-          ></p-button>
-        </div>
-      </div>
-
-      <div class="field col-12 md:col-6">
-        <label for="label">Label</label>
-                <input
-                  id="label"
-                  type="text"
-                  required
-                  pInputText
-                  [disabled]="true"
-                  [(ngModel)]="label"
-                  [ngClass]="{
-                    'ng-dirty':
-                      (label.invalid && submitted) ||
-                      (label.dirty && label.invalid)
-                  }"
-                />
-                <small
-                  *ngIf="
-                    (label.invalid && submitted) ||
-                    (label.dirty && label?.invalid)
-                  "
-                  class="p-error"
-                  >Label is required.</small
-                >
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="id">ID</label>
-                <input
-                  id="id"
-                  type="text"
-                  required
-                  pInputText
-                  [disabled]="true"
-                  [(ngModel)]="id"
-                  [ngClass]="{
-                    'ng-dirty':
-                      (id.invalid && submitted) || (id.dirty && id.invalid)
-                  }"
-                />
-                <small
-                  class="p-error"
-                  *ngIf="(id.invalid && submitted) || (id.dirty && id.invalid)"
-                  >ID is required.</small
-                >
-      </div>
-
-      <!-- <div *ngIf="description" class="field col-12">
-        <p>
-          {{ description }}
-        </p>
-      </div> -->
-      <div class="field col-12">
-        <div class="field-radiobutton">
-          <p-radioButton
-            id="observed"
-            name="observed"
-            value="false"
-            [(ngModel)]="selectedStatus"
-            inputId="observed"
-          ></p-radioButton>
-          <label for="observed">Observed</label>
-        </div>
-        <div class="field-radiobutton">
-          <p-radioButton
-            id="excluded"
-            name="excluded"
-            value="true"
-            [(ngModel)]="selectedStatus"
-            inputId="exluded"
-          ></p-radioButton>
-          <label for="excluded">Excluded</label>
-        </div>
-      </div>
-
-      <div class="field col-12">
-        <label for="onset"><b>Onset:</b></label>
-        <app-time-element id="onset"></app-time-element>
-      </div>
-      <br />
-      <div class="field col-12">
-        <label for="resolution"><b>Resolution:</b></label>
-        <app-time-element
-          id="resolution"
-          aria-labelledby="resolution-time-label"
-        ></app-time-element>
-      </div>
-
-      <div class="field col-12 md:col-6">
-        <label for="stages"><b>Disease stage:</b></label>
-        <p-dropdown
-          appendTo="body"
-          id="stages"
-          [options]="getStages()"
-          [(ngModel)]="stage"
-          optionLabel="label"
-          [filter]="true"
-          filterBy="label"
-          [showClear]="true"
-          placeholder="Select disease stage"
-        >
-        </p-dropdown>
-      </div>
-      <div class="field col-12 md:col-6">
-        <label for="findings"><b>Clinical TNM finding:</b></label>
-        <p-dropdown
-          appendTo="body"
-          id="findings"
-          [options]="getClinicalFindings()"
-          [(ngModel)]="finding"
-          optionLabel="label"
-          [filter]="true"
-          filterBy="label"
-          [showClear]="true"
-          placeholder="Select clinical findings"
-        >
-        </p-dropdown>
-      </div>
-
-      <div class="field col-12 md:col-6">
-        <label for="severity"><b>Severity:</b></label>
-        <p-dropdown
-          appendTo="body"
-          id="severity"
-          [options]="getSeverities()"
-          [(ngModel)]="severity"
-          optionLabel="label"
-          [filter]="true"
-          filterBy="label"
-          [showClear]="true"
-          placeholder="Select severity"
-        >
-        </p-dropdown>
-      </div>
-
-      <div class="field col-12 md:col-6">
-        <label for="laterality"><b>Laterality:</b></label>
-        <p-dropdown
-          id="laterality"
-          appendTo="body"
-          [options]="getLateralities()"
-          [(ngModel)]="laterality"
-          optionLabel="label"
-          [filter]="true"
-          filterBy="label"
-          [showClear]="true"
-          placeholder="Select a laterality"
-        >
-        </p-dropdown>
-      </div>
-    </div>
-    <div class="flex justify-content-start flex-wrap">
-        <p-button
-          (onClick)="addDisease()"
-          label="Add disease"
-          icon="pi pi-plus"
-          styleClass="p-button"
-        ></p-button>
-      </div>
-  </ng-template>
-
   <ng-template pTemplate="footer">
     <div class="flex justify-content-between flex-wrap">
       <div class="flex align-items-center justify-content-center">

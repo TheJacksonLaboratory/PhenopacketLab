@@ -15,13 +15,17 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+import { AngularSplitModule } from 'angular-split';
 
 // import { EditorModule } from 'primeng/editor';
 // import { QuillModule } from 'ngx-quill'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhenoCreatorComponent } from './pheno-creator.component';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { IndividualFormComponent } from './individual-form.component';
 import { PhenotypicFeatureFormComponent } from './phenotypic-feature-form.component';
 import { MeasurementFormComponent } from './measurement-form.component';
@@ -45,7 +49,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
-import { TreeSelectModule } from 'primeng/treeselect';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { CohortService } from 'src/app/services/cohort.service';
 
 @NgModule({
     imports: [
@@ -83,7 +89,12 @@ import { TreeSelectModule } from 'primeng/treeselect';
         InputTextareaModule,
         RadioButtonModule,
         TreeSelectModule,
-
+        AngularSplitModule,
+        TableModule,
+        TabViewModule,
+        ConfirmDialogModule,
+        ToastModule,
+        MessagesModule
         // EditorModule,
         // QuillModule.forRoot()
 
@@ -106,7 +117,8 @@ import { TreeSelectModule } from 'primeng/treeselect';
         ValidateFormComponent
     ],
     providers: [
-        PhenopacketService
+        CohortService,
+        MessageService
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
