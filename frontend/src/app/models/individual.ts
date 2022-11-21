@@ -6,10 +6,10 @@ export class Individual {
     dateOfBirth = ''; // timestamp
     timeAtLastEncounter: TimeElement;
     vitalStatus: VitalStatus = new VitalStatus();
-    sex: Sex = Sex.UNKNOWN_SEX;
-    karyotypicSex: KaryotypicSex = KaryotypicSex.UNKNOWN_KARYOTYPE;
-    gender: OntologyClass = new OntologyClass();
-    taxonomy: OntologyClass = new OntologyClass();
+    sex: Sex;
+    karyotypicSex: KaryotypicSex;
+    gender: OntologyClass;
+    taxonomy: OntologyClass;
 
     /**
      *
@@ -57,9 +57,9 @@ export enum Status {
     DECEASED = 'DECEASED'
 }
 export class VitalStatus {
-    status: Status = Status.UNKNOWN_STATUS;
-    timeOfDeath: TimeElement = new TimeElement();
-    causeOfDeath: OntologyClass = new OntologyClass();
+    status: Status;
+    timeOfDeath: TimeElement;
+    causeOfDeath: OntologyClass;
     survivalTimeInDays: number;
 
     public static convert(obj: any): VitalStatus {

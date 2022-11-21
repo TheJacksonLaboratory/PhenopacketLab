@@ -195,8 +195,8 @@ export class Age {
 }
 
 export class AgeRange {
-    start = new Age('1');
-    end = new Age('2');
+    start: Age;
+    end: Age;
     constructor(start?: Age, end?: Age) {
         this.start = start;
         this.end = end;
