@@ -1,34 +1,36 @@
 <p-chips
-        ngDefaultControl
-        [(ngModel)]="selectedNodesStr"
-        [allowDuplicate]="false"
-        [addOnTab]="true"
-        [addOnBlur]="true"
-        [disabled]="true"
-></p-chips>
+  ngDefaultControl
+  [(ngModel)]="selectedNodes"
+  [allowDuplicate]="false"
+  [addOnTab]="true"
+  [addOnBlur]="true"
+  [disabled]="true"
+  ><ng-template let-item pTemplate="item">
+    {{ item?.label }}
+  </ng-template>
+</p-chips>
 <p-tree
-        ngDefaultControl
-        [(selection)]="selectedNodes"
-        [value]="nodes"
-        placeholder="Select Item"
-        [filter]="true"
-        [selectionMode]="selectionMode"
-        [propagateSelectionDown]="false"
-        [propagateSelectionUp]="false"
-        (onNodeSelect)="nodeSelect($event)"
-        (onNodeUnselect)="nodeUnselect($event)"
+  ngDefaultControl
+  [(selection)]="selectedNodes"
+  [value]="nodes"
+  placeholder="Select Item"
+  [filter]="true"
+  [selectionMode]="selectionMode"
+  [propagateSelectionDown]="false"
+  [propagateSelectionUp]="false"
+  (onNodeSelect)="nodeSelect($event)"
+  (onNodeUnselect)="nodeUnselect($event)"
 >
-    <div *ngIf="selectionMode === 'tricheckbox'">
-        <ng-template let-node pTemplate="default">
-            <p-triStateCheckbox
-                    (onChange)="nodeSelectionChange(node)"
-                    [(ngModel)]="node.state"
-            ></p-triStateCheckbox>
+  <div *ngIf="selectionMode === 'tricheckbox'">
+    <ng-template let-node pTemplate="default">
+      <p-triStateCheckbox
+        (onChange)="nodeSelectionChange(node)"
+        [(ngModel)]="node.state"
+      ></p-triStateCheckbox>
 
-            {{ node.label }}
-        </ng-template>
-    </div>
-
+      {{ node.label }}
+    </ng-template>
+  </div>
 </p-tree>
 <!-- <p-accordion>
   <p-accordionTab header="Horizontal tree view">
@@ -46,22 +48,3 @@
     ></p-tree>
   </p-accordionTab>
 </p-accordion> -->
-
-<!-- <p-panel header="Horizontal tree view" [toggleable]="true">
-  <ng-template pTemplate="icons">
-          <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
-  </ng-template>
-  <p-tree
-      ngDefaultControl
-      [(ngModel)]="selectedNodes"
-      [value]="nodes"
-      layout="horizontal"
-      [selectionMode]="selectionMode"
-      [filter]="true"
-      [propagateSelectionDown]="false"
-      [propagateSelectionUp]="false"
-      (onNodeSelect)="nodeSelect($event)"
-      (onNodeUnselect)="nodeUnselect($event)"
-    ></p-tree>
-</p-panel> -->
-

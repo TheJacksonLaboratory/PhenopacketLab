@@ -38,7 +38,6 @@ import { TimeElementComponent } from './time-element/time-element.component';
 import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
@@ -107,7 +106,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     OntologyClassComponent,
     TreeSearchComponent
   ],
-  providers: [MessageService, PhenopacketService],
+  providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule { }

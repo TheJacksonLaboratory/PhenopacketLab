@@ -17,10 +17,12 @@ export class TimeElementComponent implements OnInit {
   timeElement: TimeElement;
   @Input()
   ontologyNodes: any[];
+  @Input()
+  useOntologyClass = false;
 
   age: Age;
   ageRange: AgeRange;
-  gestationalAge: GestationalAge = new GestationalAge();
+  gestationalAge: GestationalAge;
 
   selectedOntologyClass: OntologyClass;
   ontologyClass: OntologyClass;
@@ -29,24 +31,87 @@ export class TimeElementComponent implements OnInit {
 
   // No need to show the Ontology class UI as anytime an ontology class is shown, we should just show a selection of
   // corresponding ontology classes
-  // ageTypes: string[] = ['Age', 'Age Range', 'Gestational Age'];
-  ageTypes: string[] = ['Age', 'Age Range', 'Gestational Age', 'Ontology Class'];
-  // days: string[] = ['0', '1', '2', '3', '4', '5', '6'];
-
-  // TODO - fetch from backend
-  ontologies: string[] = ['Adult onset', 'Pediatric onset', 'Antenatal onset', 'Neonatal onset', 'Puerpural onset', 'Congenital onset'];
+  ageTypes: string[];
 
   constructor() {
 
   }
   ngOnInit(): void {
-    console.log('ontology nodes:');
-    console.log(this.ontologyNodes);
+    // if ontologyNodes are provided then we add the OntologyClass item in selection
+    if (this.useOntologyClass) {
+      this.ageTypes = ['Age', 'Age Range', 'Gestational Age', 'Ontology Class'];
+    } else {
+      this.ageTypes = ['Age', 'Age Range', 'Gestational Age'];
+    }
+    if (this.timeElement === undefined) {
+      this.timeElement = new TimeElement();
+    }
+    const element = this.timeElement.element;
 
+    if (element instanceof Age) {
+      this.selectedAgeType = this.ageTypes[0];
+      this.age = element;
+    } else if (element instanceof AgeRange) {
+      this.selectedAgeType = this.ageTypes[1];
+      this.ageRange = element;
+    } else if (element instanceof GestationalAge) {
+      this.selectedAgeType = this.ageTypes[2];
+      this.gestationalAge = element;
+    } else if (element instanceof OntologyClass) {
+      this.selectedAgeType = this.ageTypes[3];
+      this.selectedOntologyClass = element;
+    }
   }
 
-  updateTimeElement(timeElement: any) {
-    this.timeElement = timeElement;
+  ageTypeChange(event) {
+    const type = event.value;
+    if (type === this.ageTypes[0]) {
+      if (this.age === undefined) {
+        this.age = new Age();
+      }
+    } else if (type === this.ageTypes[1]) {
+      if (this.ageRange === undefined) {
+        this.ageRange = new AgeRange();
+      }
+    } else if (type === this.ageTypes[2]) {
+      if (this.gestationalAge === undefined) {
+        this.gestationalAge = new GestationalAge();
+      }
+    } else if (type === this.ageTypes[3]) {
+      if (this.ontologyClass === undefined) {
+        this.ontologyClass = new OntologyClass();
+      }
+    }
+  }
+  updateAge(timeElement: any) {
+    this.timeElement.element = timeElement;
+    this.timeElementEvent.emit(this.timeElement);
+  }
+  updateRangeStart(start) {
+    this.ageRange.start = start;
+    this.updateAge(this.ageRange);
+  }
+  updateRangeEnd(end) {
+    this.ageRange.end = end;
+    this.updateAge(this.ageRange);
+  }
+  // Gestational age
+  updateWeeks(event) {
+    this.updateGestationalAge(event, 'weeks');
+  }
+  updateDays(event) {
+    this.updateGestationalAge(event, 'days');
+  }
+  private updateGestationalAge(event, type: string) {
+    if (this.gestationalAge === undefined) {
+      this.gestationalAge = new GestationalAge();
+    }
+    if (type === 'weeks') {
+      this.gestationalAge.weeks = event.value;
+    } else if (type === 'days') {
+      this.gestationalAge.days = event.value;
+    }
+    this.timeElement.element = this.gestationalAge;
     this.timeElementEvent.emit(this.timeElement);
   }
 }

@@ -1,100 +1,94 @@
 {
   "data": [
     {
-      "label": "Onset",
-      "key": "HP:0003674",
+      "label": "Adult onset",
+      "key": "HP:0003581",
       "children": [
         {
-          "label": "Adult onset",
-          "key": "HP:0003581",
+          "label": "Young adult onset",
+          "key": "HP:0011462",
           "children": [
             {
-              "label": "Young adult onset",
-              "key": "HP:0011462",
-              "children": [
-                {
-                  "label": "Early young adult onset",
-                  "key": "HP:0025708"
-                },
-                {
-                  "label": "Late young adult onset",
-                  "key": "HP:0025710"
-                },
-                {
-                  "label": "Intermediate young adult onset",
-                  "key": "HP:0025709"
-                }
-              ]
+              "label": "Early young adult onset",
+              "key": "HP:0025708"
             },
             {
-              "label": "Middle age onset",
-              "key": "HP:0003596"
+              "label": "Late young adult onset",
+              "key": "HP:0025710"
             },
             {
-              "label": "Late onset",
-              "key": "HP:0003584"
+              "label": "Intermediate young adult onset",
+              "key": "HP:0025709"
             }
           ]
         },
         {
-          "label": "Antenatal onset",
-          "key": "HP:0030674",
-          "children": [
-            {
-              "label": "Fetal onset",
-              "key": "HP:0011461",
-              "children": [
-                {
-                  "label": "Late first trimester onset",
-                  "key": "HP:0034199"
-                },
-                {
-                  "label": "Second trimester onset",
-                  "key": "HP:0034198"
-                },
-                {
-                  "label": "Third trimester onset",
-                  "key": "P:0034197"
-                }
-              ]
-            },
-            {
-              "label": "Embryonal onset",
-              "key": "HP:0011460"
-            }
-          ]
+          "label": "Middle age onset",
+          "key": "HP:0003596"
         },
         {
-          "label": "Pediatric onset",
-          "key": "HP:0410280",
-          "children": [
-            {
-              "label": "Infantile onset",
-              "key": "HP:0003593"
-            },
-            {
-              "label": "Juvenile onset",
-              "key": "HP:0003621"
-            },
-            {
-              "label": "Childhood onset",
-              "key": "HP:0011463"
-            }
-          ]
-        },
-        {
-          "label": "Congenital onset",
-          "key": "HP:0003577"
-        },
-        {
-          "label": "Puerpural onset",
-          "key": "HP:4000040"
-        },
-        {
-          "label": "Neonatal onset",
-          "key": "HP:0003623"
+          "label": "Late onset",
+          "key": "HP:0003584"
         }
       ]
+    },
+    {
+      "label": "Antenatal onset",
+      "key": "HP:0030674",
+      "children": [
+        {
+          "label": "Fetal onset",
+          "key": "HP:0011461",
+          "children": [
+            {
+              "label": "Late first trimester onset",
+              "key": "HP:0034199"
+            },
+            {
+              "label": "Second trimester onset",
+              "key": "HP:0034198"
+            },
+            {
+              "label": "Third trimester onset",
+              "key": "P:0034197"
+            }
+          ]
+        },
+        {
+          "label": "Embryonal onset",
+          "key": "HP:0011460"
+        }
+      ]
+    },
+    {
+      "label": "Pediatric onset",
+      "key": "HP:0410280",
+      "children": [
+        {
+          "label": "Infantile onset",
+          "key": "HP:0003593"
+        },
+        {
+          "label": "Juvenile onset",
+          "key": "HP:0003621"
+        },
+        {
+          "label": "Childhood onset",
+          "key": "HP:0011463"
+        }
+      ]
+    },
+    {
+      "label": "Congenital onset",
+      "key": "HP:0003577"
+    },
+    {
+      "label": "Puerpural onset",
+      "key": "HP:4000040"
+    },
+    {
+      "label": "Neonatal onset",
+      "key": "HP:0003623"
     }
   ]
 }

@@ -10,11 +10,6 @@ import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
     styleUrls: ['./tree-select.component.scss'],
 })
 export class TreeSelectComponent {
-    // tslint:disable-next-line:no-input-rename
-    @Output()
-    ontologyObjectEvent = new EventEmitter<OntologyClass[]>();
-    @Input()
-    ontologyObjects: OntologyClass[];
 
     /**
      * Ontology nodes
@@ -22,6 +17,13 @@ export class TreeSelectComponent {
     @Input()
     nodes: any[];
 
+    /**
+     * Preselected nodes
+     */
+    @Input()
+    selectedNodes = [];
+    @Output()
+    selectedNodesChange = new EventEmitter<OntologyClass[]>();
     /**
      * Selection mode: can be single, checkbox, multiple or tricheckbox
      */
@@ -31,30 +33,15 @@ export class TreeSelectComponent {
     phenopacketSubscription: Subscription;
 
     selectedNodesStr: string[] = [];
-    selectedNodes: OntologyTreeNode[] = [];
 
     constructor() {}
 
     nodeSelect(event) {
-        // needed so that the programmatic changes to chips value are reflected in the UI
-        const clonedArrayStr = Object.assign([], this.selectedNodesStr);
-        clonedArrayStr.push(event.node.label);
-
-        this.selectedNodesStr = clonedArrayStr;
-        this.ontologyObjectEvent.emit(this.toOntologyClass(this.selectedNodes));
+        this.selectedNodesChange.emit(this.selectedNodes);
     }
 
     nodeUnselect(event) {
-        // needed so that the programmatic changes to chips value are reflected in the UI
-        const clonedArrayStr = Object.assign([], this.selectedNodesStr);
-        const indexStr = this.selectedNodesStr.indexOf(event.node.label);
-
-        console.log(indexStr);
-        if (indexStr !== -1) {
-            clonedArrayStr.splice(indexStr, 1);
-            this.selectedNodesStr = clonedArrayStr;
-        }
-        this.ontologyObjectEvent.emit(this.toOntologyClass(this.selectedNodes));
+        this.selectedNodesChange.emit(this.selectedNodes);
     }
 
     /**
@@ -75,18 +62,12 @@ export class TreeSelectComponent {
      * @param node
      */
     nodeSelectionChange(node: any) {
-        // needed so that the programmatic changes to chips value are reflected in the UI
-        const clonedArray = Object.assign([], this.selectedNodesStr);
 
         if (node.state) {
-            clonedArray.push(node.label);
-            this.selectedNodesStr = clonedArray;
             this.selectedNodes.push(node);
         } else {
             const index = this.selectedNodes.indexOf(node);
             if (index !== -1) {
-                clonedArray.splice(index, 1);
-                this.selectedNodesStr = clonedArray;
                 this.selectedNodes.splice(index, 1);
             }
         }

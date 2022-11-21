@@ -1,14 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Age } from 'src/app/models/base';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-// export class MyErrorStateMatcher implements ErrorStateMatcher {
-//     isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-//         const isSubmitted = form && form.submitted;
-//         return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-//     }
-// }
-
 @Component({
     selector: 'app-age',
     templateUrl: './age.component.html',
@@ -36,7 +28,15 @@ export class AgeComponent implements OnInit {
         }
     }
 
-    updateAge() {
+    updateAge(value: number, type: string) {
+        if (type === 'years') {
+            this.years = value;
+        } else if (type === 'months') {
+            this.months = value;
+        } else if (type === 'days') {
+            this.days = value;
+        }
+
         let yearsStr = '';
         if (this.years) {
             yearsStr = `${this.years}Y`;
@@ -49,10 +49,21 @@ export class AgeComponent implements OnInit {
         if (this.days) {
             daysStr = `${this.days}D`;
         }
-
-        const age = new Age();
-        age.iso8601duration = `P${yearsStr}${monthsStr}${daysStr}`;
-        this.ageEvent.emit(age);
-        console.log(age);
+        if (this.age === undefined) {
+            this.age = new Age();
+        }
+        this.age.iso8601duration = `P${yearsStr}${monthsStr}${daysStr}`;
+        this.ageEvent.emit(this.age);
+    }
+    updateYears(event) {
+        console.log(event);
+        this.updateAge(event.value, 'years');
+    }
+    updateMonths(event) {
+        console.log(event);
+        this.updateAge(event.value, 'months');
+    }
+    updateDays(event) {
+        this.updateAge(event.value, 'days');
     }
 }
