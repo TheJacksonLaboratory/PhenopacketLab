@@ -1,16 +1,16 @@
 <p-dropdown
-  [options]="ageTypes"
+  [options]="timeElementTypes"
   [(ngModel)]="selectedAgeType"
   (onChange)="ageTypeChange($event)"
   placeholder="Select an age type"
   [showClear]="true"
 ></p-dropdown>
 
-<div *ngIf="selectedAgeType === ageTypes[0]">
+<div *ngIf="selectedAgeType === ageType">
   <app-age (ageEvent)="updateAge($event)" [age]="age"></app-age>
 </div>
 
-<div *ngIf="selectedAgeType === ageTypes[1]">
+<div *ngIf="selectedAgeType === ageRangeType">
   <div class="field col-12">
     <label for="rangestart">Start</label>
     <app-age
@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<div *ngIf="selectedAgeType === ageTypes[2]" class="grid p-fluid">
+<div *ngIf="selectedAgeType === gestationalAgeType" class="grid p-fluid">
   <div class="field col-12 md:col-6">
     <label for="weeks">Weeks</label>
     <p-inputNumber
@@ -51,6 +51,6 @@
   </div>
 </div>
 
-<div *ngIf="ageTypes.length === 4 && selectedAgeType === ageTypes[3]">
-  <p-treeSelect id="ontologyClass" [(ngModel)]="selectedOntologyClass" [options]="ontologyNodes" [metaKeySelection]="false" placeholder="Select item" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
+<div *ngIf="timeElementTypes.length === 4 && selectedAgeType === ontologyClassType">
+  <p-treeSelect id="ontologyClass" [(ngModel)]="selectedOntologyClass" [options]="ontologyNodes" (onNodeSelect)="updateOntologyClass($event)" [metaKeySelection]="false" placeholder="Select item" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
 </div>

@@ -91,14 +91,22 @@ export class ExternalReference extends Convert {
     }
 }
 export class Evidence extends Convert {
-    evidenceCode: OntologyClass;
-    reference: ExternalReference;
 
     constructor(evidenceCode?: OntologyClass, reference?: ExternalReference) {
         super();
         this.evidenceCode = evidenceCode;
         this.reference = reference;
     }
+
+    static VALUES = [
+        new OntologyClass('ECO:0006016', 'author statement from published clinical study'),
+        new OntologyClass('ECO:0007539', 'author statement from published clinical study used in automatic assertion'),
+        new OntologyClass('ECO:0006017', 'author statement from published clinical study used in manual assertion'),
+        new OntologyClass('ECO:0000033', 'author statement supported by traceable reference'),
+        new OntologyClass('ECO:0006154', 'self-reported patient statement evidence')
+    ];
+    evidenceCode: OntologyClass;
+    reference: ExternalReference;
 
     public static create(obj: any): Evidence {
         const evidence = new Evidence();
@@ -304,6 +312,13 @@ export class TimeElement extends Convert {
             return `${this.element.start} - ${this.element.end}`;
         }
     }
+
+}
+export enum TimeElementType {
+    AGE = 'Age',
+    AGE_RANGE = 'Age range',
+    GESTATIONAL_AGE = 'Gestational age',
+    ONTOLOGY_CLASS = 'Ontology class'
 }
 export class File extends Convert {
     id: string; // not part of the phenopacket model (used only to distinguish between files)
