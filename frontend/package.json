@@ -33,7 +33,6 @@
     "@angular/router": "^14.2.0",
     "@fortawesome/fontawesome-free": "~5.6.3",
     "@types/chart.js": "^2.7.40",
-    "ProtVista": "^2.0.13",
     "ajv": "^6.12.0",
     "angular-split": "^14.1.0",
     "animate.css": "~3.7.2",
