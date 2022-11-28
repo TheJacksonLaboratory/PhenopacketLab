@@ -1,278 +1,290 @@
-<div class="card">
-  <div class="card-body margin">
-    <div class="row">
-      <div class="col-md-6">
-      </div>
-      <div class="col-md-6">
-        <button (click)="openEditDialog()" mat-icon-button type="submit" class="pull-right" matTooltip="Edit"
-          [matTooltipShowDelay]="2000">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <b>ID:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.id}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Individual ID:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.individualId}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Sample type:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.sampleType}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Taxonomy:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.taxonomy}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Derived from biosample:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.derivedFromId}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Sampled tissue:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.sampledTissue}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Description:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.description}}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Sample material:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.materialSample?.toString()}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Sample processing:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.sampleProcessing?.toString()}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Sample storage:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.sampleStorage?.toString()}}
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-8">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Procedure</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <!-- TODO -->
-            <app-procedure></app-procedure>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Time of collection:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <!-- TODO -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Histological:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.histologicalDiagnosis?.toString()}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Tumor grade:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.tumorGrade?.toString()}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Tumor progression:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.tumorProgression?.toString()}}
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-12">
-            <b>Pathological stage:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            {{biosample?.pathologicalStage?.toString()}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Pathological TNM finding:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div  class="col-md-12">
-            <mat-list role="list">
-              <mat-list-item *ngFor="let finding of biosample?.pathologicalTnmFinding" role="listitem">
-                {{finding.toString()}}
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="row">
-          <div class="col-md-12">
-            <b>Diagnostic markers:</b>
-          </div>
-        </div>
-        <div class="row">
-          <div  class="col-md-12">
-            <mat-list role="list">
-              <mat-list-item *ngFor="let marker of biosample?.diagnosticMarkers" role="listitem">
-                {{marker.toString()}}
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-
+<div class="row">
+  <div class="col-md-6"></div>
+  <div class="col-md-6">
+    <button
+      (click)="openEditDialog()"
+      mat-icon-button
+      type="submit"
+      class="pull-right"
+      matTooltip="Edit"
+      [matTooltipShowDelay]="2000"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
     <div class="row">
       <div class="col-md-12">
-        <app-phenotypic-feature [phenotypicFeatures]="getPhenotypicFeatures()"
-        (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"></app-phenotypic-feature>
+        <b>ID:</b>
       </div>
     </div>
-
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-
     <div class="row">
       <div class="col-md-12">
-        <app-measurement [measurements]="getPhenopacketMeasurements()"
-                            (onMeasurementsChanged)="changeMeasurements($event)"></app-measurement>
+        {{ biosample?.id }}
       </div>
     </div>
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-
+    <br />
     <div class="row">
       <div class="col-md-12">
-        <app-file [phenopacketFiles]="getPhenopacketFiles()" (onFilesChanged)="changeFiles($event)">
-        </app-file>
+        <b>Individual ID:</b>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.individualId }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Sample type:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.sampleType }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Taxonomy:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.taxonomy }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Derived from biosample:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.derivedFromId }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Sampled tissue:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.sampledTissue }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Description:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.description }}
+      </div>
+    </div>
+  </div>
+</div>
 
+<br />
+<mat-divider></mat-divider>
+<br />
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Sample material:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.materialSample?.toString() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Sample processing:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.sampleProcessing?.toString() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Sample storage:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.sampleStorage?.toString() }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Procedure</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TODO -->
+        <!-- <app-procedure></app-procedure> -->
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Time of collection:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TODO -->
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<mat-divider></mat-divider>
+<br />
+<div class="row">
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Histological:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.histologicalDiagnosis?.toString() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Tumor grade:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.tumorGrade?.toString() }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Tumor progression:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.tumorProgression?.toString() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Pathological stage:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ biosample?.pathologicalStage?.toString() }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Pathological TNM finding:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-list role="list">
+          <mat-list-item
+            *ngFor="let finding of biosample?.pathologicalTnmFinding"
+            role="listitem"
+          >
+            {{ finding.toString() }}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Diagnostic markers:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-list role="list">
+          <mat-list-item
+            *ngFor="let marker of biosample?.diagnosticMarkers"
+            role="listitem"
+          >
+            {{ marker.toString() }}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<mat-divider></mat-divider>
+<br />
+
+<div class="row">
+  <div class="col-md-12">
+    <app-phenotypic-feature
+      [phenotypicFeatures]="getPhenotypicFeatures()"
+      (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
+    ></app-phenotypic-feature>
+  </div>
+</div>
+
+<br />
+<mat-divider></mat-divider>
+<br />
+
+<div class="row">
+  <div class="col-md-12">
+    <app-measurement
+      [measurements]="getPhenopacketMeasurements()"
+      (onMeasurementsChanged)="changeMeasurements($event)"
+    ></app-measurement>
+  </div>
+</div>
+<br />
+<mat-divider></mat-divider>
+<br />
+
+<div class="row">
+  <div class="col-md-12">
+    <app-file
+      [phenopacketFiles]="getPhenopacketFiles()"
+      (onFilesChanged)="changeFiles($event)"
+    >
+    </app-file>
   </div>
 </div>

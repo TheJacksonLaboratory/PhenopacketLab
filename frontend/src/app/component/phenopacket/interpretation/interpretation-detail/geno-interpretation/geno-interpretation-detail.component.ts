@@ -10,7 +10,6 @@ import { InterpretationDetailDialogComponent } from '../interpretation-detail-di
   templateUrl: './geno-interpretation-detail.component.html',
   styleUrls: ['./geno-interpretation-detail.component.scss']
 })
-
 export class GenoInterpretationDetailComponent implements OnInit {
 
   @Input()
@@ -84,6 +83,11 @@ export class GenoInterpretationDetailComponent implements OnInit {
   isGeneDescriptor() {
     if (this.genoInterpretation) {
       return this.genoInterpretation.call.toString() === GeneDescriptor.className;
+    }
+  }
+  getCall() {
+    if (this.genoInterpretation) {
+      return this.genoInterpretation.call;
     }
   }
 }

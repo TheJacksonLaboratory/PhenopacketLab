@@ -1,11 +1,11 @@
 import { OntologyClass, TimeElement } from './base';
 
 export class Individual {
-    id: string;
-    alternateIds: string[];
-    dateOfBirth: string; // timestamp
+    id = '';
+    alternateIds: string[] = [];
+    dateOfBirth = ''; // timestamp
     timeAtLastEncounter: TimeElement;
-    vitalStatus: VitalStatus;
+    vitalStatus: VitalStatus = new VitalStatus();
     sex: Sex;
     karyotypicSex: KaryotypicSex;
     gender: OntologyClass;
@@ -97,4 +97,15 @@ export enum KaryotypicSex {
     XXXX = 'XXXX',
     XYY = 'XYY',
     OTHER_KARYOTYPE = 'Other karyotype'
+}
+
+export class Gender {
+    static VALUES = [new OntologyClass('LOINC:LA22878-5', 'Identifies as male'),
+            new OntologyClass('LOINC:LA22879-3', 'Identifies as female'),
+            new OntologyClass('LOINC:LA22880-1', 'Female-to-male transsexual'),
+            new OntologyClass('LOINC:LA22881-9', 'Male-to-female transsexual'),
+            new OntologyClass('LOINC:LA22882-7', 'Identifies as non-conforming'),
+            new OntologyClass('LOINC:LA46-8', 'other'),
+            new OntologyClass('LOINC:LA20384-6', 'Asked but unknown')];
+
 }

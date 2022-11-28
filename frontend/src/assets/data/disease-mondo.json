@@ -1,0 +1,77 @@
+{
+    "data": [
+      {
+        "label": "Acute disease",
+        "key": "MONDO_0020683",
+        "children": [
+          {
+            "label": "Acute adrenal insufficiency",
+            "key": "MONDO_0019801",
+            "children": [
+              {
+                "label": "Waterhouse-Friderichsen syndrome",
+                "key": "MONDO_0006015"
+              },
+              {
+                "label": "acute adrenal insufficiency",
+                "key": "MONDO_0019801 "
+              }
+            ]
+        },{
+            "label": "Acute eustachian salpingitis",
+            "key": "MONDO_0001064"
+        },
+        {
+            "label": "Acute kidney failure",
+            "key": "MONDO_0002492",
+            "children": [
+                {
+                    "label": "acute kidney tubular necrosis",
+                    "key": "MONDO_0006637"
+                }
+            ]
+        },{
+            "label": "Encephalitis",
+            "key": "MONDO_0019956",
+            "children": [
+                {
+                    "label": "Autoimmune encephalitis",
+                    "key": "MONDO_0020640",
+                    "children": [
+                        {
+                            "label": "Bickerstaff brainstem encephalitis",
+                            "key": "MONDO_0019208"
+                        },{
+                            "label": "Steroid-responsive encephalopathy associated with autoimmune thyroiditis",
+                            "key": "MONDO_0019385"
+                        }
+                        
+                    ]
+                }
+            ]
+        }]
+    },{
+        "label": "cardiovascular disorder",
+        "key": "MONDO_0004995",
+        "children": [
+            {
+                "label": "Celiac trunk compression syndrome",
+                "key": "MONDO_0017388"
+            },{
+                "label": "Heart disorder",
+                "key": "MONDO_0005267",
+                "children": [
+                    {
+                        "label": "Bosley-Salih-Alorainy syndrome",
+                        "key": "MONDO_0019075"
+                    },{
+                        "label": "CHIME syndrome",
+                        "key": "MONDO_0010221"
+                    }
+                ]
+            }
+        ]
+    }
+
+]   
+}

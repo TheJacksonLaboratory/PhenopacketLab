@@ -1,5 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SharedModule } from 'src/app/component/shared/shared.module';
 import { DiseaseDetailDialogComponent } from './disease-detail-dialog.component';
 
 describe('DiseaseDetailDialogComponent', () => {
@@ -10,12 +15,16 @@ describe('DiseaseDetailDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailDialogComponent ],
       imports: [
-        MatDialogModule
+        ReactiveFormsModule,
+        FormsModule,
+        DropdownModule,
+        RadioButtonModule,
+        ButtonModule,
+        SharedModule
       ],
       providers: [
-        { provide: MatDialog, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef,useValue: {} }
+        DynamicDialogRef,
+        DynamicDialogConfig
       ]
     })
     .compileComponents();

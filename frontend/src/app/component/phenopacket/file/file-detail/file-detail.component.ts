@@ -9,7 +9,7 @@ import { FileDetailDialogComponent } from './file-detail-dialog/file-detail-dial
 @Component({
   selector: 'app-file-detail',
   templateUrl: './file-detail.component.html',
-  styleUrls: ['./file-detail.component.scss']
+  styleUrls: ['./file-detail.component.scss'],
 })
 export class FileDetailComponent implements OnInit {
 
@@ -69,18 +69,18 @@ export class FileDetailComponent implements OnInit {
   }
 
   getMapping(indToFileId: Map<string, string>): Mapping[] {
-    let mappings = [];
+    const mappings = [];
     indToFileId.forEach((value, key) => {
-      mappings.push(new Mapping(key, value))
+      mappings.push(new Mapping(key, value));
     });
     return mappings;
   }
 
   getAttribute(fileAttribute: Map<string, string>): Attribute[] {
-    let attributes = [];
+    const attributes = [];
     fileAttribute.forEach((value, key) => {
       if (key !== 'description') {
-        attributes.push(new Attribute(key, value))
+        attributes.push(new Attribute(key, value));
       }
     });
     return attributes;
@@ -89,7 +89,7 @@ export class FileDetailComponent implements OnInit {
     const fileDetailData = { 'title': 'Add attribute to file' };
     fileDetailData['description'] = 'Select one of the available attribute or add a custom attribute.';
     fileDetailData['comboTitle'] = 'ID';
-    fileDetailData['comboItems'] = Attribute.getValues();//['File format', 'Genome assembly'];
+    fileDetailData['comboItems'] = Attribute.getValues(); // ['File format', 'Genome assembly'];
     fileDetailData['txtFieldTitle'] = 'Value';
     fileDetailData['placeholderId'] = 'eg. VCF, BAM, SAM, BED, FASTQ, PED';
     fileDetailData['placeholderValue'] = 'eg. GRCh37, GRCh38, GRCm38, GRCm39';
@@ -100,13 +100,13 @@ export class FileDetailComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let id = result.key;
-        let value = result.value;
+        const id = result.key;
+        const value = result.value;
         if (id !== undefined && value !== undefined) {
           // check if entry already exists
           if (this.file.fileAttribute.has(id)) {
             this.attributes.forEach((element, index) => {
-              if (element.id == id) {
+              if (element.id === id) {
                 this.attributes[index].value = value;
               }
             });
@@ -128,7 +128,7 @@ export class FileDetailComponent implements OnInit {
     const fileDetailData = { 'title': 'Add mapping to file' };
     // fileDetailData['description'] = 'Add following mapping to file:';
     fileDetailData['comboTitle'] = 'Subject ID';
-    fileDetailData['comboItems'] = Mapping.getValues(); //['I:1', 'I:2', 'I:3']; // TODO get these values from file
+    fileDetailData['comboItems'] = Mapping.getValues(); // ['I:1', 'I:2', 'I:3']; // TODO get these values from file
     fileDetailData['txtFieldTitle'] = 'ID used in file';
     fileDetailData['displayCancelButton'] = true;
     const dialogRef = this.dialog.open(FileDetailDialogComponent, {
@@ -137,13 +137,13 @@ export class FileDetailComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        let subjectId = result.key;
-        let fileId = result.value;
+        const subjectId = result.key;
+        const fileId = result.value;
         if (subjectId !== undefined && fileId !== undefined) {
           // check if entry already exists
           if (this.file.individualToFileIdentifier.has(subjectId)) {
             this.mappings.forEach((element, index) => {
-              if (element.subjectId == subjectId) {
+              if (element.subjectId === subjectId) {
                 this.mappings[index].fileId = fileId;
               }
             });
@@ -163,7 +163,7 @@ export class FileDetailComponent implements OnInit {
 
   deleteMapping(mapping: Mapping) {
     this.mappings.forEach((element, index) => {
-      if (element == mapping) {
+      if (element === mapping) {
         this.mappings.splice(index, 1);
       }
     });
@@ -176,7 +176,7 @@ export class FileDetailComponent implements OnInit {
 
   deleteAttribute(attribute: Attribute) {
     this.attributes.forEach((element, index) => {
-      if (element == attribute) {
+      if (element === attribute) {
         this.attributes.splice(index, 1);
       }
     });
@@ -202,8 +202,9 @@ export class Mapping {
    * get Mapping values
    */
   public static getValues() {
-    let values = [];
-    for (var key in Mapping.Keys) {
+    const values = [];
+    // tslint:disable-next-line:forin
+    for (const key in Mapping.Keys) {
       values.push(Mapping.Keys[key]);
     }
     return values;
@@ -233,8 +234,8 @@ export class Attribute {
   * get Attribute values
   */
   public static getValues() {
-    let values = [];
-    for (var key in Attribute.Keys) {
+    const values = [];
+    for (const key in Attribute.Keys) {
       values.push(Attribute.Keys[key]);
     }
     return values;

@@ -66,6 +66,7 @@
                     <div *ngIf="element === expandedElement" class="example-element-detail"
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <div style="width: 100%">
+                            <br>
                             <app-file-detail [file]="element" (onFileChanged)="changeFile($event, element)">
                             </app-file-detail>
                         </div>

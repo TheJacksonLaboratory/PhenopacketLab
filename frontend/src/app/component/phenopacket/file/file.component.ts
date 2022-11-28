@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 import { FileService } from 'src/app/services/file.service';
 import { File } from 'src/app/models/base';
 
@@ -11,7 +13,15 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
-  styleUrls: ['./file.component.scss']
+  styleUrls: ['./file.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class FileComponent implements OnInit {
 

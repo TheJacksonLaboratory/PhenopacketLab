@@ -1,0 +1,111 @@
+<p-card>
+  <ng-template pTemplate="title"> Individual </ng-template>
+  <ng-template pTemplate="subtitle">
+    Add subject information and vital status
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="grid p-fluid">
+      <div class="field col-12">
+        <label for="id"><b>Phenopacket ID</b></label>
+        <input
+          id="id"
+          #id="ngModel"
+          type="text"
+          required
+          pInputText
+          [(ngModel)]="phenopacket.id"
+          [ngClass]="{
+            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+          }"
+        />
+        <small
+          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+          class="p-error"
+          >Phenopacket ID is required.</small
+        >
+      </div>
+      <div class="field col-12">
+        <label for="lastEncounterDate"><b>Age of clinical examination</b> (Time of last encounter)</label>
+        <app-time-element id="lastEncounterDate" [timeElement]="timeOfLastEncounter" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
+      </div>
+      
+      <div class="field col-12 md:col-4">
+        <label for="sex">Sex</label>
+        <p-dropdown id="sex"
+          placeholder="Select sex"
+          [options]="getSexes()"
+          [(ngModel)]="sex"
+          pTooltip="Observed apparent sex of the individual"
+          showDelay="2000"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="karyotypicSex">Karyotypic Sex</label>
+        <p-dropdown id="karyotypicSex"
+          placeholder="Select karyotypic sex"
+          [options]="getKaryotypicSexes()"
+          [(ngModel)]="karyotypicSex"
+          pTooltip="The karyotypic sex of the individual"
+          showDelay="2000"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="gender">Gender</label>
+        <p-dropdown id="gender"
+          placeholder="Select gender"
+          [options]="getGenders()"
+          [(ngModel)]="gender"
+          pTooltip="Self-identified gender"
+          showDelay="2000"
+          class="w-full"
+        ></p-dropdown>
+      </div>
+    </div>
+    <br>
+    <h3><b>Vital Status</b></h3>
+    <div class="grid p-fluid">
+      <div class="field col-12 md:col-6">
+        <label for="status">Status</label>
+        <p-dropdown id="status" placeholder="Select status"
+          [options]="getStatuses()"
+          [(ngModel)]="status"
+          pTooltip="The life status of the individual"
+          showDelay="2000"
+          class="w-full"
+        ></p-dropdown>
+        
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="survivalTime">Survival time (days)</label>
+        <p-inputNumber id="survivalTime" [(ngModel)]="survivalTime"></p-inputNumber>
+      </div>
+
+      <div class="field col-12" *ngIf="status === 'DECEASED'">
+        <label for="timeOfDeath">Time of death</label>
+        <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element>
+      </div>
+      <div class="field col-12" *ngIf="status === 'DECEASED'">
+        <label for="causeOfDeath">Cause of death</label>
+
+        <p-treeSelect id="causeOfDeath" [(ngModel)]="selectedCauseOfDeath" [options]="causeOfDeaths" [metaKeySelection]="false" placeholder="Select cause of death" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
+
+        <!-- <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input> -->
+        
+        
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="grid grid-nogutter justify-content-end">
+      <p-button
+        label="Next"
+        (onClick)="nextPage()"
+        icon="pi pi-angle-right"
+        iconPos="right"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-card>

@@ -1,61 +1,43 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 
 @Component({
-    selector: 'app-ontology-class',
+    // tslint:disable-next-line:component-selector
+    selector: 'ontology-class-input',
     templateUrl: './ontology-class.component.html',
     styleUrls: ['./ontology-class.component.scss'],
+    // tslint:disable-next-line:no-host-metadata-property
+    // host: {
+    //     '[class.floating]': 'shouldLabelFloat',
+    //     '[id]': 'id',
+    //   },
 })
 export class OntologyClassComponent implements OnInit {
+    // tslint:disable-next-line:no-input-rename
     @Output()
     ontologyObjectEvent = new EventEmitter<OntologyClass>();
     @Input()
     ontologyObject: OntologyClass;
-    // title of the OntologyClass Object
-    @Input()
-    title: string;
-    labelControl = new UntypedFormControl('', [Validators.required]);
-    labelSubscription: Subscription;
-    idControl = new UntypedFormControl('', [Validators.required]);
-    idSubscription: Subscription;
 
-    label = "";
-    id = "";
+    label: string;
+    id: string;
 
     ngOnInit(): void {
-        if (this.ontologyObject) {
-            this.label = this.ontologyObject.label;
-            this.labelControl.setValue(this.label);
-            this.id = this.ontologyObject.id;
-            this.idControl.setValue(this.id);
-        } else {
-            this.ontologyObject = {id: this.id, label:this.label};
-        }
-
-        if (this.labelSubscription) {
-            this.labelSubscription.unsubscribe();
-        }
-        this.labelSubscription = this.labelControl.valueChanges.subscribe(value => {
-            if (value && value.length > 0) {
-                this.label = value;
-                this.ontologyObject.label = this.label;
-                this.ontologyObjectEvent.emit(this.ontologyObject);
-            }
-        });
-
-        if (this.idSubscription) {
-            this.idSubscription.unsubscribe();
-        }
-        this.idSubscription = this.idControl.valueChanges.subscribe(value => {
-            if (value && value.length > 0) {
-                this.id = value;
-                this.ontologyObject.id = this.id;
-                this.ontologyObjectEvent.emit(this.ontologyObject);
-            }
-        });
+       if (this.ontologyObject) {
+        this.label = this.ontologyObject.label;
+        this.id = this.ontologyObject.id;
+       }
     }
 
+    updateOntologyClass() {
+        if (this.ontologyObject === undefined) {
+            this.ontologyObject = new OntologyClass(this.id, this.label);
+
+        } else {
+            this.ontologyObject.id = this.id;
+            this.ontologyObject.label = this.label;
+        }
+        this.ontologyObjectEvent.emit(this.ontologyObject);
+    }
 
 }

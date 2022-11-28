@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import { Disease } from 'src/app/models/disease';
-import { Individual, KaryotypicSex, Sex } from 'src/app/models/individual';
+import { Gender, Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
@@ -14,7 +13,15 @@ import { BioSample } from 'src/app/models/biosample';
 @Component({
   selector: 'app-phenopacket',
   templateUrl: './phenopacket.component.html',
-  styleUrls: ['./phenopacket.component.scss']
+  styleUrls: ['./phenopacket.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class PhenopacketComponent implements OnInit {
 
@@ -23,29 +30,29 @@ export class PhenopacketComponent implements OnInit {
   @Input()
   phenopacket: Phenopacket;
 
-  @Output() onIdChanged = new EventEmitter<any>();
-  @Output() onSexChanged = new EventEmitter<any>();
-  @Output() onDobChanged = new EventEmitter<any>();
+  // @Output() onIdChanged = new EventEmitter<any>();
+  // @Output() onSexChanged = new EventEmitter<any>();
+  // @Output() onDobChanged = new EventEmitter<any>();
 
-  phenoIdControl = new UntypedFormControl('', [Validators.required]);
-  phenoSexControl = new UntypedFormControl('');
-  phenoDobControl = new UntypedFormControl(new Date());
-  lastEncounterDateControl = new UntypedFormControl(new Date());
-  phenopacketIdSubscription: Subscription;
-  phenopacketSexSubscription: Subscription;
-  phenopacketDobSubscription: Subscription;
+  // phenoIdControl = new UntypedFormControl('', [Validators.required]);
+  // phenoSexControl = new UntypedFormControl('');
+  // phenoDobControl = new UntypedFormControl(new Date());
+  // lastEncounterDateControl = new UntypedFormControl(new Date());
+  // phenopacketIdSubscription: Subscription;
+  // phenopacketSexSubscription: Subscription;
+  // phenopacketDobSubscription: Subscription;
 
-  summary: string;
-  sex: any;
-  karyotypicSex: any;
+  summary = '';
+  sex: any = Sex.UNKNOWN_SEX;
+  karyotypicSex: any = KaryotypicSex.UNKNOWN_KARYOTYPE;
   gender: any;
   dob: Date;
   individual: Individual;
-  lastEncounterDate: string;
+  lastEncounterDate = '';
 
-  status: string;
-  timeOfDeath: string;
-  causeOfDeath: string;
+  status = '';
+  timeOfDeath = '';
+  causeOfDeath = '';
   survivalTime: number;
 
   active = 'top';
@@ -68,38 +75,8 @@ export class PhenopacketComponent implements OnInit {
       this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
       this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;
 
-      // id update
-      this.phenoIdControl.setValue(this.phenopacket.id);
-      if (this.phenopacketIdSubscription) {
-        this.phenopacketIdSubscription.unsubscribe();
-      }
-      this.phenopacketIdSubscription = this.phenoIdControl.valueChanges.subscribe(value => {
-        if (value && value.length > 0) {
-          this.onIdChanged.emit(value);
-        }
-      });
-      // sex update
-      this.phenoSexControl.setValue(this.sex);
-      if (this.phenopacketSexSubscription) {
-        this.phenopacketSexSubscription.unsubscribe();
-      }
-      this.phenopacketSexSubscription = this.phenoSexControl.valueChanges.subscribe(value => {
-        if (value && value.length > 0) {
-          this.onSexChanged.emit(value);
-        }
-      });
-      // Dob update
-      this.dob = this.individual.dateOfBirth ? new Date(this.individual.dateOfBirth) : new Date();
-      this.phenoDobControl.setValue(this.dob);
-      if (this.phenopacketDobSubscription) {
-        this.phenopacketDobSubscription.unsubscribe();
-      }
-      this.phenopacketDobSubscription = this.phenoDobControl.valueChanges.subscribe(value => {
-        this.onDobChanged.emit(value);
-      });
     }
   }
-
 
   getKaryotypicSexes() {
     // tslint:disable-next-line:radix
@@ -156,33 +133,49 @@ export class PhenopacketComponent implements OnInit {
     // tslint:disable-next-line:radix
     return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
   }
-  deletePhenopacket() {
-
+  getGenders() {
+    return Gender.VALUES;
   }
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+  getStatuses() {
+    // tslint:disable-next-line:radix
+    return Object.values(Status).filter(x => !(parseInt(x) >= 0));
+  }
+  deletePhenopacket() {
 
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-    this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    if (this.phenopacket) {
+      this.phenopacket.phenotypicFeatures = phenotypicFeatures;
+    }
   }
   changeDiseases(diseases: Disease[]) {
-    this.phenopacket.diseases = diseases;
+    if (this.phenopacket) {
+      this.phenopacket.diseases = diseases;
+    }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
-    this.phenopacket.biosamples = biosamples;
+    if (this.phenopacket) {
+      this.phenopacket.biosamples = biosamples;
+    }
   }
   changeMeasurements(measurements: Measurement[]) {
-    this.phenopacket.measurements = measurements;
+    if (this.phenopacket) {
+      this.phenopacket.measurements = measurements;
+    }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
-    this.phenopacket.medicalActions = medicalActions;
+    if (this.phenopacket) {
+      this.phenopacket.medicalActions = medicalActions;
+    }
   }
 
   changeFiles(files: File[]) {
-    this.phenopacket.files = files;
+    if (this.phenopacket) {
+      this.phenopacket.files = files;
+    }
   }
 
   editStatus() {

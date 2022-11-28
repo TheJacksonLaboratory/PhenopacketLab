@@ -1,3 +1,4 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OntologyClass } from 'src/app/models/base';
@@ -9,7 +10,15 @@ import { MessageDialogComponent } from '../../shared/message-dialog/message-dial
 @Component({
   selector: 'app-biosample',
   templateUrl: './biosample.component.html',
-  styleUrls: ['./biosample.component.scss']
+  styleUrls: ['./biosample.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class BiosampleComponent implements OnInit {
 

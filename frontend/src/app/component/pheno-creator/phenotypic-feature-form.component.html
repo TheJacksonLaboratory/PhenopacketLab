@@ -1,0 +1,210 @@
+<as-split direction="horizontal">
+  <as-split-area [size]="50">
+    <!-- Phenotypic Feature table content & search -->
+    <p-toast></p-toast>
+    <p-card>
+      <ng-template pTemplate="title"> Phenotypic Features search </ng-template>
+      <ng-template pTemplate="subtitle">
+        Search for a phenotypic feature using the search field below or the
+        text-mining tool (not yet implemented).
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p-tabView>
+          <p-tabPanel header="Feature search">
+            <app-search-box
+              [showHint]="false"
+              [itemName]="'Phenotypic feature'"
+              [searchLabel]="'Phenotypic feature'"
+              [placeHolderTxt]="'Enter a phenotypic feature name'"
+              [localStorageKey]="'phenotypic_features'"
+              [searchService]="searchService"
+              (selectedSearchItem)="onSearchCriteriaChange($event)"
+              [resetSearch]="false"
+            ></app-search-box>
+          </p-tabPanel>
+          <p-tabPanel header="Text-mining search">
+            <p>Not yet implemented</p>
+          </p-tabPanel>
+        </p-tabView>
+
+        <p-table
+          *ngIf="visible"
+          [value]="phenotypicFeatures"
+          [(selection)]="selectedFeature"
+          dataKey="key"
+          selectionMode="single"
+          (onRowSelect)="onRowSelect($event)"
+          [scrollable]="true"
+          [resizableColumns]="true"
+          [tableStyle]="{'min-width': '50rem'}"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-header">Added phenotypic features</div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Label</th>
+              <th pResizableColumn>Status</th>
+              <!-- <th>Onset</th> -->
+              <th pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-feature>
+            <tr [pSelectableRow]="feature">
+              <td>{{ feature.type?.label }}</td>
+              <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
+              <!-- <td>{{feature.onset?.toString()}}</td> -->
+              <td>
+                <p-confirmDialog
+                  header="Confirmation"
+                  width="425"
+                ></p-confirmDialog>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteFeature(feature)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-card>
+  </as-split-area>
+  <as-split-area [size]="50">
+    <!-- Phenotypic feature form -->
+    <p-card>
+      <ng-template pTemplate="title"> Phenotypic Feature details </ng-template>
+      <ng-template pTemplate="subtitle">
+        Edit the phenotypic feature details of the selected phenotypic feature
+        in the left table.
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="grid p-fluid">
+          <div class="field col-6">
+            <label for="label">Label</label>
+            <input
+              id="label"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="label"
+            />
+          </div>
+          <div class="field col-6">
+            <label for="id">ID</label>
+            <input
+              id="id"
+              type="text"
+              required
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="id"
+            />
+          </div>
+          <div class="fiewl col-12">
+            <div class="field-checkbox">
+              <p-checkbox
+                      id="observed"
+                [(ngModel)]="observed"
+                [binary]="true"
+                inputId="observed"
+                (onChange)="updateExcluded($event)"
+              ></p-checkbox>
+              <label for="observed">{{
+                observed ? "Observed" : "Excluded"
+              }}</label>
+            </div>
+          </div>
+          <div class="field col-12">
+            <label for="onset"><b>Onset</b></label>
+            <app-time-element
+            id="onset"
+            [timeElement]=""
+            [ontologyNodes]="onsetsNodes"
+            [useOntologyClass]="true"
+            (timeElementEvent)="updateOnset($event)"
+            aria-labelledby="onset-label"
+          ></app-time-element>
+          </div>
+
+          <div class="field col-12">
+            <label for="resolution"><b>Resolution</b></label>
+            <app-time-element
+              id="resolution"
+              aria-labelledby="resolution-time-label"
+            ></app-time-element>
+          </div>
+
+          <div class="field col-12">
+            <label for="severity"><b>Severity</b></label>
+            <p-dropdown
+              id="severity"
+              placeholder="Select severity"
+              [options]="getSeverities()"
+              [(ngModel)]="severity"
+              (onChange)="updateSeverity($event)"
+              pTooltip="The intensity or degree of a manifestation"
+              showDelay="2000"
+              class="w-full"
+            ></p-dropdown>
+          </div>
+          <div class="field col-12">
+            <label for="modifier"><b>Modifiers</b></label>
+
+            <ontology-tree-select
+              id="modifier"
+              pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects."
+              showDelay="2000"
+              [selectionMode]="'checkbox'"
+              (selectedNodesChange)="updateModifiers($event)"
+              [(selectedNodes)]="modifiers"
+              [nodes]="modifiersNodes"
+            ></ontology-tree-select>
+
+            <!-- <app-tree-search></app-tree-search> -->
+          </div>
+
+          <div class="field col-12">
+            <label for="evidence"><b>Evidence</b></label>
+            <ontology-tree-select
+              id="evidence"
+              pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
+              showDelay="2000"
+              (selectedNodesChange)="updateEvidences($event)"
+              [(selectedNodes)]="evidences"
+              [selectionMode]="'checkbox'"
+              [nodes]="evidencesNodes"
+            ></ontology-tree-select>
+          </div>
+        </div>
+      </ng-template>
+    </p-card>
+  </as-split-area>
+</as-split>
+
+<p-card>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-between flex-wrap">
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+          iconPos="left"
+        ></p-button>
+      </div>
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Next"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>

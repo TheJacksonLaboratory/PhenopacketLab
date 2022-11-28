@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { InterpretationComponent } from './interpretation.component';
@@ -11,7 +12,8 @@ describe('InterpretationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ InterpretationComponent ],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        FormsModule
       ]
     })
     .compileComponents();

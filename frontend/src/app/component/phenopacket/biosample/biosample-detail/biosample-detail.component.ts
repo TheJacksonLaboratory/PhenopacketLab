@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { BioSample } from 'src/app/models/biosample';
 import { Measurement } from 'src/app/models/measurement';
@@ -9,7 +10,15 @@ import { BiosampleDetailDialogComponent } from './biosample-detail-dialog/biosam
 @Component({
   selector: 'app-biosample-detail',
   templateUrl: './biosample-detail.component.html',
-  styleUrls: ['./biosample-detail.component.scss']
+  styleUrls: ['./biosample-detail.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 
 export class BiosampleDetailComponent implements OnInit {
@@ -66,13 +75,19 @@ export class BiosampleDetailComponent implements OnInit {
     return [];
   }
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-    this.biosample.phenotypicFeatures = phenotypicFeatures;
+    if (this.biosample) {
+      this.biosample.phenotypicFeatures = phenotypicFeatures;
+    }
   }
   changeMeasurements(measurements: Measurement[]) {
-    this.biosample.measurements = measurements;
+    if (this.biosample) {
+      this.biosample.measurements = measurements;
+    }
   }
 
   changeFiles(files: File[]) {
-    this.biosample.files = files;
+    if (this.biosample) {
+      this.biosample.files = files;
+    }
   }
 }

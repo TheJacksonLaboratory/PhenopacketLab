@@ -20,12 +20,24 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DialogModule } from 'primeng/dialog';
+
+import { SharedModule } from '../shared/shared.module';
 import { PhenotypicDetailComponent } from './phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
 import { DiseaseComponent } from './disease/disease.component';
 import { PhenotypicFeatureComponent } from './phenotypic-feature/phenotypic-feature.component';
 import { DiseaseDetailComponent } from './disease/disease-detail/disease-detail.component';
-import { SharedModule } from '../shared/shared.module';
 import { FileComponent } from './file/file.component';
 import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { PhenopacketComponent } from './phenopacket.component';
@@ -38,7 +50,6 @@ import { MedicalActionDetailDialogComponent } from './medical-action/medical-act
 import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
-import {MatDividerModule} from "@angular/material/divider";
 import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
@@ -52,38 +63,52 @@ import { VcfRecordDialogComponent } from './interpretation/interpretation-detail
 import { BiosampleComponent } from './biosample/biosample.component';
 import { BiosampleDetailComponent } from './biosample/biosample-detail/biosample-detail.component';
 import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/biosample-detail-dialog/biosample-detail-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+
 
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        MatRadioModule,
-        MatButtonModule,
-        MatAutocompleteModule,
-        MatCardModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatTabsModule,
-        MatTooltipModule,
-        MatIconModule,
-        MatExpansionModule,
-        MatTableModule,
-        MatIconModule,
-        MatSortModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatDialogModule,
-        MatChipsModule,
-        SharedModule,
-        MatDividerModule
-    ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatRadioModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatCardModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatIconModule,
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatChipsModule,
+    SharedModule,
+    MatDividerModule,
+    MatListModule,
+    CardModule,
+    CalendarModule,
+    InputNumberModule,
+    InputTextModule,
+    DropdownModule,
+    InputMaskModule,
+    DividerModule,
+    RadioButtonModule,
+    DialogModule
+
+  ],
   declarations: [
     MeasurementComponent,
     MeasurementDetailComponent,
@@ -144,6 +169,7 @@ import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/bio
     BiosampleDetailDialogComponent,
     PhenopacketComponent
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [DialogService, MessageService]
 })
 export class PhenopacketModule { }

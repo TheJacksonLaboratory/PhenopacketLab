@@ -1,7 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { MatRadioChange } from '@angular/material/radio';
-import { Disease } from 'src/app/models/disease';
+
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
+import { OntologyClass } from 'src/app/models/base';
+import { ClinicalFindings, Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
 
 @Component({
   selector: 'app-disease-detail-dialog',
@@ -17,42 +20,64 @@ export class DiseaseDetailDialogComponent implements OnInit {
   isA: string;
   description: string;
 
-  statuses: string[] = ['Included', 'Excluded'];
+  laterality: OntologyClass;
+  severity: OntologyClass;
+  finding: OntologyClass;
+  stage: OntologyClass;
+
+
+  statuses: string[] = ['Observed', 'Excluded'];
   selectedStatus: string;
 
   // TODO - fetch from backend
   // stages: string[] = ['Incubation', 'Prodromal', 'Illness', 'Decline', 'Convalescence'];
   stages: string[] = ['Stage 0 - carcinoma in situ', 'Stage I - localized cancer', 'Stage II - locally advanced cancer, early stages', 'Stage III - locally advanced cancer, later stages', 'Stage IV - metastatic cancer'];
-  clinicalFindings: string[] = ['Tumor', 'Nodes', 'Metastasis'];
-  severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
-  lateralities: string[] = ['Right', 'Left'];
 
-  constructor(public dialogRef: MatDialogRef<DiseaseDetailDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.disease = data['disease'];
-     }
+  constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+    this.disease = config.data?.disease;
+  }
 
   ngOnInit(): void {
-    if(this.disease) {
+    if (this.disease) {
       this.diseaseDetailName = this.disease.term.label;
       this.diseaseId = this.disease.term.id;
       this.description = this.disease.description;
       this.isA = this.disease.isA;
-      this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Included';
+      this.selectedStatus = this.disease.excluded ? 'Excluded' : 'Observed';
     }
   }
 
   changeStatus(evt: MatRadioChange) {
     this.selectedStatus = evt.value;
-    this.disease.excluded = evt.value === 'Excluded';
+    if (this.disease) {
+      this.disease.excluded = evt.value === 'Excluded';
+    }
   }
 
+  getLateralities() {
+    return Laterality.VALUES;
+  }
+
+  getClinicalFindings() {
+    return ClinicalFindings.VALUES;
+  }
+  getStages() {
+    return Stages.VALUES;
+  }
+  getSeverities() {
+    return Severities.VALUES;
+  }
+  // onCancelClick(): void {
+  //   this.dialogRef.close('cancel');
+  // }
   onCancelClick(): void {
-    this.dialogRef.close('cancel');
+    this.ref.close();
   }
-
+  // onOkClick() {
+  //   return { 'disease': this.disease };
+  // }
   onOkClick() {
-    return { 'disease': this.disease };
+    this.ref.close(this.disease);
   }
 
 }

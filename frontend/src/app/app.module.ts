@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -26,20 +25,35 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { GridModule } from '@angular/flex-layout/grid';
 
 import { routing } from './app.routing';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { fakeBackendProvider } from './helpers/fake-backend';
 
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
-import { ComponentsModule } from './component/components.module';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
 import { FamilyListComponent } from './component/family-list/family-list.component';
-import { fakeBackendProvider } from './helpers/fake-backend';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 import { AboutComponent } from './component/about/about.component';
+import { SidebarComponent } from './component/sidebar/sidebar.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { HeaderComponent } from './component/header/header.component';
+import { SharedModule } from './component/shared/shared.module';
+import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.module';
+import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { CardModule } from 'primeng/card';
+import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
 
 @NgModule({
     imports: [
@@ -47,7 +61,6 @@ import { AboutComponent } from './component/about/about.component';
         BrowserAnimationsModule,
         HttpClientModule,
         routing,
-        ComponentsModule,
         RouterModule,
         CommonModule,
         MatButtonModule,
@@ -56,8 +69,8 @@ import { AboutComponent } from './component/about/about.component';
         MatSelectModule,
         MatTooltipModule,
         MatCardModule,
-        MatSidenavModule,
         MatIconModule,
+        MatSidenavModule,
         MatListModule,
         HttpClientModule,
         MatDialogModule,
@@ -66,27 +79,43 @@ import { AboutComponent } from './component/about/about.component';
         MatTreeModule,
         MatTabsModule,
         MatButtonToggleModule,
+        MatToolbarModule,
         MatExpansionModule,
         MatTableModule,
         FormsModule,
+        MatStepperModule,
         MatFormFieldModule,
         ReactiveFormsModule,
         MatAutocompleteModule,
         MatDatepickerModule,
-        PhenopacketModule
+        MatMenuModule,
+        FlexLayoutModule,
+        GridModule,
+        PhenoCreatorModule,
+        PhenopacketModule,
+        SharedModule,
+        TabViewModule,
+        CardModule,
+        ButtonModule,
+        CheckboxModule,
     ],
     declarations: [
         AppComponent,
         DashboardComponent,
+        HeaderComponent,
+        SidebarComponent,
+        FooterComponent,
         AboutComponent,
+        PhenopacketListComponent,
         CohortListComponent,
         FamilyListComponent,
         UploadDialogComponent
+
     ],
     exports: [RouterModule],
     providers: [{ provide: MatDialogRef, useValue: {} },
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         // provider used to create a fake backend
         fakeBackendProvider
     ],

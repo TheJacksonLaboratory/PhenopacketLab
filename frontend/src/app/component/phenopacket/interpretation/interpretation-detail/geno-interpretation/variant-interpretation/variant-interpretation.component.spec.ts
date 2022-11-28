@@ -1,5 +1,10 @@
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { VariantInterpretationComponent } from './variant-interpretation.component';
 
 
@@ -11,7 +16,13 @@ describe('VariantInterpretationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ VariantInterpretationComponent ],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule,
+        CdkAccordionModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatIconModule,
+        NoopAnimationsModule
       ]
     })
     .compileComponents();

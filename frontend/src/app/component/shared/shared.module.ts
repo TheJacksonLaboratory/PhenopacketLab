@@ -16,15 +16,33 @@ import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 
+import { DropdownModule } from 'primeng/dropdown';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { ChipsModule } from 'primeng/chips';
+import { TreeModule } from 'primeng/tree';
+import { AccordionModule } from 'primeng/accordion';
+import { TreeSelectModule } from 'primeng/treeselect';
+
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { SearchFilterComponent } from './age-control/search-filter/search-filter.component';
-import { AgeControlComponent } from './age-control/age-control.component';
-import { DateComponent } from './age-control/date/date.component';
+import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
+import { TimeElementComponent } from './time-element/time-element.component';
+import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
+import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -47,26 +65,48 @@ import { OntologyClassComponent } from './ontology-class/ontology-class.componen
     MatButtonModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    DropdownModule,
+    InputNumberModule,
+    MessagesModule,
+    MessageModule,
+    CalendarModule,
+    InputTextModule,
+    TriStateCheckboxModule,
+    ChipsModule,
+    AccordionModule,
+    TreeSelectModule,
+    TreeModule,
+    MatCardModule,
+    MatTreeModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatProgressBarModule
   ],
   declarations: [
     MessageDialogComponent,
     SpinnerDialogComponent,
-    AgeControlComponent,
+    TimeElementComponent,
     SearchFilterComponent,
-    DateComponent,
+    AgeComponent,
     SearchBoxComponent,
-    OntologyClassComponent
+    TreeSelectComponent,
+    OntologyClassComponent,
+    TreeSearchComponent
   ],
   exports: [
     MessageDialogComponent,
     SpinnerDialogComponent,
-    AgeControlComponent,
+    TimeElementComponent,
     SearchFilterComponent,
-    DateComponent,
+    AgeComponent,
     SearchBoxComponent,
-    OntologyClassComponent
+    TreeSelectComponent,
+    OntologyClassComponent,
+    TreeSearchComponent
   ],
+  providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule { }
