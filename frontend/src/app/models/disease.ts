@@ -2,7 +2,7 @@ import { Convert, OntologyClass, TimeElement } from './base';
 
 export class Disease extends Convert {
     // key parameter not part of the phenopacket schema, used for primeng table
-    key?: string;
+    key?: number;
 
     term: OntologyClass;
     excluded: boolean;
