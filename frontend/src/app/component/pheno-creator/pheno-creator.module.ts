@@ -18,6 +18,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { InplaceModule } from 'primeng/inplace';
+import { SplitterModule } from 'primeng/splitter';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -49,9 +53,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
-import { MessageService } from 'primeng/api';
-import { MessagesModule } from 'primeng/messages';
-import { CohortService } from 'src/app/services/cohort.service';
+
 
 @NgModule({
     imports: [
@@ -94,9 +96,9 @@ import { CohortService } from 'src/app/services/cohort.service';
         TabViewModule,
         ConfirmDialogModule,
         ToastModule,
-        MessagesModule
-        // EditorModule,
-        // QuillModule.forRoot()
+        MessagesModule,
+        InplaceModule,
+        SplitterModule
 
     ],
     exports: [
@@ -117,7 +119,6 @@ import { CohortService } from 'src/app/services/cohort.service';
         ValidateFormComponent
     ],
     providers: [
-        CohortService,
         MessageService
     ],
     schemas: [
