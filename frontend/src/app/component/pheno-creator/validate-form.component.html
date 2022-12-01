@@ -1,22 +1,46 @@
 <p-card>
     <ng-template pTemplate="title"> Validate phenopacket </ng-template>
     <ng-template pTemplate="subtitle">
-      Before adding the phenopacket to the corresponding family or cohort, the phanopacket is going to be validated 
+        Before adding the phenopacket to the corresponding family or cohort, the phanopacket is going to be validated and its corresponding metadata created.
     </ng-template>
     <ng-template pTemplate="content">
-      <div class="grid p-fluid">
-        <div class="field col-12">
-<!--            <label for="phenoEditor">Phenopacket to be validated</label>-->
-<!--            <textarea pInputTextarea [(ngModel)]="phenopacketString"></textarea>-->
-
-            <!-- <p-editor id="phenoEditor" [(ngModel)]="phenopacketString" [style]="{'height':'320px'}"></p-editor> -->
-
+        <div class="grid p-fluid">
+            <div class="field col-12">
+                <b>Created:</b> {{created}}
+            </div>
+            <div class="field col-12">
+                <b>Phenopacket schema version:</b> {{schemaVersion}}
+            </div>
+            <div class="field col-6">
+                <label for="createdBy"><b>Created by:</b></label>
+                <span>
+                    <p-inplace id="createdBy" closable="closable" [style]="{'min-height':'33px'}" [active]="active">
+                        <ng-template pTemplate="display">
+                           {{createdBy}} <i class="pi pi-user-edit"></i>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <input type="text" [(ngModel)]="createdBy" pInputText>
+                        </ng-template>
+                    </p-inplace>
+                </span>
+            </div>
+            <div class="field col-6">
+                <label for="submittedBy"><b>Submitted by:</b></label>
+                <span>
+                    <p-inplace id="submittedBy" closable="closable" [style]="{'min-height':'33px'}" [active]="active">
+                        <ng-template pTemplate="display">
+                           {{submittedBy}} <i class="pi pi-user-edit"></i>
+                        </ng-template>
+                        <ng-template pTemplate="content">
+                            <input type="text" [(ngModel)]="submittedBy" pInputText>
+                        </ng-template>
+                    </p-inplace>
+                </span>
+            </div>
         </div>
-        
-      </div>
-      <div class="flex justify-content-start flex-wrap">
-        <p-button
-          (onClick)="validate()"
+        <div class="flex justify-content-start flex-wrap">
+            <p-button
+                    (onClick)="validate()"
           label="Validate"
           styleClass="p-button"
         ></p-button>
@@ -46,4 +70,3 @@
       </div>
     </ng-template>
   </p-card>
-  

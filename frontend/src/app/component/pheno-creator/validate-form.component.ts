@@ -1,123 +1,99 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { CohortService } from 'src/app/services/cohort.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import {MetaData} from '../../models/metadata';
 
 @Component({
-    selector: 'app-validate-form',
-    templateUrl: './validate-form.component.html',
-    styleUrls: ['./pheno-creator.component.scss']
-  })
-export class ValidateFormComponent implements OnInit {
+  selector: 'app-validate-form',
+  templateUrl: './validate-form.component.html',
+  styleUrls: ['./pheno-creator.component.scss']
+})
+export class ValidateFormComponent implements OnInit, OnDestroy {
 
-    phenopacket: Phenopacket;
+  phenopacket: Phenopacket;
+  cohort: Cohort;
 
-    phenopacketString = `
-    {
-        "id": "arbitrary.id",
-        "subject": {
-          "id": "proband A",
-          "timeAtLastEncounter": {
-            "age": {
-              "iso8601duration": "P8Y"
-            }
-          },
-          "sex": "MALE"
-        },
-        "biosamples": [{
-          "id": "SAMN05324082",
-          "individualId": "SAMN05324082-individual",
-          "description": "THP-1; 6 hours; DMSO; Replicate 1",
-          "sampledTissue": {
-            "id": "UBERON:0000178",
-            "label": "peripheral blood"
-          },
-          "taxonomy": {
-            "id": "NCBITaxon:9606",
-            "label": "Homo sapiens"
-          },
-          "timeOfCollection": {
-            "age": {
-              "iso8601duration": "P8Y"
-            }
-          },
-          "histologicalDiagnosis": {
-            "id": "EFO:0000221",
-            "label": "Acute Monocytic Leukemia"
-          }
-        }],
-        "diseases": [{
-          "term": {
-            "id": "NCIT:C3171",
-            "label": "Acute Myeloid Leukemia"
-          }
-        }],
-        "metaData": {
-          "created": "2021-05-14T10:35:00Z",
-          "createdBy": "anonymous biocurator",
-          "resources": [{
-            "id": "ncit",
-            "name": "NCI Thesaurus",
-            "url": "http://purl.obolibrary.org/obo/ncit.owl",
-            "version": "21.05d",
-            "namespacePrefix": "NCIT",
-            "iriPrefix": "http://purl.obolibrary.org/obo/NCIT_"
-          }, {
-            "id": "efo",
-            "name": "Experimental Factor Ontology",
-            "url": "http://www.ebi.ac.uk/efo/efo.owl",
-            "version": "3.34.0",
-            "namespacePrefix": "EFO",
-            "iriPrefix": "http://purl.obolibrary.org/obo/EFO_"
-          }, {
-            "id": "uberon",
-            "name": "Uber-anatomy ontology",
-            "url": "http://purl.obolibrary.org/obo/uberon.owl",
-            "version": "2021-07-27",
-            "namespacePrefix": "UBERON",
-            "iriPrefix": "http://purl.obolibrary.org/obo/UBERON_"
-          }, {
-            "id": "ncbitaxon",
-            "name": "NCBI organismal classification",
-            "url": "http://purl.obolibrary.org/obo/ncbitaxon.owl",
-            "version": "2021-06-10",
-            "namespacePrefix": "NCBITaxon",
-            "iriPrefix": "http://purl.obolibrary.org/obo/NCBITaxon_"
-          }],
-          "phenopacketSchemaVersion": "2.0"
-        }
-      }
+  submitted = false;
+  disabled = true;
 
-    `;
-    submitted = false;
-    disabled = true;
+  metadata: MetaData;
+  createdBy: string;
+  created: string;
+  submittedBy: string;
+  schemaVersion = '2.0';
+  // whether the inplace createBy and SubmittedBy are active
+  active = true;
 
-    constructor (public phenopacketService: PhenopacketService, private router: Router) {
+  cohortSubscription: Subscription;
 
+  constructor(public phenopacketService: PhenopacketService, private cohortService: CohortService, private router: Router) {
+
+  }
+
+  ngOnInit() {
+    this.phenopacket = this.phenopacketService.phenopacket;
+    if (this.phenopacket === undefined) {
+      // navigate to first page of creator as phenopacket is not created
+      this.router.navigate(['pheno-creator/individual']);
     }
+    this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
+      this.cohort = cohort;
+      console.log('cohort in validate nginit subscription');
+      console.log(this.cohort);
+    });
+    console.log('cohort in validate;');
+    console.log(this.cohort);
+  }
 
-    ngOnInit() {
-        this.phenopacket = this.phenopacketService.phenopacket;
+  ngOnDestroy(): void {
+    if (this.cohortSubscription) {
+      this.cohortSubscription.unsubscribe();
     }
+  }
+  validate() {
+    this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
+    this.disabled = false;
+    console.log('validate');
+    // create the timestamp created date
+    this.created = new Date().toISOString();
 
-    validate() {
-        this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
-        this.disabled = false;
-
+    this.active = false;
+    // set metadata
+    const metadata = new MetaData();
+    metadata.createdBy = this.createdBy;
+    metadata.created = this.created;
+    metadata.submittedBy = this.submittedBy;
+    metadata.resources = [];
+    metadata.externalReferences = [];
+    metadata.phenopacketSchemaVersion = this.schemaVersion;
+    // this.phenopacket.metadata = metadata;
+  }
+  complete() {
+    // add to cohort
+    if (this.cohort) {
+      this.cohort.members.push(this.phenopacket);
     }
-    complete() {
-        this.phenopacketService.setPhenopacket(this.phenopacket);
-        this.router.navigate(['families']);
-        console.log(this.phenopacketService.getPhenopacket());
+    this.cohortService.setCohort(this.cohort);
+    console.log('completed');
+    console.log(this.cohort);
+    // this.cohortService.addPhenopacket(this.phenopacket);
+    // this.phenopacketService.phenopacket = this.phenopacket;
 
-    }
+    this.router.navigate(['phenopackets']);
 
-    prevPage() {
-        this.router.navigate(['pheno-creator/diseases']);
-        // this.router.navigate(['pheno-creator/files']);
-    }
+  }
 
-    getPhenopacketJSON(phenopacket: Phenopacket): string {
-        return '';
-    }
+  prevPage() {
+    this.phenopacketService.phenopacket = this.phenopacket;
+    this.router.navigate(['pheno-creator/diseases']);
+    // this.router.navigate(['pheno-creator/files']);
+  }
+
+  getPhenopacketJSON(phenopacket: Phenopacket): string {
+    return '';
+  }
 }
