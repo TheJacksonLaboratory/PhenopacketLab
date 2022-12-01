@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Age, AgeRange, GestationalAge, OntologyClass, TimeElement, TimeElementType } from 'src/app/models/base';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
   selector: 'app-time-element',
@@ -7,9 +9,7 @@ import { Age, AgeRange, GestationalAge, OntologyClass, TimeElement, TimeElementT
   styleUrls: ['./time-element.component.scss']
 })
 
-export class TimeElementComponent implements OnInit {
-
-  selectedAgeType: string;
+export class TimeElementComponent implements OnInit, OnDestroy {
 
   @Output() timeElementEvent = new EventEmitter<TimeElement>();
 
@@ -19,6 +19,8 @@ export class TimeElementComponent implements OnInit {
   ontologyNodes: any[];
   @Input()
   useOntologyClass = false;
+
+  selectedAgeType: string;
 
   age: Age;
   ageRange: AgeRange;
@@ -33,8 +35,15 @@ export class TimeElementComponent implements OnInit {
   // corresponding ontology classes
   timeElementTypes: string[];
 
-  constructor() {
+  timeElementSubscription: Subscription;
 
+  constructor(public phenopacketService: PhenopacketService) {
+
+  }
+  ngOnDestroy(): void {
+    if (this.timeElementSubscription) {
+      this.timeElementSubscription.unsubscribe();
+    }
   }
   ngOnInit(): void {
     // if ontologyNodes are provided then we add the OntologyClass item in selection
@@ -43,6 +52,15 @@ export class TimeElementComponent implements OnInit {
     } else {
       this.timeElementTypes = ['Age', 'Age range', 'Gestational age'];
     }
+    this.initialize();
+  }
+
+  onTimeElementChange(timeElementUpdate: TimeElement): void {
+    this.timeElement = timeElementUpdate;
+    console.log(this.timeElement);
+  }
+
+  private initialize() {
     if (this.timeElement === undefined) {
       this.timeElement = new TimeElement();
     }
@@ -62,7 +80,6 @@ export class TimeElementComponent implements OnInit {
       this.selectedOntologyClass = element;
     }
   }
-
   // getter for TimeElement enum
   get ageType() {
     return TimeElementType.AGE;
@@ -79,21 +96,34 @@ export class TimeElementComponent implements OnInit {
 
   ageTypeChange(event) {
     const type = event.value;
+    if (this.timeElement === undefined) {
+      this.timeElement = new TimeElement();
+    }
     if (type === TimeElementType.AGE) {
       if (this.age === undefined) {
         this.age = new Age();
+      } else {
+        this.updateAge(this.age);
       }
     } else if (type === TimeElementType.AGE_RANGE) {
       if (this.ageRange === undefined) {
         this.ageRange = new AgeRange();
+      } else {
+        this.updateRangeStart(this.ageRange.start);
+        this.updateRangeEnd(this.ageRange.end);
       }
     } else if (type === TimeElementType.GESTATIONAL_AGE) {
       if (this.gestationalAge === undefined) {
         this.gestationalAge = new GestationalAge();
+      } else {
+        this.updateGestationalAge(this.gestationalAge.weeks, 'weeks');
+        this.updateGestationalAge(this.gestationalAge.days, 'days');
       }
     } else if (type === TimeElementType.ONTOLOGY_CLASS) {
       if (this.ontologyClass === undefined) {
         this.ontologyClass = new OntologyClass();
+      } else {
+        this.updateOntologyClass(this.ontologyClass);
       }
     }
   }
@@ -131,8 +161,7 @@ export class TimeElementComponent implements OnInit {
   // update ontology class
   updateOntologyClass(event) {
     // event is a TreeNode (as the ontologyClass is shown as TreeSelect component)
-    const ontologyClass = new OntologyClass(event.node.key, event.node.label);
-    this.timeElement.element = new TimeElement(ontologyClass);
+    this.timeElement.element = new OntologyClass(event.node.key, event.node.label);
     this.timeElementEvent.emit(this.timeElement);
   }
 }
