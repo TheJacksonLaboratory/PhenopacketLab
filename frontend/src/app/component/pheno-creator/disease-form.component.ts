@@ -5,9 +5,10 @@ import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api'
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { ClinicalFindings, Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
 
 @Component({
@@ -44,14 +45,16 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
     severity: OntologyClass;
     finding: OntologyClass;
     stage: OntologyClass;
-
-    diseaseIndex = 0;
+    // onset
+    onset: any;
+    onsetsNodes: OntologyTreeNode[];
+    onsetsSubscription: Subscription;
 
     // TODO - fetch from backend
     // stages: string[] = ['Incubation', 'Prodromal', 'Illness', 'Decline', 'Convalescence'];
     stages: string[] = ['Stage 0 - carcinoma in situ', 'Stage I - localized cancer', 'Stage II - locally advanced cancer, early stages', 'Stage III - locally advanced cancer, later stages', 'Stage IV - metastatic cancer'];
 
-    constructor(public searchService: PhenotypeSearchService,
+    constructor(public searchService: DiseaseSearchService,
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
@@ -67,11 +70,23 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
             this.router.navigate(['pheno-creator/individual']);
         } else {
             this.diseases = this.phenopacket.diseases;
+            if (this.diseases) {
+                if (this.diseases.length > 0) {
+                    this.visible = true;
+                }
+            }
         }
+        // get onsets
+        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+        });
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
+        }
+        if (this.onsetsSubscription) {
+            this.onsetsSubscription.unsubscribe();
         }
     }
 
@@ -88,10 +103,9 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
 
     private _queryDiseaseById(id: string) {
         this.openSpinnerDialog();
-        this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
+        this.searchService.queryDiseasesById(id).subscribe(data => {
             const disease = new Disease();
-            this.diseaseIndex++;
-            disease.key = this.diseaseIndex.toString();
+            disease.key = this.getBiggestKey() + 1;
             disease.term = new OntologyClass(data.id, data.name);
             disease.excluded = false;
             this.addDisease(disease);
@@ -110,14 +124,19 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    // changeDiseases(diseases: Disease[]) {
-    //     if (diseases?.length > 0) {
-    //         this.label = diseases[0].term?.label;
-    //         this.id = diseases[0].term?.id;
-    //         this.disease = new Disease();
-    //         this.disease.term = new OntologyClass(this.id, this.label);
-    //     }
-    // }
+    /**
+     *
+     * @returns Returns the biggest key
+     */
+    getBiggestKey() {
+        let key = 0;
+        for (const disease of this.diseases) {
+            if ((disease.key) >= key) {
+                key = disease.key;
+            }
+        }
+        return key;
+    }
 
     /**
      * Adds a new disease.
@@ -173,18 +192,21 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         return Severities.VALUES;
     }
 
+    updateOnset(timeElement: any) {
+        if (this.selectedDisease) {
+            this.selectedDisease.onset = timeElement;
+        }
+    }
     updateExcluded(event) {
         if (this.selectedDisease) {
             this.selectedDisease.excluded = !event.checked;
         }
     }
     /**
-     * Called when a row is selected in the left side table
+     * Called when a row is selected on the left side table
      * @param event
      */
     onRowSelect(event) {
-        console.log('selected disease:');
-        console.log(event.data);
         this.selectedDisease = event.data;
         this.updateSelection();
     }
@@ -196,6 +218,8 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         this.label = this.selectedDisease.term.label;
         this.observed = !this.selectedDisease.excluded;
         this.laterality = this.selectedDisease.laterality;
+        this.onset = this.selectedDisease.onset;
+
         // this.diseaseStage = this.selectedDisease.diseaseStage;
         // TODO add rest of disease details
     }

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { Evidence, OntologyClass, TimeElement } from 'src/app/models/base';
+import { Evidence, OntologyClass } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -47,7 +47,7 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
     evidencesSubscription: Subscription;
     // onset
     onsetsNodes: OntologyTreeNode[];
-    selectedOnset: any;
+    onset: any;
     onsetsSubscription: Subscription;
 
     phenoIndex = 0;
@@ -76,16 +76,23 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
             this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
         }
         );
+        // get Evidences
+        this.evidencesNodes = this.getEvidences();
         // get onsets
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
             this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
-            console.log('onsetnodes:');
-            console.log(this.onsetsNodes);
         });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
         });
+        this.phenopacket = this.phenopacketService.phenopacket;
+        this.phenotypicFeatures = this.phenopacket?.phenotypicFeatures;
+        if (this.phenotypicFeatures) {
+            if (this.phenotypicFeatures.length > 0) {
+                this.visible = true;
+            }
+        }
     }
 
     ngOnDestroy(): void {
@@ -115,8 +122,7 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             const phenotypicFeature = new PhenotypicFeature();
-            this.phenoIndex++;
-            phenotypicFeature.key = this.phenoIndex.toString();
+            phenotypicFeature.key = this.getBiggestKey() + 1;
             phenotypicFeature.type = new OntologyClass(data.id, data.name);
             phenotypicFeature.excluded = false;
             this.addPhenotypicFeature(phenotypicFeature);
@@ -133,6 +139,20 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
             panelClass: 'transparent',
             disableClose: true
         });
+    }
+
+    /**
+     *
+     * @returns Returns the biggest key
+     */
+     getBiggestKey() {
+        let key = 0;
+        for (const feature of this.phenotypicFeatures) {
+            if ((feature.key) >= key) {
+                key = feature.key;
+            }
+        }
+        return key;
     }
 
     /**
@@ -160,6 +180,14 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         return Severities.VALUES;
     }
 
+    getEvidences() {
+        const nodes = [];
+        for (const evidence of Evidence.VALUES) {
+            nodes.push({label: evidence.label, key: evidence.id, leaf: true, parent: undefined});
+        }
+        return nodes;
+    }
+
     updateExcluded(event) {
         if (this.selectedFeature) {
             this.selectedFeature.excluded = !event.checked;
@@ -175,15 +203,14 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
             this.selectedFeature.severity = event.value;
         }
     }
-    updateOnset(event) {
+    updateOnset(timeElement: any) {
         if (this.selectedFeature) {
-            const ontologyClass = new OntologyClass(event.node.key, event.node.label);
-            this.selectedFeature.onset = new TimeElement(ontologyClass);
+            this.selectedFeature.onset = timeElement;
         }
     }
-    updateEvidences(evidence: any[]) {
+    updateEvidences(evidences: any[]) {
         if (this.selectedFeature) {
-            this.selectedFeature.evidence = this.evidences;
+            this.selectedFeature.evidence = evidences;
         }
     }
 
@@ -192,11 +219,8 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
      * @param event
      */
     onRowSelect(event) {
-        console.log('selected feature:');
-        console.log(event.data);
         this.selectedFeature = event.data;
         this.updateSelection();
-        // this.messageService.add({severity:'info', summary:'Product Selected', detail: event.data.name});
     }
 
     /**
@@ -207,15 +231,10 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         this.label = this.selectedFeature.type.label;
         this.observed = !this.selectedFeature.excluded;
         this.modifiers = this.selectedFeature.modifiers;
+        this.evidences = this.selectedFeature.evidence;
         this.severity = this.selectedFeature.severity;
-        if (this.selectedFeature.onset) {
-            if (this.selectedFeature.onset.element instanceof OntologyClass) {
-                const id = this.selectedFeature.onset.element.id;
-                this.selectedOnset = OntologyTreeNode.getNodeWithKey(id, this.onsetsNodes);
-            }
-        } else {
-            this.selectedOnset = null;
-        }
+        this.onset = this.selectedFeature.onset;
+        // this.phenopacketService.setTimeElement(this.onset);
     }
 
     deleteFeature(feature: PhenotypicFeature) {
@@ -239,12 +258,10 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        console.log('next');
-        console.log(this.phenopacket);
-
         // this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
         // console.log(this.phenopacket);
-        this.phenopacketService.setPhenopacket(this.phenopacket);
+        // this.phenopacketService.setPhenopacket(this.phenopacket);
+        this.phenopacketService.phenopacket = this.phenopacket;
         // this.router.navigate(['pheno-creator/measurements']);
         // TODO temp while measuremtn is not done
         this.router.navigate(['pheno-creator/diseases']);
@@ -253,6 +270,7 @@ export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
         // console.log(this.phenopacketService.getPhenopacket());
     }
     prevPage() {
+        this.phenopacketService.phenopacket = this.phenopacket;
         this.router.navigate(['pheno-creator/individual']);
     }
 }
