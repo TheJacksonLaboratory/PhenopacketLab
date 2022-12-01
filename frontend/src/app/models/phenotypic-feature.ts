@@ -2,7 +2,7 @@ import { Convert, Evidence, OntologyClass, TimeElement } from './base';
 
 export class PhenotypicFeature extends Convert {
     // key parameter not part of the phenopacket schema, used for primeng table
-    key?: string;
+    key?: number;
 
     description: string;
     type: OntologyClass = new OntologyClass('', '');
