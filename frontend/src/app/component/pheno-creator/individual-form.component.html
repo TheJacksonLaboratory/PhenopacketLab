@@ -6,35 +6,48 @@
   <ng-template pTemplate="content">
     <div class="grid p-fluid">
       <div class="field col-12">
-        <label for="id"><b>Phenopacket ID</b></label>
+        <label for="phenoId"><b>Phenopacket ID</b></label>
         <input
-          id="id"
+          id="phenoId"
           #id="ngModel"
           type="text"
           required
           pInputText
           [(ngModel)]="phenopacket.id"
           [ngClass]="{
-            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+            'ng-dirty':
+              (id?.invalid && submitted) ||
+              (id?.dirty && id?.invalid)
           }"
         />
         <small
-          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+          *ngIf="
+            (id?.invalid && submitted) ||
+            (id?.dirty && id?.invalid)
+          "
           class="p-error"
           >Phenopacket ID is required.</small
         >
       </div>
       <div class="field col-12">
-        <label for="lastEncounterDate"><b>Age of clinical examination</b> (Time of last encounter)</label>
-        <app-time-element id="lastEncounterDate" [timeElement]="timeOfLastEncounter" (timeElementEvent)="updateTimeOfLastEncounter($event)"></app-time-element>
+        <label for="lastEncounterDate"
+          ><b>Age of clinical examination</b> (Time of last encounter)</label
+        >
+        <app-time-element
+          id="lastEncounterDate"
+          [timeElement]="timeOfLastEncounter"
+          (timeElementEvent)="updateTimeOfLastEncounter($event)"
+        ></app-time-element>
       </div>
-      
+
       <div class="field col-12 md:col-4">
         <label for="sex">Sex</label>
-        <p-dropdown id="sex"
+        <p-dropdown
+          id="sex"
           placeholder="Select sex"
           [options]="getSexes()"
-          [(ngModel)]="sex"
+          [(ngModel)]="selectedSex"
+          (onChange)="updateSex($event)"
           pTooltip="Observed apparent sex of the individual"
           showDelay="2000"
           class="w-full"
@@ -43,10 +56,12 @@
 
       <div class="field col-12 md:col-4">
         <label for="karyotypicSex">Karyotypic Sex</label>
-        <p-dropdown id="karyotypicSex"
+        <p-dropdown
+          id="karyotypicSex"
           placeholder="Select karyotypic sex"
           [options]="getKaryotypicSexes()"
-          [(ngModel)]="karyotypicSex"
+          [(ngModel)]="selectedKaryotypicSex"
+          (onChange)="updateKaryotypicSex($event)"
           pTooltip="The karyotypic sex of the individual"
           showDelay="2000"
           class="w-full"
@@ -54,47 +69,65 @@
       </div>
       <div class="field col-12 md:col-4">
         <label for="gender">Gender</label>
-        <p-dropdown id="gender"
+        <p-dropdown
+          id="gender"
           placeholder="Select gender"
           [options]="getGenders()"
-          [(ngModel)]="gender"
+          [(ngModel)]="selectedGender"
+          (onChange)="updateGender($event)"
           pTooltip="Self-identified gender"
           showDelay="2000"
           class="w-full"
         ></p-dropdown>
       </div>
     </div>
-    <br>
+    <br />
     <h3><b>Vital Status</b></h3>
     <div class="grid p-fluid">
       <div class="field col-12 md:col-6">
         <label for="status">Status</label>
-        <p-dropdown id="status" placeholder="Select status"
+        <p-dropdown
+          id="status"
+          placeholder="Select status"
           [options]="getStatuses()"
-          [(ngModel)]="status"
+          [(ngModel)]="selectedStatus"
+          (onChange)="updateStatus($event)"
           pTooltip="The life status of the individual"
           showDelay="2000"
           class="w-full"
         ></p-dropdown>
-        
       </div>
       <div class="field col-12 md:col-6">
         <label for="survivalTime">Survival time (days)</label>
-        <p-inputNumber id="survivalTime" [(ngModel)]="survivalTime"></p-inputNumber>
+        <p-inputNumber
+          id="survivalTime"
+          [(ngModel)]="survivalTime"
+          (onInput)="updateSurvivalTime($event)"
+        ></p-inputNumber>
       </div>
 
-      <div class="field col-12" *ngIf="status === 'DECEASED'">
+      <div class="field col-6" *ngIf="selectedStatus === 'DECEASED'">
         <label for="timeOfDeath">Time of death</label>
-        <app-time-element id="timeOfDeath" (timeElementEvent)="updateTimeOfDeath($event)"></app-time-element>
+        <app-time-element
+          id="timeOfDeath"
+          [timeElement]="timeOfDeath"
+          (timeElementEvent)="updateTimeOfDeath($event)"
+        ></app-time-element>
       </div>
-      <div class="field col-12" *ngIf="status === 'DECEASED'">
+      <div class="field col-6" *ngIf="selectedStatus === 'DECEASED'">
         <label for="causeOfDeath">Cause of death</label>
-
-        <p-treeSelect id="causeOfDeath" [(ngModel)]="selectedCauseOfDeath" [options]="causeOfDeaths" [metaKeySelection]="false" placeholder="Select cause of death" [filter]="true" [filterInputAutoFocus]="true"></p-treeSelect>
+        <p-treeSelect
+          id="causeOfDeath"
+          [(ngModel)]="selectedCauseOfDeath"
+          (onNodeSelect)="updateCauseOfDeath($event)"
+          [options]="causeOfDeaths"
+          [metaKeySelection]="false"
+          placeholder="Select cause of death"
+          [filter]="true"
+          [filterInputAutoFocus]="true"
+        ></p-treeSelect>
 
         <!-- <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input> -->
-        
-        
       </div>
     </div>
   </ng-template>
