@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Disease } from 'src/app/models/disease';
@@ -30,17 +30,9 @@ export class PhenopacketComponent implements OnInit {
   @Input()
   phenopacket: Phenopacket;
 
-  // @Output() onIdChanged = new EventEmitter<any>();
-  // @Output() onSexChanged = new EventEmitter<any>();
-  // @Output() onDobChanged = new EventEmitter<any>();
-
-  // phenoIdControl = new UntypedFormControl('', [Validators.required]);
-  // phenoSexControl = new UntypedFormControl('');
-  // phenoDobControl = new UntypedFormControl(new Date());
-  // lastEncounterDateControl = new UntypedFormControl(new Date());
-  // phenopacketIdSubscription: Subscription;
-  // phenopacketSexSubscription: Subscription;
-  // phenopacketDobSubscription: Subscription;
+  @Output() onIdChanged = new EventEmitter<any>();
+  @Output() onSexChanged = new EventEmitter<any>();
+  @Output() onDobChanged = new EventEmitter<any>();
 
   summary = '';
   sex: any = Sex.UNKNOWN_SEX;
