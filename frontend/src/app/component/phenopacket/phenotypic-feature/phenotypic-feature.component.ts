@@ -58,10 +58,6 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
     constructor(public searchService: PhenotypeSearchService, public dialog: MatDialog) {
     }
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('change:');
-        console.log(changes);
-        // this.phenotypicFeatures = changes.phenotypicFeatures.currentValue;
-        console.log(this.phenotypicFeatures);
         this.phenotypicDataSource.data = this.phenotypicFeatures;
         this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
