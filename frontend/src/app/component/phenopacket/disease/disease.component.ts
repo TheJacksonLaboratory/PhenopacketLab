@@ -62,10 +62,6 @@ export class DiseaseComponent implements OnInit, OnChanges {
   constructor(public searchService: DiseaseSearchService, public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change:');
-    console.log(changes);
-    // this.phenotypicFeatures = changes.phenotypicFeatures.currentValue;
-    console.log(this.phenopacketDiseases);
     this.datasource.data = this.phenopacketDiseases;
     this.onDiseasesChanged.emit(this.phenopacketDiseases);
   }

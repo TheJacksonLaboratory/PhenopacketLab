@@ -31,8 +31,6 @@ export class SearchFilterComponent implements OnInit {
     const filterValue = value.toLowerCase();
     if (this.options) {
       const result = this.options.filter(val => {
-        console.log('val');
-        console.log(val);
         val.toLowerCase().includes(filterValue);
       });
       if (result.length === 0) {

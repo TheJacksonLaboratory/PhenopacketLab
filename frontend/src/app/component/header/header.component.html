@@ -11,30 +11,30 @@
     </div>
 
     <!-- User actions -->
-    <div id="user-items">
-      <button mat-button *ngIf="!user" id="login-button" color="primary" (click)="login.emit()">
-        <mat-icon>account_box</mat-icon> Sign Up/Login
-      </button>
-      <div *ngIf="user" id="user-menu">
-        <button mat-button id="user-menu-button" color="primary" [matMenuTriggerFor]="userMenu">
-          <mat-icon>account_circle</mat-icon> {{ user.name_or_email }}
-        </button>
+<!--    <div id="user-items">-->
+<!--      <button mat-button *ngIf="!user" id="login-button" color="primary" (click)="login.emit()">-->
+<!--        <mat-icon>account_box</mat-icon> Sign Up/Login-->
+<!--      </button>-->
+<!--      <div *ngIf="user" id="user-menu">-->
+<!--        <button mat-button id="user-menu-button" color="primary" [matMenuTriggerFor]="userMenu">-->
+<!--          <mat-icon>account_circle</mat-icon> {{ user.name_or_email }}-->
+<!--        </button>-->
 
-        <mat-menu #userMenu="matMenu">
-          <button *ngIf="route !== '/restricted'" mat-menu-item [routerLink]="['/user-profile']">
-            <mat-icon>person</mat-icon>
-            <span>My Profile</span>
-          </button>
-          <button *ngIf="route !== '/restricted'" mat-menu-item [routerLink]="['/groups']">
-            <mat-icon>people</mat-icon>
-            <span>My Groups</span>
-          </button>
-          <button mat-menu-item (click)="logout.emit()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Sign Out</span>
-          </button>
-        </mat-menu>
-      </div>
-    </div>
+<!--        <mat-menu #userMenu="matMenu">-->
+<!--          <button *ngIf="route !== '/restricted'" mat-menu-item [routerLink]="['/user-profile']">-->
+<!--            <mat-icon>person</mat-icon>-->
+<!--            <span>My Profile</span>-->
+<!--          </button>-->
+<!--          <button *ngIf="route !== '/restricted'" mat-menu-item [routerLink]="['/groups']">-->
+<!--            <mat-icon>people</mat-icon>-->
+<!--            <span>My Groups</span>-->
+<!--          </button>-->
+<!--          <button mat-menu-item (click)="logout.emit()">-->
+<!--            <mat-icon>exit_to_app</mat-icon>-->
+<!--            <span>Sign Out</span>-->
+<!--          </button>-->
+<!--        </mat-menu>-->
+<!--      </div>-->
+<!--    </div>-->
   </mat-toolbar-row>
 </mat-toolbar>

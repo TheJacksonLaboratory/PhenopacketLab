@@ -30,26 +30,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function handleRoute() {
             switch (true) {
                 case url.endsWith('/diseases') && method === 'GET':
-                    console.log('fakebackend disease');
                     return getDiseases();
                 case url.match(/\/diseases\/.*/) && method === 'GET':
                     return getDiseaseById();
                 case url.endsWith('/phenotypic-features') && method === 'GET':
-                    console.log('fakebackend phenotypic features');
                     return getPhenotypicFeatures();
                 case url.match(/\/phenotypic-features\/.*/) && method === 'GET':
                     return getPhenotypicFeatureById();
                 case url.endsWith('/bodysites') && method === 'GET':
-                    console.log('fakebackend bodysites');
                     return getBodySites();
                 case url.endsWith('modifiers') && method === 'GET':
-                    console.log('fakebackend modifiers');
                     return getModifiers();
                 case url.endsWith('onsets') && method === 'GET':
-                    console.log('fakebackend onsets');
                     return getOnsets();
                 case url.endsWith('mondo-diseases') && method === 'GET':
-                    console.log('fakebackend mondo-diseases');
                     return getMondoDiseases();
                 default:
                     // pass through any requests not handled above
