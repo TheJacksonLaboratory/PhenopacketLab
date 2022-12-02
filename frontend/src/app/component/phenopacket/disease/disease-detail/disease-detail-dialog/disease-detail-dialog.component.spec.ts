@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -20,7 +21,8 @@ describe('DiseaseDetailDialogComponent', () => {
         DropdownModule,
         RadioButtonModule,
         ButtonModule,
-        SharedModule
+        SharedModule,
+        HttpClientTestingModule
       ],
       providers: [
         DynamicDialogRef,
