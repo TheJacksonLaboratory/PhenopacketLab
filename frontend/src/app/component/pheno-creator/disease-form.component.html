@@ -126,35 +126,29 @@
                             <p-accordionTab header="Edit more details">
                                 <div class="grid p-fluid">
 
-                                    <div class="field col-12 md:col-6">
+                                    <div class="field col-12">
                                         <label for="stages"><b>Disease stage:</b></label>
-                                        <p-dropdown
-                                                appendTo="body"
+                                        <ontology-tree-select
                                                 id="stages"
-                                                [options]="getStages()"
-                                                [(ngModel)]="stage"
-                                                optionLabel="label"
-                                                [filter]="true"
-                                                filterBy="label"
-                                                [showClear]="true"
-                                                placeholder="Select disease stage"
-                                        >
-                                        </p-dropdown>
+                                                pTooltip="List of terms representing the disease stage e.g. AJCC stage group"
+                                                showDelay="2000"
+                                                [selectionMode]="'checkbox'"
+                                                (selectedNodesChange)="updateDiseaseStages($event)"
+                                                [(selectedNodes)]="stages"
+                                                [nodes]="stagesNodes"
+                                        ></ontology-tree-select>
                                     </div>
-                                    <div class="field col-12 md:col-6">
+                                    <div class="field col-12">
                                         <label for="findings"><b>Clinical TNM finding:</b></label>
-                                        <p-dropdown
-                                                appendTo="body"
+                                        <ontology-tree-select
                                                 id="findings"
-                                                [options]="getClinicalFindings()"
-                                                [(ngModel)]="finding"
-                                                optionLabel="label"
-                                                [filter]="true"
-                                                filterBy="label"
-                                                [showClear]="true"
-                                                placeholder="Select clinical findings"
-                                        >
-                                        </p-dropdown>
+                                                pTooltip="List of terms representing the tumor TNM score"
+                                                showDelay="2000"
+                                                [selectionMode]="'checkbox'"
+                                                (selectedNodesChange)="updateFindingStages($event)"
+                                                [(selectedNodes)]="findings"
+                                                [nodes]="findingsNodes"
+                                        ></ontology-tree-select>
                                     </div>
 
                                     <div class="field col-12 md:col-6">

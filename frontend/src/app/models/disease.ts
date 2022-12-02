@@ -87,13 +87,6 @@ export class Onset {
                 new OntologyClass('HP:0003596', 'Middle age onset'),
                 new OntologyClass('HP:0003584', 'Late onset')];
 }
-export class ClinicalFindings {
-    static VALUES = [
-        new OntologyClass('cid-0', 'Tumor'),
-        new OntologyClass('cid-1', 'Nodes'),
-        new OntologyClass('cid-2', 'Metastasis'),
-    ];
-}
 export class Severities {
     static VALUES = [
         new OntologyClass('HP:0012827', 'Borderline'),

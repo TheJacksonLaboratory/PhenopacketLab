@@ -4,7 +4,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { OntologyClass } from 'src/app/models/base';
-import { ClinicalFindings, Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
+import { Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
 
 @Component({
   selector: 'app-disease-detail-dialog',
@@ -59,7 +59,8 @@ export class DiseaseDetailDialogComponent implements OnInit {
   }
 
   getClinicalFindings() {
-    return ClinicalFindings.VALUES;
+    // TODO
+    return [];
   }
   getStages() {
     return Stages.VALUES;

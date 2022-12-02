@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { ClinicalFindings, Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
+import { Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
@@ -43,16 +43,18 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
     observed: boolean;
     laterality: OntologyClass;
     severity: OntologyClass;
-    finding: OntologyClass;
-    stage: OntologyClass;
+    // tnm Findings
+    findings: OntologyClass[];
+    findingsNodes: OntologyTreeNode[];
+    findingsSubscription: Subscription;
+    // disease Stage
+    stages: OntologyClass[];
+    stagesNodes: OntologyTreeNode[];
+
     // onset
     onset: any;
     onsetsNodes: OntologyTreeNode[];
     onsetsSubscription: Subscription;
-
-    // TODO - fetch from backend
-    // stages: string[] = ['Incubation', 'Prodromal', 'Illness', 'Decline', 'Convalescence'];
-    stages: string[] = ['Stage 0 - carcinoma in situ', 'Stage I - localized cancer', 'Stage II - locally advanced cancer, early stages', 'Stage III - locally advanced cancer, later stages', 'Stage IV - metastatic cancer'];
 
     constructor(public searchService: DiseaseSearchService,
         public phenopacketService: PhenopacketService,
@@ -80,6 +82,11 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
             this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
         });
+        // stages
+        this.stagesNodes = this.getStages();
+        this.findingsSubscription = this.phenopacketService.getTnmFindings().subscribe(nodes => {
+            this.findingsNodes = <OntologyTreeNode[]>nodes.data;
+        });
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
@@ -87,6 +94,9 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         }
         if (this.onsetsSubscription) {
             this.onsetsSubscription.unsubscribe();
+        }
+        if (this.findingsSubscription) {
+            this.findingsSubscription.unsubscribe();
         }
     }
 
@@ -182,11 +192,12 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         return Laterality.VALUES;
     }
 
-    getClinicalFindings() {
-        return ClinicalFindings.VALUES;
-    }
     getStages() {
-        return Stages.VALUES;
+        const nodes = [];
+        for (const stage of Stages.VALUES) {
+            nodes.push({label: stage.label, key: stage.id, leaf: true, parent: undefined});
+        }
+        return nodes;
     }
     getSeverities() {
         return Severities.VALUES;
@@ -200,6 +211,16 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
     updateExcluded(event) {
         if (this.selectedDisease) {
             this.selectedDisease.excluded = !event.checked;
+        }
+    }
+    updateDiseaseStages(diseaseStages) {
+        if (this.selectedDisease) {
+            this.selectedDisease.diseaseStage = diseaseStages;
+        }
+    }
+    updateFindingStages(findings) {
+        if (this.selectedDisease) {
+            this.selectedDisease.clinicalTnmFinding = findings;
         }
     }
     /**
@@ -219,7 +240,8 @@ export class DiseaseFormComponent implements OnInit, OnDestroy {
         this.observed = !this.selectedDisease.excluded;
         this.laterality = this.selectedDisease.laterality;
         this.onset = this.selectedDisease.onset;
-
+        this.stages = this.selectedDisease.diseaseStage;
+        this.findings = this.selectedDisease.clinicalTnmFinding;
         // this.diseaseStage = this.selectedDisease.diseaseStage;
         // TODO add rest of disease details
     }

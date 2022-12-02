@@ -12,6 +12,7 @@ const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
 const bodySites = require('../../assets/data/human-view.json');
 const modifiers = require('../../assets/data/modifiers.json');
 const onsets = require('../../assets/data/onset.json');
+const tnmFindings = require('../../assets/data/tnm.json');
 const mondoDiseases = require('../../assets/data/disease-mondo.json');
 
 @Injectable()
@@ -43,6 +44,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getModifiers();
                 case url.endsWith('onsets') && method === 'GET':
                     return getOnsets();
+                case url.endsWith('tnm-findings') && method === 'GET':
+                    return getTnmFindings();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
                 default:
@@ -79,6 +82,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getOnsets() {
             return ok(onsets);
+        }
+        function getTnmFindings() {
+            return ok(tnmFindings);
         }
         function getMondoDiseases() {
             return ok(mondoDiseases);
