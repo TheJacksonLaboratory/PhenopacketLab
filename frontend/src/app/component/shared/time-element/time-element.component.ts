@@ -64,7 +64,7 @@ export class TimeElementComponent implements OnInit, OnDestroy {
     if (this.timeElement === undefined) {
       this.timeElement = new TimeElement();
     }
-    const element = this.timeElement.element;
+    const element = this.timeElement?.element;
 
     if (element instanceof Age) {
       this.selectedAgeType = TimeElementType.AGE;

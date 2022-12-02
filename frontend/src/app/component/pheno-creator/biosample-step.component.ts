@@ -4,11 +4,11 @@ import { BioSample } from 'src/app/models/biosample';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    selector: 'app-biosample-form',
-    templateUrl: './biosample-form.component.html',
+    selector: 'app-biosample-step',
+    templateUrl: './biosample-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
   })
-export class BiosampleFormComponent implements OnInit {
+export class BiosampleStepComponent implements OnInit {
 
     biosamples: BioSample[];
 

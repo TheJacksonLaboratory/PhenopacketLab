@@ -4,11 +4,11 @@ import { Interpretation } from 'src/app/models/interpretation';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    selector: 'app-interpretation-form',
-    templateUrl: './interpretation-form.component.html',
+    selector: 'app-interpretation-step',
+    templateUrl: './interpretation-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
   })
-export class InterpretationFormComponent implements OnInit {
+export class InterpretationStepComponent implements OnInit {
 
     interpretations: Interpretation[];
 

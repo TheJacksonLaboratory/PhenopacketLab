@@ -9,11 +9,11 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import {CohortService} from '../../services/cohort.service';
 
 @Component({
-    selector: 'app-individual-form',
-    templateUrl: './individual-form.component.html',
+    selector: 'app-individual-step',
+    templateUrl: './individual-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
 })
-export class IndividualFormComponent implements OnInit, OnDestroy {
+export class IndividualStepComponent implements OnInit, OnDestroy {
 
     phenopacket: Phenopacket;
 

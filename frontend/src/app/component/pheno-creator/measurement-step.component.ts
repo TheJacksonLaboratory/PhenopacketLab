@@ -4,11 +4,11 @@ import { Measurement } from 'src/app/models/measurement';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    selector: 'app-measurement-form',
-    templateUrl: './measurement-form.component.html',
+    selector: 'app-measurement-step',
+    templateUrl: './measurement-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
   })
-export class MeasurementFormComponent implements OnInit {
+export class MeasurementStepComponent implements OnInit {
 
     measurements: Measurement[];
 

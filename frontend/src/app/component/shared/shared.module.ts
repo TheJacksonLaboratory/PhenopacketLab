@@ -43,6 +43,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DiseaseEditComponent } from './disease-edit/disease-edit.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -82,7 +85,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatInputModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    RadioButtonModule,
+    CheckboxModule,
+
   ],
   declarations: [
     MessageDialogComponent,
@@ -93,7 +99,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent
+    TreeSearchComponent,
+    DiseaseEditComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -104,7 +111,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent
+    TreeSearchComponent,
+    DiseaseEditComponent
   ],
   providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

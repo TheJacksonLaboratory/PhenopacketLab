@@ -14,11 +14,11 @@ import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.
 
 @Component({
     providers: [ConfirmationService],
-    selector: 'app-phenotypic-feature-form',
-    templateUrl: './phenotypic-feature-form.component.html',
+    selector: 'app-phenotypic-feature-step',
+    templateUrl: './phenotypic-feature-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
 })
-export class PhenotypicFeatureFormComponent implements OnInit, OnDestroy {
+export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
 
     label = '';
     id = '';

@@ -4,11 +4,11 @@ import { File } from 'src/app/models/base';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    selector: 'app-file-form',
-    templateUrl: './file-form.component.html',
+    selector: 'app-file-step',
+    templateUrl: './file-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
   })
-export class FileFormComponent implements OnInit {
+export class FileStepComponent implements OnInit {
 
     files: File[];
 

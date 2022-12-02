@@ -175,7 +175,7 @@ export class Age {
             const prefix = this.iso8601duration.split('Y');
             if (prefix) {
                 // tslint:disable-next-line:radix
-                return parseInt(prefix[0].substring(1));
+                return parseInt(prefix[0]?.substring(1));
             }
         }
     }
@@ -188,6 +188,8 @@ export class Age {
                     // tslint:disable-next-line:radix
                     return parseInt(prefix[1]);
                 }
+            } else {
+                return null;
             }
         }
     }
@@ -196,7 +198,9 @@ export class Age {
             const prefix = this.iso8601duration.split('M');
             if (prefix.length > 0) {
                 // tslint:disable-next-line:radix
-                return parseInt(prefix[1].substring(0, prefix[1].length - 1));
+                return parseInt(prefix[1]?.substring(0, prefix[1]?.length - 1));
+            }  else {
+                return null;
             }
         }
     }

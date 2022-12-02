@@ -8,11 +8,11 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import {MetaData} from '../../models/metadata';
 
 @Component({
-  selector: 'app-validate-form',
-  templateUrl: './validate-form.component.html',
+  selector: 'app-validate-step',
+  templateUrl: './validate-step.component.html',
   styleUrls: ['./pheno-creator.component.scss']
 })
-export class ValidateFormComponent implements OnInit, OnDestroy {
+export class ValidateStepComponent implements OnInit, OnDestroy {
 
   phenopacket: Phenopacket;
   cohort: Cohort;

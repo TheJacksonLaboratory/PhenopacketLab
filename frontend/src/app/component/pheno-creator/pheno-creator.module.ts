@@ -30,15 +30,14 @@ import { AngularSplitModule } from 'angular-split';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhenoCreatorComponent } from './pheno-creator.component';
-import { IndividualFormComponent } from './individual-form.component';
-import { PhenotypicFeatureFormComponent } from './phenotypic-feature-form.component';
-import { MeasurementFormComponent } from './measurement-form.component';
-import { BiosampleFormComponent } from './biosample-form.component';
-import { InterpretationFormComponent } from './interpretation-form.component';
-import { DiseaseFormComponent } from './disease-form.component';
-import { MedicalActionFormComponent } from './medical-action-form.component';
-import { FileFormComponent } from './file-form.component';
-import { ValidateFormComponent } from './validate-form.component';
+import { IndividualStepComponent } from './individual-step.component';
+import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
+import { MeasurementStepComponent } from './measurement-step.component';
+import { BiosampleStepComponent } from './biosample-step.component';
+import { DiseaseStepComponent } from './disease-step.component';
+import { MedicalActionStepComponent } from './medical-action-step.component';
+import { FileStepComponent } from './file-step.component';
+import { ValidateStepComponent } from './validate-step.component';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -53,6 +52,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
+import { InterpretationStepComponent } from './interpretation-step.component';
 
 
 @NgModule({
@@ -108,15 +108,15 @@ import { PhenopacketModule } from '../phenopacket/phenopacket.module';
     ],
     declarations: [
         PhenoCreatorComponent,
-        IndividualFormComponent,
-        PhenotypicFeatureFormComponent,
-        MeasurementFormComponent,
-        BiosampleFormComponent,
-        InterpretationFormComponent,
-        DiseaseFormComponent,
-        MedicalActionFormComponent,
-        FileFormComponent,
-        ValidateFormComponent
+        IndividualStepComponent,
+        PhenotypicFeatureStepComponent,
+        MeasurementStepComponent,
+        BiosampleStepComponent,
+        InterpretationStepComponent,
+        DiseaseStepComponent,
+        MedicalActionStepComponent,
+        FileStepComponent,
+        ValidateStepComponent
     ],
     providers: [
         MessageService

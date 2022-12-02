@@ -4,11 +4,11 @@ import { MedicalAction } from 'src/app/models/medical-action';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    selector: 'app-medical-action-form',
-    templateUrl: './medical-action-form.component.html',
+    selector: 'app-medical-action-step',
+    templateUrl: './medical-action-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
 })
-export class MedicalActionFormComponent implements OnInit {
+export class MedicalActionStepComponent implements OnInit {
 
     medicalActions: MedicalAction[];
 
