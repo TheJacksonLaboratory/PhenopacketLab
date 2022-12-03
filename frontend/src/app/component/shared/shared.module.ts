@@ -15,6 +15,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
@@ -28,24 +33,20 @@ import { ChipsModule } from 'primeng/chips';
 import { TreeModule } from 'primeng/tree';
 import { AccordionModule } from 'primeng/accordion';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
 import { TimeElementComponent } from './time-element/time-element.component';
 import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
-import { MatTreeModule } from '@angular/material/tree';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { DiseaseEditComponent } from './disease-edit/disease-edit.component';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { CheckboxModule } from 'primeng/checkbox';
+import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
+import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent
+    DiseaseEditComponent,
+    PhenotypicFeatureEditComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -112,7 +114,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent
+    DiseaseEditComponent,
+    PhenotypicFeatureEditComponent
   ],
   providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

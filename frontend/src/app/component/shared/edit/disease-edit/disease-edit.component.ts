@@ -1,15 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-    providers: [ConfirmationService],
     selector: 'app-disease-edit',
     templateUrl: './disease-edit.component.html',
     styleUrls: ['./disease-edit.component.scss']
@@ -36,9 +32,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     onsetsNodes: OntologyTreeNode[];
     onsetsSubscription: Subscription;
 
-    constructor(public searchService: DiseaseSearchService,
-        public phenopacketService: PhenopacketService,
-        public dialog: MatDialog) {
+    constructor(public phenopacketService: PhenopacketService) {
     }
 
     ngOnInit() {

@@ -3,9 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { Evidence, OntologyClass } from 'src/app/models/base';
-import { Severities } from 'src/app/models/disease';
-import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -20,8 +18,6 @@ import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.
 })
 export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
 
-    label = '';
-    id = '';
     visible = false;
     phenopacket: Phenopacket;
     phenotypicFeatures: PhenotypicFeature[] = [];
@@ -33,24 +29,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     // searchparams
     currSearchParams: any = {};
     spinnerDialogRef: any;
-
-    observed: boolean;
-
-    severity: OntologyClass;
-    // modifiers
-    modifiers: OntologyClass[];
-    modifiersNodes: OntologyTreeNode[];
-    modifiersSubscription: Subscription;
-    // evidence
-    evidences: Evidence[];
-    evidencesNodes: OntologyTreeNode[];
-    evidencesSubscription: Subscription;
-    // onset
-    onsetsNodes: OntologyTreeNode[];
-    onset: any;
-    onsetsSubscription: Subscription;
-
-    phenoIndex = 0;
 
     constructor(public searchService: PhenotypeSearchService,
         public phenopacketService: PhenopacketService,
@@ -69,41 +47,22 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             this.router.navigate(['pheno-creator/individual']);
         } else {
             this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
+            if (this.phenotypicFeatures) {
+                if (this.phenotypicFeatures.length > 0) {
+                    this.visible = true;
+                }
+            }
         }
 
-        // Get modifiers
-        this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
-            this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
-        }
-        );
-        // get Evidences
-        this.evidencesNodes = this.getEvidences();
-        // get onsets
-        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
-        });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
         });
-        this.phenopacket = this.phenopacketService.phenopacket;
-        this.phenotypicFeatures = this.phenopacket?.phenotypicFeatures;
-        if (this.phenotypicFeatures) {
-            if (this.phenotypicFeatures.length > 0) {
-                this.visible = true;
-            }
-        }
     }
 
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
-        }
-        if (this.modifiersSubscription) {
-            this.modifiersSubscription.unsubscribe();
-        }
-        if (this.onsetsSubscription) {
-            this.onsetsSubscription.unsubscribe();
         }
     }
 
@@ -160,9 +119,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
      **/
     addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
         if (phenotypicFeature === undefined) {
-            phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type.id = this.id;
-            phenotypicFeature.type.label = this.label;
+            return;
         }
         this.phenotypicFeatures.push(phenotypicFeature);
         // we copy the array after each update so the ngChange method is triggered on the child component
@@ -174,67 +131,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         // make table visible
         this.visible = true;
 
-    }
-
-    getSeverities() {
-        return Severities.VALUES;
-    }
-
-    getEvidences() {
-        const nodes = [];
-        for (const evidence of Evidence.VALUES) {
-            nodes.push({label: evidence.label, key: evidence.id, leaf: true, parent: undefined});
-        }
-        return nodes;
-    }
-
-    updateExcluded(event) {
-        if (this.selectedFeature) {
-            this.selectedFeature.excluded = !event.checked;
-        }
-    }
-    updateModifiers(modifiers: any[]) {
-        if (this.selectedFeature) {
-            this.selectedFeature.modifiers = modifiers;
-        }
-    }
-    updateSeverity(event) {
-        if (this.selectedFeature) {
-            this.selectedFeature.severity = event.value;
-        }
-    }
-    updateOnset(timeElement: any) {
-        if (this.selectedFeature) {
-            this.selectedFeature.onset = timeElement;
-        }
-    }
-    updateEvidences(evidences: any[]) {
-        if (this.selectedFeature) {
-            this.selectedFeature.evidence = evidences;
-        }
-    }
-
-    /**
-     * Called when a row is selected in the left side table
-     * @param event
-     */
-    onRowSelect(event) {
-        this.selectedFeature = event.data;
-        this.updateSelection();
-    }
-
-    /**
-     * Update components on the right side pane with all data from the selected phenotypic feature
-     */
-    updateSelection() {
-        this.id = this.selectedFeature.type.id;
-        this.label = this.selectedFeature.type.label;
-        this.observed = !this.selectedFeature.excluded;
-        this.modifiers = this.selectedFeature.modifiers;
-        this.evidences = this.selectedFeature.evidence;
-        this.severity = this.selectedFeature.severity;
-        this.onset = this.selectedFeature.onset;
-        // this.phenopacketService.setTimeElement(this.onset);
     }
 
     deleteFeature(feature: PhenotypicFeature) {
@@ -257,10 +153,22 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         });
     }
 
+    updatePhenotypicFeature(phenotypicFeature) {
+        this.selectedFeature = phenotypicFeature;
+    }
+
+    /**
+     * Called when a row is selected in the left side table
+     * @param event
+     */
+    onRowSelect(event) {
+        this.selectedFeature = event.data;
+    }
+
     nextPage() {
         // this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
         // console.log(this.phenopacket);
-        // this.phenopacketService.setPhenopacket(this.phenopacket);
+        this.phenopacketService.setPhenopacket(this.phenopacket);
         this.phenopacketService.phenopacket = this.phenopacket;
         // this.router.navigate(['pheno-creator/measurements']);
         // TODO temp while measuremtn is not done

@@ -1,13 +1,4 @@
 <p-card>
-    <!--    <p-splitter styleClass="mb-5" [panelSizes]="[50,50]">-->
-    <!--        &lt;!&ndash;    <p-splitter [style]="{'height': '300px'}" styleClass="mb-5">&ndash;&gt;-->
-    <!--        <ng-template pTemplate>-->
-    <!--            -->
-    <!--        </ng-template>-->
-    <!--        <ng-template pTemplate>-->
-    <!--            -->
-    <!--        </ng-template>-->
-    <!--    </p-splitter>-->
     <as-split direction="horizontal">
         <as-split-area [size]="50">
             <!-- Phenotypic Feature table content & search -->
@@ -80,114 +71,9 @@
             <!-- Phenotypic feature form -->
             <p-card header="Phenotypic Feature details"
                     subheader="Select the phenotypic feature on the left-side table and then edit its details.">
-                <div class="grid p-fluid">
-                    <div class="field col-6">
-                        <label for="label">Label</label>
-                        <input
-                                id="label"
-                                type="text"
-                                required
-                                pInputText
-                                [disabled]="true"
-                                [(ngModel)]="label"
-                        />
-                    </div>
-                    <div class="field col-6">
-                        <label for="id">ID</label>
-                        <input
-                                id="id"
-                                type="text"
-                                required
-                                pInputText
-                                [disabled]="true"
-                                [(ngModel)]="id"
-                        />
-                    </div>
-                    <div class="field col-12">
-                        <div class="field-checkbox">
-                            <p-checkbox
-                                    id="observed"
-                                    [(ngModel)]="observed"
-                                    [binary]="true"
-                                    inputId="observed"
-                                    (onChange)="updateExcluded($event)"
-                            ></p-checkbox>
-                            <label for="observed">{{
-                                observed ? "Observed" : "Excluded"
-                                }}</label>
-                        </div>
-                    </div>
-                    <div class="field col-6">
-                        <label for="onset"><b>Onset</b></label>
-                        <app-time-element
-                                id="onset"
-                                [timeElement]="onset"
-                                [ontologyNodes]="onsetsNodes"
-                                [useOntologyClass]="true"
-                                (timeElementEvent)="updateOnset($event)"
-                                aria-labelledby="onset-label"
-                        ></app-time-element>
-                    </div>
+                
+                    <app-phenotypic-feature-edit [phenotypicFeature]="selectedFeature" (phenotypicFeatureChange)="updatePhenotypicFeature($event)"></app-phenotypic-feature-edit>
 
-                    <div class="field col-6">
-                        <label for="resolution"><b>Resolution</b></label>
-                        <app-time-element
-                                id="resolution"
-                                aria-labelledby="resolution-time-label"
-                        ></app-time-element>
-                    </div>
-
-                    <div class="field col-12">
-                        <p-accordion>
-                            <p-accordionTab header="Edit more details">
-                                <div class="grid p-fluid">
-                                    <div class="field col-12">
-                                        <label for="severity"><b>Severity</b></label>
-                                        <p-dropdown
-                                                id="severity"
-                                                placeholder="Select severity"
-                                                [options]="getSeverities()"
-                                                [(ngModel)]="severity"
-                                                (onChange)="updateSeverity($event)"
-                                                pTooltip="The intensity or degree of a manifestation"
-                                                showDelay="2000"
-                                                class="w-full"
-                                        ></p-dropdown>
-                                    </div>
-                                    <div class="field col-12">
-                                        <label for="modifier"><b>Modifiers</b></label>
-
-                                        <ontology-tree-select
-                                                id="modifier"
-                                                pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects."
-                                                showDelay="2000"
-                                                [selectionMode]="'checkbox'"
-                                                (selectedNodesChange)="updateModifiers($event)"
-                                                [(selectedNodes)]="modifiers"
-                                                [nodes]="modifiersNodes"
-                                        ></ontology-tree-select>
-
-                                        <!-- <app-tree-search></app-tree-search> -->
-                                    </div>
-
-                                    <div class="field col-12">
-                                        <label for="evidence"><b>Evidence</b></label>
-                                        <ontology-tree-select
-                                                id="evidence"
-                                                pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
-                                                showDelay="2000"
-                                                (selectedNodesChange)="updateEvidences($event)"
-                                                [(selectedNodes)]="evidences"
-                                                [selectionMode]="'checkbox'"
-                                                [nodes]="evidencesNodes"
-                                        ></ontology-tree-select>
-                                    </div>
-                                </div>
-                            </p-accordionTab>
-                        </p-accordion>
-                    </div>
-
-                </div>
             </p-card>
         </as-split-area>
     </as-split>

@@ -1,6 +1,19 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
+import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { StepsModule } from 'primeng/steps';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
@@ -25,10 +38,8 @@ import { SplitterModule } from 'primeng/splitter';
 
 import { AngularSplitModule } from 'angular-split';
 
-// import { EditorModule } from 'primeng/editor';
-// import { QuillModule } from 'ngx-quill'
+import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhenoCreatorComponent } from './pheno-creator.component';
 import { IndividualStepComponent } from './individual-step.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
@@ -38,18 +49,6 @@ import { DiseaseStepComponent } from './disease-step.component';
 import { MedicalActionStepComponent } from './medical-action-step.component';
 import { FileStepComponent } from './file-step.component';
 import { ValidateStepComponent } from './validate-step.component';
-import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
