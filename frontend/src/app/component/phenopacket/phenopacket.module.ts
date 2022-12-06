@@ -65,6 +65,7 @@ import { BiosampleDetailComponent } from './biosample/biosample-detail/biosample
 import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/biosample-detail-dialog/biosample-detail-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
 
 
 
@@ -139,6 +140,7 @@ import { MessageService } from 'primeng/api';
     BiosampleComponent,
     BiosampleDetailComponent,
     BiosampleDetailDialogComponent,
+    IndividualDialogComponent,
     PhenopacketComponent
   ],
   exports: [
@@ -167,6 +169,7 @@ import { MessageService } from 'primeng/api';
     BiosampleComponent,
     BiosampleDetailComponent,
     BiosampleDetailDialogComponent,
+    IndividualDialogComponent,
     PhenopacketComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -47,6 +47,7 @@ import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.co
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
 import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
 import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
+import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/p
     OntologyClassComponent,
     TreeSearchComponent,
     DiseaseEditComponent,
-    PhenotypicFeatureEditComponent
+    PhenotypicFeatureEditComponent,
+    IndividualEditComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -115,7 +117,8 @@ import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/p
     OntologyClassComponent,
     TreeSearchComponent,
     DiseaseEditComponent,
-    PhenotypicFeatureEditComponent
+    PhenotypicFeatureEditComponent,
+    IndividualEditComponent
   ],
   providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
