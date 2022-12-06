@@ -83,7 +83,7 @@
               showDelay="2000"
               [selectionMode]="'checkbox'"
               (selectedNodesChange)="updateModifiers($event)"
-              [selectedNodes]="phenotypicFeature?.modifiers"
+              [selectedNodes]="phenotypicFeature?.modifierNodes"
               [nodes]="modifiersNodes"
             ></ontology-tree-select>
 
@@ -97,7 +97,7 @@
               pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
               showDelay="2000"
               (selectedNodesChange)="updateEvidences($event)"
-              [selectedNodes]="phenotypicFeature?.evidence"
+              [selectedNodes]="phenotypicFeature?.evidences"
               [selectionMode]="'checkbox'"
               [nodes]="evidencesNodes"
             ></ontology-tree-select>

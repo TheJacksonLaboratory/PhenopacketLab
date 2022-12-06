@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { OntologyClass } from 'src/app/models/base';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 
 @Component({
@@ -23,16 +21,12 @@ export class TreeSelectComponent {
     @Input()
     selectedNodes = [];
     @Output()
-    selectedNodesChange = new EventEmitter<OntologyClass[]>();
+    selectedNodesChange = new EventEmitter<OntologyTreeNode[]>();
     /**
      * Selection mode: can be single, checkbox, multiple or tricheckbox
      */
     @Input()
     selectionMode = 'checkbox';
-
-    phenopacketSubscription: Subscription;
-
-    selectedNodesStr: string[] = [];
 
     constructor() {}
 
@@ -42,19 +36,6 @@ export class TreeSelectComponent {
 
     nodeUnselect(event) {
         this.selectedNodesChange.emit(this.selectedNodes);
-    }
-
-    /**
-     *
-     * @param ontologyNodes Transform to OntologyClass
-     * @returns
-     */
-    toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
-        const ontologyList = [];
-        for (const node of ontologyNodes) {
-            ontologyList.push(new OntologyClass(node['key'], node['label']));
-        }
-        return ontologyList;
     }
 
     /**

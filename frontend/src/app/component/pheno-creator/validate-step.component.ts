@@ -67,10 +67,12 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     metadata.createdBy = this.createdBy;
     metadata.created = this.created;
     metadata.submittedBy = this.submittedBy;
+    // TODO
     metadata.resources = [];
+    // TODO
     metadata.externalReferences = [];
     metadata.phenopacketSchemaVersion = this.schemaVersion;
-    // this.phenopacket.metadata = metadata;
+    this.phenopacket.metadata = metadata;
   }
   complete() {
     // add to cohort
@@ -93,6 +95,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // this.router.navigate(['pheno-creator/files']);
   }
 
+  // TODO
   getPhenopacketJSON(phenopacket: Phenopacket): string {
     return '';
   }

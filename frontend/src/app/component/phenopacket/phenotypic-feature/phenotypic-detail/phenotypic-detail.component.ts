@@ -58,7 +58,7 @@ export class PhenotypicDetailComponent implements OnInit, OnDestroy {
     this.resolution = this.phenotypicFeature.resolution?.toString();
     this.severity = this.phenotypicFeature.severity?.toString();
     this.modifiers = this.phenotypicFeature.modifiers?.toString();
-    this.evidences = this.phenotypicFeature.evidence;
+    this.evidences = this.phenotypicFeature.evidences;
     this.evidenceDatasource.data = this.evidences;
   }
 

@@ -20,7 +20,6 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
 
   severity: OntologyClass;
   // modifiers
-  modifiers: OntologyClass[];
   modifiersNodes: OntologyTreeNode[];
   modifiersSubscription: Subscription;
   // evidence
@@ -77,9 +76,11 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
   }
-  updateModifiers(modifiers: any[]) {
+
+  updateModifiers(nodeModifiers: OntologyTreeNode[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.modifiers = modifiers;
+      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers);
+      this.phenotypicFeature.modifierNodes = nodeModifiers;
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
   }
@@ -103,7 +104,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateEvidences(evidences: any[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.evidence = evidences;
+      this.phenotypicFeature.evidences = evidences;
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
   }

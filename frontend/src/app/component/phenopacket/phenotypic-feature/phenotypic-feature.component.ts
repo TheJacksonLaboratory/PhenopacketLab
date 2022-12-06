@@ -78,7 +78,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             feature.description = 'Phenotypic Feature description';
             feature.type = new OntologyClass('id', 'name');
             feature.onset = new TimeElement('');
-            feature.evidence = [new Evidence(new OntologyClass('', ''))];
+            feature.evidences = [new Evidence(new OntologyClass('', ''))];
             feature.excluded = false;
             feature.resolution = new TimeElement('');
             feature.severity = new OntologyClass('', '');
@@ -145,7 +145,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             phenotypicFeature.type = new OntologyClass(data.id, data.name);
             phenotypicFeature.description = data.description;
             phenotypicFeature.onset = new TimeElement('');
-            phenotypicFeature.evidence = [new Evidence(new OntologyClass('', ''))];
+            phenotypicFeature.evidences = [new Evidence(new OntologyClass('', ''))];
             phenotypicFeature.excluded = false;
             phenotypicFeature.resolution = new TimeElement('');
             phenotypicFeature.severity = new OntologyClass('', '');
