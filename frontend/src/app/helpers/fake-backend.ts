@@ -14,6 +14,7 @@ const modifiers = require('../../assets/data/modifiers.json');
 const onsets = require('../../assets/data/onset.json');
 const tnmFindings = require('../../assets/data/tnm.json');
 const mondoDiseases = require('../../assets/data/disease-mondo.json');
+const textMinedExample = require('../../assets/data/text-mined-example.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -48,6 +49,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getTnmFindings();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
+                case url.endsWith('text-miner') && method === 'POST':
+                    return getTextMined();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -88,6 +91,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getMondoDiseases() {
             return ok(mondoDiseases);
+        }
+        function getTextMined() {
+            return ok(textMinedExample);
         }
         // helper functions
 

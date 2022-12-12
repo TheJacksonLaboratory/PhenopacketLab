@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BaseSearchService } from './base-search.service';
 
 const phenotypicFeaturesUrl = environment.PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL;
-;
+const textMinerUrl = environment.TEXT_MINING_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +14,11 @@ export class PhenotypeSearchService extends BaseSearchService {
 
     selectedSearchItems: any;
     selectedSearchItemSubject: BehaviorSubject<any>;
-    
+
     constructor(private http: HttpClient) {
         super(http);
-        this.selectedSearchItems = {}
-        this.selectedSearchItemSubject = new BehaviorSubject(this.selectedSearchItems)
+        this.selectedSearchItems = {};
+        this.selectedSearchItemSubject = new BehaviorSubject(this.selectedSearchItems);
 
     }
     getSelectedSearchItems() {
@@ -53,8 +53,17 @@ export class PhenotypeSearchService extends BaseSearchService {
             offset: paramsIn.offset ? paramsIn.offset : '',
             sortBy: paramsIn.sortBy ? paramsIn.sortBy : '',
             sortDirection: paramsIn.sortDirection ? paramsIn.sortDirection : ''
-        }
+        };
         return this.http.get(url, { params: options });
+    }
+
+    /**
+     *
+     * @param textSearch
+     * @returns an Observable with json dataset as a result
+     */
+    public queryTextMiner(textSearch: string): Observable<any> {
+        return this.http.post(textMinerUrl, { payload: textSearch });
     }
 
 }

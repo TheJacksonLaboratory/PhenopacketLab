@@ -1,6 +1,8 @@
 import {AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
+import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
 
 @Component({
@@ -11,11 +13,7 @@ import { WordDialogComponent } from './word-dialog.component';
 })
 export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  textSearch = `Here we present a 13-year old girl with inherited myopathy with collagenopathy.
-
-During the neonatal period weak suckling, decreased muscle tone, joint laxity and hypertension of elbows, knees and wrists were observed.
-
-No joint dislocations or sprains occurred. Mental development, including speech, was normal.`;
+  textSearch = 'Here we present a 13-year-old girl with inherited myopathy associated with collagenopathy.\n\nDuring the neonatal period weak sucking, decreased muscle tone, joint laxity and hyperextension of elbows, knees and wrists were observed.\n\nNo joint dislocations or sprains occurred. Mental development, including speech, was normal.';
 
   @Output()
   phenotypicFeaturesChange = new EventEmitter<PhenotypicFeature[]>();
@@ -24,15 +22,13 @@ No joint dislocations or sprains occurred. Mental development, including speech,
   visible = false;
 
   formattedText: string;
-  idxList = [[50, 57], [108, 120], [146, 157], [223, 240]];
+  idxList = [];
   selectedPhenotypicFeature: PhenotypicFeature;
-  phenotypicFeatures: PhenotypicFeature[] = [
-    new PhenotypicFeature('HP:0003198', 'Myopathy', false, MiningState.UNKNWON, 1),
-    new PhenotypicFeature('HP:0002033', 'Poor suck', false, MiningState.UNKNWON, 2),
-    new PhenotypicFeature('HP:0001388', 'Joint laxity', false, MiningState.UNKNWON, 3),
-    new PhenotypicFeature('HP:0001373', 'Joint dislocation', true, MiningState.UNKNWON, 4)];
+  phenotypicFeatures: PhenotypicFeature[];
 
-  constructor(private elementRef: ElementRef, public dialog: MatDialog) {
+  spinnerDialogRef: any;
+
+  constructor(private phenotypeSearchService: PhenotypeSearchService, private elementRef: ElementRef, public dialog: MatDialog) {
 
   }
 
@@ -95,15 +91,39 @@ No joint dislocations or sprains occurred. Mental development, including speech,
 
   submit() {
     this.textSearchVisible = false;
+    this.openSpinnerDialog();
+    this.phenotypeSearchService.queryTextMiner(this.textSearch).subscribe(resp => {
+      const result = resp?.result;
+      const concepts = result?.concepts;
+      // reset
+      this.idxList = [];
+      this.phenotypicFeatures = [];
+      concepts.forEach((term, idx) => {
+        this.idxList.push([term.start, term.end]);
+        this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
+      });
 
-    this.formatText();
+      // show result in formatted text
+      this.formatText();
 
-    if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
-      this.visible = true;
-    }
+      if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
+        this.visible = true;
+      }
+      this.spinnerDialogRef.close();
+    },
+    (error) => {
+        console.log(error);
+        this.spinnerDialogRef.close();
+    });
 
   }
 
+  openSpinnerDialog() {
+    this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
+        panelClass: 'transparent',
+        disableClose: true
+    });
+}
   updateExcluded(event) {
     if (this.selectedPhenotypicFeature) {
       this.selectedPhenotypicFeature.excluded = !event.checked;
@@ -156,7 +176,7 @@ No joint dislocations or sprains occurred. Mental development, including speech,
     return MiningState.REJECTED;
   }
   /**
-   * Called when a row is selected in the left side table
+   * Called when a row is selected on the left side table
    * @param event
    */
   onRowSelect(event) {

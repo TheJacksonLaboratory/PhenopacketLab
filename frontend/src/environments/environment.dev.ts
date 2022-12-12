@@ -11,5 +11,6 @@ export const environment = {
   MONDO_DISEASES_URL: `${API_URL}/mondo-diseases`,
   ONSETS_URL: `${API_URL}/onsets`,
   TNM_FINDINGS_URL: `${API_URL}/tnm-findings`,
-  HPO_DISEASE_URL: `${API_URL}/diseases`
+  HPO_DISEASE_URL: `${API_URL}/diseases`,
+  TEXT_MINING_URL: `${API_URL}/text-miner`
 };
