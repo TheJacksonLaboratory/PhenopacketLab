@@ -8,6 +8,8 @@ export class PhenotypicFeature extends Convert {
     modifierNodes?: OntologyTreeNode[];
     // parameter no part of phenopacket and that represents the evidences as TreeNodes
     evidenceNodes?: OntologyTreeNode[];
+    // parameter no part of phenopacket and used for text-mining state
+    textMiningState: MiningState;
 
     description: string;
     type: OntologyClass;
@@ -19,6 +21,14 @@ export class PhenotypicFeature extends Convert {
     evidences: Evidence[];
     children: PhenotypicFeature[];
     parent: PhenotypicFeature;
+
+    constructor(id?: string, label?: string, excluded?: boolean, state?: MiningState, key?: number) {
+        super();
+        this.type = new OntologyClass(id, label);
+        this.excluded = excluded;
+        this.textMiningState = state;
+        this.key = key;
+    }
 
     static create(obj: any): PhenotypicFeature {
         const phenotypicFeature = new PhenotypicFeature();
@@ -51,4 +61,10 @@ export class PhenotypicFeature extends Convert {
 
         return phenotypicFeature;
     }
+}
+
+export enum MiningState {
+    UNKNWON,
+    APPROVED,
+    REJECTED
 }

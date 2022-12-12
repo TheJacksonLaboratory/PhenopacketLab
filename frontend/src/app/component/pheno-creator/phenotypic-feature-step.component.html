@@ -4,7 +4,7 @@
             <!-- Phenotypic Feature table content & search -->
             <p-toast></p-toast>
             <p-card header="Phenotypic Features search" subheader="Search for a phenotypic feature using the search field below or the
-                    text-mining tool (not yet implemented).">
+                    text-mining tool.">
                 <p-tabView>
                     <p-tabPanel header="Feature search">
                         <app-search-box
@@ -19,7 +19,8 @@
                         ></app-search-box>
                     </p-tabPanel>
                     <p-tabPanel header="Text-mining search">
-                        <p>Not yet implemented</p>
+                        
+                        <app-text-mining (phenotypicFeaturesChange)="addTextMinedFeatures($event)"></app-text-mining>
                     </p-tabPanel>
                 </p-tabView>
 

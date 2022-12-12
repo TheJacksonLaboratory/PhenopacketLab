@@ -1,0 +1,28 @@
+<div class="grid p-fluid">
+  <div class="field col-12"><b>Id:</b> {{ phenotypicFeature?.type?.id }}</div>
+  <div class="field col-12">
+    <b>Name:</b>
+    {{ phenotypicFeature?.type?.label }}
+  </div>
+  <div class="field col-12">
+    <div class="field-checkbox">
+      <p-checkbox
+        ngDefaultControl
+        id="observed"
+        [ngModel]="!phenotypicFeature?.excluded"
+        [binary]="true"
+        inputId="observed"
+        (onChange)="updateExcluded($event)"
+      ></p-checkbox>
+      <label for="observed">{{
+        !phenotypicFeature?.excluded ? "Observed" : "Excluded"
+      }}</label>
+    </div>
+  </div>
+  <div class="field col-6">
+    <button type="text" pButton label="Approve" (click)="approve()"></button>
+  </div>
+  <div class="field col-6">
+    <button type="text" pButton label="Reject" (click)="reject()"></button>
+  </div>
+</div>

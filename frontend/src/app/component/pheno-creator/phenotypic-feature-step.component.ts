@@ -81,7 +81,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.key = this.getBiggestKey() + 1;
             phenotypicFeature.type = new OntologyClass(data.id, data.name);
             phenotypicFeature.excluded = false;
             this.addPhenotypicFeature(phenotypicFeature);
@@ -121,6 +120,8 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         if (phenotypicFeature === undefined) {
             return;
         }
+        // set unique key for feature table
+        phenotypicFeature.key = this.getBiggestKey() + 1;
         this.phenotypicFeatures.push(phenotypicFeature);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.phenotypicFeatures = this.phenotypicFeatures.slice();
@@ -130,7 +131,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.submitted = true;
         // make table visible
         this.visible = true;
-
     }
 
     deleteFeature(feature: PhenotypicFeature) {
@@ -157,6 +157,12 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.selectedFeature = phenotypicFeature;
     }
 
+    addTextMinedFeatures(phenotypicFeatures: PhenotypicFeature[]) {
+        phenotypicFeatures.forEach(feature => {
+            this.addPhenotypicFeature(feature);
+        });
+        console.log(this.phenotypicFeatures);
+    }
     /**
      * Called when a row is selected in the left side table
      * @param event

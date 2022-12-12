@@ -35,6 +35,7 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { InplaceModule } from 'primeng/inplace';
 import { SplitterModule } from 'primeng/splitter';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -52,6 +53,9 @@ import { ValidateStepComponent } from './validate-step.component';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
+import { TextMiningComponent } from './text-mining/text-mining.component';
+import { TextPipe } from './text-mining/text.pipe';
+import { WordDialogComponent } from './text-mining/word-dialog.component';
 
 
 @NgModule({
@@ -97,8 +101,8 @@ import { InterpretationStepComponent } from './interpretation-step.component';
         ToastModule,
         MessagesModule,
         InplaceModule,
-        SplitterModule
-
+        SplitterModule,
+        TooltipModule
     ],
     exports: [
         StepsModule,
@@ -115,7 +119,10 @@ import { InterpretationStepComponent } from './interpretation-step.component';
         DiseaseStepComponent,
         MedicalActionStepComponent,
         FileStepComponent,
-        ValidateStepComponent
+        ValidateStepComponent,
+        TextMiningComponent,
+        TextPipe,
+        WordDialogComponent
     ],
     providers: [
         MessageService
