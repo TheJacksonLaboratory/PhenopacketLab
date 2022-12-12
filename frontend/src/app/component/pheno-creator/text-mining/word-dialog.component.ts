@@ -5,6 +5,7 @@ import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-featur
 @Component({
     selector: 'app-word-dialog',
     templateUrl: 'word-dialog.component.html',
+    styleUrls: ['word-dialog.component.scss']
 })
 export class WordDialogComponent {
 

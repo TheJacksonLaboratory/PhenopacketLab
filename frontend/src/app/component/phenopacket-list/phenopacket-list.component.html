@@ -20,7 +20,6 @@
   
   <p-tabView id="closableTabView" [(activeIndex)]="activeIndex">
     <p-tabPanel header="Summary" [selected]="true">
-      <p-card>
         <!-- Table summary of individuals -->
         <table
           #varTable
@@ -80,7 +79,6 @@
             *matHeaderRowDef="displayedColumns; sticky: true"
           ></tr>
         </table>
-      </p-card>
     </p-tabPanel>
     <p-tabPanel
       *ngFor="let phenopacket of individualTabs; let index = index"
