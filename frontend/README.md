@@ -2,7 +2,7 @@
 
 This is the Phenopacketlab UI, built with Angular Material and Node.
 
-The live application can be accessed [here](http://34.74.159.187/dashboard).
+The live application can be accessed [here](http://34.138.50.46/dashboard).
 
 ## Getting started
 
