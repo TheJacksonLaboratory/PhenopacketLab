@@ -65,6 +65,7 @@
             <label for="severity"><b>Severity</b></label>
             <p-dropdown
               id="severity"
+              appendTo="body"
               placeholder="Select severity"
               [options]="getSeverities()"
               [ngModel]="phenotypicFeature?.severity"

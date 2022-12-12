@@ -14,6 +14,7 @@
     <label for="sex">Sex</label>
     <p-dropdown
       id="sex"
+      appendTo="body"
       placeholder="Select sex"
       [options]="getSexes()"
       [ngModel]="subject?.sex"
@@ -28,6 +29,7 @@
     <label for="karyotypicSex">Karyotypic Sex</label>
     <p-dropdown
       id="karyotypicSex"
+      appendTo="body"
       placeholder="Select karyotypic sex"
       [options]="getKaryotypicSexes()"
       [ngModel]="subject?.karyotypicSex"
@@ -41,6 +43,7 @@
     <label for="gender">Gender</label>
     <p-dropdown
       id="gender"
+      appendTo="body"
       placeholder="Select gender"
       [options]="getGenders()"
       [ngModel]="subject?.gender"
@@ -58,6 +61,7 @@
     <label for="status">Status</label>
     <p-dropdown
       id="status"
+      appendTo="body"
       placeholder="Select status"
       [options]="getStatuses()"
       [ngModel]="subject?.vitalStatus?.status"
