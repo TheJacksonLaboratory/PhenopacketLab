@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Evidence, OntologyClass } from 'src/app/models/base';
+import { Evidence, OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -58,6 +58,12 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  getPhenotypicOnsetId() {
+    return TimeElementId.PHENOTYPIC_ONSET;
+  }
+  getPhenotypicResolutionId() {
+    return TimeElementId.PHENOTYPIC_RESOLUTION;
+  }
   getSeverities() {
     return Severities.VALUES;
   }

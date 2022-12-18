@@ -48,6 +48,9 @@ import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.co
 import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
 import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
+import { AgeRangeComponent } from './time-element/age-range/age-range.component';
+import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
+import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
 
 
 @NgModule({
@@ -98,6 +101,9 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
     TimeElementComponent,
     SearchFilterComponent,
     AgeComponent,
+    AgeRangeComponent,
+    GestationalAgeComponent,
+    OntologyTimeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
@@ -112,6 +118,9 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
     TimeElementComponent,
     SearchFilterComponent,
     AgeComponent,
+    AgeRangeComponent,
+    GestationalAgeComponent,
+    OntologyTimeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,

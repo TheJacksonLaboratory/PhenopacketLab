@@ -1,33 +1,70 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Age } from 'src/app/models/base';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Age, TimeElement, TimeElementId } from 'src/app/models/base';
+import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
     selector: 'app-age',
     templateUrl: './age.component.html',
     styleUrls: ['./age.component.scss']
 })
-
-export class AgeComponent implements OnInit {
+export class AgeComponent implements OnInit, OnDestroy {
 
     @Output() ageEvent = new EventEmitter<Age>();
 
     @Input()
     age: Age;
+
+    @Input()
+    timeElementId: TimeElementId;
+
     years: number;
     months: number;
     days: number;
 
-    constructor() {
+    phenotypicOnsetSubscription: Subscription;
+    phenotypicResolutionSubscription: Subscription;
+
+    constructor(private phenotypeSearchService: PhenotypeSearchService) {
 
     }
     ngOnInit(): void {
-        if (this.age) {
+        console.log('ngInit Age');
+        console.log(this.age);
+        if (this.age && this.age instanceof Age) {
+            this.years = this.age.getYears();
+            this.months = this.age.getMonths();
+            this.days = this.age.getDays();
+        }
+        this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
+            if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
+                this.setAge(onset);
+            }
+        });
+        this.phenotypicResolutionSubscription = this.phenotypeSearchService.getPhenotypicResolution().subscribe(resolution => {
+            if (this.timeElementId === TimeElementId.PHENOTYPIC_RESOLUTION) {
+                this.setAge(resolution);
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.phenotypicOnsetSubscription) {
+            this.phenotypicOnsetSubscription.unsubscribe();
+        }
+        if (this.phenotypicResolutionSubscription) {
+            this.phenotypicResolutionSubscription.unsubscribe();
+        }
+    }
+
+    setAge(timeElement: TimeElement) {
+        if (timeElement?.element instanceof Age) {
+            this.age = timeElement.element;
             this.years = this.age.getYears();
             this.months = this.age.getMonths();
             this.days = this.age.getDays();
         }
     }
-
     updateAge(value: number, type: string) {
         if (type === 'years') {
             this.years = value;
@@ -36,31 +73,16 @@ export class AgeComponent implements OnInit {
         } else if (type === 'days') {
             this.days = value;
         }
-
-        let yearsStr = '';
-        if (this.years) {
-            yearsStr = `${this.years}Y`;
-        }
-        let monthsStr = '';
-        if (this.months) {
-            monthsStr = `${this.months}M`;
-        }
-        let daysStr = '';
-        if (this.days) {
-            daysStr = `${this.days}D`;
-        }
-        if (this.age === undefined) {
+        if (this.age === undefined || this.age === null) {
             this.age = new Age();
         }
-        this.age.iso8601duration = `P${yearsStr}${monthsStr}${daysStr}`;
+        this.age.iso8601duration = Age.convertToIso8601(this.years, this.months, this.days);
         this.ageEvent.emit(this.age);
     }
     updateYears(event) {
-        console.log(event);
         this.updateAge(event.value, 'years');
     }
     updateMonths(event) {
-        console.log(event);
         this.updateAge(event.value, 'months');
     }
     updateDays(event) {

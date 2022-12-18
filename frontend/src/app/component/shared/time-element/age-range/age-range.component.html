@@ -1,0 +1,79 @@
+<div class="p-fluid grid formgrid">
+  <div class="field col-12">
+    <label for="rangestart">Start</label>
+
+    <div id="rangestart" class="p-fluid grid formgrid">
+      <div class="field col-12 md:col-4">
+        <label for="yearsStart">Years</label>
+        <p-inputNumber
+          id="yearsStart"
+          [(ngModel)]="yearsStart"
+          (onInput)="updateYearsStart($event)"
+          [min]="0"
+          [max]="120"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="monthsStart">Months</label>
+        <p-inputNumber
+          [(ngModel)]="monthsStart"
+          (onInput)="updateMonthsStart($event)"
+          id="monthsStart"
+          [min]="0"
+          [max]="11"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="daysStart">Days</label>
+        <p-inputNumber
+          [(ngModel)]="daysStart"
+          (onInput)="updateDaysStart($event)"
+          id="daysStart"
+          [min]="0"
+          [max]="31"
+        >
+        </p-inputNumber>
+      </div>
+    </div>
+
+    <label for="rangeend">End</label>
+
+    <div id="rangeend" class="p-fluid grid formgrid">
+      <div class="field col-12 md:col-4">
+        <label for="yearsEnd">Years</label>
+        <p-inputNumber
+          id="yearsEnd"
+          [(ngModel)]="yearsEnd"
+          (onInput)="updateYearsEnd($event)"
+          [min]="0"
+          [max]="120"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="monthsEnd">Months</label>
+        <p-inputNumber
+          [(ngModel)]="monthsEnd"
+          (onInput)="updateMonthsEnd($event)"
+          id="monthsEnd"
+          [min]="0"
+          [max]="11"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="daysEnd">Days</label>
+        <p-inputNumber
+          [(ngModel)]="daysEnd"
+          (onInput)="updateDaysEnd($event)"
+          id="daysEnd"
+          [min]="0"
+          [max]="31"
+        >
+        </p-inputNumber>
+      </div>
+    </div>
+  </div>
+</div>

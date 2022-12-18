@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { AgeComponent } from './age.component';
+import { GestationalAgeComponent } from './gestational-age.component';
 
-describe('AgeComponent', () => {
-  let component: AgeComponent;
-  let fixture: ComponentFixture<AgeComponent>;
+describe('GestationalAgeComponent', () => {
+  let component: GestationalAgeComponent;
+  let fixture: ComponentFixture<GestationalAgeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -15,13 +15,13 @@ describe('AgeComponent', () => {
         FormsModule,
         HttpClientTestingModule
       ],
-      declarations: [ AgeComponent ]
+      declarations: [ GestationalAgeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AgeComponent);
+    fixture = TestBed.createComponent(GestationalAgeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
