@@ -123,7 +123,6 @@ export class ChecklistDatabase {
         // Build the tree nodes from Json object  . The result is a list of `TodolabelNode` with nested
         //     file node as children.
         const data = this.buildFileTree(TREE_DATA, 0);
-        console.log(data);
         // Notify the change.
         this.dataChange.next(data);
     }

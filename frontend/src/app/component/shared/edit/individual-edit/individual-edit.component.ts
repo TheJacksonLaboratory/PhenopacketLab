@@ -41,6 +41,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
       */
     updateTimeOfLastEncounter(timeOfLastEncounter: any) {
         if (this.subject) {
+            console.log('update Time Of Last encounter');
             console.log(timeOfLastEncounter);
             this.subject.timeAtLastEncounter = timeOfLastEncounter;
             this.subjectChange.emit(this.subject);
@@ -73,7 +74,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     updateSurvivalTime(event: any) {
         if (this.subject) {
-            console.log(event.value);
             this.subject.vitalStatus.survivalTimeInDays = event.value;
             this.subjectChange.emit(this.subject);
         }

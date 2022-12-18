@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { OntologyClass } from 'src/app/models/base';
+import { OntologyClass, TimeElement } from 'src/app/models/base';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -29,6 +30,11 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     // searchparams
     currSearchParams: any = {};
     spinnerDialogRef: any;
+
+    onsetsNodes: OntologyTreeNode[];
+    onsetsSubscription: Subscription;
+    onsetApplied = false;
+    onset: TimeElement;
 
     constructor(public searchService: PhenotypeSearchService,
         public phenopacketService: PhenopacketService,
@@ -58,11 +64,19 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
         });
+        // get onsets
+        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+        });
+        this.onset = this.phenopacket?.subject?.timeAtLastEncounter;
     }
 
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
+        }
+        if (this.onsetsSubscription) {
+            this.onsetsSubscription.unsubscribe();
         }
     }
 
@@ -103,7 +117,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
      *
      * @returns Returns the biggest key
      */
-     getBiggestKey() {
+    getBiggestKey() {
         let key = 0;
         for (const feature of this.phenotypicFeatures) {
             if ((feature.key) >= key) {
@@ -139,7 +153,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.type.id !== feature.type.id);
+                this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.key !== feature.key);
                 this.selectedFeature = null;
                 this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
                 if (this.phenotypicFeatures.length === 0) {
@@ -161,7 +175,26 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         phenotypicFeatures.forEach(feature => {
             this.addPhenotypicFeature(feature);
         });
-        console.log(this.phenotypicFeatures);
+    }
+
+    updateAgeOnset(timeElement: any) {
+        console.log('onset update');
+        console.log(timeElement);
+        this.onset = timeElement;
+    }
+
+    applyOnset() {
+        this.onsetApplied = true;
+        this.phenotypicFeatures.forEach(feature => {
+            feature.onset = this.onset;
+        });
+        this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
+        console.log('apply onset');
+        console.log(this.onset);
+    }
+
+    editOnset() {
+        this.onsetApplied = false;
     }
     /**
      * Called when a row is selected in the left side table
@@ -169,11 +202,11 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
      */
     onRowSelect(event) {
         this.selectedFeature = event.data;
+        this.searchService.setPhenotypicOnset(this.selectedFeature.onset);
+        this.searchService.setPhenotypicResolution(this.selectedFeature.resolution);
     }
 
     nextPage() {
-        // this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
-        // console.log(this.phenopacket);
         this.phenopacketService.setPhenopacket(this.phenopacket);
         this.phenopacketService.phenopacket = this.phenopacket;
         // this.router.navigate(['pheno-creator/measurements']);

@@ -53,6 +53,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.formattedText = '<pre #text>';
     let startIndex = 0;
     // iterate through pair of indices
+    // TODO make sure idxList is sorted
     this.idxList.forEach((startEnd, idx) => {
       for (let index = startIndex; index < this.textSearch.length; index++) {
         // if index is between start and end, it is one of the phenotypic feature found
@@ -155,6 +156,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   startOver() {
     this.textSearchVisible = true;
+    this.phenotypicFeatures = [];
+    this.visible = false;
   }
   addApprovedTerms() {
     const approvedFeatures = [];
@@ -163,6 +166,11 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         approvedFeatures.push(feature);
       }
     }
+    // reset table
+    this.textSearchVisible = true;
+    this.phenotypicFeatures = [];
+    this.visible = false;
+
     this.phenotypicFeaturesChange.emit(approvedFeatures);
   }
 
