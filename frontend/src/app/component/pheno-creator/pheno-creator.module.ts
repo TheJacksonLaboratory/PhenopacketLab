@@ -36,12 +36,13 @@ import { MessagesModule } from 'primeng/messages';
 import { InplaceModule } from 'primeng/inplace';
 import { SplitterModule } from 'primeng/splitter';
 import { TooltipModule } from 'primeng/tooltip';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { AngularSplitModule } from 'angular-split';
 
 import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
 
-import { PhenoCreatorComponent } from './pheno-creator.component';
+import { PhenoCreatorAllComponent } from './pheno-creator-all.component';
 import { IndividualStepComponent } from './individual-step.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
 import { MeasurementStepComponent } from './measurement-step.component';
@@ -56,6 +57,8 @@ import { InterpretationStepComponent } from './interpretation-step.component';
 import { TextMiningComponent } from './text-mining/text-mining.component';
 import { TextPipe } from './text-mining/text.pipe';
 import { WordDialogComponent } from './text-mining/word-dialog.component';
+import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
+import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 
 
 @NgModule({
@@ -102,15 +105,17 @@ import { WordDialogComponent } from './text-mining/word-dialog.component';
         MessagesModule,
         InplaceModule,
         SplitterModule,
-        TooltipModule
+        TooltipModule,
+        SelectButtonModule
     ],
     exports: [
         StepsModule,
         ToastModule,
-        PhenoCreatorRoutingModule
+        PhenoCreatorRoutingModule,
     ],
     declarations: [
-        PhenoCreatorComponent,
+        PhenoCreatorAllComponent,
+        PhenoCreatorRareComponent,
         IndividualStepComponent,
         PhenotypicFeatureStepComponent,
         MeasurementStepComponent,
@@ -122,7 +127,8 @@ import { WordDialogComponent } from './text-mining/word-dialog.component';
         ValidateStepComponent,
         TextMiningComponent,
         TextPipe,
-        WordDialogComponent
+        WordDialogComponent,
+        ProfileSelectionComponent
     ],
     providers: [
         MessageService

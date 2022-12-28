@@ -7,12 +7,12 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-  selector: 'app-pheno-creator',
+  selector: 'app-pheno-creator-all',
   templateUrl: './pheno-creator.component.html',
   styleUrls: ['./pheno-creator.component.scss'],
   providers: [MessageService]
 })
-export class PhenoCreatorComponent implements OnInit, OnDestroy {
+export class PhenoCreatorAllComponent implements OnInit, OnDestroy {
 
   phenopacket: Phenopacket;
 

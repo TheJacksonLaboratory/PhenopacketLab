@@ -8,7 +8,8 @@ import { IndividualStepComponent } from './individual-step.component';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { MeasurementStepComponent } from './measurement-step.component';
 import { MedicalActionStepComponent } from './medical-action-step.component';
-import { PhenoCreatorComponent } from './pheno-creator.component';
+import { PhenoCreatorAllComponent } from './pheno-creator-all.component';
+import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
 import { ValidateStepComponent } from './validate-step.component';
 
@@ -17,7 +18,7 @@ import { ValidateStepComponent } from './validate-step.component';
     imports: [
         RouterModule.forChild([
             {
-                path: '', component: PhenoCreatorComponent, children: [
+                path: 'all', component: PhenoCreatorAllComponent, children: [
                     { path: '', redirectTo: 'individual', pathMatch: 'full' },
                     { path: 'individual', component: IndividualStepComponent },
                     { path: 'phenotypic-features', component: PhenotypicFeatureStepComponent },
@@ -27,6 +28,16 @@ import { ValidateStepComponent } from './validate-step.component';
                     { path: 'diseases', component: DiseaseStepComponent },
                     { path: 'medical-actions', component: MedicalActionStepComponent },
                     { path: 'files', component: FileStepComponent },
+                    { path: 'validate', component: ValidateStepComponent }
+
+                ]
+            },
+            {
+                path: 'rare', component: PhenoCreatorRareComponent, children: [
+                    { path: '', redirectTo: 'individual', pathMatch: 'full' },
+                    { path: 'individual', component: IndividualStepComponent },
+                    { path: 'phenotypic-features', component: PhenotypicFeatureStepComponent },
+                    { path: 'diseases', component: DiseaseStepComponent },
                     { path: 'validate', component: ValidateStepComponent }
 
                 ]

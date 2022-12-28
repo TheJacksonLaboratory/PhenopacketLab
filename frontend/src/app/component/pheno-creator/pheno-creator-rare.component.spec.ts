@@ -4,16 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CardModule } from 'primeng/card';
 import { StepsModule } from 'primeng/steps';
-import { PhenoCreatorComponent } from './pheno-creator.component';
+import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 
 
-describe('PhenoCreatorComponent', () => {
-  let component: PhenoCreatorComponent;
-  let fixture: ComponentFixture<PhenoCreatorComponent>;
+describe('PhenoCreatorRareComponent', () => {
+  let component: PhenoCreatorRareComponent;
+  let fixture: ComponentFixture<PhenoCreatorRareComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhenoCreatorComponent ],
+      declarations: [ PhenoCreatorRareComponent ],
       imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -29,7 +29,7 @@ describe('PhenoCreatorComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhenoCreatorComponent);
+    fixture = TestBed.createComponent(PhenoCreatorRareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
