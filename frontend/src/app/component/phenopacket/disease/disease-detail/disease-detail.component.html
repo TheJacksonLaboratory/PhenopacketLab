@@ -34,11 +34,25 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6"><b>Disease stage:</b> {{ stage }}</div>
-  <div class="col-md-6"><b>Clinical TNM finding:</b> {{ finding }}</div>
+  <div class="col-md-6">
+    <b>Disease stage:</b><br />
+    <ul>
+      <li *ngFor="let disStage of disease.diseaseStage">
+        {{ disStage.label }} [{{ disStage.key }}]
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <b>Clinical TNM finding:</b><br />
+    <ul>
+      <li *ngFor="let disFinding of disease.clinicalTnmFinding">
+        {{ disFinding.label }} [{{ disFinding.key }}]
+      </li>
+    </ul>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-6"><b>Severity: </b> {{ severity }}</div>
   <div class="col-md-6"><b>Laterality:</b> {{ laterality }}</div>
 </div>
-<br>
+<br />

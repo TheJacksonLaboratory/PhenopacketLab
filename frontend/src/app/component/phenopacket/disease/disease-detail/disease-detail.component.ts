@@ -33,8 +33,8 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
   status: string;
   onset: string;
   resolution: string;
-  stage: string;
-  finding: string;
+  // stage: string;
+  // finding: string;
   severity: string;
   laterality: string;
 
@@ -56,8 +56,6 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
     this.status = this.disease.excluded ? 'Excluded' : 'Observed';
     this.onset = this.disease.onset?.toString();
     this.resolution = this.disease.resolution?.toString();
-    this.stage = this.disease.diseaseStage?.toString();
-    this.finding = this.disease.clinicalTnmFinding?.toString();
     this.laterality = this.disease.laterality?.label;
   }
 
