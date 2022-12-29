@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-individual-step',
@@ -17,15 +18,13 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     phenopacketSubscription: Subscription;
     submitted = false;
 
+    profileSelectionSubscription: Subscription;
+    profileSelection: ProfileSelection;
+
     summary: string;
 
     constructor(public phenopacketService: PhenopacketService, private router: Router) {
 
-    }
-    ngOnDestroy(): void {
-        if (this.phenopacketSubscription) {
-            this.phenopacketSubscription.unsubscribe();
-        }
     }
 
     ngOnInit() {
@@ -34,7 +33,18 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
             this.phenopacket = new Phenopacket();
             this.phenopacket.subject = new Individual();
         }
+        this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+            this.profileSelection = profile;
+        });
+    }
 
+    ngOnDestroy() {
+        if (this.phenopacketSubscription) {
+            this.phenopacketSubscription.unsubscribe();
+        }
+        if (this.profileSelectionSubscription) {
+            this.profileSelectionSubscription.unsubscribe();
+        }
     }
 
     updateSubject(subject: Individual) {
@@ -47,7 +57,12 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket.id) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
-            this.router.navigate(['pheno-creator/phenotypic-features']);
+            for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+                if (this.profileSelection === profile.value) {
+                    this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                    return;
+                }
+            }
             return;
         }
         this.submitted = true;

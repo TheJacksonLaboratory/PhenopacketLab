@@ -10,6 +10,7 @@ import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -35,6 +36,9 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     onsetsSubscription: Subscription;
     onsetApplied = false;
     onset: TimeElement;
+
+    profileSelection: ProfileSelection;
+    profileSelectionSubscription: Subscription;
 
     constructor(public searchService: PhenotypeSearchService,
         public phenopacketService: PhenopacketService,
@@ -68,6 +72,10 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
             this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
         });
+        // get profile
+        this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+            this.profileSelection = profile;
+        });
         this.onset = this.phenopacket?.subject?.timeAtLastEncounter;
     }
 
@@ -77,6 +85,9 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         }
         if (this.onsetsSubscription) {
             this.onsetsSubscription.unsubscribe();
+        }
+        if (this.profileSelectionSubscription) {
+            this.profileSelectionSubscription.unsubscribe();
         }
     }
 
@@ -211,13 +222,34 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.phenopacketService.phenopacket = this.phenopacket;
         // this.router.navigate(['pheno-creator/measurements']);
         // TODO temp while measuremtn is not done
-        this.router.navigate(['pheno-creator/diseases']);
+
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+
+            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+                this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
+                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                return;
+            }
+        }
+
         this.submitted = true;
 
         // console.log(this.phenopacketService.getPhenopacket());
     }
     prevPage() {
         this.phenopacketService.phenopacket = this.phenopacket;
-        this.router.navigate(['pheno-creator/individual']);
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelection === profile.value) {
+                this.router.navigate([`pheno-creator/${profile.path}/individual`]);
+                return;
+            }
+        }
     }
 }

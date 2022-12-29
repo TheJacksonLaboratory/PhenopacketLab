@@ -5,7 +5,8 @@ import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import {MetaData} from '../../models/metadata';
+import { MetaData } from '../../models/metadata';
+import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
   selector: 'app-validate-step',
@@ -30,6 +31,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   cohortSubscription: Subscription;
 
+  profileSelectionSubscription: Subscription;
+  profileSelection: ProfileSelection;
+
   constructor(public phenopacketService: PhenopacketService, private cohortService: CohortService, private router: Router) {
 
   }
@@ -45,6 +49,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
       console.log('cohort in validate nginit subscription');
       console.log(this.cohort);
     });
+    this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+      this.profileSelection = profile;
+    });
     console.log('cohort in validate;');
     console.log(this.cohort);
   }
@@ -52,6 +59,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.cohortSubscription) {
       this.cohortSubscription.unsubscribe();
+    }
+    if (this.profileSelectionSubscription) {
+      this.profileSelectionSubscription.unsubscribe();
     }
   }
   validate() {
@@ -82,6 +92,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.cohortService.setCohort(this.cohort);
     console.log('completed');
     console.log(this.cohort);
+    // reset phenopacket
+    this.phenopacketService.phenopacket = undefined;
+
     // this.cohortService.addPhenopacket(this.phenopacket);
     // this.phenopacketService.phenopacket = this.phenopacket;
 
@@ -91,8 +104,20 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   prevPage() {
     this.phenopacketService.phenopacket = this.phenopacket;
-    this.router.navigate(['pheno-creator/diseases']);
-    // this.router.navigate(['pheno-creator/files']);
+    // check profile and navigate to the corresponding step
+    for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+      if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+        this.router.navigate([`pheno-creator/${profile.path}/files`]);
+        return;
+      } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
+        this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+        return;
+      } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+        this.router.navigate([`pheno-creator/${profile.path}/files`]);
+        return;
+      }
+      // Possible other profiles to come
+    }
   }
 
   // TODO

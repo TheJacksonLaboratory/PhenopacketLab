@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-measurement-step',
     templateUrl: './measurement-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
   })
-export class MeasurementStepComponent implements OnInit {
+export class MeasurementStepComponent implements OnInit, OnDestroy {
 
     measurements: Measurement[];
+
+    profileSelectionSubscription: Subscription;
+    profileSelection: ProfileSelection;
 
     constructor (public phenopacketService: PhenopacketService, private router: Router) {
 
@@ -18,13 +23,44 @@ export class MeasurementStepComponent implements OnInit {
 
     ngOnInit() {
         // this.measurements = this.phenopacketService.getPhenopacket().measurements;
+        this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+            this.profileSelection = profile;
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.profileSelectionSubscription) {
+            this.profileSelectionSubscription.unsubscribe();
+        }
     }
 
     nextPage() {
         this.phenopacketService.phenopacket.measurements = this.measurements;
-        this.router.navigate(['pheno-creator/biosamples']);
+
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+                this.router.navigate([`pheno-creator/${profile.path}/biosamples`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+                this.router.navigate([`pheno-creator/${profile.path}/biosamples`]);
+                return;
+            }
+            // Possible other profiles to come
+        }
     }
+
     prevPage() {
-        this.router.navigate(['pheno-creator/phenotypic-features']);
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+                this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+                this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                return;
+            }
+            // Possible other profiles to come
+        }
     }
 }

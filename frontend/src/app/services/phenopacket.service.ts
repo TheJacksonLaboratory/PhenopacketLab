@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ProfileSelection } from '../component/pheno-creator/profile-selection/profile-selection.component';
 import { Phenopacket } from '../models/phenopacket';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
@@ -17,6 +18,8 @@ export class PhenopacketService {
 
     phenopacket: Phenopacket;
     phenopacketSubject = new Subject<Phenopacket>();
+
+    profileSelection = new BehaviorSubject<ProfileSelection>(ProfileSelection.ALL_AVAILABLE);
 
     private validated = new Subject<any>();
     validated$ = this.validated.asObservable();
@@ -49,6 +52,12 @@ export class PhenopacketService {
     }
     getTnmFindings(): Observable<any> {
         return this.http.get(tnmFindingsUrl);
+    }
+    setProfileSelection(profile: ProfileSelection) {
+        this.profileSelection.next(profile);
+    }
+    getProfileSelection(): Observable<ProfileSelection> {
+        return this.profileSelection.asObservable();
     }
  }
 

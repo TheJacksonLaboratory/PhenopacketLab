@@ -1,6 +1,13 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
+
+export enum ProfileSelection {
+    RARE_DISEASE = 'rare',
+    ALL_AVAILABLE = 'all',
+    OTHER = 'other'
+}
 
 @Component({
     selector: 'app-profile-selection',
@@ -16,40 +23,30 @@ import { Router } from '@angular/router';
     ]
 })
 export class ProfileSelectionComponent implements OnInit {
+    static profileSelectionOptions = [
+        // tslint:disable-next-line:max-line-length
+        { label: 'Rare disease', value: ProfileSelection.RARE_DISEASE, path: 'rare', steps: ['phenotypic-features', 'diseases', 'validate'] },
+        { label: 'All available steps', value: ProfileSelection.ALL_AVAILABLE, path: 'all', steps: ['phenotypic-features', 'measurements', 'biosamples', 'interpretations', 'diseases', 'medical-actions', 'files', 'validate'] },
+        { label: 'Other', value: ProfileSelection.OTHER, path: 'other', steps: ['phenotypic-features', 'measurement', 'biosamples', 'interpretations', 'diseases', 'medical-actions', 'files', 'validate']  }
+    ];
 
-    profileSelectionOptions: any[];
+    options: any;
     profileSelected: any;
     submitted = false;
 
-    constructor(private router: Router) { }
+    constructor(private phenopacketService: PhenopacketService, private router: Router) { }
 
     ngOnInit() {
-
-        this.profileSelectionOptions = [
-            { label: 'Rare disease', value: SelectionOptions.RARE_DISEASE },
-            { label: 'All available steps', value: SelectionOptions.ALL_AVAILABLE },
-            { label: 'Other', value: SelectionOptions.OTHER }
-        ];
-
+        this.options = ProfileSelectionComponent.profileSelectionOptions;
     }
 
     start() {
-        if (this.profileSelected === SelectionOptions.ALL_AVAILABLE) {
-            this.router.navigate(['pheno-creator/all']);
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelected === profile.value) {
+                this.phenopacketService.setProfileSelection(profile.value);
+                this.router.navigate([`pheno-creator/${profile.path}`]);
+            }
         }
-        if (this.profileSelected === SelectionOptions.RARE_DISEASE) {
-            this.router.navigate(['pheno-creator/rare']);
-        }
-        if (this.profileSelected === SelectionOptions.OTHER) {
-            this.router.navigate(['pheno-creator/rare']);
-        }
-
     }
 
-}
-
-export enum SelectionOptions {
-    RARE_DISEASE,
-    ALL_AVAILABLE,
-    OTHER
 }

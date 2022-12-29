@@ -9,6 +9,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -30,6 +31,9 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     // searchparams
     currSearchParams: any = {};
     spinnerDialogRef: any;
+
+    profileSelectionSubscription: Subscription;
+    profileSelection: ProfileSelection;
 
     submitted = false;
 
@@ -55,10 +59,16 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
                 }
             }
         }
+        this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+            this.profileSelection = profile;
+        });
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
+        }
+        if (this.profileSelectionSubscription) {
+            this.profileSelectionSubscription.unsubscribe();
         }
     }
 
@@ -165,11 +175,36 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.phenopacketService.setPhenopacket(this.phenopacket);
 
         // this.phenopacketService.phenopacket.diseases = this.diseases;
-        this.router.navigate(['pheno-creator/validate']);
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
+                this.router.navigate([`pheno-creator/${profile.path}/validate`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                return;
+            }
+        }
         this.submitted = true;
 
     }
     prevPage() {
+        // check profile and navigate to the corresponding step
+        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
+                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
+                this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                return;
+            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
+                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                return;
+            }
+        }
         this.router.navigate(['pheno-creator/phenotypic-features']);
     }
 }
