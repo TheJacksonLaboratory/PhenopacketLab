@@ -79,7 +79,6 @@
           selectionMode="single"
           (onRowSelect)="onRowSelect($event)"
           [scrollable]="true"
-          [resizableColumns]="true"
           [tableStyle]="{ 'min-width': '50rem' }"
         >
           <ng-template pTemplate="caption">
@@ -99,10 +98,6 @@
               <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
               <td>{{ feature.onset?.toString() }}</td>
               <td>
-                <p-confirmDialog
-                  header="Confirmation"
-                  width="425"
-                ></p-confirmDialog>
                 <button
                   pButton
                   pRipple
@@ -150,3 +145,5 @@
     </div>
   </ng-template>
 </p-card>
+
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
