@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ProfileSelection } from '../component/pheno-creator/profile-selection/profile-selection.component';
 import { Phenopacket } from '../models/phenopacket';
+import { ProfileSelection } from '../models/profile';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MedicalAction } from 'src/app/models/medical-action';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-medical-action-step',
@@ -39,7 +39,7 @@ export class MedicalActionStepComponent implements OnInit, OnDestroy {
     nextPage() {
         this.phenopacketService.phenopacket.medicalActions = this.medicalActions;
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/files`]);
                 return;
@@ -52,7 +52,7 @@ export class MedicalActionStepComponent implements OnInit, OnDestroy {
     }
     prevPage() {
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
                 return;

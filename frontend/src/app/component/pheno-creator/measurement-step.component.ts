@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-measurement-step',
@@ -38,7 +38,7 @@ export class MeasurementStepComponent implements OnInit, OnDestroy {
         this.phenopacketService.phenopacket.measurements = this.measurements;
 
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/biosamples`]);
                 return;
@@ -52,7 +52,7 @@ export class MeasurementStepComponent implements OnInit, OnDestroy {
 
     prevPage() {
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
                 return;

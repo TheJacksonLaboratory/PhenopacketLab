@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { File } from 'src/app/models/base';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-file-step',
@@ -36,7 +36,7 @@ export class FileStepComponent implements OnInit, OnDestroy {
 
     nextPage() {
         this.phenopacketService.phenopacket.files = this.files;
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/validate`]);
                 return;
@@ -48,7 +48,7 @@ export class FileStepComponent implements OnInit, OnDestroy {
         }
     }
     prevPage() {
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
                 return;

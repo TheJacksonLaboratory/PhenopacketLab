@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     selector: 'app-individual-step',
@@ -57,7 +57,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket.id) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
-            for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+            for (const profile of Profile.profileSelectionOptions) {
                 if (this.profileSelection === profile.value) {
                     this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
                     return;

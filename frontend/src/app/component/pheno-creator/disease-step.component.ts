@@ -6,10 +6,10 @@ import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -176,7 +176,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
 
         // this.phenopacketService.phenopacket.diseases = this.diseases;
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
                 return;
@@ -193,7 +193,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     }
     prevPage() {
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
                 return;

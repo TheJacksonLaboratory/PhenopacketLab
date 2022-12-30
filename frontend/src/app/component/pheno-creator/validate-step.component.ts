@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { CohortService } from 'src/app/services/cohort.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MetaData } from '../../models/metadata';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
   selector: 'app-validate-step',
@@ -105,7 +105,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   prevPage() {
     this.phenopacketService.phenopacket = this.phenopacket;
     // check profile and navigate to the corresponding step
-    for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+    for (const profile of Profile.profileSelectionOptions) {
       if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
         this.router.navigate([`pheno-creator/${profile.path}/files`]);
         return;

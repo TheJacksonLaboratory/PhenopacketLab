@@ -7,10 +7,10 @@ import { OntologyClass, TimeElement } from 'src/app/models/base';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
-import { ProfileSelection, ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -224,7 +224,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         // TODO temp while measuremtn is not done
 
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
 
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
@@ -245,7 +245,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     prevPage() {
         this.phenopacketService.phenopacket = this.phenopacket;
         // check profile and navigate to the corresponding step
-        for (const profile of ProfileSelectionComponent.profileSelectionOptions) {
+        for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === profile.value) {
                 this.router.navigate([`pheno-creator/${profile.path}/individual`]);
                 return;
