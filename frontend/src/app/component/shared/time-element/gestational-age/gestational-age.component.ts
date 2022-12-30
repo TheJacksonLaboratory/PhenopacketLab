@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GestationalAge, TimeElement, TimeElementId } from 'src/app/models/base';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
@@ -24,8 +25,10 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
 
     phenotypicOnsetSubscription: Subscription;
     phenotypicResolutionSubscription: Subscription;
+    diseaseOnsetSubscription: Subscription;
+    diseaseResolutionSubscription: Subscription;
 
-    constructor(private phenotypeSearchService: PhenotypeSearchService) {
+    constructor(private phenotypeSearchService: PhenotypeSearchService, private diseaseSearchService: DiseaseSearchService) {
     }
 
     ngOnInit(): void {
@@ -44,6 +47,16 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
                 this.setGestationalAge(resolution);
             }
         });
+        this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
+            if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
+                this.setGestationalAge(onset);
+            }
+        });
+        this.diseaseResolutionSubscription = this.diseaseSearchService.getDiseaseResolution().subscribe(resolution => {
+            if (this.timeElementId === TimeElementId.DISEASE_RESOLUTION) {
+                this.setGestationalAge(resolution);
+            }
+        });
     }
 
     ngOnDestroy(): void {
@@ -52,6 +65,12 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
         }
         if (this.phenotypicResolutionSubscription) {
             this.phenotypicResolutionSubscription.unsubscribe();
+        }
+        if (this.diseaseOnsetSubscription) {
+            this.diseaseOnsetSubscription.unsubscribe();
+        }
+        if (this.diseaseResolutionSubscription) {
+            this.diseaseResolutionSubscription.unsubscribe();
         }
     }
 

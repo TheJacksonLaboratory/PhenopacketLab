@@ -87,7 +87,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.openSpinnerDialog();
         this.searchService.queryDiseasesById(id).subscribe(data => {
             const disease = new Disease();
-            disease.key = this.getBiggestKey() + 1;
             disease.term = new OntologyClass(data.id, data.name);
             disease.excluded = false;
             this.addDisease(disease);
@@ -127,6 +126,8 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         if (disease === undefined) {
             return;
         }
+        // set unique key for feature table
+        disease.key = this.getBiggestKey() + 1;
         this.diseases.push(disease);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.diseases = this.diseases.slice();
@@ -168,6 +169,8 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
      */
     onRowSelect(event) {
         this.selectedDisease = event.data;
+        this.searchService.setDiseaseOnset(this.selectedDisease.onset);
+        this.searchService.setDiseaseResolution(this.selectedDisease.resolution);
     }
 
     nextPage() {

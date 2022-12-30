@@ -21,11 +21,12 @@
           *ngIf="visible"
           [value]="diseases"
           [(selection)]="selectedDisease"
+          [resizableColumns]="true"
+          styleClass="p-datatable-gridlines"
           dataKey="key"
           selectionMode="single"
           (onRowSelect)="onRowSelect($event)"
           [scrollable]="true"
-          [resizableColumns]="true"
           [tableStyle]="{ 'min-width': '50rem' }"
         >
           <ng-template pTemplate="caption">
@@ -35,7 +36,7 @@
             <tr>
               <th pResizableColumn>Label</th>
               <th pResizableColumn>Status</th>
-              <!-- <th>Onset</th> -->
+              <th pResizableColumn>Onset</th>
               <th pResizableColumn></th>
             </tr>
           </ng-template>
@@ -43,7 +44,7 @@
             <tr [pSelectableRow]="disease">
               <td>{{ disease.term?.label }}</td>
               <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
-              <!-- <td>{{feature.onset?.toString()}}</td> -->
+              <td>{{ disease.onset?.toString() }}</td>
               <td>
                 <button
                   pButton

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Age, AgeRange, GestationalAge, OntologyClass, TimeElement, TimeElementId, TimeElementType } from 'src/app/models/base';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { AgeComponent } from './age/age.component';
@@ -38,11 +39,15 @@ export class TimeElementComponent implements OnInit, OnDestroy {
 
   phenotypicOnsetSubscription: Subscription;
   phenotypicResolutionSubscription: Subscription;
+  diseaseOnsetSubscription: Subscription;
+  diseaseResolutionSubscription: Subscription;
 
   @ViewChild(AgeComponent) ageChild: AgeComponent;
 
 
-  constructor(private phenotypeSearchService: PhenotypeSearchService, public phenopacketService: PhenopacketService) {
+  constructor(public phenopacketService: PhenopacketService,
+              private phenotypeSearchService: PhenotypeSearchService,
+              private diseaseSearchService: DiseaseSearchService) {
 
   }
 
@@ -57,16 +62,25 @@ export class TimeElementComponent implements OnInit, OnDestroy {
     this.initialize();
     this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
       if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
-        console.log(onset);
         this.timeElement = onset;
-        console.log('getPhenotypicOnset');
         this.initialize();
       }
     });
     this.phenotypicResolutionSubscription = this.phenotypeSearchService.getPhenotypicResolution().subscribe(resolution => {
       if (this.timeElementId === TimeElementId.PHENOTYPIC_RESOLUTION) {
         this.timeElement = resolution;
-        console.log('getPhenotypicResolution');
+        this.initialize();
+      }
+    });
+    this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
+      if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
+        this.timeElement = onset;
+        this.initialize();
+      }
+    });
+    this.diseaseResolutionSubscription = this.diseaseSearchService.getDiseaseResolution().subscribe(resolution => {
+      if (this.timeElementId === TimeElementId.DISEASE_RESOLUTION) {
+        this.timeElement = resolution;
         this.initialize();
       }
     });
@@ -79,6 +93,12 @@ export class TimeElementComponent implements OnInit, OnDestroy {
     if (this.phenotypicResolutionSubscription) {
       this.phenotypicResolutionSubscription.unsubscribe();
     }
+    if (this.diseaseOnsetSubscription) {
+      this.diseaseOnsetSubscription.unsubscribe();
+    }
+    if (this.diseaseResolutionSubscription) {
+      this.diseaseResolutionSubscription.unsubscribe();
+    }
   }
 
   onTimeElementChange(timeElementUpdate: TimeElement): void {
@@ -86,8 +106,6 @@ export class TimeElementComponent implements OnInit, OnDestroy {
   }
 
   private initialize() {
-    console.log('initialize');
-    console.log(this.timeElement);
     if (this.timeElement === undefined) {
       this.timeElement = new TimeElement();
     }

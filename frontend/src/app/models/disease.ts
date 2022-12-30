@@ -19,8 +19,6 @@ export class Disease extends Convert {
     constructor(id?: string, label?: string) {
         super();
         this.term = new OntologyClass(id, label);
-        this.onset = new TimeElement('');
-        this.resolution = new TimeElement('');
         this.diseaseStage = [];
         this.clinicalTnmFinding = [];
     }

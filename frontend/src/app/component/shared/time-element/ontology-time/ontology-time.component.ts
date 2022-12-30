@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
@@ -20,9 +21,9 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
     timeElementId: TimeElementId;
 
     phenotypicOnsetSubscription: Subscription;
-    phenotypicResolutionSubscription: Subscription;
+    diseaseOnsetSubscription: Subscription;
 
-    constructor(private phenotypeSearchService: PhenotypeSearchService) {
+    constructor(private phenotypeSearchService: PhenotypeSearchService, private diseaseSearchService: DiseaseSearchService) {
 
     }
     ngOnInit(): void {
@@ -34,9 +35,9 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
                 this.setOntologyClass(onset);
             }
         });
-        this.phenotypicResolutionSubscription = this.phenotypeSearchService.getPhenotypicResolution().subscribe(resolution => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_RESOLUTION) {
-                this.setOntologyClass(resolution);
+        this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
+            if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
+                this.setOntologyClass(onset);
             }
         });
     }
@@ -45,8 +46,8 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
         if (this.phenotypicOnsetSubscription) {
             this.phenotypicOnsetSubscription.unsubscribe();
         }
-        if (this.phenotypicResolutionSubscription) {
-            this.phenotypicResolutionSubscription.unsubscribe();
+        if (this.diseaseOnsetSubscription) {
+            this.diseaseOnsetSubscription.unsubscribe();
         }
     }
 
