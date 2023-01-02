@@ -1,9 +1,10 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AgeComponent } from './age.component';
 
-describe('DateComponent', () => {
+describe('AgeComponent', () => {
   let component: AgeComponent;
   let fixture: ComponentFixture<AgeComponent>;
 
@@ -11,7 +12,8 @@ describe('DateComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         InputNumberModule,
-        FormsModule
+        FormsModule,
+        HttpClientTestingModule
       ],
       declarations: [ AgeComponent ]
     })

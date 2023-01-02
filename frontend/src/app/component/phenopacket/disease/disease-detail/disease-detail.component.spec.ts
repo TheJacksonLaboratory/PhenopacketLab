@@ -16,14 +16,14 @@ describe('DiseaseDetailComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailComponent ],
       imports: [
-        MatDialogModule
-      ],
-      providers: [
-        DialogService,
-        MessageService,
+        MatDialogModule,
         MatIconModule,
         MatButtonModule,
         MatTooltipModule
+      ],
+      providers: [
+        DialogService,
+        MessageService
       ]
     })
     .compileComponents();

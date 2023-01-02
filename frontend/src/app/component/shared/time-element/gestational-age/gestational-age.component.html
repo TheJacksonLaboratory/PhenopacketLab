@@ -1,0 +1,23 @@
+<div class="p-fluid grid formgrid">
+  <div class="field col-12 md:col-6">
+    <label for="weeksId">Weeks</label>
+    <p-inputNumber
+      id="weeksId"
+      [(ngModel)]="weeks"
+      (onInput)="updateWeeks($event)"
+      [min]="0"
+      [max]="45"
+    >
+    </p-inputNumber>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="daysId">Days</label>
+    <p-inputNumber
+      id="daysId"
+      [(ngModel)]="days"
+      (onInput)="updateDays($event)"
+      [min]="0"
+      [max]="31"
+    ></p-inputNumber>
+  </div>
+</div>

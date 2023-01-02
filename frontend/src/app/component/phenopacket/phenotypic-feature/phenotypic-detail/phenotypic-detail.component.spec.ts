@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
 
 
@@ -16,6 +18,10 @@ describe('PhenotypicDetailComponent', () => {
         MatDialogModule,
         MatIconModule,
         MatTooltipModule
+      ],
+      providers: [
+        DialogService,
+        MessageService
       ]
     })
     .compileComponents();

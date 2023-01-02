@@ -1,7 +1,5 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -9,7 +7,7 @@ import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
-import { FamilyData } from '../family-list/family-data';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
 
@@ -20,47 +18,59 @@ import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.com
   styleUrls: ['./phenopacket-list.component.scss'],
   providers: [DatePipe]
 })
-export class PhenopacketListComponent implements OnInit {
+export class PhenopacketListComponent implements OnInit, OnDestroy {
   cohort: Cohort;
   /** Array used to hold opened tabs **/
   individualTabsMap = new Map<String, Phenopacket>();
   individualTabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
-  cohortMap: Map<String, Phenopacket>;
-  selected = new UntypedFormControl(0);
+  cohortMap = new Map<string, Phenopacket>();
 
   // Table items
   displayedColumns = ['id', 'dob', 'sex', 'remove'];
+  activeIndex = 0;
 
+  phenopacketSubscription: Subscription;
+  cohortPhenopacketSubscription: Subscription;
   cohortSubscription: Subscription;
   datasource = new MatTableDataSource<Phenopacket>();
-  selectionProband = new SelectionModel<Phenopacket>(false, []);
-
-  constructor(private cohortService: CohortService, public dialog: MatDialog, private datePipe: DatePipe) {
+  constructor(public phenopacketService: PhenopacketService,
+              private cohortService: CohortService,
+              public dialog: MatDialog,
+              private datePipe: DatePipe) {
+  }
+  ngOnDestroy(): void {
+    if (this.cohortSubscription) {
+      this.cohortSubscription.unsubscribe();
+    }
+    if (this.phenopacketSubscription) {
+      this.phenopacketSubscription.unsubscribe();
+    }
+    if (this.cohortPhenopacketSubscription) {
+      this.cohortPhenopacketSubscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
-    this.cohort = new FamilyData().COHORT_DATA;
-    this.cohortMap = new Map<string, Phenopacket>();
-    for (const individual of this.cohort.members) {
-      this.individualTabs.push(individual);
-      this.cohortMap.set(individual.id, individual);
-    }
+    this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
+      this.cohort = cohort;
+      const members = this.cohort.members;
+      if (members) {
+        for (const phenopacket of members) {
+          this.addTab(phenopacket);
+        }
 
-    this.cohortSubscription = this.cohortService.getPhenopacket().subscribe(phenopacket => {
-      this.addTab(phenopacket);
-      this.updateCohort(this.cohortService.cohort);
+      }
     });
-    this.datasource.data = Array.from(this.cohortMap.values());
+    this.updateCohort();
   }
 
-  updateCohort(cohort: Cohort) {
-    this.cohort = cohort;
+  updateCohort() {
     if (this.cohort) {
       if (this.individualTabsMap.keys.length < this.cohort.members.keys.length + 1) {
-
-        this.cohort.members.forEach((value: Phenopacket) => {
-          this.cohortMap.set(value.id, value);
+        this.cohort.members.forEach(phenopacket => {
+          this.individualTabsMap.set(phenopacket.id, phenopacket);
+          this.cohortMap.set(phenopacket.id, phenopacket);
         });
         this.individualTabs = Array.from(this.individualTabsMap.values());
         this.datasource.data = Array.from(this.cohortMap.values());
@@ -74,18 +84,14 @@ export class PhenopacketListComponent implements OnInit {
       phenopacket.id = `new-patient-${this.individualTabs.length + 1}`;
       phenopacket.subject = new Individual();
     }
-    this.individualTabs.push(phenopacket);
-    // add new phenopacket to family
-    if (this.cohort === undefined) {
-      this.cohort = new Cohort();
-    }
+    this.individualTabs = Array.from(this.individualTabsMap.values());
     this.individualTabsMap.set(phenopacket.id, phenopacket);
     this.cohortMap.set(phenopacket.id, phenopacket);
-    this.selected.setValue(this.individualTabs.keys.length);
+    // this.selected.setValue(this.individualTabs.keys.length);
     this.datasource.data = Array.from(this.cohortMap.values());
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
-    this.cohortService.setCohort(this.cohort);
+    // this.cohortService.setCohort(this.cohort);
   }
 
   removeIndividual(individual: Phenopacket) {
@@ -137,7 +143,7 @@ export class PhenopacketListComponent implements OnInit {
     }
     for (let i = 0; i < this.individualTabs.length; i++) {
       if (element === this.individualTabs[i]) {
-        this.selected.setValue(i + 1);
+        this.activeIndex = i + 1;
       }
     }
   }
@@ -152,7 +158,7 @@ export class PhenopacketListComponent implements OnInit {
   /**
    * Open dialog to upload a new file
    */
-   public openFileUploadDialog() {
+  public openFileUploadDialog() {
     const currPhenopackets = [];
     if (this.cohort) {
       this.cohort.members?.forEach(val => currPhenopackets.push(val));
@@ -161,7 +167,7 @@ export class PhenopacketListComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(UploadDialogComponent, {
       width: '40%',
-      height: '30%',
+      height: '40%',
       data: { fileType: 'JSON, yaml', titleText: 'Upload Phenopacket file(s)', currentPhenopackets: currPhenopackets }
     });
     dialogRef.afterClosed().subscribe(result => {

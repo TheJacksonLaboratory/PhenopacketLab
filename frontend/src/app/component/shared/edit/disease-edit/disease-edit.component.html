@@ -1,0 +1,130 @@
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="label">Label</label>
+    <input
+      ngDefaultControl
+      id="label"
+      type="text"
+      required
+      pInputText
+      [disabled]="true"
+      [(ngModel)]="disease?.term.label"
+    />
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="id">ID</label>
+    <input
+      ngDefaultControl
+      id="id"
+      type="text"
+      required
+      pInputText
+      [disabled]="true"
+      [(ngModel)]="disease?.term.id"
+    />
+  </div>
+  <div class="fiewl col-12">
+    <div class="field-checkbox">
+      <p-checkbox
+        ngDefaultControl
+        id="observed"
+        [ngModel]="!disease?.excluded"
+        [binary]="true"
+        inputId="observed"
+        (onChange)="updateExcluded($event)"
+      ></p-checkbox>
+      <label for="observed">{{ !disease?.excluded ? "Observed" : "Excluded" }}</label>
+    </div>
+  </div>
+
+  <div class="field col-6">
+    <label for="onset"><b>Onset</b></label>
+    <app-time-element
+      id="onset"
+      [timeElementId]="getDiseaseOnsetId()"
+      [timeElement]="disease?.onset"
+      [ontologyNodes]="onsetsNodes"
+      [useOntologyClass]="true"
+      (timeElementEvent)="updateOnset($event)"
+      aria-labelledby="onset-label"
+    ></app-time-element>
+  </div>
+  <br />
+  <div class="field col-6">
+    <label for="resolution"><b>Resolution:</b></label>
+    <app-time-element
+      id="resolution"
+      [timeElementId]="getDiseaseResolutionId()"
+      [timeElement]="disease?.resolution"
+      (timeElementEvent)="updateResolution($event)"
+      aria-labelledby="resolution-time-label"
+    ></app-time-element>
+  </div>
+  <div class="field col-12">
+    <p-accordion>
+      <p-accordionTab header="Edit more details">
+        <div class="grid p-fluid">
+          <div class="field col-12">
+            <label for="stages"><b>Disease stage:</b></label>
+            <ontology-tree-select
+              id="stages"
+              pTooltip="List of terms representing the disease stage e.g. AJCC stage group"
+              showDelay="2000"
+              [selectionMode]="'checkbox'"
+              (selectedNodesChange)="updateDiseaseStages($event)"
+              [selectedNodes]="disease?.diseaseStage"
+              [nodes]="stagesNodes"
+            ></ontology-tree-select>
+          </div>
+          <div class="field col-12">
+            <label for="findings"><b>Clinical TNM finding:</b></label>
+            <ontology-tree-select
+              id="findings"
+              pTooltip="List of terms representing the tumor TNM score"
+              showDelay="2000"
+              [selectionMode]="'checkbox'"
+              (selectedNodesChange)="updateFindingStages($event)"
+              [selectedNodes]="disease?.clinicalTnmFinding"
+              [nodes]="findingsNodes"
+            ></ontology-tree-select>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="severity"><b>Severity:</b></label>
+            <p-dropdown
+              ngDefaultControl
+              appendTo="body"
+              id="severity"
+              [options]="getSeverities()"
+              [ngModel]="severity"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select severity"
+            >
+            </p-dropdown>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="laterality"><b>Laterality:</b></label>
+            <p-dropdown
+              ngDefaultControl
+              id="laterality"
+              appendTo="body"
+              [options]="getLateralities()"
+              [ngModel]="disease?.laterality"
+              (ngModelChange)="updateLaterality($event)"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select a laterality"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

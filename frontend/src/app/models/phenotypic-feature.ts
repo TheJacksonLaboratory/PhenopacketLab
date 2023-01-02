@@ -1,57 +1,70 @@
 import { Convert, Evidence, OntologyClass, TimeElement } from './base';
+import { OntologyTreeNode } from './ontology-treenode';
 
 export class PhenotypicFeature extends Convert {
     // key parameter not part of the phenopacket schema, used for primeng table
-    key?: string;
+    key?: number;
+    // parameter no part of phenopacket and that represents the modifiers as TreeNodes
+    modifierNodes?: OntologyTreeNode[];
+    // parameter no part of phenopacket and that represents the evidences as TreeNodes
+    evidenceNodes?: OntologyTreeNode[];
+    // parameter no part of phenopacket and used for text-mining state
+    textMiningState: MiningState;
 
     description: string;
-    type: OntologyClass = new OntologyClass('', '');
+    type: OntologyClass;
     excluded = false;
-    severity: OntologyClass = new OntologyClass('', '');
+    severity: OntologyClass;
     modifiers: OntologyClass[];
     onset: TimeElement;
     resolution: TimeElement;
-    evidence: Evidence[];
+    evidences: Evidence[];
     children: PhenotypicFeature[];
     parent: PhenotypicFeature;
+
+    constructor(id?: string, label?: string, excluded?: boolean, state?: MiningState, key?: number) {
+        super();
+        this.type = new OntologyClass(id, label);
+        this.excluded = excluded;
+        this.textMiningState = state;
+        this.key = key;
+    }
 
     static create(obj: any): PhenotypicFeature {
         const phenotypicFeature = new PhenotypicFeature();
         if (obj['description']) {
             phenotypicFeature.description = obj['description'];
-            console.log('pheno description');
         }
         if (obj['type']) {
             phenotypicFeature.type = OntologyClass.convert(obj['type']);
-            console.log('pheno type');
         } else {
             throw new Error(`Phenopacket file is missing 'type' field in 'phenotypicFeatures' object.`);
         }
         if (obj['excluded']) {
             phenotypicFeature.excluded = obj['excluded'];
-            console.log('pheno excluded');
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
-            console.log('pheno severity');
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
-            console.log('pheno modifiers');
         }
         if (obj['onset']) {
             phenotypicFeature.onset = TimeElement.convert(obj['onset']);
-            console.log('pheno onset');
         }
         if (obj['resolution']) {
             phenotypicFeature.resolution = TimeElement.convert(obj['resolution']);
-            console.log('pheno resolution');
         }
         if (obj['evidence']) {
-            phenotypicFeature.evidence = Evidence.convert(obj['evidence']);
-            console.log('pheno evidence');
+            phenotypicFeature.evidences = Evidence.convert(obj['evidence']);
         }
 
         return phenotypicFeature;
     }
+}
+
+export enum MiningState {
+    UNKNWON,
+    APPROVED,
+    REJECTED
 }

@@ -1,9 +1,10 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { BaseSearchService } from "./base-search.service";
-  
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { TimeElement } from '../models/base';
+import { BaseSearchService } from './base-search.service';
+
 const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
 const hpoDiseasesUrl = environment.HPO_DISEASE_URL;
 
@@ -15,10 +16,13 @@ export class DiseaseSearchService extends BaseSearchService {
     selectedSearchItems: any;
     selectedSearchItemSubject: BehaviorSubject<any>;
 
+    onset = new Subject<TimeElement>();
+    resolution = new Subject<TimeElement>();
+
     constructor(private http: HttpClient) {
         super(http);
-        this.selectedSearchItems = {}
-        this.selectedSearchItemSubject = new BehaviorSubject(this.selectedSearchItems)
+        this.selectedSearchItems = {};
+        this.selectedSearchItemSubject = new BehaviorSubject(this.selectedSearchItems);
     }
     getAll(): Observable<any> {
         return this.getAllHpoDiseases();
@@ -59,8 +63,22 @@ export class DiseaseSearchService extends BaseSearchService {
             offset: paramsIn.offset ? paramsIn.offset : '',
             sortBy: paramsIn.sortBy ? paramsIn.sortBy : '',
             sortDirection: paramsIn.sortDirection ? paramsIn.sortDirection : ''
-        }
+        };
         return this.http.get(url, { params: options });
     }
 
+    getDiseaseOnset(): Observable<TimeElement> {
+        return this.onset.asObservable();
+    }
+
+    setDiseaseOnset(onset: TimeElement) {
+        this.onset.next(onset);
+    }
+    getDiseaseResolution(): Observable<TimeElement> {
+        return this.resolution.asObservable();
+    }
+
+    setDiseaseResolution(resolution: TimeElement) {
+        this.resolution.next(resolution);
+    }
 }

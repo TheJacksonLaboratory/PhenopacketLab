@@ -1,14 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Disease } from 'src/app/models/disease';
-import { Gender, Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { Individual, KaryotypicSex, Sex, } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { BioSample } from 'src/app/models/biosample';
+import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-phenopacket',
@@ -23,30 +26,21 @@ import { BioSample } from 'src/app/models/biosample';
     ]),
   ],
 })
-export class PhenopacketComponent implements OnInit {
+export class PhenopacketComponent implements OnInit, OnDestroy {
 
-  constructor() {
-  }
   @Input()
   phenopacket: Phenopacket;
 
-  // @Output() onIdChanged = new EventEmitter<any>();
-  // @Output() onSexChanged = new EventEmitter<any>();
-  // @Output() onDobChanged = new EventEmitter<any>();
-
-  // phenoIdControl = new UntypedFormControl('', [Validators.required]);
-  // phenoSexControl = new UntypedFormControl('');
-  // phenoDobControl = new UntypedFormControl(new Date());
-  // lastEncounterDateControl = new UntypedFormControl(new Date());
-  // phenopacketIdSubscription: Subscription;
-  // phenopacketSexSubscription: Subscription;
-  // phenopacketDobSubscription: Subscription;
+  @Output() onIdChanged = new EventEmitter<any>();
+  @Output() onSexChanged = new EventEmitter<any>();
+  @Output() onDobChanged = new EventEmitter<any>();
+  @Output() onIndividualChange = new EventEmitter<Individual>();
 
   summary = '';
   sex: any = Sex.UNKNOWN_SEX;
   karyotypicSex: any = KaryotypicSex.UNKNOWN_KARYOTYPE;
   gender: any;
-  dob: Date;
+  // dob: Date;
   individual: Individual;
   lastEncounterDate = '';
 
@@ -58,10 +52,13 @@ export class PhenopacketComponent implements OnInit {
   active = 'top';
   viewMode;
   // accordion
-  step = 0;
+  step: number;
+
+  ref: DynamicDialogRef;
+
+  constructor(public dialogService: DialogService, public messageService: MessageService) { }
 
   ngOnInit(): void {
-
     this.viewMode = 'tab1';
     if (this.phenopacket) {
       this.individual = this.phenopacket.subject;
@@ -74,13 +71,13 @@ export class PhenopacketComponent implements OnInit {
       this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath?.toString();
       this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
       this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;
-
     }
   }
 
-  getKaryotypicSexes() {
-    // tslint:disable-next-line:radix
-    return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   getPhenotypicFeatures() {
@@ -129,19 +126,35 @@ export class PhenopacketComponent implements OnInit {
     return [];
   }
 
-  getSexes() {
-    // tslint:disable-next-line:radix
-    return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
-  }
-  getGenders() {
-    return Gender.VALUES;
-  }
-  getStatuses() {
-    // tslint:disable-next-line:radix
-    return Object.values(Status).filter(x => !(parseInt(x) >= 0));
-  }
-  deletePhenopacket() {
+  openEditDialog() {
+    this.ref = this.dialogService.open(IndividualDialogComponent, {
+      header: 'Edit Individual',
+      width: '70%',
+      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      data: { subject: this.individual }
+    });
 
+    this.ref.onClose.subscribe((subject: Individual) => {
+      if (subject) {
+        this.individual = subject;
+        this.updateIndividual();
+        // emit change
+        this.onIndividualChange.emit(this.individual);
+      }
+    });
+  }
+  updateIndividual() {
+    this.sex = this.individual.sex;
+    this.karyotypicSex = this.individual.karyotypicSex;
+    this.causeOfDeath = this.individual.vitalStatus?.causeOfDeath?.toString();
+    this.gender = this.individual.gender?.toString();
+    this.lastEncounterDate = this.individual.timeAtLastEncounter?.toString();
+    this.status = this.individual.vitalStatus?.status;
+    this.survivalTime = this.individual.vitalStatus?.survivalTimeInDays;
+    this.timeOfDeath = this.individual.vitalStatus?.timeOfDeath?.toString();
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
@@ -176,13 +189,6 @@ export class PhenopacketComponent implements OnInit {
     if (this.phenopacket) {
       this.phenopacket.files = files;
     }
-  }
-
-  editStatus() {
-    // TODO
-  }
-  editTimeOfLastEncounter() {
-    // TODO
   }
 
   setStep(index: number) {

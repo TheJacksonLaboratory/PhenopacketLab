@@ -1,13 +1,15 @@
 # Frontend
 
-This is the Phenopacketlab UI, built with Angular Material and Node. 
+This is the Phenopacketlab UI, built with Angular Material and Node.
+
+The live application can be accessed [here](http://35.229.81.196/dashboard).
 
 ## Getting started
 
-The Node version is 12.22.8.
+The Node version is 14.2.
 If on MacOs, you can install Node using homebrew and the following command:
 
-`brew install node@12`
+`brew install node@14`
 
 Fother operating systems, the specific version of Node can be downloaded [here](https://nodejs.org/en/download/) for the corresponding platform.
 

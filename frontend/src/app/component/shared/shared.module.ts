@@ -15,6 +15,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
@@ -28,21 +33,24 @@ import { ChipsModule } from 'primeng/chips';
 import { TreeModule } from 'primeng/tree';
 import { AccordionModule } from 'primeng/accordion';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
 import { TimeElementComponent } from './time-element/time-element.component';
 import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
-import { MatTreeModule } from '@angular/material/tree';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
+import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
+import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
+import { AgeRangeComponent } from './time-element/age-range/age-range.component';
+import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
+import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
 
 
 @NgModule({
@@ -82,7 +90,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatInputModule,
     MatCheckboxModule,
     MatButtonToggleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    RadioButtonModule,
+    CheckboxModule,
+
   ],
   declarations: [
     MessageDialogComponent,
@@ -90,10 +101,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     TimeElementComponent,
     SearchFilterComponent,
     AgeComponent,
+    AgeRangeComponent,
+    GestationalAgeComponent,
+    OntologyTimeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent
+    TreeSearchComponent,
+    DiseaseEditComponent,
+    PhenotypicFeatureEditComponent,
+    IndividualEditComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -101,10 +118,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     TimeElementComponent,
     SearchFilterComponent,
     AgeComponent,
+    AgeRangeComponent,
+    GestationalAgeComponent,
+    OntologyTimeComponent,
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent
+    TreeSearchComponent,
+    DiseaseEditComponent,
+    PhenotypicFeatureEditComponent,
+    IndividualEditComponent
   ],
   providers: [MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

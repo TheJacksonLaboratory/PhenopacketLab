@@ -29,13 +29,14 @@ export class Convert {
 
 export class OntologyClass extends Convert {
 
+    id = '';
+    label = '';
+
     constructor(id?: string, label?: string) {
         super();
         this.id = id;
         this.label = label;
     }
-    id = '';
-    label = '';
 
     static create(obj: any): OntologyClass {
         const ontologyClass = new OntologyClass();
@@ -170,12 +171,39 @@ export class Age {
         return age;
     }
 
+    /**
+     *
+     * @param years
+     * @param months
+     * @param days
+     * @returns an ISO8601 duration
+     */
+    public static convertToIso8601(years: number, months: number, days: number): string {
+        let isoStr: string;
+        let yearsStr = '';
+        if (years) {
+            yearsStr = `${years}Y`;
+        }
+        let monthsStr = '';
+        if (months) {
+            monthsStr = `${months}M`;
+        }
+        let daysStr = '';
+        if (days) {
+            daysStr = `${days}D`;
+        }
+        if (yearsStr !== '' || monthsStr !== '' || daysStr !== '') {
+            isoStr = `P${yearsStr}${monthsStr}${daysStr}`;
+        }
+        return isoStr;
+    }
+
     public getYears() {
         if (this.iso8601duration) {
             const prefix = this.iso8601duration.split('Y');
             if (prefix) {
                 // tslint:disable-next-line:radix
-                return parseInt(prefix[0].substring(1));
+                return parseInt(prefix[0]?.substring(1));
             }
         }
     }
@@ -188,6 +216,8 @@ export class Age {
                     // tslint:disable-next-line:radix
                     return parseInt(prefix[1]);
                 }
+            } else {
+                return null;
             }
         }
     }
@@ -196,7 +226,9 @@ export class Age {
             const prefix = this.iso8601duration.split('M');
             if (prefix.length > 0) {
                 // tslint:disable-next-line:radix
-                return parseInt(prefix[1].substring(0, prefix[1].length - 1));
+                return parseInt(prefix[1]?.substring(0, prefix[1]?.length - 1));
+            } else {
+                return null;
             }
         }
     }
@@ -299,13 +331,20 @@ export class TimeElement extends Convert {
 
     toString() {
         if (this.element instanceof GestationalAge) {
-            return `${this.element.days} days, ${this.element.weeks} weeks`;
+            let weeksStr = ''; let daysStr = '';
+            if (this.element.weeks) {
+                weeksStr = `${this.element.weeks} week(s)`;
+            }
+            if (this.element.days) {
+                daysStr = `${this.element.days} day(s)`;
+            }
+            return `${weeksStr} - ${daysStr} `;
         } else if (this.element instanceof Age) {
             return this.element.iso8601duration;
         } else if (this.element instanceof OntologyClass) {
             return this.element.toString();
         } else if (this.element instanceof AgeRange) {
-            return `${this.element.start} - ${this.element.start}`;
+            return `${this.element.start?.iso8601duration} - ${this.element.end?.iso8601duration}`;
         } else if (typeof this.element === 'string') {
             return this.element;
         } else if (this.element instanceof TimeInterval) {
@@ -319,6 +358,14 @@ export enum TimeElementType {
     AGE_RANGE = 'Age range',
     GESTATIONAL_AGE = 'Gestational age',
     ONTOLOGY_CLASS = 'Ontology class'
+}
+export enum TimeElementId {
+    INDIVIDUAL_TIME_OF_DEATH,
+    INDIVIDUAL_ONSET,
+    PHENOTYPIC_ONSET,
+    PHENOTYPIC_RESOLUTION,
+    DISEASE_ONSET,
+    DISEASE_RESOLUTION
 }
 export class File extends Convert {
     id: string; // not part of the phenopacket model (used only to distinguish between files)

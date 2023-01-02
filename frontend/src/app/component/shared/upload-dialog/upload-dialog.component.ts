@@ -1,17 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { UploadService } from 'src/app/services/upload-service';
-import { FamilyService } from 'src/app/services/family.service';
 import { CohortService } from 'src/app/services/cohort.service';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Cohort } from 'src/app/models/cohort';
 
 @Component({
   selector: 'app-upload-dialog',
   templateUrl: './upload-dialog.component.html',
   styleUrls: ['./upload-dialog.component.css']
 })
-export class UploadDialogComponent implements OnInit {
+export class UploadDialogComponent implements OnInit, OnDestroy {
 
   public files: Set<File> = new Set();
   public file: File;
@@ -37,8 +37,11 @@ export class UploadDialogComponent implements OnInit {
   phenopackets = [];
   currentPhenopackets: Phenopacket[];
 
+  cohort: Cohort;
+  cohortSubscription: Subscription;
+
   constructor(public dialogRef: MatDialogRef<UploadDialogComponent>,
-    public uploadService: UploadService, public familyService: FamilyService,
+    public uploadService: UploadService,
     public cohortService: CohortService, @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog) {
 
@@ -48,9 +51,18 @@ export class UploadDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
+      this.cohort = cohort;
+    });
+
     this.showProgress = false;
   }
 
+  ngOnDestroy(): void {
+    if (this.cohortSubscription) {
+      this.cohortSubscription.unsubscribe();
+    }
+  }
   uploadFile($event) {
     console.log('---Uploading one or more files---');
     this.files = $event.target.files;
@@ -59,13 +71,6 @@ export class UploadDialogComponent implements OnInit {
     this.uploadSub = this.uploadService.importFromFile(this.files[0])
       .subscribe(
         (event) => {
-          // if (event.type === HttpEventType.UploadProgress) {
-            // this.percentCompleted = Math.round(100 * event.loaded / event.total);
-          //   this.showProgress = true;
-          //   this.uploading = true;
-          //   console.log(this.percentCompleted + "%");
-          // }
-
           // Check that the pheno id does not already exist
           for (const newPheno of event) {
             for (const currPheno of this.currentPhenopackets) {
@@ -78,7 +83,12 @@ export class UploadDialogComponent implements OnInit {
           }
 
           this.phenopackets = event;
-          this.cohortService.addPhenopacket(event[0]);
+
+          if (this.cohort === undefined) {
+            this.cohortService.setCohort(new Cohort());
+          }
+          this.cohort.members.push(event[0]);
+          this.cohortService.setCohort(this.cohort);
           this.showProgress = true;
           this.uploading = true;
           this.percentCompleted = 100;
@@ -120,4 +130,5 @@ export class UploadDialogComponent implements OnInit {
   onOkClick() {
     return { 'phenopackets': this.phenopackets };
   }
+
 }

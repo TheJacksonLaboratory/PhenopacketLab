@@ -1,0 +1,90 @@
+{
+  "data": [
+    {
+      "label": "T - Original primary tumor",
+      "key": "T",
+      "children": [
+        {
+          "label": "Primary tumor cannot be evaluated",
+          "key": "TX"
+        },
+        {
+          "label": "No evidence as primary tumor",
+          "key": "T0"
+        },
+        {
+          "label": "Carcinoma in situ (early cancer that has not spread to neighboring tissue)",
+          "key": "Tis"
+        },
+        {
+          "label": "Size and/or extent of the primary tumor",
+          "key": "T1-T4",
+          "children": [
+            {
+              "label": "T1",
+              "key": "T1"
+            },
+            {
+              "label": "T2",
+              "key": "T2"
+            },
+            {
+              "label": "T3",
+              "key": "T3"
+            },
+            {
+              "label": "T4",
+              "key": "T4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "N - Nearby lymph nodes reach",
+      "key": "N",
+      "children": [
+        {
+          "label": "Regional lymph nodes cannot be evaluated",
+          "key": "NX"
+        },
+        {
+          "label": "No regional lymph node involvement (no cancer found in the lymph nodes)",
+          "key": "N0"
+        },
+        {
+          "label": "Involvement of regional lymph nodes (number and/or extent of spread)",
+          "key": "N1-N3",
+          "children": [
+            {
+              "label": "N1",
+              "key": "N1"
+            },
+            {
+              "label": "N2",
+              "key": "N2"
+            },
+            {
+              "label": "N3",
+              "key": "N3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "M - distant metastases",
+      "key": "M",
+      "children": [
+        {
+          "label": "No distant metastasis (cancer has not spread to other parts of the body)",
+          "key": "M0"
+        },
+        {
+          "label": "Distant metastasis (cancer has spread to distant parts of the body)",
+          "key": "M1"
+        }
+      ]
+    }
+  ]
+}

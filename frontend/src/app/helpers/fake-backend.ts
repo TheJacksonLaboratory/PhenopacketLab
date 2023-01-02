@@ -12,7 +12,9 @@ const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
 const bodySites = require('../../assets/data/human-view.json');
 const modifiers = require('../../assets/data/modifiers.json');
 const onsets = require('../../assets/data/onset.json');
+const tnmFindings = require('../../assets/data/tnm.json');
 const mondoDiseases = require('../../assets/data/disease-mondo.json');
+const textMinedExample = require('../../assets/data/text-mined-example.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -30,27 +32,25 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function handleRoute() {
             switch (true) {
                 case url.endsWith('/diseases') && method === 'GET':
-                    console.log('fakebackend disease');
                     return getDiseases();
                 case url.match(/\/diseases\/.*/) && method === 'GET':
                     return getDiseaseById();
                 case url.endsWith('/phenotypic-features') && method === 'GET':
-                    console.log('fakebackend phenotypic features');
                     return getPhenotypicFeatures();
                 case url.match(/\/phenotypic-features\/.*/) && method === 'GET':
                     return getPhenotypicFeatureById();
                 case url.endsWith('/bodysites') && method === 'GET':
-                    console.log('fakebackend bodysites');
                     return getBodySites();
                 case url.endsWith('modifiers') && method === 'GET':
-                    console.log('fakebackend modifiers');
                     return getModifiers();
                 case url.endsWith('onsets') && method === 'GET':
-                    console.log('fakebackend onsets');
                     return getOnsets();
+                case url.endsWith('tnm-findings') && method === 'GET':
+                    return getTnmFindings();
                 case url.endsWith('mondo-diseases') && method === 'GET':
-                    console.log('fakebackend mondo-diseases');
                     return getMondoDiseases();
+                case url.endsWith('text-miner') && method === 'POST':
+                    return getTextMined();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -86,8 +86,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getOnsets() {
             return ok(onsets);
         }
+        function getTnmFindings() {
+            return ok(tnmFindings);
+        }
         function getMondoDiseases() {
             return ok(mondoDiseases);
+        }
+        function getTextMined() {
+            return ok(textMinedExample);
         }
         // helper functions
 

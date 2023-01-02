@@ -1,0 +1,12 @@
+<p-treeSelect
+    ngDefaultControl
+    id="ontologyClass"
+    appendTo="body"
+    [(ngModel)]="ontologyClass"
+    [options]="ontologyNodes"
+    (onNodeSelect)="updateOntologyClass($event)"
+    [metaKeySelection]="false"
+    placeholder="Select item"
+    [filter]="true"
+    [filterInputAutoFocus]="true"
+  ></p-treeSelect>

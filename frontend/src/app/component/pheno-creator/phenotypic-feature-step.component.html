@@ -1,0 +1,149 @@
+<p-card>
+  <as-split direction="horizontal">
+    <as-split-area [size]="50">
+      <!-- Phenotypic Feature table content & search -->
+      <p-toast></p-toast>
+      <p-card
+        header="Phenotypic Features search"
+        subheader="Search for a phenotypic feature using the search field below or the
+                    text-mining tool."
+      >
+        <app-search-box
+          [showHint]="false"
+          [itemName]="'Phenotypic feature'"
+          [searchLabel]="'Phenotypic feature'"
+          [placeHolderTxt]="'Enter a phenotypic feature name'"
+          [localStorageKey]="'phenotypic_features'"
+          [searchService]="searchService"
+          (selectedSearchItem)="onSearchCriteriaChange($event)"
+          [resetSearch]="false"
+        ></app-search-box>
+        <br />
+
+        <p-accordion>
+          <p-accordionTab header="Text mining search">
+            <app-text-mining
+              (phenotypicFeaturesChange)="addTextMinedFeatures($event)"
+            ></app-text-mining>
+          </p-accordionTab>
+        </p-accordion>
+
+        <br>
+        <div class="grid p-fluid">
+          <div class="field col-12">
+            <label for="onset"><b>Age of onset: </b></label>
+            <app-time-element
+              *ngIf="!onsetApplied"
+              id="onset"
+              [timeElement]="onset"
+              [ontologyNodes]="onsetsNodes"
+              [useOntologyClass]="true"
+              (timeElementEvent)="updateAgeOnset($event)"
+              aria-labelledby="onset-label"
+            ></app-time-element>
+            <!-- <br *ngIf="onsetApplied"> -->
+            <div *ngIf="onsetApplied" class="flex align-items-center">
+              {{ onset?.toString() }}
+              <button
+                *ngIf="onsetApplied"
+                pTooltip="Edit onset"
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-text"
+                (click)="editOnset()"
+              ></button>
+            </div>
+          </div>
+
+          <div class="field col-6">
+            <button
+              *ngIf="!onsetApplied"
+              pButton
+              type="button"
+              label="Apply onset to all features"
+              (click)="applyOnset()"
+            ></button>
+          </div>
+          <div class="field col-6"></div>
+        </div>
+
+        <p-table
+          *ngIf="visible"
+          [value]="phenotypicFeatures"
+          [(selection)]="selectedFeature"
+          [resizableColumns]="true"
+          styleClass="p-datatable-gridlines"
+          dataKey="key"
+          selectionMode="single"
+          (onRowSelect)="onRowSelect($event)"
+          [scrollable]="true"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-header">Added phenotypic features</div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Label</th>
+              <th pResizableColumn>Status</th>
+              <th pResizableColumn>Onset</th>
+              <th pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-feature>
+            <tr [pSelectableRow]="feature">
+              <td>{{ feature.type?.label }}</td>
+              <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
+              <td>{{ feature.onset?.toString() }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteFeature(feature)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </as-split-area>
+    <as-split-area [size]="50">
+      <!-- Phenotypic feature form -->
+      <p-card
+        header="Phenotypic Feature details"
+        subheader="Select the phenotypic feature on the left-side table and then edit its details."
+      >
+        <app-phenotypic-feature-edit
+          [phenotypicFeature]="selectedFeature"
+          (phenotypicFeatureChange)="updatePhenotypicFeature($event)"
+        ></app-phenotypic-feature-edit>
+      </p-card>
+    </as-split-area>
+  </as-split>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-between flex-wrap">
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+          iconPos="left"
+        ></p-button>
+      </div>
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Next"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>
+
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>

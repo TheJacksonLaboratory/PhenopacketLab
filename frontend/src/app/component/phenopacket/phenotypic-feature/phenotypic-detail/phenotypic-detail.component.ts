@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { Evidence } from 'src/app/models/base';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -11,13 +13,17 @@ import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog/phen
   styleUrls: ['./phenotypic-detail.component.scss']
 })
 
-export class PhenotypicDetailComponent implements OnInit {
+export class PhenotypicDetailComponent implements OnInit, OnDestroy {
+
+  @Input()
+  phenotypicFeature: PhenotypicFeature;
+  @Output()
+  onPhenotypicFeatureChange = new EventEmitter<PhenotypicFeature>();
 
   phenotypicDetailName: string;
   termId: string;
   description: string;
   selectedStatus: string;
-  statuses: string[] = ['Included', 'Excluded'];
   status: string;
   onset: string;
   resolution: string;
@@ -33,19 +39,9 @@ export class PhenotypicDetailComponent implements OnInit {
   evidenceDatasource = new DataPresentMatTableDataSource<Evidence>();
   evidenceColumns = ['id', 'name', 'refid', 'refname', 'description'];
 
-  // TODO - fetch from backend
-  severities: string[] = ['Borderline', 'Mild', 'Moderate', 'Severe', 'Profound'];
+  ref: DynamicDialogRef;
 
-  // TODO - fetch from backend
-  modifierValues: string[] = ['modifier 1', 'modifier 2'];
-
-  // TODO - fetch from backend
-  evidenceValues: string[] = ['evidence 1', 'evidence 2'];
-
-  @Input()
-  phenotypicFeature: PhenotypicFeature;
-
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialogService: DialogService, public messageService: MessageService) { }
 
   ngOnInit() {
     if (this.phenotypicFeature) {
@@ -62,7 +58,7 @@ export class PhenotypicDetailComponent implements OnInit {
     this.resolution = this.phenotypicFeature.resolution?.toString();
     this.severity = this.phenotypicFeature.severity?.toString();
     this.modifiers = this.phenotypicFeature.modifiers?.toString();
-    this.evidences = this.phenotypicFeature.evidence;
+    this.evidences = this.phenotypicFeature.evidences;
     this.evidenceDatasource.data = this.evidences;
   }
 
@@ -97,26 +93,29 @@ export class PhenotypicDetailComponent implements OnInit {
     return '';
   }
   openEditDialog() {
-    const phenotypicDetailData = { 'title': 'Edit phenotypic feature' };
-    phenotypicDetailData['feature'] = this.phenotypicFeature;
-    phenotypicDetailData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(PhenotypicDetailDialogComponent, {
-      width: '750px',
-      data: phenotypicDetailData
+    this.ref = this.dialogService.open(PhenotypicDetailDialogComponent, {
+      header: 'Edit Phenotypic Feature',
+      width: '70%',
+      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      data: { feature: this.phenotypicFeature }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        const updatedFeature = result.feature;
-        if (updatedFeature !== undefined) {
-          // update feature
-          this.phenotypicFeature = updatedFeature;
-          this.updatePhenotypicDetails();
-          // emit change
-          // this.onFeatureChanged.emit(this.phenotypicFeature);
-        }
+
+    this.ref.onClose.subscribe((feature: PhenotypicFeature) => {
+      if (feature) {
+        this.phenotypicFeature = feature;
+        this.updatePhenotypicDetails();
+        // emit change
+        this.onPhenotypicFeatureChange.emit(this.phenotypicFeature);
       }
     });
-    return dialogRef;
   }
 
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
 }
