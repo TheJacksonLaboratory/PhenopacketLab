@@ -10,4 +10,5 @@ module phenopacketlab.core {
     exports org.monarchinitiative.phenopacketlab.core;
     exports org.monarchinitiative.phenopacketlab.core.disease;
     exports org.monarchinitiative.phenopacketlab.core.ontology;
+    exports org.monarchinitiative.phenopacketlab.core.subtree to phenopacketlab.restapi;
 }
