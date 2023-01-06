@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core.subtree;
 
+import com.google.common.collect.Comparators;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.phenol.io.OntologyLoader;
@@ -35,6 +36,21 @@ public class CreateSubtreeTest {
         assertThat(root.getChildren().stream()
                 .map(SubtreeNode::getLabel)
                 .toList(),
+                hasItems("Antenatal onset", "Adult onset", "Congenital onset",
+                        "Neonatal onset", "Puerpural onset", "Pediatric onset"));
+    }
+
+    @Test
+    public void createSortedSubtree() {
+        TermId onset = TermId.of("HP:0003674");
+        SubtreeNode root = CreateSubtree.createSubtree(onset, HPO);
+
+        assertThat(root.getKey(), equalTo(onset.getValue()));
+        assertThat(root.getLabel(), equalTo("Onset"));
+        assertThat(Comparators.isInOrder(root.getChildren(), new SubtreeNodeComparator()), equalTo(true));
+        assertThat(root.getSortedChildren().stream()
+                        .map(SubtreeNode::getLabel)
+                        .toList(),
                 hasItems("Antenatal onset", "Adult onset", "Congenital onset",
                         "Neonatal onset", "Puerpural onset", "Pediatric onset"));
     }

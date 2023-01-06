@@ -1,8 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core.subtree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -32,6 +30,11 @@ public class SubtreeNode {
     }
 
     public List<SubtreeNode> getChildren() {
+        return children;
+    }
+
+    public List<SubtreeNode> getSortedChildren() {
+        Collections.sort(children, new SubtreeNodeComparator());
         return children;
     }
 

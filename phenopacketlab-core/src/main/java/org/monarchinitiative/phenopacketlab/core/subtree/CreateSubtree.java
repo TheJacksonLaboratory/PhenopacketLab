@@ -30,7 +30,7 @@ public class CreateSubtree {
         for (TermId childTermId : childTerms) {
             Term term = ontology.getTermMap().get(childTermId);
             SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
-            node.getChildren().add(childNode);
+            node.getSortedChildren().add(childNode);
             augmentWithChildren(ontology, childTermId, childNode);
         }
 
