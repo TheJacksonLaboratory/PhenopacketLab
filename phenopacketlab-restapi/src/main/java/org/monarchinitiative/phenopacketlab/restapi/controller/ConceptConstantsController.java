@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 
 import org.monarchinitiative.phenopacketlab.core.ConceptConstantsService;
+import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "${api.version}/constants")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ConceptConstantsController {
 
     private final ConceptConstantsService conceptConstantsService;
@@ -64,6 +67,11 @@ public class ConceptConstantsController {
     @GetMapping(value = "onset", headers = "Accept=application/json")
     public ResponseEntity<List<IdentifiedConcept>> getOnsetValues() {
         return ResponseEntity.ok(conceptConstantsService.onsetConstants());
+    }
+
+    @GetMapping(value = "treeonset", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getOnsetTreeValues() {
+        return ResponseEntity.ok(conceptConstantsService.onsetTreeConstants());
     }
 
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")

@@ -11,4 +11,5 @@ module phenopacketlab.core {
     exports org.monarchinitiative.phenopacketlab.core.disease;
     exports org.monarchinitiative.phenopacketlab.core.ontology;
     exports org.monarchinitiative.phenopacketlab.core.subtree to phenopacketlab.restapi;
+    opens org.monarchinitiative.phenopacketlab.core.subtree to com.fasterxml.jackson.databind;
 }

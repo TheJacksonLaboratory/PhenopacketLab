@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core;
 
+import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 
@@ -15,6 +16,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> modifierConstants;
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
+    private final SubtreeNode onsetTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -25,6 +27,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> modifierConstants,
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
+                                SubtreeNode onsetTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -34,6 +37,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.modifierConstants = modifierConstants;
         this.severityConstants = severityConstants;
         this.onsetConstants = onsetConstants;
+        this.onsetTreeConstants = onsetTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
         this.contigConstants = contigConstants;
     }
@@ -71,6 +75,11 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     @Override
     public List<IdentifiedConcept> onsetConstants() {
         return onsetConstants;
+    }
+
+    @Override
+    public SubtreeNode onsetTreeConstants() {
+        return onsetTreeConstants;
     }
 
     @Override

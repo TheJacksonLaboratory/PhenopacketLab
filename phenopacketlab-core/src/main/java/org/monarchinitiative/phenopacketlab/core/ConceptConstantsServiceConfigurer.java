@@ -5,6 +5,8 @@ import org.monarchinitiative.phenol.annotations.constants.hpo.HpoSubOntologyRoot
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacketlab.core.subtree.CreateSubtree;
+import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
@@ -35,6 +37,7 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
+        SubtreeNode onsetTreeConstants = configureOnsetTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -45,6 +48,7 @@ public class ConceptConstantsServiceConfigurer {
                 modifierConstants,
                 severityConstants,
                 onsetConstants,
+                onsetTreeConstants,
                 structuralTypeConstants,
                 contigConstants);
     }
@@ -163,6 +167,23 @@ public class ConceptConstantsServiceConfigurer {
         } else {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
             return List.of();
+        }
+    }
+
+    private static SubtreeNode configureOnsetTreeConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
+            return null;
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        if (hp instanceof OntologyConceptResource) {
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
+            return CreateSubtree.createSubtree(HpoOnsetTermIds.ONSET, hpo, Comparator.comparing(SubtreeNode::getLabel));
+        } else {
+            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            return null;
         }
     }
 

@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core;
 
+import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 
@@ -23,6 +24,8 @@ public interface ConceptConstantsService {
     List<IdentifiedConcept> severityConstants();
 
     List<IdentifiedConcept> onsetConstants();
+
+    SubtreeNode onsetTreeConstants();
 
     List<Concept> structuralTypeConstants();
 
