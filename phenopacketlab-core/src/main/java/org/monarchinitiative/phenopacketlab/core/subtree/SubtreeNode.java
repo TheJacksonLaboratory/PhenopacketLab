@@ -15,10 +15,12 @@ public class SubtreeNode {
 
     private final String key, label;
     private final List<SubtreeNode> children = new ArrayList<>();
+    private final Comparator<SubtreeNode> comparator;
 
-    public SubtreeNode(String key, String label) {
+    public SubtreeNode(String key, String label, Comparator<SubtreeNode> comparator) {
         this.key = key;
         this.label = label;
+        this.comparator = comparator;
     }
 
     public String getKey() {
@@ -30,11 +32,9 @@ public class SubtreeNode {
     }
 
     public List<SubtreeNode> getChildren() {
-        return children;
-    }
-
-    public List<SubtreeNode> getSortedChildren() {
-        Collections.sort(children, new SubtreeNodeComparator());
+        if (comparator != null) {
+            Collections.sort(children, comparator);
+        }
         return children;
     }
 

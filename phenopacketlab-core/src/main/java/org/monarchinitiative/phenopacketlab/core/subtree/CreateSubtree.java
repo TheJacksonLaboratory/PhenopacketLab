@@ -5,6 +5,7 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
+import java.util.Comparator;
 import java.util.Set;
 
 public class CreateSubtree {
@@ -13,25 +14,26 @@ public class CreateSubtree {
     }
 
     /**
-     * Create a subtree with given {@code root} from an {@code ontology}.
+     * Create a subtree with given {@code root} from an {@code ontology}, with a {@code comparator} used to sort
+     * the children of the tree branches.
      */
-    public static SubtreeNode createSubtree(TermId root, Ontology ontology) {
+    public static SubtreeNode createSubtree(TermId root, Ontology ontology, Comparator<SubtreeNode> comparator) {
         Term rootTerm = ontology.getTermMap().get(root);
         if (rootTerm == null)
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
-        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName());
-        return augmentWithChildren(ontology, root, node);
+        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName(), comparator);
+        return augmentWithChildren(ontology, root, node, comparator);
     }
 
-    private static SubtreeNode augmentWithChildren(Ontology ontology, TermId termId, SubtreeNode node) {
+    private static SubtreeNode augmentWithChildren(Ontology ontology, TermId termId, SubtreeNode node, Comparator<SubtreeNode> comparator) {
         Set<TermId> childTerms = OntologyAlgorithm.getChildTerms(ontology, termId, false);
 
         for (TermId childTermId : childTerms) {
             Term term = ontology.getTermMap().get(childTermId);
-            SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
-            node.getSortedChildren().add(childNode);
-            augmentWithChildren(ontology, childTermId, childNode);
+            SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName(), comparator);
+            node.getChildren().add(childNode);
+            augmentWithChildren(ontology, childTermId, childNode, comparator);
         }
 
         return node;
