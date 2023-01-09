@@ -21,11 +21,13 @@ public interface ConceptConstantsService {
 
     List<IdentifiedConcept> modifierConstants();
 
+    List<SubtreeNode> modifierTreeConstants();
+
     List<IdentifiedConcept> severityConstants();
 
     List<IdentifiedConcept> onsetConstants();
 
-    SubtreeNode onsetTreeConstants();
+    List<SubtreeNode> onsetTreeConstants();
 
     List<Concept> structuralTypeConstants();
 

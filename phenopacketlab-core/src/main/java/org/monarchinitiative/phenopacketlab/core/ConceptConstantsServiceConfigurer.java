@@ -29,15 +29,19 @@ public class ConceptConstantsServiceConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConceptConstantsServiceConfigurer.class);
 
+    // TODO add constant to HpoClinicalModifierTermIds
+    public static final TermId MODIFIER = TermId.of("HP:0012823");
+
     public static ConceptConstantsService configure(ConceptResourceService resourceService) {
         List<IdentifiedConcept> sexConstants = configureSexConstants(resourceService);
         List<IdentifiedConcept> genderConstants = configureGenderConstants(resourceService);
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
+        List<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
-        SubtreeNode onsetTreeConstants = configureOnsetTreeConstants(resourceService);
+        List<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -46,6 +50,7 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateConstants,
                 lateralityConstants,
                 modifierConstants,
+                modifierTreeConstants,
                 severityConstants,
                 onsetConstants,
                 onsetTreeConstants,
@@ -148,6 +153,24 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
+    private static List<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure modifier tree constants due to missing HP concept resource!");
+            return null;
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        if (hp instanceof OntologyConceptResource) {
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
+
+            return CreateSubtree.createSubtree(MODIFIER, hpo, Comparator.comparing(SubtreeNode::getLabel));
+        } else {
+            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            return null;
+        }
+    }
+
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
@@ -170,7 +193,7 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static SubtreeNode configureOnsetTreeConstants(ConceptResourceService resourceService) {
+    private static List<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
             LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
