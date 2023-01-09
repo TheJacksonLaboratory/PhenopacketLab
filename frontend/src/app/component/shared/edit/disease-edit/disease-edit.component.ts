@@ -38,12 +38,12 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // get onsets
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+            this.onsetsNodes = <OntologyTreeNode[]>nodes;
         });
         // stages
         this.stagesNodes = this.getStages();
         this.findingsSubscription = this.phenopacketService.getTnmFindings().subscribe(nodes => {
-            this.findingsNodes = <OntologyTreeNode[]>nodes.data;
+            this.findingsNodes = <OntologyTreeNode[]>nodes;
         });
     }
     ngOnDestroy(): void {

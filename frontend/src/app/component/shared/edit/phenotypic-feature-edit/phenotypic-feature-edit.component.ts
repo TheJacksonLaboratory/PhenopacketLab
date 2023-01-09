@@ -38,14 +38,14 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
 
     // Get modifiers
     this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
-      this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
+      this.modifiersNodes = <OntologyTreeNode[]>nodes;
     }
     );
     // get Evidences
     this.evidencesNodes = this.getEvidences();
     // get onsets
     this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-      this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+      this.onsetsNodes = <OntologyTreeNode[]>nodes;
     });
   }
 

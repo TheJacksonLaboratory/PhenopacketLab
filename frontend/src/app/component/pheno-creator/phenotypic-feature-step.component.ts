@@ -70,7 +70,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         });
         // get onsets
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+            this.onsetsNodes = <OntologyTreeNode[]>nodes;
         });
         // get profile
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {

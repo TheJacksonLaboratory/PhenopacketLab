@@ -1,690 +1,688 @@
-{
-  "data": [
-    {
-      "label": "Clinical course",
-      "key": "HP:0031797",
-      "children": [
-        {
-          "label": "Temporal pattern",
-          "key": "HP:0011008",
-          "children": [
-            {
-              "label": "Recurrent",
-              "key": "HP:0031796",
-              "children": [
-                {
-                  "label": "Periodic",
-                  "key": "HP:0025304",
-                  "children": [
-                    {
-                      "label": "Quotidian",
-                      "key": "HP:0025305"
-                    }
-                  ]
-                },
-                {
-                  "label": "Episodic",
-                  "key": "HP:0025303"
-                },
-                {
-                  "label": "Seizure cluster",
-                  "key": "HP:0033349"
-                }
-              ]
-            },
-            {
-              "label": "Acute",
-              "key": "HP:0011009",
-              "children": [
-                {
-                  "label": "Acute emergence over days",
-                  "key": "HP:0025308"
-                },
-                {
-                  "label": "Acute emergence over minutes",
-                  "key": "HP:0025306"
-                },
-                {
-                  "label": "Acute emergence over hours",
-                  "key": "HP:0025307"
-                }
-              ]
-            },
-            {
-              "label": "Nocturnal",
-              "key": "HP:0025301"
-            },
-            {
-              "label": "Stable",
-              "key": "HP:0031915"
-            },
-            {
-              "label": "Diurnal",
-              "key": "HP:0025302"
-            },
-            {
-              "label": "Fluctuating",
-              "key": "HP:0031914"
-            },
-            {
-              "label": "Subacute",
-              "key": "HP:0011011"
-            },
-            {
-              "label": "Prolonged",
-              "key": "HP:0025297"
-            },
-            {
-              "label": "Insidious onset",
-              "key": "HP:0003587"
-            },
-            {
-              "label": "Transient",
-              "key": "HP:0025153"
-            },
-            {
-              "label": "Migratory",
-              "key": "HP:0025279"
-            },
-            {
-              "label": "Chronic",
-              "key": "HP:0011010"
-            }
-          ]
-        },
-        {
-          "label": "Mortality/Aging",
-          "key": "HP:0040006",
-          "children": [
-            {
-              "label": "Age of death",
-              "key": "HP:0011420",
-              "children": [
-                {
-                  "label": "Death in adulthood",
-                  "key": "HP:0033763",
-                  "chidlren": [
-                    {
-                      "label": "Death in early adulthood",
-                      "key": "HP:0100613"
-                    },
-                    {
-                      "label": "Death in middle age",
-                      "key": "HP:0033764"
-                    },
-                    {
-                      "label": "Death in late adulthood",
-                      "key": "HP:0033765"
-                    }
-                  ]
-                },
-                {
-                  "label": "Prenatal death",
-                  "key": "HP:0034241",
-                  "chidlren": [
-                    {
-                      "label": "Miscarriage",
-                      "key": "HP:0005268"
-                    },
-                    {
-                      "label": "Stillbirth",
-                      "key": "HP:0003826"
-                    }
-                  ]
-                },
-                {
-                  "label": "Neonatal death",
-                  "key": "HP:0003811"
-                },
-                {
-                  "label": "Death in infancy",
-                  "key": "HP:0001522"
-                },
-                {
-                  "label": "Death in childhood",
-                  "key": "HP:0003819"
-                },
-                {
-                  "label": "Death in adolescence",
-                  "key": "HP:0011421"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "Pace of progression",
-          "key": "HP:0003679",
-          "children": [
-            {
-              "label": "Nonprogressive",
-              "key": "HP:0003680"
-            },
-            {
-              "label": "Slowly progressive ",
-              "key": "HP:0003677"
-            },
-            {
-              "label": "Rapidly progressive",
-              "key": "HP:0003678"
-            },
-            {
-              "label": "Progressive",
-              "key": "HP:0003676"
-            },
-            {
-              "label": "Variable progression rate",
-              "key": "HP:0003682"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Position",
-      "key": "HP:0012830",
-      "children": [
-        {
-          "label": "Spatial pattern",
-          "key": "HP:0012836",
-          "children": [
-            {
-              "label": "Centrilobular",
-              "key": "HP:0033816"
-            },
-            {
-              "label": "Multifocal",
-              "key": "HP:0030651"
-            },
-            {
-              "label": "Bronchocentric",
-              "key": "HP:0033815"
-            },
-            {
-              "label": "Dermatomal",
-              "key": "HP:0025294"
-            },
-            {
-              "label": "Acral",
-              "key": "HP:0025292"
-            },
-            {
-              "label": "Distal",
-              "key": "HP:0012839"
-            },
-            {
-              "label": "Diffuse",
-              "key": "HP:0020034"
-            },
-            {
-              "label": "Pericentral",
-              "key": "HP:0030649"
-            },
-            {
-              "label": "Joint flexor surface localization",
-              "key": "HP:0032540"
-            },
-            {
-              "label": "Peripheral",
-              "key": "HP:0030646"
-            },
-            {
-              "label": "Axial",
-              "key": "HP:0025287"
-            },
-            {
-              "label": "Apical",
-              "key": "HP:0033820"
-            },
-            {
-              "label": "Joint extensor surface localization",
-              "key": "HP:0032539"
-            },
-            {
-              "label": "Paracentral",
-              "key": "HP:0030647"
-            },
-            {
-              "label": "Reticular",
-              "key": "HP:0033818"
-            },
-            {
-              "label": "Predominant small joint localization",
-              "key": "HP:0032544"
-            },
-            {
-              "label": "Herpetiform",
-              "key": "HP:0025295"
-            },
-            {
-              "label": "Proximal",
-              "key": "HP:0012840"
-            },
-            {
-              "label": "Perilymphatic",
-              "key": "HP:0033819"
-            },
-            {
-              "label": "Midperipheral",
-              "key": "HP:0030648"
-            },
-            {
-              "label": "Paraseptal",
-              "key": "HP:0033814"
-            },
-            {
-              "label": "Polycyclic",
-              "key": "HP:0031450"
-            },
-            {
-              "label": "Miliary",
-              "key": "HP:0033817"
-            },
-            {
-              "label": "Cervical (neck)",
-              "key": "HP:0032535"
-            },
-            {
-              "label": "Distributed along Blaschko lines",
-              "key": "HP:0025293"
-            },
-            {
-              "label": "Morbilliform",
-              "key": "HP:0025296"
-            },
-            {
-              "label": "Lower-body predominance",
-              "key": "HP:0025291"
-            },
-            {
-              "label": "Upper-body predominance",
-              "key": "HP:0025290"
-            },
-            {
-              "label": "Perilobular",
-              "key": "HP:0033813"
-            },
-            {
-              "label": "Central",
-              "key": "HP:0030645"
-            },
-            {
-              "label": "Focal",
-              "key": "HP:0030650"
-            },
-            {
-              "label": "Lateral",
-              "key": "HP:0025275"
-            },
-            {
-              "label": "Localized",
-              "key": "HP:0033817"
-            },
-            {
-              "label": "Generalized",
-              "key": "HP:0012837"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Triggered by",
-      "key": "HP:0025204",
-      "children": [
-        {
-          "label": "Triggered by food ingestion",
-          "key": "HP:0033793",
-          "children": [
-            {
-              "label": "Triggered by carbohydrate ingestion",
-              "key": "HP:0025208",
-              "children": [
-                {
-                  "label": "Triggered by galactose ingestion",
-                  "key": "HP:0025213"
-                },
-                {
-                  "label": "Triggered by glucose ingestion",
-                  "key": "HP:0025210"
-                },
-                {
-                  "label": "Triggered by fructose ingestion",
-                  "key": "HP:0025209"
-                }
-              ]
-            },
-            {
-              "label": "Triggered by heavy meal",
-              "key": "HP:0025216"
-            },
-            {
-              "label": "Triggered by fava bean ingestion",
-              "key": "HP:0034060"
-            },
-            {
-              "label": "Triggered by cheese ingestion",
-              "key": "HP:0033789"
-            },
-            {
-              "label": "Triggered by sodium ingestion",
-              "key": "HP:0025224"
-            },
-            {
-              "label": "Triggered by high-fat diet",
-              "key": "HP:0025217"
-            },
-            {
-              "label": "Triggered by ingestion of potassium-rich food",
-              "key": "HP:0031167"
-            },
-            {
-              "label": "Triggered by breast feeding",
-              "key": "HP:0025205"
-            },
-            {
-              "label": "Triggered by ethanol ingestion",
-              "key": "HP:0025211"
-            }
-          ]
-        },
-        {
-          "label": "Triggered by infection",
-          "key": "HP:0033184",
-          "children": [
-            {
-              "label": "Triggered by viral infection",
-              "key": "HP:0033198",
-              "children": [
-                {
-                  "label": "Triggered by EBV infection",
-                  "key": "HP:0033185"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "Triggered by physical trauma",
-          "key": "HP:0031135",
-          "children": [
-            {
-              "label": "Triggered by head trauma",
-              "key": "HP:0500260"
-            }
-          ]
-        },
-        {
-          "label": "Triggered by dehydration",
-          "key": "HP:0025207"
-        },
-        {
-          "label": "Triggered by anesthetics",
-          "key": "HP:0500261"
-        },
-        {
-          "label": "Triggered by emotion",
-          "key": "HP:0025334"
-        },
-        {
-          "label": "Triggered by menstruation",
-          "key": "HP:0025220"
-        },
-        {
-          "label": "Triggered by vestibular stimulation",
-          "key": "HP:0025229"
-        },
-        {
-          "label": "Triggered by stress",
-          "key": "HP:0025226"
-        },
-        {
-          "label": "Triggered by vaccination",
-          "key": "HP:0025219"
-        },
-        {
-          "label": "Triggered by febrile illness",
-          "key": "HP:0025215"
-        },
-        {
-          "label": "Triggered by cold",
-          "key": "HP:0025206"
-        },
-        {
-          "label": "Triggered by smoking",
-          "key": "HP:0025223"
-        },
-        {
-          "label": "Triggered by sudden movement",
-          "key": "HP:0025228"
-        },
-        {
-          "label": "Triggered by heat",
-          "key": "HP:0025214"
-        },
-        {
-          "label": "Triggered by excitement",
-          "key": "HP:0025227"
-        },
-        {
-          "label": "Triggered by sleep deprivation",
-          "key": "HP:0025222"
-        },
-        {
-          "label": "Triggered by sound",
-          "key": "HP:0025225"
-        },
-        {
-          "label": "Triggered by muscle relaxant",
-          "key": "HP:0034195"
-        },
-        {
-          "label": "Triggered by exertion",
-          "key": "HP:0025377"
-        },
-        {
-          "label": "Triggered by an abusive adult",
-          "key": "HP:0033032"
-        },
-        {
-          "label": "Triggered by hyperventilation",
-          "key": "HP:0025218"
-        },
-        {
-          "label": "Triggered by fasting",
-          "key": "HP:0025212"
-        },
-        {
-          "label": "Triggered by pregnancy",
-          "key": "HP:0025221"
-        }
-      ]
-    },
-    {
-      "label": "Fracture type",
-      "key": "HP:4000042",
-      "children": [
-        {
-          "label": "Compression fracture",
-          "key": "HP:4000047"
-        },
-        {
-          "label": "Closed fracture",
-          "key": "HP:4000051"
-        },
-        {
-          "label": "Greenstick fracture",
-          "key": "HP:4000043"
-        },
-        {
-          "label": "Avulsion fracture",
-          "key": "HP:4000052"
-        },
-        {
-          "label": "Transverse fracture",
-          "key": "HP:4000044"
-        },
-        {
-          "label": "Open fracture",
-          "key": "HP:4000050"
-        },
-        {
-          "label": "Segmental fracture",
-          "key": "HP:4000049"
-        },
-        {
-          "label": "Oblique fracture",
-          "key": "HP:4000046"
-        },
-        {
-          "label": "Displaced fracture",
-          "key": "HP:4000053"
-        },
-        {
-          "label": "Comminuted fracture",
-          "key": "HP:4000048"
-        },
-        {
-          "label": "Spiral fracture",
-          "key": "HP:4000045"
-        }
-      ]
-    },
-    {
-      "label": "Aggravated by",
-      "key": "HP:0025285",
-      "children": [
-        {
-          "label": "Exacerbated by aspirin ingestion",
-          "key": "HP:0032365"
-        },
-        {
-          "label": "Aggravated by acetylcholinesterase inhibitor",
-          "key": "HP:0032525"
-        },
-        {
-          "label": "Exacerbated by methylxanthine ingestion",
-          "key": "HP:0032534"
-        },
-        {
-          "label": "Exacerbated by barbiturate medication",
-          "key": "HP:0032502"
-        },
-        {
-          "label": "Exacerbated by contraceptive medication",
-          "key": "HP:0032501"
-        },
-        {
-          "label": "Aggravated by activity",
-          "key": "HP:0025286"
-        },
-        {
-          "label": "Exacerbated by pregnancy",
-          "key": "HP:0032542"
-        },
-        {
-          "label": "Exacerbated by tobacco use",
-          "key": "HP:0032500"
-        },
-        {
-          "label": "Exacerbated by head trauma",
-          "key": "HP:0025315"
-        }
-      ]
-    },
-    {
-      "label": "Ameliorated by",
-      "key": "HP:0025254",
-      "children": [
-        {
-          "label": "Ameliorated by immunosuppresion",
-          "key": "HP:0032522"
-        },
-        {
-          "label": "Ameliorated by ethanol ingestion",
-          "key": "HP:0032503"
-        },
-        {
-          "label": "Ameliorated by acetylcholinesterase inhibitor",
-          "key": "HP:0032526"
-        },
-        {
-          "label": "Ameliorated by carbohydrate ingestion",
-          "key": "HP:0025257"
-        },
-        {
-          "label": "Ameliorated by heat",
-          "key": "HP:0025256"
-        },
-        {
-          "label": "Ameliorated by pregnancy",
-          "key": "HP:0025255"
-        }
-      ]
-    },
-    {
-      "label": "Pain characteristic",
-      "key": "HP:0025280",
-      "children": [
-        {
-          "label": "Tender",
-          "key": "HP:0025283"
-        },
-        {
-          "label": "Dull",
-          "key": "HP:0025282"
-        },
-        {
-          "label": "Sleep-interrupting",
-          "key": "HP:0025284"
-        },
-        {
-          "label": "Sharp",
-          "key": "HP:0025281"
-        }
-      ]
-    },
-    {
-      "label": "Phenotypic variability",
-      "key": "HP:0003812",
-      "children": [
-        {
-          "label": "Incomplete penetrance",
-          "key": "HP:0003829",
-          "children": [
-            {
-              "label": "Age-dependent penetrance",
-              "key": "HP:0003831"
-            }
-          ]
-        },
-        {
-          "label": "Variable expressivity",
-          "key": "HP:0003828"
-        }
-      ]
-    },
-    {
-      "label": "Clinical relevance",
-      "key": "HP:0045088",
-      "children": [
-        {
-          "label": "Minor finding",
-          "key": "HP:0045090"
-        },
-        {
-          "label": "Distinctive finding",
-          "key": "HP:0045089"
-        }
-      ]
-    },
-    {
-      "label": "Worse in evening",
-      "key": "HP:0410401"
-    },
-    {
-      "label": "Refractory",
-      "key": "HP:0031375"
-    }
-  ]
-}
+[
+  {
+    "label": "Clinical course",
+    "key": "HP:0031797",
+    "children": [
+      {
+        "label": "Temporal pattern",
+        "key": "HP:0011008",
+        "children": [
+          {
+            "label": "Recurrent",
+            "key": "HP:0031796",
+            "children": [
+              {
+                "label": "Periodic",
+                "key": "HP:0025304",
+                "children": [
+                  {
+                    "label": "Quotidian",
+                    "key": "HP:0025305"
+                  }
+                ]
+              },
+              {
+                "label": "Episodic",
+                "key": "HP:0025303"
+              },
+              {
+                "label": "Seizure cluster",
+                "key": "HP:0033349"
+              }
+            ]
+          },
+          {
+            "label": "Acute",
+            "key": "HP:0011009",
+            "children": [
+              {
+                "label": "Acute emergence over days",
+                "key": "HP:0025308"
+              },
+              {
+                "label": "Acute emergence over minutes",
+                "key": "HP:0025306"
+              },
+              {
+                "label": "Acute emergence over hours",
+                "key": "HP:0025307"
+              }
+            ]
+          },
+          {
+            "label": "Nocturnal",
+            "key": "HP:0025301"
+          },
+          {
+            "label": "Stable",
+            "key": "HP:0031915"
+          },
+          {
+            "label": "Diurnal",
+            "key": "HP:0025302"
+          },
+          {
+            "label": "Fluctuating",
+            "key": "HP:0031914"
+          },
+          {
+            "label": "Subacute",
+            "key": "HP:0011011"
+          },
+          {
+            "label": "Prolonged",
+            "key": "HP:0025297"
+          },
+          {
+            "label": "Insidious onset",
+            "key": "HP:0003587"
+          },
+          {
+            "label": "Transient",
+            "key": "HP:0025153"
+          },
+          {
+            "label": "Migratory",
+            "key": "HP:0025279"
+          },
+          {
+            "label": "Chronic",
+            "key": "HP:0011010"
+          }
+        ]
+      },
+      {
+        "label": "Mortality/Aging",
+        "key": "HP:0040006",
+        "children": [
+          {
+            "label": "Age of death",
+            "key": "HP:0011420",
+            "children": [
+              {
+                "label": "Death in adulthood",
+                "key": "HP:0033763",
+                "chidlren": [
+                  {
+                    "label": "Death in early adulthood",
+                    "key": "HP:0100613"
+                  },
+                  {
+                    "label": "Death in middle age",
+                    "key": "HP:0033764"
+                  },
+                  {
+                    "label": "Death in late adulthood",
+                    "key": "HP:0033765"
+                  }
+                ]
+              },
+              {
+                "label": "Prenatal death",
+                "key": "HP:0034241",
+                "chidlren": [
+                  {
+                    "label": "Miscarriage",
+                    "key": "HP:0005268"
+                  },
+                  {
+                    "label": "Stillbirth",
+                    "key": "HP:0003826"
+                  }
+                ]
+              },
+              {
+                "label": "Neonatal death",
+                "key": "HP:0003811"
+              },
+              {
+                "label": "Death in infancy",
+                "key": "HP:0001522"
+              },
+              {
+                "label": "Death in childhood",
+                "key": "HP:0003819"
+              },
+              {
+                "label": "Death in adolescence",
+                "key": "HP:0011421"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Pace of progression",
+        "key": "HP:0003679",
+        "children": [
+          {
+            "label": "Nonprogressive",
+            "key": "HP:0003680"
+          },
+          {
+            "label": "Slowly progressive ",
+            "key": "HP:0003677"
+          },
+          {
+            "label": "Rapidly progressive",
+            "key": "HP:0003678"
+          },
+          {
+            "label": "Progressive",
+            "key": "HP:0003676"
+          },
+          {
+            "label": "Variable progression rate",
+            "key": "HP:0003682"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Position",
+    "key": "HP:0012830",
+    "children": [
+      {
+        "label": "Spatial pattern",
+        "key": "HP:0012836",
+        "children": [
+          {
+            "label": "Centrilobular",
+            "key": "HP:0033816"
+          },
+          {
+            "label": "Multifocal",
+            "key": "HP:0030651"
+          },
+          {
+            "label": "Bronchocentric",
+            "key": "HP:0033815"
+          },
+          {
+            "label": "Dermatomal",
+            "key": "HP:0025294"
+          },
+          {
+            "label": "Acral",
+            "key": "HP:0025292"
+          },
+          {
+            "label": "Distal",
+            "key": "HP:0012839"
+          },
+          {
+            "label": "Diffuse",
+            "key": "HP:0020034"
+          },
+          {
+            "label": "Pericentral",
+            "key": "HP:0030649"
+          },
+          {
+            "label": "Joint flexor surface localization",
+            "key": "HP:0032540"
+          },
+          {
+            "label": "Peripheral",
+            "key": "HP:0030646"
+          },
+          {
+            "label": "Axial",
+            "key": "HP:0025287"
+          },
+          {
+            "label": "Apical",
+            "key": "HP:0033820"
+          },
+          {
+            "label": "Joint extensor surface localization",
+            "key": "HP:0032539"
+          },
+          {
+            "label": "Paracentral",
+            "key": "HP:0030647"
+          },
+          {
+            "label": "Reticular",
+            "key": "HP:0033818"
+          },
+          {
+            "label": "Predominant small joint localization",
+            "key": "HP:0032544"
+          },
+          {
+            "label": "Herpetiform",
+            "key": "HP:0025295"
+          },
+          {
+            "label": "Proximal",
+            "key": "HP:0012840"
+          },
+          {
+            "label": "Perilymphatic",
+            "key": "HP:0033819"
+          },
+          {
+            "label": "Midperipheral",
+            "key": "HP:0030648"
+          },
+          {
+            "label": "Paraseptal",
+            "key": "HP:0033814"
+          },
+          {
+            "label": "Polycyclic",
+            "key": "HP:0031450"
+          },
+          {
+            "label": "Miliary",
+            "key": "HP:0033817"
+          },
+          {
+            "label": "Cervical (neck)",
+            "key": "HP:0032535"
+          },
+          {
+            "label": "Distributed along Blaschko lines",
+            "key": "HP:0025293"
+          },
+          {
+            "label": "Morbilliform",
+            "key": "HP:0025296"
+          },
+          {
+            "label": "Lower-body predominance",
+            "key": "HP:0025291"
+          },
+          {
+            "label": "Upper-body predominance",
+            "key": "HP:0025290"
+          },
+          {
+            "label": "Perilobular",
+            "key": "HP:0033813"
+          },
+          {
+            "label": "Central",
+            "key": "HP:0030645"
+          },
+          {
+            "label": "Focal",
+            "key": "HP:0030650"
+          },
+          {
+            "label": "Lateral",
+            "key": "HP:0025275"
+          },
+          {
+            "label": "Localized",
+            "key": "HP:0033817"
+          },
+          {
+            "label": "Generalized",
+            "key": "HP:0012837"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Triggered by",
+    "key": "HP:0025204",
+    "children": [
+      {
+        "label": "Triggered by food ingestion",
+        "key": "HP:0033793",
+        "children": [
+          {
+            "label": "Triggered by carbohydrate ingestion",
+            "key": "HP:0025208",
+            "children": [
+              {
+                "label": "Triggered by galactose ingestion",
+                "key": "HP:0025213"
+              },
+              {
+                "label": "Triggered by glucose ingestion",
+                "key": "HP:0025210"
+              },
+              {
+                "label": "Triggered by fructose ingestion",
+                "key": "HP:0025209"
+              }
+            ]
+          },
+          {
+            "label": "Triggered by heavy meal",
+            "key": "HP:0025216"
+          },
+          {
+            "label": "Triggered by fava bean ingestion",
+            "key": "HP:0034060"
+          },
+          {
+            "label": "Triggered by cheese ingestion",
+            "key": "HP:0033789"
+          },
+          {
+            "label": "Triggered by sodium ingestion",
+            "key": "HP:0025224"
+          },
+          {
+            "label": "Triggered by high-fat diet",
+            "key": "HP:0025217"
+          },
+          {
+            "label": "Triggered by ingestion of potassium-rich food",
+            "key": "HP:0031167"
+          },
+          {
+            "label": "Triggered by breast feeding",
+            "key": "HP:0025205"
+          },
+          {
+            "label": "Triggered by ethanol ingestion",
+            "key": "HP:0025211"
+          }
+        ]
+      },
+      {
+        "label": "Triggered by infection",
+        "key": "HP:0033184",
+        "children": [
+          {
+            "label": "Triggered by viral infection",
+            "key": "HP:0033198",
+            "children": [
+              {
+                "label": "Triggered by EBV infection",
+                "key": "HP:0033185"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Triggered by physical trauma",
+        "key": "HP:0031135",
+        "children": [
+          {
+            "label": "Triggered by head trauma",
+            "key": "HP:0500260"
+          }
+        ]
+      },
+      {
+        "label": "Triggered by dehydration",
+        "key": "HP:0025207"
+      },
+      {
+        "label": "Triggered by anesthetics",
+        "key": "HP:0500261"
+      },
+      {
+        "label": "Triggered by emotion",
+        "key": "HP:0025334"
+      },
+      {
+        "label": "Triggered by menstruation",
+        "key": "HP:0025220"
+      },
+      {
+        "label": "Triggered by vestibular stimulation",
+        "key": "HP:0025229"
+      },
+      {
+        "label": "Triggered by stress",
+        "key": "HP:0025226"
+      },
+      {
+        "label": "Triggered by vaccination",
+        "key": "HP:0025219"
+      },
+      {
+        "label": "Triggered by febrile illness",
+        "key": "HP:0025215"
+      },
+      {
+        "label": "Triggered by cold",
+        "key": "HP:0025206"
+      },
+      {
+        "label": "Triggered by smoking",
+        "key": "HP:0025223"
+      },
+      {
+        "label": "Triggered by sudden movement",
+        "key": "HP:0025228"
+      },
+      {
+        "label": "Triggered by heat",
+        "key": "HP:0025214"
+      },
+      {
+        "label": "Triggered by excitement",
+        "key": "HP:0025227"
+      },
+      {
+        "label": "Triggered by sleep deprivation",
+        "key": "HP:0025222"
+      },
+      {
+        "label": "Triggered by sound",
+        "key": "HP:0025225"
+      },
+      {
+        "label": "Triggered by muscle relaxant",
+        "key": "HP:0034195"
+      },
+      {
+        "label": "Triggered by exertion",
+        "key": "HP:0025377"
+      },
+      {
+        "label": "Triggered by an abusive adult",
+        "key": "HP:0033032"
+      },
+      {
+        "label": "Triggered by hyperventilation",
+        "key": "HP:0025218"
+      },
+      {
+        "label": "Triggered by fasting",
+        "key": "HP:0025212"
+      },
+      {
+        "label": "Triggered by pregnancy",
+        "key": "HP:0025221"
+      }
+    ]
+  },
+  {
+    "label": "Fracture type",
+    "key": "HP:4000042",
+    "children": [
+      {
+        "label": "Compression fracture",
+        "key": "HP:4000047"
+      },
+      {
+        "label": "Closed fracture",
+        "key": "HP:4000051"
+      },
+      {
+        "label": "Greenstick fracture",
+        "key": "HP:4000043"
+      },
+      {
+        "label": "Avulsion fracture",
+        "key": "HP:4000052"
+      },
+      {
+        "label": "Transverse fracture",
+        "key": "HP:4000044"
+      },
+      {
+        "label": "Open fracture",
+        "key": "HP:4000050"
+      },
+      {
+        "label": "Segmental fracture",
+        "key": "HP:4000049"
+      },
+      {
+        "label": "Oblique fracture",
+        "key": "HP:4000046"
+      },
+      {
+        "label": "Displaced fracture",
+        "key": "HP:4000053"
+      },
+      {
+        "label": "Comminuted fracture",
+        "key": "HP:4000048"
+      },
+      {
+        "label": "Spiral fracture",
+        "key": "HP:4000045"
+      }
+    ]
+  },
+  {
+    "label": "Aggravated by",
+    "key": "HP:0025285",
+    "children": [
+      {
+        "label": "Exacerbated by aspirin ingestion",
+        "key": "HP:0032365"
+      },
+      {
+        "label": "Aggravated by acetylcholinesterase inhibitor",
+        "key": "HP:0032525"
+      },
+      {
+        "label": "Exacerbated by methylxanthine ingestion",
+        "key": "HP:0032534"
+      },
+      {
+        "label": "Exacerbated by barbiturate medication",
+        "key": "HP:0032502"
+      },
+      {
+        "label": "Exacerbated by contraceptive medication",
+        "key": "HP:0032501"
+      },
+      {
+        "label": "Aggravated by activity",
+        "key": "HP:0025286"
+      },
+      {
+        "label": "Exacerbated by pregnancy",
+        "key": "HP:0032542"
+      },
+      {
+        "label": "Exacerbated by tobacco use",
+        "key": "HP:0032500"
+      },
+      {
+        "label": "Exacerbated by head trauma",
+        "key": "HP:0025315"
+      }
+    ]
+  },
+  {
+    "label": "Ameliorated by",
+    "key": "HP:0025254",
+    "children": [
+      {
+        "label": "Ameliorated by immunosuppresion",
+        "key": "HP:0032522"
+      },
+      {
+        "label": "Ameliorated by ethanol ingestion",
+        "key": "HP:0032503"
+      },
+      {
+        "label": "Ameliorated by acetylcholinesterase inhibitor",
+        "key": "HP:0032526"
+      },
+      {
+        "label": "Ameliorated by carbohydrate ingestion",
+        "key": "HP:0025257"
+      },
+      {
+        "label": "Ameliorated by heat",
+        "key": "HP:0025256"
+      },
+      {
+        "label": "Ameliorated by pregnancy",
+        "key": "HP:0025255"
+      }
+    ]
+  },
+  {
+    "label": "Pain characteristic",
+    "key": "HP:0025280",
+    "children": [
+      {
+        "label": "Tender",
+        "key": "HP:0025283"
+      },
+      {
+        "label": "Dull",
+        "key": "HP:0025282"
+      },
+      {
+        "label": "Sleep-interrupting",
+        "key": "HP:0025284"
+      },
+      {
+        "label": "Sharp",
+        "key": "HP:0025281"
+      }
+    ]
+  },
+  {
+    "label": "Phenotypic variability",
+    "key": "HP:0003812",
+    "children": [
+      {
+        "label": "Incomplete penetrance",
+        "key": "HP:0003829",
+        "children": [
+          {
+            "label": "Age-dependent penetrance",
+            "key": "HP:0003831"
+          }
+        ]
+      },
+      {
+        "label": "Variable expressivity",
+        "key": "HP:0003828"
+      }
+    ]
+  },
+  {
+    "label": "Clinical relevance",
+    "key": "HP:0045088",
+    "children": [
+      {
+        "label": "Minor finding",
+        "key": "HP:0045090"
+      },
+      {
+        "label": "Distinctive finding",
+        "key": "HP:0045089"
+      }
+    ]
+  },
+  {
+    "label": "Worse in evening",
+    "key": "HP:0410401"
+  },
+  {
+    "label": "Refractory",
+    "key": "HP:0031375"
+  }
+]

@@ -41,9 +41,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getPhenotypicFeatureById();
                 case url.endsWith('/bodysites') && method === 'GET':
                     return getBodySites();
-                case url.endsWith('modifiers') && method === 'GET':
+                case url.endsWith('modifier') && method === 'GET':
                     return getModifiers();
-                case url.endsWith('onsets') && method === 'GET':
+                case url.endsWith('onset') && method === 'GET':
                     return getOnsets();
                 case url.endsWith('tnm-findings') && method === 'GET':
                     return getTnmFindings();

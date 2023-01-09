@@ -26,7 +26,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // get cause of death
         this.causeOfDeathSubscription = this.phenopacketService.getMondoDiseases().subscribe(nodes => {
-            this.causeOfDeaths = <TreeNode[]>nodes.data;
+            this.causeOfDeaths = <TreeNode[]>nodes;
         });
     }
     ngOnDestroy(): void {
