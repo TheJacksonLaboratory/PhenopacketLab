@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "${api.version}/diseases")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DiseaseController {
 
     private final DiseaseService diseaseService;
