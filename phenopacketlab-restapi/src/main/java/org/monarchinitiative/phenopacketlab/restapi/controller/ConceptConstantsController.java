@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacketlab.core.ConceptConstantsService;
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The controller for serving requests for <em>constant</em> values required in the frontend UI elements that allow
@@ -61,7 +63,12 @@ public class ConceptConstantsController {
 
     @GetMapping(value = "treemodifier", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getModifierTreeValues() {
-        return ResponseEntity.ok(conceptConstantsService.modifierTreeConstants());
+        Optional<SubtreeNode> node = conceptConstantsService.modifierTreeConstants();
+        if (node.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } else {
+            return ResponseEntity.ok(node.get());
+        }
     }
 
     @GetMapping(value = "severity", headers = "Accept=application/json")
@@ -76,7 +83,12 @@ public class ConceptConstantsController {
 
     @GetMapping(value = "treeonset", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getOnsetTreeValues() {
-        return ResponseEntity.ok(conceptConstantsService.onsetTreeConstants());
+        Optional<SubtreeNode> node = conceptConstantsService.onsetTreeConstants();
+        if (node.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } else {
+            return ResponseEntity.ok(node.get());
+        }
     }
 
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")

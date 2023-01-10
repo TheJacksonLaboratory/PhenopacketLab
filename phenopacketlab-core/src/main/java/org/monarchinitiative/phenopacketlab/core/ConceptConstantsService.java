@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.model.Concept;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The service for providing {@link IdentifiedConcept}s and {@link Concept}s for phenopacket attributes.
@@ -21,13 +22,13 @@ public interface ConceptConstantsService {
 
     List<IdentifiedConcept> modifierConstants();
 
-    SubtreeNode modifierTreeConstants();
+    Optional<SubtreeNode> modifierTreeConstants();
 
     List<IdentifiedConcept> severityConstants();
 
     List<IdentifiedConcept> onsetConstants();
 
-    SubtreeNode onsetTreeConstants();
+    Optional<SubtreeNode> onsetTreeConstants();
 
     List<Concept> structuralTypeConstants();
 

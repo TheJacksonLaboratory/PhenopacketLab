@@ -10,6 +10,7 @@ import org.monarchinitiative.phenopacketlab.core.TestUtils;
 
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -29,12 +30,12 @@ public class CreateSubtreeTest {
     @Test
     public void createSubtree() {
         TermId onset = TermId.of("HP:0003674");
-        SubtreeNode root = CreateSubtree.createSubtree(onset, HPO, null);
-
-        assertThat(root.getKey(), equalTo(onset.getValue()));
-        assertThat(root.getLabel(), equalTo("Onset"));
-        assertThat(root.getChildren(), hasSize(6));
-        assertThat(root.getChildren().stream()
+        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, null);
+        assertThat(root.isPresent(), equalTo(true));
+        assertThat(root.get().getKey(), equalTo(onset.getValue()));
+        assertThat(root.get().getLabel(), equalTo("Onset"));
+        assertThat(root.get().getChildren(), hasSize(6));
+        assertThat(root.get().getChildren().stream()
                 .map(SubtreeNode::getLabel)
                 .toList(),
                 hasItems("Antenatal onset", "Adult onset", "Congenital onset",
@@ -44,12 +45,12 @@ public class CreateSubtreeTest {
     @Test
     public void createSortedSubtree() {
         TermId onset = TermId.of("HP:0003674");
-        SubtreeNode root = CreateSubtree.createSubtree(onset, HPO, Comparator.comparing(SubtreeNode::getLabel));
-
-        assertThat(root.getKey(), equalTo(onset.getValue()));
-        assertThat(root.getLabel(), equalTo("Onset"));
-        assertThat(Comparators.isInOrder(root.getChildren(), Comparator.comparing(SubtreeNode::getLabel)), equalTo(true));
-        assertThat(root.getChildren().stream()
+        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, Comparator.comparing(SubtreeNode::getLabel));
+        assertThat(root.isPresent(), equalTo(true));
+        assertThat(root.get().getKey(), equalTo(onset.getValue()));
+        assertThat(root.get().getLabel(), equalTo("Onset"));
+        assertThat(Comparators.isInOrder(root.get().getChildren(), Comparator.comparing(SubtreeNode::getLabel)), equalTo(true));
+        assertThat(root.get().getChildren().stream()
                         .map(SubtreeNode::getLabel)
                         .toList(),
                 hasItems("Antenatal onset", "Adult onset", "Congenital onset",

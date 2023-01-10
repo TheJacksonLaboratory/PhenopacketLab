@@ -38,10 +38,10 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
-        SubtreeNode modifierTreeConstants = configureModifierTreeConstants(resourceService);
+        Optional<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
-        SubtreeNode onsetTreeConstants = configureOnsetTreeConstants(resourceService);
+        Optional<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -153,11 +153,11 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static SubtreeNode configureModifierTreeConstants(ConceptResourceService resourceService) {
+    private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
             LOGGER.warn("Cannot configure modifier tree constants due to missing HP concept resource!");
-            return null;
+            return Optional.empty();
         }
 
         IdentifiedConceptResource hp = hpOptional.get();
@@ -167,7 +167,7 @@ public class ConceptConstantsServiceConfigurer {
             return CreateSubtree.createSubtree(MODIFIER, hpo, Comparator.comparing(SubtreeNode::getLabel));
         } else {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -193,11 +193,11 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static SubtreeNode configureOnsetTreeConstants(ConceptResourceService resourceService) {
+    private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
             LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
-            return null;
+            return Optional.empty();
         }
 
         IdentifiedConceptResource hp = hpOptional.get();
@@ -206,7 +206,7 @@ public class ConceptConstantsServiceConfigurer {
             return CreateSubtree.createSubtree(HpoOnsetTermIds.ONSET, hpo, Comparator.comparing(SubtreeNode::getLabel));
         } else {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
-            return null;
+            return Optional.empty();
         }
     }
 

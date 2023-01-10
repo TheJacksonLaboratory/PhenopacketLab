@@ -20,7 +20,7 @@ public class CreateSubtree {
      * @return a node of the root node of the subtree
      * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
      */
-    public static SubtreeNode createSubtree(TermId root,
+    public static Optional<SubtreeNode> createSubtree(TermId root,
                                             Ontology ontology,
                                             Comparator<SubtreeNode> comparator) {
         Term rootTerm = ontology.getTermMap().get(root);
@@ -28,7 +28,7 @@ public class CreateSubtree {
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
         SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName());
-        return augmentWithChildren(ontology, root, node, comparator);
+        return Optional.of(augmentWithChildren(ontology, root, node, comparator));
     }
 
     private static SubtreeNode augmentWithChildren(Ontology ontology,

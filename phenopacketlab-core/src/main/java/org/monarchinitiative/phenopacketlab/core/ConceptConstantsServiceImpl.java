@@ -6,6 +6,7 @@ import org.monarchinitiative.phenopacketlab.model.Concept;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
@@ -14,10 +15,10 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> allelicStateConstants;
     private final List<IdentifiedConcept> lateralityConstants;
     private final List<IdentifiedConcept> modifierConstants;
-    private final SubtreeNode modifierTreeConstants;
+    private final Optional<SubtreeNode> modifierTreeConstants;
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
-    private final SubtreeNode onsetTreeConstants;
+    private final Optional<SubtreeNode> onsetTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -26,10 +27,10 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> allelicStateConstants,
                                 List<IdentifiedConcept> lateralityConstants,
                                 List<IdentifiedConcept> modifierConstants,
-                                SubtreeNode modifierTreeConstants,
+                                Optional<SubtreeNode> modifierTreeConstants,
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
-                                SubtreeNode onsetTreeConstants,
+                                Optional<SubtreeNode> onsetTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -69,7 +70,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     public List<IdentifiedConcept> modifierConstants() {
         return modifierConstants;
     }
-    public SubtreeNode modifierTreeConstants() {
+    public Optional<SubtreeNode> modifierTreeConstants() {
         return modifierTreeConstants;
     }
 
@@ -84,7 +85,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     }
 
     @Override
-    public SubtreeNode onsetTreeConstants() {
+    public Optional<SubtreeNode> onsetTreeConstants() {
         return onsetTreeConstants;
     }
 
