@@ -5,7 +5,6 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +24,7 @@ public class CreateSubtree {
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
         SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName(), comparator);
-        List<SubtreeNode> result = new ArrayList<>();
-        result.add(augmentWithChildren(ontology, root, node, comparator));
-        return result;
+        return augmentWithChildren(ontology, root, node, comparator).getChildren();
     }
 
     private static SubtreeNode augmentWithChildren(Ontology ontology, TermId termId, SubtreeNode node, Comparator<SubtreeNode> comparator) {
