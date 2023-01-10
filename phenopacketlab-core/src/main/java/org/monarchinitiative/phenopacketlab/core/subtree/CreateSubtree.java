@@ -5,8 +5,7 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
-import java.util.Comparator;
-import java.util.Set;
+import java.util.*;
 
 public class CreateSubtree {
 
@@ -16,25 +15,41 @@ public class CreateSubtree {
     /**
      * Create a subtree with given {@code root} from an {@code ontology}, with a {@code comparator} used to sort
      * the children of the tree branches.
+     *
+     * @param comparator a comparator for sorting children of a node or {@code null} if no sorting is expected
+     * @return a node of the root node of the subtree
+     * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
      */
-    public static SubtreeNode createSubtree(TermId root, Ontology ontology, Comparator<SubtreeNode> comparator) {
+    public static SubtreeNode createSubtree(TermId root,
+                                            Ontology ontology,
+                                            Comparator<SubtreeNode> comparator) {
         Term rootTerm = ontology.getTermMap().get(root);
         if (rootTerm == null)
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
-        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName(), comparator);
+        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName());
         return augmentWithChildren(ontology, root, node, comparator);
     }
 
-    private static SubtreeNode augmentWithChildren(Ontology ontology, TermId termId, SubtreeNode node, Comparator<SubtreeNode> comparator) {
-        Set<TermId> childTerms = OntologyAlgorithm.getChildTerms(ontology, termId, false);
+    private static SubtreeNode augmentWithChildren(Ontology ontology,
+                                                   TermId termId,
+                                                   SubtreeNode node,
+                                                   Comparator<SubtreeNode> comparator) {
+        Collection<TermId> children = OntologyAlgorithm.getChildTerms(ontology, termId, false);
 
-        for (TermId childTermId : childTerms) {
+        List<SubtreeNode> childNodes = new ArrayList<>(children.size());
+        for (TermId childTermId : children) {
+            // Term should always be non-null since we just got the termId from the `ontology`.
             Term term = ontology.getTermMap().get(childTermId);
-            SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName(), comparator);
-            node.getChildren().add(childNode);
+            SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
             augmentWithChildren(ontology, childTermId, childNode, comparator);
+            childNodes.add(childNode);
         }
+
+        if (comparator != null)
+            childNodes.sort(comparator);
+
+        node.getChildren().addAll(childNodes);
 
         return node;
     }
