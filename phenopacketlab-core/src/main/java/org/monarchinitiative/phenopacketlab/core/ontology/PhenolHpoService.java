@@ -5,7 +5,9 @@ import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PhenolHpoService implements HpoService {
 
@@ -17,6 +19,14 @@ public class PhenolHpoService implements HpoService {
         this.hpo = hpo;
     }
 
+    @Override
+    public Stream<Term> phenotypicFeatures() {
+        return hpo.getTerms().stream();
+    }
+    @Override
+    public Optional<Term> phenotypicFeatureById(TermId id) {
+        return Optional.ofNullable(hpo.getTermMap().get(id));
+    }
     @Override
     public Collection<Term> severities() {
         // TODO - sort by increasing severity?
