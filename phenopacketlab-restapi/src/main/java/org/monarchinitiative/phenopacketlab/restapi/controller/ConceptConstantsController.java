@@ -60,7 +60,7 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "treemodifier", headers = "Accept=application/json")
-    public ResponseEntity<List<SubtreeNode>> getModifierTreeValues() {
+    public ResponseEntity<SubtreeNode> getModifierTreeValues() {
         return ResponseEntity.ok(conceptConstantsService.modifierTreeConstants());
     }
 
@@ -75,7 +75,7 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "treeonset", headers = "Accept=application/json")
-    public ResponseEntity<List<SubtreeNode>> getOnsetTreeValues() {
+    public ResponseEntity<SubtreeNode> getOnsetTreeValues() {
         return ResponseEntity.ok(conceptConstantsService.onsetTreeConstants());
     }
 

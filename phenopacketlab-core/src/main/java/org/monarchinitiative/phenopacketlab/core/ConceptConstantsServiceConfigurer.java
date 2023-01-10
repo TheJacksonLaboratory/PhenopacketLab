@@ -38,10 +38,10 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
-        List<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
+        SubtreeNode modifierTreeConstants = configureModifierTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
-        List<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
+        SubtreeNode onsetTreeConstants = configureOnsetTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -153,7 +153,7 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static List<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
+    private static SubtreeNode configureModifierTreeConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
             LOGGER.warn("Cannot configure modifier tree constants due to missing HP concept resource!");
@@ -193,7 +193,7 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static List<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
+    private static SubtreeNode configureOnsetTreeConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
             LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
