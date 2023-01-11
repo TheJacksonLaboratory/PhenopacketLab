@@ -45,7 +45,7 @@
       id="gender"
       appendTo="body"
       placeholder="Select gender"
-      [options]="getGenders()"
+      [options]="genders"
       [ngModel]="subject?.gender"
       (ngModelChange)="updateGender($event)"
       pTooltip="Self-identified gender"

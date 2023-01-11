@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { TreeNode } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Gender, Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -20,6 +20,11 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 
+    sexSubscription: Subscription;
+
+    genders: OntologyClass[];
+    genderSubscription: Subscription;
+
     constructor(public phenopacketService: PhenopacketService) {
     }
 
@@ -28,10 +33,28 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         this.causeOfDeathSubscription = this.phenopacketService.getMondoDiseases().subscribe(nodes => {
             this.causeOfDeaths = <TreeNode[]>nodes;
         });
+        this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
+            console.log(sexes);
+        });
+        this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
+            console.log(genders);
+            if (this.genders === undefined) {
+                this.genders = [];
+            }
+            for (const gender of genders) {
+                this.genders.push(new OntologyClass(gender.id.value, gender.name));
+            }
+        });
     }
     ngOnDestroy(): void {
         if (this.causeOfDeathSubscription) {
             this.causeOfDeathSubscription.unsubscribe();
+        }
+        if (this.sexSubscription) {
+            this.sexSubscription.unsubscribe();
+        }
+        if (this.genderSubscription) {
+            this.genderSubscription.unsubscribe();
         }
     }
 
@@ -97,10 +120,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     getSexes() {
         // tslint:disable-next-line:radix
         return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
-    }
-
-    getGenders() {
-        return Gender.VALUES;
     }
 
     getKaryotypicSexes() {

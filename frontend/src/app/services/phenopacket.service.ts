@@ -10,6 +10,8 @@ const modifiersUrl = environment.MODIFIERS_URL;
 const mondoDiseasesUrl = environment.MONDO_DISEASES_URL;
 const onsetsUrl = environment.ONSETS_URL;
 const tnmFindingsUrl = environment.TNM_FINDINGS_URL;
+const sexUrl = environment.SEX_URL;
+const genderUrl = environment.GENDER_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +48,12 @@ export class PhenopacketService {
     }
     getMondoDiseases(): Observable<any> {
         return this.http.get(mondoDiseasesUrl);
+    }
+    getSex(): Observable<any> {
+        return this.http.get(sexUrl);
+    }
+    getGender(): Observable<any> {
+        return this.http.get(genderUrl);
     }
     getOnsets(): Observable<any> {
         return this.http.get(onsetsUrl);
