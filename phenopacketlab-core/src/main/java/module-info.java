@@ -12,7 +12,7 @@ module phenopacketlab.core {
     exports org.monarchinitiative.phenopacketlab.core.ontology;
     exports org.monarchinitiative.phenopacketlab.core.subtree to phenopacketlab.restapi;
     opens org.monarchinitiative.phenopacketlab.core.subtree to com.fasterxml.jackson.databind;
-    exports org.monarchinitiative.phenopacketlab.core.miner to phenopacketlab.restapi;
+    exports org.monarchinitiative.phenopacketlab.core.miner to phenopacketlab.restapi, phenopacketlab.autoconfigure;
     opens org.monarchinitiative.phenopacketlab.core.miner to com.fasterxml.jackson.databind;
 
 }
