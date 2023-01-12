@@ -4,7 +4,6 @@ import java.util.List;
 
 public class MinedText {
     String payload;
-
     List<MinedConcept> concepts;
 
     public MinedText(String payload, List<MinedConcept> concepts) {
@@ -15,7 +14,13 @@ public class MinedText {
     public String getPayload() {
         return payload;
     }
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
     public List<MinedConcept> getConcepts() {
         return concepts;
+    }
+    public void setConcepts(List<MinedConcept> concepts) {
+        this.concepts = concepts;
     }
 }
