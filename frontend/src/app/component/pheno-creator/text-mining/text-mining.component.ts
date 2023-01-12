@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
@@ -94,37 +94,40 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.textSearchVisible = false;
     this.openSpinnerDialog();
     this.phenotypeSearchService.queryTextMiner(this.textSearch).subscribe(resp => {
-      const result = resp?.result;
-      const concepts = result?.concepts;
-      // reset
-      this.idxList = [];
-      this.phenotypicFeatures = [];
-      concepts.forEach((term, idx) => {
-        this.idxList.push([term.start, term.end]);
-        this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
-      });
+      if (resp) {
+        const concepts = resp?.concepts;
+        this.textSearch = resp?.payload;
+        // reset
+        this.idxList = [];
+        this.phenotypicFeatures = [];
+        concepts.forEach((term, idx) => {
+          this.idxList.push([term.start, term.end]);
+          this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
+        });
 
-      // show result in formatted text
-      this.formatText();
+        // show result in formatted text
+        this.formatText();
 
-      if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
-        this.visible = true;
+        if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
+          this.visible = true;
+        }
       }
+
       this.spinnerDialogRef.close();
     },
-    (error) => {
+      (error) => {
         console.log(error);
         this.spinnerDialogRef.close();
-    });
+      });
 
   }
 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-        panelClass: 'transparent',
-        disableClose: true
+      panelClass: 'transparent',
+      disableClose: true
     });
-}
+  }
   updateExcluded(event) {
     if (this.selectedPhenotypicFeature) {
       this.selectedPhenotypicFeature.excluded = !event.checked;
