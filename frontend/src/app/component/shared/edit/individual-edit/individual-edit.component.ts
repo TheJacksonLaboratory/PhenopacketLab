@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TreeNode } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -25,13 +25,13 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     genders: OntologyClass[];
     genderSubscription: Subscription;
 
-    constructor(public phenopacketService: PhenopacketService) {
+    constructor(public phenopacketService: PhenopacketService, public diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {
         // get cause of death
-        this.causeOfDeathSubscription = this.phenopacketService.getMondoDiseases().subscribe(nodes => {
-            this.causeOfDeaths = <TreeNode[]>nodes;
+        this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
+            this.causeOfDeaths = diseases;
         });
         this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
             console.log(sexes);
@@ -113,7 +113,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     updateCauseOfDeath(event) {
         if (this.subject) {
-            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.node.key, event.node.label);
+            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
             this.subjectChange.emit(this.subject);
         }
     }

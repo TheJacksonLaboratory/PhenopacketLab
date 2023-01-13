@@ -80,7 +80,10 @@
     ></p-inputNumber>
   </div>
 
-  <div class="field col-6" *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()">
+  <div
+    class="field col-6"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+  >
     <label for="timeOfDeath">Time of death</label>
     <app-time-element
       id="timeOfDeath"
@@ -88,19 +91,23 @@
       (timeElementEvent)="updateTimeOfDeath($event)"
     ></app-time-element>
   </div>
-  <div class="field col-6" *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()">
+  <div
+    class="field col-6"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+  >
     <label for="causeOfDeath">Cause of death</label>
-    <p-treeSelect
+    <p-dropdown
       id="causeOfDeath"
-      [ngModel]="subject?.vitalStatus?.causeOfDeath"
-      (onNodeSelect)="updateCauseOfDeath($event)"
-      [options]="causeOfDeaths"
-      [metaKeySelection]="false"
       placeholder="Select cause of death"
-      [filter]="true"
-      [filterInputAutoFocus]="true"
-    ></p-treeSelect>
+      [options]="causeOfDeaths"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="30"
+      filter="true"
+      optionLabel="name"
+      filterBy="name"
+      (onChange)="updateCauseOfDeath($event)"
+      showClear="true"
+    ></p-dropdown>
 
-    <!-- <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input> -->
   </div>
 </div>
