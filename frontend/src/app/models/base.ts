@@ -352,6 +352,22 @@ export class TimeElement extends Convert {
         }
     }
 
+    /**
+     *
+     * @returns Copy the object into a new one
+     */
+    public copy(): TimeElement {
+        if (this.element instanceof Age) {
+            return new TimeElement(new Age(this.element.iso8601duration));
+        } else if (this.element instanceof AgeRange) {
+            return new TimeElement(new AgeRange(this.element.start, this.element.end));
+        } else if (this.element instanceof GestationalAge) {
+            return new TimeElement(new GestationalAge(this.element.weeks, this.element.days));
+        } else if (this.element instanceof OntologyClass) {
+            return new TimeElement(new OntologyClass(this.element.id, this.element.label));
+        }
+    }
+
 }
 export enum TimeElementType {
     AGE = 'Age',
