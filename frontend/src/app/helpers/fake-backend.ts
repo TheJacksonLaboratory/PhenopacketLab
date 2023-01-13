@@ -52,7 +52,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getTnmFindings();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
-                case url.endsWith('text-miner') && method === 'POST':
+                case url.endsWith('textminer') && method === 'POST':
                     return getTextMined();
                 default:
                     // pass through any requests not handled above
