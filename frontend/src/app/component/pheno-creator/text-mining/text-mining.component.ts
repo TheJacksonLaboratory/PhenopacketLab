@@ -1,6 +1,10 @@
 import { AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { TimeElement } from 'src/app/models/base';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
@@ -28,11 +32,28 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   spinnerDialogRef: any;
 
-  constructor(private phenotypeSearchService: PhenotypeSearchService, private elementRef: ElementRef, public dialog: MatDialog) {
+  onsetsNodes: OntologyTreeNode[];
+  onsetsSubscription: Subscription;
+  onsetApplied = false;
+  onset: TimeElement;
+
+  constructor(private phenotypeSearchService: PhenotypeSearchService,
+    public phenopacketService: PhenopacketService,
+    private elementRef: ElementRef,
+    public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
+    // get Onset from individual
+    const phenopacket = this.phenopacketService.phenopacket;
+    this.onset = phenopacket?.subject?.timeAtLastEncounter;
+
+    // get onsets
+    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+      // we get the children from the root node sent in response
+      this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+    });
 
   }
 
@@ -46,7 +67,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   }
   ngOnDestroy(): void {
-
+    if (this.onsetsSubscription) {
+      this.onsetsSubscription.unsubscribe();
+    }
   }
 
   private formatText() {
@@ -197,6 +220,26 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    */
   onRowSelect(event) {
     // this.selectedFeature = event.data;
+  }
+
+  // Onset
+  updateAgeOnset(timeElement: any) {
+    console.log('onset update');
+    console.log(timeElement);
+    this.onset = timeElement;
+  }
+
+  applyOnset() {
+    this.onsetApplied = true;
+    this.phenotypicFeatures.forEach(feature => {
+      feature.onset = this.onset.copy();
+    });
+    console.log('apply onset');
+    console.log(this.onset);
+  }
+
+  editOnset() {
+    this.onsetApplied = false;
   }
 
 }

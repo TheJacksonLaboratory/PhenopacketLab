@@ -29,45 +29,6 @@
         </p-accordion>
 
         <br>
-        <div class="grid p-fluid">
-          <div class="field col-12">
-            <label for="onset"><b>Age of onset: </b></label>
-            <app-time-element
-              *ngIf="!onsetApplied"
-              id="onset"
-              [timeElement]="onset"
-              [ontologyNodes]="onsetsNodes"
-              [useOntologyClass]="true"
-              (timeElementEvent)="updateAgeOnset($event)"
-              aria-labelledby="onset-label"
-            ></app-time-element>
-            <!-- <br *ngIf="onsetApplied"> -->
-            <div *ngIf="onsetApplied" class="flex align-items-center">
-              {{ onset?.toString() }}
-              <button
-                *ngIf="onsetApplied"
-                pTooltip="Edit onset"
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-text"
-                (click)="editOnset()"
-              ></button>
-            </div>
-          </div>
-
-          <div class="field col-6">
-            <button
-              *ngIf="!onsetApplied"
-              pButton
-              type="button"
-              label="Apply onset to all features"
-              (click)="applyOnset()"
-            ></button>
-          </div>
-          <div class="field col-6"></div>
-        </div>
 
         <p-table
           *ngIf="visible"

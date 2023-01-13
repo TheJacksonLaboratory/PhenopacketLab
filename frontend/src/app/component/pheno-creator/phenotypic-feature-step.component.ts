@@ -3,8 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { OntologyClass, TimeElement } from 'src/app/models/base';
-import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
@@ -31,11 +30,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     // searchparams
     currSearchParams: any = {};
     spinnerDialogRef: any;
-
-    onsetsNodes: OntologyTreeNode[];
-    onsetsSubscription: Subscription;
-    onsetApplied = false;
-    onset: TimeElement;
 
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
@@ -68,23 +62,15 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
         });
-        // get onsets
-        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-            this.onsetsNodes = <OntologyTreeNode[]>nodes;
-        });
         // get profile
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        this.onset = this.phenopacket?.subject?.timeAtLastEncounter;
     }
 
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
             this.phenopacketSubscription.unsubscribe();
-        }
-        if (this.onsetsSubscription) {
-            this.onsetsSubscription.unsubscribe();
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
@@ -188,25 +174,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         });
     }
 
-    updateAgeOnset(timeElement: any) {
-        console.log('onset update');
-        console.log(timeElement);
-        this.onset = timeElement;
-    }
-
-    applyOnset() {
-        this.onsetApplied = true;
-        this.phenotypicFeatures.forEach(feature => {
-            feature.onset = this.onset;
-        });
-        this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
-        console.log('apply onset');
-        console.log(this.onset);
-    }
-
-    editOnset() {
-        this.onsetApplied = false;
-    }
     /**
      * Called when a row is selected in the left side table
      * @param event
