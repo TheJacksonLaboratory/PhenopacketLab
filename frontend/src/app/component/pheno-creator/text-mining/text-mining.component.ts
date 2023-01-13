@@ -88,6 +88,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         }
       }
     });
+    if (this.idxList.length === 0) {
+      this.formattedText = `<pre #text>${this.textSearch}</pre>`;
+    }
   }
 
   submit() {
@@ -95,8 +98,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.openSpinnerDialog();
     this.phenotypeSearchService.queryTextMiner(this.textSearch).subscribe(resp => {
       if (resp) {
-        const concepts = resp?.concepts;
-        this.textSearch = resp?.payload;
+        const concepts = resp.concepts;
+        this.textSearch = resp.payload;
         // reset
         this.idxList = [];
         this.phenotypicFeatures = [];
@@ -147,13 +150,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      const vettedFeature = result.data;
-      this.phenotypicFeatures.forEach(feature => {
-        if (feature.key === vettedFeature.key) {
-          feature.textMiningState = vettedFeature.state;
-        }
-      });
-      this.formatText();
+      if (result) {
+        const vettedFeature = result.data;
+        this.phenotypicFeatures.forEach(feature => {
+          if (feature.key === vettedFeature.key) {
+            feature.textMiningState = vettedFeature.state;
+          }
+        });
+        this.formatText();
+      }
     });
   }
 
