@@ -20,6 +20,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 
+    selectedSex: string;
+    sexes: string[];
     sexSubscription: Subscription;
 
     genders: OntologyClass[];
@@ -34,10 +36,14 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.causeOfDeaths = diseases;
         });
         this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
-            console.log(sexes);
+            if (this.sexes === undefined) {
+                this.sexes = [];
+            }
+            for (const sex of sexes) {
+                this.sexes.push(sex.name);
+            }
         });
         this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
-            console.log(genders);
             if (this.genders === undefined) {
                 this.genders = [];
             }
@@ -45,6 +51,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                 this.genders.push(new OntologyClass(gender.id.value, gender.name));
             }
         });
+        if (this.subject) {
+            this.selectedSex = this.getLabelClassFromSex(this.subject.sex);
+        }
     }
     ngOnDestroy(): void {
         if (this.causeOfDeathSubscription) {
@@ -71,9 +80,33 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    updateSex(sex: any) {
-        if (this.subject) {
-            this.subject.sex = sex;
+    getLabelClassFromSex(sex: Sex) {
+        if (sex === Sex.FEMALE) {
+            return 'Female';
+        } else if (sex === Sex.MALE) {
+            return 'Male';
+        } else if (sex === Sex.OTHER_SEX) {
+            return 'Undifferentiated Sex';
+        } else if (sex === Sex.UNKNOWN_SEX) {
+            return 'Unknown';
+        }
+    }
+
+    getSexFromSelection(sexLabel: String): Sex {
+        if (sexLabel === 'Male') {
+            return Sex.MALE;
+        } else if (sexLabel === 'Female') {
+            return Sex.FEMALE;
+        } else if (sexLabel === 'Undifferentiated Sex') {
+            return Sex.OTHER_SEX;
+        } else if (sexLabel === 'Unknown') {
+            return Sex.UNKNOWN_SEX;
+        }
+    }
+
+    updateSex(event: any) {
+        if (this.subject && event) {
+            this.subject.sex = this.getSexFromSelection(event.value);
             this.subjectChange.emit(this.subject);
         }
     }
