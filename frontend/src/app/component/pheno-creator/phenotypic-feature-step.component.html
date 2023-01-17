@@ -21,7 +21,7 @@
         <br />
 
         <p-accordion>
-          <p-accordionTab header="Text mining search">
+          <p-accordionTab header="Text mining search" [(selected)]="expandedTextMining">
             <app-text-mining
               (phenotypicFeaturesChange)="addTextMinedFeatures($event)"
             ></app-text-mining>

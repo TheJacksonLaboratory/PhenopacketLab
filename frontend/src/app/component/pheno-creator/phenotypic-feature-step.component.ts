@@ -31,6 +31,8 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     currSearchParams: any = {};
     spinnerDialogRef: any;
 
+    expandedTextMining = false;
+
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
 
@@ -172,6 +174,8 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         phenotypicFeatures.forEach(feature => {
             this.addPhenotypicFeature(feature);
         });
+        // collapse accordion
+        this.expandedTextMining = false;
     }
 
     /**
