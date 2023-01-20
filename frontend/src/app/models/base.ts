@@ -93,12 +93,6 @@ export class ExternalReference extends Convert {
 }
 export class Evidence extends Convert {
 
-    constructor(evidenceCode?: OntologyClass, reference?: ExternalReference) {
-        super();
-        this.evidenceCode = evidenceCode;
-        this.reference = reference;
-    }
-
     static VALUES = [
         new OntologyClass('ECO:0006016', 'author statement from published clinical study'),
         new OntologyClass('ECO:0007539', 'author statement from published clinical study used in automatic assertion'),
@@ -106,8 +100,15 @@ export class Evidence extends Convert {
         new OntologyClass('ECO:0000033', 'author statement supported by traceable reference'),
         new OntologyClass('ECO:0006154', 'self-reported patient statement evidence')
     ];
+
     evidenceCode: OntologyClass;
     reference: ExternalReference;
+
+    constructor(evidenceCode?: OntologyClass, reference?: ExternalReference) {
+        super();
+        this.evidenceCode = evidenceCode;
+        this.reference = reference;
+    }
 
     public static create(obj: any): Evidence {
         const evidence = new Evidence();
@@ -301,54 +302,71 @@ export class GestationalAge {
 }
 export class TimeElement extends Convert {
 
+    age: Age;
+    ageRange: AgeRange;
+    gestationalAge: GestationalAge;
+    ontologyClass: OntologyClass;
+    timestamp: string;
+    interval: TimeInterval;
     /**
      *
      * @param element can be instance of GestationalAge, Age, AgeRange, string or TimeInterval
      */
     constructor(element?: any) {
         super();
-        this.element = element;
+        if (element instanceof Age) {
+            this.age = element;
+        } else if (element instanceof AgeRange) {
+            this.ageRange = element;
+        } else if (element instanceof GestationalAge) {
+            this.gestationalAge = element;
+        } else if (element instanceof OntologyClass) {
+            this.ontologyClass = element;
+        } else if (typeof element === 'string') {
+            this.timestamp = element;
+        } else if (element instanceof TimeInterval) {
+            this.interval = element;
+        }
     }
-    element: any;
 
     static create(obj: any): TimeElement {
         const timeElement = new TimeElement();
         if (obj['age']) {
-            timeElement.element = Age.convert(obj['age']);
+            timeElement.age = Age.convert(obj['age']);
         } else if (obj['ageRange']) {
-            timeElement.element = AgeRange.convert(obj['ageRange']);
+            timeElement.ageRange = AgeRange.convert(obj['ageRange']);
         } else if (obj['gestationalAge']) {
-            timeElement.element = GestationalAge.convert(obj['gestationalAge']);
+            timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
-            timeElement.element = OntologyClass.convert(obj['ontologyClass']);
+            timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
         } else if (obj['timestamp']) {
-            timeElement.element = obj['timestamp'];
+            timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {
-            timeElement.element = TimeInterval.convert(obj['interval']);
+            timeElement.interval = TimeInterval.convert(obj['interval']);
         }
         return timeElement;
     }
 
     toString() {
-        if (this.element instanceof GestationalAge) {
+        if (this.gestationalAge) {
             let weeksStr = ''; let daysStr = '';
-            if (this.element.weeks) {
-                weeksStr = `${this.element.weeks} week(s)`;
+            if (this.gestationalAge.weeks) {
+                weeksStr = `${this.gestationalAge.weeks} week(s)`;
             }
-            if (this.element.days) {
-                daysStr = `${this.element.days} day(s)`;
+            if (this.gestationalAge.days) {
+                daysStr = `${this.gestationalAge.days} day(s)`;
             }
             return `${weeksStr} - ${daysStr} `;
-        } else if (this.element instanceof Age) {
-            return this.element.iso8601duration;
-        } else if (this.element instanceof OntologyClass) {
-            return this.element.toString();
-        } else if (this.element instanceof AgeRange) {
-            return `${this.element.start?.iso8601duration} - ${this.element.end?.iso8601duration}`;
-        } else if (typeof this.element === 'string') {
-            return this.element;
-        } else if (this.element instanceof TimeInterval) {
-            return `${this.element.start} - ${this.element.end}`;
+        } else if (this.age instanceof Age) {
+            return this.age.iso8601duration;
+        } else if (this.ontologyClass) {
+            return this.ontologyClass.toString();
+        } else if (this.ageRange) {
+            return `${this.ageRange.start?.iso8601duration} - ${this.ageRange.end?.iso8601duration}`;
+        } else if (this.timestamp) {
+            return this.timestamp;
+        } else if (this.interval) {
+            return `${this.interval.start} - ${this.interval.end}`;
         }
     }
 
@@ -357,14 +375,18 @@ export class TimeElement extends Convert {
      * @returns Copy the object into a new one
      */
     public copy(): TimeElement {
-        if (this.element instanceof Age) {
-            return new TimeElement(new Age(this.element.iso8601duration));
-        } else if (this.element instanceof AgeRange) {
-            return new TimeElement(new AgeRange(this.element.start, this.element.end));
-        } else if (this.element instanceof GestationalAge) {
-            return new TimeElement(new GestationalAge(this.element.weeks, this.element.days));
-        } else if (this.element instanceof OntologyClass) {
-            return new TimeElement(new OntologyClass(this.element.id, this.element.label));
+        if (this.age) {
+            return new TimeElement(new Age(this.age.iso8601duration));
+        } else if (this.ageRange) {
+            return new TimeElement(new AgeRange(this.ageRange.start, this.ageRange.end));
+        } else if (this.gestationalAge) {
+            return new TimeElement(new GestationalAge(this.gestationalAge.weeks, this.gestationalAge.days));
+        } else if (this.ontologyClass) {
+            return new TimeElement(new OntologyClass(this.ontologyClass.id, this.ontologyClass.label));
+        } else if (this.timestamp) {
+            return new TimeElement(this.timestamp);
+        } else if (this.interval) {
+            return new TimeElement(new TimeInterval(this.interval.start, this.interval.end));
         }
     }
 

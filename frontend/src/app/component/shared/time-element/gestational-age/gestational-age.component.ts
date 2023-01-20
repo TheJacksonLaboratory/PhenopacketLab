@@ -75,11 +75,9 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
     }
 
     setGestationalAge(timeElement: TimeElement) {
-        if (timeElement?.element instanceof GestationalAge) {
-            this.gestationalAge = timeElement.element;
-            this.weeks = this.gestationalAge.weeks;
-            this.days = this.gestationalAge.days;
-        }
+        this.gestationalAge = timeElement.gestationalAge;
+        this.weeks = this.gestationalAge.weeks;
+        this.days = this.gestationalAge.days;
     }
     updateGestationalAge(value: number, type: string) {
         if (this.gestationalAge === undefined || this.gestationalAge === null) {

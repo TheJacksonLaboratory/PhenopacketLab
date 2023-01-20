@@ -77,12 +77,10 @@ export class AgeComponent implements OnInit, OnDestroy {
     }
 
     setAge(timeElement: TimeElement) {
-        if (timeElement?.element instanceof Age) {
-            this.age = timeElement.element;
-            this.years = this.age.getYears();
-            this.months = this.age.getMonths();
-            this.days = this.age.getDays();
-        }
+        this.age = timeElement.age;
+        this.years = this.age.getYears();
+        this.months = this.age.getMonths();
+        this.days = this.age.getDays();
     }
     updateAge(value: number, type: string) {
         if (type === 'years') {
