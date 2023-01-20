@@ -84,13 +84,15 @@ export class AgeRangeComponent implements OnInit, OnDestroy {
     }
 
     setAgeRange(timeElement: TimeElement) {
-        this.ageRange = timeElement.ageRange;
-        this.yearsStart = this.ageRange.start.getYears();
-        this.monthsStart = this.ageRange.start.getMonths();
-        this.daysStart = this.ageRange.start.getDays();
-        this.yearsEnd = this.ageRange.end.getYears();
-        this.monthsEnd = this.ageRange.end.getMonths();
-        this.daysEnd = this.ageRange.end.getDays();
+        if (timeElement) {
+            this.ageRange = timeElement.ageRange;
+            this.yearsStart = this.ageRange.start.getYears();
+            this.monthsStart = this.ageRange.start.getMonths();
+            this.daysStart = this.ageRange.start.getDays();
+            this.yearsEnd = this.ageRange.end.getYears();
+            this.monthsEnd = this.ageRange.end.getMonths();
+            this.daysEnd = this.ageRange.end.getDays();
+        }
     }
     updateAgeRange(value: number, type: string) {
         if (type === 'yearsStart') {
