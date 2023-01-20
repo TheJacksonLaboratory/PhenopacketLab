@@ -49,7 +49,7 @@ describe('DownloadService', () => {
         feature5.onset = new TimeElement(new TimeInterval('2020-03-18T00:00:00Z', '2020-03-20T00:00:00Z'));
         phenopacket.phenotypicFeatures.push(feature5);
 
-        const savedJson = service.saveAsJson(phenopacket);
+        const savedJson = service.saveAsJson(phenopacket, false);
         // parse saved string as json
         const jsonObj = JSON.parse(savedJson);
         expect(jsonObj.hasOwnProperty('id')).toBe(true);

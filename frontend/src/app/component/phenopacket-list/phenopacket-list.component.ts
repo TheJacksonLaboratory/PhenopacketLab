@@ -7,6 +7,7 @@ import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
+import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
 import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
@@ -27,7 +28,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   cohortMap = new Map<string, Phenopacket>();
 
   // Table items
-  displayedColumns = ['id', 'dob', 'sex', 'remove'];
+  displayedColumns = ['id', 'timeOfLastEncounter', 'sex', 'download', 'remove'];
   activeIndex = 0;
 
   phenopacketSubscription: Subscription;
@@ -35,9 +36,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   cohortSubscription: Subscription;
   datasource = new MatTableDataSource<Phenopacket>();
   constructor(public phenopacketService: PhenopacketService,
-              private cohortService: CohortService,
-              public dialog: MatDialog,
-              private datePipe: DatePipe) {
+    private cohortService: CohortService,
+    private downloadService: DownloadService,
+    public dialog: MatDialog,
+    private datePipe: DatePipe) {
   }
   ngOnDestroy(): void {
     if (this.cohortSubscription) {
@@ -122,6 +124,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     });
     return dialogRef;
 
+  }
+
+  downloadPhenopacket(phenopacket: Phenopacket) {
+    this.downloadService.saveAsJson(phenopacket, true);
   }
 
   changeId(id: string, index: number) {
