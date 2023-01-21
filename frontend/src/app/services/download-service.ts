@@ -18,7 +18,7 @@ export class DownloadService {
         if (saveToFile) {
             this.dynamicDownloadByHtmlTag({
                 fileName: `${phenopacket.id}.json`,
-                text: JSON.stringify(phenopacketString)
+                text: phenopacketString
             });
         }
         return phenopacketString;
