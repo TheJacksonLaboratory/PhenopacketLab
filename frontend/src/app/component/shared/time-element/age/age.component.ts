@@ -77,7 +77,7 @@ export class AgeComponent implements OnInit, OnDestroy {
     }
 
     setAge(timeElement: TimeElement) {
-        if (timeElement) {
+        if (timeElement && timeElement.age) {
             this.age = timeElement.age;
             this.years = this.age.getYears();
             this.months = this.age.getMonths();

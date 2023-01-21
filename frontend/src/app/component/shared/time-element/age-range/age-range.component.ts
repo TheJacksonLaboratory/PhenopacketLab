@@ -84,7 +84,7 @@ export class AgeRangeComponent implements OnInit, OnDestroy {
     }
 
     setAgeRange(timeElement: TimeElement) {
-        if (timeElement) {
+        if (timeElement && timeElement.ageRange) {
             this.ageRange = timeElement.ageRange;
             this.yearsStart = this.ageRange.start.getYears();
             this.monthsStart = this.ageRange.start.getMonths();

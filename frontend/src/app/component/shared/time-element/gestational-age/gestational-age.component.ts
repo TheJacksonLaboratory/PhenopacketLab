@@ -75,7 +75,7 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
     }
 
     setGestationalAge(timeElement: TimeElement) {
-        if (timeElement) {
+        if (timeElement && timeElement.gestationalAge) {
             this.gestationalAge = timeElement.gestationalAge;
             this.weeks = this.gestationalAge.weeks;
             this.days = this.gestationalAge.days;
