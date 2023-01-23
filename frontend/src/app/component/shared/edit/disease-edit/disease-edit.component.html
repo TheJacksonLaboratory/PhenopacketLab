@@ -112,7 +112,7 @@
               ngDefaultControl
               id="laterality"
               appendTo="body"
-              [options]="getLateralities()"
+              [options]="lateralities"
               [ngModel]="disease?.laterality"
               (ngModelChange)="updateLaterality($event)"
               optionLabel="label"

@@ -32,6 +32,10 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     onsetsNodes: OntologyTreeNode[];
     onsetsSubscription: Subscription;
 
+    // laterality
+    lateralities: OntologyClass[];
+    lateralitySubscription: Subscription;
+
     constructor(public phenopacketService: PhenopacketService) {
     }
 
@@ -46,6 +50,15 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         this.findingsSubscription = this.phenopacketService.getTnmFindings().subscribe(nodes => {
             this.findingsNodes = <OntologyTreeNode[]>nodes.children;
         });
+        // laterality
+        this.lateralitySubscription = this.phenopacketService.getLaterality().subscribe(lateralities => {
+            lateralities.forEach(laterality => {
+                if (this.lateralities === undefined) {
+                    this.lateralities = [];
+                }
+                this.lateralities.push(new OntologyClass(laterality.id.value, laterality.name));
+            });
+        });
     }
     ngOnDestroy(): void {
         if (this.onsetsSubscription) {
@@ -53,6 +66,9 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         }
         if (this.findingsSubscription) {
             this.findingsSubscription.unsubscribe();
+        }
+        if (this.lateralitySubscription) {
+            this.lateralitySubscription.unsubscribe();
         }
     }
 

@@ -17,6 +17,7 @@ const mondoDiseases = require('../../assets/data/disease-mondo.json');
 const textMinedExample = require('../../assets/data/text-mined-example.json');
 const sexes = require('../../assets/data/sex.json');
 const genders = require('../../assets/data/gender.json');
+const laterality = require('../../assets/data/laterality.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -49,6 +50,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSexes();
                 case url.endsWith('gender') && method === 'GET':
                     return getGenders();
+                case url.endsWith('laterality') && method === 'GET':
+                    return getLaterality();
                 case url.endsWith('onset') && method === 'GET':
                     return getOnsets();
                 case url.endsWith('tnm-findings') && method === 'GET':
@@ -90,6 +93,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getGenders() {
             return ok(genders);
+        }
+        function getLaterality() {
+            return ok(laterality);
         }
         function getModifiers() {
             return ok(modifiers);
