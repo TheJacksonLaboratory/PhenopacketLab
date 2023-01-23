@@ -28,7 +28,22 @@
       (click)="startOver()"
     ></button>
   </div>
-  <div *ngIf="!textSearchVisible" class="field col-8"></div>
+  <div *ngIf="!textSearchVisible" class="field col-4">
+    <button
+      pButton
+      type="button"
+      label="Approve all"
+      (click)="approveAll()"
+    ></button>
+  </div>
+  <div *ngIf="!textSearchVisible" class="field col-4">
+    <button
+      pButton
+      type="button"
+      label="Reject all"
+      (click)="rejectAll()"
+    ></button>
+  </div>
   <div *ngIf="true" class="field col-12">
     <p-table
       *ngIf="visible"

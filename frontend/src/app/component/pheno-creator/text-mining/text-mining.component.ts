@@ -185,6 +185,21 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     });
   }
 
+  /**
+   * Approve all terms
+   */
+  approveAll() {
+    this.phenotypicFeatures.forEach(feature => {
+      feature.textMiningState = MiningState.APPROVED;
+    });
+    this.formatText();
+  }
+  rejectAll() {
+    this.phenotypicFeatures.forEach(feature => {
+      feature.textMiningState = MiningState.REJECTED;
+    });
+    this.formatText();
+  }
   startOver() {
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
