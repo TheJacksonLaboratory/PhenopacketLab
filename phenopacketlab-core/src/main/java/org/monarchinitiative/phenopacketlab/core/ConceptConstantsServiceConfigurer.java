@@ -65,15 +65,14 @@ public class ConceptConstantsServiceConfigurer {
             return List.of();
         }
 
-        IdentifiedConceptResource ncit = ncitOptional.get();
         List<IdentifiedConcept> concepts = new ArrayList<>(4);
 
-        retrieveIdentifiedConcept(ncit, "NCIT:C20197", concepts, "Missing Male sex NCIT:C20197");
-        retrieveIdentifiedConcept(ncit, "NCIT:C16576", concepts, "Missing Female sex NCIT:C16576");
-        retrieveIdentifiedConcept(ncit, "NCIT:C41438", concepts, "Missing Undifferentiated sex NCIT:C41438");
-        retrieveIdentifiedConcept(ncit, "NCIT:C17998", concepts, "Missing Unknown sex NCIT:C17998");
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C17998"), "UNKNOWN_SEX", "Not known, observed, recorded; or reported as unknown by the data contributor.", Arrays.asList("Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46113"), "FEMALE", "An animal who is observed by researcher or clinician to be female, the sex that ordinarily produces ova.", Arrays.asList("Female", "FEMALE", "Female Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46112"), "MALE", "An animal who is observed by researcher or clinician to be male, the sex that ordinarily produces sperm.", Arrays.asList("Male", "MALE", "Male Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C45908"), "OTHER", "A person (one of unisexual specimens) who is born with genitalia and/or secondary sexual characteristics of indeterminate sex, or which combine features of both sexes.", Arrays.asList("Intersex", "Intersexed", "UNDIFFERENTIATED")));
 
-        return Collections.unmodifiableList(concepts);
+        return concepts;
     }
 
     private static List<IdentifiedConcept> configureGenderConstants(ConceptResourceService resourceService) {

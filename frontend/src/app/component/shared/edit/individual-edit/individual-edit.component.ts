@@ -52,7 +52,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             }
         });
         if (this.subject) {
-            this.selectedSex = this.getLabelClassFromSex(this.subject.sex);
+            this.selectedSex = this.subject.sex;
         }
     }
     ngOnDestroy(): void {
@@ -80,33 +80,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    getLabelClassFromSex(sex: Sex) {
-        if (sex === Sex.FEMALE) {
-            return 'Female';
-        } else if (sex === Sex.MALE) {
-            return 'Male';
-        } else if (sex === Sex.OTHER_SEX) {
-            return 'Undifferentiated Sex';
-        } else if (sex === Sex.UNKNOWN_SEX) {
-            return 'Unknown';
-        }
-    }
-
-    getSexFromSelection(sexLabel: String): Sex {
-        if (sexLabel === 'Male') {
-            return Sex.MALE;
-        } else if (sexLabel === 'Female') {
-            return Sex.FEMALE;
-        } else if (sexLabel === 'Undifferentiated Sex') {
-            return Sex.OTHER_SEX;
-        } else if (sexLabel === 'Unknown') {
-            return Sex.UNKNOWN_SEX;
-        }
-    }
-
     updateSex(event: any) {
         if (this.subject && event) {
-            this.subject.sex = this.getSexFromSelection(event.value);
+            this.subject.sex = event.value;
             this.subjectChange.emit(this.subject);
         }
     }

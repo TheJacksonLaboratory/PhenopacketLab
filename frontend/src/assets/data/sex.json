@@ -1,120 +1,34 @@
 [
   {
-    "name": "Male",
-    "definition": "A person who belongs to the sex that normally produces sperm. The term is used to indicate biological sex distinctions, cultural gender role distinctions, or both.",
-    "synonyms": [
-      "Human, Male",
-      "M",
-      "M",
-      "M",
-      "MALE",
-      "MALE",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "Male",
-      "male"
-    ],
-    "id": { "value": "NCIT:C20197", "prefix": "NCIT", "id": "C20197" }
-  },
-  {
-    "name": "Female",
-    "definition": "A person who belongs to the sex that normally produces ova. The term is used to indicate biological sex distinctions, or cultural gender role distinctions, or both.",
-    "synonyms": [
-      "F",
-      "F",
-      "F",
-      "FEMALE",
-      "FEMALE",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "Female",
-      "female"
-    ],
-    "id": { "value": "NCIT:C16576", "prefix": "NCIT", "id": "C16576" }
-  },
-  {
-    "name": "Undifferentiated Sex",
-    "definition": "Sex could not be determined; not uniquely defined; undifferentiated.",
-    "synonyms": [
-      "Not Specified",
-      "Sex Not Specified",
-      "Undifferentiated",
-      "Undifferentiated",
-      "Undifferentiated Sex"
-    ],
-    "id": { "value": "NCIT:C41438", "prefix": "NCIT", "id": "C41438" }
-  },
-  {
-    "name": "Unknown",
+    "name": "UNKNOWN_SEX",
     "definition": "Not known, observed, recorded; or reported as unknown by the data contributor.",
     "synonyms": [
-      "Not Known",
-      "U",
-      "U",
-      "U",
-      "U",
-      "UNK",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "UNKNOWN",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown",
-      "Unknown/Not Stated",
-      "{Unknown}"
+      "Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated"
     ],
     "id": { "value": "NCIT:C17998", "prefix": "NCIT", "id": "C17998" }
+  },
+  {
+    "name": "FEMALE",
+    "definition": "An animal who is observed by researcher or clinician to be female, the sex that ordinarily produces ova.",
+    "synonyms": [
+      "Female", "FEMALE", "Female Phenotype"
+    ],
+    "id": { "value": "NCIT:C46113", "prefix": "NCIT", "id": "C46113" }
+  },
+  {
+    "name": "MALE",
+    "definition": "An animal who is observed by researcher or clinician to be male, the sex that ordinarily produces sperm.",
+    "synonyms": [
+      "Male", "MALE", "Male Phenotype"
+    ],
+    "id": { "value": "NCIT:C46112", "prefix": "NCIT", "id": "C46112" }
+  },
+  {
+    "name": "OTHER",
+    "definition": "A person (one of unisexual specimens) who is born with genitalia and/or secondary sexual characteristics of indeterminate sex, or which combine features of both sexes.",
+    "synonyms": [
+      "Intersex", "Intersexed", "UNDIFFERENTIATED"
+    ],
+    "id": { "value": "NCIT:C45908", "prefix": "NCIT", "id": "C45908" }
   }
 ]
