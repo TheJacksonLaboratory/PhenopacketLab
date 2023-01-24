@@ -31,6 +31,10 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   onset: any;
   onsetsSubscription: Subscription;
 
+  // severity
+  severities: OntologyClass[];
+  severitySubscription: Subscription;
+
   constructor(public phenopacketService: PhenopacketService) {
   }
 
@@ -49,6 +53,15 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
       // we get the children from the root node sent in response
       this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
     });
+    // severity
+    this.severitySubscription = this.phenopacketService.getSeverity().subscribe(severities => {
+      severities.forEach(severity => {
+        if (this.severities === undefined) {
+          this.severities = [];
+        }
+        this.severities.push(new OntologyClass(severity.id.value, severity.name));
+      });
+    });
   }
 
   ngOnDestroy(): void {
@@ -57,6 +70,9 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
     if (this.onsetsSubscription) {
       this.onsetsSubscription.unsubscribe();
+    }
+    if (this.severitySubscription) {
+      this.severitySubscription.unsubscribe();
     }
   }
 

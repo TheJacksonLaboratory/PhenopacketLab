@@ -13,6 +13,7 @@ const tnmFindingsUrl = environment.TNM_FINDINGS_URL;
 const sexUrl = environment.SEX_URL;
 const genderUrl = environment.GENDER_URL;
 const lateralityUrl = environment.LATERALITY_URL;
+const severityUrl = environment.SEVERITY_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -58,6 +59,9 @@ export class PhenopacketService {
     }
     getLaterality(): Observable<any> {
         return this.http.get(lateralityUrl);
+    }
+    getSeverity(): Observable<any> {
+        return this.http.get(severityUrl);
     }
     getOnsets(): Observable<any> {
         return this.http.get(onsetsUrl);

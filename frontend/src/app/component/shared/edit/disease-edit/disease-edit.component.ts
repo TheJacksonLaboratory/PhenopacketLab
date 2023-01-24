@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
-import { Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
+import { Disease, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -78,9 +78,6 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     getDiseaseResolutionId() {
         return TimeElementId.DISEASE_RESOLUTION;
     }
-    getLateralities() {
-        return Laterality.VALUES;
-    }
 
     getStages() {
         const nodes = [];
@@ -88,9 +85,6 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             nodes.push({ label: stage.label, key: stage.id, leaf: true, parent: undefined });
         }
         return nodes;
-    }
-    getSeverities() {
-        return Severities.VALUES;
     }
 
     updateOnset(timeElement: any) {

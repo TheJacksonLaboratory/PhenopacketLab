@@ -77,36 +77,6 @@
             ></ontology-tree-select>
           </div>
           <div class="field col-12">
-            <label for="findings"><b>Clinical TNM finding:</b></label>
-            <ontology-tree-select
-              id="findings"
-              pTooltip="List of terms representing the tumor TNM score"
-              showDelay="2000"
-              [selectionMode]="'checkbox'"
-              (selectedNodesChange)="updateFindingStages($event)"
-              [selectedNodes]="disease?.clinicalTnmFinding"
-              [nodes]="findingsNodes"
-            ></ontology-tree-select>
-          </div>
-
-          <div class="field col-12 md:col-6">
-            <label for="severity"><b>Severity:</b></label>
-            <p-dropdown
-              ngDefaultControl
-              appendTo="body"
-              id="severity"
-              [options]="getSeverities()"
-              [ngModel]="severity"
-              optionLabel="label"
-              [filter]="true"
-              filterBy="label"
-              [showClear]="true"
-              placeholder="Select severity"
-            >
-            </p-dropdown>
-          </div>
-
-          <div class="field col-12 md:col-6">
             <label for="laterality"><b>Laterality:</b></label>
             <p-dropdown
               ngDefaultControl
@@ -123,6 +93,20 @@
             >
             </p-dropdown>
           </div>
+
+          <div class="field col-12">
+            <label for="findings"><b>Clinical TNM finding:</b></label>
+            <ontology-tree-select
+              id="findings"
+              pTooltip="List of terms representing the tumor TNM score"
+              showDelay="2000"
+              [selectionMode]="'checkbox'"
+              (selectedNodesChange)="updateFindingStages($event)"
+              [selectedNodes]="disease?.clinicalTnmFinding"
+              [nodes]="findingsNodes"
+            ></ontology-tree-select>
+          </div>
+
         </div>
       </p-accordionTab>
     </p-accordion>
