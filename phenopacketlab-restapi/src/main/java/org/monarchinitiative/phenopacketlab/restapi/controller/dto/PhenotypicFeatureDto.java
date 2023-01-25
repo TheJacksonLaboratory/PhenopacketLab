@@ -1,5 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller.dto;
 
+import java.util.Objects;
+
 /**
  * Data transfer object for Hpo Phenotypic feature.
  */
@@ -32,5 +34,16 @@ public class PhenotypicFeatureDto {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhenotypicFeatureDto that = (PhenotypicFeatureDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }
