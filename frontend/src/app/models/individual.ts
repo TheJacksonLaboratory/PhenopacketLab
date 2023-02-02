@@ -23,7 +23,7 @@ export class Individual {
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`);
         }
-        if (obj['alternateId']) {
+        if (obj['alternateIds']) {
             individual.alternateIds = obj['alternateIds'];
         }
         if (obj['dateOfBirth']) {

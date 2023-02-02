@@ -4,10 +4,13 @@
     <div class="field col-12">
         <p-card>
             <div class="grid p-fluid">
-                <div class="field col-11">
-                    <b>Time of last encounter: </b> {{ lastEncounterDate }}
+                <div class="field col-12 md:col-5">
+                    <b>Individual ID: </b> {{individual.id}}
                 </div>
-                <div class="field col-1">
+                <div class="field col-12 md:col-6">
+                    <b> Alternate IDs: </b> {{individual.alternateIds?.join(', ')}}
+                </div>
+                <div class="field cold-12 md:col-1">
                     <button
                             (click)="openEditDialog()"
                             mat-icon-button
@@ -19,6 +22,10 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                 </div>
+                <div class="field col-12">
+                    <b>Time of last encounter: </b> {{ lastEncounterDate }}
+                </div>
+                
 
                 <!-- <div class="field col-12 md:col-6"><b>Date of birth: </b> {{ dob }}</div> -->
 
@@ -292,7 +299,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
-                <app-metadata [metadata]="phenopacket?.metadata"></app-metadata>
+                <app-metadata [metadata]="phenopacket?.metaData"></app-metadata>
 
                 <mat-action-row>
                     <button mat-button color="warn" (click)="prevStep()">

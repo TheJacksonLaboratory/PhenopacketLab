@@ -17,6 +17,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     @Output()
     subjectChange = new EventEmitter<Individual>();
 
+    @Input()
+    submitted: boolean;
+
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 

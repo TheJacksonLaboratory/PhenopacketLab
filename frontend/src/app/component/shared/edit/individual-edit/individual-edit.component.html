@@ -1,4 +1,27 @@
 <div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="individualId"><b>Individual ID</b></label>
+        <input
+          id="individualId"
+          #id="ngModel"
+          type="text"
+          required
+          pInputText
+          [(ngModel)]="subject.id"
+          [ngClass]="{
+            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+          }"
+        />
+        <small
+          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+          class="p-error"
+          >Individual ID is required.</small
+        >
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="alternateIds">Alternate IDs</label>
+    <p-chips id="alternateIds" [(ngModel)]="subject.alternateIds"></p-chips>
+  </div>
   <div class="field col-12">
     <label for="lastEncounterDate"
       ><b>Age of clinical examination</b> (Time of last encounter)</label

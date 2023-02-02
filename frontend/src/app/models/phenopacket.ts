@@ -17,7 +17,7 @@ export class Phenopacket {
     interpretations: Interpretation[] = [];
     diseases: Disease[] = [];
     medicalActions: MedicalAction[] = [];
-    metadata: MetaData;
+    metaData: MetaData;
     files: File[] = [];
 
     // for Family Phenopacket
@@ -60,7 +60,7 @@ export class Phenopacket {
             phenopacket.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
         }
         if (obj['metaData']) {
-            phenopacket.metadata = MetaData.convert(obj['metaData']);
+            phenopacket.metaData = MetaData.convert(obj['metaData']);
         } else {
             throw new Error(`Phenopacket file is missing 'metaData' field.`);
         }
