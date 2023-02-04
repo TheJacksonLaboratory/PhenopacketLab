@@ -18,7 +18,7 @@ public class TextMiningController {
         this.textMiningService = textMiningService;
     }
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<MinedText> minedText(@RequestBody String payload) {
         if (payload == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
