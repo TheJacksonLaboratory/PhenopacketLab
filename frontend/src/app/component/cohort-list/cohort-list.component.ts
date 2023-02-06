@@ -64,7 +64,7 @@ export class CohortListComponent implements OnInit {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         // find idx in individualTabs for individual to remove
         let idx;
         for (let i = 0; i < this.individualTabs.length; i++) {

@@ -104,7 +104,7 @@ export class DiseaseComponent implements OnInit, OnChanges {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         this.phenopacketDiseases.forEach((disease, index) => {
           if (disease === element) {
             this.phenopacketDiseases.splice(index, 1);

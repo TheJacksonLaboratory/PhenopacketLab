@@ -85,7 +85,7 @@ export class VcfRecordComponent implements OnInit {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         this.vcfRecordDataSource.data = [];
         this.onVcfRecordChanged.emit(undefined);
       }

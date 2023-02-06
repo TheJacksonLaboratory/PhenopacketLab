@@ -1,24 +1,30 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MessageService } from "primeng/api";
+import { FileUpload } from "primeng/fileupload";
 import { Subscription } from 'rxjs';
 import { Cohort } from 'src/app/models/cohort';
 import { Individual, Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { UploadService } from "../../services/upload-service";
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
-import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
-
+import { Table }  from 'primeng/table';
 
 @Component({
   selector: 'app-phenopacket-list',
   templateUrl: './phenopacket-list.component.html',
   styleUrls: ['./phenopacket-list.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  encapsulation: ViewEncapsulation.None
 })
 export class PhenopacketListComponent implements OnInit, OnDestroy {
+
+  @ViewChild(Table) table: Table;
+
+  @ViewChild(FileUpload) fupload: FileUpload;
   cohort: Cohort;
   /** Array used to hold opened tabs **/
   individualTabsMap = new Map<String, Phenopacket>();
@@ -33,10 +39,15 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
   cohortSubscription: Subscription;
-  datasource = new MatTableDataSource<Phenopacket>();
+  phenopackets: Phenopacket[];
+
+  selectedPhenopacket: Phenopacket;
   constructor(public phenopacketService: PhenopacketService,
               private cohortService: CohortService,
+
+              private uploadService: UploadService,
               public dialog: MatDialog,
+              private messageService: MessageService,
               private datePipe: DatePipe) {
   }
   ngOnDestroy(): void {
@@ -73,7 +84,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
           this.cohortMap.set(phenopacket.id, phenopacket);
         });
         this.individualTabs = Array.from(this.individualTabsMap.values());
-        this.datasource.data = Array.from(this.cohortMap.values());
+        this.phenopackets = Array.from(this.cohortMap.values());
       }
     }
   }
@@ -88,7 +99,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     this.individualTabsMap.set(phenopacket.id, phenopacket);
     this.cohortMap.set(phenopacket.id, phenopacket);
     // this.selected.setValue(this.individualTabs.keys.length);
-    this.datasource.data = Array.from(this.cohortMap.values());
+    this.phenopackets = Array.from(this.cohortMap.values());
     this.individualTabs = Array.from(this.individualTabsMap.values());
 
     // this.cohortService.setCohort(this.cohort);
@@ -104,7 +115,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         // find idx in individualTabs for individual to remove
         let idx;
         for (let i = 0; i < this.individualTabs.length; i++) {
@@ -117,7 +128,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         this.individualTabs.splice(idx, 1);
         // remove individual from family map
         this.cohortMap.delete(individual.id);
-        this.datasource.data = Array.from(this.cohortMap.values());
+        this.phenopackets = Array.from(this.cohortMap.values());
       }
     });
     return dialogRef;
@@ -138,47 +149,54 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   }
 
   openTab(element: any) {
+    this.table._selection = null;
+    this.table.selectionChange.emit();
+
     if (!this.individualTabs.includes(element)) {
       this.individualTabs.push(element);
     }
-    for (let i = 0; i < this.individualTabs.length; i++) {
-      if (element === this.individualTabs[i]) {
-        this.activeIndex = i + 1;
-      }
-    }
+    this.activeIndex = this.individualTabs.indexOf(element) + 1;
   }
   closeTab(index: number) {
-    this.individualTabs.splice(index, 1);
+    this.individualTabs.splice(index - 1, 1);
   }
 
   formatDate(date: Date, format: string) {
     return this.datePipe.transform(date, format);
   }
 
-  /**
-   * Open dialog to upload a new file
-   */
-  public openFileUploadDialog() {
-    const currPhenopackets = [];
+  handleFileUpload(event: any) {
+    console.log('---Uploading one or more files---');
+    let currentPhenopackets = [];
     if (this.cohort) {
-      this.cohort.members?.forEach(val => currPhenopackets.push(val));
-      console.log('uploaded:');
-      console.log(this.cohort.members);
+      this.cohort.members?.forEach(val => currentPhenopackets.push(val));
     }
-    const dialogRef = this.dialog.open(UploadDialogComponent, {
-      width: '40%',
-      height: '40%',
-      data: { fileType: 'JSON, yaml', titleText: 'Upload Phenopacket file(s)', currentPhenopackets: currPhenopackets }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // refresh datasource
-      // this.refresh();
-      // wait 2 sec
-      // (async () => {
-      // await this.delay(2000);
-      // this.refresh();
-      // })();
-    });
+    const files = event.files;
+    const isSingleUploaded = files.length > 1;
+    // TODO: multiple files?
+    this.uploadService.importFromFile(files[0])
+        .subscribe(
+            (phenopackets: Phenopacket[]) => {
+              const currentPhenopacketsId = currentPhenopackets.map(phenopacket => phenopacket.id);
+              for (const newPhenopacket of phenopackets) {
+                if (newPhenopacket.id in currentPhenopacketsId) {
+                  const errorMessage = `Phenopacket Id '${newPhenopacket.id}' already exists.`;
+                  throw new Error(errorMessage);
+                }
+              }
+
+              this.phenopackets = phenopackets;
+              if (this.cohort === undefined) {
+                this.cohortService.setCohort(new Cohort());
+              }
+              this.cohort.members.push(phenopackets[0]);
+              this.cohortService.setCohort(this.cohort);
+              this.messageService.add({severity:'success', summary: "Phenopacket Upload Success!"});
+
+            }, (error) => {
+              this.fupload._files = [];
+              this.messageService.add({severity:'error', summary: error.message, detail: 'Please try again.'});
+            });
   }
 
 }

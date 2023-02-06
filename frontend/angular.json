@@ -30,6 +30,7 @@
           "configurations": {
             "dev": {
               "optimization": false,
+              "sourceMap": true,
               "budgets": [
                 {
                   "type": "anyComponentStyle",

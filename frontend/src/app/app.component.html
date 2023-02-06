@@ -2,7 +2,7 @@
   (toggleNav)="sideNavOpen = $event"
   [route]="router.url">
 </app-header>
-
+<p-toast baseZIndex="11" autoZIndex="false"></p-toast>
 <mat-sidenav-container>
   <mat-sidenav mode="side" [(opened)]="sideNavOpen">
     <app-sidebar [route]="router.url" [open]="sideNavOpen"></app-sidebar>

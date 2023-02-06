@@ -82,7 +82,7 @@ export class GeneContextDialogComponent {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close('cancel');
+    this.dialogRef.close(false);
   }
 
   onOkClick() {

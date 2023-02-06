@@ -1,114 +1,27 @@
-.add-tab-button,
-.delete-tab-button {
-  margin: 8px;
-}
-.delete-tab-button:hover {
-  color: darkgrey;
-}
-.mat-row .mat-cell {
-  // border-bottom: 1px solid grey;
-  // border-top: 1px solid grey;
-  // border-right: 1px solid grey;
-  cursor: pointer;
-}
-.mat-row {
-  height: auto;
-}
+.phenopacket-list-tabs {
+  .p-tabview-panels {
+    padding: 0 !important;
 
-.mat-cell {
-  padding: 10px 8px 8px 0px;
-}
-// .mat-cell {
-//   font-size: 14px;
-//   min-height: 48px;
-//   text-align: center;
-//   border-right: 1px solid black;
-// }
-.tab-label {
-  float: left;
-  margin-left: 10px;
-}
-.close-icon {
-  float: right;
-  margin-right: 5px;
-}
-.margin {
-  margin-left: 10px;
-}
-.mat-column-id {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 30% !important;
-  width: 30% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
+    & .p-element:not(:first-child) .p-tabview-panel {
+      padding: 1.25rem !important;
+    }
+  }
 
-  word-break: break-word;
+  .p-tabview-nav-link {
+    text-decoration: none !important;
+    &:focus{
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
 
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
+  .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:hover{
+    background: #e9ecef;
+    color: #495057;
+  }
 
-.mat-column-dob {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 30% !important;
-  width: 30% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
 
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-.mat-column-sex {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 10% !important;
-  width: 10% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-.mat-column-proband {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 10% !important;
-  width: 10% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-.mat-column-remove {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 10% !important;
-  width: 10% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
+  .p-datatable .p-datatable-tbody > tr:focus {
+    outline: 0 none;
+  }
 }
