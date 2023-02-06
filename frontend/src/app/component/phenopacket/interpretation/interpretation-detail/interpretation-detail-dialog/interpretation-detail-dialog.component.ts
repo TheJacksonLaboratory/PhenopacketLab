@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { ComplexValue, Measurement, Quantity, TypedQuantity, Value } from 'src/app/models/measurement';
@@ -10,11 +10,12 @@ import { MeasurementService } from 'src/app/services/measurement.search.service'
   styleUrls: ['./interpretation-detail-dialog.component.scss']
 })
 
-export class InterpretationDetailDialogComponent {
+export class InterpretationDetailDialogComponent implements OnInit {
 
   description: string;
   assay:  OntologyClass;
-  measurementValue: Value | ComplexValue;
+  value: Value;
+  complexValue: ComplexValue;
   timeObserved: TimeElement;
   // procedure
   procedure: Procedure;
@@ -22,9 +23,10 @@ export class InterpretationDetailDialogComponent {
   bodySite: OntologyClass;
   performed: TimeElement;
   // Value
-  value: Quantity | OntologyClass;
-  complexValue: TypedQuantity[];
-  
+  quantity: Quantity;
+  ontologyClass: OntologyClass;
+  typedQuantities: TypedQuantity[];
+
   measurement: Measurement;
 
   constructor(public dialogRef: MatDialogRef<InterpretationDetailDialogComponent>,
@@ -40,7 +42,7 @@ export class InterpretationDetailDialogComponent {
 
   updateMeasurement() {
     if (this.measurement) {
-      
+
     } else {
       this.measurement = new Measurement();
     }
@@ -54,9 +56,16 @@ export class InterpretationDetailDialogComponent {
   }
 
   onMeasurementValueChange(eventObj: any) {
-    this.measurementValue = eventObj.value;
+    this.value = eventObj.value;
     if (this.measurement) {
-      this.measurement.measurementValue = this.measurementValue;
+      this.measurement.value = this.value;
+    }
+  }
+
+  onMeasurementComplexValueChange(eventObj: any) {
+    this.complexValue = eventObj.value;
+    if (this.measurement) {
+      this.measurement.complexValue = this.complexValue;
     }
   }
 

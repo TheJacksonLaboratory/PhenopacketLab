@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
@@ -20,7 +20,6 @@ export class MedicalActionDetailComponent implements OnInit {
   @Input()
   diseases: Disease[];
 
-  action: Procedure | Treatment | RadiationTherapy | TherapeuticRegimen;
   treatmentTarget: OntologyClass;
   treatmentIntent: OntologyClass;
   responseToTreatment: OntologyClass;
@@ -57,42 +56,40 @@ export class MedicalActionDetailComponent implements OnInit {
 
   updateMedicalActionAction() {
     if (this.medicalAction) {
-      this.action = this.medicalAction.action;
+
       this.treatmentTarget = this.medicalAction.treatmentTarget;
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
-      if (this.action) {
-        if (this.action instanceof Procedure) {
-          this.actionType = Procedure.actionName;
-          this.procedureCode = this.action.code;
-          this.bodySite = this.action.bodySite;
-          this.performed = this.action.performed;
-        } else if (this.action instanceof Treatment) {
-          this.actionType = Treatment.actionName;
-          this.agent = this.action.agent;
-          this.routeOfAdministration = this.action.routeOfAdministration;
-          this.doseIntervals = this.action.doseIntervals;
-          if (this.doseIntervals) {
-            this.doseIntervalDatasource.data = this.doseIntervals;
-          }
-          this.drugType = this.action.drugType;
-          this.cumulativeDose = this.action.cumulativeDose;
-        } else if (this.action instanceof RadiationTherapy) {
-          this.actionType = RadiationTherapy.actionName;
-          this.modality = this.action.modality;
-          this.bodySite = this.action.bodySite;
-          this.dosage = this.action.dosage;
-          this.fractions = this.action.fractions;
-        } else if (this.action instanceof TherapeuticRegimen) {
-          this.actionType = TherapeuticRegimen.actionName;
-          this.identifier = this.action.identifier;
-          this.startTime = this.action.startTime;
-          this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.regimenStatus;
+      if (this.medicalAction.procedure) {
+        this.actionType = Procedure.actionName;
+        this.procedureCode = this.medicalAction.procedure.code;
+        this.bodySite = this.medicalAction.procedure.bodySite;
+        this.performed = this.medicalAction.procedure.performed;
+      } else if (this.medicalAction.treatment) {
+        this.actionType = Treatment.actionName;
+        this.agent = this.medicalAction.treatment.agent;
+        this.routeOfAdministration = this.medicalAction.treatment.routeOfAdministration;
+        this.doseIntervals = this.medicalAction.treatment.doseIntervals;
+        if (this.doseIntervals) {
+          this.doseIntervalDatasource.data = this.doseIntervals;
         }
-
+        this.drugType = this.medicalAction.treatment.drugType;
+        this.cumulativeDose = this.medicalAction.treatment.cumulativeDose;
+      } else if (this.medicalAction.radiationTherapy) {
+        this.actionType = RadiationTherapy.actionName;
+        this.modality = this.medicalAction.radiationTherapy.modality;
+        this.bodySite = this.medicalAction.radiationTherapy.bodySite;
+        this.dosage = this.medicalAction.radiationTherapy.dosage;
+        this.fractions = this.medicalAction.radiationTherapy.fractions;
+      } else if (this.medicalAction.therapeuticRegimen) {
+        this.actionType = TherapeuticRegimen.actionName;
+        this.identifier = this.medicalAction.therapeuticRegimen.identifier;
+        this.startTime = this.medicalAction.therapeuticRegimen.startTime;
+        this.endTime = this.medicalAction.therapeuticRegimen.endTime;
+        this.regimenStatus = this.medicalAction.therapeuticRegimen.regimenStatus;
       }
+
     }
 
   }
