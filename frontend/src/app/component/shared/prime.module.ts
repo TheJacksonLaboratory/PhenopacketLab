@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
@@ -44,7 +45,8 @@ import { ToastModule } from "primeng/toast";
     CardModule,
     TableModule,
     FileUploadModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   exports: [
     ButtonModule,
@@ -65,8 +67,9 @@ import { ToastModule } from "primeng/toast";
     CardModule,
     TableModule,
     FileUploadModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class PrimeModule { }

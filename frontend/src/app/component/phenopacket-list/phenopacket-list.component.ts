@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessageService } from "primeng/api";
+import { ConfirmationService, ConfirmEventType, MessageService } from "primeng/api";
 import { FileUpload } from "primeng/fileupload";
 import { Subscription } from 'rxjs';
 import { Cohort } from 'src/app/models/cohort';
@@ -48,6 +48,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
               private uploadService: UploadService,
               public dialog: MatDialog,
               private messageService: MessageService,
+              private confirmationService: ConfirmationService,
               private datePipe: DatePipe) {
   }
   ngOnDestroy(): void {
@@ -107,32 +108,22 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
 
   removeIndividual(individual: Phenopacket) {
     // we remove the tab and the individual
-    const msgData = { 'title': 'Delete Phenopacket' };
-    msgData['description'] = `Delete the Phenopacket with id ${individual.id} ?`;
-    msgData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: msgData
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        // Remove here
         // find idx in individualTabs for individual to remove
-        let idx;
-        for (let i = 0; i < this.individualTabs.length; i++) {
-          if (this.individualTabs[i].id === individual.id) {
-            idx = i;
-            break;
-          }
-        }
+        const removeIdx = this.individualTabs.indexOf(individual);
         // remove individual tab
-        this.individualTabs.splice(idx, 1);
+        this.individualTabs.splice(removeIdx, 1);
         // remove individual from family map
         this.cohortMap.delete(individual.id);
         this.phenopackets = Array.from(this.cohortMap.values());
-      }
-    });
-    return dialogRef;
-
+        this.messageService.add({severity:'info', summary:'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
+      },
+      reject: () => {}, key: "positionDialog"});
   }
 
   changeId(id: string, index: number) {

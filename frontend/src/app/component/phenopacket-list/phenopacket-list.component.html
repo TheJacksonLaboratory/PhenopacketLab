@@ -29,7 +29,7 @@
               {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
             </td>
             <td style="text-align: center">
-              <button pButton type="button" class="p-button-secondary" icon="pi pi-trash" (click)="removeIndividual(null)"></button>
+              <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="removeIndividual(phenopacket)"></button>
             </td>
           </tr>
         </ng-template>
@@ -61,4 +61,10 @@
     </p-tabPanel>
 
   </p-tabView>
+  <p-confirmDialog #cd [style]="{width: '50vw'}" key="positionDialog" position="bottom-right" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+      <button type="button" class="p-button-outlined" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    </ng-template>
+  </p-confirmDialog>
 </div>
