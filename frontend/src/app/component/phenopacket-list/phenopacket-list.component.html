@@ -1,12 +1,12 @@
 <div class="phenopacket-list">
-  <div class="flex p-3 card-btn-wrapper">
+  <div class="flex p-3 pl-0 card-btn-wrapper">
     <!-- <button mat-raised-button routerLink="/pheno-creator" class="add-tab-button">Add new individual</button> -->
     <p-fileUpload #fubauto mode="basic" name="file[]" [customUpload]="true"
                   maxFileSize="1000000" (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
                   chooseIcon="pi-file-import" accept=".json,.yml">
 
     </p-fileUpload>
-    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-pencil" routerLink="/profile-selection"></button>
+    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button>
 
   </div>
 

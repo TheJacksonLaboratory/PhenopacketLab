@@ -3,61 +3,35 @@ app-header {
   width: 100vw;
   z-index: 10;
 }
+.main {
+  display: flex;
+  min-height: 100vh;
+  padding: 70px 0 0 0;
+  background-color: white;
 
-mat-sidenav-container {
-  margin-top: 64px;
-  height: 90vh;
-
-  mat-sidenav {
-    overflow-x: hidden;
-    transform: none;
-    visibility: visible !important;
-
-    app-sidebar {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
+  .sidebar {
+    .p-sidebar {
+      width: auto !important;
+      position: unset !important;
+      .menu-list .p-menu {
+        border: 0 !important;
+        .p-menuitem {
+          text-transform: uppercase;
+          font-size: .8rem;
+          border-radius: 6px;
+        }
+        .p-menuitem-link-active {
+          background-color: rgba(38, 166, 154, .65) !important;
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+  .content {
+    flex: 6;
+    &.full {
+      flex: auto;
     }
   }
 
-  mat-sidenav-content {
-    margin-left: 64px;
-  }
-}
-
-@media (min-height: 710px) {
-  mat-sidenav-container {
-    height: 91vh;
-  }
-}
-
-@media (min-height: 800px) {
-  mat-sidenav-container {
-    height: 92vh;
-  }
-}
-
-@media (min-height: 850px) {
-  mat-sidenav-container {
-    height: 92.5vh;
-  }
-}
-
-@media (min-height: 910px) {
-  mat-sidenav-container {
-    height: 93vh;
-  }
-}
-
-@media (min-height: 980px) {
-  mat-sidenav-container {
-    height: 93.5vh;
-  }
-}
-
-@media (min-height: 1060px) {
-  mat-sidenav-container {
-    height: 94vh;
-  }
 }

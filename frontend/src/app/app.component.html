@@ -1,15 +1,11 @@
-<app-header
-  (toggleNav)="sideNavOpen = $event"
-  [route]="router.url">
-</app-header>
+<app-header (toggleNav)="sideNavOpen = $event"></app-header>
 <p-toast baseZIndex="11" position="bottom-right" showTransitionOption="100ms ease-out" hideTransitionOptions="100ms ease-in"></p-toast>
-<mat-sidenav-container>
-  <mat-sidenav mode="side" [(opened)]="sideNavOpen">
-    <app-sidebar [route]="router.url" [open]="sideNavOpen"></app-sidebar>
-  </mat-sidenav>
-  <mat-sidenav-content>
+<div class="main">
+  <p-sidebar [visible]="activeSidenav" styleClass="p-sidebar-sm" class="sidebar flex-1" [showCloseIcon]="false" [closeOnEscape]="false" transitionOptions="0ms">
+    <app-sidebar></app-sidebar>
+  </p-sidebar>
+  <div class="content p-2" [ngClass]="{'full': activeSidenav === false}">
     <router-outlet></router-outlet>
-    <mat-divider></mat-divider>
-    <app-footer></app-footer>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </div>
+</div>
+
