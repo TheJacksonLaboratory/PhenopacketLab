@@ -2,14 +2,11 @@
   <div class="flex p-3 pl-0 card-btn-wrapper">
     <!-- <button mat-raised-button routerLink="/pheno-creator" class="add-tab-button">Add new individual</button> -->
     <p-fileUpload #fubauto mode="basic" name="file[]" [customUpload]="true"
-                  maxFileSize="1000000" (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
-                  chooseIcon="pi-file-import" accept=".json,.yml">
-
+                  (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
+                  chooseIcon="pi-file-import" accept=".json">
     </p-fileUpload>
     <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button>
-
   </div>
-
   <p-tabView id="closableTabView" [(activeIndex)]="activeIndex" (onClose)="closeTab($event.index)" styleClass="phenopacket-list-tabs">
     <p-tabPanel header="Phenopackets" [selected]="true" class="first-panel">
       <p-table [value]="phenopackets" selectionMode="single" (onRowSelect)="openTab($event.data)">
@@ -35,7 +32,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
-            <td [attr.colspan]="3">
+            <td [attr.colspan]="4">
               No phenopackets found.
             </td>
           </tr>

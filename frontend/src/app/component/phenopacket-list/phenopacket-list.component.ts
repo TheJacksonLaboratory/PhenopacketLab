@@ -185,8 +185,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
               this.messageService.add({severity:'success', summary: "Phenopacket Upload Success!"});
 
             }, (error) => {
+              this.fupload.clear()
               this.fupload._files = [];
-              this.messageService.add({severity:'error', summary: error.message, detail: 'Please try again.'});
+              const detail = error?.detail != null ? error.detail : 'Please try again.';
+              this.messageService.add({severity:'error', summary: error.message, detail: detail});
             });
   }
 
