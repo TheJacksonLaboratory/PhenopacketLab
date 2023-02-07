@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subscriber } from "rxjs";
+import { PhenopacketLabError } from "../models/error";
 import { FileType } from "../models/file-type";
 
 import { Phenopacket } from "../models/phenopacket";
@@ -44,7 +45,7 @@ export class UploadService {
                         }
                     }
                     catch (e) {
-                        throw new Error(`Phenopacket ${type.toUpperCase()} Parsing Error`)
+                        throw new PhenopacketLabError(`${file.name} Parsing Error`, e)
                     }
                 }),
             );

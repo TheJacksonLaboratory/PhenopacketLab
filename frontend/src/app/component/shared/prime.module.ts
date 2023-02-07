@@ -22,6 +22,7 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from "primeng/toast";
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [],
@@ -46,7 +47,8 @@ import { ToastModule } from "primeng/toast";
     TableModule,
     FileUploadModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TooltipModule
   ],
   exports: [
     ButtonModule,
@@ -68,7 +70,8 @@ import { ToastModule } from "primeng/toast";
     TableModule,
     FileUploadModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TooltipModule
   ],
   providers: [MessageService, ConfirmationService]
 })
