@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "${api.version}/phenotypic-features")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PhenotypicFeatureController {
 
     private final HpoService phenotypicFeatureService;

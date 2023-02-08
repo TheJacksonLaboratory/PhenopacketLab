@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api/v1';
+const API_URL = 'http://34.23.1.146:8080/api/v1';
 
 export const environment = {
   production: true,
