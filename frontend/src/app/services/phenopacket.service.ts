@@ -39,10 +39,7 @@ export class PhenopacketService {
     }
 
     validatePhenopacket(phenopacket: string): Observable<any> {
-        const options = {
-            phenopacket: phenopacket
-        };
-        return this.http.get(phenopacketValidateUrl, { params: options });
+        return this.http.post(phenopacketValidateUrl, {data: phenopacket});
     }
 
     getModifiers(): Observable<any> {

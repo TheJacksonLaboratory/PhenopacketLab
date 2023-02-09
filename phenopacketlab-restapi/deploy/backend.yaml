@@ -35,7 +35,6 @@ spec:
           resources:
             requests:
               memory: 1Gi # This is the minimum memory that is requested and allocated every time a pod has been created
-              cpu: 100m # We seem to run out of threads on the server deployment.
             limits:
               memory: 8Gi # This is the memory limit for your pod. If your application uses more than this, the pod will be OOM killed
           imagePullPolicy: Always

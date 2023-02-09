@@ -1,5 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class Application {
 
-    // TODO: put in property file
-    public final String CORS_URL = "http://34.23.1.146:8080";
-//    public final String CORS_URL = "http://localhost:8080";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
+
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -30,7 +31,11 @@ public class Application {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**").allowedOrigins(CORS_URL);
+                LOGGER.info("Adding CORS mapping");
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedHeaders("*")
+                        .allowedMethods("GET", "POST");
             }
         };
     }
