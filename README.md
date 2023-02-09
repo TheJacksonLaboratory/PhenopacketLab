@@ -3,10 +3,13 @@
 [![Java CI with Maven](https://github.com/TheJacksonLaboratory/PhenopacketLab/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/TheJacksonLaboratory/PhenopacketLab/actions/workflows/maven.yml)
 ![Node CI](https://github.com/TheJacksonLaboratory/PhenopacketLab/actions/workflows/node.js.yml/badge.svg)
 
-This Maven project is a test project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (`phenopacketlab-restapi`). 
+This Maven project is a project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (`phenopacketlab-restapi`). 
+
+The Single-page application can be accessed at the following URL: http://35.227.26.28/dashboard 
+The Spring Boot RESTful API which serves the application with all the necessary ontologies can be found at this URL: http://34.75.10.180:8080/swagger-ui/index.html
 
 The project can be deployed in  multiple ways: 
-* frontend dist folder can be deployed in a Tomcat container and the backend can be deployed as a war file.
+* frontend dist folder can be deployed by being copied in a Web server and the backend can be deployed as a war file.
 * frontend and backend can be both deployed in a single war file on a server.
 * frontend and backend can be packaged in an executable file that contains a Tomcat EE instance and that is used to serve the application.
 
@@ -15,15 +18,17 @@ Below are some screenshots of the running application:
 The welcome screen:
 ![Alt text](/resources/welcome-screenshot.png?raw=true)
 
-The Phenotypic Feature GUI:
-![Alt text](/resources/phenotypic-feature-screenshot.png?raw=true)
+The phenopacket table with a list of phenopackets:
+![Alt text](/resources/phenopacket-list-screenshot.png?raw=true)
 
-The Selectable Ontology Tree:
-![Alt text](/resources/selectable-ontology-screenshot.png?raw=true)
+The Phenopacket creator stepper:
+![Alt text](/resources/phenopacket-creator-screenshot.png?raw=true)
 
-The Simple Ontology Tree:
-![Alt text](/resources/simple-ontology-screenshot.png?raw=true)
+The phenotypic feature creation step with text mining feature:
+![Alt text](/resources/text-mining-screenshot.png?raw=true)
 
+The disease creation step with text search:
+![Alt text](/resources/disease-screenshot.png?raw=true)
 
 ## Build from sources
 
@@ -36,7 +41,7 @@ cd PhenopacketLab
 
 ## Setup *PhenopacketLab* data directory
 
-*PhenopacketLab* backend requires several data files to be present to run. The data directory is setup in two steps: 
+*PhenopacketLab* backend requires several data files to be present to run. The data directory is set up in two steps: 
 - download non-ontology resources
 - preprocess ontologies
 
@@ -46,13 +51,13 @@ and [ROBOT](https://robot.obolibrary.org/) to get ahold of the executable JARs.
 Run the following to set up the data directory:
 
 ```shell
-OBOGRAPHS_JAR=path/to/obographs-cli.jar
-ROBOT_JAR=path/to/robot.jar
-PLAB_DATADIR=path/to/phenopacket-lab
+OBOGRAPHS_JAR=/Users/elkasb/software-dep/obographs-cli-0.3.0.jar
+ROBOT_JAR=/Users/elkasb/software-dep/robot-1.9.1.jar
+PLAB_DATADIR=/Users/elkasb/data/phenopacket-lab
 PLAB_VERSION=0.1-SNAPSHOT
 
 # 0 - Build the app
-cd PhenopacketLab
+#cd PhenopacketLab
 ./mvnw --projects phenopacketlab-restapi --also-make --batch-mode package
 
 # 1 - Download non-ontology resources
@@ -79,4 +84,4 @@ PL_PROFILE=development
 java -Dspring.profiles.active=${PL_PROFILE} -Dphenopacketlab.data-directory=${PL_DATADIR} -jar ${PL_JAR} 
 ```
 
-By default, backend serves requests at `localhost:8080`.
+By default, backend serves requests at `localhost:8080`, and the frontend will be at `localhost:4200`.
