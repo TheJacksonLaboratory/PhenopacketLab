@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +18,7 @@ import { MedicalActionService } from 'src/app/services/medical-action.search.ser
 
 export class MedicalActionDetailDialogComponent implements OnInit {
 
-  action: any;
+  // action: any;
   treatmentTarget: OntologyClass;
   treatmentIntent: OntologyClass;
   responseToTreatment: OntologyClass;
@@ -59,12 +59,12 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   actionTypes = ['Procedure', 'Treatment', 'Radiation therapy', 'Therapeutic regimen'];
   actionType: string;
   // TODO pull data from backend endpoint
-  intents = [{id: 'intent-1', label: 'Intent 1'},
-            {id: 'intent-2', label: 'Intent 2'},
-            {id: 'intent-3', label: 'Intent 3'}];
-  responses = [{id: 'resp-1', label: 'Response 1'},
-              {id: 'resp-2', label: 'Response 2'},
-              {id: 'resp-3', label: 'Response 3'}];
+  intents = [{ id: 'intent-1', label: 'Intent 1' },
+  { id: 'intent-2', label: 'Intent 2' },
+  { id: 'intent-3', label: 'Intent 3' }];
+  responses = [{ id: 'resp-1', label: 'Response 1' },
+  { id: 'resp-2', label: 'Response 2' },
+  { id: 'resp-3', label: 'Response 3' }];
 
   // Dose Intervals table
   doseIntervalDisplayedColumns: string[] = DoseIntervalColumns.map((col) => col.key);
@@ -85,45 +85,46 @@ export class MedicalActionDetailDialogComponent implements OnInit {
     // bodySite filter for RadiationTherapy
     this.radiationTherapyBodySites = this.searchService.getAllFromLocalStorage(this.bodySitesStorageKey);
     this.filteredBodySites = this.bodySiteControl.valueChanges.pipe(
-        startWith(''),
-        map(bodySite => (bodySite ? this._filter(bodySite) : this.radiationTherapyBodySites.slice())),
-      );
+      startWith(''),
+      map(bodySite => (bodySite ? this._filter(bodySite) : this.radiationTherapyBodySites.slice())),
+    );
 
   }
 
   updateMedicalAction() {
     if (this.medicalAction) {
-      this.action = this.medicalAction.action;
       this.treatmentTarget = this.medicalAction.treatmentTarget;
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
       this.terminationReason = this.medicalAction.treatmentTerminationReason;
       this.responseToTreatmentVal = this.responseToTreatment?.label;
-      this.actionType = this.action.toString();
-      if (this.action) {
-        if (this.action instanceof Procedure) {
-          this.procedureCode = this.action.code;
-          this.bodySite = this.action.bodySite;
-          this.performed = this.action.performed;
-        } else if (this.action instanceof Treatment) {
-          this.agent = this.action.agent;
-          this.routeOfAdministration = this.action.routeOfAdministration;
-          this.doseIntervals = this.action.doseIntervals;
-          this.drugType = this.action.drugType;
-          this.cumulativeDose = this.action.cumulativeDose;
-        } else if (this.action instanceof RadiationTherapy) {
-          this.modality = this.action.modality;
-          this.bodySite = this.action.bodySite;
-          this.dosage = this.action.dosage;
-          this.fractions = this.action.fractions;
-          this.bodySiteControl.setValue(this.getBodySiteDisplay(this.bodySite));
-        } else if (this.action instanceof TherapeuticRegimen) {
-          this.identifier = this.action.identifier;
-          this.startTime = this.action.startTime;
-          this.endTime = this.action.endTime;
-          this.regimenStatus = this.action.regimenStatus;
-        }
+      if (this.medicalAction.procedure) {
+        this.procedureCode = this.medicalAction.procedure.code;
+        this.bodySite = this.medicalAction.procedure.bodySite;
+        this.performed = this.medicalAction.procedure.performed;
+        this.actionType = this.medicalAction.procedure.toString();
+      } else if (this.medicalAction.treatment) {
+        this.agent = this.medicalAction.treatment.agent;
+        this.routeOfAdministration = this.medicalAction.treatment.routeOfAdministration;
+        this.doseIntervals = this.medicalAction.treatment.doseIntervals;
+        this.drugType = this.medicalAction.treatment.drugType;
+        this.cumulativeDose = this.medicalAction.treatment.cumulativeDose;
+        this.actionType = this.medicalAction.treatment.toString();
+      } else if (this.medicalAction.radiationTherapy) {
+        this.modality = this.medicalAction.radiationTherapy.modality;
+        this.bodySite = this.medicalAction.radiationTherapy.bodySite;
+        this.dosage = this.medicalAction.radiationTherapy.dosage;
+        this.fractions = this.medicalAction.radiationTherapy.fractions;
+        this.bodySiteControl.setValue(this.getBodySiteDisplay(this.bodySite));
+        this.actionType = this.medicalAction.radiationTherapy.toString();
+      } else if (this.medicalAction.therapeuticRegimen) {
+        this.identifier = this.medicalAction.therapeuticRegimen.identifier;
+        this.startTime = this.medicalAction.therapeuticRegimen.startTime;
+        this.endTime = this.medicalAction.therapeuticRegimen.endTime;
+        this.regimenStatus = this.medicalAction.therapeuticRegimen.regimenStatus;
+        this.actionType = this.medicalAction.therapeuticRegimen.toString();
       }
+
     } else {
       this.medicalAction = new MedicalAction();
     }
@@ -132,15 +133,26 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   onActionTypeChange(obj: any) {
     this.actionType = obj.value;
     if (this.actionType === Procedure.actionName) {
-      this.action = new Procedure();
+      this.medicalAction.procedure = new Procedure();
+      this.medicalAction.treatment = undefined;
+      this.medicalAction.radiationTherapy = undefined;
+      this.medicalAction.therapeuticRegimen = undefined;
     } else if (this.actionType === Treatment.actionName) {
-      this.action = new Treatment();
+      this.medicalAction.procedure = undefined;
+      this.medicalAction.treatment = new Treatment();
+      this.medicalAction.radiationTherapy = undefined;
+      this.medicalAction.therapeuticRegimen = undefined;
     } else if (this.actionType === RadiationTherapy.actionName) {
-      this.action = new RadiationTherapy();
+      this.medicalAction.procedure = undefined;
+      this.medicalAction.treatment = undefined;
+      this.medicalAction.radiationTherapy = new RadiationTherapy();
+      this.medicalAction.therapeuticRegimen = undefined;
     } else if (this.actionType === TherapeuticRegimen.actionName) {
-      this.action = new TherapeuticRegimen();
+      this.medicalAction.procedure = undefined;
+      this.medicalAction.treatment = undefined;
+      this.medicalAction.radiationTherapy = undefined;
+      this.medicalAction.therapeuticRegimen = new TherapeuticRegimen();
     }
-    this.medicalAction.action = this.action;
   }
 
   onDiseaseChange(eventObj: any) {
@@ -174,22 +186,22 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   changeProcedureCode(eventObj: OntologyClass) {
     this.procedureCode = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.code = this.procedureCode;
+    if (this.medicalAction && this.medicalAction.procedure) {
+      this.medicalAction.procedure.code = this.procedureCode;
     }
   }
   changeAgent(eventObj: OntologyClass) {
     this.agent = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.agent = this.agent;
+    if (this.medicalAction && this.medicalAction.treatment) {
+      this.medicalAction.treatment.agent = this.agent;
     }
   }
   changeRouteOfAdministration(eventObj: OntologyClass) {
     this.routeOfAdministration = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.routeOfAdministration = this.routeOfAdministration;
+    if (this.medicalAction && this.medicalAction.treatment) {
+      this.medicalAction.treatment.routeOfAdministration = this.routeOfAdministration;
     }
   }
 
@@ -200,20 +212,28 @@ export class MedicalActionDetailDialogComponent implements OnInit {
     const label = searchBodySite.selectedItems[0].selectedValue.name;
     this.bodySite = new OntologyClass(id, label);
     // push changes to medicalAction
-    this.medicalAction.action.bodySite = this.bodySite;
+    if (this.medicalAction && this.medicalAction.procedure) {
+      this.medicalAction.procedure.bodySite = this.bodySite;
+    } else if (this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.bodySite = this.bodySite;
+    }
   }
 
   removeBodySite() {
     this.bodySite = undefined;
-    this.medicalAction.action.bodySite = this.bodySite;
+    if (this.medicalAction && this.medicalAction.procedure) {
+      this.medicalAction.procedure.bodySite = this.bodySite;
+    } else if (this.medicalAction && this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.bodySite = this.bodySite;
+    }
   }
 
   /** end body site search */
   onDrugTypeChange(eventObj: any) {
     this.drugType = eventObj.value;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.drugType = this.drugType;
+    if (this.medicalAction && this.medicalAction.treatment) {
+      this.medicalAction.treatment.drugType = this.drugType;
     }
   }
 
@@ -257,15 +277,17 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   changeModality(eventObj: OntologyClass) {
     this.modality = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.modality = this.modality;
+    if (this.medicalAction && this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.modality = this.modality;
     }
   }
   changeBodySite(eventObj: any) {
     this.bodySite = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.bodySite = this.bodySite;
+    if (this.medicalAction && this.medicalAction.procedure) {
+      this.medicalAction.procedure.bodySite = this.bodySite;
+    } else if (this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.bodySite = this.bodySite;
     }
   }
   getBodySiteDisplay(bodySite: any) {
@@ -286,15 +308,15 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   changeDosage(eventObj: number) {
     this.dosage = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.dosage = this.dosage;
+    if (this.medicalAction && this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.dosage = this.dosage;
     }
   }
   changeFractions(eventObj: number) {
     this.fractions = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.fractions = this.fractions;
+    if (this.medicalAction && this.medicalAction.radiationTherapy) {
+      this.medicalAction.radiationTherapy.fractions = this.fractions;
     }
   }
 
@@ -302,15 +324,15 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   changeIdentifier(eventObj: any) {
     this.identifier = eventObj;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.identifier = this.identifier;
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.identifier = this.identifier;
     }
   }
   onRegimenStatusChange(eventObj: any) {
     this.regimenStatus = eventObj.value;
     // update medicalAction
-    if (this.medicalAction) {
-      this.medicalAction.action.regimenStatus = this.regimenStatus;
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.regimenStatus = this.regimenStatus;
     }
   }
 }

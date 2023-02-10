@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -76,18 +76,20 @@ export class GenoInterpretationDetailComponent implements OnInit {
   }
 
   isVariantInterpretation() {
-    if (this.genoInterpretation) {
-      return this.genoInterpretation.call.toString() === VariantInterpretation.className;
+    if (this.genoInterpretation && this.genoInterpretation.variantInterpretation) {
+      return this.genoInterpretation.variantInterpretation.toString() === VariantInterpretation.className;
     }
   }
   isGeneDescriptor() {
-    if (this.genoInterpretation) {
-      return this.genoInterpretation.call.toString() === GeneDescriptor.className;
+    if (this.genoInterpretation && this.genoInterpretation.geneDescriptor) {
+      return this.genoInterpretation.geneDescriptor.toString() === GeneDescriptor.className;
     }
   }
   getCall() {
-    if (this.genoInterpretation) {
-      return this.genoInterpretation.call;
+    if (this.genoInterpretation && this.genoInterpretation.variantInterpretation) {
+      return this.genoInterpretation.variantInterpretation;
+    } else if (this.genoInterpretation && this.genoInterpretation.geneDescriptor) {
+      return this.genoInterpretation.geneDescriptor;
     }
   }
 }

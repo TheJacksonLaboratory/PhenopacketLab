@@ -31,6 +31,10 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   onset: any;
   onsetsSubscription: Subscription;
 
+  // severity
+  severities: OntologyClass[];
+  severitySubscription: Subscription;
+
   constructor(public phenopacketService: PhenopacketService) {
   }
 
@@ -38,14 +42,25 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
 
     // Get modifiers
     this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
-      this.modifiersNodes = <OntologyTreeNode[]>nodes.data;
+      // we get the children from the root node sent in response
+      this.modifiersNodes = <OntologyTreeNode[]>nodes.children;
     }
     );
     // get Evidences
     this.evidencesNodes = this.getEvidences();
     // get onsets
     this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-      this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+      // we get the children from the root node sent in response
+      this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+    });
+    // severity
+    this.severitySubscription = this.phenopacketService.getSeverity().subscribe(severities => {
+      severities.forEach(severity => {
+        if (this.severities === undefined) {
+          this.severities = [];
+        }
+        this.severities.push(new OntologyClass(severity.id.value, severity.name));
+      });
     });
   }
 
@@ -55,6 +70,9 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
     if (this.onsetsSubscription) {
       this.onsetsSubscription.unsubscribe();
+    }
+    if (this.severitySubscription) {
+      this.severitySubscription.unsubscribe();
     }
   }
 

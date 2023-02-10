@@ -1,5 +1,28 @@
 <div class="grid p-fluid">
   <div class="field col-12">
+    <label for="individualId"><b>Individual ID</b></label>
+        <input
+          id="individualId"
+          #id="ngModel"
+          type="text"
+          required
+          pInputText
+          [(ngModel)]="subject.id"
+          [ngClass]="{
+            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+          }"
+        />
+        <small
+          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+          class="p-error"
+          >Individual ID is required.</small
+        >
+  </div>
+  <!-- <div class="field col-12 md:col-6">
+    <label for="alternateIds">Alternate IDs</label>
+    <p-chips id="alternateIds" [(ngModel)]="subject.alternateIds"></p-chips>
+  </div> -->
+  <div class="field col-12">
     <label for="lastEncounterDate"
       ><b>Age of clinical examination</b> (Time of last encounter)</label
     >
@@ -16,9 +39,9 @@
       id="sex"
       appendTo="body"
       placeholder="Select sex"
-      [options]="getSexes()"
-      [ngModel]="subject?.sex"
-      (ngModelChange)="updateSex($event)"
+      [(ngModel)]="selectedSex"
+      [options]="sexes"
+      (onChange)="updateSex($event)"
       pTooltip="Observed apparent sex of the individual"
       showDelay="2000"
       class="w-full"
@@ -45,7 +68,7 @@
       id="gender"
       appendTo="body"
       placeholder="Select gender"
-      [options]="getGenders()"
+      [options]="genders"
       [ngModel]="subject?.gender"
       (ngModelChange)="updateGender($event)"
       pTooltip="Self-identified gender"
@@ -80,7 +103,10 @@
     ></p-inputNumber>
   </div>
 
-  <div class="field col-6" *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()">
+  <div
+    class="field col-6"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+  >
     <label for="timeOfDeath">Time of death</label>
     <app-time-element
       id="timeOfDeath"
@@ -88,19 +114,23 @@
       (timeElementEvent)="updateTimeOfDeath($event)"
     ></app-time-element>
   </div>
-  <div class="field col-6" *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()">
+  <div
+    class="field col-6"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+  >
     <label for="causeOfDeath">Cause of death</label>
-    <p-treeSelect
+    <p-dropdown
       id="causeOfDeath"
-      [ngModel]="subject?.vitalStatus?.causeOfDeath"
-      (onNodeSelect)="updateCauseOfDeath($event)"
-      [options]="causeOfDeaths"
-      [metaKeySelection]="false"
       placeholder="Select cause of death"
-      [filter]="true"
-      [filterInputAutoFocus]="true"
-    ></p-treeSelect>
+      [options]="causeOfDeaths"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="30"
+      filter="true"
+      optionLabel="name"
+      filterBy="name"
+      (onChange)="updateCauseOfDeath($event)"
+      showClear="true"
+    ></p-dropdown>
 
-    <!-- <ontology-class-input id="causeOfDeath" (ontologyObjectEvent)="updateCauseOfDeath($event)"></ontology-class-input> -->
   </div>
 </div>

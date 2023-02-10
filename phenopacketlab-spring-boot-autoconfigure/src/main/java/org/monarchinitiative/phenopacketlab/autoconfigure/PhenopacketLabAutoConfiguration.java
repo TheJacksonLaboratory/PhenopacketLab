@@ -9,6 +9,8 @@ import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhe
 import org.monarchinitiative.phenopacketlab.core.*;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningImpl;
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
@@ -107,6 +109,11 @@ public class PhenopacketLabAutoConfiguration {
         } catch (IOException e) {
             throw new InvalidResourceException(e);
         }
+    }
+
+    @Bean
+    public TextMiningService textMiningService() {
+        return new TextMiningImpl();
     }
 
     @Bean

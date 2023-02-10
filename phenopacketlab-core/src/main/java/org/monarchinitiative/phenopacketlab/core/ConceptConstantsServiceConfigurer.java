@@ -5,6 +5,8 @@ import org.monarchinitiative.phenol.annotations.constants.hpo.HpoSubOntologyRoot
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacketlab.core.subtree.CreateSubtree;
+import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
@@ -27,14 +29,19 @@ public class ConceptConstantsServiceConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConceptConstantsServiceConfigurer.class);
 
+    // TODO add constant to HpoClinicalModifierTermIds
+    public static final TermId MODIFIER = TermId.of("HP:0012823");
+
     public static ConceptConstantsService configure(ConceptResourceService resourceService) {
         List<IdentifiedConcept> sexConstants = configureSexConstants(resourceService);
         List<IdentifiedConcept> genderConstants = configureGenderConstants(resourceService);
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
+        Optional<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
+        Optional<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -43,8 +50,10 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateConstants,
                 lateralityConstants,
                 modifierConstants,
+                modifierTreeConstants,
                 severityConstants,
                 onsetConstants,
+                onsetTreeConstants,
                 structuralTypeConstants,
                 contigConstants);
     }
@@ -56,15 +65,14 @@ public class ConceptConstantsServiceConfigurer {
             return List.of();
         }
 
-        IdentifiedConceptResource ncit = ncitOptional.get();
         List<IdentifiedConcept> concepts = new ArrayList<>(4);
 
-        retrieveIdentifiedConcept(ncit, "NCIT:C20197", concepts, "Missing Male sex NCIT:C20197");
-        retrieveIdentifiedConcept(ncit, "NCIT:C16576", concepts, "Missing Female sex NCIT:C16576");
-        retrieveIdentifiedConcept(ncit, "NCIT:C41438", concepts, "Missing Undifferentiated sex NCIT:C41438");
-        retrieveIdentifiedConcept(ncit, "NCIT:C17998", concepts, "Missing Unknown sex NCIT:C17998");
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C17998"), "UNKNOWN_SEX", "Not known, observed, recorded; or reported as unknown by the data contributor.", Arrays.asList("Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46113"), "FEMALE", "An animal who is observed by researcher or clinician to be female, the sex that ordinarily produces ova.", Arrays.asList("Female", "FEMALE", "Female Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46112"), "MALE", "An animal who is observed by researcher or clinician to be male, the sex that ordinarily produces sperm.", Arrays.asList("Male", "MALE", "Male Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C45908"), "OTHER", "A person (one of unisexual specimens) who is born with genitalia and/or secondary sexual characteristics of indeterminate sex, or which combine features of both sexes.", Arrays.asList("Intersex", "Intersexed", "UNDIFFERENTIATED")));
 
-        return Collections.unmodifiableList(concepts);
+        return concepts;
     }
 
     private static List<IdentifiedConcept> configureGenderConstants(ConceptResourceService resourceService) {
@@ -144,6 +152,24 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
+    private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure modifier tree constants due to missing HP concept resource!");
+            return Optional.empty();
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        if (hp instanceof OntologyConceptResource) {
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
+
+            return CreateSubtree.createSubtree(MODIFIER, hpo, Comparator.comparing(SubtreeNode::getLabel));
+        } else {
+            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            return Optional.empty();
+        }
+    }
+
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
@@ -163,6 +189,23 @@ public class ConceptConstantsServiceConfigurer {
         } else {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
             return List.of();
+        }
+    }
+
+    private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
+        if (hpOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
+            return Optional.empty();
+        }
+
+        IdentifiedConceptResource hp = hpOptional.get();
+        if (hp instanceof OntologyConceptResource) {
+            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
+            return CreateSubtree.createSubtree(HpoOnsetTermIds.ONSET, hpo, Comparator.comparing(SubtreeNode::getLabel));
+        } else {
+            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            return Optional.empty();
         }
     }
 

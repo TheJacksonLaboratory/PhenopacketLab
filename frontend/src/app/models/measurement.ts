@@ -3,7 +3,8 @@ import { Convert, OntologyClass, Procedure, TimeElement } from './base';
 export class Measurement extends Convert {
     description: string;
     assay: OntologyClass;
-    measurementValue: Value | ComplexValue;
+    value: Value;
+    complexValue: ComplexValue;
     timeObserved: TimeElement;
     procedure: Procedure;
 
@@ -20,9 +21,9 @@ export class Measurement extends Convert {
         }
         // measurement value
         if (obj['value']) {
-            measurement.measurementValue = Value.convert(obj['value']);
+            measurement.value = Value.convert(obj['value']);
         } else if (obj['complexValue']) {
-            measurement.measurementValue = ComplexValue.convert(obj['complexValue']);
+            measurement.complexValue = ComplexValue.convert(obj['complexValue']);
         } else {
             throw new Error(`Phenopacket file is missing 'value' or 'complexValue' field in 'measurements' object.`);
         }
@@ -37,16 +38,17 @@ export class Measurement extends Convert {
 }
 
 export class Value {
-    value: Quantity | OntologyClass;
+    quantity: Quantity;
+    ontologyClass: OntologyClass;
 
     static convert(obj: any): Value {
         const val = new Value();
         // if value is quantity
         if (obj['quantity']) {
-            val.value = Quantity.convert(obj['quantity']);
+            val.quantity = Quantity.convert(obj['quantity']);
         } else if (obj['ontologyClass']) {
             // value is ontology class
-            val.value = OntologyClass.convert(obj['ontologyClass']);
+            val.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
         } else {
             throw new Error(`Phenopacket file is missing 'quantity' or 'ontologyClass' field in 'value' object.`);
         }
@@ -54,13 +56,13 @@ export class Value {
     }
 
     toString() {
-        if (this.value instanceof Quantity) {
-            const unit = this.value.unit;
-            const val = this.value.value;
+        if (this.quantity) {
+            const unit = this.quantity.unit;
+            const val = this.quantity.value;
             return `${val} ${unit?.label} [${unit?.id}]`;
-        } else if (this.value instanceof OntologyClass) {
-            const label = this.value?.label;
-            const id = this.value?.id;
+        } else if (this.ontologyClass) {
+            const label = this.ontologyClass?.label;
+            const id = this.ontologyClass?.id;
             return `${label} [${id}]`;
         }
         return '';

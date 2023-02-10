@@ -9,7 +9,7 @@ COPY ./ /usr/local/app
 RUN npm install -g @angular/cli
 RUN npm install --save-dev @angular-devkit/build-angular
 ENV NODE_OPTIONS=--max_old_space_size=4096
-RUN ng build
+RUN ng build --configuration=production
 
 # Stage 2: Serve app with nginx server
 
