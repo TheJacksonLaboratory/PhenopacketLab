@@ -170,9 +170,11 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
             (phenopackets: Phenopacket[]) => {
               const currentPhenopacketsId = currentPhenopackets.map(phenopacket => phenopacket.id);
               for (const newPhenopacket of phenopackets) {
-                if (newPhenopacket.id in currentPhenopacketsId) {
-                  const errorMessage = `Phenopacket Id '${newPhenopacket.id}' already exists.`;
-                  throw new Error(errorMessage);
+                if (currentPhenopacketsId.includes(newPhenopacket.id)) {
+                  const errorMessage = `'${newPhenopacket.id}' already exists.`;
+                  this.messageService.add({severity:'error', summary:"Duplicate Phenopacket ID Error", detail: errorMessage});
+                  this.clearFileUpload();
+                  return;
                 }
               }
 
@@ -182,14 +184,18 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
               }
               this.cohort.members.push(phenopackets[0]);
               this.cohortService.setCohort(this.cohort);
+              this.clearFileUpload();
               this.messageService.add({severity:'success', summary: "Phenopacket Upload Success!"});
-
             }, (error) => {
-              this.fupload.clear()
-              this.fupload._files = [];
+              this.clearFileUpload();
               const detail = error?.detail != null ? error.detail : 'Please try again.';
               this.messageService.add({severity:'error', summary: error.message, detail: detail});
             });
+  }
+
+  clearFileUpload(){
+    this.fupload.clear()
+    this.fupload._files = [];
   }
 
 }
