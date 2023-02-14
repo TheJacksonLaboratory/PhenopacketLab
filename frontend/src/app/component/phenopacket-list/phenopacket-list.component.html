@@ -3,12 +3,12 @@
     <!-- <button mat-raised-button routerLink="/pheno-creator" class="add-tab-button">Add new individual</button> -->
     <p-fileUpload #fubauto mode="basic" name="file[]" [customUpload]="true"
                   (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
-                  chooseIcon="pi-file-import" accept=".json">
+                  chooseIcon="pi-file-import" accept=".json" multiple="multiple">
     </p-fileUpload>
     <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-pencil" routerLink="/profile-selection"></button>
   </div>
-  <p-tabView id="closableTabView" [(activeIndex)]="activeIndex" (onClose)="closeTab($event.index)" styleClass="phenopacket-list-tabs">
-    <p-tabPanel header="Phenopackets" [selected]="true" class="first-panel">
+  <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
+    <p-tabPanel header="Phenopackets" class="first-panel">
       <p-table [value]="phenopackets" selectionMode="single" (onRowSelect)="openTab($event.data)">
         <ng-template pTemplate="header">
           <tr>
@@ -40,7 +40,7 @@
       </p-table>
     </p-tabPanel>
     <p-tabPanel
-            *ngFor="let phenopacket of individualTabs; let index = index"
+            *ngFor="let phenopacket of tabs; let index = index"
             [header]="phenopacket.id"
             [closable]="true"
     >
@@ -48,9 +48,9 @@
         <div class="field col-12">
           <app-phenopacket
                   [phenopacket]="phenopacket"
-                  (onIdChanged)="changeId($event, activeIndex)"
-                  (onSexChanged)="changeSex($event, activeIndex)"
-                  (onDobChanged)="changeDob($event, activeIndex)"
+                  (onIdChanged)="changeId($event, tabIndex)"
+                  (onSexChanged)="changeSex($event, tabIndex)"
+                  (onDobChanged)="changeDob($event, tabIndex)"
           >
           </app-phenopacket>
         </div>
