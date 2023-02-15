@@ -27,6 +27,7 @@
       <div class="field col-12">
         <app-individual-edit
           [subject]="phenopacket?.subject"
+          [submitted]="submitted"
           (subjectChange)="updateSubject($event)"
         ></app-individual-edit>
       </div>

@@ -149,11 +149,15 @@ export class MeasurementComponent implements AfterViewInit, OnInit {
     }
 
     getValue(measurement: Measurement) {
-        if (measurement.measurementValue) {
-            const measurementValue = measurement.measurementValue;
-            return measurementValue.toString();
+        let measurementValue;
+        if (measurement.value) {
+            measurementValue = measurement.value;
+        } else if (measurement.complexValue) {
+            measurementValue = measurement.complexValue;
+        } else {
+            return '';
         }
-        return '';
+        return measurementValue.toString();
     }
 
     getProcedure(measurement: Measurement) {

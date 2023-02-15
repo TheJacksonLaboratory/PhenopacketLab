@@ -52,14 +52,9 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
     }
 
     setOntologyClass(timeElement: any) {
-        console.log('set ontology class');
-        console.log(timeElement);
         if (timeElement?.element instanceof OntologyClass) {
-
-            console.log(timeElement);
             this.ontologyClass = timeElement.element;
             // this.ontologyClass = OntologyTreeNode.getNodeWithKey(timeElement.element.id, this.ontologyNodes);
-            console.log(this.ontologyClass);
             // this.ontologyClass = timeElement.element;
         }
     }

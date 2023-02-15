@@ -220,11 +220,6 @@ legend.plot-control-panel-border {
   text-align: center;
 }
 
-// removes the horizontal scroll in the side-nav
-mat-sidenav-container > mat-sidenav > div.mat-drawer-inner-container {
-  overflow-x: hidden;
-}
-
 .button-tooltip-container {
   height: fit-content;
   width: fit-content;
@@ -232,10 +227,6 @@ mat-sidenav-container > mat-sidenav > div.mat-drawer-inner-container {
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-.mat-sidenav-content {
-  background-color: white;
 }
 
 .p-sidebar-mask {

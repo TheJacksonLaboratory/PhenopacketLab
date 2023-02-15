@@ -1,5 +1,7 @@
 {
-  "data": [
+  "label": "TNM findings",
+  "key": "TNM",
+  "children":[
     {
       "label": "T - Original primary tumor",
       "key": "T",

@@ -1,0 +1,88 @@
+# Copyright 2021 The Jackson Laboratory
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# ... Deployment YAML definition
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phenopacketlab-backend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: phenopacketlab-backend
+  template:
+    metadata:
+      labels:
+        app: phenopacketlab-backend
+    spec:
+
+      containers:
+        # Container 1: Our service. 
+        - name: backend
+          resources:
+            requests:
+              memory: 1Gi # This is the minimum memory that is requested and allocated every time a pod has been created
+            limits:
+              memory: 8Gi # This is the memory limit for your pod. If your application uses more than this, the pod will be OOM killed
+          imagePullPolicy: Always
+          image: gcr.io/jax-robinson-phenopacket/phenopacketlab-backend
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: phenopacketlab-backend-config
+
+---
+
+# Create this with:
+# kubectl -n $NAMESPACE expose deployment cimg-service --port=80 --target-port=1975 --type=LoadBalancer
+# once which means the IP address is kept and does not keep changing.
+
+# ... Service YAML definition
+# See https://piotrminkowski.com/2020/09/10/spring-cloud-kubernetes-load-balancer-guide/
+# See https://learnk8s.io/spring-boot-kubernetes-guide
+# apiVersion: v1
+# kind: Service
+#metadata:
+#  name: cimg-service
+#spec:
+#  selector:
+#    app: cimg-service
+#  ports:
+#    - name: http
+#      port: 80
+#      protocol: TCP
+#      targetPort: 1975
+#  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: phenopacketlab-backend-config
+data:
+  SERVER_PORT: "8080"
+  SERVICE_ADDRESS: "10.142.0.15:7233"
+  TEST_BUCKET_NAME: "jax-cimg-sample-data"
+  TEMPORAL_NAMESPACE: "latest"
+
+  # Java options
+  JAVA_OPTS: "-XX:MinRAMPercentage=60.0 -XX:MaxRAMPercentage=90.0 -XX:+HeapDumpOnOutOfMemoryError"
+
+  # Comma separated list of allowed frontend domains for CORS
+  ALLOWED_ORIGINS: "localhost:4200,34.74.33.239"
+  AUTO_CACHE: "true"

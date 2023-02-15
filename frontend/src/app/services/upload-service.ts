@@ -18,7 +18,7 @@ export class UploadService {
      * @param file 
      * @returns 
      */
-    public importFromFile(file: File): Observable<any[]> {
+    public importFromFile(file: File): Observable<Phenopacket> {
         const filename = file.name.toLowerCase();
         let type;
         if (filename.endsWith('json'))  {
@@ -31,17 +31,15 @@ export class UploadService {
 
         return this.fileToString(file)
             .pipe(
-                map((binary: string): Phenopacket[] => {
+                map((binary: string): Phenopacket => {
                     try{
-                        let result = [];
+                        let phenopacket: Phenopacket;
                         if (type === FileType.JSON) {
-                            const phenopacket: Phenopacket = Phenopacket.convert(JSON.parse(binary as string));
-                            result.push(phenopacket);
-                            return result;
+                            phenopacket = Phenopacket.convert(JSON.parse(binary as string));
+                            return phenopacket;
                         } else if (type === FileType.YAML) {
-                            const phenopacket = result.push(parse(binary as string));
-                            result.push(phenopacket);
-                            return result;
+                            phenopacket = parse(binary as string);
+                            return phenopacket;
                         }
                     }
                     catch (e) {

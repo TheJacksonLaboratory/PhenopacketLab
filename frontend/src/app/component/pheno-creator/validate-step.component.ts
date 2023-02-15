@@ -5,6 +5,7 @@ import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { CohortService } from 'src/app/services/cohort.service';
+import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MetaData } from '../../models/metadata';
 
@@ -34,7 +35,8 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   profileSelectionSubscription: Subscription;
   profileSelection: ProfileSelection;
 
-  constructor(public phenopacketService: PhenopacketService, private cohortService: CohortService, private router: Router) {
+  constructor(public phenopacketService: PhenopacketService, private downloadService: DownloadService,
+              private cohortService: CohortService, private router: Router) {
 
   }
 
@@ -82,7 +84,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // TODO
     metadata.externalReferences = [];
     metadata.phenopacketSchemaVersion = this.schemaVersion;
-    this.phenopacket.metadata = metadata;
+    this.phenopacket.metaData = metadata;
   }
   complete() {
     // add to cohort
@@ -120,8 +122,12 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO
+  /**
+   *
+   * @param phenopacket
+   * @returns a phenopacket as String
+   */
   getPhenopacketJSON(phenopacket: Phenopacket): string {
-    return '';
+    return this.downloadService.saveAsJson(phenopacket, false);
   }
 }

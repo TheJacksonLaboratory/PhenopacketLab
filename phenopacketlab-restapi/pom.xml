@@ -48,6 +48,12 @@
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Swagger UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.14</version>
+        </dependency>
     </dependencies>
 
     <build>

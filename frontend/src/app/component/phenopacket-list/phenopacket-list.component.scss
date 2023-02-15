@@ -24,4 +24,11 @@
   .p-datatable .p-datatable-tbody > tr:focus {
     outline: 0 none;
   }
+
+  .actions {
+    display: inline-flex;
+    .p-button {
+      margin: .25rem;
+    }
+  }
 }

@@ -35,7 +35,11 @@ export class MeasurementDetailComponent implements OnInit {
 
   updateMeasurement() {
     if (this.measurement) {
-      this.measurementValue = this.measurement.measurementValue;
+      if (this.measurement.value) {
+        this.measurementValue = this.measurement.value;
+      } else if (this.measurement.complexValue) {
+        this.measurementValue = this.measurement.complexValue;
+      }
       this.description = this.measurement.description;
       this.assay = this.measurement.assay;
       this.timeObserved = this.measurement.timeObserved;

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Profound",
+    "definition": "Having an extremely high degree of severity. For quantitative traits, a deviation of more than five standard deviations from the appropriate population mean.",
+    "synonyms": ["Profound"],
+    "id": { "value": "HP:0012829", "prefix": "HP", "id": "0012829" }
+  },
+  {
+    "name": "Severe",
+    "definition": "Having a high degree of severity. For quantitative traits, a deviation of between four and five standard deviations from the appropriate population mean.",
+    "synonyms": ["Severe"],
+    "id": { "value": "HP:0012828", "prefix": "HP", "id": "0012828" }
+  },
+  {
+    "name": "Moderate",
+    "definition": "Having a medium degree of severity. For quantitative traits, a deviation of between three and four standard deviations from the appropriate population mean.",
+    "synonyms": [],
+    "id": { "value": "HP:0012826", "prefix": "HP", "id": "0012826" }
+  },
+  {
+    "name": "Mild",
+    "definition": "Having a relatively minor degree of severity. For quantitative traits, a deviation of between two and three standard deviations from the appropriate population mean.",
+    "synonyms": ["Mild"],
+    "id": { "value": "HP:0012825", "prefix": "HP", "id": "0012825" }
+  },
+  {
+    "name": "Borderline",
+    "definition": "Having a minor degree of severity that is considered to be on the boundary between the normal and the abnormal ranges. For quantitative traits, a deviation of that is less than two standard deviations from the appropriate population mean.",
+    "synonyms": ["Borderline"],
+    "id": { "value": "HP:0012827", "prefix": "HP", "id": "0012827" }
+  }
+]

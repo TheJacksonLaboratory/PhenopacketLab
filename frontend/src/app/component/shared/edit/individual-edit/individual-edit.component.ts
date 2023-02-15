@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TreeNode } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Gender, Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -17,21 +17,56 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     @Output()
     subjectChange = new EventEmitter<Individual>();
 
+    @Input()
+    submitted: boolean;
+
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 
-    constructor(public phenopacketService: PhenopacketService) {
+    selectedSex: string;
+    sexes: string[];
+    sexSubscription: Subscription;
+
+    genders: OntologyClass[];
+    genderSubscription: Subscription;
+
+    constructor(public phenopacketService: PhenopacketService, public diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {
         // get cause of death
-        this.causeOfDeathSubscription = this.phenopacketService.getMondoDiseases().subscribe(nodes => {
-            this.causeOfDeaths = <TreeNode[]>nodes.data;
+        this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
+            this.causeOfDeaths = diseases;
         });
+        this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
+            if (this.sexes === undefined) {
+                this.sexes = [];
+            }
+            for (const sex of sexes) {
+                this.sexes.push(sex.name);
+            }
+        });
+        this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
+            if (this.genders === undefined) {
+                this.genders = [];
+            }
+            for (const gender of genders) {
+                this.genders.push(new OntologyClass(gender.id.value, gender.name));
+            }
+        });
+        if (this.subject) {
+            this.selectedSex = this.subject.sex;
+        }
     }
     ngOnDestroy(): void {
         if (this.causeOfDeathSubscription) {
             this.causeOfDeathSubscription.unsubscribe();
+        }
+        if (this.sexSubscription) {
+            this.sexSubscription.unsubscribe();
+        }
+        if (this.genderSubscription) {
+            this.genderSubscription.unsubscribe();
         }
     }
 
@@ -48,9 +83,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    updateSex(sex: any) {
-        if (this.subject) {
-            this.subject.sex = sex;
+    updateSex(event: any) {
+        if (this.subject && event) {
+            this.subject.sex = event.value;
             this.subjectChange.emit(this.subject);
         }
     }
@@ -90,17 +125,13 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     updateCauseOfDeath(event) {
         if (this.subject) {
-            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.node.key, event.node.label);
+            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
             this.subjectChange.emit(this.subject);
         }
     }
     getSexes() {
         // tslint:disable-next-line:radix
         return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
-    }
-
-    getGenders() {
-        return Gender.VALUES;
     }
 
     getKaryotypicSexes() {
