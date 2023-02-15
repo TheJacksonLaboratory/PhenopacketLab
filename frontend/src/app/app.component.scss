@@ -14,10 +14,14 @@ app-header {
       width: auto !important;
       position: unset !important;
       color: #00796b;
+      .p-sidebar-header, .p-sidebar-footer {
+        display: none;
+      }
       .p-sidebar-content {
         padding: 0;
       }
       .menu-list .p-menu {
+        padding: 0;
         border: 0 !important;
         margin: 0;
         width: auto;
