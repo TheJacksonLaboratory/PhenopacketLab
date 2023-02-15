@@ -3,7 +3,7 @@ import { OntologyClass, TimeElement } from './base';
 export class Individual {
     id = '';
     alternateIds: string[] = [];
-    dateOfBirth = ''; // timestamp
+    dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
     vitalStatus: VitalStatus = new VitalStatus();
     sex: Sex;
@@ -23,7 +23,7 @@ export class Individual {
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`);
         }
-        if (obj['alternateId']) {
+        if (obj['alternateIds']) {
             individual.alternateIds = obj['alternateIds'];
         }
         if (obj['dateOfBirth']) {
@@ -32,7 +32,7 @@ export class Individual {
         if (obj['timeAtLastEncounter']) {
             individual.timeAtLastEncounter = TimeElement.convert(obj['timeAtLastEncounter']);
         }
-        if  (obj['vitalStatus']) {
+        if (obj['vitalStatus']) {
             individual.vitalStatus = VitalStatus.convert(obj['vitalStatus']);
         }
         if (obj['sex']) {
@@ -61,6 +61,13 @@ export class VitalStatus {
     timeOfDeath: TimeElement;
     causeOfDeath: OntologyClass;
     survivalTimeInDays: number;
+
+    public constructor(status?: Status, timeOfDeath?: TimeElement, causeOfDeath?: OntologyClass, survivalTimeInDays?: number) {
+        this.status = status;
+        this.timeOfDeath = timeOfDeath;
+        this.causeOfDeath = causeOfDeath;
+        this.survivalTimeInDays = survivalTimeInDays;
+    }
 
     public static convert(obj: any): VitalStatus {
         const vitalSatus = new VitalStatus();
@@ -99,13 +106,3 @@ export enum KaryotypicSex {
     OTHER_KARYOTYPE = 'Other karyotype'
 }
 
-export class Gender {
-    static VALUES = [new OntologyClass('LOINC:LA22878-5', 'Identifies as male'),
-            new OntologyClass('LOINC:LA22879-3', 'Identifies as female'),
-            new OntologyClass('LOINC:LA22880-1', 'Female-to-male transsexual'),
-            new OntologyClass('LOINC:LA22881-9', 'Male-to-female transsexual'),
-            new OntologyClass('LOINC:LA22882-7', 'Identifies as non-conforming'),
-            new OntologyClass('LOINC:LA46-8', 'other'),
-            new OntologyClass('LOINC:LA20384-6', 'Asked but unknown')];
-
-}

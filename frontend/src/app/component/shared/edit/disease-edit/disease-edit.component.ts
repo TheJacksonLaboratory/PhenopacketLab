@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
-import { Disease, Laterality, Severities, Stages } from 'src/app/models/disease';
+import { Disease, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -32,18 +32,32 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     onsetsNodes: OntologyTreeNode[];
     onsetsSubscription: Subscription;
 
+    // laterality
+    lateralities: OntologyClass[];
+    lateralitySubscription: Subscription;
+
     constructor(public phenopacketService: PhenopacketService) {
     }
 
     ngOnInit() {
         // get onsets
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.data;
+            // we get the children from the root node sent in response
+            this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
         });
         // stages
         this.stagesNodes = this.getStages();
         this.findingsSubscription = this.phenopacketService.getTnmFindings().subscribe(nodes => {
-            this.findingsNodes = <OntologyTreeNode[]>nodes.data;
+            this.findingsNodes = <OntologyTreeNode[]>nodes.children;
+        });
+        // laterality
+        this.lateralitySubscription = this.phenopacketService.getLaterality().subscribe(lateralities => {
+            lateralities.forEach(laterality => {
+                if (this.lateralities === undefined) {
+                    this.lateralities = [];
+                }
+                this.lateralities.push(new OntologyClass(laterality.id.value, laterality.name));
+            });
         });
     }
     ngOnDestroy(): void {
@@ -53,6 +67,9 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         if (this.findingsSubscription) {
             this.findingsSubscription.unsubscribe();
         }
+        if (this.lateralitySubscription) {
+            this.lateralitySubscription.unsubscribe();
+        }
     }
 
     getDiseaseOnsetId() {
@@ -61,9 +78,6 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     getDiseaseResolutionId() {
         return TimeElementId.DISEASE_RESOLUTION;
     }
-    getLateralities() {
-        return Laterality.VALUES;
-    }
 
     getStages() {
         const nodes = [];
@@ -71,9 +85,6 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             nodes.push({ label: stage.label, key: stage.id, leaf: true, parent: undefined });
         }
         return nodes;
-    }
-    getSeverities() {
-        return Severities.VALUES;
     }
 
     updateOnset(timeElement: any) {

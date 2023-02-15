@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService, MessageService } from "primeng/api";
 import { FileUpload } from "primeng/fileupload";
@@ -9,6 +9,7 @@ import { Cohort } from 'src/app/models/cohort';
 import { Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
+import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { UploadService } from "../../services/upload-service";
 import { Table }  from 'primeng/table';
@@ -29,14 +30,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   @ViewChild(TabView) tabView: TabView;
   cohort: Cohort;
   /** Array used to hold opened tabs **/
-  individualTabsMap = new Map<String, Phenopacket>();
   tabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
-  cohortMap = new Map<string, Phenopacket>();
-
-  // Table items
-  displayedColumns = ['id', 'dob', 'sex', 'remove'];
   tabIndex = 0;
+  displayedColumns = ['id', 'timeOfLastEncounter', 'sex', 'download', 'remove'];
 
   phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
@@ -47,7 +44,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private datePipe: DatePipe, private changeDetectorRef: ChangeDetectorRef) {
+              private datePipe: DatePipe, private downloadService: DownloadService) {
   }
   ngOnDestroy(): void {
     if (this.phenopacketSubscription) {
@@ -82,6 +79,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         this.messageService.add({severity:'info', summary:'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
       },
       reject: () => {}, key: "positionDialog"});
+  }
+
+  downloadPhenopacket(phenopacket: Phenopacket) {
+    this.downloadService.saveAsJson(phenopacket, true);
   }
 
   changeId(id: string, index: number) {

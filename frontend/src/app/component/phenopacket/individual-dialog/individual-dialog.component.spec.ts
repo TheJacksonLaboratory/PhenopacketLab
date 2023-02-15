@@ -7,6 +7,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedModule } from 'src/app/component/shared/shared.module';
+import { Individual } from 'src/app/models/individual';
 import { IndividualDialogComponent } from './individual-dialog.component';
 
 describe('IndividualDialogComponent', () => {
@@ -37,6 +38,8 @@ describe('IndividualDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IndividualDialogComponent);
     component = fixture.componentInstance;
+    // initialize subject
+    component.subject = new Individual();
     fixture.detectChanges();
   });
 

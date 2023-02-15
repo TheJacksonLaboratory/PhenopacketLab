@@ -63,7 +63,7 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         // provider used to create a fake backend
-        fakeBackendProvider
+        // fakeBackendProvider
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

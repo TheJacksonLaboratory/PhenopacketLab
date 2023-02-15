@@ -4,7 +4,12 @@ import { Quantity } from './measurement';
 
 export class MedicalAction extends Convert {
     // can be Procedure, Treatment, RadiationTherapy or TherapeuticRegimen
-    action: any;
+    // action
+    procedure: Procedure;
+    treatment: Treatment;
+    radiationTherapy: RadiationTherapy;
+    therapeuticRegimen: TherapeuticRegimen;
+
     treatmentTarget: OntologyClass;
     treatmentIntent: OntologyClass;
     responseToTreatment: OntologyClass;
@@ -15,13 +20,13 @@ export class MedicalAction extends Convert {
         const medicalAction = new MedicalAction();
         // action
         if (obj['procedure']) {
-            medicalAction.action = Procedure.convert(obj['procedure']);
+            medicalAction.procedure = Procedure.convert(obj['procedure']);
         } else if (obj['treatment']) {
-            medicalAction.action = Treatment.convert(obj['treatment']);
+            medicalAction.treatment = Treatment.convert(obj['treatment']);
         } else if (obj['radiationTherapy']) {
-            medicalAction.action = RadiationTherapy.convert(obj['radiationTherapy']);
+            medicalAction.radiationTherapy = RadiationTherapy.convert(obj['radiationTherapy']);
         } else if (obj['therapeuticRegimen']) {
-            medicalAction.action = TherapeuticRegimen.convert(obj['therapeuticRegimen']);
+            medicalAction.therapeuticRegimen = TherapeuticRegimen.convert(obj['therapeuticRegimen']);
         } else {
             throw new Error(`Phenopacket file is missing 'procedure', 'treatment', 'radiationTherapy' or 'therapeuticRegimen' field in 'medicalActions' object.`);
         }

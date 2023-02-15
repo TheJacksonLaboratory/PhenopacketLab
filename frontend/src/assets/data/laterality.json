@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Bilateral",
+    "definition": "Being present on both sides of the body.",
+    "synonyms": [],
+    "id": { "value": "HP:0012832", "prefix": "HP", "id": "0012832" }
+  },
+  {
+    "name": "Right",
+    "definition": "Being located on the right side of the body.",
+    "synonyms": ["Right-sided"],
+    "id": { "value": "HP:0012834", "prefix": "HP", "id": "0012834" }
+  },
+  {
+    "name": "Left",
+    "definition": "Being located on the left side of the body.",
+    "synonyms": ["Left-sided"],
+    "id": { "value": "HP:0012835", "prefix": "HP", "id": "0012835" }
+  },
+  {
+    "name": "Unilateral",
+    "definition": "Being present on only the left or only the right side of the body.",
+    "synonyms": [],
+    "id": { "value": "HP:0012833", "prefix": "HP", "id": "0012833" }
+  }
+]

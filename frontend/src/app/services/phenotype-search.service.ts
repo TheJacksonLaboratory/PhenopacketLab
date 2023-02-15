@@ -67,7 +67,8 @@ export class PhenotypeSearchService extends BaseSearchService {
      * @returns an Observable with json dataset as a result
      */
     public queryTextMiner(textSearch: string): Observable<any> {
-        return this.http.post(textMinerUrl, { payload: textSearch });
+        const headers = { 'content-type': 'text/plain'};
+        return this.http.post(textMinerUrl, textSearch, {headers});
     }
 
     getPhenotypicOnset(): Observable<TimeElement> {

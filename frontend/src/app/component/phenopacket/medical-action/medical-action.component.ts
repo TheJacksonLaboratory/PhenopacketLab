@@ -132,14 +132,13 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     }
 
     getActionName(medicalAction: MedicalAction) {
-        const action = medicalAction.action;
-        if (action instanceof Procedure) {
+        if (medicalAction.procedure) {
             return Procedure.actionName;
-        } else if (action instanceof Treatment) {
+        } else if (medicalAction.treatment) {
             return Treatment.actionName;
-        } else if (action instanceof RadiationTherapy) {
+        } else if (medicalAction.radiationTherapy) {
             return RadiationTherapy.actionName;
-        } else if (action instanceof TherapeuticRegimen) {
+        } else if (medicalAction.therapeuticRegimen) {
             return TherapeuticRegimen.actionName;
         }
         return '';
@@ -150,15 +149,14 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
      * @returns id
      */
     getId(medicalAction: MedicalAction) {
-        const action = medicalAction.action;
-        if (action instanceof Procedure) {
-            return action.code?.id;
-        } else if (action instanceof Treatment) {
-            return action.agent?.id;
-        } else if (action instanceof RadiationTherapy) {
-            return action.modality?.id;
-        } else if (action instanceof TherapeuticRegimen) {
-            return action.identifier?.id;
+        if (medicalAction.procedure) {
+            return medicalAction.procedure.code?.id;
+        } else if (medicalAction.treatment) {
+            return medicalAction.treatment.agent?.id;
+        } else if (medicalAction.radiationTherapy) {
+            return medicalAction.radiationTherapy.modality?.id;
+        } else if (medicalAction.therapeuticRegimen) {
+            return medicalAction.therapeuticRegimen.identifier?.id;
         }
         return '';
     }
@@ -186,13 +184,13 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
      */
     getIcon(medicalAction: MedicalAction) {
         if (medicalAction) {
-            if (medicalAction.action.toString() === 'Procedure') {
+            if (medicalAction.procedure) {
                 return 'medical_information';
-            } else if (medicalAction.action.toString() === 'Treatment') {
+            } else if (medicalAction.treatment) {
                 return 'vaccines';
-            } else if (medicalAction.action.toString() === 'Radiation therapy') {
+            } else if (medicalAction.radiationTherapy) {
                 return 'radiology';
-            } else if (medicalAction.action.toString() === 'Therapeutic regimen') {
+            } else if (medicalAction.therapeuticRegimen) {
                 return 'medication';
             }
             return '';

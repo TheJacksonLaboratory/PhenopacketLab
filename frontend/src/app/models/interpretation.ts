@@ -68,7 +68,9 @@ export enum InterpretationStatus {
 export class GenomicInterpretation extends Convert {
     subjectOrBiosampleId: string;
     interpretationStatus: InterpretationStatus;
-    call: GeneDescriptor | VariantInterpretation;
+    // call
+    geneDescriptor: GeneDescriptor;
+    variantInterpretation: VariantInterpretation;
 
     static create(obj: any): GenomicInterpretation {
         const genomicInterpretation = new GenomicInterpretation();
@@ -84,9 +86,9 @@ export class GenomicInterpretation extends Convert {
         }
         // call
         if (obj['geneDescriptor']) {
-            genomicInterpretation.call = GeneDescriptor.convert(obj['geneDescriptor']);
+            genomicInterpretation.geneDescriptor = GeneDescriptor.convert(obj['geneDescriptor']);
         } else if (obj['variantInterpretation']) {
-            genomicInterpretation.call = VariantInterpretation.convert(obj['variantInterpretation']);
+            genomicInterpretation.variantInterpretation = VariantInterpretation.convert(obj['variantInterpretation']);
         } else {
             throw new Error(`Phenopacket file is missing 'geneDescriptor' or 'variantInterpretation' field in 'genomicInterpretation' object.`);
         }

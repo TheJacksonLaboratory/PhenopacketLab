@@ -54,7 +54,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        if (this.phenopacket.id) {
+        if (this.phenopacket.id && this.phenopacket.subject.id) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {

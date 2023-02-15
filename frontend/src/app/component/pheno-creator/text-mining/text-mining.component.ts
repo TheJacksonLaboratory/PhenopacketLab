@@ -1,6 +1,10 @@
-import {AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { TimeElement } from 'src/app/models/base';
+import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
@@ -28,11 +32,28 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   spinnerDialogRef: any;
 
-  constructor(private phenotypeSearchService: PhenotypeSearchService, private elementRef: ElementRef, public dialog: MatDialog) {
+  onsetsNodes: OntologyTreeNode[];
+  onsetsSubscription: Subscription;
+  onsetApplied = false;
+  onset: TimeElement;
+
+  constructor(private phenotypeSearchService: PhenotypeSearchService,
+    public phenopacketService: PhenopacketService,
+    private elementRef: ElementRef,
+    public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
+    // get Onset from individual
+    const phenopacket = this.phenopacketService.phenopacket;
+    this.onset = phenopacket?.subject?.timeAtLastEncounter;
+
+    // get onsets
+    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+      // we get the children from the root node sent in response
+      this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+    });
 
   }
 
@@ -46,7 +67,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   }
   ngOnDestroy(): void {
-
+    if (this.onsetsSubscription) {
+      this.onsetsSubscription.unsubscribe();
+    }
   }
 
   private formatText() {
@@ -88,43 +111,49 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         }
       }
     });
+    if (this.idxList.length === 0) {
+      this.formattedText = `<pre #text>${this.textSearch}</pre>`;
+    }
   }
 
   submit() {
     this.textSearchVisible = false;
     this.openSpinnerDialog();
     this.phenotypeSearchService.queryTextMiner(this.textSearch).subscribe(resp => {
-      const result = resp?.result;
-      const concepts = result?.concepts;
-      // reset
-      this.idxList = [];
-      this.phenotypicFeatures = [];
-      concepts.forEach((term, idx) => {
-        this.idxList.push([term.start, term.end]);
-        this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
-      });
+      if (resp) {
+        const concepts = resp.concepts;
+        this.textSearch = resp.payload;
+        // reset
+        this.idxList = [];
+        this.phenotypicFeatures = [];
+        concepts.forEach((term, idx) => {
+          this.idxList.push([term.start, term.end]);
+          this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
+        });
 
-      // show result in formatted text
-      this.formatText();
+        // show result in formatted text
+        this.formatText();
 
-      if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
-        this.visible = true;
+        if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
+          this.visible = true;
+        }
       }
+
       this.spinnerDialogRef.close();
     },
-    (error) => {
+      (error) => {
         console.log(error);
         this.spinnerDialogRef.close();
-    });
+      });
 
   }
 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-        panelClass: 'transparent',
-        disableClose: true
+      panelClass: 'transparent',
+      disableClose: true
     });
-}
+  }
   updateExcluded(event) {
     if (this.selectedPhenotypicFeature) {
       this.selectedPhenotypicFeature.excluded = !event.checked;
@@ -144,16 +173,33 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      const vettedFeature = result.data;
-      this.phenotypicFeatures.forEach(feature => {
-        if (feature.key === vettedFeature.key) {
-          feature.textMiningState = vettedFeature.state;
-        }
-      });
-      this.formatText();
+      if (result) {
+        const vettedFeature = result.data;
+        this.phenotypicFeatures.forEach(feature => {
+          if (feature.key === vettedFeature.key) {
+            feature.textMiningState = vettedFeature.state;
+          }
+        });
+        this.formatText();
+      }
     });
   }
 
+  /**
+   * Approve all terms
+   */
+  approveAll() {
+    this.phenotypicFeatures.forEach(feature => {
+      feature.textMiningState = MiningState.APPROVED;
+    });
+    this.formatText();
+  }
+  rejectAll() {
+    this.phenotypicFeatures.forEach(feature => {
+      feature.textMiningState = MiningState.REJECTED;
+    });
+    this.formatText();
+  }
   startOver() {
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
@@ -189,6 +235,26 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    */
   onRowSelect(event) {
     // this.selectedFeature = event.data;
+  }
+
+  // Onset
+  updateAgeOnset(timeElement: any) {
+    console.log('onset update');
+    console.log(timeElement);
+    this.onset = timeElement;
+  }
+
+  applyOnset() {
+    this.onsetApplied = true;
+    this.phenotypicFeatures.forEach(feature => {
+      feature.onset = this.onset.copy();
+    });
+    console.log('apply onset');
+    console.log(this.onset);
+  }
+
+  editOnset() {
+    this.onsetApplied = false;
   }
 
 }

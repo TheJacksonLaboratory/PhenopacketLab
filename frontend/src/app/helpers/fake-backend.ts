@@ -15,6 +15,10 @@ const onsets = require('../../assets/data/onset.json');
 const tnmFindings = require('../../assets/data/tnm.json');
 const mondoDiseases = require('../../assets/data/disease-mondo.json');
 const textMinedExample = require('../../assets/data/text-mined-example.json');
+const sexes = require('../../assets/data/sex.json');
+const genders = require('../../assets/data/gender.json');
+const laterality = require('../../assets/data/laterality.json');
+const severity = require('../../assets/data/severity.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -41,15 +45,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getPhenotypicFeatureById();
                 case url.endsWith('/bodysites') && method === 'GET':
                     return getBodySites();
-                case url.endsWith('modifiers') && method === 'GET':
+                case url.endsWith('modifier') && method === 'GET':
                     return getModifiers();
-                case url.endsWith('onsets') && method === 'GET':
+                case url.endsWith('sex') && method === 'GET':
+                    return getSexes();
+                case url.endsWith('gender') && method === 'GET':
+                    return getGenders();
+                case url.endsWith('laterality') && method === 'GET':
+                    return getLaterality();
+                case url.endsWith('severity') && method === 'GET':
+                    return getSeverity();
+                case url.endsWith('onset') && method === 'GET':
                     return getOnsets();
                 case url.endsWith('tnm-findings') && method === 'GET':
                     return getTnmFindings();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
-                case url.endsWith('text-miner') && method === 'POST':
+                case url.endsWith('textminer') && method === 'POST':
                     return getTextMined();
                 default:
                     // pass through any requests not handled above
@@ -79,7 +91,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getBodySites() {
             return ok(bodySites);
         }
-
+        function getSexes() {
+            return ok(sexes);
+        }
+        function getGenders() {
+            return ok(genders);
+        }
+        function getLaterality() {
+            return ok(laterality);
+        }
+        function getSeverity() {
+            return ok(severity);
+        }
         function getModifiers() {
             return ok(modifiers);
         }

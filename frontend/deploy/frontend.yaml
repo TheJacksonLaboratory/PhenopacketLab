@@ -33,7 +33,11 @@ spec:
           resources:
             requests:
               memory: 1Gi # This is the minimum memory that is requested and allocated every time a pod has been created
+            limits:
+              memory: 4Gi
+
           imagePullPolicy: Always
+          # image: us-docker.pkg.dev/jax-cs-registry/docker/jax-robinson-phenopacket/phenopacketlab-frontend
           image: gcr.io/jax-robinson-phenopacket/phenopacketlab-frontend
           ports:
           - containerPort: 4200
