@@ -100,7 +100,7 @@ export class InterpretationComponent implements AfterViewInit, OnInit {
             data: msgData
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result === 'ok') {
+            if (result) {
                 this.removeFromDatasource(element);
             }
         });

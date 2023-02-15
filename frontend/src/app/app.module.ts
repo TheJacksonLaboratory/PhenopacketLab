@@ -1,37 +1,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { MatDialogRef } from "@angular/material/dialog";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatRippleModule } from '@angular/material/core';
-import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GridModule } from '@angular/flex-layout/grid';
 
-import { routing } from './app.routing';
+import { ROUTING } from './app.routing';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { fakeBackendProvider } from './helpers/fake-backend';
@@ -41,18 +21,12 @@ import { AppComponent } from './app.component';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
 import { FamilyListComponent } from './component/family-list/family-list.component';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
-import { UploadDialogComponent } from './component/shared/upload-dialog/upload-dialog.component';
 import { AboutComponent } from './component/about/about.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { FooterComponent } from './component/footer/footer.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from './component/header/header.component';
 import { SharedModule } from './component/shared/shared.module';
 import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.module';
-import { TabViewModule } from 'primeng/tabview';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { CardModule } from 'primeng/card';
 import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
 
 @NgModule({
@@ -60,44 +34,17 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        routing,
+        ROUTING,
         RouterModule,
         CommonModule,
-        MatButtonModule,
-        MatRippleModule,
-        MatInputModule,
-        MatSelectModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
         HttpClientModule,
-        MatDialogModule,
-        MatCheckboxModule,
-        MatSortModule,
-        MatTreeModule,
-        MatTabsModule,
-        MatButtonToggleModule,
-        MatToolbarModule,
-        MatExpansionModule,
-        MatTableModule,
         FormsModule,
-        MatStepperModule,
-        MatFormFieldModule,
         ReactiveFormsModule,
-        MatAutocompleteModule,
-        MatDatepickerModule,
-        MatMenuModule,
         FlexLayoutModule,
         GridModule,
         PhenoCreatorModule,
         PhenopacketModule,
-        SharedModule,
-        TabViewModule,
-        CardModule,
-        ButtonModule,
-        CheckboxModule,
+        SharedModule
     ],
     declarations: [
         AppComponent,
@@ -108,8 +55,7 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
         AboutComponent,
         PhenopacketListComponent,
         CohortListComponent,
-        FamilyListComponent,
-        UploadDialogComponent
+        FamilyListComponent
 
     ],
     exports: [RouterModule],

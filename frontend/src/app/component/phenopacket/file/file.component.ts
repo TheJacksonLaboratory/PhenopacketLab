@@ -76,7 +76,7 @@ export class FileComponent implements OnInit {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         this.filesMap.delete(element.id);
         this.updateFiles();
       }

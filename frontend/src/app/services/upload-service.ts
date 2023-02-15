@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subscriber } from "rxjs";
+import { PhenopacketLabError } from "../models/error";
+import { FileType } from "../models/file-type";
 
 import { Phenopacket } from "../models/phenopacket";
 import { parse } from "yamljs";
@@ -16,30 +18,32 @@ export class UploadService {
      * @param file 
      * @returns 
      */
-    public importFromFile(file: File): Observable<any[]> {
-        let filename = file.name.toLowerCase();
-        let type = '';
+    public importFromFile(file: File): Observable<Phenopacket> {
+        const filename = file.name.toLowerCase();
+        let type;
         if (filename.endsWith('json'))  {
-            type = 'json';
+            type = FileType.JSON;
         } else if (filename.endsWith('yml') || filename.endsWith('yaml')) {
-            type = 'yaml';
+            type = FileType.YAML;
+        } else {
+            throw new Error("Phenopacket file type is not supported");
         }
 
         return this.fileToString(file)
             .pipe(
-                map((binary: string): any[] => {
-                    // Converts the data to Phenopacket
-                    let result = [];
-                    if (type === 'json') {
-                        let phenopacket = Phenopacket.convert(JSON.parse(binary as string));
-                        result.push(phenopacket);
-                        return result;
-                    } else if (type === 'yaml') {
-                        let phenopacket = result.push(parse(binary as string));
-                        result.push(phenopacket);
-                        return result;
-                    } else {
-                        throw new Error("Type is not supported");
+                map((binary: string): Phenopacket => {
+                    try{
+                        let phenopacket: Phenopacket;
+                        if (type === FileType.JSON) {
+                            phenopacket = Phenopacket.convert(JSON.parse(binary as string));
+                            return phenopacket;
+                        } else if (type === FileType.YAML) {
+                            phenopacket = parse(binary as string);
+                            return phenopacket;
+                        }
+                    }
+                    catch (e) {
+                        throw new PhenopacketLabError(`${file.name} Parsing Error`, e)
                     }
                 }),
             );

@@ -1,117 +1,67 @@
-<p-card header="Phenopackets">
-  <div>
-    <a routerLink="/profile-selection"
-      ><button mat-raised-button class="add-tab-button">
-        Create new phenopacket
-      </button></a
-    >
-    <!-- <button mat-raised-button routerLink="/pheno-creator" class="add-tab-button">Add new individual</button> -->
-    <button
-      mat-raised-button
-      type="submit"
-      matTooltip="Upload one or more phenopacket files in JSON or Yaml format"
-      [matTooltipShowDelay]="2000"
-      (click)="openFileUploadDialog()"
-    >
-      <mat-icon matSuffix>cloud_upload</mat-icon>
-      Upload Phenopacket File
-    </button>
+<div class="phenopacket-list">
+  <div class="flex p-3 card-btn-wrapper">
+    <p-fileUpload #fubauto mode="basic" name="file[]" [customUpload]="true"
+                  (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
+                  chooseIcon="pi-file-import" accept=".json" multiple="multiple">
+    </p-fileUpload>
+    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-pencil" routerLink="/profile-selection"></button>
   </div>
-  
-  <p-tabView id="closableTabView" [(activeIndex)]="activeIndex">
-    <p-tabPanel header="Phenopacket list" [selected]="true">
-        <!-- Table summary of individuals -->
-        <table
-          #varTable
-          mat-table
-          class="table-hover mat-elevation-z2"
-          [dataSource]="datasource"
-          matSort
-          multiTemplateDataRows
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>Id</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="timeOfLastEncounter">
-            <th mat-header-cell *matHeaderCellDef>Time of last encounter</th>
-            <td mat-cell *matCellDef="let element">{{ element.subject?.timeAtLastEncounter }}</td>
-          </ng-container>
-  
-          <ng-container matColumnDef="sex">
-            <th mat-header-cell *matHeaderCellDef>Sex</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.subject?.sex }}
+  <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
+    <p-tabPanel header="Phenopackets" class="first-panel">
+      <p-table [value]="phenopackets" selectionMode="single" (onRowSelect)="openTab($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Identifier</th>
+            <th>Last Encounter</th>
+            <th>Sex</th>
+            <th style="width: 8rem"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-phenopacket>
+          <tr [pSelectableRow]="phenopacket">
+            <td>{{phenopacket.id}}</td>
+            <td>{{phenopacket.subject?.timeAtLastEncounter != null ? phenopacket.subject?.timeAtLastEncounter : '-'}}</td>
+            <td>
+              {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
             </td>
-          </ng-container>
-  
-          <ng-container matColumnDef="download">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <button
-                (click)="$event.stopPropagation()"
-                mat-icon-button
-                type="submit"
-                class="pull-right"
-                matTooltip="Download as JSON file"
-                [matTooltipShowDelay]="2000"
-                (click)="downloadPhenopacket(element)"
-              >
-                <mat-icon matSuffix>download</mat-icon>
-              </button>
+            <td class="actions">
+              <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="removeIndividual(phenopacket)"></button>
+              <button pButton type="button" class="p-button" icon="pi pi-download" (click)="downloadPhenopacket(phenopacket)"></button>
             </td>
-          </ng-container>
-          <ng-container matColumnDef="remove">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <button
-                (click)="$event.stopPropagation()"
-                mat-icon-button
-                type="submit"
-                class="pull-right"
-                matTooltip="Remove individual"
-                [matTooltipShowDelay]="2000"
-                (click)="removeIndividual(element)"
-              >
-                <mat-icon matSuffix>delete</mat-icon>
-              </button>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="4">
+              No phenopackets found.
             </td>
-          </ng-container>
-  
-          <tr
-            mat-row
-            (click)="openTab(element)"
-            *matRowDef="let element; columns: displayedColumns"
-            class="example-element-row"
-            matTooltip="Click to open in new tab"
-            [matTooltipShowDelay]="2000"
-          ></tr>
-  
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-          ></tr>
-        </table>
+          <tr>
+       </ng-template>
+      </p-table>
     </p-tabPanel>
     <p-tabPanel
-      *ngFor="let phenopacket of individualTabs; let index = index"
-      [header]="phenopacket.id"
-      [closable]="true"
+            *ngFor="let phenopacket of tabs; let index = index"
+            [header]="phenopacket.id"
+            [closable]="true"
     >
       <div class="grid p-fluid">
         <div class="field col-12">
           <app-phenopacket
-            [phenopacket]="phenopacket"
-            (onIdChanged)="changeId($event, activeIndex)"
-            (onSexChanged)="changeSex($event, activeIndex)"
-            (onDobChanged)="changeDob($event, activeIndex)"
+                  [phenopacket]="phenopacket"
+                  (onIdChanged)="changeId($event, tabIndex)"
+                  (onSexChanged)="changeSex($event, tabIndex)"
+                  (onDobChanged)="changeDob($event, tabIndex)"
           >
           </app-phenopacket>
         </div>
       </div>
     </p-tabPanel>
-  
+
   </p-tabView>
-  
-</p-card>
+  <p-confirmDialog #cd [style]="{width: '50vw'}" key="positionDialog" position="bottom-right" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+      <button type="button" class="p-button-outlined" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    </ng-template>
+  </p-confirmDialog>
+</div>

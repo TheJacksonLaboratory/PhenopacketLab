@@ -111,7 +111,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             data: msgData
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result === 'ok') {
+            if (result) {
                 this.removeFromDatasource(element);
             }
         });

@@ -35,7 +35,7 @@ export class VcfRecordDialogComponent {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close('cancel');
+    this.dialogRef.close(false);
   }
 
   onOkClick() {

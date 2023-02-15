@@ -176,7 +176,7 @@ export class MedicalActionDetailDialogComponent implements OnInit {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close('cancel');
+    this.dialogRef.close(false);
   }
 
   onOkClick() {

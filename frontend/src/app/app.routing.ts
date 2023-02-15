@@ -16,4 +16,4 @@ const routes: Routes = [
   { path: '**', redirectTo: 'dashboard' },
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const ROUTING = RouterModule.forRoot(routes);

@@ -11,8 +11,6 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
-import { UploadDialogComponent } from '../shared/upload-dialog/upload-dialog.component';
-
 @Component({
   selector: 'app-family-list',
   templateUrl: 'family-list.component.html',
@@ -145,7 +143,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
       data: msgData
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'ok') {
+      if (result) {
         // remove individual tab
         this.individualTabsMap.delete(individual.id);
         // remove individual from family map
@@ -251,33 +249,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
     // this.changeDetectorRefs.detectChanges();
   }
-
-  /**
-   * Open dialog to upload a new file
-   */
-  public openFileUploadDialog() {
-    const currPhenopackets = [];
-    if (this.family) {
-      if (this.family.proband) {
-        currPhenopackets.push(this.family.proband);
-      }
-      this.family.relatives?.forEach(val => currPhenopackets.push(val));
-    }
-    const dialogRef = this.dialog.open(UploadDialogComponent, {
-      width: '40%',
-      height: '30%',
-      data: { fileType: 'JSON, yaml', titleText: 'Upload Phenopacket file(s)', currentPhenopackets: currPhenopackets }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // refresh datasource
-      this.refresh();
-      // wait 2 sec
-      // (async () => {
-      // await this.delay(2000);
-      // this.refresh();
-      // })();
-    });
+  openFileUploadDialog(){
+    return;
   }
-
-
 }

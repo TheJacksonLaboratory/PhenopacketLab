@@ -23,11 +23,11 @@ export class MessageDialogComponent {
     }
 
   onOkClick(): void {
-    this.dialogRef.close('ok');
+    this.dialogRef.close(true);
   }
 
   onCancelClick(): void {
-    this.dialogRef.close('cancel');
+    this.dialogRef.close(false);
   }
 }
 

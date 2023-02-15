@@ -9,7 +9,7 @@
   },
   "scripts": {
     "ng": "node --max_old_space_size=4096 ./node_modules/.bin/ng",
-    "start": "ng serve",
+    "start": "ng serve -c dev",
     "build": "ng build --configuration=dev --base-href /app/",
     "buildProd": "ng build --prod=true --aot --configuration=production --base-href /app/",
     "buildWatch": "ng build --aot --configuration=dev --watch=true --base-href /app/",
@@ -46,7 +46,7 @@
     "popper.js": "^1.16.1",
     "primeflex": "^3.2.1",
     "primeicons": "^6.0.1",
-    "primeng": "^14.1.2",
+    "primeng": "^14.2.2",
     "rxjs": "~6.5.2",
     "rxjs-compat": "6.5.4",
     "webpack": "^5.74.0",
