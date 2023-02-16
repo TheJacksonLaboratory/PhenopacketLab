@@ -43,9 +43,6 @@ export class MedicalActionStepComponent implements OnInit, OnDestroy {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`pheno-creator/${profile.path}/files`]);
                 return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/files`]);
-                return;
             }
             // Possible other profiles to come
         }
@@ -54,10 +51,7 @@ export class MedicalActionStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
                 return;
             }
             // Possible other profiles to come

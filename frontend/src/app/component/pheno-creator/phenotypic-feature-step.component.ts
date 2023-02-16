@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -12,7 +12,7 @@ import { PhenotypeSearchService } from 'src/app/services/phenotype-search.servic
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
 
 @Component({
-    providers: [ConfirmationService],
+    providers: [ConfirmationService, DialogService],
     selector: 'app-phenotypic-feature-step',
     templateUrl: './phenotypic-feature-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
@@ -29,7 +29,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     selectedFeature: PhenotypicFeature;
     // searchparams
     currSearchParams: any = {};
-    spinnerDialogRef: any;
+    spinnerDialogRef: DynamicDialogRef;
 
     expandedTextMining = false;
 
@@ -40,7 +40,8 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
-        private router: Router, public dialog: MatDialog,
+        private dialogService: DialogService,
+        private router: Router,
         private primengConfig: PrimeNGConfig) {
     }
 
@@ -106,9 +107,9 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     }
 
     openSpinnerDialog() {
-        this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-            panelClass: 'transparent',
-            disableClose: true
+        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+            closable: false,
+            modal: true
         });
     }
 
@@ -201,9 +202,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
                 this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
                 return;
             }

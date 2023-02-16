@@ -112,10 +112,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
         this.router.navigate([`pheno-creator/${profile.path}/files`]);
         return;
       } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-        this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
-        return;
-      } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-        this.router.navigate([`pheno-creator/${profile.path}/files`]);
+        this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
         return;
       }
       // Possible other profiles to come

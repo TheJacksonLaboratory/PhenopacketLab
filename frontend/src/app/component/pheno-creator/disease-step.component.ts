@@ -181,13 +181,10 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/validate`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
                 return;
             }
         }
@@ -198,13 +195,10 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`pheno-creator/${profile.path}/biosamples`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
                 this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
                 return;
             }
         }

@@ -24,8 +24,8 @@ import { ValidateStepComponent } from './validate-step.component';
                     { path: 'phenotypic-features', component: PhenotypicFeatureStepComponent },
                     { path: 'measurements', component: MeasurementStepComponent },
                     { path: 'biosamples', component: BiosampleStepComponent },
-                    { path: 'interpretations', component: InterpretationStepComponent },
                     { path: 'diseases', component: DiseaseStepComponent },
+                    { path: 'interpretations', component: InterpretationStepComponent },
                     { path: 'medical-actions', component: MedicalActionStepComponent },
                     { path: 'files', component: FileStepComponent },
                     { path: 'validate', component: ValidateStepComponent }
@@ -38,6 +38,7 @@ import { ValidateStepComponent } from './validate-step.component';
                     { path: 'individual', component: IndividualStepComponent },
                     { path: 'phenotypic-features', component: PhenotypicFeatureStepComponent },
                     { path: 'diseases', component: DiseaseStepComponent },
+                    { path: 'interpretations', component: InterpretationStepComponent },
                     { path: 'validate', component: ValidateStepComponent }
 
                 ]

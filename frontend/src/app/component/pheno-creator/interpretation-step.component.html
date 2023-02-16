@@ -1,27 +1,94 @@
 <p-card>
-    <div class="grid p-fluid">
-      <div class="field col-12">This step is not yet implemented.</div>
-    </div>
-  
-    <ng-template pTemplate="footer">
-      <div class="flex justify-content-between flex-wrap">
-        <div class="flex align-items-center justify-content-center">
-          <p-button
-            label="Back"
-            (onClick)="prevPage()"
-            icon="pi pi-angle-left"
-            iconPos="left"
-          ></p-button>
-        </div>
-        <div class="flex align-items-center justify-content-center">
-          <p-button
-            label="Next"
-            (onClick)="nextPage()"
-            icon="pi pi-angle-right"
-            iconPos="right"
-          ></p-button>
-        </div>
+  <as-split direction="horizontal">
+    <as-split-area [size]="50">
+      <!-- Interpretation table content & search -->
+      <p-card
+        header="Interpretation search"
+        subheader="This page uses the Variant Validator API in order to find and create new variant interpretation in the phenopacket."
+      >
+        
+        <app-variant-validator (variantsChange)="addVariants($event)"></app-variant-validator>
+
+        
+
+        <br />
+
+        <p-table
+          *ngIf="visible"
+          [value]="interpretations"
+          [(selection)]="selectedInterpretation"
+          styleClass="p-datatable-gridlines"
+          scrollDirection="horizontal"
+          responsiveLayout="scroll"
+          [resizableColumns]="true"
+          [tableStyle]="{ width: 'max-content'}"   
+          dataKey="key"
+          selectionMode="single"
+          (onRowSelect)="onRowSelect($event)"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-header">Added interpretations</div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>ID</th>
+              <th pResizableColumn>Progress status</th>
+              <th pResizableColumn>Diagnosis</th>
+              <th pResizableColumn></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-interpretation>
+            <tr [pSelectableRow]="interpretation">
+              <td>{{ interpretation.id }}</td>
+              <td>{{ interpretation.progressStatus }}</td>
+              <td>{{ interpretation.disease?.toString() }}</td>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteInterpretation(interpretation)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </as-split-area>
+    <as-split-area [size]="50">
+      <!-- Interpretation form -->
+      <p-card
+        header="Interpretation details"
+        subheader="Select the phenotypic feature on the left-side table and then edit its details."
+      >
+<!--        <app-interpretation-edit-->
+<!--          [interpretation]="selectedInterpretation"-->
+<!--          (interpretationChange)="updateInterpretation($event)"-->
+<!--        ></app-interpretation-edit>-->
+      </p-card>
+    </as-split-area>
+  </as-split>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-between flex-wrap">
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+          iconPos="left"
+        ></p-button>
       </div>
-    </ng-template>
-  </p-card>
-  
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Next"
+          (onClick)="nextPage()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>
+
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
