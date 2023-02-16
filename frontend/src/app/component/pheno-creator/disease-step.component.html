@@ -21,12 +21,14 @@
           *ngIf="visible"
           [value]="diseases"
           [(selection)]="selectedDisease"
-          [resizableColumns]="true"
           styleClass="p-datatable-gridlines"
+          scrollDirection="horizontal"
+          responsiveLayout="scroll"
+          [resizableColumns]="true"
+          [tableStyle]="{ width: 'max-content'}"
           dataKey="key"
           selectionMode="single"
           (onRowSelect)="onRowSelect($event)"
-          [scrollable]="true"
         >
           <ng-template pTemplate="caption">
             <div class="table-header">Added diseases</div>

@@ -34,12 +34,14 @@
           *ngIf="visible"
           [value]="phenotypicFeatures"
           [(selection)]="selectedFeature"
-          [resizableColumns]="true"
           styleClass="p-datatable-gridlines"
+          scrollDirection="horizontal"
+          responsiveLayout="scroll"
+          [resizableColumns]="true"
+          [tableStyle]="{ width: 'max-content'}"
           dataKey="key"
           selectionMode="single"
           (onRowSelect)="onRowSelect($event)"
-          [scrollable]="true"
         >
           <ng-template pTemplate="caption">
             <div class="table-header">Added phenotypic features</div>
