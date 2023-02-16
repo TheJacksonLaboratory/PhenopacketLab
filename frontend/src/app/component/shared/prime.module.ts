@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
@@ -21,8 +21,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
-import { ToastModule } from "primeng/toast";
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [],
@@ -48,7 +49,8 @@ import { TooltipModule } from 'primeng/tooltip';
     FileUploadModule,
     ToastModule,
     ConfirmDialogModule,
-    TooltipModule
+    TooltipModule,
+    ProgressSpinnerModule
   ],
   exports: [
     ButtonModule,
@@ -71,7 +73,8 @@ import { TooltipModule } from 'primeng/tooltip';
     FileUploadModule,
     ToastModule,
     ConfirmDialogModule,
-    TooltipModule
+    TooltipModule,
+    ProgressSpinnerModule
   ],
   providers: [MessageService, ConfirmationService]
 })

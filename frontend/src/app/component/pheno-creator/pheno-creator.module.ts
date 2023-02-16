@@ -6,7 +6,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +36,8 @@ import { InplaceModule } from 'primeng/inplace';
 import { SplitterModule } from 'primeng/splitter';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -59,6 +60,7 @@ import { TextPipe } from './text-mining/text.pipe';
 import { WordDialogComponent } from './text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -85,7 +87,6 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
-        MatDialogModule,
         MatAutocompleteModule,
         MatRippleModule,
         MatSelectModule,
@@ -106,7 +107,10 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         InplaceModule,
         SplitterModule,
         TooltipModule,
-        SelectButtonModule
+        SelectButtonModule,
+        DialogModule,
+        DynamicDialogModule,
+        ProgressSpinnerModule
     ],
     exports: [
         StepsModule,

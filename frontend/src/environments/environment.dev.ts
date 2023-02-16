@@ -13,8 +13,9 @@ export const environment = {
   LATERALITY_URL: `${API_URL}/constants/laterality`,
   MODIFIERS_URL: `${API_URL}/constants/modifier`,
   MONDO_DISEASES_URL: `${API_URL}/mondo-diseases`,
-  ONSETS_URL: `${API_URL}/onset`,
+  ONSETS_URL: `${API_URL}/constants/treeonset`,
   TNM_FINDINGS_URL: `${API_URL}/tnm-findings`,
   HPO_DISEASE_URL: `${API_URL}/diseases`,
-  TEXT_MINING_URL: `${API_URL}/textminer`
+  TEXT_MINING_URL: `${API_URL}/textminer`,
+  VARIANT_VALIDATOR_URL: `${API_URL}/variantvalidator`
 };

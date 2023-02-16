@@ -1,6 +1,8 @@
 import { Convert, OntologyClass } from './base';
 
 export class Interpretation extends Convert {
+    // key parameter not part of the phenopacket schema, used for primeng table
+    key?: number;
     id: string;
     progressStatus: ProgressStatus;
     diagnosis: Diagnosis;

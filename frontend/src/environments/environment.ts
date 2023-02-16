@@ -20,7 +20,8 @@ export const environment = {
   ONSETS_URL: `${API_URL}/onsets`,
   TNM_FINDINGS_URL: `${API_URL}/tnm-findings`,
   HPO_DISEASE_URL: `${API_URL}/diseases`,
-  TEXT_MINING_URL: `${API_URL}/textminer`
+  TEXT_MINING_URL: `${API_URL}/textminer`,
+  VARIANT_VALIDATOR_URL: `${API_URL}/variantvalidator`
 };
 
 /*

@@ -13,6 +13,8 @@ import org.monarchinitiative.phenopacketlab.core.miner.TextMiningImpl;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
+import org.monarchinitiative.phenopacketlab.core.variantvalidator.VariantValidatorImpl;
+import org.monarchinitiative.phenopacketlab.core.variantvalidator.VariantValidatorService;
 import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +118,8 @@ public class PhenopacketLabAutoConfiguration {
         return new TextMiningImpl();
     }
 
+    @Bean
+    VariantValidatorService variantValidatorService() { return new VariantValidatorImpl(); }
     @Bean
     public PhenopacketLabMetadata phenopacketLabMetadata() {
         return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());

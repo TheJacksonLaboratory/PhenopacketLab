@@ -1,0 +1,104 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <label for="hgvs">HGVS</label>
+    <input
+      id="hgvs"
+      type="HGVS"
+      aria-describedby="HGVS annotation"
+      pInputText
+      [(ngModel)]="hgvs"
+    />
+    E.g.
+    <a
+      href="javascript:void(0);"
+      (click)="updateHgvs('NC_000017.11:g.50198002C>A')"
+      >NC_000017.11:g.50198002C>A</a
+    >
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="build">Genome build</label>
+    <p-dropdown
+      id="build"
+      appendTo="body"
+      placeholder="Select genome build"
+      [(ngModel)]="assembly"
+      [options]="builds"
+      (onChange)="updateAssembly($event)"
+      pTooltip="Reference genome build"
+      showDelay="2000"
+      class="w-full"
+    ></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="transcript">Transcript</label>
+    <p-dropdown
+      id="transcript"
+      appendTo="body"
+      placeholder="Select transcript"
+      [(ngModel)]="transcript"
+      [options]="transcripts"
+      (onChange)="updateTranscript($event)"
+      pTooltip="Gene transcript"
+      showDelay="2000"
+      class="w-full"
+    ></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-4">
+    <button
+      pButton
+      type="button"
+      label="Search"
+      (click)="searchVariantByHGVS()"
+    ></button>
+  </div>
+  <div class="field col-12 md:col-8"></div>
+
+  <div *ngIf="variantVisible" class="field col-12">
+    <p-table
+      [value]="variants"
+      dataKey="key"
+      styleClass="p-datatable-gridlines"
+      scrollDirection="horizontal"
+      responsiveLayout="scroll"
+      [resizableColumns]="true"
+      [tableStyle]="{ width: 'max-content' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="table-header">Variant(s) found</div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn style="width: 1rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th pResizableColumn style="min-width: 2rem">Chr</th>
+          <th pResizableColumn>HGVS</th>
+          <th pResizableColumn>Gene symbol</th>
+          <th pResizableColumn>Build</th>
+          <th pResizableColumn>Transcript description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-variant>
+        <tr [pSelectableRow]="variant">
+          <td>
+            <p-tableCheckbox [value]="variant"></p-tableCheckbox>
+          </td>
+          <td>{{ variant.chr }}</td>
+          <td>{{ variant.hgvs }}</td>
+          <td>{{ variant.geneSymbol }}</td>
+          <td>{{ variant.build }}</td>
+          <td>{{ variant.transcriptDescription }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="variantVisible" class="field col-12 md:col-4">
+    <button
+      pButton
+      type="button"
+      label="Add selected variant"
+      (click)="addSelectedVariant()"
+    ></button>
+  </div>
+</div>

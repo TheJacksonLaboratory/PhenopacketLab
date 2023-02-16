@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from "./material.module";
+import { MaterialModule } from './material.module';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
-import { PrimeModule } from "./prime.module";
+import { PrimeModule } from './prime.module';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
 import { TimeElementComponent } from './time-element/time-element.component';
@@ -18,6 +18,7 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
+import { VariantValidatorComponent } from './edit/interpretation-edit/variant-validator/variant-validator.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { OntologyTimeComponent } from './time-element/ontology-time/ontology-tim
     TreeSearchComponent,
     DiseaseEditComponent,
     PhenotypicFeatureEditComponent,
-    IndividualEditComponent
+    IndividualEditComponent,
+    VariantValidatorComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -61,6 +63,7 @@ import { OntologyTimeComponent } from './time-element/ontology-time/ontology-tim
     DiseaseEditComponent,
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
+    VariantValidatorComponent,
     PrimeModule,
     MaterialModule
   ]
