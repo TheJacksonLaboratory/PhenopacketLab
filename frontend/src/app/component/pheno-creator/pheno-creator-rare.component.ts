@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -24,27 +25,13 @@ export class PhenoCreatorRareComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.items = [{
-      label: 'Individual',
-      routerLink: 'individual'
-    },
-    {
-      label: 'Phenotypic Feature(s)',
-      routerLink: 'phenotypic-features'
-    },
-    {
-      label: 'Disease(s)',
-      routerLink: 'diseases'
-    },
-    {
-      label: 'Validate',
-      routerLink: 'validate'
-    }
-    ];
+    this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
 
     this.subscription = this.phenopacketService.validated$.subscribe((phenopacket) => {
-      this.messageService.add({ severity: 'success', summary: 'Phenopacket created',
-        detail: 'The phenopacket with the ID ' + phenopacket.subject.id + ' has been successfully validated.' });
+      this.messageService.add({
+        severity: 'success', summary: 'Phenopacket created',
+        detail: 'The phenopacket with the ID ' + phenopacket.subject.id + ' has been successfully validated.'
+      });
     });
 
   }
