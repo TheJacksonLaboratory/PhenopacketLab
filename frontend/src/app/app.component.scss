@@ -6,7 +6,8 @@ app-header {
 .main {
   display: flex;
   min-height: 100vh;
-  padding: 70px 0 0 0;
+  width: 100%;
+  margin: 70px 0 0 0;
   background-color: white;
 
   .sidebar {
@@ -39,6 +40,21 @@ app-header {
     flex: 6;
     &.full {
       flex: auto;
+    }
+
+    .static-content-profile {
+      .wrapper {
+        padding: 1rem 0 0 0;
+        .subsection {
+          margin: 1rem 0 0 0;
+          a {
+            text-decoration: none;
+          }
+          .subsection-title {
+            text-transform: uppercase;
+          }
+        }
+      }
     }
   }
 
