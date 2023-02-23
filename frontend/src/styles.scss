@@ -232,3 +232,17 @@ legend.plot-control-panel-border {
 .p-sidebar-mask {
   display: none !important;
 }
+
+.code-highlight {
+  pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #7a828e12;
+    border-radius: 6px;
+    text-align: left;
+    white-space: pre-line;
+    font-style: italic;
+  }
+}

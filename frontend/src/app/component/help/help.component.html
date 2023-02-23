@@ -5,13 +5,36 @@
             <div class="p-accordion-sm">
                 <p-accordion>
                     <p-accordionTab header="Do phenopackets contain confidential information?">
-                        Content 2
+                        Phenopackets can contain confidential information in the form of name, date of birth, and
+                        genomic information.
                     </p-accordionTab>
                     <p-accordionTab header="What other ways can I create phenopackets?">
-                        Content 1
+                        Phenopackets can be created programmatically through our Java and Python libraries.
+                        Maven
+                        <div class="code-highlight">
+                            <pre>
+                                &#60;dependency&#62;
+                                &#60;groupId&#62;org.phenopackets&#60;/groupId&#62;
+                                &#60;artifactId&#62;phenopacket-schema&#60;/artifactId&#62;
+                                &#60;version&#62;${{'{'}}phenopacket-schema.version{{'}'}}&#60;/version&#62;
+                                &#60;/dependency&#62;
+                            </pre>
+                        </div>
+                        Gradle
+                        <div class="code-highlight">
+                            <pre>
+                                implementation 'org.phenopackets:phenopacket-schema:2.0.2'
+                            </pre>
+                        </div>
+                        Pip
+                        <div class="code-highlight">
+                            <pre>
+                                pip install phenopackets
+                            </pre>
+                        </div>
                     </p-accordionTab>
                     <p-accordionTab header="What can I do with my phenopackets?">
-                        Content 3
+                        Documentation needed.. exomiser?
                     </p-accordionTab>
                 </p-accordion>
             </div>
