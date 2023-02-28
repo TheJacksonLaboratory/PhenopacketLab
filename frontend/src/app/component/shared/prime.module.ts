@@ -24,6 +24,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { PanelModule } from 'primeng/panel';
+
 
 @NgModule({
   declarations: [],
@@ -50,7 +52,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ToastModule,
     ConfirmDialogModule,
     TooltipModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    PanelModule
   ],
   exports: [
     ButtonModule,
@@ -74,7 +77,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ToastModule,
     ConfirmDialogModule,
     TooltipModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    PanelModule
   ],
   providers: [MessageService, ConfirmationService]
 })

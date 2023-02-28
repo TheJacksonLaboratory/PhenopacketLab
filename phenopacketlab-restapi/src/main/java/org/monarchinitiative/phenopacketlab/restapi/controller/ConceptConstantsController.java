@@ -3,8 +3,8 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.monarchinitiative.phenopacketlab.core.ConceptConstantsService;
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
-import org.monarchinitiative.phenopacketlab.model.Concept;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.Concept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

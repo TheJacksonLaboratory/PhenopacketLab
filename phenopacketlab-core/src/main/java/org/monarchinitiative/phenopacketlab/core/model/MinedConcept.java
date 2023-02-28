@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacketlab.model;
+package org.monarchinitiative.phenopacketlab.core.model;
 
 import java.util.Objects;
 

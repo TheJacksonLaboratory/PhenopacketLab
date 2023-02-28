@@ -4,8 +4,8 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.io.utils.CurieUtil;
 import org.monarchinitiative.phenol.io.utils.CurieUtilBuilder;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
-import org.monarchinitiative.phenopacketlab.model.Resource;
+import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.io.InputStream;
 import java.util.Map;

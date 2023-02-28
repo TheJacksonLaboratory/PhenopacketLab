@@ -4,9 +4,9 @@ import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResou
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceServiceImpl;
-import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

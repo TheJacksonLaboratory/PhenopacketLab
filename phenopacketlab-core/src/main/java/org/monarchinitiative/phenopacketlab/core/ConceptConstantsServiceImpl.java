@@ -1,8 +1,8 @@
 package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
-import org.monarchinitiative.phenopacketlab.model.Concept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.Concept;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package org.monarchinitiative.phenopacketlab.model;
+package org.monarchinitiative.phenopacketlab.core.model;
 
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenol.ontology.data.TermSynonym;
-import org.monarchinitiative.phenopacketlab.model.util.MappingIterator;
+import org.monarchinitiative.phenopacketlab.core.model.util.MappingIterator;
 
 import java.util.Iterator;
 import java.util.Optional;

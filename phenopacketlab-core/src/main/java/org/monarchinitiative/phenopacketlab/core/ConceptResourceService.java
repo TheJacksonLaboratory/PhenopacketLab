@@ -1,7 +1,7 @@
 package org.monarchinitiative.phenopacketlab.core;
 
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
-import org.monarchinitiative.phenopacketlab.model.Resource;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.util.Optional;
 

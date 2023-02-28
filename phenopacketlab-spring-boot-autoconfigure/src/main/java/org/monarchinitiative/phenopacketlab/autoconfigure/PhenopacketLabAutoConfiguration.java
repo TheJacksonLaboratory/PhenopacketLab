@@ -13,9 +13,9 @@ import org.monarchinitiative.phenopacketlab.core.miner.TextMiningImpl;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
-import org.monarchinitiative.phenopacketlab.core.variantvalidator.VariantValidatorImpl;
-import org.monarchinitiative.phenopacketlab.core.variantvalidator.VariantValidatorService;
-import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
+import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
+import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -119,7 +119,7 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    VariantValidatorService variantValidatorService() { return new VariantValidatorImpl(); }
+    public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
     @Bean
     public PhenopacketLabMetadata phenopacketLabMetadata() {
         return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());

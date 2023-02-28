@@ -1,6 +1,6 @@
 package org.monarchinitiative.phenopacketlab.io;
 
-import org.monarchinitiative.phenopacketlab.model.Resource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.util.Objects;
 

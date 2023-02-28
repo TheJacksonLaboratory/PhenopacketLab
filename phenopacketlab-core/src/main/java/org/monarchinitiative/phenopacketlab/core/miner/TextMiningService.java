@@ -1,6 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core.miner;
 
-import org.monarchinitiative.phenopacketlab.model.MinedText;
+import org.monarchinitiative.phenopacketlab.core.model.MinedText;
 
 public interface TextMiningService {
 

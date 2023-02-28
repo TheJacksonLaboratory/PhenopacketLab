@@ -1,7 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
-import org.monarchinitiative.phenopacketlab.model.MinedText;
+import org.monarchinitiative.phenopacketlab.core.model.MinedText;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

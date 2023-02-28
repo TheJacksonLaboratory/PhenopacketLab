@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacketlab.model;
+package org.monarchinitiative.phenopacketlab.core.model;
 
 /**
  * The {@link ResourceAware} implementors are aware of a {@link Resource}. The implementors usually provide
