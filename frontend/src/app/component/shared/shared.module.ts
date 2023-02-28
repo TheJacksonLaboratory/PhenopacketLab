@@ -18,7 +18,8 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
-import { VariantValidatorComponent } from './edit/interpretation-edit/variant-validator/variant-validator.component';
+import { VariantInterpretationComponent } from './edit/interpretation-edit/variant-validator/variant-interpretation.component';
+import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { VariantValidatorComponent } from './edit/interpretation-edit/variant-va
     DiseaseEditComponent,
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
-    VariantValidatorComponent
+    InterpretationEditComponent,
+    VariantInterpretationComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -63,7 +65,8 @@ import { VariantValidatorComponent } from './edit/interpretation-edit/variant-va
     DiseaseEditComponent,
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
-    VariantValidatorComponent,
+    InterpretationEditComponent,
+    VariantInterpretationComponent,
     PrimeModule,
     MaterialModule
   ]

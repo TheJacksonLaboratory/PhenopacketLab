@@ -21,7 +21,7 @@ export const environment = {
   TNM_FINDINGS_URL: `${API_URL}/tnm-findings`,
   HPO_DISEASE_URL: `${API_URL}/diseases`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
-  VARIANT_VALIDATOR_URL: `${API_URL}/variantvalidator`
+  FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`
 };
 
 /*

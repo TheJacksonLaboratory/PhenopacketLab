@@ -111,6 +111,13 @@ export enum TherapeuticActionability {
     NOT_ACTIONABLE = 'NOT_ACTIONABLE',
     ACTIONABLE = 'ACTIONABLE'
 }
+export enum MoleculeContext {
+    unspecified_molecule_context = 'unspecified_molecule_context',
+    genomic = 'genomic',
+    transcript = 'transcript',
+    protein = 'protein',
+    UNRECOGNIZED = 'UNRECOGNIZED'
+}
 /**
  * VRS object : https://vrs.ga4gh.org/en/stable/schema.html
  */
@@ -206,7 +213,7 @@ export class VariationDescriptor {
     xrefs: string[];
     alternateLabels: string[];
     extensions: Extension[];
-    moleculeContext: string;
+    moleculeContext: MoleculeContext;
     structuralType: OntologyClass;
     vrsRefAlleleSeq: string;
     allelicState: OntologyClass;
@@ -267,6 +274,8 @@ export class VariationDescriptor {
 }
 export class VariantInterpretation {
     static className = 'VariantInterpretation';
+
+    key?: number;
     acmgPathogenicityClassification: AcmgPathogenicityClassification;
     therapeuticActionability: TherapeuticActionability;
     variationDescriptor: VariationDescriptor;

@@ -7,15 +7,15 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedModule } from 'src/app/component/shared/shared.module';
-import { VariantValidatorComponent } from './variant-validator.component';
+import { VariantInterpretationComponent } from './variant-interpretation.component';
 
-describe('VariantValidatorComponent', () => {
-  let component: VariantValidatorComponent;
-  let fixture: ComponentFixture<VariantValidatorComponent>;
+describe('VariantInterpretationComponent', () => {
+  let component: VariantInterpretationComponent;
+  let fixture: ComponentFixture<VariantInterpretationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VariantValidatorComponent ],
+      declarations: [ VariantInterpretationComponent ],
       imports: [
         ReactiveFormsModule,
         NoopAnimationsModule,
@@ -35,7 +35,7 @@ describe('VariantValidatorComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VariantValidatorComponent);
+    fixture = TestBed.createComponent(VariantInterpretationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

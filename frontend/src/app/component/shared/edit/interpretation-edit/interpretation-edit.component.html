@@ -1,0 +1,78 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="interpretationid">Interpretation ID</label>
+    <input
+      id="interpretationid"
+      type="text"
+      aria-describedby="Interpretation ID"
+      pInputText
+      [(ngModel)]="id"
+      (ngModelChange)="onIdChange($event)"
+    />
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="status">Progress status</label>
+    <p-dropdown
+      id="status"
+      appendTo="body"
+      placeholder="Select progress status"
+      [(ngModel)]="progressStatus"
+      [options]="statuses"
+      (onChange)="updateProgressStatus($event)"
+      pTooltip="Progress status"
+      showDelay="2000"
+      class="w-full"
+    ></p-dropdown>
+  </div>
+  <!-- <div class="field col-12 md:col-12">
+    <span class="p-float-label">
+      <textarea
+        id="summary"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        (ngModelChange)="onSummaryChange($event)"
+      ></textarea>
+      <label for="Summary">Summary</label>
+    </span>
+  </div> -->
+</div>
+
+<p-card
+  header="Diagnosis"
+  subheader="Create a diagnosis with its corresponding disease and genomic interpretation."
+>
+  <div class="grid p-fluid">
+    <div class="field col-12 md:col-6">
+      <label for="disease">Disease</label>
+      <p-dropdown
+        id="disease"
+        placeholder="Select disease"
+        [options]="diseases"
+        appendTo="body"
+        [virtualScroll]="true"
+        [virtualScrollItemSize]="30"
+        filter="true"
+        optionLabel="name"
+        filterBy="name"
+        (onChange)="updateDisease($event)"
+        showClear="true"
+      ></p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6"></div>
+    <app-variant-interpretation
+      (variantInterpretationChange)="addVariantInterpretation($event)"
+    ></app-variant-interpretation>
+  </div>
+</p-card>
+<div class="grid p-fluid">
+<div class="field col-12 md:col-4">
+    <button
+      pButton
+      type="button"
+      label="Add interpretation"
+      (click)="addInterpretation()"
+    ></button>
+  </div>
+  </div>

@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { Interpretation } from 'src/app/models/interpretation';
+
+import { Interpretation, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
-import { Variant } from 'src/app/models/variant';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -20,20 +21,27 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
 
     visible = false;
     phenopacket: Phenopacket;
+    id: string;
+    interpretation: Interpretation;
     interpretations: Interpretation[] = [];
     submitted = false;
     phenopacketSubscription: Subscription;
 
     // table contents of phenotypic features
     selectedInterpretation: Interpretation;
-    // searchparams
-    currSearchParams: any = {};
+    // progress status
+    progressStatus: ProgressStatus;
+    statuses: ProgressStatus[];
+    // diseases
+    diseases: any[];
+    diseaseSubscription: Subscription;
 
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
 
     constructor(public searchService: InterpretationService,
         public phenopacketService: PhenopacketService,
+        public diseaseService: DiseaseSearchService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
         private router: Router, public dialog: MatDialog,
@@ -64,6 +72,12 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
+        // get diseases
+        this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
+            this.diseases = diseases;
+        });
+        // statuses
+        this.statuses = this.getStatuses();
     }
 
     ngOnDestroy(): void {
@@ -72,6 +86,9 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
+        }
+        if (this.diseaseSubscription) {
+            this.diseaseSubscription.unsubscribe();
         }
     }
 
@@ -131,11 +148,22 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
     }
 
     updateInterpretation(interpretation) {
-        this.selectedInterpretation = interpretation;
+        if (this.interpretations === undefined) {
+            this.interpretations = [];
+        }
+        this.interpretations.push(interpretation);
     }
 
-    addVariants(variant: Variant[]) {
-        // todo
+    updateProgressStatus(event) {
+        if (this.interpretation === undefined) {
+            this.interpretation = new Interpretation();
+        }
+        this.interpretation.progressStatus = event.value;
+    }
+
+    getStatuses() {
+        // tslint:disable-next-line:radix
+        return Object.values(ProgressStatus).filter(x => !(parseInt(x) >= 0));
     }
     /**
      * Called when a row is selected in the left side table
