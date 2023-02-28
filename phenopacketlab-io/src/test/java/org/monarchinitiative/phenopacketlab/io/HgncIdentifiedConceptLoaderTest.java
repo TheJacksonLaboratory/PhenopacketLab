@@ -2,9 +2,9 @@ package org.monarchinitiative.phenopacketlab.io;
 
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConceptResource;
-import org.monarchinitiative.phenopacketlab.model.Resource;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
