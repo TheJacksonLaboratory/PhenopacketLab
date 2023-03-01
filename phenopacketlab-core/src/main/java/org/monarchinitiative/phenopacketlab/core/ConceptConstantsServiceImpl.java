@@ -19,6 +19,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
     private final Optional<SubtreeNode> onsetTreeConstants;
+    private final Optional<SubtreeNode> tnmTumorTreeConstants;
+    private final Optional<SubtreeNode> tnmNodeTreeConstants;
+    private final Optional<SubtreeNode> tnmMetastasisTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -31,6 +34,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
                                 Optional<SubtreeNode> onsetTreeConstants,
+                                Optional<SubtreeNode> tnmTumorTreeConstants,
+                                Optional<SubtreeNode> tnmNodeTreeConstants,
+                                Optional<SubtreeNode> tnmMetastasisTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -42,6 +48,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.severityConstants = severityConstants;
         this.onsetConstants = onsetConstants;
         this.onsetTreeConstants = onsetTreeConstants;
+        this.tnmTumorTreeConstants = tnmTumorTreeConstants;
+        this.tnmNodeTreeConstants = tnmNodeTreeConstants;
+        this.tnmMetastasisTreeConstants = tnmMetastasisTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
         this.contigConstants = contigConstants;
     }
@@ -70,6 +79,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     public List<IdentifiedConcept> modifierConstants() {
         return modifierConstants;
     }
+
+    @Override
     public Optional<SubtreeNode> modifierTreeConstants() {
         return modifierTreeConstants;
     }
@@ -83,6 +94,15 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     public List<IdentifiedConcept> onsetConstants() {
         return onsetConstants;
     }
+
+    @Override
+    public Optional<SubtreeNode> tnmTumorTreeConstants() { return tnmTumorTreeConstants; }
+
+    @Override
+    public Optional<SubtreeNode> tnmNodeTreeConstants() { return tnmNodeTreeConstants; }
+
+    @Override
+    public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return tnmMetastasisTreeConstants; }
 
     @Override
     public Optional<SubtreeNode> onsetTreeConstants() {

@@ -42,6 +42,9 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
         Optional<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
+        Optional<SubtreeNode> tnmTumorTreeConstants = configureTnmTumorTreeConstants(resourceService);
+        Optional<SubtreeNode> tnmNodeTreeConstants = configureTnmNodeTreeConstants(resourceService);
+        Optional<SubtreeNode> tnmMetastasisTreeConstants = configureTnmMetastasisTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -54,6 +57,9 @@ public class ConceptConstantsServiceConfigurer {
                 severityConstants,
                 onsetConstants,
                 onsetTreeConstants,
+                tnmTumorTreeConstants,
+                tnmNodeTreeConstants,
+                tnmMetastasisTreeConstants,
                 structuralTypeConstants,
                 contigConstants);
     }
@@ -207,6 +213,35 @@ public class ConceptConstantsServiceConfigurer {
             LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
             return Optional.empty();
         }
+    }
+
+    private static Optional<SubtreeNode> configureTnmFindingsTreeConstants(ConceptResourceService resourceService, String id) {
+        Optional<IdentifiedConceptResource> ncitOptional = resourceService.forPrefix("NCIT");
+        if (ncitOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure TNM "+ id + " tree constants due to missing NCIT concept resource!");
+            return Optional.empty();
+        }
+
+        IdentifiedConceptResource ncit = ncitOptional.get();
+        if (ncit instanceof OntologyConceptResource) {
+            Ontology ncitOnto = ((OntologyConceptResource) ncit).getOntology();
+            return CreateSubtree.createSubtree(ncitOnto.getPrimaryTermId(TermId.of(id)), ncitOnto, Comparator.comparing(SubtreeNode::getLabel));
+        } else {
+            LOGGER.warn("BUG: TNM " + id + " concept resource should implement OntologyConceptResource.");
+            return Optional.empty();
+        }
+    }
+
+    private static Optional<SubtreeNode> configureTnmTumorTreeConstants(ConceptResourceService resourceService) {
+        return configureTnmFindingsTreeConstants(resourceService, "NCIT:C48885");
+    }
+
+    private static Optional<SubtreeNode> configureTnmNodeTreeConstants(ConceptResourceService resourceService) {
+        return configureTnmFindingsTreeConstants(resourceService, "NCIT:C48884");
+    }
+
+    private static Optional<SubtreeNode> configureTnmMetastasisTreeConstants(ConceptResourceService resourceService) {
+        return configureTnmFindingsTreeConstants(resourceService, "NCIT:C48883");
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

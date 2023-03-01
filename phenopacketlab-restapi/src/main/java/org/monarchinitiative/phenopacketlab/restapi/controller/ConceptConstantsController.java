@@ -62,11 +62,7 @@ public class ConceptConstantsController {
     @GetMapping(value = "treemodifier", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getModifierTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.modifierTreeConstants();
-        if (node.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } else {
-            return ResponseEntity.ok(node.get());
-        }
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @GetMapping(value = "severity", headers = "Accept=application/json")
@@ -82,11 +78,25 @@ public class ConceptConstantsController {
     @GetMapping(value = "treeonset", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getOnsetTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.onsetTreeConstants();
-        if (node.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } else {
-            return ResponseEntity.ok(node.get());
-        }
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-tnm-tumor", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTnmTumorTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.tnmTumorTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-tnm-node", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTnmNodesTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.tnmNodeTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-tnm-metastasis", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTnmMetastasisTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.tnmMetastasisTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")

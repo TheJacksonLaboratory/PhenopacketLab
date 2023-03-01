@@ -30,6 +30,12 @@ public interface ConceptConstantsService {
 
     Optional<SubtreeNode> onsetTreeConstants();
 
+    Optional<SubtreeNode> tnmTumorTreeConstants();
+
+    Optional<SubtreeNode> tnmNodeTreeConstants();
+
+    Optional<SubtreeNode> tnmMetastasisTreeConstants();
+
     List<Concept> structuralTypeConstants();
 
     List<Concept> contigConstants(String genomeAssembly);
