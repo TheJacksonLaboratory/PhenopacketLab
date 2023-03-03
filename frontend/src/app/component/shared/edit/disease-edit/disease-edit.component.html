@@ -68,15 +68,22 @@
         <div class="grid p-fluid">
           <div class="field col-12">
             <label for="stages"><b>Disease stage:</b></label>
-            <ontology-tree-select
+            <p-dropdown
+              ngDefaultControl
               id="stages"
               pTooltip="List of terms representing the disease stage e.g. AJCC stage group"
               showDelay="2000"
-              [selectionMode]="'checkbox'"
-              (selectedNodesChange)="updateDiseaseStages($event)"
-              [selectedNodes]="disease?.diseaseStage"
-              [nodes]="stagesNodes"
-            ></ontology-tree-select>
+              appendTo="body"
+              [options]="stagesNodes"
+              [ngModel]="disease?.diseaseStage"
+              (ngModelChange)="updateDiseaseStages($event)"
+              optionLabel="label"
+              [filter]="true"
+              filterBy="label"
+              [showClear]="true"
+              placeholder="Select disease stage"
+            >
+            </p-dropdown>
           </div>
           <div class="field col-12">
             <label for="laterality"><b>Laterality:</b></label>
