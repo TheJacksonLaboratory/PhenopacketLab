@@ -379,6 +379,113 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C48879",
+      "lbl" : "Generic TNM Finding",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A cancer finding in the TNM system that is not specifically identified as a clinical, pathologic, recurrent (retreatment), or autopsy classification using an accepted prefix in accordance with TNM classification guidelines. Though the 6th Edition of the AJCC Cancer Staging Manual indicates that unspecified TNM staging descriptors may be considered synonymous with the corresponding fully specified clinical category, such omission may lead to ambiguity in meaning, and in practice unqualified descriptors are frequently used with other intended meanings.  The generic TNM concepts in the NCI Thesaurus are intended to explicitly reflect this lack of specification."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Generic TNM Finding"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C48879"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Generic TNM Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1711210"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Generic_TNM_Finding"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C48883",
+      "lbl" : "Generic Distant Metastasis TNM Finding",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Generic Distant Metastasis TNM Finding"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C48883"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Generic Distant Metastasis TNM Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1708230"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Generic_Distant_Metastasis_TNM_Finding"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C48885",
+      "lbl" : "Generic Primary Tumor TNM Finding",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Generic Primary Tumor TNM Finding"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C48885"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Generic Primary Tumor TNM Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1708231"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Generic_Primary_Tumor_TNM_Finding"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C48884",
+      "lbl" : "Generic Regional Lymph Nodes TNM Finding",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Generic Regional Lymph Nodes TNM Finding"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C48884"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Generic Regional Lymph Nodes TNM Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1708232"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Generic_Regional_Lymph_Nodes_TNM_Finding"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C27551",
       "lbl" : "Disorder by Site",
       "type" : "CLASS",
