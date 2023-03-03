@@ -12,7 +12,9 @@ const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
 const bodySites = require('../../assets/data/human-view.json');
 const modifiers = require('../../assets/data/modifiers.json');
 const onsets = require('../../assets/data/onset.json');
-const tnmFindings = require('../../assets/data/tnm.json');
+const tnmTumors = require('../../assets/data/tnm-tumors.json');
+const tnmNodes = require('../../assets/data/tnm-nodes.json');
+const tnmMetastasis = require('../../assets/data/tnm-metastasis.json');
 const mondoDiseases = require('../../assets/data/disease-mondo.json');
 const textMinedExample = require('../../assets/data/text-mined-example.json');
 const sexes = require('../../assets/data/sex.json');
@@ -57,8 +59,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSeverity();
                 case url.endsWith('onset') && method === 'GET':
                     return getOnsets();
-                case url.endsWith('tnm-findings') && method === 'GET':
-                    return getTnmFindings();
+                case url.endsWith('tree-tnm-tumor') && method === 'GET':
+                    return getTnmTumor();
+                case url.endsWith('tree-tnm-node') && method === 'GET':
+                    return getTnmNode();
+                case url.endsWith('tree-tnm-metastasis') && method === 'GET':
+                    return getTnmMetastasis();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
                 case url.endsWith('textminer') && method === 'POST':
@@ -109,8 +115,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getOnsets() {
             return ok(onsets);
         }
-        function getTnmFindings() {
-            return ok(tnmFindings);
+        function getTnmTumor() {
+            return ok(tnmTumors);
+        }
+        function getTnmNode() {
+            return ok(tnmNodes);
+        }
+        function getTnmMetastasis() {
+            return ok(tnmMetastasis);
         }
         function getMondoDiseases() {
             return ok(mondoDiseases);

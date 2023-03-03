@@ -28,14 +28,16 @@ export class Convert {
 }
 
 export class OntologyClass extends Convert {
-
+    // used for tnm finding or node key. Not part of the phenopacket schema
+    key?: string;
     id = '';
     label = '';
 
-    constructor(id?: string, label?: string) {
+    constructor(id?: string, label?: string, key?: string) {
         super();
         this.id = id;
         this.label = label;
+        this.key = key;
     }
 
     static create(obj: any): OntologyClass {
