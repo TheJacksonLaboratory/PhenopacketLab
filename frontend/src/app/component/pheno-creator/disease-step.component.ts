@@ -50,7 +50,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
-            this.router.navigate(['pheno-creator/individual']);
+            this.router.navigate(['creator/individual']);
         } else {
             this.diseases = this.phenopacket.diseases;
             if (this.diseases) {
@@ -181,13 +181,13 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/medical-actions`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/validate`]);
+                this.router.navigate([`creator/${profile.path}/validate`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/medical-actions`]);
                 return;
             }
         }
@@ -198,16 +198,16 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             }
         }
-        this.router.navigate(['pheno-creator/phenotypic-features']);
+        this.router.navigate(['creator/phenotypic-features']);
     }
 }

@@ -44,7 +44,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.phenopacket = this.phenopacketService.phenopacket;
     if (this.phenopacket === undefined) {
       // navigate to first page of creator as phenopacket is not created
-      this.router.navigate(['pheno-creator/individual']);
+      this.router.navigate(['creator/individual']);
     }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
@@ -109,13 +109,13 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // check profile and navigate to the corresponding step
     for (const profile of Profile.profileSelectionOptions) {
       if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-        this.router.navigate([`pheno-creator/${profile.path}/files`]);
+        this.router.navigate([`creator/${profile.path}/files`]);
         return;
       } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-        this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+        this.router.navigate([`creator/${profile.path}/diseases`]);
         return;
       } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-        this.router.navigate([`pheno-creator/${profile.path}/files`]);
+        this.router.navigate([`creator/${profile.path}/files`]);
         return;
       }
       // Possible other profiles to come

@@ -14,10 +14,9 @@ export class SidebarComponent implements OnInit{
 
   ngOnInit() {
     this.items = [
-      {label: 'Dashboard', icon: 'pi pi-fw pi-users', routerLink: '/dashboard'},
-      {label: 'Second Example', icon: 'pi pi-fw pi-plus', routerLink: '/profile-selection'}
+      {label: 'Phenopackets', icon: 'pi pi-fw pi-users', routerLink: '/dashboard'},
+      {label: 'Add Phenopacket', icon: 'pi pi-fw pi-plus', routerLink: '/profile-selection', styleClass: "submenu"}
     ];
-
   }
 
 }

@@ -18,9 +18,15 @@ export class AboutComponent implements OnInit {
         {name: 'Michael Gargano M.S.', title: "Senior Scientific Software Engineer",
             external_link: "https://www.jax.org/people/michael-gargano",
             email: 'michael.gargano@jax.org', src: 'assets/img/michael-gargano.jpeg'},
-        {name: 'Baha El Kassaby M.S. ', title: "Senior Scientific Software Engineer",
+        {name: 'Baha El Kassaby M.S.', title: "Senior Scientific Software Engineer",
             external_link: "https://www.jax.org/people/baha-el-kassaby",
-            email: "Baha.ElKassaby@jax.org", src: 'assets/img/baha-el-kassaby.jpeg'}
+            email: "Baha.ElKassaby@jax.org", src: 'assets/img/baha-el-kassaby.jpeg'},
+        {name: 'Beth Sundberg', title: "Scientific QA Software Engineer",
+              external_link: "https://www.jax.org/people/beth-sundberg",
+              email: "beth.sundberg@jax.org", src: 'assets/img/beth-sundberg.jpeg'},
+        {name: 'Camille Liedtka M.S.', title: 'Associate Research Project Manager',
+              external_link: "https://www.jax.org/people/camille-liedtka",
+              email: "camille.liedtka@jax.org", src: 'assets/img/camille-liedtka.jpeg'}
       ];
   constructor() {
   }

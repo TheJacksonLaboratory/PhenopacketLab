@@ -59,7 +59,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
             this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {
                 if (this.profileSelection === profile.value) {
-                    this.router.navigate([`pheno-creator/${profile.path}/phenotypic-features`]);
+                    this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
                     return;
                 }
             }

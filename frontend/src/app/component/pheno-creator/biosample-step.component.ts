@@ -39,10 +39,10 @@ export class BiosampleStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             }
             // Possible other profiles to come
@@ -52,10 +52,10 @@ export class BiosampleStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
+                this.router.navigate([`creator/${profile.path}/measurements`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
+                this.router.navigate([`creator/${profile.path}/measurements`]);
                 return;
             }
             // Possible other profiles to come
