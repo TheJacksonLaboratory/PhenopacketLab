@@ -22,6 +22,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final Optional<SubtreeNode> tnmTumorTreeConstants;
     private final Optional<SubtreeNode> tnmNodeTreeConstants;
     private final Optional<SubtreeNode> tnmMetastasisTreeConstants;
+    private final Optional<SubtreeNode> diseaseStagesTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -37,6 +38,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 Optional<SubtreeNode> tnmTumorTreeConstants,
                                 Optional<SubtreeNode> tnmNodeTreeConstants,
                                 Optional<SubtreeNode> tnmMetastasisTreeConstants,
+                                Optional<SubtreeNode> diseaseStagesTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -51,6 +53,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.tnmTumorTreeConstants = tnmTumorTreeConstants;
         this.tnmNodeTreeConstants = tnmNodeTreeConstants;
         this.tnmMetastasisTreeConstants = tnmMetastasisTreeConstants;
+        this.diseaseStagesTreeConstants = diseaseStagesTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
         this.contigConstants = contigConstants;
     }
@@ -103,6 +106,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     @Override
     public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return tnmMetastasisTreeConstants; }
+
+    @Override
+    public Optional<SubtreeNode> diseaseStagesTreeConstants() { return diseaseStagesTreeConstants; }
 
     @Override
     public Optional<SubtreeNode> onsetTreeConstants() {

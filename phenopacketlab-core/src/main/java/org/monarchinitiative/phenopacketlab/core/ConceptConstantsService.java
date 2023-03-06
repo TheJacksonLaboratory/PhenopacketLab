@@ -40,4 +40,5 @@ public interface ConceptConstantsService {
 
     List<Concept> contigConstants(String genomeAssembly);
 
+    Optional<SubtreeNode> diseaseStagesTreeConstants();
 }
