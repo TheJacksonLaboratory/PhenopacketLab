@@ -19,6 +19,7 @@ export class DiseaseSearchService extends BaseSearchService {
     onset = new Subject<TimeElement>();
     resolution = new Subject<TimeElement>();
     tnmFindings = new Subject<OntologyClass[]>();
+    diseaseStages = new Subject<OntologyClass[]>();
 
     constructor(private http: HttpClient) {
         super(http);
@@ -88,5 +89,12 @@ export class DiseaseSearchService extends BaseSearchService {
     }
     setTnmFindings(findings: OntologyClass[]) {
         this.tnmFindings.next(findings);
+    }
+
+    getStages(): Observable<OntologyClass[]> {
+        return this.diseaseStages.asObservable();
+    }
+    setStages(stages: OntologyClass[]) {
+        this.diseaseStages.next(stages);
     }
 }

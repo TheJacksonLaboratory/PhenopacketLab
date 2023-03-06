@@ -35,7 +35,10 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
 
     // disease Stage
     stages: OntologyClass[];
-    stagesNodes: OntologyTreeNode[];
+    diseaseStagesNodes: OntologyTreeNode[];
+    stageSelected: OntologyTreeNode;
+    diseaseStagesSubscription: Subscription;
+    diseaseStageSelectedSubscription: Subscription;
 
     // onset
     onset: any;
@@ -56,7 +59,8 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
         });
         // stages
-        this.stagesNodes = this.getStages();
+        this.stages = this.getStages();
+
         // laterality
         this.lateralitySubscription = this.phenopacketService.getLaterality().subscribe(lateralities => {
             lateralities.forEach(laterality => {
@@ -82,29 +86,31 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             this.tumorSelected = undefined;
             this.metastasisSelected = undefined;
             // update when a disease is selected
-            findings.forEach(finding => {
-                const treeNode = new OntologyTreeNode();
-                treeNode.key = finding.id;
-                treeNode.label = finding.label;
-                if (finding.key === 'tumor') {
-                    this.tumorSelected = treeNode;
-                }
-                if (finding.key === 'node') {
-                    this.nodeSelected = treeNode;
-                }
-                if (finding.key === 'metastasis') {
-                    this.metastasisSelected = treeNode;
-                }
-            });
+            this.initializeTnmFindingSelected(findings);
         });
+        this.initializeTnmFindingSelected(this.disease?.clinicalTnmFinding);
+
+        // Disease Stages
+        this.diseaseStagesSubscription = this.phenopacketService.getDiseaseStages().subscribe(nodes => {
+            this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
+        });
+        this.diseaseStageSelectedSubscription = this.diseaseService.getStages().subscribe(stages => {
+            // reset
+            this.stageSelected = undefined;
+            // update when a disease is selected
+            this.initializeDiseaseStageSelected(stages[0]);
+        });
+        this.initializeDiseaseStageSelected(this.disease?.diseaseStage[0]);
+
 
     }
+
     ngOnDestroy(): void {
         if (this.onsetsSubscription) {
             this.onsetsSubscription.unsubscribe();
         }
         if (this.tumorSubscription) {
-            this.tumorSubscription .unsubscribe();
+            this.tumorSubscription.unsubscribe();
         }
         if (this.nodeSubscription) {
             this.nodeSubscription.unsubscribe();
@@ -118,6 +124,44 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         if (this.lateralitySubscription) {
             this.lateralitySubscription.unsubscribe();
         }
+        if (this.diseaseStagesSubscription) {
+            this.diseaseStagesSubscription.unsubscribe();
+        }
+        if (this.diseaseStageSelectedSubscription) {
+            this.diseaseStageSelectedSubscription.unsubscribe();
+        }
+    }
+
+    initializeTnmFindingSelected(findings: OntologyClass[]) {
+        // update when a disease is selected
+        if (findings === undefined) {
+            return;
+        }
+        findings.forEach(finding => {
+            const treeNode = new OntologyTreeNode();
+            treeNode.key = finding.id;
+            treeNode.label = finding.label;
+            if (finding.key === 'tumor') {
+                this.tumorSelected = treeNode;
+            }
+            if (finding.key === 'node') {
+                this.nodeSelected = treeNode;
+            }
+            if (finding.key === 'metastasis') {
+                this.metastasisSelected = treeNode;
+            }
+        });
+    }
+
+    initializeDiseaseStageSelected(stage: OntologyClass) {
+        // update when a disease is selected
+        if (stage === undefined) {
+            return;
+        }
+        const treeNode = new OntologyTreeNode();
+        treeNode.key = stage.id;
+        treeNode.label = stage.label;
+        this.stageSelected = treeNode;
     }
 
     getDiseaseOnsetId() {
@@ -128,11 +172,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
 
     getStages() {
-        const nodes = [];
-        for (const stage of Stages.VALUES) {
-            nodes.push({ label: stage.label, key: stage.id, leaf: true, parent: undefined });
-        }
-        return nodes;
+        return Stages.VALUES;
     }
 
     updateOnset(timeElement: any) {
@@ -153,28 +193,28 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             this.diseaseChange.emit(this.disease);
         }
     }
-    updateDiseaseStages(diseaseStages) {
+    updateDiseaseStage(event) {
         if (this.disease) {
-            this.disease.diseaseStage = diseaseStages;
+            // reset previous selection
+            this.disease.diseaseStage = [];
+            this.disease.diseaseStage.push(new OntologyClass(event.node.key, event.node.label));
             this.diseaseChange.emit(this.disease);
         }
     }
     updateLaterality(laterality) {
         if (this.disease) {
+            console.log(laterality);
             this.disease.laterality = laterality;
             this.diseaseChange.emit(this.disease);
         }
     }
-    // TNM findings
-    selectFinding() {
 
-    }
     /**
      * Update TNM finding list
      * @param event
      * @param tnm can be 'tumor', 'node' or 'metastasis'
      */
-    updateTumorStages(event, tnm: string) {
+    updateTnmStages(event, tnm: string) {
         if (tnm !== 'tumor' && tnm !== 'node' && tnm !== 'metastasis') {
             throw new Error('Select tumor, node or metastasis');
         }

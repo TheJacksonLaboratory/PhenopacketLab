@@ -21,6 +21,7 @@ const sexes = require('../../assets/data/sex.json');
 const genders = require('../../assets/data/gender.json');
 const laterality = require('../../assets/data/laterality.json');
 const severity = require('../../assets/data/severity.json');
+const stages = require('../../assets/data/stages.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -65,6 +66,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getTnmNode();
                 case url.endsWith('tree-tnm-metastasis') && method === 'GET':
                     return getTnmMetastasis();
+                case url.endsWith('tree-disease-stages') && method === 'GET':
+                    return getDiseaseStages();
                 case url.endsWith('mondo-diseases') && method === 'GET':
                     return getMondoDiseases();
                 case url.endsWith('textminer') && method === 'POST':
@@ -123,6 +126,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getTnmMetastasis() {
             return ok(tnmMetastasis);
+        }
+        function getDiseaseStages() {
+            return ok(stages);
         }
         function getMondoDiseases() {
             return ok(mondoDiseases);

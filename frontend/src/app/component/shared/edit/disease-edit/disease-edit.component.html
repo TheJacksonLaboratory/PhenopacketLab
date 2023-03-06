@@ -68,22 +68,18 @@
         <div class="grid p-fluid">
           <div class="field col-12">
             <label for="stages"><b>Disease stage:</b></label>
-            <p-dropdown
+            <p-treeSelect
               ngDefaultControl
               id="stages"
-              pTooltip="List of terms representing the disease stage e.g. AJCC stage group"
-              showDelay="2000"
               appendTo="body"
-              [options]="stagesNodes"
-              [ngModel]="disease?.diseaseStage"
-              (ngModelChange)="updateDiseaseStages($event)"
-              optionLabel="label"
+              [(ngModel)]="stageSelected"
+              [options]="diseaseStagesNodes"
+              (onNodeSelect)="updateDiseaseStage($event)"
+              [metaKeySelection]="false"
+              placeholder="Select Disease Stage"
               [filter]="true"
-              filterBy="label"
-              [showClear]="true"
-              placeholder="Select disease stage"
-            >
-            </p-dropdown>
+              [filterInputAutoFocus]="true"
+            ></p-treeSelect>
           </div>
           <div class="field col-12">
             <label for="laterality"><b>Laterality:</b></label>
@@ -111,7 +107,7 @@
               appendTo="body"
               [(ngModel)]="tumorSelected"
               [options]="tumorNodes"
-              (onNodeSelect)="updateTumorStages($event, 'tumor')"
+              (onNodeSelect)="updateTnmStages($event, 'tumor')"
               [metaKeySelection]="false"
               placeholder="Select tumor TNM Finding"
               [filter]="true"
@@ -123,7 +119,7 @@
               appendTo="body"
               [(ngModel)]="nodeSelected"
               [options]="nodeNodes"
-              (onNodeSelect)="updateTumorStages($event, 'node')"
+              (onNodeSelect)="updateTnmStages($event, 'node')"
               [metaKeySelection]="false"
               placeholder="Select node TNM Finding"
               [filter]="true"
@@ -135,7 +131,7 @@
               appendTo="body"
               [(ngModel)]="metastasisSelected"
               [options]="metastasisNodes"
-              (onNodeSelect)="updateTumorStages($event, 'metastasis')"
+              (onNodeSelect)="updateTnmStages($event, 'metastasis')"
               [metaKeySelection]="false"
               placeholder="Select metastasis TNM Finding"
               [filter]="true"
