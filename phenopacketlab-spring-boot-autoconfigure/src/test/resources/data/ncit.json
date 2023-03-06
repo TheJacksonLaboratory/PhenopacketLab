@@ -486,6 +486,99 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C28108",
+      "lbl" : "Disease Stage Qualifier",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An adjectival term that can specify or describe a disease stage."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C166373" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease Stage Qualifier"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease Stage Qualifier"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "stage of disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "stage_of_disease"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186460"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186461"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186462"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186463"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186464"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186465"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186466"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186467"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186468"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186470"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186471"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C186472"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C48660"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A30",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C67119"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C28108"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Classification"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Disease Stage Qualifier"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease Stage Qualifier"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1511987"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Disease_Stage_Modifier"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C27551",
       "lbl" : "Disorder by Site",
       "type" : "CLASS",
