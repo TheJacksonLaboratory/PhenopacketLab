@@ -84,15 +84,10 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             feature.severity = new OntologyClass('', '');
             feature.modifiers = [new OntologyClass('', '')];
             this.phenotypicFeatures.push(feature);
-        } else if (phenotypicFeature && this.showAddButton) {
-            this.phenotypicFeatures.push(phenotypicFeature);
         }
-        if (this.showAddButton) {
-            this.phenotypicDataSource.data = this.phenotypicFeatures;
-            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
-        } else {
-            this.onPhenotypicFeaturesChanged.emit([phenotypicFeature]);
-        }
+        this.phenotypicFeatures.push(phenotypicFeature);
+        this.phenotypicDataSource.data = this.phenotypicFeatures;
+        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
 
         // TODO push changes to api
     }
