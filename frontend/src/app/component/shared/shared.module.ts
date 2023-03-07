@@ -26,7 +26,7 @@ import { OntologyTimeComponent } from './time-element/ontology-time/ontology-tim
     FormsModule,
     ReactiveFormsModule,
     PrimeModule,
-    MaterialModule,
+    MaterialModule
   ],
   declarations: [
     MessageDialogComponent,

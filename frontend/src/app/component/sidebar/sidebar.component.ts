@@ -1,19 +1,22 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
 
-  // tracks whether the sidebar should be open or closed
-  @Input() open?: boolean;
-
-  // current url
-  @Input() route?: string;
+  items: MenuItem[];
 
   constructor() {
+  }
+
+  ngOnInit() {
+    this.items = [
+      {label: 'Phenopackets', icon: 'pi pi-fw pi-users', routerLink: '/dashboard'},
+      {label: 'Add Phenopacket', icon: 'pi pi-fw pi-plus', routerLink: '/profile-selection', styleClass: "submenu"}
+    ];
   }
 
 }

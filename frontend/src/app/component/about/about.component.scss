@@ -1,29 +1,60 @@
-a {
-  color: #9c27b0;
-  background-color: transparent;
-  text-decoration: none;
-}
+.about {
+  .wrapper {
+    .contact-card {
+      margin: 1rem;
+      & .contact-img {
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+        border-radius: 999px;
+        overflow: hidden;
+        margin: 0 auto;
 
-ul {
-  list-style: none;
-}
+        & img {
+          width: 100%;
+          height: 100%;
+          -o-object-fit: cover;
+          object-fit: cover;
+        }
+      }
 
-.h3, h3 {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 300;
-  font-size: 1.5625rem;
-  line-height: 1.4em;
-}
+      & .contact-bio {
+        text-align: center;
 
-.mat-card {
-  margin: 10px;
-}
+        .pi {
+          cursor: pointer;
+          font-size: 1.2rem;
 
-.learn-more-button {
-  display: block;
-  border: none;
-  height: 50px;
-  color: #fff;
-  background: #3458bf;
+          &:hover {
+            opacity: .5;
+          }
+        }
+        .contact-name {
+          margin: 0.25rem 0 0 0;
+        }
+        .contact-title {
+          margin: 0 0 .25rem 0;
+          text-transform: uppercase;
+          color: gray;
+        }
+      }
+    }
+    .publications {
+      ul {
+        list-style-type:none;
+      }
+    }
+    .action-wrapper {
+      a {
+        padding: 0.45625rem 1rem !important;
+        &:not(:first-child){
+          margin: 0 0 0 .25rem;
+        }
+
+        &:hover {
+          opacity: .5;
+        }
+      }
+    }
+  }
 }
-  

@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import 'rxjs/add/operator/filter';
-import { Router } from '@angular/router';
-import { SidebarComponent } from './component/sidebar/sidebar.component';
-import { HeaderComponent } from './component/header/header.component';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
+import 'rxjs/add/operator/filter';
+import { HeaderComponent } from './component/header/header.component';
+import { SidebarComponent } from './component/sidebar/sidebar.component';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 
@@ -23,10 +24,17 @@ export class AppComponent implements OnInit {
   // status of whether the sidebar is open or closed
   sideNavOpen = false;
 
-  constructor(public location: Location, public http: HttpClient, public router: Router) { }
+  activeSidenav = true;
+
+  constructor(public location: Location, public http: HttpClient, public router: Router) {}
 
   ngOnInit() {
-    this.sideNavOpen = this.header?.sideNavOpen || true;
+    const hideNavUrls = ["/about", "/help"];
+    this.router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        this.activeSidenav = !(hideNavUrls.includes(event.url));
+      }
+    });
   }
 
 }

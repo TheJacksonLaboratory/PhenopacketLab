@@ -24,7 +24,7 @@ export class ProfileSelectionComponent implements OnInit {
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelected === profile.value) {
                 this.phenopacketService.setProfileSelection(profile.value);
-                this.router.navigate([`pheno-creator/${profile.path}`]);
+                this.router.navigate([`creator/${profile.path}`]);
             }
         }
     }

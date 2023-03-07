@@ -36,7 +36,6 @@
     "ajv": "^6.12.0",
     "angular-split": "^14.1.0",
     "animate.css": "~3.7.2",
-    "bootstrap": "^4.3.1",
     "bootstrap-icons": "^1.9.1",
     "bootstrap-material-design": "4.1.2",
     "chart.js": "^2.7.2",

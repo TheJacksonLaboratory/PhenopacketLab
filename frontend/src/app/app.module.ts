@@ -12,6 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { GridModule } from '@angular/flex-layout/grid';
 
 import { ROUTING } from './app.routing';
+import { HelpComponent } from "./component/help/help.component";
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { fakeBackendProvider } from './helpers/fake-backend';
@@ -53,6 +54,7 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
         SidebarComponent,
         FooterComponent,
         AboutComponent,
+        HelpComponent,
         PhenopacketListComponent,
         CohortListComponent,
         FamilyListComponent

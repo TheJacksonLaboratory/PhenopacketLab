@@ -9,6 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
+import { SidebarModule } from "primeng/sidebar";
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ChipsModule } from 'primeng/chips';
 import { TreeModule } from 'primeng/tree';
@@ -22,6 +23,8 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from "primeng/toast";
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
@@ -48,6 +51,9 @@ import { TooltipModule } from 'primeng/tooltip';
     FileUploadModule,
     ToastModule,
     ConfirmDialogModule,
+    SidebarModule,
+    MenubarModule,
+    MenuModule,
     TooltipModule
   ],
   exports: [
@@ -71,6 +77,9 @@ import { TooltipModule } from 'primeng/tooltip';
     FileUploadModule,
     ToastModule,
     ConfirmDialogModule,
+    SidebarModule,
+    MenubarModule,
+    MenuModule,
     TooltipModule
   ],
   providers: [MessageService, ConfirmationService]
