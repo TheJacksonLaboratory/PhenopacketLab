@@ -1,22 +1,22 @@
 <div class="grid p-fluid">
   <div class="field col-12">
     <label for="individualId"><b>Individual ID</b></label>
-        <input
-          id="individualId"
-          #id="ngModel"
-          type="text"
-          required
-          pInputText
-          [(ngModel)]="subject.id"
-          [ngClass]="{
-            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
-          }"
-        />
-        <small
-          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
-          class="p-error"
-          >Individual ID is required.</small
-        >
+    <input
+      id="individualId"
+      #id="ngModel"
+      type="text"
+      required
+      pInputText
+      [(ngModel)]="subject.id"
+      [ngClass]="{
+        'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+      }"
+    />
+    <small
+      *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+      class="p-error"
+      >Individual ID is required.</small
+    >
   </div>
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
@@ -130,7 +130,12 @@
       filterBy="name"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
-    ></p-dropdown>
-
+    >
+      <ng-template let-cause pTemplate="item">
+        <div [pTooltip]="cause.id" tooltipPosition="right" escape="false">
+          {{ cause.name }}
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
 </div>
