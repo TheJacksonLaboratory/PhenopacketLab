@@ -178,10 +178,10 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/medical-actions`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/validate`]);
+                this.router.navigate([`creator/${profile.path}/validate`]);
                 return;
             }
             // Possible other profiles to come
@@ -191,10 +191,10 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                this.router.navigate([`creator/${profile.path}/diseases`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                this.router.navigate([`creator/${profile.path}/diseases`]);
                 return;
             }
             // Possible other profiles to come

@@ -28,7 +28,7 @@ import { InterpretationEditComponent } from './edit/interpretation-edit/interpre
     FormsModule,
     ReactiveFormsModule,
     PrimeModule,
-    MaterialModule,
+    MaterialModule
   ],
   declarations: [
     MessageDialogComponent,

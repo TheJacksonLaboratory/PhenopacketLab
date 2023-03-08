@@ -1,35 +1,37 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { Contact } from '../../models/contact';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
 
-  selectedTab: any;
-
-  constructor(private route: ActivatedRoute) { }
+  contacts: Contact[] =
+      [
+        {name: 'Peter Robinson M.D., MSc.', title: "Professor of Computational Biology",
+            external_link: "https://www.jax.org/research-and-faculty/faculty/peter-robinson",
+            email: 'peter.robinson@jax.org', src: 'assets/img/peter-robinson.jpeg'},
+        {name: 'Daniel Danis Ph.D.', title: "Associate Computational Scientist",
+            external_link: "https://www.jax.org/people/daniel-danis",
+            email: 'daniel.danis@jax.org', src: 'assets/img/daniel-danis.jpeg'},
+        {name: 'Michael Gargano M.S.', title: "Senior Scientific Software Engineer",
+            external_link: "https://www.jax.org/people/michael-gargano",
+            email: 'michael.gargano@jax.org', src: 'assets/img/michael-gargano.jpeg'},
+        {name: 'Baha El Kassaby M.S.', title: "Senior Scientific Software Engineer",
+            external_link: "https://www.jax.org/people/baha-el-kassaby",
+            email: "Baha.ElKassaby@jax.org", src: 'assets/img/baha-el-kassaby.jpeg'},
+        {name: 'Beth Sundberg', title: "Scientific QA Software Engineer",
+              external_link: "https://www.jax.org/people/beth-sundberg",
+              email: "beth.sundberg@jax.org", src: 'assets/img/beth-sundberg.jpeg'},
+        {name: 'Camille Liedtka M.S.', title: 'Associate Research Project Manager',
+              external_link: "https://www.jax.org/people/camille-liedtka",
+              email: "camille.liedtka@jax.org", src: 'assets/img/camille-liedtka.jpeg'}
+      ];
+  constructor() {
+  }
 
   ngOnInit() {
-
-    this.route.paramMap.subscribe(paramsIn => {
-
-      const selectedTabIn = paramsIn.get('selectedTab');
-      if (selectedTabIn) {
-        this.selectedTab = selectedTabIn;
-      }
-    });
   }
 
 }

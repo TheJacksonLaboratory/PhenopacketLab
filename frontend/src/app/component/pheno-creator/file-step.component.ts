@@ -38,7 +38,7 @@ export class FileStepComponent implements OnInit, OnDestroy {
         this.phenopacketService.phenopacket.files = this.files;
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/validate`]);
+                this.router.navigate([`creator/${profile.path}/validate`]);
                 return;
             }
             // Possible other profiles to come
@@ -47,7 +47,7 @@ export class FileStepComponent implements OnInit, OnDestroy {
     prevPage() {
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/medical-actions`]);
                 return;
             }
             // Possible other profiles to come

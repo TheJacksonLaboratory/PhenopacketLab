@@ -51,7 +51,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
-            this.router.navigate(['pheno-creator/individual']);
+            this.router.navigate(['creator/individual']);
         } else {
             this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
             if (this.phenotypicFeatures) {
@@ -192,17 +192,17 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     nextPage() {
         this.phenopacketService.setPhenopacket(this.phenopacket);
         this.phenopacketService.phenopacket = this.phenopacket;
-        // this.router.navigate(['pheno-creator/measurements']);
+        // this.router.navigate(['creator/measurements']);
         // TODO temp while measuremtn is not done
 
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
 
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`pheno-creator/${profile.path}/measurements`]);
+                this.router.navigate([`creator/${profile.path}/measurements`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/diseases`]);
+                this.router.navigate([`creator/${profile.path}/diseases`]);
                 return;
             }
         }
@@ -216,7 +216,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === profile.value) {
-                this.router.navigate([`pheno-creator/${profile.path}/individual`]);
+                this.router.navigate([`creator/${profile.path}/individual`]);
                 return;
             }
         }
