@@ -50,10 +50,10 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateConstants,
                 lateralityConstants,
                 modifierConstants,
-                modifierTreeConstants,
+                modifierTreeConstants.orElse(null),
                 severityConstants,
                 onsetConstants,
-                onsetTreeConstants,
+                onsetTreeConstants.orElse(null),
                 structuralTypeConstants,
                 contigConstants);
     }

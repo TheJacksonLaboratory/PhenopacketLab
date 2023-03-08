@@ -15,10 +15,10 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> allelicStateConstants;
     private final List<IdentifiedConcept> lateralityConstants;
     private final List<IdentifiedConcept> modifierConstants;
-    private final Optional<SubtreeNode> modifierTreeConstants;
+    private final SubtreeNode modifierTreeConstants;
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
-    private final Optional<SubtreeNode> onsetTreeConstants;
+    private final SubtreeNode onsetTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -27,10 +27,10 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> allelicStateConstants,
                                 List<IdentifiedConcept> lateralityConstants,
                                 List<IdentifiedConcept> modifierConstants,
-                                Optional<SubtreeNode> modifierTreeConstants,
+                                SubtreeNode modifierTreeConstants,
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
-                                Optional<SubtreeNode> onsetTreeConstants,
+                                SubtreeNode onsetTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -71,7 +71,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         return modifierConstants;
     }
     public Optional<SubtreeNode> modifierTreeConstants() {
-        return modifierTreeConstants;
+        return Optional.ofNullable(modifierTreeConstants);
     }
 
     @Override
@@ -86,7 +86,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     @Override
     public Optional<SubtreeNode> onsetTreeConstants() {
-        return onsetTreeConstants;
+        return Optional.ofNullable(onsetTreeConstants);
     }
 
     @Override
