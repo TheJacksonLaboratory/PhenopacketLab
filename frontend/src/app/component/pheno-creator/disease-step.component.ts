@@ -184,7 +184,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
                 this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`pheno-creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             }
         }
