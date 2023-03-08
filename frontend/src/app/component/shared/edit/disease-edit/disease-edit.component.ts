@@ -203,7 +203,6 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
     updateLaterality(laterality) {
         if (this.disease) {
-            console.log(laterality);
             this.disease.laterality = laterality;
             this.diseaseChange.emit(this.disease);
         }
