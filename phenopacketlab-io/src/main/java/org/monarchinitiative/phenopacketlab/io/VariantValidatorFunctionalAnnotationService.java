@@ -26,9 +26,11 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
     private static final Logger LOGGER = LoggerFactory.getLogger(VariantValidatorFunctionalAnnotationService.class);
 
     private final HttpClient client;
+    private final ObjectMapper objectMapper;
 
     public VariantValidatorFunctionalAnnotationService() {
         client = HttpClient.newHttpClient();
+        objectMapper = new ObjectMapper();
     }
 
     @Override
@@ -67,9 +69,7 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
 
             String result1 = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
 
-            System.out.println(result1);
-            JsonNode tree = new ObjectMapper().readTree(result1);
-            System.out.println(tree);
+            JsonNode tree = objectMapper.readTree(result1);
             // Put map into variant object
             Iterator<String> names = tree.fieldNames();
 
@@ -121,13 +121,6 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
                             variant.setPHgvs(phgvs);
                         }
                     }
-                    JsonNode refSeqRecNode = node.get("reference_sequence_records");
-                    if (refSeqRecNode.has("transcript")) {
-                        String varTranscript = refSeqRecNode.get("transcript").asText();
-                        if (varTranscript.startsWith("https://www.ncbi.nlm.nih.gov/nuccore/")) {
-//                                variant.setTranscript(varTranscript.substring(37, varTranscript.length()));
-                        }
-                    }
 
                     results.add(variant);
                     //just do the first one if many transcript (versions/ or less pathogenic ones)
@@ -135,8 +128,8 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
                 }
             }
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage(), e);
+            return List.of();
         }
         return results;
     }
