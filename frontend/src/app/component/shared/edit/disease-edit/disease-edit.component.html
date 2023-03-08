@@ -109,7 +109,7 @@
               [options]="tumorNodes"
               (onNodeSelect)="updateTnmStages($event, 'tumor')"
               [metaKeySelection]="false"
-              placeholder="Select tumor TNM Finding"
+              placeholder="Select tumor stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
             ></p-treeSelect>
@@ -121,7 +121,7 @@
               [options]="nodeNodes"
               (onNodeSelect)="updateTnmStages($event, 'node')"
               [metaKeySelection]="false"
-              placeholder="Select node TNM Finding"
+              placeholder="Select node stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
             ></p-treeSelect>
@@ -133,7 +133,7 @@
               [options]="metastasisNodes"
               (onNodeSelect)="updateTnmStages($event, 'metastasis')"
               [metaKeySelection]="false"
-              placeholder="Select metastasis TNM Finding"
+              placeholder="Select metastasis stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
             ></p-treeSelect>
