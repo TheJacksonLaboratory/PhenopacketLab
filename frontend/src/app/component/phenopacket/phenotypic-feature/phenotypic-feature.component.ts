@@ -84,15 +84,10 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             feature.severity = new OntologyClass('', '');
             feature.modifiers = [new OntologyClass('', '')];
             this.phenotypicFeatures.push(feature);
-        } else if (phenotypicFeature && this.showAddButton) {
-            this.phenotypicFeatures.push(phenotypicFeature);
         }
-        if (this.showAddButton) {
-            this.phenotypicDataSource.data = this.phenotypicFeatures;
-            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
-        } else {
-            this.onPhenotypicFeaturesChanged.emit([phenotypicFeature]);
-        }
+        this.phenotypicFeatures.push(phenotypicFeature);
+        this.phenotypicDataSource.data = this.phenotypicFeatures;
+        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
 
         // TODO push changes to api
     }
@@ -144,12 +139,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             const phenotypicFeature = new PhenotypicFeature();
             phenotypicFeature.type = new OntologyClass(data.id, data.name);
             phenotypicFeature.description = data.description;
-            phenotypicFeature.onset = new TimeElement('');
-            phenotypicFeature.evidences = [new Evidence(new OntologyClass('', ''))];
             phenotypicFeature.excluded = false;
-            phenotypicFeature.resolution = new TimeElement('');
-            phenotypicFeature.severity = new OntologyClass('', '');
-            phenotypicFeature.modifiers = [new OntologyClass('', '')];
             this.addPhenotypicFeature(phenotypicFeature);
             this.spinnerDialogRef.close();
         },
@@ -173,11 +163,21 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
 
     getModifiers(phenotypicFeature: PhenotypicFeature) {
         if (phenotypicFeature.modifiers) {
-            let modifierStr = '';
-            for (const modifier of phenotypicFeature.modifiers) {
-                modifierStr += `${modifier.label}, `;
-            }
-            return modifierStr;
+            const result = [];
+            phenotypicFeature.modifiers.forEach(modifier => {
+                result.push(modifier.id);
+            });
+            return result.join(',');
+        }
+        return '';
+    }
+    getEvidences(phenotypicFeature: PhenotypicFeature) {
+        if (phenotypicFeature.evidences) {
+            const result = [];
+            phenotypicFeature.evidences.forEach(evidence => {
+                result.push(evidence.evidenceCode.id);
+            });
+            return result.join(',');
         }
         return '';
     }

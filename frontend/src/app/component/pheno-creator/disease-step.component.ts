@@ -171,6 +171,8 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.selectedDisease = event.data;
         this.searchService.setDiseaseOnset(this.selectedDisease.onset);
         this.searchService.setDiseaseResolution(this.selectedDisease.resolution);
+        this.searchService.setTnmFindings(this.selectedDisease.clinicalTnmFinding);
+        this.searchService.setStages(this.selectedDisease.diseaseStage);
     }
 
     nextPage() {

@@ -32,7 +32,7 @@
             <!-- Onset Column -->
             <ng-container matColumnDef="onset">
                 <th mat-header-cell *matHeaderCellDef> Onset </th>
-                <td mat-cell *matCellDef="let element"> {{element.onset}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.onset?.toString()}} </td>
             </ng-container>
 
             <!-- Resolution Column -->
@@ -56,7 +56,7 @@
 
             <ng-container matColumnDef="evidence">
                 <th mat-header-cell *matHeaderCellDef> Evidence </th>
-                <td mat-cell *matCellDef="let element"> {{element.evidence?.evidenceCode?.label}} </td>
+                <td mat-cell *matCellDef="let element"> {{getEvidences(element)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="remove">

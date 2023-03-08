@@ -1,0 +1,28 @@
+{
+  "key": "NCIT:C48883",
+  "label": "Generic Distant Metastasis TNM Finding",
+  "children": [
+    {
+      "key": "NCIT:C48699",
+      "label": "M0 Stage Finding",
+      "children": [
+        {
+          "key": "NCIT:C95956",
+          "label": "cM0 (i+) Stage Finding",
+          "children": []
+        }
+      ]
+    },
+    {
+      "key": "NCIT:C48700",
+      "label": "M1 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48701", "label": "M1a Stage Finding", "children": [] },
+        { "key": "NCIT:C48702", "label": "M1b Stage Finding", "children": [] },
+        { "key": "NCIT:C48703", "label": "M1c Stage Finding", "children": [] },
+        { "key": "NCIT:C188301", "label": "M1d Stage Finding", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C48704", "label": "MX Stage Finding", "children": [] }
+  ]
+}

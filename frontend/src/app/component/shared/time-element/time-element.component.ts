@@ -141,8 +141,6 @@ export class TimeElementComponent implements OnInit, OnDestroy {
 
   ageTypeChange(event) {
     const type = event.value;
-    console.log('ageTypeChanged');
-    console.log(this.timeElement);
     if (this.timeElement === undefined) {
       this.timeElement = new TimeElement();
     }
@@ -154,6 +152,8 @@ export class TimeElementComponent implements OnInit, OnDestroy {
       this.updateTimeElement(new GestationalAge());
     } else if (type === TimeElementType.ONTOLOGY_CLASS) {
       this.updateTimeElement(new OntologyClass());
+    } else if (type === null) {
+      this.updateTimeElement(null);
     }
   }
   updateTimeElement(timeElement: any) {
@@ -180,6 +180,11 @@ export class TimeElementComponent implements OnInit, OnDestroy {
       this.timeElement.ageRange = undefined;
       this.timeElement.gestationalAge = undefined;
       this.timeElement.ontologyClass = timeElement;
+    } else {
+      this.timeElement.age = undefined;
+      this.timeElement.ageRange = undefined;
+      this.timeElement.gestationalAge = undefined;
+      this.timeElement.ontologyClass = undefined;
     }
     this.timeElementEvent.emit(this.timeElement);
   }

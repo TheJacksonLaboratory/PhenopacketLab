@@ -1,0 +1,1387 @@
+{
+  "key": "NCIT:C28108",
+  "label": "Disease Stage Qualifier",
+  "children": [
+    {
+      "key": "NCIT:C134969",
+      "label": "AIDS-Related Kaposi Sarcoma Stage",
+      "children": [
+        {
+          "key": "NCIT:C134978",
+          "label": "AIDS-Related Kaposi Sarcoma I (Immune System) Status",
+          "children": [
+            {
+              "key": "NCIT:C134979",
+              "label": "AIDS-Related Kaposi Sarcoma I0 (Good Risk)",
+              "children": []
+            },
+            {
+              "key": "NCIT:C134980",
+              "label": "AIDS-Related Kaposi Sarcoma I1 (Poor Risk)",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C134984",
+          "label": "AIDS-Related Kaposi Sarcoma Overall Risk Group",
+          "children": [
+            {
+              "key": "NCIT:C134985",
+              "label": "AIDS-Related Kaposi Sarcoma Good Risk",
+              "children": []
+            },
+            {
+              "key": "NCIT:C134986",
+              "label": "AIDS-Related Kaposi Sarcoma Poor Risk",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C134981",
+          "label": "AIDS-Related Kaposi Sarcoma S (Systemic Illness) Status",
+          "children": [
+            {
+              "key": "NCIT:C134982",
+              "label": "AIDS-Related Kaposi Sarcoma S0 (Good Risk)",
+              "children": []
+            },
+            {
+              "key": "NCIT:C134983",
+              "label": "AIDS-Related Kaposi Sarcoma S1 (Poor Risk)",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C134970",
+          "label": "AIDS-Related Kaposi Sarcoma T (Tumor) Status",
+          "children": [
+            {
+              "key": "NCIT:C134971",
+              "label": "AIDS-Related Kaposi Sarcoma T0 (Good Risk): Localized Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C169110",
+                  "label": "AIDS-Related Kaposi Sarcoma T0 (Good Risk): Minimal Oral Disease",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C169109",
+                  "label": "AIDS-Related Kaposi Sarcoma T0 (Good Risk): Skin and/or Lymph Nodes",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C134972",
+              "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Widespread Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C134973",
+                  "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Edema or Ulceration",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C134974",
+                  "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Extensive Oral Involvement",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C134975",
+                  "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Gastrointestinal Tract Involvement",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C134977",
+                  "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Other Non-Nodal Viscera Involvement",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C134976",
+                  "label": "AIDS-Related Kaposi Sarcoma T1 (Poor Risk): Pulmonary Involvement",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "key": "NCIT:C90529", "label": "AJCC v6 Stage", "children": [] },
+    {
+      "key": "NCIT:C90530",
+      "label": "AJCC v7 Stage",
+      "children": [
+        {
+          "key": "NCIT:C140963",
+          "label": "Differentiated Thyroid Gland Carcinoma 45 Years and Older AJCC v7 Stage",
+          "children": []
+        },
+        {
+          "key": "NCIT:C140961",
+          "label": "Differentiated Thyroid Gland Carcinoma Under 45 Years AJCC v7 Stage",
+          "children": []
+        }
+      ]
+    },
+    {
+      "key": "NCIT:C132248",
+      "label": "AJCC v8 Stage",
+      "children": [
+        {
+          "key": "NCIT:C177555",
+          "label": "AJCC v8 Clinical Stage",
+          "children": []
+        },
+        {
+          "key": "NCIT:C177556",
+          "label": "AJCC v8 Pathologic Stage",
+          "children": []
+        },
+        {
+          "key": "NCIT:C140964",
+          "label": "Differentiated Thyroid Gland Carcinoma 55 Years and Older AJCC v8 Stage",
+          "children": []
+        },
+        {
+          "key": "NCIT:C140962",
+          "label": "Differentiated Thyroid Gland Carcinoma Under 55 Years AJCC v8 Stage",
+          "children": []
+        }
+      ]
+    },
+    { "key": "NCIT:C180901", "label": "AJCC v9 Stage", "children": [] },
+    { "key": "NCIT:C93281", "label": "Advanced Stage", "children": [] },
+    {
+      "key": "NCIT:C141138",
+      "label": "Ann Arbor Stage",
+      "children": [
+        {
+          "key": "NCIT:C177558",
+          "label": "Ann Arbor Clinical Stage",
+          "children": []
+        },
+        {
+          "key": "NCIT:C177559",
+          "label": "Ann Arbor Pathologic Stage",
+          "children": []
+        }
+      ]
+    },
+    { "key": "NCIT:C115134", "label": "BCLC Stage", "children": [] },
+    {
+      "key": "NCIT:C141212",
+      "label": "Binet Stage",
+      "children": [
+        { "key": "NCIT:C80134", "label": "Binet Stage A", "children": [] },
+        { "key": "NCIT:C80135", "label": "Binet Stage B", "children": [] },
+        { "key": "NCIT:C80136", "label": "Binet Stage C", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C139445",
+      "label": "Breast Cancer Anatomic Stage",
+      "children": []
+    },
+    {
+      "key": "NCIT:C139446",
+      "label": "Breast Cancer Prognostic Stage",
+      "children": []
+    },
+    {
+      "key": "NCIT:C116832",
+      "label": "CNS Involvement Status at Leukemia Diagnosis",
+      "children": [
+        { "key": "NCIT:C116833", "label": "CNS 1", "children": [] },
+        {
+          "key": "NCIT:C116834",
+          "label": "CNS 2",
+          "children": [
+            { "key": "NCIT:C116836", "label": "CNS 2a", "children": [] },
+            { "key": "NCIT:C116837", "label": "CNS 2b", "children": [] },
+            { "key": "NCIT:C116838", "label": "CNS 2c", "children": [] }
+          ]
+        },
+        {
+          "key": "NCIT:C116835",
+          "label": "CNS 3",
+          "children": [
+            { "key": "NCIT:C116840", "label": "CNS 3a", "children": [] },
+            { "key": "NCIT:C116841", "label": "CNS 3b", "children": [] },
+            { "key": "NCIT:C116843", "label": "CNS 3c", "children": [] }
+          ]
+        }
+      ]
+    },
+    { "key": "NCIT:C139006", "label": "Durie/Salmon Stage", "children": [] },
+    { "key": "NCIT:C141099", "label": "ENSAT Stage", "children": [] },
+    { "key": "NCIT:C28064", "label": "Extensive Stage", "children": [] },
+    {
+      "key": "NCIT:C125738",
+      "label": "FIGO Stage",
+      "children": [
+        { "key": "NCIT:C186618", "label": "FIGO 2009 Stage", "children": [] },
+        { "key": "NCIT:C186617", "label": "FIGO 2018 Stage", "children": [] },
+        { "key": "NCIT:C96243", "label": "FIGO Stage 0", "children": [] },
+        {
+          "key": "NCIT:C96244",
+          "label": "FIGO Stage I",
+          "children": [
+            {
+              "key": "NCIT:C6391",
+              "label": "FIGO Stage I Gestational Trophoblastic Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C6392",
+                  "label": "FIGO Stage IA Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6394",
+                  "label": "FIGO Stage IB Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6395",
+                  "label": "FIGO Stage IC Gestational Trophoblastic Tumor",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96245",
+              "label": "FIGO Stage IA",
+              "children": [
+                {
+                  "key": "NCIT:C96246",
+                  "label": "FIGO Stage IA1",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C96247",
+                  "label": "FIGO Stage IA2",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96248",
+              "label": "FIGO Stage IB",
+              "children": [
+                {
+                  "key": "NCIT:C96249",
+                  "label": "FIGO Stage IB1",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C96250",
+                  "label": "FIGO Stage IB2",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C162222",
+                  "label": "FIGO Stage IB3",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96251",
+              "label": "FIGO Stage IC",
+              "children": [
+                {
+                  "key": "NCIT:C128099",
+                  "label": "FIGO Stage IC1",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C128100",
+                  "label": "FIGO Stage IC2",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C128101",
+                  "label": "FIGO Stage IC3",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C96252",
+          "label": "FIGO Stage II",
+          "children": [
+            {
+              "key": "NCIT:C6396",
+              "label": "FIGO Stage II Gestational Trophoblastic Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C6397",
+                  "label": "FIGO Stage IIA Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6398",
+                  "label": "FIGO Stage IIB Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6399",
+                  "label": "FIGO Stage IIC Gestational Trophoblastic Tumor",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96253",
+              "label": "FIGO Stage IIA",
+              "children": [
+                {
+                  "key": "NCIT:C162223",
+                  "label": "FIGO Stage IIA1",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C162224",
+                  "label": "FIGO Stage IIA2",
+                  "children": []
+                }
+              ]
+            },
+            { "key": "NCIT:C96254", "label": "FIGO Stage IIB", "children": [] },
+            {
+              "key": "NCIT:C188300",
+              "label": "FIGO Stage IIC1",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C96255",
+          "label": "FIGO Stage III",
+          "children": [
+            {
+              "key": "NCIT:C6400",
+              "label": "FIGO Stage III Gestational Trophoblastic Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C6401",
+                  "label": "FIGO Stage IIIA Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6402",
+                  "label": "FIGO Stage IIIB Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6403",
+                  "label": "FIGO Stage IIIC Gestational Trophoblastic Tumor",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96256",
+              "label": "FIGO Stage IIIA",
+              "children": [
+                {
+                  "key": "NCIT:C128102",
+                  "label": "FIGO Stage IIIA1",
+                  "children": [
+                    {
+                      "key": "NCIT:C128103",
+                      "label": "FIGO Stage IIIA1(i)",
+                      "children": []
+                    },
+                    {
+                      "key": "NCIT:C128104",
+                      "label": "FIGO Stage IIIA1(ii)",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "key": "NCIT:C128105",
+                  "label": "FIGO Stage IIIA2",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C96257",
+              "label": "FIGO Stage IIIB",
+              "children": []
+            },
+            {
+              "key": "NCIT:C96258",
+              "label": "FIGO Stage IIIC",
+              "children": [
+                {
+                  "key": "NCIT:C96259",
+                  "label": "FIGO Stage IIIC1",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C96260",
+                  "label": "FIGO Stage IIIC2",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C96261",
+          "label": "FIGO Stage IV",
+          "children": [
+            {
+              "key": "NCIT:C6404",
+              "label": "FIGO Stage IV Gestational Trophoblastic Tumor",
+              "children": [
+                {
+                  "key": "NCIT:C6405",
+                  "label": "FIGO Stage IVA Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6406",
+                  "label": "FIGO Stage IVB Gestational Trophoblastic Tumor",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6407",
+                  "label": "FIGO Stage IVC Gestational Trophoblastic Tumor",
+                  "children": []
+                }
+              ]
+            },
+            { "key": "NCIT:C96262", "label": "FIGO Stage IVA", "children": [] },
+            { "key": "NCIT:C96263", "label": "FIGO Stage IVB", "children": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "NCIT:C28067",
+      "label": "Hepatoblastoma Stage",
+      "children": [
+        { "key": "NCIT:C28072", "label": "PRETEXT Stage 1", "children": [] },
+        { "key": "NCIT:C28073", "label": "PRETEXT Stage 2", "children": [] },
+        { "key": "NCIT:C28074", "label": "PRETEXT Stage 3", "children": [] },
+        { "key": "NCIT:C28075", "label": "PRETEXT Stage 4", "children": [] },
+        {
+          "key": "NCIT:C28068",
+          "label": "Postsurgical Stage I",
+          "children": []
+        },
+        {
+          "key": "NCIT:C28069",
+          "label": "Postsurgical Stage II",
+          "children": []
+        },
+        {
+          "key": "NCIT:C28070",
+          "label": "Postsurgical Stage III",
+          "children": []
+        },
+        {
+          "key": "NCIT:C28071",
+          "label": "Postsurgical Stage IV",
+          "children": []
+        }
+      ]
+    },
+    {
+      "key": "NCIT:C139007",
+      "label": "International Staging System Stage",
+      "children": []
+    },
+    { "key": "NCIT:C28065", "label": "Limited Stage", "children": [] },
+    { "key": "NCIT:C141147", "label": "Lugano Stage", "children": [] },
+    { "key": "NCIT:C143151", "label": "Masaoka-Koga Stage", "children": [] },
+    {
+      "key": "NCIT:C146847",
+      "label": "Mediastinal Malignant Germ Cell Tumor Stage",
+      "children": []
+    },
+    { "key": "NCIT:C141461", "label": "Occult Stage", "children": [] },
+    { "key": "NCIT:C186517", "label": "Postoperative Stage", "children": [] },
+    { "key": "NCIT:C141392", "label": "RISS Stage", "children": [] },
+    { "key": "NCIT:C141207", "label": "Rai Stage", "children": [] },
+    { "key": "NCIT:C141216", "label": "St. Jude Stage", "children": [] },
+    {
+      "key": "NCIT:C28051",
+      "label": "Stage 0",
+      "children": [
+        {
+          "key": "NCIT:C4442",
+          "label": "Stage 0 Extrahepatic Bile Duct Cancer",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5892",
+          "label": "Stage 0 Oral Cavity Verrucous Carcinoma",
+          "children": []
+        },
+        { "key": "NCIT:C27964", "label": "Stage 0a", "children": [] },
+        { "key": "NCIT:C27965", "label": "Stage 0is", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C28056", "label": "Stage A", "children": [] },
+    {
+      "key": "NCIT:C28057",
+      "label": "Stage B",
+      "children": [
+        { "key": "NCIT:C28058", "label": "Stage B1", "children": [] },
+        { "key": "NCIT:C28059", "label": "Stage B2", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C28060", "label": "Stage C", "children": [] },
+    {
+      "key": "NCIT:C28061",
+      "label": "Stage D",
+      "children": [
+        { "key": "NCIT:C28062", "label": "Stage D1", "children": [] },
+        { "key": "NCIT:C28063", "label": "Stage D2", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C27966",
+      "label": "Stage I",
+      "children": [
+        {
+          "key": "NCIT:C36202",
+          "label": "Astler-Coller A Colon Carcinoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8077",
+          "label": "Stage I Adult Diffuse Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8076",
+          "label": "Stage I Adult Diffuse Mixed Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8075",
+          "label": "Stage I Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C27327",
+          "label": "Stage I Centroblastic Follicular Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8305",
+          "label": "Stage I Childhood Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C7795",
+          "label": "Stage I Cutaneous T-Cell Non-Hodgkin Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8882",
+          "label": "Stage I Extragonadal Mixed Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8886",
+          "label": "Stage I Extragonadal Non-Seminomatous Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C4996",
+          "label": "Stage I Extragonadal Seminoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5769",
+          "label": "Stage I Extrahepatic Bile Duct Cancer",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8081",
+          "label": "Stage I High Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5002",
+          "label": "Stage I High Grade Burkitt-Like Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8074",
+          "label": "Stage I Intermediate Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8069",
+          "label": "Stage I Low Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8198",
+          "label": "Stage I Oral Cavity Verrucous Carcinoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C6106",
+          "label": "Stage I Retinoblastoma",
+          "children": [
+            {
+              "key": "NCIT:C6107",
+              "label": "Stage IA Retinoblastoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6108",
+              "label": "Stage IB Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C5091",
+          "label": "Stage I Splenic Marginal Zone Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C27975",
+          "label": "Stage IA",
+          "children": [
+            {
+              "key": "NCIT:C6107",
+              "label": "Stage IA Retinoblastoma",
+              "children": []
+            },
+            { "key": "NCIT:C27983", "label": "Stage IA1", "children": [] },
+            { "key": "NCIT:C27984", "label": "Stage IA2", "children": [] },
+            { "key": "NCIT:C136485", "label": "Stage IA3", "children": [] }
+          ]
+        },
+        {
+          "key": "NCIT:C27976",
+          "label": "Stage IB",
+          "children": [
+            {
+              "key": "NCIT:C96240",
+              "label": "Stage IB Cervix",
+              "children": [
+                { "key": "NCIT:C28052", "label": "Stage IB1", "children": [] },
+                { "key": "NCIT:C28053", "label": "Stage IB2", "children": [] },
+                { "key": "NCIT:C181581", "label": "Stage IB3", "children": [] }
+              ]
+            },
+            {
+              "key": "NCIT:C6108",
+              "label": "Stage IB Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        { "key": "NCIT:C27981", "label": "Stage IC", "children": [] },
+        { "key": "NCIT:C28285", "label": "Stage Is", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C141199", "label": "Stage IE", "children": [] },
+    {
+      "key": "NCIT:C28054",
+      "label": "Stage II",
+      "children": [
+        {
+          "key": "NCIT:C8122",
+          "label": "Stage II Adult Diffuse Large Cell Lymphoma",
+          "children": [
+            {
+              "key": "NCIT:C8475",
+              "label": "Stage II Contiguous Adult Diffuse Large Cell Lymphoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C8480",
+              "label": "Stage II Non-Contiguous Adult Diffuse Large Cell Lymphoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C8121",
+          "label": "Stage II Adult Diffuse Mixed Cell Lymphoma",
+          "children": [
+            {
+              "key": "NCIT:C8474",
+              "label": "Stage II Contiguous Adult Diffuse Mixed Cell Lymphoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C9199",
+              "label": "Stage II Non-Contiguous Adult Diffuse Mixed Cell Lymphoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C8120",
+          "label": "Stage II Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": [
+            {
+              "key": "NCIT:C8471",
+              "label": "Stage II Contiguous Adult Diffuse Small Cleaved Cell Lymphoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C9197",
+              "label": "Stage II Non-Contiguous Adult Diffuse Small Cleaved Cell Lymphoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C27328",
+          "label": "Stage II Centroblastic Follicular Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C96241",
+          "label": "Stage II Cervix",
+          "children": [
+            {
+              "key": "NCIT:C96242",
+              "label": "Stage IIA Cervix",
+              "children": [
+                { "key": "NCIT:C95177", "label": "Stage IIA1", "children": [] },
+                { "key": "NCIT:C95178", "label": "Stage IIA2", "children": [] }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C8306",
+          "label": "Stage II Childhood Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8475",
+          "label": "Stage II Contiguous Adult Diffuse Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8474",
+          "label": "Stage II Contiguous Adult Diffuse Mixed Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8471",
+          "label": "Stage II Contiguous Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C7797",
+          "label": "Stage II Cutaneous T-Cell Non-Hodgkin Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8600",
+          "label": "Stage II Extragonadal Mixed Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8887",
+          "label": "Stage II Extragonadal Non-Seminomatous Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8890",
+          "label": "Stage II Extragonadal Seminoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5770",
+          "label": "Stage II Extrahepatic Bile Duct Cancer",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8123",
+          "label": "Stage II High Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5001",
+          "label": "Stage II High Grade Burkitt-Like Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8118",
+          "label": "Stage II Intermediate Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8082",
+          "label": "Stage II Low Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8480",
+          "label": "Stage II Non-Contiguous Adult Diffuse Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C9199",
+          "label": "Stage II Non-Contiguous Adult Diffuse Mixed Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C9197",
+          "label": "Stage II Non-Contiguous Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8202",
+          "label": "Stage II Oral Cavity Verrucous Carcinoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C6109",
+          "label": "Stage II Retinoblastoma",
+          "children": [
+            {
+              "key": "NCIT:C6110",
+              "label": "Stage IIA Retinoblastoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6111",
+              "label": "Stage IIB Retinoblastoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6112",
+              "label": "Stage IIC Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C5092",
+          "label": "Stage II Splenic Marginal Zone Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C27967",
+          "label": "Stage IIA",
+          "children": [
+            {
+              "key": "NCIT:C9365",
+              "label": "Stage IIA Bladder Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C96242",
+              "label": "Stage IIA Cervix",
+              "children": [
+                { "key": "NCIT:C95177", "label": "Stage IIA1", "children": [] },
+                { "key": "NCIT:C95178", "label": "Stage IIA2", "children": [] }
+              ]
+            },
+            {
+              "key": "NCIT:C5998",
+              "label": "Stage IIA Nasopharyngeal Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6254",
+              "label": "Stage IIA Nasopharyngeal Keratinizing Squamous Cell Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6110",
+              "label": "Stage IIA Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C27968",
+          "label": "Stage IIB",
+          "children": [
+            {
+              "key": "NCIT:C9366",
+              "label": "Stage IIB Bladder Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5999",
+              "label": "Stage IIB Nasopharyngeal Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6255",
+              "label": "Stage IIB Nasopharyngeal Keratinizing Squamous Cell Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6111",
+              "label": "Stage IIB Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C27969",
+          "label": "Stage IIC",
+          "children": [
+            {
+              "key": "NCIT:C8573",
+              "label": "Stage IIC Adult Soft Tissue Sarcoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6112",
+              "label": "Stage IIC Retinoblastoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C8584",
+              "label": "Stage IIC Soft Tissue Sarcoma",
+              "children": [
+                {
+                  "key": "NCIT:C8573",
+                  "label": "Stage IIC Adult Soft Tissue Sarcoma",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "key": "NCIT:C141200", "label": "Stage IIE", "children": [] },
+    {
+      "key": "NCIT:C27970",
+      "label": "Stage III",
+      "children": [
+        {
+          "key": "NCIT:C5919",
+          "label": "Astler-Coller B3 Colon Carcinoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8135",
+          "label": "Stage III Adult Diffuse Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8134",
+          "label": "Stage III Adult Diffuse Mixed Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8133",
+          "label": "Stage III Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8307",
+          "label": "Stage III Childhood Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C7799",
+          "label": "Stage III Cutaneous T-Cell Non-Hodgkin Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8883",
+          "label": "Stage III Extragonadal Mixed Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8888",
+          "label": "Stage III Extragonadal Non-Seminomatous Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8891",
+          "label": "Stage III Extragonadal Seminoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5771",
+          "label": "Stage III Extrahepatic Bile Duct Cancer",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8136",
+          "label": "Stage III High Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5000",
+          "label": "Stage III High Grade Burkitt-Like Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8830",
+          "label": "Stage III Hodgkin's Disease Lymphocyte Predominance Type",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8131",
+          "label": "Stage III Intermediate Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8127",
+          "label": "Stage III Low Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8206",
+          "label": "Stage III Oral Cavity Verrucous Carcinoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C6113",
+          "label": "Stage III Retinoblastoma",
+          "children": [
+            {
+              "key": "NCIT:C6114",
+              "label": "Stage IIIA Retinoblastoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6115",
+              "label": "Stage IIIB Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C5093",
+          "label": "Stage III Splenic Marginal Zone Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C27977",
+          "label": "Stage IIIA",
+          "children": [
+            {
+              "key": "NCIT:C6114",
+              "label": "Stage IIIA Retinoblastoma",
+              "children": []
+            },
+            { "key": "NCIT:C139980", "label": "Stage IIIA1", "children": [] },
+            { "key": "NCIT:C139981", "label": "Stage IIIA2", "children": [] }
+          ]
+        },
+        {
+          "key": "NCIT:C27978",
+          "label": "Stage IIIB",
+          "children": [
+            {
+              "key": "NCIT:C6115",
+              "label": "Stage IIIB Retinoblastoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C27982",
+          "label": "Stage IIIC",
+          "children": [
+            { "key": "NCIT:C95179", "label": "Stage IIIC1", "children": [] },
+            { "key": "NCIT:C95180", "label": "Stage IIIC2", "children": [] }
+          ]
+        },
+        { "key": "NCIT:C137676", "label": "Stage IIID", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C27971",
+      "label": "Stage IV",
+      "children": [
+        {
+          "key": "NCIT:C8148",
+          "label": "Stage IV Adult Diffuse Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8147",
+          "label": "Stage IV Adult Diffuse Mixed Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8146",
+          "label": "Stage IV Adult Diffuse Small Cleaved Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8308",
+          "label": "Stage IV Childhood Large Cell Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C7801",
+          "label": "Stage IV Cutaneous T-Cell Non-Hodgkin Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8889",
+          "label": "Stage IV Extragonadal Non-Seminomatous Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8892",
+          "label": "Stage IV Extragonadal Seminoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5772",
+          "label": "Stage IV Extrahepatic Bile Duct Cancer",
+          "children": [
+            {
+              "key": "NCIT:C5773",
+              "label": "Stage IVA Extrahepatic Bile Duct Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5774",
+              "label": "Stage IVB Extrahepatic Bile Duct Cancer",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C8626",
+          "label": "Stage IV Gastric Cancer with Metastasis",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8956",
+          "label": "Stage IV Gastric Cancer without Metastasis",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8149",
+          "label": "Stage IV High Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C4999",
+          "label": "Stage IV High Grade Burkitt-Like Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8831",
+          "label": "Stage IV Hodgkin's Disease Lymphocyte Predominance Type",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8144",
+          "label": "Stage IV Intermediate Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8140",
+          "label": "Stage IV Low Grade Adult Non-Hodgkin's Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C8210",
+          "label": "Stage IV Oral Cavity Verrucous Carcinoma",
+          "children": [
+            {
+              "key": "NCIT:C5869",
+              "label": "Stage IVA Oral Cavity Verrucous Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5870",
+              "label": "Stage IVB Oral Cavity Verrucous Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5871",
+              "label": "Stage IVC Oral Cavity Verrucous Carcinoma",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C6116",
+          "label": "Stage IV Retinoblastoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C5094",
+          "label": "Stage IV Splenic Marginal Zone Lymphoma",
+          "children": []
+        },
+        {
+          "key": "NCIT:C28337",
+          "label": "Stage IV Testicular Non-Seminomatous Germ Cell Tumor",
+          "children": []
+        },
+        {
+          "key": "NCIT:C27979",
+          "label": "Stage IVA",
+          "children": [
+            {
+              "key": "NCIT:C9367",
+              "label": "Stage IVA Bladder Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6733",
+              "label": "Stage IVA Esophageal Adenocarcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5694",
+              "label": "Stage IVA Esophageal Cancer",
+              "children": [
+                {
+                  "key": "NCIT:C6733",
+                  "label": "Stage IVA Esophageal Adenocarcinoma",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6736",
+                  "label": "Stage IVA Esophageal Squamous Cell Carcinoma",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C6736",
+              "label": "Stage IVA Esophageal Squamous Cell Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5773",
+              "label": "Stage IVA Extrahepatic Bile Duct Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5869",
+              "label": "Stage IVA Oral Cavity Verrucous Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5730",
+              "label": "Stage IVA Pancreatic Cancer",
+              "children": []
+            },
+            { "key": "NCIT:C141344", "label": "Stage IVA1", "children": [] },
+            { "key": "NCIT:C141345", "label": "Stage IVA2", "children": [] }
+          ]
+        },
+        {
+          "key": "NCIT:C27980",
+          "label": "Stage IVB",
+          "children": [
+            {
+              "key": "NCIT:C9368",
+              "label": "Stage IVB Bladder Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C6734",
+              "label": "Stage IVB Esophageal Adenocarcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5693",
+              "label": "Stage IVB Esophageal Cancer",
+              "children": [
+                {
+                  "key": "NCIT:C6734",
+                  "label": "Stage IVB Esophageal Adenocarcinoma",
+                  "children": []
+                },
+                {
+                  "key": "NCIT:C6735",
+                  "label": "Stage IVB Esophageal Squamous Cell Carcinoma",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "key": "NCIT:C6735",
+              "label": "Stage IVB Esophageal Squamous Cell Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5774",
+              "label": "Stage IVB Extrahepatic Bile Duct Cancer",
+              "children": []
+            },
+            {
+              "key": "NCIT:C5870",
+              "label": "Stage IVB Oral Cavity Verrucous Carcinoma",
+              "children": []
+            },
+            {
+              "key": "NCIT:C8575",
+              "label": "Stage IVB Pancreatic Cancer",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C28055",
+          "label": "Stage IVC",
+          "children": [
+            {
+              "key": "NCIT:C5871",
+              "label": "Stage IVC Oral Cavity Verrucous Carcinoma",
+              "children": []
+            }
+          ]
+        },
+        { "key": "NCIT:C27972", "label": "Stage IVS", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C188299", "label": "Stage M2", "children": [] },
+    {
+      "key": "NCIT:C139577",
+      "label": "Stage R",
+      "children": [
+        { "key": "NCIT:C139578", "label": "Stage R0", "children": [] },
+        { "key": "NCIT:C139579", "label": "Stage R1", "children": [] },
+        { "key": "NCIT:C139580", "label": "Stage R2", "children": [] },
+        { "key": "NCIT:C139581", "label": "Stage RX", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C92207", "label": "Stage Unknown", "children": [] },
+    { "key": "NCIT:C28066", "label": "Stage Unspecified", "children": [] },
+    { "key": "NCIT:C27973", "label": "Stage V", "children": [] },
+    { "key": "NCIT:C95957", "label": "Stage X", "children": [] },
+    {
+      "key": "NCIT:C159243",
+      "label": "Staging Incomplete",
+      "children": [
+        {
+          "key": "NCIT:C159723",
+          "label": "Incomplete Staging (cM)",
+          "children": []
+        },
+        {
+          "key": "NCIT:C159724",
+          "label": "Incomplete Staging (pM)",
+          "children": []
+        }
+      ]
+    },
+    { "key": "NCIT:C140161", "label": "Whitmore-Jewett Stage", "children": [] }
+  ]
+}

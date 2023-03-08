@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 
 import { Disease } from 'src/app/models/disease';
 import { DiseaseDetailDialogComponent } from './disease-detail-dialog/disease-detail-dialog.component';
+import { OntologyClass } from 'src/app/models/base';
 
 @Component({
   selector: 'app-disease-detail',
@@ -33,8 +34,8 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
   status: string;
   onset: string;
   resolution: string;
-  // stage: string;
-  // finding: string;
+  stage: string;
+  findings: OntologyClass[];
   severity: string;
   laterality: string;
 
@@ -57,6 +58,8 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
     this.onset = this.disease.onset?.toString();
     this.resolution = this.disease.resolution?.toString();
     this.laterality = this.disease.laterality?.label;
+    this.findings = this.disease.clinicalTnmFinding;
+    this.stage = this.disease.diseaseStage[0]?.toString();
   }
 
   openEditDialog() {
@@ -72,6 +75,7 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
 
     this.ref.onClose.subscribe((disease: Disease) => {
       if (disease) {
+        console.log(disease);
         this.disease = disease;
         this.updateDiseaseDetails();
         // emit change

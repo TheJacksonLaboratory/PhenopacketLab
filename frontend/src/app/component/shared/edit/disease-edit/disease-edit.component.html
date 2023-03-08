@@ -33,7 +33,9 @@
         inputId="observed"
         (onChange)="updateExcluded($event)"
       ></p-checkbox>
-      <label for="observed">{{ !disease?.excluded ? "Observed" : "Excluded" }}</label>
+      <label for="observed">{{
+        !disease?.excluded ? "Observed" : "Excluded"
+      }}</label>
     </div>
   </div>
 
@@ -66,15 +68,18 @@
         <div class="grid p-fluid">
           <div class="field col-12">
             <label for="stages"><b>Disease stage:</b></label>
-            <ontology-tree-select
+            <p-treeSelect
+              ngDefaultControl
               id="stages"
-              pTooltip="List of terms representing the disease stage e.g. AJCC stage group"
-              showDelay="2000"
-              [selectionMode]="'checkbox'"
-              (selectedNodesChange)="updateDiseaseStages($event)"
-              [selectedNodes]="disease?.diseaseStage"
-              [nodes]="stagesNodes"
-            ></ontology-tree-select>
+              appendTo="body"
+              [(ngModel)]="stageSelected"
+              [options]="diseaseStagesNodes"
+              (onNodeSelect)="updateDiseaseStage($event)"
+              [metaKeySelection]="false"
+              placeholder="Select Disease Stage"
+              [filter]="true"
+              [filterInputAutoFocus]="true"
+            ></p-treeSelect>
           </div>
           <div class="field col-12">
             <label for="laterality"><b>Laterality:</b></label>
@@ -96,17 +101,43 @@
 
           <div class="field col-12">
             <label for="findings"><b>Clinical TNM finding:</b></label>
-            <ontology-tree-select
+            <p-treeSelect
+              ngDefaultControl
               id="findings"
-              pTooltip="List of terms representing the tumor TNM score"
-              showDelay="2000"
-              [selectionMode]="'checkbox'"
-              (selectedNodesChange)="updateFindingStages($event)"
-              [selectedNodes]="disease?.clinicalTnmFinding"
-              [nodes]="findingsNodes"
-            ></ontology-tree-select>
+              appendTo="body"
+              [(ngModel)]="tumorSelected"
+              [options]="tumorNodes"
+              (onNodeSelect)="updateTnmStages($event, 'tumor')"
+              [metaKeySelection]="false"
+              placeholder="Select tumor stage"
+              [filter]="true"
+              [filterInputAutoFocus]="true"
+            ></p-treeSelect>
+            <p-treeSelect
+              ngDefaultControl
+              id="findings"
+              appendTo="body"
+              [(ngModel)]="nodeSelected"
+              [options]="nodeNodes"
+              (onNodeSelect)="updateTnmStages($event, 'node')"
+              [metaKeySelection]="false"
+              placeholder="Select node stage"
+              [filter]="true"
+              [filterInputAutoFocus]="true"
+            ></p-treeSelect>
+            <p-treeSelect
+              ngDefaultControl
+              id="findings"
+              appendTo="body"
+              [(ngModel)]="metastasisSelected"
+              [options]="metastasisNodes"
+              (onNodeSelect)="updateTnmStages($event, 'metastasis')"
+              [metaKeySelection]="false"
+              placeholder="Select metastasis stage"
+              [filter]="true"
+              [filterInputAutoFocus]="true"
+            ></p-treeSelect>
           </div>
-
         </div>
       </p-accordionTab>
     </p-accordion>
