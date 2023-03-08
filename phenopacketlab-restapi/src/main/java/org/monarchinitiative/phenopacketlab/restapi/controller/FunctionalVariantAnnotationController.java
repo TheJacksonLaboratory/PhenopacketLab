@@ -75,7 +75,7 @@ public class FunctionalVariantAnnotationController {
 //                                                   "NM_000093.4|NM_001278074.1|NM_000093.3")
                                                String transcript) {
         if (transcript.equals("prefered")) {
-            return ResponseEntity.ok(functionalAnnotationVariantService.annotate(build, description, TranscriptSelection.PREFERED).collect(Collectors.toList()));
+            return ResponseEntity.ok(functionalAnnotationVariantService.annotate(build, description, TranscriptSelection.PREFERRED).collect(Collectors.toList()));
         } else if (transcript.equals("all")) {
             return ResponseEntity.ok(functionalAnnotationVariantService.annotate(build, description, TranscriptSelection.ALL).collect(Collectors.toList()));
         } else {

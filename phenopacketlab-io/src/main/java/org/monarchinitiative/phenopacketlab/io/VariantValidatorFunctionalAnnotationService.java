@@ -33,13 +33,10 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
 
     @Override
     public Stream<VariantMetadata> annotate(String build, String description, TranscriptSelection transcript) {
-        if (transcript == TranscriptSelection.PREFERED) {
-            return encodeHgvsFromVariantValidator(build, description, "mane_select").stream();
-        } else if (transcript == TranscriptSelection.ALL) {
-            return encodeHgvsFromVariantValidator(build, description, "all").stream();
-        } else {
-            throw new RuntimeException();
-        }
+        return switch (transcript) {
+            case PREFERRED -> encodeHgvsFromVariantValidator(build, description, "mane_select").stream();
+            case ALL -> encodeHgvsFromVariantValidator(build, description, "all").stream();
+        };
     }
 
     /**
