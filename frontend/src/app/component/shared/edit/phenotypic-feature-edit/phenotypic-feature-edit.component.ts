@@ -128,7 +128,6 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateEvidences(nodes: any[]) {
     if (this.phenotypicFeature) {
-      console.log(nodes);
       this.phenotypicFeature.evidences = [];
       this.phenotypicFeature.evidenceNodes = [];
       for (const node of nodes) {
