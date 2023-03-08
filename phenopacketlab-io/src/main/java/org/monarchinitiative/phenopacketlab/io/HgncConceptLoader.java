@@ -42,7 +42,7 @@ public class HgncConceptLoader {
                 .skip(1) // header
                 .map(toConcept())
                 .flatMap(Optional::stream)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
 
         return IdentifiedConceptResource.of(concepts, createHgncResource(version));
     }
