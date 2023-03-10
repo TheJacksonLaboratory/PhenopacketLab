@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
-import { Interpretation, ProgressStatus } from 'src/app/models/interpretation';
+import { Interpretation } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
@@ -29,12 +29,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
 
     // table contents of phenotypic features
     selectedInterpretation: Interpretation;
-    // progress status
-    progressStatus: ProgressStatus;
-    statuses: ProgressStatus[];
-    // diseases
-    diseases: any[];
-    diseaseSubscription: Subscription;
 
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
@@ -72,12 +66,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        // get diseases
-        this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
-            this.diseases = diseases;
-        });
-        // statuses
-        this.statuses = this.getStatuses();
     }
 
     ngOnDestroy(): void {
@@ -86,9 +74,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
-        }
-        if (this.diseaseSubscription) {
-            this.diseaseSubscription.unsubscribe();
         }
     }
 
@@ -154,22 +139,12 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         this.interpretations.push(interpretation);
     }
 
-    updateProgressStatus(event) {
-        if (this.interpretation === undefined) {
-            this.interpretation = new Interpretation();
-        }
-        this.interpretation.progressStatus = event.value;
-    }
-
-    getStatuses() {
-        // tslint:disable-next-line:radix
-        return Object.values(ProgressStatus).filter(x => !(parseInt(x) >= 0));
-    }
     /**
      * Called when a row is selected in the left side table
      * @param event
      */
     onRowSelect(event) {
+        console.log(event);
         this.selectedInterpretation = event.data;
     }
 

@@ -1,0 +1,45 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="subjectid">Subject ID</label>
+    <input
+      id="subjectid"
+      type="text"
+      [disabled]="true"
+      aria-describedby="Subject ID"
+      pInputText
+      [ngModel]="genomicInterpretation?.subjectOrBiosampleId"
+      pTooltip="Set in Individual Page as the Individual ID"
+    />
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="interpretationstatus">Interpretation Status</label>
+    <p-dropdown
+      id="interpretationstatus"
+      appendTo="body"
+      placeholder="Select progress status"
+      [ngModel]="selectedInterpretationStatus"
+      [options]="getInterpretationStatuses()"
+      (onChange)="updateInterpretationStatus($event)"
+      pTooltip="Interpretation status"
+      showDelay="2000"
+      class="w-full"
+      showClear="true"
+      optionLabel="value"
+    >
+      <ng-template let-interpretationstatus pTemplate="item">
+        <div
+          [pTooltip]="interpretationstatus.description"
+          tooltipPosition="left"
+          escape="false"
+        >
+          {{ interpretationstatus.value }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <app-variant-search-interpretation
+    (variantInterpretationChange)="addVariantInterpretation($event)"
+  ></app-variant-search-interpretation>
+</div>

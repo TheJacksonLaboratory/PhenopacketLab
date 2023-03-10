@@ -1,27 +1,24 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { VariantInterpretation } from 'src/app/models/interpretation';
-import { Phenopacket } from 'src/app/models/phenopacket';
+import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation } from 'src/app/models/interpretation';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { SpinnerDialogComponent } from '../../../spinner-dialog/spinner-dialog.component';
+import { SpinnerDialogComponent } from '../../../../spinner-dialog/spinner-dialog.component';
 
 @Component({
     providers: [ConfirmationService, DialogService],
-    selector: 'app-variant-interpretation',
+    selector: 'app-variant-search-interpretation',
     templateUrl: './variant-interpretation.component.html',
     styleUrls: ['./variant-interpretation.component.scss']
 })
 export class VariantInterpretationComponent implements OnInit {
 
     @Output()
-    variantInterpretationChange = new EventEmitter<VariantInterpretation[]>();
+    variantInterpretationChange = new EventEmitter<VariantInterpretation>();
 
     spinnerDialogRef: DynamicDialogRef;
 
-    phenopacket: Phenopacket;
     // variant search params
     interpretations: VariantInterpretation[];
     visible = false;
@@ -30,16 +27,18 @@ export class VariantInterpretationComponent implements OnInit {
     selectedTranscript: string;
     transcriptDescription: string;
     transcript: string;
-    acmg: string;
+    selectedAcmgPathogenicity = AcmgPathogenicityClassification.NOT_PROVIDED;
     genotype: string;
     genotypes = ['heterozygous', 'homozygous', 'hemizygous'];
     builds = ['GRCh37/hg19', 'GRCh38/hg38'];
     transcripts = ['all', 'prefered'];
+    acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
+    selectedTherapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
+    therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
 
     expanded = false;
 
     constructor(public searchService: InterpretationService,
-        public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
         private messageService: MessageService) {
@@ -47,7 +46,6 @@ export class VariantInterpretationComponent implements OnInit {
 
 
     ngOnInit() {
-        this.phenopacket = this.phenopacketService.phenopacket;
     }
 
     updateHgvs(hgvs: string) {
@@ -68,18 +66,16 @@ export class VariantInterpretationComponent implements OnInit {
             this.transcriptDescription = 'Return only \'select\' transcripts';
             this.transcript = 'mane_select';
         }
-        // if (this.selectedTranscript === 'select' || this.selectedTranscript === 'mane_select'
-        //  || this.selectedTranscript === 'refseq_select') {
-        //     this.transcriptDescription = 'Return only \'select\' transcripts';
-        //     this.transcript = this.selectedTranscript;
-        // }
-        // if (this.selectedTranscript === 'single/multiple') {
-        //     this.transcriptDescription = ''
-        //     this.transcript = '';
-        // }
     }
-    updateTranscript(transcript: string) {
-        this.transcript = transcript;
+
+    updateAcmgPathogenicity(acmgPathogenicity: AcmgPathogenicityClassification) {
+        console.log(acmgPathogenicity);
+        console.log(this.selectedAcmgPathogenicity);
+    }
+
+    updateTherapeuticActionability(therapeuticActionability: TherapeuticActionability) {
+        console.log(therapeuticActionability);
+        console.log(this.selectedTherapeuticActionability);
     }
 
     public searchVariantByHGVS() {
@@ -100,13 +96,15 @@ export class VariantInterpretationComponent implements OnInit {
                 this.interpretations = [];
                 for (const item of data) {
                     const variant = new VariantMetadata(item);
-                    const vInterpretation = variant.toVariantInterpretation(this.acmg, this.genotype);
+                    const vInterpretation = variant.toVariantInterpretation(this.selectedAcmgPathogenicity, this.genotype);
                     vInterpretation.key = this.getBiggestKey(this.interpretations) + 1;
+                    vInterpretation.acmgPathogenicityClassification = this.selectedAcmgPathogenicity;
+                    vInterpretation.therapeuticActionability = this.selectedTherapeuticActionability;
                     this.interpretations.push(vInterpretation);
                 }
 
                 this.visible = true;
-                this.variantInterpretationChange.emit(this.interpretations);
+                this.variantInterpretationChange.emit(this.interpretations[0]);
                 this.spinnerDialogRef.close();
             },
                 (error) => {
@@ -121,23 +119,13 @@ export class VariantInterpretationComponent implements OnInit {
     }
 
     deleteInterpretation(interpretation: VariantInterpretation) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete \'' + interpretation.variationDescriptor.expressions[0]?.value + '\'?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.interpretations = this.interpretations.filter(val => val.key !== interpretation.key);
-                this.variantInterpretationChange.emit(this.interpretations);
-                if (this.interpretations.length === 0) {
-                    this.visible = false;
-                }
-                this.messageService.add({ severity: 'success', summary: 'Successful',
-                    detail: 'Variant interpretation Deleted', life: 3000 });
-            },
-            reject: () => {
-                this.confirmationService.close();
-            }
-        });
+        this.interpretations = this.interpretations.filter(val => val.key !== interpretation.key);
+        if (this.interpretations.length === 0) {
+            this.visible = false;
+            this.variantInterpretationChange.emit(undefined);
+        } else {
+            this.variantInterpretationChange.emit(this.interpretations[0]);
+        }
     }
 
     /**

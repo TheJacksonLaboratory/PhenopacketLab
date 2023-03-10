@@ -96,6 +96,7 @@ export class VariantMetadata {
         vcfRecord.alt = this.alt;
         vcfRecord.ref = this.ref;
         vDescriptor.vcfRecord = vcfRecord;
+        vDescriptor.id = Date.now().toString();
         vInterpretation.variationDescriptor = vDescriptor;
         return vInterpretation;
     }

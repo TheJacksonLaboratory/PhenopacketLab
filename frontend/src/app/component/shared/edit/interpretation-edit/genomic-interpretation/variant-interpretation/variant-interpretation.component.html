@@ -5,6 +5,30 @@
 <!--    <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>-->
   </ng-template>
   <div class="grid p-fluid">
+    <div class="field col-12 md:col-6">
+      <label for="acmg">Acmg pathogenicity classification</label>
+      <p-dropdown
+        id="acmg"
+        appendTo="body"
+        placeholder="Select Acmg pathogenicity"
+        [(ngModel)]="selectedAcmgPathogenicity"
+        [options]="acmgClassifications"
+        (onChange)="updateAcmgPathogenicity($event)"
+        class="w-full"
+      ></p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="therapeutic">Therapeutic actionability</label>
+      <p-dropdown
+        id="therapeutic"
+        appendTo="body"
+        placeholder="Select Therapeutic actionability"
+        [(ngModel)]="selectedTherapeuticActionability"
+        [options]="therapeuticActionabilities"
+        (onChange)="updateTherapeuticActionability($event)"
+        class="w-full"
+      ></p-dropdown>
+    </div>
     <div class="field col-12">
       This interface uses the Variant Validator
       <a href="https://rest.variantvalidator.org/" target="_blank">API</a> in
@@ -150,7 +174,8 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="rowexpansion" let-interpretation>
-
+<!-- Variation Descriptor -->
+          
         </ng-template>
       </p-table>
     </div>

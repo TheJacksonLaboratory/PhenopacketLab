@@ -18,8 +18,9 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
-import { VariantInterpretationComponent } from './edit/interpretation-edit/variant-validator/variant-interpretation.component';
+import { VariantInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variant-interpretation.component';
 import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
+import { GenomicInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { InterpretationEditComponent } from './edit/interpretation-edit/interpre
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
-    VariantInterpretationComponent
+    VariantInterpretationComponent,
+    GenomicInterpretationComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -67,6 +69,7 @@ import { InterpretationEditComponent } from './edit/interpretation-edit/interpre
     IndividualEditComponent,
     InterpretationEditComponent,
     VariantInterpretationComponent,
+    GenomicInterpretationComponent,
     PrimeModule,
     MaterialModule
   ]
