@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Profile } from 'src/app/models/profile';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -27,6 +27,14 @@ export class ProfileSelectionComponent implements OnInit {
                 this.router.navigate([`creator/${profile.path}`]);
             }
         }
+    }
+    startRareDisease() {
+        this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+        this.router.navigate(['creator/rare']);
+    }
+    startAll() {
+        this.phenopacketService.setProfileSelection(ProfileSelection.ALL_AVAILABLE);
+        this.router.navigate(['creator/all']);
     }
 
 }
