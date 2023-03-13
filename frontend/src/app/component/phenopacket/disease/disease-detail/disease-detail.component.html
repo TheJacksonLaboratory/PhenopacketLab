@@ -35,20 +35,19 @@
 
 <div class="row">
   <div class="col-md-6">
-    <b>Disease stage:</b><br />
+    <b>Disease stage: </b> {{ stage }}
+    <!-- <br />
     <ul>
       <li *ngFor="let disStage of disease?.diseaseStage">
-        <!-- diseaseStage is a TreeNode instead of an OntologyClass (key instead of id) -->
-        {{ disStage.label }} [{{ disStage.key }}]
+        {{ disStage.label }} [{{ disStage.id }}]
       </li>
-    </ul>
+    </ul> -->
   </div>
   <div class="col-md-6">
     <b>Clinical TNM finding:</b><br />
     <ul>
-      <li *ngFor="let disFinding of disease?.clinicalTnmFinding">
-        <!-- diseaseStage is a TreeNode instead of an OntologyClass (key instead of id) -->
-        {{ disFinding.label }} [{{ disFinding.key }}]
+      <li *ngFor="let finding of findings">
+        {{ finding.label }} [{{ finding.id }}]
       </li>
     </ul>
   </div>

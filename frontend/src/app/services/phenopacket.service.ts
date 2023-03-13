@@ -9,7 +9,10 @@ const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
 const mondoDiseasesUrl = environment.MONDO_DISEASES_URL;
 const onsetsUrl = environment.ONSETS_URL;
-const tnmFindingsUrl = environment.TNM_FINDINGS_URL;
+const tnmTumorFindingsUrl = environment.TNM_TUMOR_URL;
+const tnmNodeFindingsUrl = environment.TNM_NODE_URL;
+const tnmMetastasisFindingsUrl = environment.TNM_METASTASIS_URL;
+const diseaseStagesUrl = environment.DISEASE_STAGES_URL;
 const sexUrl = environment.SEX_URL;
 const genderUrl = environment.GENDER_URL;
 const lateralityUrl = environment.LATERALITY_URL;
@@ -63,8 +66,17 @@ export class PhenopacketService {
     getOnsets(): Observable<any> {
         return this.http.get(onsetsUrl);
     }
-    getTnmFindings(): Observable<any> {
-        return this.http.get(tnmFindingsUrl);
+    getTnmTumorFindings(): Observable<any> {
+        return this.http.get(tnmTumorFindingsUrl);
+    }
+    getTnmNodeFindings(): Observable<any> {
+        return this.http.get(tnmNodeFindingsUrl);
+    }
+    getTnmMetastasisFindings(): Observable<any> {
+        return this.http.get(tnmMetastasisFindingsUrl);
+    }
+    getDiseaseStages(): Observable<any> {
+        return this.http.get(diseaseStagesUrl);
     }
     setProfileSelection(profile: ProfileSelection) {
         this.profileSelection.next(profile);

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { TimeElement } from '../models/base';
+import { OntologyClass, TimeElement } from '../models/base';
 import { BaseSearchService } from './base-search.service';
 
 const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
@@ -18,6 +18,8 @@ export class DiseaseSearchService extends BaseSearchService {
 
     onset = new Subject<TimeElement>();
     resolution = new Subject<TimeElement>();
+    tnmFindings = new Subject<OntologyClass[]>();
+    diseaseStages = new Subject<OntologyClass[]>();
 
     constructor(private http: HttpClient) {
         super(http);
@@ -80,5 +82,19 @@ export class DiseaseSearchService extends BaseSearchService {
 
     setDiseaseResolution(resolution: TimeElement) {
         this.resolution.next(resolution);
+    }
+
+    getTnmFindings(): Observable<OntologyClass[]> {
+        return this.tnmFindings.asObservable();
+    }
+    setTnmFindings(findings: OntologyClass[]) {
+        this.tnmFindings.next(findings);
+    }
+
+    getStages(): Observable<OntologyClass[]> {
+        return this.diseaseStages.asObservable();
+    }
+    setStages(stages: OntologyClass[]) {
+        this.diseaseStages.next(stages);
     }
 }

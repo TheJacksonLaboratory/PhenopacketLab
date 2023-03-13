@@ -126,11 +126,29 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
   }
-  updateEvidences(evidences: any[]) {
+  updateEvidences(nodes: any[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.evidences = evidences;
+      this.phenotypicFeature.evidences = [];
+      this.phenotypicFeature.evidenceNodes = [];
+      for (const node of nodes) {
+        const evidence = new Evidence(new OntologyClass(node.key, node.label));
+        this.phenotypicFeature.evidences.push(evidence);
+        this.phenotypicFeature.evidenceNodes.push(node);
+      }
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
+  }
+  getSelectedEvidenceNodes() {
+    const selectedNodes = [];
+    if (this.phenotypicFeature && this.phenotypicFeature.evidences) {
+      this.phenotypicFeature.evidences.forEach(evidence => {
+        const node = new OntologyTreeNode();
+        node.key = evidence.evidenceCode.id;
+        node.label = evidence.evidenceCode.label;
+        selectedNodes.push(node);
+      });
+    }
+    return [];
   }
 
 }

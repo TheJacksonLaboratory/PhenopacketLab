@@ -75,6 +75,7 @@
               pTooltip="The intensity or degree of a manifestation"
               showDelay="2000"
               class="w-full"
+              [showClear]="true"
             ></p-dropdown>
           </div>
 
@@ -101,7 +102,7 @@
               pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
               showDelay="2000"
               (selectedNodesChange)="updateEvidences($event)"
-              [selectedNodes]="phenotypicFeature?.evidences"
+              [selectedNodes]="phenotypicFeature?.evidenceNodes"
               [selectionMode]="'checkbox'"
               [nodes]="evidencesNodes"
             ></ontology-tree-select>

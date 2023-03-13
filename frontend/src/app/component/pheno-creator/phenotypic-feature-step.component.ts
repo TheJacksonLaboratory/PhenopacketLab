@@ -209,7 +209,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
 
         this.submitted = true;
 
-        // console.log(this.phenopacketService.getPhenopacket());
     }
     prevPage() {
         this.phenopacketService.phenopacket = this.phenopacket;

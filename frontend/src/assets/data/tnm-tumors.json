@@ -1,0 +1,108 @@
+{
+  "key": "NCIT:C48885",
+  "label": "Generic Primary Tumor TNM Finding",
+  "children": [
+    { "key": "NCIT:C106299", "label": "Any T", "children": [] },
+    { "key": "NCIT:C48719", "label": "T0 Stage Finding", "children": [] },
+    {
+      "key": "NCIT:C48720",
+      "label": "T1 Stage Finding",
+      "children": [
+        {
+          "key": "NCIT:C48721",
+          "label": "T1a Stage Finding",
+          "children": [
+            {
+              "key": "NCIT:C188292",
+              "label": "T1a1 Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C188293",
+              "label": "T1a2 Stage Finding",
+              "children": []
+            }
+          ]
+        },
+        {
+          "key": "NCIT:C48722",
+          "label": "T1b Stage Finding",
+          "children": [
+            {
+              "key": "NCIT:C188294",
+              "label": "T1b1 Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C188295",
+              "label": "T1b2 Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C180899",
+              "label": "T1b3 Stage Finding",
+              "children": []
+            }
+          ]
+        },
+        { "key": "NCIT:C48723", "label": "T1c Stage Finding", "children": [] },
+        { "key": "NCIT:C95805", "label": "T1mi Stage Finding", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C48724",
+      "label": "T2 Stage Finding",
+      "children": [
+        {
+          "key": "NCIT:C48725",
+          "label": "T2a Stage Finding",
+          "children": [
+            {
+              "key": "NCIT:C188296",
+              "label": "T2a1 Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C188297",
+              "label": "T2a2 Stage Finding",
+              "children": []
+            }
+          ]
+        },
+        { "key": "NCIT:C48726", "label": "T2b Stage Finding", "children": [] },
+        { "key": "NCIT:C48727", "label": "T2c Stage Finding", "children": [] },
+        { "key": "NCIT:C148411", "label": "T2d Stage Finding", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C48728",
+      "label": "T3 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48729", "label": "T3a Stage Finding", "children": [] },
+        { "key": "NCIT:C48730", "label": "T3b Stage Finding", "children": [] },
+        { "key": "NCIT:C48731", "label": "T3c Stage Finding", "children": [] },
+        { "key": "NCIT:C148412", "label": "T3d Stage Finding", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C48732",
+      "label": "T4 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48733", "label": "T4a Stage Finding", "children": [] },
+        { "key": "NCIT:C48734", "label": "T4b Stage Finding", "children": [] },
+        { "key": "NCIT:C48735", "label": "T4c Stage Finding", "children": [] },
+        { "key": "NCIT:C48736", "label": "T4d Stage Finding", "children": [] },
+        { "key": "NCIT:C188298", "label": "T4e Stage Finding", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C132010", "label": "T5 Stage Finding", "children": [] },
+    { "key": "NCIT:C48737", "label": "TX Stage Finding", "children": [] },
+    {
+      "key": "NCIT:C48738",
+      "label": "Tis Stage Finding",
+      "children": [
+        { "key": "NCIT:C96025", "label": "Ta Stage Finding", "children": [] }
+      ]
+    }
+  ]
+}
