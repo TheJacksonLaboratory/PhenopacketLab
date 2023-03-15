@@ -32,7 +32,8 @@
       rows="2"
       cols="30"
       pInputTextarea
-      [(ngModel)]="variationDescriptor?.description"
+      [ngModel]="variationDescriptor?.description"
+      (ngModelChange)="onDescriptionChange($event)"
       [autoResize]="false"
     ></textarea>
   </div>
