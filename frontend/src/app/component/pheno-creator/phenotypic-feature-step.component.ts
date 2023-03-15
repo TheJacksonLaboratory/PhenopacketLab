@@ -10,6 +10,7 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { Utils } from '../shared/utils';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -114,20 +115,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
-     * @returns Returns the biggest key
-     */
-    getBiggestKey() {
-        let key = 0;
-        for (const feature of this.phenotypicFeatures) {
-            if ((feature.key) >= key) {
-                key = feature.key;
-            }
-        }
-        return key;
-    }
-
-    /**
      * Adds a new phenotypic feature.
      **/
     addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
@@ -135,7 +122,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             return;
         }
         // set unique key for feature table
-        phenotypicFeature.key = this.getBiggestKey() + 1;
+        phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
         this.phenotypicFeatures.push(phenotypicFeature);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.phenotypicFeatures = this.phenotypicFeatures.slice();

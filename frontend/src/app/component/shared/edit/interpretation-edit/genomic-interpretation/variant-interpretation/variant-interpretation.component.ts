@@ -1,10 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Utils } from 'src/app/component/shared/utils';
 import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
-import { SpinnerDialogComponent } from '../../../../spinner-dialog/spinner-dialog.component';
+import { SpinnerDialogComponent } from 'src/app/component/shared/spinner-dialog/spinner-dialog.component';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -97,7 +98,7 @@ export class VariantInterpretationComponent implements OnInit {
                 for (const item of data) {
                     const variant = new VariantMetadata(item);
                     const vInterpretation = variant.toVariantInterpretation(this.selectedAcmgPathogenicity, this.genotype);
-                    vInterpretation.key = this.getBiggestKey(this.interpretations) + 1;
+                    vInterpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
                     vInterpretation.acmgPathogenicityClassification = this.selectedAcmgPathogenicity;
                     vInterpretation.therapeuticActionability = this.selectedTherapeuticActionability;
                     this.interpretations.push(vInterpretation);
@@ -126,21 +127,6 @@ export class VariantInterpretationComponent implements OnInit {
         } else {
             this.variantInterpretationChange.emit(this.interpretations[0]);
         }
-    }
-
-    /**
-     *
-     * @param array of item with key parameters
-     * @returns Returns the biggest key
-     */
-    getBiggestKey(array: any[]) {
-        let key = 0;
-        for (const item of array) {
-            if ((item.key) >= key) {
-                key = item.key;
-            }
-        }
-        return key;
     }
 
     getHgvsExpression(interpretation: VariantInterpretation, syntax: string) {

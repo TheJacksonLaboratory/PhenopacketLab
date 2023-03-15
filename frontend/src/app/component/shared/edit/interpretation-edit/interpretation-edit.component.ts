@@ -7,6 +7,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { Utils } from 'src/app/component/shared/utils';
 
 @Component({
     providers: [ConfirmationService],
@@ -64,21 +65,6 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    /**
-     *
-     * @param array of item with key parameters
-     * @returns Returns the biggest key
-     */
-    getBiggestKey(array: any[]) {
-        let key = 0;
-        for (const item of array) {
-            if ((item.key) >= key) {
-                key = item.key;
-            }
-        }
-        return key;
-    }
-
     onIdChange(event) {
         this.id = event;
     }
@@ -94,7 +80,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
         const genomicInterpretation = new GenomicInterpretation();
         genomicInterpretation.subjectOrBiosampleId = this.phenopacket.subject.id;
-        genomicInterpretation.key = this.getBiggestKey(this.genomicInterpretations) + 1;
+        genomicInterpretation.key = Utils.getBiggestKey(this.genomicInterpretations) + 1;
         this.genomicInterpretations.push(genomicInterpretation);
         this.genomicInterpretationVisible = true;
     }

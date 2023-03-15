@@ -10,6 +10,7 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { Utils } from '../shared/utils';
 
 @Component({
     providers: [ConfirmationService],
@@ -106,20 +107,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
-     * @returns Returns the biggest key
-     */
-    getBiggestKey() {
-        let key = 0;
-        for (const disease of this.diseases) {
-            if ((disease.key) >= key) {
-                key = disease.key;
-            }
-        }
-        return key;
-    }
-
-    /**
      * Adds a new disease.
      **/
     addDisease(disease?: Disease) {
@@ -127,7 +114,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
             return;
         }
         // set unique key for feature table
-        disease.key = this.getBiggestKey() + 1;
+        disease.key = Utils.getBiggestKey(this.diseases) + 1;
         this.diseases.push(disease);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.diseases = this.diseases.slice();

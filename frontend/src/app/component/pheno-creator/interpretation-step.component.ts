@@ -10,6 +10,7 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { Utils } from '../shared/utils';
 
 @Component({
     providers: [ConfirmationService],
@@ -78,21 +79,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
-     * @param array of item with key parameters
-     * @returns Returns the biggest key
-     */
-    getBiggestKey(array: any[]) {
-        let key = 0;
-        for (const item of array) {
-            if ((item.key) >= key) {
-                key = item.key;
-            }
-        }
-        return key;
-    }
-
-    /**
      * Adds a new Interpretation.
      **/
     addInterpretation(interpretation?: Interpretation) {
@@ -100,7 +86,7 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
             return;
         }
         // set unique key for feature table
-        interpretation.key = this.getBiggestKey(this.interpretations) + 1;
+        interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
         this.interpretations.push(interpretation);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.interpretations = this.interpretations.slice();
