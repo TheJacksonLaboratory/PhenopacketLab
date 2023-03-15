@@ -21,6 +21,7 @@ import { OntologyTimeComponent } from './time-element/ontology-time/ontology-tim
 import { VariantInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variant-interpretation.component';
 import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
 import { GenomicInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation.component';
+import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { GenomicInterpretationComponent } from './edit/interpretation-edit/genom
     IndividualEditComponent,
     InterpretationEditComponent,
     VariantInterpretationComponent,
-    GenomicInterpretationComponent
+    GenomicInterpretationComponent,
+    VariationDescriptorComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -70,6 +72,7 @@ import { GenomicInterpretationComponent } from './edit/interpretation-edit/genom
     InterpretationEditComponent,
     VariantInterpretationComponent,
     GenomicInterpretationComponent,
+    VariationDescriptorComponent,
     PrimeModule,
     MaterialModule
   ]

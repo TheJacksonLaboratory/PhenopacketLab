@@ -1,8 +1,12 @@
 <p-toast position="center" key="cen"></p-toast>
 
-<p-panel header="Variant interpretation" [toggleable]="true" [collapsed]="true">
+<p-fieldset
+  legend="Variant interpretation"
+  [toggleable]="true"
+  [collapsed]="true"
+>
   <ng-template pTemplate="icons">
-<!--    <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>-->
+    <!--    <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>-->
   </ng-template>
   <div class="grid p-fluid">
     <div class="field col-12 md:col-6">
@@ -146,7 +150,11 @@
             <th pResizableColumn></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-interpretation let-expanded="expanded">
+        <ng-template
+          pTemplate="body"
+          let-interpretation
+          let-expanded="expanded"
+        >
           <tr [pSelectableRow]="interpretation">
             <td>
               <button
@@ -159,8 +167,10 @@
               ></button>
             </td>
             <td>{{ interpretation.variationDescriptor.vcfRecord?.chrom }}</td>
-            <td>{{ getHgvsExpression(interpretation, 'hgvs.c') }}</td>
-            <td>{{ interpretation.variationDescriptor.geneContext?.symbol }}</td>
+            <td>{{ getHgvsExpression(interpretation, "hgvs.c") }}</td>
+            <td>
+              {{ interpretation.variationDescriptor.geneContext?.symbol }}
+            </td>
             <td>{{ interpretation.variationDescriptor.moleculeContext }}</td>
             <td>
               <button
@@ -174,10 +184,16 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="rowexpansion" let-interpretation>
-<!-- Variation Descriptor -->
-          
+          <!-- Variation Descriptor -->
+          <tr>
+            <td colspan="6">
+              <div class="p-3">
+                <app-variation-descriptor [variationDescriptor]="interpretation.variationDescriptor" (variationDescriptorChange)="updateVariationDescriptor($event)"></app-variation-descriptor>
+              </div>
+            </td>
+          </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
-</p-panel>
+</p-fieldset>

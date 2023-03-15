@@ -21,6 +21,5 @@ export const environment = {
   HPO_DISEASE_URL: `${API_URL}/diseases`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
-  // can be removed onced merged
-  TNM_FINDINGS_URL: `${API_URL}/tnm-findings`
+  ALLELIC_STATE_URL: `${API_URL}/tree-allelic-states`
 };

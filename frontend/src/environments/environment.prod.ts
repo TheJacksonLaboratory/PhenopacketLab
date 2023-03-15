@@ -20,5 +20,6 @@ export const environment = {
   DISEASE_STAGES_URL: `${API_URL}/constants/tree-disease-stages`,
   HPO_DISEASE_URL: `${API_URL}/diseases`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
-  FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`
+  FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
+  ALLELIC_STATE_URL: `${API_URL}/tree-allelic-states`
 };

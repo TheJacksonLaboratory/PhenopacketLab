@@ -22,6 +22,8 @@ const genders = require('../../assets/data/gender.json');
 const laterality = require('../../assets/data/laterality.json');
 const severity = require('../../assets/data/severity.json');
 const stages = require('../../assets/data/stages.json');
+const functionalAnnotation = require('../../assets/data/functional-annotation.json');
+const allelicStates = require('../../assets/data/allelic-state.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -72,6 +74,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getMondoDiseases();
                 case url.endsWith('textminer') && method === 'POST':
                     return getTextMined();
+                case url.match(/\/functional-annotation\/.*/) && method === 'GET':
+                    return getFunctionalAnnotation();
+                case url.match('tree-allelic-states') && method === 'GET':
+                    return getAllelicStates();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -135,6 +141,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getTextMined() {
             return ok(textMinedExample);
+        }
+        function getFunctionalAnnotation() {
+            return ok(functionalAnnotation);
+        }
+        function getAllelicStates() {
+            return ok(allelicStates);
         }
         // helper functions
 

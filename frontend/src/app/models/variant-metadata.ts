@@ -4,6 +4,7 @@ import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeCo
 
 export class VariantMetadata {
     key?: number;
+    assembly: string;
     chr: string;
     position: number;
     ref: string;
@@ -17,6 +18,7 @@ export class VariantMetadata {
     genotype: string;
 
     constructor(variant: VariantMetadata) {
+        this.assembly = variant.assembly;
         this.chr = variant.chr;
         this.position = variant.position;
         this.ref = variant.ref;
@@ -91,6 +93,7 @@ export class VariantMetadata {
             }
         }
         const vcfRecord = new VcfRecord();
+        vcfRecord.genomeAssembly = this.assembly;
         vcfRecord.chrom = this.chr;
         vcfRecord.pos = this.position;
         vcfRecord.alt = this.alt;

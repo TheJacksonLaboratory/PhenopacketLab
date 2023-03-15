@@ -9,7 +9,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
-import { SidebarModule } from "primeng/sidebar";
+import { SidebarModule } from 'primeng/sidebar';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { ChipsModule } from 'primeng/chips';
 import { TreeModule } from 'primeng/tree';
@@ -22,12 +22,14 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
-import { ToastModule } from "primeng/toast";
+import { ToastModule } from 'primeng/toast';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PanelModule } from 'primeng/panel';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FieldsetModule } from 'primeng/fieldset';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { PanelModule } from 'primeng/panel';
     SidebarModule,
     MenubarModule,
     MenuModule,
-    TooltipModule
+    TooltipModule,
+    InputTextareaModule,
+    FieldsetModule
   ],
   exports: [
     ButtonModule,
@@ -87,7 +91,9 @@ import { PanelModule } from 'primeng/panel';
     PanelModule,
     SidebarModule,
     MenubarModule,
-    MenuModule
+    MenuModule,
+    InputTextareaModule,
+    FieldsetModule
   ],
   providers: [MessageService, ConfirmationService]
 })

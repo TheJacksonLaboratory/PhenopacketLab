@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation } from 'src/app/models/interpretation';
+import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { SpinnerDialogComponent } from '../../../../spinner-dialog/spinner-dialog.component';
@@ -154,5 +154,9 @@ export class VariantInterpretationComponent implements OnInit {
                 }
             }
         }
+    }
+
+    updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
+
     }
 }
