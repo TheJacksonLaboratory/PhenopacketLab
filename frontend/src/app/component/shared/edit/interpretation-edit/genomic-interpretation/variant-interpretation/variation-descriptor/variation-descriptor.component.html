@@ -340,10 +340,8 @@
       [filter]="true"
       [filterInputAutoFocus]="true"
     >
-    <ng-template let-allelic pTemplate="item">
-      <div [pTooltip]="allelic.key" tooltipPosition="left" escape="false">
-        {{ allelic.label }}
-      </div>
+    <ng-template let-node pTemplate="default">
+      <span [pTooltip]="node.key">{{ node.label }}</span>
     </ng-template>
     </p-treeSelect>
   </div>

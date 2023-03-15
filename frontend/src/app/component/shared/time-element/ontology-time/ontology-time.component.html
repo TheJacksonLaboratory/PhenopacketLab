@@ -9,4 +9,8 @@
     placeholder="Select item"
     [filter]="true"
     [filterInputAutoFocus]="true"
-  ></p-treeSelect>
+  >
+  <ng-template let-node pTemplate="default">
+    <span [pTooltip]="node.key">{{ node.label }}</span>
+  </ng-template>
+</p-treeSelect>

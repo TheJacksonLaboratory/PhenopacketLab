@@ -31,6 +31,9 @@
       {{ node.label }}
     </ng-template>
   </div>
+  <ng-template let-node pTemplate="default">
+    <span [pTooltip]="node.key">{{ node.label }}</span>
+  </ng-template>
 </p-tree>
 <!-- <p-accordion>
   <p-accordionTab header="Horizontal tree view">

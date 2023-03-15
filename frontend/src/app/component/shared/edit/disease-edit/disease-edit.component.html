@@ -79,7 +79,11 @@
               placeholder="Select Disease Stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
-            ></p-treeSelect>
+            >
+              <ng-template let-node pTemplate="default">
+                <span [pTooltip]="node.key">{{ node.label }}</span>
+              </ng-template>
+            </p-treeSelect>
           </div>
           <div class="field col-12">
             <label for="laterality"><b>Laterality:</b></label>
@@ -112,7 +116,11 @@
               placeholder="Select tumor stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
-            ></p-treeSelect>
+            >
+              <ng-template let-node pTemplate="default">
+                <span [pTooltip]="node.key">{{ node.label }}</span>
+              </ng-template>
+            </p-treeSelect>
             <p-treeSelect
               ngDefaultControl
               id="findings"
@@ -124,7 +132,11 @@
               placeholder="Select node stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
-            ></p-treeSelect>
+            >
+              <ng-template let-node pTemplate="default">
+                <span [pTooltip]="node.key">{{ node.label }}</span>
+              </ng-template>
+            </p-treeSelect>
             <p-treeSelect
               ngDefaultControl
               id="findings"
@@ -136,7 +148,11 @@
               placeholder="Select metastasis stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
-            ></p-treeSelect>
+            >
+              <ng-template let-node pTemplate="default">
+                <span [pTooltip]="node.key">{{ node.label }}</span>
+              </ng-template>
+            </p-treeSelect>
           </div>
         </div>
       </p-accordionTab>
