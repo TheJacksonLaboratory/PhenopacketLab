@@ -15,6 +15,8 @@ export class GenomicInterpretationComponent implements OnInit {
     genomicInterpretationChange = new EventEmitter<GenomicInterpretation>();
 
     selectedInterpretationStatus: InterpretationStatus;
+    interpretationStatuses = Object.keys(InterpretationStatus).filter((item) => isNaN(Number(item)));
+
 
     constructor(public searchService: InterpretationService) {
     }
@@ -24,20 +26,9 @@ export class GenomicInterpretationComponent implements OnInit {
 
     updateInterpretationStatus(event) {
         console.log(event);
-        const interpretationStatusValue = event.value;
-        for (const status of InterpretationStatus.getStatuses()) {
-            if (status.value === interpretationStatusValue.value) {
-                this.genomicInterpretation.interpretationStatus = status;
-                this.selectedInterpretationStatus = status;
-                console.log(this.genomicInterpretation.interpretationStatus);
-                break;
-            }
-        }
+        this.selectedInterpretationStatus = event.value;
+        console.log(this.genomicInterpretation.interpretationStatus);
         this.genomicInterpretationChange.emit(this.genomicInterpretation);
-    }
-    getInterpretationStatuses() {
-        // return Object.values(InterpretationStatus).filter(x => !(parseInt(x) >= 0));
-        return InterpretationStatus.getStatuses();
     }
 
     addVariantInterpretation(variantInterpretation: VariantInterpretation) {

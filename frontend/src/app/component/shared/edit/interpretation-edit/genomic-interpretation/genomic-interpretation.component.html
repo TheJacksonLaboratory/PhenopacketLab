@@ -17,25 +17,15 @@
     <p-dropdown
       id="interpretationstatus"
       appendTo="body"
-      placeholder="Select progress status"
-      [ngModel]="selectedInterpretationStatus"
-      [options]="getInterpretationStatuses()"
+      placeholder="Select interpretation status"
+      [(ngModel)]="selectedInterpretationStatus"
+      [options]="interpretationStatuses"
       (onChange)="updateInterpretationStatus($event)"
       pTooltip="Interpretation status"
       showDelay="2000"
       class="w-full"
       showClear="true"
-      optionLabel="value"
     >
-      <ng-template let-interpretationstatus pTemplate="item">
-        <div
-          [pTooltip]="interpretationstatus.description"
-          tooltipPosition="left"
-          escape="false"
-        >
-          {{ interpretationstatus.value }}
-        </div>
-      </ng-template>
     </p-dropdown>
   </div>
 

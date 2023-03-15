@@ -60,27 +60,35 @@ export class Diagnosis {
     }
 }
 
-export class InterpretationStatus {
-
-    public static UNKNOWN_STATUS = new InterpretationStatus('UNKNOWN_STATUS', 'No information is available about the status');
-    public static REJECTED = new InterpretationStatus('REJECTED', 'The variant or gene reported here is interpreted not to be related to the diagnosis');
-    public static CANDIDATE = new InterpretationStatus('CANDIDATE', 'The variant or gene reported here is interpreted to possibly be related to the diagnosis');
-    public static CONTRIBUTORY = new InterpretationStatus('CONTRIBUTORY', 'The variant or gene reported here is interpreted to be related to the diagnosis');
-    public static CAUSATIVE = new InterpretationStatus('CAUSATIVE', 'The variant or gene reported here is interpreted to be causative of the diagnosis');
-
-    private constructor(public value: string, public description: string) {
-    }
-
-    public static getStatuses() {
-        const values = [];
-        values.push(InterpretationStatus.UNKNOWN_STATUS);
-        values.push(InterpretationStatus.REJECTED);
-        values.push(InterpretationStatus.CANDIDATE);
-        values.push(InterpretationStatus.CONTRIBUTORY);
-        values.push(InterpretationStatus.CAUSATIVE);
-        return values;
-    }
+export enum InterpretationStatus {
+    UNKNOWN_STATUS = 'UNKNOWN_STATUS',
+    REJECTED = 'REJECTED',
+    CANDIDATE = 'CANDIDATE',
+    CONTRIBUTORY = 'CONTRIBUTORY',
+    CAUSATIVE = 'CAUSATIVE'
 }
+
+// export class InterpretationStatus {
+
+//     public static UNKNOWN_STATUS = new InterpretationStatus('UNKNOWN_STATUS', 'No information is available about the status');
+//     public static REJECTED = new InterpretationStatus('REJECTED', 'The variant or gene reported here is interpreted not to be related to the diagnosis');
+//     public static CANDIDATE = new InterpretationStatus('CANDIDATE', 'The variant or gene reported here is interpreted to possibly be related to the diagnosis');
+//     public static CONTRIBUTORY = new InterpretationStatus('CONTRIBUTORY', 'The variant or gene reported here is interpreted to be related to the diagnosis');
+//     public static CAUSATIVE = new InterpretationStatus('CAUSATIVE', 'The variant or gene reported here is interpreted to be causative of the diagnosis');
+
+//     private constructor(public value: string, public description: string) {
+//     }
+
+//     public static getStatuses() {
+//         const values = [];
+//         values.push(InterpretationStatus.UNKNOWN_STATUS);
+//         values.push(InterpretationStatus.REJECTED);
+//         values.push(InterpretationStatus.CANDIDATE);
+//         values.push(InterpretationStatus.CONTRIBUTORY);
+//         values.push(InterpretationStatus.CAUSATIVE);
+//         return values;
+//     }
+// }
 export class GenomicInterpretation extends Convert {
     // used for unique identifier in a table, not part of the phenopacket schema
     key?: number;
