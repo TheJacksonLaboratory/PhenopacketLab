@@ -105,6 +105,12 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-allelic-states", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getAllelicStatesTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.allelicStateTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")
     public ResponseEntity<List<Concept>> getContigs(@PathVariable("genomeAssembly") String genomeAssembly) {
         List<Concept> concepts = conceptConstantsService.contigConstants(genomeAssembly);

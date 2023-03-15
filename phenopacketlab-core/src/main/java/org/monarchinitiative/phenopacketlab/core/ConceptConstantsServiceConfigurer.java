@@ -29,9 +29,6 @@ public class ConceptConstantsServiceConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConceptConstantsServiceConfigurer.class);
 
-    // TODO add constant to HpoClinicalModifierTermIds
-    public static final TermId MODIFIER = TermId.of("HP:0012823");
-
     public static ConceptConstantsService configure(ConceptResourceService resourceService) {
         List<IdentifiedConcept> sexConstants = configureSexConstants(resourceService);
         List<IdentifiedConcept> genderConstants = configureGenderConstants(resourceService);
@@ -46,6 +43,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> tnmNodeTreeConstants = configureTnmNodeTreeConstants(resourceService);
         Optional<SubtreeNode> tnmMetastasisTreeConstants = configureTnmMetastasisTreeConstants(resourceService);
         Optional<SubtreeNode> diseaseStagesTreeConstants = configureDiseaseStagesTreeConstants(resourceService);
+        Optional<SubtreeNode> allelicStateTreeConstants = configureAllelicStateTreeConstants(resourceService);
         List<Concept> structuralTypeConstants = configureStructuralTypes();
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
@@ -58,10 +56,11 @@ public class ConceptConstantsServiceConfigurer {
                 severityConstants,
                 onsetConstants,
                 onsetTreeConstants.orElse(null),
-                tnmTumorTreeConstants,
-                tnmNodeTreeConstants,
-                tnmMetastasisTreeConstants,
-                diseaseStagesTreeConstants,
+                tnmTumorTreeConstants.orElse(null),
+                tnmNodeTreeConstants.orElse(null),
+                tnmMetastasisTreeConstants.orElse(null),
+                diseaseStagesTreeConstants.orElse(null),
+                allelicStateTreeConstants.orElse(null),
                 structuralTypeConstants,
                 contigConstants);
     }
@@ -160,24 +159,6 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
-        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
-        if (hpOptional.isEmpty()) {
-            LOGGER.warn("Cannot configure modifier tree constants due to missing HP concept resource!");
-            return Optional.empty();
-        }
-
-        IdentifiedConceptResource hp = hpOptional.get();
-        if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
-
-            return CreateSubtree.createSubtree(MODIFIER, hpo, Comparator.comparing(SubtreeNode::getLabel));
-        } else {
-            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
-            return Optional.empty();
-        }
-    }
-
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
         if (hpOptional.isEmpty()) {
@@ -200,54 +181,49 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
-    private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
-        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
-        if (hpOptional.isEmpty()) {
-            LOGGER.warn("Cannot configure onset tree constants due to missing HP concept resource!");
+    private static Optional<SubtreeNode> configureTreeConstants(ConceptResourceService resourceService, TermId rootTerm, String prefix) {
+        Optional<IdentifiedConceptResource> optional = resourceService.forPrefix(prefix);
+        if (optional.isEmpty()) {
+            LOGGER.warn("Cannot configure onset tree constants due to missing " + prefix + " concept resource!");
             return Optional.empty();
         }
 
-        IdentifiedConceptResource hp = hpOptional.get();
-        if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
-            return CreateSubtree.createSubtree(HpoOnsetTermIds.ONSET, hpo, Comparator.comparing(SubtreeNode::getLabel));
+        IdentifiedConceptResource resource = optional.get();
+        if (resource instanceof OntologyConceptResource) {
+            Ontology onto = ((OntologyConceptResource) resource).getOntology();
+            return CreateSubtree.createSubtree(rootTerm, onto, Comparator.comparing(SubtreeNode::getLabel));
         } else {
-            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            LOGGER.warn("BUG: " + prefix + " concept resource should implement OntologyConceptResource.");
             return Optional.empty();
         }
     }
 
-    private static Optional<SubtreeNode> configureNcitTreeConstants(ConceptResourceService resourceService, String id) {
-        Optional<IdentifiedConceptResource> ncitOptional = resourceService.forPrefix("NCIT");
-        if (ncitOptional.isEmpty()) {
-            LOGGER.warn("Cannot configure NCIT "+ id + " tree constants due to missing NCIT concept resource!");
-            return Optional.empty();
-        }
+    private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
+        return configureTreeConstants(resourceService, TermId.of("HP:0012823"), "HP");
+    }
 
-        IdentifiedConceptResource ncit = ncitOptional.get();
-        if (ncit instanceof OntologyConceptResource) {
-            Ontology ncitOnto = ((OntologyConceptResource) ncit).getOntology();
-            return CreateSubtree.createSubtree(ncitOnto.getPrimaryTermId(TermId.of(id)), ncitOnto, Comparator.comparing(SubtreeNode::getLabel));
-        } else {
-            LOGGER.warn("BUG: NCIT " + id + " concept resource should implement OntologyConceptResource.");
-            return Optional.empty();
-        }
+    private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {
+        return configureTreeConstants(resourceService, HpoOnsetTermIds.ONSET, "HP");
     }
 
     private static Optional<SubtreeNode> configureTnmTumorTreeConstants(ConceptResourceService resourceService) {
-        return configureNcitTreeConstants(resourceService, "NCIT:C48885");
+        return configureTreeConstants(resourceService, TermId.of("NCIT:C48885"), "NCIT");
     }
 
     private static Optional<SubtreeNode> configureTnmNodeTreeConstants(ConceptResourceService resourceService) {
-        return configureNcitTreeConstants(resourceService, "NCIT:C48884");
+        return configureTreeConstants(resourceService, TermId.of("NCIT:C48884"), "NCIT");
     }
 
     private static Optional<SubtreeNode> configureTnmMetastasisTreeConstants(ConceptResourceService resourceService) {
-        return configureNcitTreeConstants(resourceService, "NCIT:C48883");
+        return configureTreeConstants(resourceService, TermId.of("NCIT:C48883"), "NCIT");
     }
 
     private static Optional<SubtreeNode> configureDiseaseStagesTreeConstants(ConceptResourceService resourceService) {
-        return configureNcitTreeConstants(resourceService, "NCIT:C28108");
+        return configureTreeConstants(resourceService, TermId.of("NCIT:C28108"), "NCIT");
+    }
+
+    private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService) {
+        return configureTreeConstants(resourceService, TermId.of("GENO:0000875"), "GENO");
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

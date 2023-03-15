@@ -19,10 +19,11 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
     private final SubtreeNode onsetTreeConstants;
-    private final Optional<SubtreeNode> tnmTumorTreeConstants;
-    private final Optional<SubtreeNode> tnmNodeTreeConstants;
-    private final Optional<SubtreeNode> tnmMetastasisTreeConstants;
-    private final Optional<SubtreeNode> diseaseStagesTreeConstants;
+    private final SubtreeNode tnmTumorTreeConstants;
+    private final SubtreeNode tnmNodeTreeConstants;
+    private final SubtreeNode tnmMetastasisTreeConstants;
+    private final SubtreeNode diseaseStagesTreeConstants;
+    private final SubtreeNode allelicStateTreeConstants;
     private final List<Concept> structuralTypeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -35,10 +36,11 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
                                 SubtreeNode onsetTreeConstants,
-                                Optional<SubtreeNode> tnmTumorTreeConstants,
-                                Optional<SubtreeNode> tnmNodeTreeConstants,
-                                Optional<SubtreeNode> tnmMetastasisTreeConstants,
-                                Optional<SubtreeNode> diseaseStagesTreeConstants,
+                                SubtreeNode tnmTumorTreeConstants,
+                                SubtreeNode tnmNodeTreeConstants,
+                                SubtreeNode tnmMetastasisTreeConstants,
+                                SubtreeNode diseaseStagesTreeConstants,
+                                SubtreeNode allelicStateTreeConstants,
                                 List<Concept> structuralTypeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -54,6 +56,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.tnmNodeTreeConstants = tnmNodeTreeConstants;
         this.tnmMetastasisTreeConstants = tnmMetastasisTreeConstants;
         this.diseaseStagesTreeConstants = diseaseStagesTreeConstants;
+        this.allelicStateTreeConstants = allelicStateTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
         this.contigConstants = contigConstants;
     }
@@ -99,21 +102,22 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     }
 
     @Override
-    public Optional<SubtreeNode> tnmTumorTreeConstants() { return tnmTumorTreeConstants; }
+    public Optional<SubtreeNode> tnmTumorTreeConstants() { return Optional.ofNullable(tnmTumorTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> tnmNodeTreeConstants() { return tnmNodeTreeConstants; }
+    public Optional<SubtreeNode> tnmNodeTreeConstants() { return Optional.ofNullable(tnmNodeTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return tnmMetastasisTreeConstants; }
+    public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return Optional.ofNullable(tnmMetastasisTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> diseaseStagesTreeConstants() { return diseaseStagesTreeConstants; }
+    public Optional<SubtreeNode> diseaseStagesTreeConstants() { return Optional.ofNullable(diseaseStagesTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> onsetTreeConstants() {
-        return Optional.ofNullable(onsetTreeConstants);
-    }
+    public Optional<SubtreeNode> onsetTreeConstants() { return Optional.ofNullable(onsetTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> allelicStateTreeConstants() { return Optional.ofNullable(allelicStateTreeConstants); }
 
     @Override
     public List<Concept> structuralTypeConstants() {

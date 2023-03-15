@@ -22,11 +22,11 @@ public interface ConceptConstantsService {
 
     List<IdentifiedConcept> modifierConstants();
 
-    Optional<SubtreeNode> modifierTreeConstants();
-
     List<IdentifiedConcept> severityConstants();
 
     List<IdentifiedConcept> onsetConstants();
+
+    Optional<SubtreeNode> modifierTreeConstants();
 
     Optional<SubtreeNode> onsetTreeConstants();
 
@@ -41,4 +41,6 @@ public interface ConceptConstantsService {
     List<Concept> contigConstants(String genomeAssembly);
 
     Optional<SubtreeNode> diseaseStagesTreeConstants();
+
+    Optional<SubtreeNode> allelicStateTreeConstants();
 }
