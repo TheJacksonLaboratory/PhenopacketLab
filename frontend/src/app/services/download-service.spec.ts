@@ -3,7 +3,7 @@ import { DownloadService } from './download-service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
 import { Phenopacket } from '../models/phenopacket';
-import { Individual, Sex, Status, VitalStatus } from '../models/individual';
+import { Individual, Status, VitalStatus } from '../models/individual';
 import { Age, OntologyClass, TimeElement, TimeInterval } from '../models/base';
 import { PhenotypicFeature } from '../models/phenotypic-feature';
 
@@ -25,7 +25,7 @@ describe('DownloadService', () => {
         phenopacket.id = 'arbitrary.phenopacket.id';
         const individual = new Individual();
         individual.id = 'P123542';
-        individual.sex = Sex.MALE;
+        individual.sex = 'MALE';
         individual.timeAtLastEncounter = new TimeElement(new Age('P70Y'));
         individual.vitalStatus = new VitalStatus(Status.DECEASED, null, new OntologyClass('MONDO:0100096', 'COVID-19'));
         phenopacket.subject = individual;

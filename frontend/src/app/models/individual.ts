@@ -6,8 +6,8 @@ export class Individual {
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
     vitalStatus: VitalStatus = new VitalStatus();
-    sex: Sex;
-    karyotypicSex: KaryotypicSex;
+    sex: string;
+    karyotypicSex: string;
     gender: OntologyClass;
     taxonomy: OntologyClass;
 
@@ -86,23 +86,39 @@ export class VitalStatus {
         return vitalSatus;
     }
 }
-export enum Sex {
-    UNKNOWN_SEX = 'UNKNOWN_SEX',
-    FEMALE = 'FEMALE',
-    MALE = 'MALE',
-    OTHER_SEX = 'OTHER_SEX'
+
+export class ConstantObject {
+    name: string;
+    definition: string;
+    synonyms: string[];
+    id: Id;
 }
-export enum KaryotypicSex {
-    UNKNOWN_KARYOTYPE = 'Unknown karyotype',
-    XX = 'XX',
-    XY = 'XY',
-    XO = 'XO',
-    XXY = 'XXY',
-    XXX = 'XXX',
-    XXYY = 'XXYY',
-    XXXY = 'XXXY',
-    XXXX = 'XXXX',
-    XYY = 'XYY',
-    OTHER_KARYOTYPE = 'Other karyotype'
+export class Id {
+    value: string;
+    prefix: string;
+    id: string;
+}
+export class KaryotypicSex {
+    public static VALUES = [new KaryotypicSex('UNKNOWN_KARYOTYPE', 'Untyped or inconclusive karyotyping'),
+        new KaryotypicSex('XX', 'Female'),
+        new KaryotypicSex('XY', 'Male'),
+        new KaryotypicSex('XO', 'Single X chromosome only'),
+        new KaryotypicSex('XXY', 'Two X and one Y chromosome'),
+        new KaryotypicSex('XXX', 'Three X chromosomes'),
+        new KaryotypicSex('XXYY', 'Two X chromosomes and two Y chromosomes'),
+        new KaryotypicSex('XXXY', 'Three X chromosomes and one Y chromosome'),
+        new KaryotypicSex('XXXX', 'Four X chromosomes'),
+        new KaryotypicSex('XYY', 'One X and two Y chromosomes'),
+        new KaryotypicSex('OTHER_KARYOTYPE', 'None of the above types')];
+
+    name: string;
+    definition;
+    id: Id;
+
+    constructor(name: string, definition: string, id?: Id) {
+        this.name = name;
+        this.definition = definition;
+        this.id = id;
+    }
 }
 

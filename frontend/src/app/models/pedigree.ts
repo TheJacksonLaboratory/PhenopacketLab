@@ -1,5 +1,3 @@
-import { Sex } from './individual';
-
 export enum AffectedStatus {
     MISSING,
     UNAFFECTED,
@@ -10,7 +8,7 @@ export class Person {
     individualId: string;
     paternalId: string;
     maternalId: string;
-    sex: Sex;
+    sex: string;
     affectedStatus: AffectedStatus;
 
 }

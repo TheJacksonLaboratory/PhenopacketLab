@@ -1,18 +1,17 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationService, MessageService } from "primeng/api";
-import { FileUpload } from "primeng/fileupload";
-import { TabView } from "primeng/tabview";
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { FileUpload } from 'primeng/fileupload';
+import { TabView } from 'primeng/tabview';
 import { Subscription } from 'rxjs';
 import { Cohort } from 'src/app/models/cohort';
-import { Sex } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
 import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { UploadService } from "../../services/upload-service";
-import { Table }  from 'primeng/table';
+import { UploadService } from '../../services/upload-service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-phenopacket-list',
@@ -71,14 +70,14 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       accept: () => {
         // Remove tab if open since we are not default opening them
         const removeIdx = this.tabs.indexOf(individual);
-        if (removeIdx > -1){
+        if (removeIdx > -1) {
           this.tabs.splice(removeIdx, 1);
         }
         // Remove them from the cohort.
         this.cohortService.removeCohortMember(individual);
-        this.messageService.add({severity:'info', summary:'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
+        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
       },
-      reject: () => {}, key: "positionDialog"});
+      reject: () => {}, key: 'positionDialog'});
   }
 
   downloadPhenopacket(phenopacket: Phenopacket) {
@@ -89,7 +88,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     const selectedIndividual = this.tabs[index];
     selectedIndividual.id = id;
   }
-  changeSex(sex: Sex, index: number) {
+  changeSex(sex: string, index: number) {
     const selectedIndividual = this.tabs[index];
     selectedIndividual.subject.sex = sex;
   }
@@ -123,23 +122,23 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
                 const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
                 if (phenopacketListIds.includes(newPhenopacket.id)) {
                   const errorMessage = `'${newPhenopacket.id}' already exists.`;
-                  this.messageService.add({severity:'error', summary:"Duplicate Phenopacket ID Error", detail: errorMessage});
+                  this.messageService.add({severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage});
                   this.clearFileUpload();
                   return;
                 }
                 this.cohortService.addCohortMember(newPhenopacket);
                 this.clearFileUpload();
-                this.messageService.add({severity:'success', summary: "Phenopacket Upload Success!"});
+                this.messageService.add({severity: 'success', summary: 'Phenopacket Upload Success!'});
               }, (error) => {
                 this.clearFileUpload();
                 const detail = error?.detail != null ? error.detail : 'Please try again.';
-                this.messageService.add({severity:'error', summary: error.message, detail: detail});
+                this.messageService.add({severity: 'error', summary: error.message, detail: detail});
               })
     );
   }
 
-  clearFileUpload(){
-    this.fupload.clear()
+  clearFileUpload() {
+    this.fupload.clear();
     this.fupload._files = [];
   }
 }
