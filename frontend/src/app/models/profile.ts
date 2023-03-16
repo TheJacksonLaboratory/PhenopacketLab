@@ -18,7 +18,7 @@ export class Profile {
         routerLink: 'phenotypic-features'
     },
     {
-        label: 'Disease(s)',
+        label: 'Disease diagnoses',
         routerLink: 'diseases'
     },
     {
@@ -47,7 +47,7 @@ export class Profile {
         routerLink: 'biosamples'
     },
     {
-        label: 'Disease(s)',
+        label: 'Disease diagnoses',
         routerLink: 'diseases'
     },
     {
