@@ -80,7 +80,7 @@
 <br />
 <h3><b>Vital Status</b></h3>
 <div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
+  <div class="field col-12 md:col-4">
     <label for="status">Status</label>
     <p-dropdown
       id="status"
@@ -89,22 +89,28 @@
       [options]="getStatuses()"
       [ngModel]="subject?.vitalStatus?.status"
       (ngModelChange)="updateStatus($event)"
-      pTooltip="The life status of the individual"
+      pTooltip="The vital status of the individual e.g. whether they are alive or the time and cause of death. RECOMMENDED"
+      tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
     ></p-dropdown>
   </div>
-  <div class="field col-12 md:col-6">
+  <div class="field col-12 md:col-4"></div>
+  <div class="field col-12 md:col-4"></div>
+
+  <div class="field col-12 md:col-4"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()">
     <label for="survivalTime">Survival time (days)</label>
     <p-inputNumber
       id="survivalTime"
       [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
       (onInput)="updateSurvivalTime($event)"
+      pTooltip="Number of days the patient was alive after their primary diagnosis"
+      tooltipPosition="bottom"
     ></p-inputNumber>
   </div>
-
   <div
-    class="field col-6"
+    class="field col-12 md:col-4"
     *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
   >
     <label for="timeOfDeath">Time of death</label>
@@ -115,7 +121,7 @@
     ></app-time-element>
   </div>
   <div
-    class="field col-6"
+    class="field col-12 md:col-4"
     *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
   >
     <label for="causeOfDeath">Cause of death</label>
