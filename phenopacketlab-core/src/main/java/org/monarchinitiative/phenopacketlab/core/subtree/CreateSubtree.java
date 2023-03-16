@@ -17,40 +17,45 @@ public class CreateSubtree {
      * the children of the tree branches.
      *
      * @param comparator a comparator for sorting children of a node or {@code null} if no sorting is expected
+     * @param ontology source ontology
+     * @param excludedNodes nodes to be excluded from the resulting tree
      * @return a node of the root node of the subtree
      * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
      */
     public static Optional<SubtreeNode> createSubtree(TermId root,
-                                            Ontology ontology,
-                                            Comparator<SubtreeNode> comparator) {
+                                                      Ontology ontology,
+                                                      Comparator<SubtreeNode> comparator,
+                                                      List<TermId> excludedNodes) {
         Term rootTerm = ontology.getTermMap().get(root);
         if (rootTerm == null)
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
         SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName());
-        return Optional.of(augmentWithChildren(ontology, root, node, comparator));
+        return Optional.of(augmentWithChildren(ontology, root, node, comparator, excludedNodes));
     }
 
     private static SubtreeNode augmentWithChildren(Ontology ontology,
                                                    TermId termId,
                                                    SubtreeNode node,
-                                                   Comparator<SubtreeNode> comparator) {
+                                                   Comparator<SubtreeNode> comparator,
+                                                   List<TermId> excludedNodes) {
         Collection<TermId> children = OntologyAlgorithm.getChildTerms(ontology, termId, false);
 
         List<SubtreeNode> childNodes = new ArrayList<>(children.size());
         for (TermId childTermId : children) {
-            // Term should always be non-null since we just got the termId from the `ontology`.
-            Term term = ontology.getTermMap().get(childTermId);
-            SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
-            augmentWithChildren(ontology, childTermId, childNode, comparator);
-            childNodes.add(childNode);
+            // if child term is not one of the excluded node do nothing
+            if (excludedNodes == null || !excludedNodes.contains(childTermId)) {
+                // Term should always be non-null since we just got the termId from the `ontology`.
+                Term term = ontology.getTermMap().get(childTermId);
+                SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
+                augmentWithChildren(ontology, childTermId, childNode, comparator, excludedNodes);
+                childNodes.add(childNode);
+            }
         }
-
         if (comparator != null)
             childNodes.sort(comparator);
 
         node.getChildren().addAll(childNodes);
-
         return node;
     }
 }
