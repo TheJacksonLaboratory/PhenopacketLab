@@ -36,7 +36,9 @@ public interface ConceptConstantsService {
 
     Optional<SubtreeNode> tnmMetastasisTreeConstants();
 
-    List<Concept> structuralTypeConstants();
+    List<IdentifiedConcept> structuralTypeConstants();
+
+    Optional<SubtreeNode> structuralTypeTreeConstants();
 
     List<Concept> contigConstants(String genomeAssembly);
 

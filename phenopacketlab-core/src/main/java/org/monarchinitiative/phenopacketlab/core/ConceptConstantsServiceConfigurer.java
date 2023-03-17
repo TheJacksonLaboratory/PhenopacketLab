@@ -45,7 +45,8 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> tnmMetastasisTreeConstants = configureTnmMetastasisTreeConstants(resourceService);
         Optional<SubtreeNode> diseaseStagesTreeConstants = configureDiseaseStagesTreeConstants(resourceService);
         Optional<SubtreeNode> allelicStateTreeConstants = configureAllelicStateTreeConstants(resourceService);
-        List<Concept> structuralTypeConstants = configureStructuralTypes();
+        List<IdentifiedConcept> structuralTypeConstants = configureStructuralTypeConstants(resourceService);
+        Optional<SubtreeNode> structuralTypeTreeConstants = configureStructuralTypeTreeConstants(resourceService);
         Map<String, List<Concept>> contigConstants = configureContigConstants();
 
         return new ConceptConstantsServiceImpl(sexConstants,
@@ -63,6 +64,7 @@ public class ConceptConstantsServiceConfigurer {
                 diseaseStagesTreeConstants.orElse(null),
                 allelicStateTreeConstants.orElse(null),
                 structuralTypeConstants,
+                structuralTypeTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -156,49 +158,36 @@ public class ConceptConstantsServiceConfigurer {
         return Collections.unmodifiableList(concepts);
     }
 
-    private static List<IdentifiedConcept> configureModifierConstants(ConceptResourceService resourceService) {
-        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
-        if (hpOptional.isEmpty()) {
-            LOGGER.warn("Cannot configure modifier constants due to missing HP concept resource!");
+    private static List<IdentifiedConcept> configureConstants(ConceptResourceService resourceService, String prefix, TermId term) {
+        Optional<IdentifiedConceptResource> optional = resourceService.forPrefix(prefix);
+        if (optional.isEmpty()) {
+            LOGGER.warn("Cannot configure " + term.getId() + "  constants due to missing " + prefix + " concept resource!");
             return List.of();
         }
-
-
-        IdentifiedConceptResource hp = hpOptional.get();
-        if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
-            Set<TermId> modifierIds = OntologyAlgorithm.getChildTerms(hpo, HpoSubOntologyRootTermIds.CLINICAL_MODIFIER, false);
+        IdentifiedConceptResource resource = optional.get();
+        if (resource instanceof OntologyConceptResource) {
+            Ontology onto = ((OntologyConceptResource) resource).getOntology();
+            Set<TermId> modifierIds = OntologyAlgorithm.getChildTerms(onto, term, false);
 
             return modifierIds.stream()
-                    .map(hp::conceptForTermId)
+                    .map(resource::conceptForTermId)
                     .flatMap(Optional::stream)
                     .collect(Collectors.toList());
         } else {
-            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
+            LOGGER.warn("BUG: " + prefix + " concept resource should implement OntologyConceptResource.");
             return List.of();
         }
     }
 
+    private static List<IdentifiedConcept> configureStructuralTypeConstants(ConceptResourceService resourceService) {
+        return configureConstants(resourceService, "SO", TermId.of("SO:0001537"));
+    }
+    private static List<IdentifiedConcept> configureModifierConstants(ConceptResourceService resourceService) {
+        return configureConstants(resourceService, "HP", HpoSubOntologyRootTermIds.CLINICAL_MODIFIER);
+    }
+
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
-        Optional<IdentifiedConceptResource> hpOptional = resourceService.forPrefix("HP");
-        if (hpOptional.isEmpty()) {
-            LOGGER.warn("Cannot configure onset constants due to missing HP concept resource!");
-            return List.of();
-        }
-
-        IdentifiedConceptResource hp = hpOptional.get();
-        if (hp instanceof OntologyConceptResource) {
-            Ontology hpo = ((OntologyConceptResource) hp).getOntology();
-            Set<TermId> onsetIds = OntologyAlgorithm.getChildTerms(hpo, HpoOnsetTermIds.ONSET, false);
-
-            return onsetIds.stream()
-                    .map(hp::conceptForTermId)
-                    .flatMap(Optional::stream)
-                    .collect(Collectors.toList());
-        } else {
-            LOGGER.warn("BUG: HP concept resource should implement OntologyConceptResource.");
-            return List.of();
-        }
+        return configureConstants(resourceService, "HP", HpoOnsetTermIds.ONSET);
     }
 
     private static Optional<SubtreeNode> configureTreeConstants(ConceptResourceService resourceService, TermId rootTerm,
@@ -219,6 +208,9 @@ public class ConceptConstantsServiceConfigurer {
         }
     }
 
+    private static Optional<SubtreeNode> configureStructuralTypeTreeConstants(ConceptResourceService resourceService) {
+        return configureTreeConstants(resourceService, TermId.of("SO:0001537"), "SO", null);
+    }
     private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
         // exclude laterality and severity from modifier nodes
         List<TermId> excludedNodes = new ArrayList<>();

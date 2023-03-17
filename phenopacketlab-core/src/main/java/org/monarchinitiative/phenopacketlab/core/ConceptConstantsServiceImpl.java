@@ -24,7 +24,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final SubtreeNode tnmMetastasisTreeConstants;
     private final SubtreeNode diseaseStagesTreeConstants;
     private final SubtreeNode allelicStateTreeConstants;
-    private final List<Concept> structuralTypeConstants;
+    private final List<IdentifiedConcept> structuralTypeConstants;
+    private final SubtreeNode structuralTypeTreeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
     ConceptConstantsServiceImpl(List<IdentifiedConcept> sexConstants,
@@ -41,7 +42,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 SubtreeNode tnmMetastasisTreeConstants,
                                 SubtreeNode diseaseStagesTreeConstants,
                                 SubtreeNode allelicStateTreeConstants,
-                                List<Concept> structuralTypeConstants,
+                                List<IdentifiedConcept> structuralTypeConstants,
+                                SubtreeNode structuralTypeTreeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
         this.genderConstants = genderConstants;
@@ -58,6 +60,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.diseaseStagesTreeConstants = diseaseStagesTreeConstants;
         this.allelicStateTreeConstants = allelicStateTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
+        this.structuralTypeTreeConstants = structuralTypeTreeConstants;
         this.contigConstants = contigConstants;
     }
 
@@ -120,9 +123,12 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     public Optional<SubtreeNode> allelicStateTreeConstants() { return Optional.ofNullable(allelicStateTreeConstants); }
 
     @Override
-    public List<Concept> structuralTypeConstants() {
+    public List<IdentifiedConcept> structuralTypeConstants() {
         return structuralTypeConstants;
     }
+
+    @Override
+    public Optional<SubtreeNode> structuralTypeTreeConstants() { return Optional.ofNullable(structuralTypeTreeConstants); }
 
     @Override
     public List<Concept> contigConstants(String genomeAssembly) {

@@ -30,8 +30,14 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "structural", headers = "Accept=application/json")
-    public ResponseEntity<List<Concept>> getStructuralType() {
+    public ResponseEntity<List<IdentifiedConcept>> getStructuralType() {
         return ResponseEntity.ok(conceptConstantsService.structuralTypeConstants());
+    }
+
+    @GetMapping(value = "tree-structural", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getStructuralTypeTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.structuralTypeTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @GetMapping(value = "allelic_state", headers = "Accept=application/json")
