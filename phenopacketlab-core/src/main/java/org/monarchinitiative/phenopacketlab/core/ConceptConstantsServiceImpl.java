@@ -11,7 +11,7 @@ import java.util.Optional;
 class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     private final List<IdentifiedConcept> sexConstants;
-    private final List<IdentifiedConcept> genderConstants;
+    private final List<Concept> genderConstants;
     private final List<IdentifiedConcept> allelicStateConstants;
     private final List<IdentifiedConcept> lateralityConstants;
     private final List<IdentifiedConcept> modifierConstants;
@@ -28,7 +28,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final Map<String, List<Concept>> contigConstants;
 
     ConceptConstantsServiceImpl(List<IdentifiedConcept> sexConstants,
-                                List<IdentifiedConcept> genderConstants,
+                                List<Concept> genderConstants,
                                 List<IdentifiedConcept> allelicStateConstants,
                                 List<IdentifiedConcept> lateralityConstants,
                                 List<IdentifiedConcept> modifierConstants,
@@ -67,7 +67,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     }
 
     @Override
-    public List<IdentifiedConcept> genderConstants() {
+    public List<Concept> genderConstants() {
         return genderConstants;
     }
 

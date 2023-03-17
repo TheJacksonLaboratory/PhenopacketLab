@@ -31,7 +31,8 @@ public class ConceptConstantsServiceConfigurer {
 
     public static ConceptConstantsService configure(ConceptResourceService resourceService) {
         List<IdentifiedConcept> sexConstants = configureSexConstants(resourceService);
-        List<IdentifiedConcept> genderConstants = configureGenderConstants(resourceService);
+//        List<IdentifiedConcept> genderConstants = configureGenderConstants(resourceService);
+        List<Concept> genderConstants = configureGenderConstants();
         List<IdentifiedConcept> allelicStateConstants = configureAllelicStateConstants(resourceService);
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
@@ -82,6 +83,13 @@ public class ConceptConstantsServiceConfigurer {
         return concepts;
     }
 
+    /**
+     * @deprecated
+     * Use {@link #configureGenderConstants()} instead which returns LOINC terms.
+     * @param resourceService resource
+     * @return GSSO terms
+     */
+    @Deprecated
     private static List<IdentifiedConcept> configureGenderConstants(ConceptResourceService resourceService) {
         Optional<IdentifiedConceptResource> gssoOpt = resourceService.forPrefix("GSSO");
         if (gssoOpt.isEmpty()) {
@@ -99,6 +107,18 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(gsso, "GSSO:009472", concepts, "Missing ultergender GSSO:009472");
 
         return Collections.unmodifiableList(concepts);
+    }
+
+    private static List<Concept> configureGenderConstants() {
+        Concept identifiesAsMale = Concept.of("Identifies as male", "LOINC:LA22878-5", List.of());
+        Concept identifiesAsFemale = Concept.of("Identifies as female", "LOINC:LA22879-3", List.of());
+        Concept femaleToMaleTranssexual = Concept.of("Female-to-male transsexual", "LOINC:LA22880-1", List.of());
+        Concept maleToFemaleTranssexual = Concept.of("Male-to-female transsexual", "LOINC:LA22881-9", List.of());
+        Concept identifiesAsNonConforming = Concept.of("Identifies as non-conforming", "LOINC:LA22882-7", List.of());
+        Concept otherGender = Concept.of("other", "LOINC:LA46-8", List.of());
+        Concept askedButUnknown = Concept.of("Asked but unknown", "LOINC:LA20384-6", List.of());
+        return List.of(identifiesAsMale, identifiesAsFemale, femaleToMaleTranssexual, maleToFemaleTranssexual,
+                identifiesAsNonConforming, otherGender, askedButUnknown);
     }
 
     private static List<IdentifiedConcept> configureAllelicStateConstants(ConceptResourceService resourceService) {

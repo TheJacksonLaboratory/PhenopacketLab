@@ -50,7 +50,7 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "gender", headers = "Accept=application/json")
-    public ResponseEntity<List<IdentifiedConcept>> getGenderValues() {
+    public ResponseEntity<List<Concept>> getGenderValues() {
         return ResponseEntity.ok(conceptConstantsService.genderConstants());
     }
 

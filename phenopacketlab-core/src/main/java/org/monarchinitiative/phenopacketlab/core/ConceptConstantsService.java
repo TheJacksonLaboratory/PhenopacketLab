@@ -14,7 +14,7 @@ public interface ConceptConstantsService {
 
     List<IdentifiedConcept> sexConstants();
 
-    List<IdentifiedConcept> genderConstants();
+    List<Concept> genderConstants();
 
     List<IdentifiedConcept> allelicStateConstants();
 
