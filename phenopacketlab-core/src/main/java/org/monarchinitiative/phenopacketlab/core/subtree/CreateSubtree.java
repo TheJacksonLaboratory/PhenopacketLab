@@ -30,7 +30,7 @@ public class CreateSubtree {
         if (rootTerm == null)
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
-        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName());
+        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName(), rootTerm.getDefinition());
         return Optional.of(augmentWithChildren(ontology, root, node, comparator, excludedNodes));
     }
 
@@ -47,7 +47,7 @@ public class CreateSubtree {
             if (excludedNodes == null || !excludedNodes.contains(childTermId)) {
                 // Term should always be non-null since we just got the termId from the `ontology`.
                 Term term = ontology.getTermMap().get(childTermId);
-                SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName());
+                SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName(), term.getDefinition());
                 augmentWithChildren(ontology, childTermId, childNode, comparator, excludedNodes);
                 childNodes.add(childNode);
             }
