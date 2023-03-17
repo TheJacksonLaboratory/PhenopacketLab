@@ -322,6 +322,7 @@
       [options]="moleculeContexts"
       (onChange)="updateMoleculeContext($event)"
       class="w-full"
+      [showClear]="true"
     ></p-dropdown>
   </div>
   <div class="field col-12 md:col-6">
@@ -339,10 +340,34 @@
       placeholder="Select item"
       [filter]="true"
       [filterInputAutoFocus]="true"
+      [showClear]="true"
+      (onClear)="updateAllelicState($event)"
     >
     <ng-template let-node pTemplate="default">
       <span [pTooltip]="node.key">{{ node.label }}</span>
     </ng-template>
+    </p-treeSelect>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="structural">Structural type</label>
+    <p-treeSelect
+      ngDefaultControl
+      id="structural"
+      appendTo="body"
+      [(ngModel)]="structuralTypeSelected"
+      [options]="structuralTypesNodes"
+      (onNodeSelect)="updateStructuralType($event)"
+      [metaKeySelection]="false"
+      placeholder="Select Structural type"
+      pTooltip="The structural variant type associated with this variant, such as a substitution, deletion, or fusion."
+      [filter]="true"
+      [filterInputAutoFocus]="true"
+      [showClear]="true"
+      (onClear)="updateStructuralType($event)"
+    >
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.description">{{ node.label }} [{{node.key}}]</span>
+      </ng-template>
     </p-treeSelect>
   </div>
 </div>

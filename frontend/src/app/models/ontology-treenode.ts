@@ -4,6 +4,7 @@ import { OntologyClass } from './base';
 export class OntologyTreeNode<T = any> implements TreeNode {
   label?: string;
   data?: T;
+  description?: string;
   icon?: string;
   expandedIcon?: any;
   collapsedIcon?: any;

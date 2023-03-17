@@ -31,6 +31,12 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     allelicStateSubscription: Subscription;
     selectedAllelicState: OntologyClass;
 
+    // structural types
+    structuralTypesNodes: OntologyTreeNode[];
+    structuralTypeSelected: OntologyTreeNode;
+    structuralTypesSubscription: Subscription;
+    structuralTypeSelectedSubscription: Subscription;
+
     expanded = false;
 
     constructor(public searchService: InterpretationService,
@@ -43,6 +49,17 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
             // we get the children from the root node sent in response
             this.allelicStatesNodes = <OntologyTreeNode[]>nodes.children;
         });
+        // structural types
+        this.structuralTypesSubscription = this.interpretationService.getStructuralTypesValues().subscribe(nodes => {
+            this.structuralTypesNodes = <OntologyTreeNode[]>nodes.children;
+        });
+    //     this.structuralTypeSelectedSubscription = this.interpretationService.getStructuralTypes().subscribe(stages => {
+    //         // reset
+    //         this.structuralTypeSelected = undefined;
+    //         // update when a disease is selected
+    //         this.initializeStructuralTypeSelected(stages[0]);
+    //     });
+    //     this.initializeStructuralTypeSelected(this.variationDescriptor?.structuralType);
     }
 
     ngOnDestroy(): void {
@@ -59,18 +76,53 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         this.label = label;
     }
 
+    initializeStructuralTypeSelected(type: OntologyClass) {
+        // update when an interpretation is selected
+        if (type === undefined) {
+            return;
+        }
+        const treeNode = new OntologyTreeNode();
+        treeNode.key = type.id;
+        treeNode.label = type.label;
+        this.structuralTypeSelected = treeNode;
+    }
+
     onDescriptionChange(description: string) {
         this.description = description;
     }
 
     updateAllelicState(event) {
-        if (event.value) {
-            this.selectedAllelicState = new OntologyClass(event.value.id, event.value.name);
+        if (this.variationDescriptor) {
+            if (event) {
+                this.selectedAllelicState = new OntologyClass(event.node.key, event.node.label);
+            } else {
+                this.selectedAllelicState = undefined;
+            }
+            this.variationDescriptor.allelicState = this.selectedAllelicState;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
         }
     }
 
-    updateMoleculeContext(moleculeContext: MoleculeContext) {
+    updateMoleculeContext(event) {
+        if (this.variationDescriptor) {
+            if (event) {
+                this.variationDescriptor.moleculeContext = event.value;
+            } else {
+                this.variationDescriptor.moleculeContext = undefined;
+            }
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
+    }
 
+    updateStructuralType(event) {
+        if (this.variationDescriptor) {
+            if (event) {
+                this.variationDescriptor.structuralType = new OntologyClass(event.node.key, event.node.label);
+            } else {
+                this.variationDescriptor.structuralType = undefined;
+            }
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
     }
 
 }

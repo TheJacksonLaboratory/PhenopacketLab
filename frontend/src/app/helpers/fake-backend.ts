@@ -24,6 +24,7 @@ const severity = require('../../assets/data/severity.json');
 const stages = require('../../assets/data/stages.json');
 const functionalAnnotation = require('../../assets/data/functional-annotation.json');
 const allelicStates = require('../../assets/data/allelic-state.json');
+const structuralTypes = require('../../assets/data/structural-types.json');
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -78,6 +79,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getFunctionalAnnotation();
                 case url.match('tree-allelic-states') && method === 'GET':
                     return getAllelicStates();
+                case url.match('tree-structural') && method === 'GET':
+                    return getStructuralTypes();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -147,6 +150,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
         function getAllelicStates() {
             return ok(allelicStates);
+        }
+        function getStructuralTypes() {
+            return ok(structuralTypes);
         }
         // helper functions
 
