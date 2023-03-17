@@ -110,7 +110,11 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateSeverity(event) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.severity = event.value;
+      if (event) {
+        this.phenotypicFeature.severity = event.value;
+      } else {
+        this.phenotypicFeature.severity = undefined;
+      }
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
   }

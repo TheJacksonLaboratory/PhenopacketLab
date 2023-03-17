@@ -79,6 +79,8 @@
               placeholder="Select Disease Stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
+              [showClear]="true"
+              (onClear)="updateDiseaseStage($event)"
             >
               <ng-template let-node pTemplate="default">
                 <span [pTooltip]="node.key">{{ node.label }}</span>
@@ -93,7 +95,7 @@
               appendTo="body"
               [options]="lateralities"
               [ngModel]="disease?.laterality"
-              (ngModelChange)="updateLaterality($event)"
+              (onChange)="updateLaterality($event)"
               optionLabel="label"
               [filter]="true"
               filterBy="label"
@@ -116,6 +118,8 @@
               placeholder="Select tumor stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
+              [showClear]="true"
+              (onClear)="updateTnmStages($event, 'tumor')"
             >
               <ng-template let-node pTemplate="default">
                 <span [pTooltip]="node.key">{{ node.label }}</span>
@@ -132,6 +136,8 @@
               placeholder="Select node stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
+              [showClear]="true"
+              (onClear)="updateTnmStages($event, 'node')"
             >
               <ng-template let-node pTemplate="default">
                 <span [pTooltip]="node.key">{{ node.label }}</span>
@@ -148,6 +154,8 @@
               placeholder="Select metastasis stage"
               [filter]="true"
               [filterInputAutoFocus]="true"
+              [showClear]="true"
+              (onClear)="updateTnmStages($event, 'metastasis')"
             >
               <ng-template let-node pTemplate="default">
                 <span [pTooltip]="node.key">{{ node.label }}</span>

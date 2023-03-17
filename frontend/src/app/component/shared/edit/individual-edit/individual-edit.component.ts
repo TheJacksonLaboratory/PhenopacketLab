@@ -91,15 +91,24 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
 
     updateSex(event: any) {
-        console.log(event);
         if (this.subject) {
-            this.subject.sex = event.value.name;
+            if (event.value) {
+                this.subject.sex = event.value.name;
+            }
+            if (event.value === undefined || event.value === null) {
+                this.subject.sex = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
+
     updateKaryotypicSex(karyotypicSex: KaryotypicSex) {
         if (this.subject) {
-            this.subject.karyotypicSex = karyotypicSex.name;
+            if (karyotypicSex) {
+                this.subject.karyotypicSex = karyotypicSex.name;
+            } else {
+                this.subject.karyotypicSex = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
@@ -110,10 +119,15 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     updateGender(gender: any) {
         if (this.subject) {
-            this.subject.gender = new OntologyClass(gender.id.value, gender.name);
+            if (gender) {
+                this.subject.gender = new OntologyClass(gender.id.value, gender.name);
+            } else {
+                this.subject.gender = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
+
     updateStatus(status: any) {
         if (this.subject) {
             this.subject.vitalStatus.status = status;
@@ -138,7 +152,11 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     updateCauseOfDeath(event) {
         if (this.subject) {
-            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
+            if (event) {
+                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
+            } else {
+                this.subject.vitalStatus.causeOfDeath = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }

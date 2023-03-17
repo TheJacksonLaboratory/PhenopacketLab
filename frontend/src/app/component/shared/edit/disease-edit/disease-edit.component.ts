@@ -195,15 +195,23 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
     updateDiseaseStage(event) {
         if (this.disease) {
-            // reset previous selection
-            this.disease.diseaseStage = [];
-            this.disease.diseaseStage.push(new OntologyClass(event.node.key, event.node.label));
+            if (event) {
+                // reset previous selection
+                this.disease.diseaseStage = [];
+                this.disease.diseaseStage.push(new OntologyClass(event.node.key, event.node.label));
+            } else {
+                this.disease.diseaseStage = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }
-    updateLaterality(laterality) {
+    updateLaterality(event) {
         if (this.disease) {
-            this.disease.laterality = laterality;
+            if (event) {
+                this.disease.laterality = event.value;
+            } else {
+                this.disease.laterality = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }
@@ -227,7 +235,11 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                     this.disease.clinicalTnmFinding.splice(index, 1);
                 }
             });
-            this.disease.clinicalTnmFinding.push(new OntologyClass(event.node.key, event.node.label, tnm));
+            if (event) {
+                this.disease.clinicalTnmFinding.push(new OntologyClass(event.node.key, event.node.label, tnm));
+            } else {
+                this.disease.clinicalTnmFinding = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }
