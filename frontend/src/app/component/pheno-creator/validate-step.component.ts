@@ -23,9 +23,11 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   disabled = true;
 
   metadata: MetaData;
-  createdBy: string;
+  createdByPrefix: string;
+  createdBySuffix: string;
   created: string;
-  submittedBy: string;
+  submittedByPrefix: string;
+  submittedBySuffix: string;
   schemaVersion = '2.0';
   // whether the inplace createBy and SubmittedBy are active
   active = true;
@@ -66,6 +68,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
       this.profileSelectionSubscription.unsubscribe();
     }
   }
+
   validate() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
     this.disabled = false;
@@ -73,19 +76,30 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // create the timestamp created date
     this.created = new Date().toISOString();
 
-    this.active = false;
     // set metadata
     const metadata = new MetaData();
-    metadata.createdBy = this.createdBy;
+    if (this.createdBySuffix !== undefined) {
+      this.createdByPrefix = 'ORCiD:';
+    } else {
+      this.createdByPrefix = 'Anonymous';
+    }
+    if (this.submittedBySuffix !== undefined) {
+      this.submittedByPrefix = 'ORCiD:';
+    } else {
+      this.submittedByPrefix = 'Anonymous';
+    }
+    metadata.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+    metadata.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
     metadata.created = this.created;
-    metadata.submittedBy = this.submittedBy;
     // TODO
     metadata.resources = [];
     // TODO
     metadata.externalReferences = [];
     metadata.phenopacketSchemaVersion = this.schemaVersion;
     this.phenopacket.metaData = metadata;
+    this.active = false;
   }
+
   complete() {
     // add to cohort
     if (this.cohort) {
