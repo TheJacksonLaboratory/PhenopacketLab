@@ -1,199 +1,64 @@
 <p-toast position="center" key="cen"></p-toast>
-
-<p-fieldset
-  legend="Variant interpretation"
-  [toggleable]="true"
-  [collapsed]="true"
+<p-splitter
+  [style]="{ height: '100%', width: '100%' }"
+  styleClass="messageSplitter"
+  [panelSizes]="[50, 50]"
+  [layout]="'horizontal'"
 >
-  <ng-template pTemplate="icons">
-    <!--    <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>-->
+  <ng-template pTemplate>
+    <div class="col flex justify-content-center">
+      <app-variation-search
+        (variantInterpretationChange)="updateVariantInterpretation($event)"
+      ></app-variation-search>
+    </div>
   </ng-template>
-  <div class="grid p-fluid">
-    <div class="field col-12 md:col-6">
-      <label for="acmg">Acmg pathogenicity classification</label>
-      <p-dropdown
-        id="acmg"
-        appendTo="body"
-        placeholder="Select Acmg pathogenicity"
-        [(ngModel)]="selectedAcmgPathogenicity"
-        [options]="acmgClassifications"
-        (onChange)="updateAcmgPathogenicity($event)"
-        class="w-full"
-      ></p-dropdown>
-    </div>
-    <div class="field col-12 md:col-6">
-      <label for="therapeutic">Therapeutic actionability</label>
-      <p-dropdown
-        id="therapeutic"
-        appendTo="body"
-        placeholder="Select Therapeutic actionability"
-        [(ngModel)]="selectedTherapeuticActionability"
-        [options]="therapeuticActionabilities"
-        (onChange)="updateTherapeuticActionability($event)"
-        class="w-full"
-      ></p-dropdown>
-    </div>
-    <div class="field col-12">
-      This interface uses the Variant Validator
-      <a href="https://rest.variantvalidator.org/" target="_blank">API</a> in
-      order to find and create new variant interpretation in the phenopacket.
-    </div>
-    <div class="field col-12">
-      <label for="hgvs">HGVS</label>
-      <input
-        id="hgvs"
-        type="text"
-        aria-describedby="HGVS annotation"
-        pInputText
-        [(ngModel)]="hgvs"
-      />
-      E.g.
-      <a
-        href="javascript:void(0);"
-        (click)="updateHgvs('NC_000017.11:g.50198002C>A')"
-        >NC_000017.11:g.50198002C>A</a
-      >
-    </div>
-    <div class="field col-12 md:col-4">
-      <label for="build">Genome build</label>
-      <p-dropdown
-        id="build"
-        appendTo="body"
-        placeholder="Select genome build"
-        [(ngModel)]="assembly"
-        [options]="builds"
-        (onChange)="updateAssembly($event)"
-        pTooltip="Reference genome build"
-        showDelay="2000"
-        class="w-full"
-      ></p-dropdown>
-    </div>
-    <div class="field col-12 md:col-4">
-      <label for="genotype">Genotype</label>
-      <p-dropdown
-        id="genotype"
-        appendTo="body"
-        placeholder="Select genotype"
-        [(ngModel)]="genotype"
-        [options]="genotypes"
-        pTooltip="Genotype"
-        showDelay="2000"
-        class="w-full"
-      ></p-dropdown>
-    </div>
-    <div class="field col-12 md:col-4">
-      <label for="transcript">Transcript</label>
-      <p-dropdown
-        id="transcript"
-        appendTo="body"
-        placeholder="Select transcript"
-        [(ngModel)]="selectedTranscript"
-        [options]="transcripts"
-        (onChange)="updateSelectedTranscript($event)"
-        pTooltip="Gene transcript"
-        showDelay="2000"
-        class="w-full"
-      ></p-dropdown>
-      <!-- <input
-        *ngIf="selectedTranscript === 'single/multiple'"
-        id="singlemultiple"
-        type="text"
-        aria-describedby="Input single or multiple transcripts"
-        pInputText
-        [(ngModel)]="transcript"
-      /> -->
-      <div *ngIf="selectedTranscript">{{ transcriptDescription }}</div>
-      <!-- <div *ngIf="selectedTranscript === 'single/multiple'">
-        Eg.
-        <a href="javascript:void(0);" (click)="updateTranscript('NM_000093.4')"
-          >NM_000093.4</a
-        >
-        (single) or
-        <a
-          href="javascript:void(0);"
-          (click)="updateTranscript('NM_000093.4|NM_001278074.1|NM_000093.3')"
-          >NM_000093.4|NM_001278074.1|NM_000093.3</a
-        >
-        (multiple).
-      </div> -->
-    </div>
-    <div class="field col-12 md:col-4">
-      <button
-        pButton
-        type="button"
-        label="Search"
-        (click)="searchVariantByHGVS()"
-      ></button>
-    </div>
-    <div class="field col-12 md:col-8"></div>
 
-    <div *ngIf="visible" class="field col-12">
-      <p-table
-        [value]="interpretations"
-        dataKey="key"
-        styleClass="p-datatable-gridlines"
-      >
-        <!-- scrollDirection="horizontal"
-            responsiveLayout="scroll"
-            [resizableColumns]="true"
-            [tableStyle]="{ width: 'max-content' }" -->
-        <ng-template pTemplate="caption">
-          <div class="table-header">Variant found</div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 5rem"></th>
-            <th pResizableColumn style="min-width: 2rem">Chr</th>
-            <th pResizableColumn>HGVS</th>
-            <th pResizableColumn>Gene symbol</th>
-            <th pResizableColumn>Molecule context</th>
-            <th pResizableColumn></th>
-          </tr>
-        </ng-template>
-        <ng-template
-          pTemplate="body"
-          let-interpretation
-          let-expanded="expanded"
-        >
-          <tr [pSelectableRow]="interpretation">
-            <td>
-              <button
-                type="button"
-                pButton
-                pRipple
-                [pRowToggler]="interpretation"
-                class="p-button-text p-button-rounded p-button-plain"
-                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-              ></button>
-            </td>
-            <td>{{ interpretation.variationDescriptor.vcfRecord?.chrom }}</td>
-            <td>{{ getHgvsExpression(interpretation, "hgvs.c") }}</td>
-            <td>
-              {{ interpretation.variationDescriptor.geneContext?.symbol }}
-            </td>
-            <td>{{ interpretation.variationDescriptor.moleculeContext }}</td>
-            <td>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-warning"
-                (click)="deleteInterpretation(interpretation)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-interpretation>
-          <!-- Variation Descriptor -->
-          <tr>
-            <td colspan="6">
-              <div class="p-3">
-                <app-variation-descriptor [variationDescriptor]="interpretation.variationDescriptor" (variationDescriptorChange)="updateVariationDescriptor($event)"></app-variation-descriptor>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+  <ng-template pTemplate>
+    <div class="col flex justify-content-center">
+      <div class="grid fluid">
+        <div class="field col-12">
+          <b>Variant Interpretation</b>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="acmg">Acmg pathogenicity classification</label>
+          <p-dropdown
+            id="acmg"
+            appendTo="body"
+            placeholder="Select Acmg pathogenicity"
+            [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
+            [options]="acmgClassifications"
+            (onChange)="updateAcmgPathogenicity($event)"
+            class="w-full"
+          ></p-dropdown>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="therapeutic">Therapeutic actionability</label>
+          <p-dropdown
+            id="therapeutic"
+            appendTo="body"
+            placeholder="Select Therapeutic actionability"
+            [ngModel]="variantInterpretation?.therapeuticActionability"
+            [options]="therapeuticActionabilities"
+            (onChange)="updateTherapeuticActionability($event)"
+            class="w-full"
+          ></p-dropdown>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12">
+          <app-variation-descriptor
+            [variationDescriptor]="variantInterpretation?.variationDescriptor"
+            (variationDescriptorChange)="updateVariationDescriptor($event)"
+          ></app-variation-descriptor>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-4">
+          <button
+            pButton
+            type="button"
+            label="Delete interpretation"
+            (click)="updateVariantInterpretation(undefined)"
+            icon="pi pi-trash"
+          ></button>
+        </div>
+      </div>
     </div>
-  </div>
-</p-fieldset>
+  </ng-template>
+</p-splitter>

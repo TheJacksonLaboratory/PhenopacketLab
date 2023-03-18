@@ -22,6 +22,8 @@ import { VariantInterpretationComponent } from './edit/interpretation-edit/genom
 import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
 import { GenomicInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation.component';
 import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
+import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
+import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic
     InterpretationEditComponent,
     VariantInterpretationComponent,
     GenomicInterpretationComponent,
-    VariationDescriptorComponent
+    VariationDescriptorComponent,
+    VariationSearchComponent,
+    GeneDescriptorComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -73,6 +77,8 @@ import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic
     VariantInterpretationComponent,
     GenomicInterpretationComponent,
     VariationDescriptorComponent,
+    GeneDescriptorComponent,
+    VariationSearchComponent,
     PrimeModule,
     MaterialModule
   ]

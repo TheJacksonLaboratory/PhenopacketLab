@@ -66,14 +66,30 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         if (this.allelicStateSubscription) {
             this.allelicStateSubscription.unsubscribe();
         }
+        if (this.structuralTypesSubscription) {
+            this.structuralTypesSubscription.unsubscribe();
+        }
     }
 
     onIdChange(id: string) {
-        this.id = id;
+        if (this.variationDescriptor) {
+            this.variationDescriptor.id = id;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
     }
 
     onLabelChange(label: string) {
-        this.label = label;
+        if (this.variationDescriptor) {
+            this.variationDescriptor.label = label;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
+    }
+
+    onVrsRefAlleleSeqChange(refAlleleSeq: string) {
+        if (this.variationDescriptor) {
+            this.variationDescriptor.vrsRefAlleleSeq = refAlleleSeq;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
     }
 
     initializeStructuralTypeSelected(type: OntologyClass) {

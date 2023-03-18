@@ -30,6 +30,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PanelModule } from 'primeng/panel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FieldsetModule } from 'primeng/fieldset';
+import { SplitterModule } from 'primeng/splitter';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     MenuModule,
     TooltipModule,
     InputTextareaModule,
-    FieldsetModule
+    FieldsetModule,
+    SplitterModule
   ],
   exports: [
     ButtonModule,
@@ -93,7 +95,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     MenubarModule,
     MenuModule,
     InputTextareaModule,
-    FieldsetModule
+    FieldsetModule,
+    SplitterModule
   ],
   providers: [MessageService, ConfirmationService]
 })

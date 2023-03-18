@@ -370,4 +370,16 @@
       </ng-template>
     </p-treeSelect>
   </div>
+  <div class="field col-12 md:col-6">
+    <label for="refalseq">Ref Allele Sequence</label>
+    <input
+      id="refalseq"
+      type="text"
+      aria-describedby="Ref Allele Sequence"
+      pInputText
+      pTooltip="A Sequence corresponding to a “ref allele”, describing the sequence expected at a SequenceLocation reference."
+      [ngModel]="variationDescriptor?.vrsRefAlleleSeq"
+      (ngModelChange)="onVrsRefAlleleSeqChange($event)"
+    />
+  </div>
 </div>

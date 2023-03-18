@@ -26,7 +26,7 @@ export class GenomicInterpretationComponent implements OnInit {
 
     updateInterpretationStatus(event) {
         console.log(event);
-        this.selectedInterpretationStatus = event.value;
+        this.genomicInterpretation.interpretationStatus = event.value;
         console.log(this.genomicInterpretation.interpretationStatus);
         this.genomicInterpretationChange.emit(this.genomicInterpretation);
     }
