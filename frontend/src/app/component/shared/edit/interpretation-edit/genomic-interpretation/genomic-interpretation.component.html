@@ -30,12 +30,12 @@
   </div>
 
   <p-tabView>
-    <p-tabPanel header="Variant Interpretation" pTooltip="This element represents the interpretation of a variant according to the American College of Medical Genetics (ACMG) variant interpretation guidelines.">
+    <p-tabPanel header="Variant Interpretation">
       <app-variant-search-interpretation
         (variantInterpretationChange)="addVariantInterpretation($event)"
       ></app-variant-search-interpretation>
     </p-tabPanel>
-    <p-tabPanel header="Gene Descriptor" pTooltip="This element represents an identifier for a gene, using the Gene Descriptor from the VRSATILE Framework. Gene Descriptors can be used to transmit the information that the gene is thought to play a causative role in the disease phenotypes being described in cases where the exact variant cannot be transmitted, either for privacy reasons or because it is unknown.">
+    <p-tabPanel header="Gene Descriptor">
       <app-gene-descriptor
         (geneDescriptorChange)="addGeneDescriptor($event)"
       ></app-gene-descriptor>

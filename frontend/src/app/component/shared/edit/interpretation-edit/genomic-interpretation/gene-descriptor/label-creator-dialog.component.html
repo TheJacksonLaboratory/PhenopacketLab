@@ -1,0 +1,34 @@
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <label for="value">Value</label>
+    <input
+      id="value"
+      type="text"
+      pInputText
+      [ngModel]="label?.value"
+      (ngModelChange)="onLabelChange($event)"
+      required
+      autofocus
+    />
+    <small class="p-error" *ngIf="submitted && !label.value"
+      >Value is required.</small
+    >
+  </div>
+</div>
+
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="closeDialog()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Save"
+    (click)="saveLabel()"
+  ></button>
+</div>

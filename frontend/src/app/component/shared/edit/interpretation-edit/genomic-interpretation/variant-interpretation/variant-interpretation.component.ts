@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
+import { AcmgPathogenicityClassification, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -47,6 +47,12 @@ export class VariantInterpretationComponent implements OnInit {
         }
     }
 
+    updateGeneDescriptor(geneDescriptor: GeneDescriptor) {
+        if (this.variantInterpretation) {
+            this.variantInterpretation.variationDescriptor.geneContext = geneDescriptor;
+            this.variantInterpretationChange.emit(this.variantInterpretation);
+        }
+    }
     updateVariantInterpretation(variantInterpretation: VariantInterpretation) {
         this.variantInterpretation = variantInterpretation;
         this.variantInterpretationChange.emit(this.variantInterpretation);

@@ -31,6 +31,7 @@ import { PanelModule } from 'primeng/panel';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { SplitterModule } from 'primeng/splitter';
     TooltipModule,
     InputTextareaModule,
     FieldsetModule,
-    SplitterModule
+    SplitterModule,
+    DialogModule
   ],
   exports: [
     ButtonModule,
@@ -96,7 +98,8 @@ import { SplitterModule } from 'primeng/splitter';
     MenuModule,
     InputTextareaModule,
     FieldsetModule,
-    SplitterModule
+    SplitterModule,
+    DialogModule
   ],
   providers: [MessageService, ConfirmationService]
 })

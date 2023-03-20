@@ -18,6 +18,10 @@
       <div class="grid fluid">
         <div class="field col-12">
           <b>Variant Interpretation</b>
+          <br />
+          This element represents the interpretation of a variant according to
+          the American College of Medical Genetics (ACMG) variant interpretation
+          guidelines.
         </div>
         <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
           <label for="acmg">Acmg pathogenicity classification</label>
@@ -49,6 +53,16 @@
             (variationDescriptorChange)="updateVariationDescriptor($event)"
           ></app-variation-descriptor>
         </div>
+        <div *ngIf="variantInterpretation" class="field col-12">
+          <p-accordion>
+            <p-accordionTab header="Gene descriptor">
+              <app-gene-descriptor
+                [geneDescriptor]="variantInterpretation?.variationDescriptor?.geneContext"
+                (geneDescriptorChange)="updateGeneDescriptor($event)"
+              ></app-gene-descriptor>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
         <div *ngIf="variantInterpretation" class="field col-12 md:col-4">
           <button
             pButton
@@ -56,6 +70,7 @@
             label="Delete interpretation"
             (click)="updateVariantInterpretation(undefined)"
             icon="pi pi-trash"
+            class="p-button-warning"
           ></button>
         </div>
       </div>

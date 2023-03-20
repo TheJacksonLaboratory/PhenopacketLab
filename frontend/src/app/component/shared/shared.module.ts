@@ -24,6 +24,7 @@ import { GenomicInterpretationComponent } from './edit/interpretation-edit/genom
 import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
 import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
 import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
+import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { VariationSearchComponent } from './edit/interpretation-edit/genomic-int
     GenomicInterpretationComponent,
     VariationDescriptorComponent,
     VariationSearchComponent,
-    GeneDescriptorComponent
+    GeneDescriptorComponent,
+    LabelCreatorDialogComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -79,6 +81,7 @@ import { VariationSearchComponent } from './edit/interpretation-edit/genomic-int
     VariationDescriptorComponent,
     GeneDescriptorComponent,
     VariationSearchComponent,
+    LabelCreatorDialogComponent,
     PrimeModule,
     MaterialModule
   ]
