@@ -6,6 +6,7 @@ import { Utils } from 'src/app/component/shared/utils';
 import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -24,7 +25,9 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     interpretations: VariantInterpretation[];
     visible = false;
     hgvs: string;
-    assembly: string;
+    showHGVSHelp: boolean;
+    // We just support grch38 for now
+    assembly = 'GRCh38/hg38';
     selectedTranscript: string;
     transcriptDescription: string;
     transcript: string;
@@ -38,6 +41,8 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
 
     expanded = false;
+
+    apiLink = environment.FUNCTIONAL_ANNOTATION_URL;
 
     constructor(public searchService: InterpretationService,
         private confirmationService: ConfirmationService,
@@ -82,7 +87,13 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
         console.log(this.selectedTherapeuticActionability);
     }
 
+    openHGVSHelp() {
+        this.showHGVSHelp = true;
+    }
+
     public searchVariantByHGVS() {
+        // For now we just allow the mane select option
+        this.transcript = 'mane_select';
         if (this.hgvs && this.assembly && this.transcript) {
             this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
                 closable: false,

@@ -25,12 +25,23 @@ export class VariantInterpretationComponent implements OnInit {
 
     expanded = false;
 
+    splitterWidths = [50, 50];
+    viewLeftPane = true;
+
     constructor() {
     }
 
     ngOnInit() {
     }
 
+    collapseSplitter() {
+        this.viewLeftPane = false;
+        this.splitterWidths = [0.1, 99.9];
+    }
+    expandSplitter() {
+        this.viewLeftPane = true;
+        this.splitterWidths = [50, 50];
+    }
     updateAcmgPathogenicity(acmgPathogenicity: AcmgPathogenicityClassification) {
         if (this.variantInterpretation) {
             console.log(acmgPathogenicity);

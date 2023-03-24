@@ -3,41 +3,29 @@
     <div class="field col-12">Select a profile to create a phenopacket.</div>
   </div>
   <div class="grid p-fluid">
-    <div class="field col-12 md:col-6">
-      <p-button
+    <div class="field col-12">
+      <button
+        pButton
         label="Rare disease"
-        (onClick)="startRareDisease()"
+        (click)="startRareDisease()"
         icon="pi pi-angle-right"
+        pTooltip="Create a phenopacket in the context of rare disease"
         iconPos="right"
-      ></p-button>
+        style="width: 300px"
+      ></button>
     </div>
-    <div class="field col-12 md:col-6">
-      <p-button
+    <div class="field col-12">
+      <button
+        pButton
         label="All available"
-        (onClick)="startAll()"
+        (click)="startAll()"
         icon="pi pi-angle-right"
+        pTooltip="Create a phenopacket with all available steps and phenopacket components"
         iconPos="right"
-      ></p-button>
+        style="width: 300px"
+      ></button>
     </div>
-    <!-- <div class="field col-12">
-      <p-selectButton
-        ngDefaultControl
-        [options]="options"
-        [(ngModel)]="profileSelected"
-        optionLabel="label"
-        optionValue="value"
-      >
-      </p-selectButton>
-    </div> -->
+   
   </div>
-  <!-- <ng-template pTemplate="footer">
-    <div class="grid grid-nogutter justify-content-center">
-      <p-button
-        label="Start"
-        (onClick)="start()"
-        icon="pi pi-angle-right"
-        iconPos="right"
-      ></p-button>
-    </div>
-  </ng-template> -->
+  
 </p-card>

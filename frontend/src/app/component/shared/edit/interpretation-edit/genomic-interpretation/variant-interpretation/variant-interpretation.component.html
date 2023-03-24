@@ -1,14 +1,27 @@
 <p-toast position="center" key="cen"></p-toast>
+<p-button
+  *ngIf="!viewLeftPane"
+  icon="pi pi-angle-double-right"
+  styleClass="p-button-text p-button-rounded"
+  (onClick)="expandSplitter()"
+  pTooltip="Expand"
+></p-button>
+<p-button
+  *ngIf="viewLeftPane"
+  icon="pi pi-angle-double-left"
+  styleClass="p-button-text p-button-rounded"
+  (onClick)="collapseSplitter()"
+  pTooltip="Collapse"
+></p-button>
 <p-splitter
   [style]="{ height: '100%', width: '100%' }"
   styleClass="messageSplitter"
-  [panelSizes]="[50, 50]"
+  [panelSizes]="splitterWidths"
   [layout]="'horizontal'"
 >
   <ng-template pTemplate>
-    <div class="col flex justify-content-center">
-      <app-variation-search
-        (variantInterpretationChange)="updateVariantInterpretation($event)"
+    <div *ngIf="viewLeftPane" class="col flex justify-content-center">
+      <app-variation-search (variantInterpretationChange)="updateVariantInterpretation($event)"
       ></app-variation-search>
     </div>
   </ng-template>

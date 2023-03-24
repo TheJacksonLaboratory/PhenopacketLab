@@ -31,26 +31,33 @@
   <div class="field col-12">
     This interface uses the Variant Validator
     <a href="https://rest.variantvalidator.org/" target="_blank">API</a>
-    in order to find and create new variant interpretation in the
-    phenopacket.
+    in order to find and create new variant interpretation in the phenopacket.
   </div>
   <div class="field col-12">
     <label for="hgvs">HGVS</label>
-    <input
-      id="hgvs"
-      type="text"
-      aria-describedby="HGVS annotation"
-      pInputText
-      [(ngModel)]="hgvs"
-    />
+
+    <div class="p-inputgroup">
+      <input
+        pInputText
+        id="hgvs"
+        type="text"
+        aria-describedby="HGVS annotation"
+        [(ngModel)]="hgvs"
+      />
+      <p-button
+        (click)="openHGVSHelp()"
+        icon="pi pi-external-link"
+        pTooltip="Show Help"
+      ></p-button>
+    </div>
     E.g.
-    <a
-      href="javascript:void(0);"
-      (click)="updateHgvs('NC_000017.11:g.50198002C>A')"
-      >NC_000017.11:g.50198002C>A</a
+    <a href="javascript:void(0);" (click)="updateHgvs('NM_000088.3:c.589G>T')"
+      >NM_000088.3:c.589G>T</a
     >
   </div>
-  <div class="field col-12 md:col-4">
+
+  <!-- <div class="field col-12 md:col-6">
+    Genome build: {{ assembly }}
     <label for="build">Genome build</label>
     <p-dropdown
       id="build"
@@ -63,9 +70,9 @@
       showDelay="2000"
       class="w-full"
     ></p-dropdown>
-  </div>
-  <div class="field col-12 md:col-4">
-    <label for="genotype">Genotype</label>
+  </div> -->
+  <div class="field col-12 md:col-6">
+    <!-- <label for="genotype">Genotype</label> -->
     <p-dropdown
       id="genotype"
       appendTo="body"
@@ -77,47 +84,14 @@
       class="w-full"
     ></p-dropdown>
   </div>
-  <div class="field col-12 md:col-4">
-    <label for="transcript">Transcript</label>
-    <p-dropdown
-      id="transcript"
-      appendTo="body"
-      placeholder="Select transcript"
-      [(ngModel)]="selectedTranscript"
-      [options]="transcripts"
-      (onChange)="updateSelectedTranscript($event)"
-      pTooltip="Gene transcript"
-      showDelay="2000"
-      class="w-full"
-    ></p-dropdown>
-    <!-- <input
-        *ngIf="selectedTranscript === 'single/multiple'"
-        id="singlemultiple"
-        type="text"
-        aria-describedby="Input single or multiple transcripts"
-        pInputText
-        [(ngModel)]="transcript"
-      /> -->
-    <div *ngIf="selectedTranscript">{{ transcriptDescription }}</div>
-      <!-- <div *ngIf="selectedTranscript === 'single/multiple'">
-          Eg.
-          <a href="javascript:void(0);" (click)="updateTranscript('NM_000093.4')"
-            >NM_000093.4</a
-          >
-          (single) or
-          <a
-            href="javascript:void(0);"
-            (click)="updateTranscript('NM_000093.4|NM_001278074.1|NM_000093.3')"
-            >NM_000093.4|NM_001278074.1|NM_000093.3</a
-          >
-          (multiple).
-        </div> -->
-  </div>
+  <div class="field col-12 md:col-6"></div>
+
   <div class="field col-12 md:col-4">
     <button
       pButton
       type="button"
       label="Search"
+      pTooltip="Search variant by HGVS"
       (click)="searchVariantByHGVS()"
     ></button>
   </div>
@@ -129,10 +103,6 @@
       dataKey="key"
       styleClass="p-datatable-gridlines"
     >
-      <!-- scrollDirection="horizontal"
-            responsiveLayout="scroll"
-            [resizableColumns]="true"
-            [tableStyle]="{ width: 'max-content' }" -->
       <ng-template pTemplate="caption">
         <div class="table-header">Variant found</div>
       </ng-template>
@@ -146,11 +116,7 @@
           <th pResizableColumn></th>
         </tr>
       </ng-template>
-      <ng-template
-        pTemplate="body"
-        let-interpretation
-        let-expanded="expanded"
-      >
+      <ng-template pTemplate="body" let-interpretation let-expanded="expanded">
         <tr [pSelectableRow]="interpretation">
           <td>
             <button
@@ -159,9 +125,7 @@
               pRipple
               [pRowToggler]="interpretation"
               class="p-button-text p-button-rounded p-button-plain"
-              [icon]="
-                expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
-              "
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
             ></button>
           </td>
           <td>
@@ -187,15 +151,12 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-interpretation>
-        <!-- Variation Descriptor -->
         <tr>
           <td colspan="6">
             <div class="p-3">
               <app-variation-descriptor
                 [variationDescriptor]="interpretation.variationDescriptor"
-                (variationDescriptorChange)="
-                  updateVariationDescriptor($event)
-                "
+                (variationDescriptorChange)="updateVariationDescriptor($event)"
               ></app-variation-descriptor>
             </div>
           </td>
@@ -204,3 +165,41 @@
     </p-table>
   </div>
 </div>
+<p-dialog
+  header="HGVS Helper"
+  [(visible)]="showHGVSHelp"
+  [style]="{ width: '19vw' }"
+>
+  <b>Examples for this field include the following :</b>
+  <i>HGVS</i>
+  <br />
+  <ul>
+    <li>NM_000088.3:c.589G>T</li>
+    <li>NC_000017.10:g.48275363C>A</li>
+    <li>NG_007400.1:g.8638G>T</li>
+    <li>LRG_1:g.8638G>T</li>
+    <li>LRG_1t1:c.589G>T</li>
+  </ul>
+  <br />
+  <i>Pseudo-VCF</i>
+  <ul>
+    <li>17-50198002-C-A</li>
+    <li>17:50198002:C:A</li>
+    <li>GRCh38-17-50198002-C-A</li>
+    <li>GRCh38:17:50198002:C:A</li>
+  </ul>
+  <br />
+  <i>Hybrid</i>
+  <ul>
+    <li>chr17:50198002C>A</li>
+    <li>chr17:50198002C>A(GRCh38)</li>
+    <li>chr17(GRCh38):50198002C>A</li>
+    <li>chr17:g.50198002C>A</li>
+    <li>chr17:g.50198002C>A(GRCh38)</li>
+    <li>chr17(GRCh38):g.50198002C>A</li>
+  </ul>
+  <br />
+  This UI will use build GRCh38 to perform a search. In order to do more detailed
+  searches, you can use directly the PhenopacketLab API accessible on this
+  <a [href]="apiLink" target="_blank">link</a>.
+</p-dialog>
