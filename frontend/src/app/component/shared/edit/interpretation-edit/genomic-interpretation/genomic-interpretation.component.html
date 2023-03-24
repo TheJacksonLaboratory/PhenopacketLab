@@ -29,16 +29,7 @@
     </p-dropdown>
   </div>
 
-  <p-tabView>
-    <p-tabPanel header="Variant Interpretation">
-      <app-variant-search-interpretation
-        (variantInterpretationChange)="addVariantInterpretation($event)"
-      ></app-variant-search-interpretation>
-    </p-tabPanel>
-    <p-tabPanel header="Gene Descriptor">
-      <app-gene-descriptor
-        (geneDescriptorChange)="addGeneDescriptor($event)"
-      ></app-gene-descriptor>
-    </p-tabPanel>
-  </p-tabView>
+  <app-variant-search-interpretation
+    (variantInterpretationChange)="addVariantInterpretation($event)"
+  ></app-variant-search-interpretation>
 </div>
