@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -15,6 +16,8 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
 
     @Input()
     disease: Disease;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     diseaseChange = new EventEmitter<Disease>();
 
@@ -151,6 +154,13 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                 this.metastasisSelected = treeNode;
             }
         });
+    }
+
+    isRareProfile(): boolean {
+        if (this.profile) {
+            return this.profile === ProfileSelection.RARE_DISEASE;
+        }
+        return false;
     }
 
     initializeDiseaseStageSelected(stage: OntologyClass) {

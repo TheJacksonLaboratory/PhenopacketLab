@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -41,7 +40,7 @@ export class DiseaseDetailComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService, public messageService: MessageService, public dialog: MatDialog) { }
+  constructor(public dialogService: DialogService, public messageService: MessageService) { }
 
   ngOnInit(): void {
     if (this.disease) {

@@ -62,7 +62,7 @@
       aria-labelledby="resolution-time-label"
     ></app-time-element>
   </div>
-  <div class="field col-12">
+  <div *ngIf="!isRareProfile()" class="field col-12">
     <p-accordion>
       <p-accordionTab header="Edit more details">
         <div class="grid p-fluid">
