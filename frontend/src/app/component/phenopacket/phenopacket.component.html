@@ -75,7 +75,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">list</mat-icon>
-                        Phenotypic Features
+                        <b>Phenotypic Features</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Describes a phenotype that characterizes the subject of the
@@ -104,7 +104,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">square_foot</mat-icon>
-                        Measurements
+                        <b>Measurements</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Used to record individual measurements, which can capture
@@ -135,7 +135,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">biotech</mat-icon>
-                        Biosamples
+                        <b>Biosamples</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Unit of biological material from which the substrate molecules
@@ -167,7 +167,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">interpreter_mode</mat-icon>
-                        Interpretations
+                        <b>Interpretations</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Represents the interpretation of a genomic analysis, such as the
@@ -177,6 +177,7 @@
 
                 <app-interpretation
                         [interpretations]="getInterpretations()"
+                        [phenopacket]="phenopacket"
                 ></app-interpretation>
 
                 <mat-action-row>
@@ -197,7 +198,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">coronavirus</mat-icon>
-                        Diseases
+                        <b>Diseases</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Diagnosis, i.e., an inference or hypothesis about the cause
@@ -228,7 +229,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">medical_services</mat-icon>
-                        Medical Actions
+                        <b>Medical Actions</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Describes medications, procedures, other actions taken for
@@ -260,7 +261,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">text_snippet</mat-icon>
-                        Files
+                        <b>Files</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         External files linked with the structured phenotypic data, which
@@ -292,7 +293,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon class="tab-icon">data_object</mat-icon>
-                        Metadata
+                       <b>Metadata</b>
                     </mat-panel-title>
                     <mat-panel-description>
                         Structured definitions of the resources and ontologies used within

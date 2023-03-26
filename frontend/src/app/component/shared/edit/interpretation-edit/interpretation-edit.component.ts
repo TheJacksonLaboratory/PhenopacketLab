@@ -6,7 +6,6 @@ import { Diagnosis, GenomicInterpretation, Interpretation, ProgressStatus } from
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from 'src/app/component/shared/utils';
 
 @Component({
@@ -18,13 +17,14 @@ import { Utils } from 'src/app/component/shared/utils';
 export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     @Input()
+    phenopacket: Phenopacket;
+    @Input()
     interpretation: Interpretation;
     @Output()
     interpretationChange = new EventEmitter<Interpretation>();
 
     visible = false;
     genomicInterpretationVisible = false;
-    phenopacket: Phenopacket;
     id: string;
 
     selectedDisease: OntologyClass;
@@ -32,24 +32,19 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     selectedProgressStatus: ProgressStatus;
     progressStatuses: ProgressStatus[];
     // diseases
-    diseases: any[];
+    diseases: OntologyClass[];
     diseaseSubscription: Subscription;
     // genomic interpretations
     genomicInterpretations: GenomicInterpretation[];
 
-
     constructor(public searchService: InterpretationService,
-        public phenopacketService: PhenopacketService,
         public diseaseService: DiseaseSearchService,
-        private confirmationService: ConfirmationService,
         private messageService: MessageService,
         private primengConfig: PrimeNGConfig) {
     }
 
-
     ngOnInit() {
         this.primengConfig.ripple = true;
-        this.phenopacket = this.phenopacketService.phenopacket;
 
         // get diseases
         this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
@@ -57,6 +52,16 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         });
         // statuses
         this.progressStatuses = this.getProgressStatuses();
+        // initialize
+        if (this.interpretation) {
+            this.id = this.interpretation.id;
+            this.selectedProgressStatus = this.interpretation.progressStatus;
+            this.selectedDisease = this.interpretation.diagnosis?.disease;
+            this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations ;
+            if (this.genomicInterpretations && this.genomicInterpretations.length > 0) {
+                this.genomicInterpretationVisible = true;
+            }
+        }
     }
 
     ngOnDestroy(): void {
@@ -67,11 +72,6 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     onIdChange(event) {
         this.id = event;
-    }
-    updateDisease(event) {
-        if (event.value) {
-            this.selectedDisease = new OntologyClass(event.value.id, event.value.name);
-        }
     }
 
     addGenomicInterpretation() {
@@ -85,7 +85,6 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.genomicInterpretationVisible = true;
     }
     deleteGenomicInterpretation(genomicInterpretation: GenomicInterpretation) {
-        console.log(genomicInterpretation);
         this.genomicInterpretations = this.genomicInterpretations.filter(val => val.key !== genomicInterpretation.key);
         if (this.genomicInterpretations.length === 0) {
             this.genomicInterpretationVisible = false;
@@ -102,16 +101,16 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.selectedProgressStatus = event.value;
     }
 
-    addInterpretation() {
+    updateInterpretation() {
         if (this.id === undefined) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please fill in the interpretation ID.' });
             return;
         }
-        if (this.selectedProgressStatus === undefined) {
+        if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the interpretation progress status.' });
             return;
         }
-        if (this.selectedDisease === undefined) {
+        if (this.selectedDisease === undefined || this.selectedDisease === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select a disease term for the interpretation diagnosis.' });
             return;
         }
@@ -147,7 +146,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         interpretation.id = this.id;
         interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
         interpretation.progressStatus = this.selectedProgressStatus;
-        interpretation.diagnosis.disease = this.selectedDisease;
+        interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
         // emit change
         this.interpretationChange.emit(interpretation);
         this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });

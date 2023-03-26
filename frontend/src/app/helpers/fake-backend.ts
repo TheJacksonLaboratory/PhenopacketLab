@@ -6,7 +6,7 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 // array in local storage for list of diseases
 // let diseasesf = JSON.parse("") || [];
 const diseases = require('../../assets/data/mondo.json');
-const diseaseNames = require('../../assets/data/mondo-id-names.json');
+const diseaseNames = require('../../assets/data/mondo-diseases.json');
 const phenotypicFeatures = require('../../assets/data/hp.json');
 const phenotypicFeaturesNames = require('../../assets/data/hp-id-names.json');
 const bodySites = require('../../assets/data/human-view.json');

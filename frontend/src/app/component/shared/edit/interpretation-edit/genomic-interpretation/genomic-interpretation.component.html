@@ -30,6 +30,7 @@
   </div>
 
   <app-variant-search-interpretation
+    [variantInterpretation]="genomicInterpretation?.variantInterpretation"
     (variantInterpretationChange)="addVariantInterpretation($event)"
   ></app-variant-search-interpretation>
 </div>

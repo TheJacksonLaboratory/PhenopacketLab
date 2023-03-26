@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { Utils } from 'src/app/component/shared/utils';
 import { OntologyClass } from 'src/app/models/base';
-import { MoleculeContext, VariationDescriptor } from 'src/app/models/interpretation';
+import { Expression, MoleculeContext, VariationDescriptor, VcfRecord } from 'src/app/models/interpretation';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 
@@ -53,13 +54,6 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         this.structuralTypesSubscription = this.interpretationService.getStructuralTypesValues().subscribe(nodes => {
             this.structuralTypesNodes = <OntologyTreeNode[]>nodes.children;
         });
-    //     this.structuralTypeSelectedSubscription = this.interpretationService.getStructuralTypes().subscribe(stages => {
-    //         // reset
-    //         this.structuralTypeSelected = undefined;
-    //         // update when a disease is selected
-    //         this.initializeStructuralTypeSelected(stages[0]);
-    //     });
-    //     this.initializeStructuralTypeSelected(this.variationDescriptor?.structuralType);
     }
 
     ngOnDestroy(): void {
@@ -92,6 +86,26 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         }
     }
 
+    addExpression() {
+        if (this.variationDescriptor) {
+            if (!this.variationDescriptor.expressions) {
+                this.variationDescriptor.expressions = [];
+            }
+            const newExpression = new Expression();
+            newExpression.key = Utils.getBiggestKey(this.variationDescriptor.expressions) + 1;
+            this.variationDescriptor.expressions.push(newExpression);
+        }
+    }
+    deleteExpression(expression: Expression) {
+        this.variationDescriptor.expressions = this.variationDescriptor.expressions.filter(val => val.key !== expression.key);
+    }
+    addVCFRecord() {
+        if (this.variationDescriptor) {
+            if (!this.variationDescriptor.vcfRecord) {
+                this.variationDescriptor.vcfRecord = new VcfRecord();
+            }
+        }
+    }
     initializeStructuralTypeSelected(type: OntologyClass) {
         // update when an interpretation is selected
         if (type === undefined) {

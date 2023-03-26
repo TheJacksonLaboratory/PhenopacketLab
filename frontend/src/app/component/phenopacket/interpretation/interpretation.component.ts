@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatDialog } from '@angular/material/dialog';
 
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
 import { Interpretation } from 'src/app/models/interpretation';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InterpretationDetailDialogComponent } from './interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
+import { Phenopacket } from 'src/app/models/phenopacket';
 
 @Component({
     selector: 'app-interpretation',
@@ -20,106 +20,79 @@ import { InterpretationDetailDialogComponent } from './interpretation-detail/int
         ]),
     ],
 })
-export class InterpretationComponent implements AfterViewInit, OnInit {
+export class InterpretationComponent implements OnInit {
 
     @Input()
     interpretations: Interpretation[];
+    @Input()
+    phenopacket: Phenopacket;
+    @Output()
+    onInterpretationsChange = new EventEmitter<Interpretation[]>();
 
-    // Table items
-    displayedColumns = ['id', 'status', 'diagnosis', 'summary', 'remove'];
+    ref: DynamicDialogRef;
 
-    interpretationDataSource = new DataPresentMatTableDataSource<Interpretation>();
-
-    expandedElement: Interpretation | null;
-
-    dialogRef: any;
     spinnerDialogRef: any;
+    showTable = false;
 
-    constructor(public dialog: MatDialog) {
-
+    constructor(public dialogService: DialogService, public messageService: MessageService,
+        public confirmationService: ConfirmationService) {
     }
 
     ngOnInit() {
-        this.updateInterpretation();
-
-    }
-
-    ngAfterViewInit() {
-
-    }
-
-    updateInterpretation() {
-        if (this.interpretations) {
-            this.interpretationDataSource.data = this.interpretations;
+        if (this.interpretations && this.interpretations.length > 0) {
+            this.showTable = true;
         }
-
     }
+
     /**
      * Add a new interpretation(genomic) with default values or no values
      */
     addInterpretation(interpretation?: Interpretation) {
-        if (interpretation === undefined) {
-            // Add through a dialog to choose from type of Actions
-            const measurementDetailData = { 'title': 'Edit measurement' };
-            measurementDetailData['displayCancelButton'] = true;
-            const dialogRef = this.dialog.open(InterpretationDetailDialogComponent, {
-                width: '1000px',
-                data: measurementDetailData
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result !== undefined) {
-                    const updatedInterpretation = result.interpretation;
-                    if (updatedInterpretation) {
-                        // update measurement
-                        this.interpretations.push(updatedInterpretation);
-                        this.interpretationDataSource.data = this.interpretations;
-                        // emit change
-                    }
-                }
-            });
-            return dialogRef;
-        } else {
-            this.interpretations.push(interpretation);
+        if (interpretation === undefined || interpretation === null) {
+            interpretation = new Interpretation();
         }
-        this.interpretationDataSource.data = this.interpretations;
-
-        // TODO push changes to api
-    }
-
-    /**
-     * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element
-     * @returns
-     */
-    deleteInterpretation(element: Interpretation) {
-        const msgData = { 'title': 'Delete Genomic Interpretation' };
-        msgData['description'] = `Delete the Interpretation with the ID "${element?.id}" ?`;
-        msgData['displayCancelButton'] = true;
-        const dialogRef = this.dialog.open(MessageDialogComponent, {
-            width: '400px',
-            data: msgData
+        this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
+            header: 'Edit Interpretation',
+            width: '70%',
+            contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { interpretation: interpretation,
+                    phenopacket: this.phenopacket }
         });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.removeFromDatasource(element);
+
+        this.ref.onClose.subscribe((interpret: Interpretation) => {
+            if (interpret) {
+                const indexToUpdate = this.interpretations.findIndex(item => item.id === interpret.id);
+                if (indexToUpdate === -1) {
+                    this.interpretations.push(interpret);
+                } else {
+                    this.interpretations[indexToUpdate] = interpret;
+                    this.interpretations = Object.assign([], this.interpretations);
+                }
+                // emit change
+                this.onInterpretationsChange.emit(this.interpretations);
             }
         });
-        return dialogRef;
     }
 
-    removeFromDatasource(interpretation: Interpretation) {
-        if (this.interpretations) {
-            this.interpretations.forEach((element, index) => {
-                if (element === interpretation) {
-                    this.interpretations.splice(index, 1);
+    deleteInterpretation(interpretation: Interpretation) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete \'' + interpretation.id + '\'?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.interpretations = this.interpretations.filter(val => val.id !== interpretation.id);
+                if (this.interpretations.length === 0) {
+                    this.showTable = false;
                 }
-            });
-            this.interpretationDataSource.data = this.interpretations;
-        }
-    }
-
-    expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element;
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Interpretation Deleted', life: 3000 });
+            },
+            reject: () => {
+                this.confirmationService.close();
+            }
+        });
     }
 
 }

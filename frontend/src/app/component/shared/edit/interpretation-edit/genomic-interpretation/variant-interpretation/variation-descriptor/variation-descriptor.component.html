@@ -44,7 +44,14 @@
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
-        <div class="table-header">Expressions</div>
+        <div class="flex align-items-center justify-content-between">
+          Expressions
+          <p-button
+            icon="pi pi-plus"
+            pTooltip="Add new expression"
+            (onClick)="addExpression()"
+          ></p-button>
+        </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
@@ -66,6 +73,7 @@
           >
             Version
           </th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-expression let-editing="editing">
@@ -117,6 +125,15 @@
               </ng-template>
             </p-cellEditor>
           </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteExpression(expression)"
+            ></button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -130,7 +147,14 @@
       [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
-        <div class="table-header">VCF Record</div>
+        <div class="flex align-items-center justify-content-between">
+          VCF Record
+          <p-button *ngIf="!variationDescriptor?.vcfRecord"
+            icon="pi pi-plus"
+            pTooltip="Add new expression"
+            (onClick)="addVCFRecord()"
+          ></p-button>
+        </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
@@ -230,8 +254,7 @@
           >
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText [(ngModel)]="vcfrecord.id"
-                />
+                <input pInputText [(ngModel)]="vcfrecord.id" />
               </ng-template>
               <ng-template pTemplate="output">
                 {{ vcfrecord?.id }}
@@ -343,9 +366,9 @@
       [showClear]="true"
       (onClear)="updateAllelicState($event)"
     >
-    <ng-template let-node pTemplate="default">
-      <span [pTooltip]="node.key">{{ node.label }}</span>
-    </ng-template>
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.key">{{ node.label }}</span>
+      </ng-template>
     </p-treeSelect>
   </div>
   <div class="field col-12 md:col-6">
@@ -366,7 +389,9 @@
       (onClear)="updateStructuralType($event)"
     >
       <ng-template let-node pTemplate="default">
-        <span [pTooltip]="node.description">{{ node.label }} [{{node.key}}]</span>
+        <span [pTooltip]="node.description"
+          >{{ node.label }} [{{ node.key }}]</span
+        >
       </ng-template>
     </p-treeSelect>
   </div>

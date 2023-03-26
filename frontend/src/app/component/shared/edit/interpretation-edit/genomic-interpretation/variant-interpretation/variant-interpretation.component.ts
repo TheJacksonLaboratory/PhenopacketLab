@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AcmgPathogenicityClassification, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
@@ -11,10 +11,11 @@ import { AcmgPathogenicityClassification, GeneDescriptor, TherapeuticActionabili
 })
 export class VariantInterpretationComponent implements OnInit {
 
+    @Input()
+    variantInterpretation: VariantInterpretation;
     @Output()
     variantInterpretationChange = new EventEmitter<VariantInterpretation>();
 
-    variantInterpretation: VariantInterpretation;
     visible = false;
     hgvs: string;
     assembly: string;
@@ -42,18 +43,16 @@ export class VariantInterpretationComponent implements OnInit {
         this.viewLeftPane = true;
         this.splitterWidths = [50, 50];
     }
-    updateAcmgPathogenicity(acmgPathogenicity: AcmgPathogenicityClassification) {
+    updateAcmgPathogenicity(event) {
         if (this.variantInterpretation) {
-            console.log(acmgPathogenicity);
-            this.variantInterpretation.acmgPathogenicityClassification = acmgPathogenicity;
+            this.variantInterpretation.acmgPathogenicityClassification = event.value;
             this.variantInterpretationChange.emit(this.variantInterpretation);
         }
     }
 
-    updateTherapeuticActionability(therapeuticActionability: TherapeuticActionability) {
+    updateTherapeuticActionability(event) {
         if (this.variantInterpretation) {
-            console.log(therapeuticActionability);
-            this.variantInterpretation.therapeuticActionability = therapeuticActionability;
+            this.variantInterpretation.therapeuticActionability = event.value;
             this.variantInterpretationChange.emit(this.variantInterpretation);
         }
     }

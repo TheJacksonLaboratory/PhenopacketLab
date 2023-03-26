@@ -38,117 +38,130 @@
       <label for="Summary">Summary</label>
     </span>
   </div> -->
-</div>
-
-<p-card
-  header="Diagnosis"
-  subheader="Create a diagnosis with its corresponding disease and genomic interpretation."
->
-  <div class="grid p-fluid">
-    <div class="field col-12 md:col-6">
-      <label for="disease">Disease</label>
-      <p-dropdown
-        id="disease"
-        placeholder="Select disease"
-        [options]="diseases"
-        appendTo="body"
-        [virtualScroll]="true"
-        [virtualScrollItemSize]="30"
-        filter="true"
-        optionLabel="name"
-        filterBy="name"
-        (onChange)="updateDisease($event)"
-        showClear="true"
-      >
-        <ng-template let-disease pTemplate="item">
-          <div [pTooltip]="disease.id" tooltipPosition="left" escape="false">
-            {{ disease.name }}
-          </div>
-        </ng-template>
-      </p-dropdown>
-    </div>
-    <div class="field col-12 md:col-6"></div>
-    <div class="field col-12 md:col-6">
-      <button
-        pButton
-        type="button"
-        label="Add Genomic Interpretation"
-        (click)="addGenomicInterpretation()"
-      ></button>
-    </div>
-
-    <div *ngIf="genomicInterpretationVisible" class="field col-12">
-      <p-table
-        [value]="genomicInterpretations"
-        dataKey="key"
-        [tableStyle]="{'min-width': '60rem'}"
-      >
-        <ng-template pTemplate="caption">
-          <div class="table-header">Genomic Interpretation(s)</div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 5rem"></th>
-            <th pResizableColumn style="min-width: 2rem">Subject ID</th>
-            <th pResizableColumn>Status</th>
-            <th pResizableColumn>Call</th>
-            <th pResizableColumn></th>
-          </tr>
-        </ng-template>
-        <ng-template
-          pTemplate="body"
-          let-genomicinterpretation
-          let-expanded="expanded"
-        >
-          <tr>
-            <td>
-              <button
-                type="button"
-                pButton
-                pRipple
-                [pRowToggler]="genomicinterpretation"
-                class="p-button-text p-button-rounded p-button-plain"
-                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-              ></button>
-            </td>
-            <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td>
-            <td>{{ genomicinterpretation.interpretationStatus }}</td>
-            <td>{{ getCall(genomicinterpretation) }}</td>
-            <td>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-warning"
-                (click)="deleteGenomicInterpretation(genomicinterpretation)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-genomicinterpretation>
-          <tr>
-            <td colspan="5">
-              <div class="p-3">
-                <app-genomic-interpretation
-                  [genomicInterpretation]="genomicinterpretation"
-                  (genomicInterpretationChange)="updateGenomicInterpretation($event, genomicinterpretation)"
-                ></app-genomic-interpretation>
+  <div class="field col-12">
+    <p-card
+      header="Diagnosis"
+      subheader="Create a diagnosis with its corresponding disease and genomic interpretation."
+    >
+      <div class="grid p-fluid">
+        <div class="field col-12 md:col-6">
+          <label for="disease">Disease</label>
+          <p-dropdown
+            id="disease"
+            placeholder="Select disease"
+            dataKey="id"
+            [options]="diseases"
+            appendTo="body"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="30"
+            filter="true"
+            filterBy="label"
+            [(ngModel)]="selectedDisease"
+            optionLabel="label"
+            showClear="true"
+          >
+            <ng-template let-disease pTemplate="item">
+              <div
+                [pTooltip]="disease.id"
+                tooltipPosition="left"
+                escape="false"
+              >
+                {{ disease.label }}
               </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="field col-12 md:col-6"></div>
+        <div class="field col-12">
+          <button
+            pButton
+            label="Add Genomic Interpretation"
+            (click)="addGenomicInterpretation()"
+            icon="pi pi-plus"
+            class="p-button-text"
+            style="width: 300px"
+          ></button>
+        </div>
+
+        <div *ngIf="genomicInterpretationVisible" class="field col-12">
+          <p-table
+            [value]="genomicInterpretations"
+            dataKey="key"
+            [tableStyle]="{ 'min-width': '60rem' }"
+          >
+            <ng-template pTemplate="caption">
+              <div class="table-header">Genomic Interpretation(s)</div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 5rem"></th>
+                <th pResizableColumn style="min-width: 2rem">Subject ID</th>
+                <th pResizableColumn>Status</th>
+                <th pResizableColumn>Call</th>
+                <th pResizableColumn></th>
+              </tr>
+            </ng-template>
+            <ng-template
+              pTemplate="body"
+              let-genomicinterpretation
+              let-expanded="expanded"
+            >
+              <tr>
+                <td>
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    [pRowToggler]="genomicinterpretation"
+                    class="p-button-text p-button-rounded p-button-plain"
+                    [icon]="
+                      expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                    "
+                  ></button>
+                </td>
+                <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td>
+                <td>{{ genomicinterpretation.interpretationStatus }}</td>
+                <td>{{ getCall(genomicinterpretation) }}</td>
+                <td>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning"
+                    (click)="deleteGenomicInterpretation(genomicinterpretation)"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-genomicinterpretation>
+              <tr>
+                <td colspan="5">
+                  <div class="p-3">
+                    <app-genomic-interpretation
+                      [genomicInterpretation]="genomicinterpretation"
+                      (genomicInterpretationChange)="
+                        updateGenomicInterpretation(
+                          $event,
+                          genomicinterpretation
+                        )
+                      "
+                    ></app-genomic-interpretation>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </p-card>
   </div>
-</p-card>
-<br />
-<div class="grid p-fluid">
-  <div class="field col-12 md:col-4">
+  <div class="field col-12 right">
     <button
       pButton
-      type="button"
-      label="Add interpretation"
-      (click)="addInterpretation()"
+      label="Save Interpretation"
+      (click)="updateInterpretation()"
+      icon="pi pi-save"
+      style="width: 300px"
     ></button>
   </div>
 </div>

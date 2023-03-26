@@ -1,45 +1,34 @@
-table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-th,
-td {
-    overflow: hidden;
-    width: auto;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-tr.example-detail-row {
-    height: 0;
-}
-
-.wrap {
-    overflow-wrap: break-word;
-}
-// tr.example-element-row:not(.example-expanded-row):hover {
-//   background: whitesmoke;
-// }
-
-// tr.example-element-row:not(.example-expanded-row):active {
-//   background: #efefef;
-// }
-
-.example-element-row td {
-    border-bottom-width: 0;
-}
-
-.example-element-detail {
-    overflow: hidden;
-    display: flex;
-}
-
-.add-button-container {
-    padding-bottom: 8px;
-    padding-top: 10px;
-}
-
-.add-button + .add-button {
-    margin-left: 8px;
-}
+.phenopacket-list-tabs {
+    .p-tabview-panels {
+      padding: 0 !important;
+  
+      & .p-element:not(:first-child) .p-tabview-panel {
+        padding: 1.25rem !important;
+      }
+    }
+  
+    .p-tabview-nav-link {
+      text-decoration: none !important;
+      &:focus{
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+  
+    .p-datatable.p-datatable-hoverable-rows .p-datatable-tbody > tr:hover{
+      background: #e9ecef;
+      color: #495057;
+    }
+  
+  
+    .p-datatable .p-datatable-tbody > tr:focus {
+      outline: 0 none;
+    }
+  
+    .actions {
+      display: inline-flex;
+      .p-button {
+        margin: .25rem;
+      }
+    }
+  }

@@ -1,14 +1,10 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatDialog } from '@angular/material/dialog';
 
-import { Measurement } from 'src/app/models/measurement';
-import { GenomicInterpretation, Interpretation, ProgressStatus } from 'src/app/models/interpretation';
-import { UntypedFormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { GenomicInterpretation, Interpretation } from 'src/app/models/interpretation';
 import { InterpretationDetailDialogComponent } from './interpretation-detail-dialog/interpretation-detail-dialog.component';
-import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
-import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/message-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-interpretation-detail',
@@ -23,7 +19,7 @@ import { MessageDialogComponent } from 'src/app/component/shared/message-dialog/
         ]),
     ],
 })
-export class InterpretationDetailComponent implements AfterViewInit, OnInit {
+export class InterpretationDetailComponent implements OnInit {
 
     @Input()
     interpretation: Interpretation;
@@ -34,159 +30,65 @@ export class InterpretationDetailComponent implements AfterViewInit, OnInit {
     interpretationId: string;
     status: any;
     summary: string;
-    statusControl = new UntypedFormControl('');
-    statusSubscription: Subscription;
+    genomicInterpretations: GenomicInterpretation[];
 
-    // Table items
-    displayedColumns = ['id', 'status', 'call', 'remove'];
-
-    genoInterpretationDataSource = new DataPresentMatTableDataSource<GenomicInterpretation>();
-
-    expandedElement: Measurement | null;
-
-    dialogRef: any;
+    ref: DynamicDialogRef;
     spinnerDialogRef: any;
 
-    constructor(public dialog: MatDialog) {
+    constructor(public dialogService: DialogService, public messageService: MessageService) {
 
     }
 
     ngOnInit() {
         this.updateInterpretation();
-        if (this.statusSubscription) {
-            this.statusSubscription.unsubscribe();
-        }
-        this.statusSubscription = this.statusControl.valueChanges.subscribe(value => {
-            if (value && value.length > 0) {
-                if (this.interpretation) {
-                    this.interpretation.progressStatus = value;
-                    this.onInterpretationChanged.emit(this.interpretation);
-                }
-
-            }
-        });
-
-    }
-
-    ngAfterViewInit() {
-
-    }
-
-    openEditDialog() {
-        const measurementDetailData = { 'title': 'Edit Interpretation' };
-        measurementDetailData['interpretation'] = this.interpretation;
-        measurementDetailData['displayCancelButton'] = true;
-        const dialogRef = this.dialog.open(InterpretationDetailDialogComponent, {
-            width: '1000px',
-            data: measurementDetailData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result !== undefined) {
-                const updatedInterpretation = result.interpretation;
-                if (updatedInterpretation) {
-                    // update interpretation
-                    this.interpretation = updatedInterpretation;
-                    this.updateInterpretation();
-                    // emit change
-                    // this.onFeatureChanged.emit(this.phenotypicFeature);
-                }
-            }
-        });
-        return dialogRef;
     }
 
     updateInterpretation() {
         if (this.interpretation) {
-            this.genoInterpretationDataSource.data = this.interpretation.diagnosis?.genomicInterpretations;
             this.disease = this.interpretation.diagnosis?.disease?.toString();
             this.interpretationId = this.interpretation.id;
             this.status = this.interpretation.progressStatus;
-            this.statusControl.setValue(this.status);
             this.summary = this.interpretation.summary;
-            this.onInterpretationChanged.emit(this.interpretation);
+            this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations;
         }
-
     }
+
+    openEditDialog() {
+        this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
+            header: 'Edit Interpretation',
+            width: '70%',
+            contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { interpretation: this.interpretation }
+        });
+
+        this.ref.onClose.subscribe((interpretation: Interpretation) => {
+            if (interpretation) {
+                this.interpretation = interpretation;
+                this.updateInterpretation();
+                // emit change
+                this.onInterpretationChanged.emit(this.interpretation);
+            }
+        });
+    }
+
     /**
      * Add a new interpretation(genomic) with default values or no values
      */
     addInterpretation(genoInterpretation?: GenomicInterpretation) {
-        if (genoInterpretation === undefined) {
-            // Add through a dialog to choose from type of Actions
-            const measurementDetailData = { 'title': 'Edit measurement' };
-            measurementDetailData['displayCancelButton'] = true;
-            const dialogRef = this.dialog.open(InterpretationDetailDialogComponent, {
-                width: '1000px',
-                data: measurementDetailData
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result !== undefined) {
-                    const updatedInterpretation = result.interpretation;
-                    if (updatedInterpretation) {
-                        // update measurement
-                        this.interpretation = updatedInterpretation;
-                        this.genoInterpretationDataSource.data = this.interpretation.diagnosis?.genomicInterpretations;
-                        // emit change
-                        this.onInterpretationChanged.emit(this.interpretation);
-                    }
-                }
-            });
-            return dialogRef;
-        } else {
-            this.interpretation.diagnosis.genomicInterpretations.push(genoInterpretation);
-        }
-        this.genoInterpretationDataSource.data = this.interpretation.diagnosis.genomicInterpretations;
-        this.onInterpretationChanged.emit(this.interpretation);
 
         // TODO push changes to api
     }
 
-    /**
-     * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element
-     * @returns
-     */
-    deleteInterpretation(element: GenomicInterpretation) {
-        const msgData = { 'title': 'Delete Genomic Interpretation' };
-        msgData['description'] = `Delete the Interpretation with the ID "${this.getId(element)}" ?`;
-        msgData['displayCancelButton'] = true;
-        const dialogRef = this.dialog.open(MessageDialogComponent, {
-            width: '400px',
-            data: msgData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.removeFromDatasource(element);
-            }
-        });
-        return dialogRef;
-    }
 
-    removeFromDatasource(interpretation: GenomicInterpretation) {
-        if (this.interpretation.diagnosis) {
-            this.interpretation.diagnosis.genomicInterpretations.forEach((element, index) => {
-                if (element === interpretation) {
-                    this.interpretation.diagnosis.genomicInterpretations.splice(index, 1);
-                }
-            });
-            this.genoInterpretationDataSource.data = this.interpretation.diagnosis.genomicInterpretations;
-            this.onInterpretationChanged.emit(this.interpretation);
+    getCall(genomicInterpretation: GenomicInterpretation) {
+        if (genomicInterpretation.geneDescriptor === undefined && genomicInterpretation.variantInterpretation) {
+            return 'VariantInterpretation';
+        } else if (genomicInterpretation.geneDescriptor && genomicInterpretation.variantInterpretation === undefined) {
+            return 'GeneDescriptor';
         }
-    }
-
-    expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element;
-    }
-
-    getId(element: GenomicInterpretation) {
-        if (element) {
-            return element.subjectOrBiosampleId;
-        }
-        return '';
-    }
-    getProgressStatus() {
-        // tslint:disable-next-line:radix
-        return Object.values(ProgressStatus).filter(x => !(parseInt(x) >= 0));
     }
 }
 
