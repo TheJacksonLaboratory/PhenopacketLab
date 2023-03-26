@@ -1,3 +1,5 @@
+import { Utils } from '../component/shared/utils';
+
 /**
  * Class to convert to list or list of phenopacket model objects.
  * the Phenopacket model objects that can have more than one instance should
@@ -10,6 +12,7 @@ export class Convert {
             const array = [];
             for (const item of obj) {
                 const it = this.create(item);
+                it.key = Utils.getBiggestKey(array) + 1;
                 array.push(it);
             }
             return array;
