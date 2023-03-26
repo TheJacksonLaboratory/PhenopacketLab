@@ -3,17 +3,17 @@ package org.monarchinitiative.phenopacketlab.restapi.controller.dto;
 /**
  * Data transfer object for HpoDisease.
  */
-public class DiseaseDto {
+public class OntologyClassDto {
 
     private String id;
-    private String name;
+    private String label;
 
-    public DiseaseDto() {
+    public OntologyClassDto() {
     }
 
-    public DiseaseDto(String id, String name) {
+    public OntologyClassDto(String id, String label) {
         this.id = id;
-        this.name = name;
+        this.label = label;
     }
 
     public String getId() {
@@ -24,12 +24,12 @@ public class DiseaseDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
 

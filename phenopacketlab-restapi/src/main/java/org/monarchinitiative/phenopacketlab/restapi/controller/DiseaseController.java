@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDisease;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
-import org.monarchinitiative.phenopacketlab.restapi.controller.dto.DiseaseDto;
+import org.monarchinitiative.phenopacketlab.restapi.controller.dto.OntologyClassDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,19 +21,19 @@ public class DiseaseController {
         this.diseaseService = diseaseService;
     }
 
-    private static Function<HpoDisease, DiseaseDto> diseaseToDto() {
-        return d -> new DiseaseDto(d.id().getValue(), d.getDiseaseName());
+    private static Function<HpoDisease, OntologyClassDto> diseaseToDto() {
+        return d -> new OntologyClassDto(d.id().getValue(), d.getDiseaseName());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<DiseaseDto> diseaseById(@PathVariable("id") String id) {
+    public ResponseEntity<OntologyClassDto> diseaseById(@PathVariable("id") String id) {
         TermId diseaseId = TermId.of(id);
         return ResponseEntity.of(diseaseService.diseaseById(diseaseId)
                 .map(diseaseToDto()));
     }
 
     @GetMapping
-    public ResponseEntity<List<DiseaseDto>> allDiseases() {
+    public ResponseEntity<List<OntologyClassDto>> allDiseases() {
         return ResponseEntity.ok(diseaseService.diseases()
                 .map(diseaseToDto())
                 .collect(Collectors.toList()));
