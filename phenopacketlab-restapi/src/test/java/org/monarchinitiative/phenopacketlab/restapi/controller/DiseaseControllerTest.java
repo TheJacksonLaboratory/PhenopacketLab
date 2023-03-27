@@ -92,7 +92,7 @@ public class DiseaseControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"label\":\"First\"},{\"id\":\"OMIM:987654\",\"name\":\"Second\"}]"));
+        assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"label\":\"First\"},{\"id\":\"OMIM:987654\",\"label\":\"Second\"}]"));
     }
 
     private static HpoDisease createDisease(String diseaseId, String diseaseName, List<HpoDiseaseAnnotation> diseaseAnnotations) {
