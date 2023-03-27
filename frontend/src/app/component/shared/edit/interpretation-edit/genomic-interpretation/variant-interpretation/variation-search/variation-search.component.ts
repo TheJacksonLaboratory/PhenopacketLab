@@ -65,18 +65,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
         this.assembly = event.value;
     }
 
-    updateSelectedTranscript(event: any) {
-        this.selectedTranscript = event.value;
-        if (this.selectedTranscript === 'all') {
-            this.transcriptDescription = 'Return all possible transcripts';
-            this.transcript = this.selectedTranscript;
-        }
-        if (this.selectedTranscript === 'prefered') {
-            this.transcriptDescription = 'Return only \'select\' transcripts';
-            this.transcript = 'mane_select';
-        }
-    }
-
     updateAcmgPathogenicity(acmgPathogenicity: AcmgPathogenicityClassification) {
         console.log(acmgPathogenicity);
         console.log(this.selectedAcmgPathogenicity);
@@ -93,8 +81,8 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
 
     public searchVariantByHGVS() {
         // For now we just allow the mane select option
-        this.transcript = 'mane_select';
-        if (this.hgvs && this.assembly && this.transcript) {
+        this.selectedTranscript = 'prefered';
+        if (this.hgvs && this.assembly) {
             this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
                 closable: false,
                 modal: true
