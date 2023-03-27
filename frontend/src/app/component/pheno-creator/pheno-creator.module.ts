@@ -38,6 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -110,7 +111,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         SelectButtonModule,
         DialogModule,
         DynamicDialogModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        ScrollPanelModule
+
     ],
     exports: [
         StepsModule,
