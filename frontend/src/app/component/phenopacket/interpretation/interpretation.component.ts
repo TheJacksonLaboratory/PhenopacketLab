@@ -71,6 +71,7 @@ export class InterpretationComponent implements OnInit {
                     this.interpretations[indexToUpdate] = interpret;
                     this.interpretations = Object.assign([], this.interpretations);
                 }
+                this.showTable = true;
                 // emit change
                 this.onInterpretationsChange.emit(this.interpretations);
             }
