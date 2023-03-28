@@ -53,7 +53,7 @@ public class PhenotypicFeatureControllerTest {
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response.getContentAsString(), equalTo("{\"id\":\"OMIM:123456\",\"name\":\"First\"}"));
+        assertThat(response.getContentAsString(), equalTo("{\"id\":\"OMIM:123456\",\"label\":\"First\"}"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class PhenotypicFeatureControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"name\":\"First\"},{\"id\":\"OMIM:987654\",\"name\":\"Second\"}]"));
+        assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"label\":\"First\"},{\"id\":\"OMIM:987654\",\"label\":\"Second\"}]"));
     }
 
     private static Term createPhenotypicFeature(String phenotypicFeatureId, String phenotypicFeatureName) {
