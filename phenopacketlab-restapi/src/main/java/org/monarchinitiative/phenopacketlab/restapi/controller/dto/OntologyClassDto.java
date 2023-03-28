@@ -1,5 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller.dto;
 
+import java.util.Objects;
+
 /**
  * Data transfer object for HpoDisease.
  */
@@ -32,5 +34,16 @@ public class OntologyClassDto {
         this.label = label;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OntologyClassDto that = (OntologyClassDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(label, that.label);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, label);
+    }
 }

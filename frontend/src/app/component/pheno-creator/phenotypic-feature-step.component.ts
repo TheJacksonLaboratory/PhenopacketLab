@@ -96,7 +96,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.name);
+            phenotypicFeature.type = new OntologyClass(data.id, data.label);
             phenotypicFeature.excluded = false;
             this.addPhenotypicFeature(phenotypicFeature);
             this.spinnerDialogRef.close();

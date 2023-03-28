@@ -196,14 +196,14 @@
       [virtualScroll]="true"
       [virtualScrollItemSize]="30"
       filter="true"
-      optionLabel="name"
-      filterBy="name"
+      optionLabel="label"
+      filterBy="label"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
     >
       <ng-template let-cause pTemplate="item">
         <div [pTooltip]="cause.id" tooltipPosition="right" escape="false">
-          {{ cause.name }}
+          {{ cause.label }}
         </div>
       </ng-template>
     </p-dropdown>

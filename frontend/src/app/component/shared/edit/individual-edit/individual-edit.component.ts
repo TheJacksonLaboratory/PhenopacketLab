@@ -153,7 +153,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     updateCauseOfDeath(event) {
         if (this.subject) {
             if (event) {
-                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
+                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.label);
             } else {
                 this.subject.vitalStatus.causeOfDeath = undefined;
             }
