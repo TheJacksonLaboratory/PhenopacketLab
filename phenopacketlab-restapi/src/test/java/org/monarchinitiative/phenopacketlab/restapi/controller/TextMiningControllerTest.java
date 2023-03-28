@@ -43,7 +43,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void mineText() throws Exception {
-        when(textMiningService.mineText("This is an example text", "", true))
+        when(textMiningService.mineText("This is an example text"))
                 .thenReturn(new MinedText("This is an example text", new ArrayList<>()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer")
@@ -58,7 +58,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void textMined_missingPayload() throws Exception {
-        when(textMiningService.mineText(null, "", true))
+        when(textMiningService.mineText(null))
                 .thenReturn(new MinedText(null, null));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer"))
