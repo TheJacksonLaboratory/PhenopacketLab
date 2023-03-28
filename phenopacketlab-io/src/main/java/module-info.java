@@ -8,6 +8,8 @@ module phenopacketlab.io {
     requires org.slf4j;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    requires org.monarchinitiative.phenol.core;
+    requires org.monarchinitiative.fenominal.core;
 
     exports org.monarchinitiative.phenopacketlab.io;
 }
