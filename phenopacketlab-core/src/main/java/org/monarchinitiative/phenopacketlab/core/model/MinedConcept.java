@@ -5,12 +5,14 @@ import java.util.Objects;
 public class MinedConcept {
 
     String id;
+    String label;
     int start;
     int end;
     boolean excluded;
 
-    public MinedConcept(String id, int start, int end, boolean excluded) {
+    public MinedConcept(String id, String label, int start, int end, boolean excluded) {
         this.id = id;
+        this.label = label;
         this.start = start;
         this.end = end;
         this.excluded = excluded;
@@ -21,6 +23,12 @@ public class MinedConcept {
     }
     public void setId(String id) {
         this.id = id;
+    }
+    public String getLabel() {
+        return label;
+    }
+    public void setLabel(String label) {
+        this.label = label;
     }
     public int getStart() {
         return start;
@@ -46,11 +54,11 @@ public class MinedConcept {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MinedConcept that = (MinedConcept) o;
-        return Objects.equals(id, that.id) && Objects.equals(start, that.start) && Objects.equals(end, that.end) && Objects.equals(excluded, that.excluded);
+        return Objects.equals(id, that.id) && Objects.equals(label, that.label) && Objects.equals(start, that.start) && Objects.equals(end, that.end) && Objects.equals(excluded, that.excluded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, start, end, excluded);
+        return Objects.hash(id, label, start, end, excluded);
     }
 }
