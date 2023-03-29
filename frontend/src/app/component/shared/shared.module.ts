@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AngularSplitModule } from 'angular-split';
+
 import { MaterialModule } from './material.module';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { PrimeModule } from './prime.module';
@@ -33,7 +36,8 @@ import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-
     FormsModule,
     ReactiveFormsModule,
     PrimeModule,
-    MaterialModule
+    MaterialModule,
+    AngularSplitModule
   ],
   declarations: [
     MessageDialogComponent,
@@ -83,7 +87,8 @@ import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-
     VariationSearchComponent,
     LabelCreatorDialogComponent,
     PrimeModule,
-    MaterialModule
+    MaterialModule,
+    AngularSplitModule
   ]
 })
 export class SharedModule { }
