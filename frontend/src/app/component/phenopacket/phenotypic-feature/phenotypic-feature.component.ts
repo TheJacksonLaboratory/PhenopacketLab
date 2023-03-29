@@ -1,13 +1,14 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatDialog } from '@angular/material/dialog';
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { Evidence, OntologyClass, TimeElement } from 'src/app/models/base';
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
+import { OntologyClass } from 'src/app/models/base';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PhenotypicDetailDialogComponent } from './phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
+import { Utils } from '../../shared/utils';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -22,17 +23,14 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
         ]),
     ],
 })
-export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChanges {
+export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     // search params
     itemName = 'Phenotypic feature';
     searchLabel = 'Phenotypic feature';
     placeHolderTxt = 'Enter a phenotypic feature name';
     localStorageKey = 'phenotypic_features';
 
-    // Table items
-    displayedColumns = ['label', 'status', 'onset', 'resolution', 'severity', 'modifiers', 'evidence', 'remove'];
-
-    phenotypicDataSource = new DataPresentMatTableDataSource<PhenotypicFeature>();
+    showTable = false;
 
     phenotypicCount: number;
 
@@ -52,75 +50,75 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
     @Output()
     onPhenotypicFeaturesChanged = new EventEmitter<PhenotypicFeature[]>();
 
-    dialogRef: any;
+    ref: DynamicDialogRef;
     spinnerDialogRef: any;
 
-    constructor(public searchService: PhenotypeSearchService, public dialog: MatDialog) {
+    constructor(public searchService: PhenotypeSearchService, public dialogService: DialogService,
+        private messageService: MessageService, private confirmationService: ConfirmationService) {
     }
     ngOnChanges(changes: SimpleChanges): void {
-        this.phenotypicDataSource.data = this.phenotypicFeatures;
         this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
     ngOnInit() {
-        this.phenotypicDataSource.data = this.phenotypicFeatures;
-    }
-
-    ngAfterViewInit() {
-    }
-
-    /**
-     * Add a new phenotypic feature with default values or no values
-     */
-    addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
-        if (phenotypicFeature === undefined) {
-            const feature = new PhenotypicFeature();
-            feature.description = 'Phenotypic Feature description';
-            feature.type = new OntologyClass('id', 'name');
-            feature.onset = new TimeElement('');
-            feature.evidences = [new Evidence(new OntologyClass('', ''))];
-            feature.excluded = false;
-            feature.resolution = new TimeElement('');
-            feature.severity = new OntologyClass('', '');
-            feature.modifiers = [new OntologyClass('', '')];
-            this.phenotypicFeatures.push(feature);
+        if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
+            this.showTable = true;
         }
-        this.phenotypicFeatures.push(phenotypicFeature);
-        this.phenotypicDataSource.data = this.phenotypicFeatures;
-        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+    }
 
-        // TODO push changes to api
+    addPhenotypicFeature(feature?: PhenotypicFeature) {
+        // TODO not needed
+    }
+
+    editPhenotypicFeature(feature?: PhenotypicFeature) {
+        this.ref = this.dialogService.open(PhenotypicDetailDialogComponent, {
+            header: 'Edit Phenotypic feature',
+            width: '70%',
+            contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { phenotypicFeature: feature }
+        });
+
+        this.ref.onClose.subscribe((phenoFeature: PhenotypicFeature) => {
+            if (phenoFeature) {
+                const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.key === phenoFeature.key);
+                if (indexToUpdate === -1) {
+                    this.phenotypicFeatures.push(phenoFeature);
+                } else {
+                    this.phenotypicFeatures[indexToUpdate] = phenoFeature;
+                    this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
+                }
+                this.showTable = true;
+                // emit change
+                this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+            }
+        });
+
     }
 
     /**
-     * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element
+     * Removes the chosen feature
+     * @param feature
      * @returns
      */
-    deleteFeature(element: PhenotypicFeature) {
-        const msgData = { 'title': 'Delete Phenotypic Feature' };
-        msgData['description'] = `Delete the Phenotypic Feature named "${element.type.label}" ?`;
-        msgData['displayCancelButton'] = true;
-        const dialogRef = this.dialog.open(MessageDialogComponent, {
-            width: '400px',
-            data: msgData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.removeFromDatasource(element);
+    deleteFeature(feature: PhenotypicFeature) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete \'' + feature.type.id + '\'?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.key !== feature.key);
+                if (this.phenotypicFeatures.length === 0) {
+                    this.showTable = false;
+                }
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Phenotypic feature Deleted', life: 3000 });
+            },
+            reject: () => {
+                this.confirmationService.close();
             }
         });
-        return dialogRef;
-    }
-
-    removeFromDatasource(phenoFeature: PhenotypicFeature) {
-        this.phenotypicFeatures.forEach((element, index) => {
-            if (element === phenoFeature) {
-                this.phenotypicFeatures.splice(index, 1);
-            }
-        });
-        this.phenotypicDataSource.data = this.phenotypicFeatures;
-        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
     onSearchCriteriaChange(searchCriteria: any) {
@@ -134,13 +132,19 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
     }
 
     private _queryPhenotypicFeatureById(id: string) {
-        this.openSpinnerDialog();
+        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+            closable: false,
+            modal: true
+        });
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.name);
+            phenotypicFeature.type = new OntologyClass(data.id, data.label);
             phenotypicFeature.description = data.description;
             phenotypicFeature.excluded = false;
-            this.addPhenotypicFeature(phenotypicFeature);
+            phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
+            this.phenotypicFeatures.push(phenotypicFeature);
+            this.showTable = true;
+            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
             this.spinnerDialogRef.close();
         },
             (error) => {
@@ -149,23 +153,11 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
             });
     }
 
-    expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element;
-
-    }
-
-    openSpinnerDialog() {
-        this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-            panelClass: 'transparent',
-            disableClose: true
-        });
-    }
-
     getModifiers(phenotypicFeature: PhenotypicFeature) {
         if (phenotypicFeature.modifiers) {
             const result = [];
             phenotypicFeature.modifiers.forEach(modifier => {
-                result.push(modifier.id);
+                result.push(modifier.toString());
             });
             return result.join(',');
         }
@@ -175,7 +167,7 @@ export class PhenotypicFeatureComponent implements AfterViewInit, OnInit, OnChan
         if (phenotypicFeature.evidences) {
             const result = [];
             phenotypicFeature.evidences.forEach(evidence => {
-                result.push(evidence.evidenceCode.id);
+                result.push(evidence.evidenceCode.toString());
             });
             return result.join(',');
         }
