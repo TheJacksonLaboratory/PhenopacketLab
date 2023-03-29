@@ -30,9 +30,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     selectedKaryotypicSex: KaryotypicSex;
 
     showGender = false;
-    genders: ConstantObject[];
-    selectedGender: ConstantObject;
-    genderSubscription: Subscription;
+    // genders: ConstantObject[];
+    // selectedGender: ConstantObject;
+    // genderSubscription: Subscription;
 
     constructor(public phenopacketService: PhenopacketService, public diseaseService: DiseaseSearchService) {
     }
@@ -50,15 +50,15 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                 }
             }
         });
-        this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
-            this.genders = genders;
-            console.log(genders);
-            for (const gender of genders) {
-                if (this.subject && this.subject.gender?.label === gender.name) {
-                   this.selectedGender = gender;
-                }
-            }
-        });
+        // this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
+        //     this.genders = genders;
+        //     console.log(genders);
+        //     for (const gender of genders) {
+        //         if (this.subject && this.subject.gender?.label === gender.name) {
+        //            this.selectedGender = gender;
+        //         }
+        //     }
+        // });
         if (this.subject) {
             for (const karyosex of KaryotypicSex.VALUES) {
                 if (this.subject.karyotypicSex === karyosex.name) {
@@ -74,9 +74,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         if (this.sexSubscription) {
             this.sexSubscription.unsubscribe();
         }
-        if (this.genderSubscription) {
-            this.genderSubscription.unsubscribe();
-        }
+        // if (this.genderSubscription) {
+        //     this.genderSubscription.unsubscribe();
+        // }
     }
 
     /**
@@ -113,20 +113,20 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
 
-    handleClickMore(event) {
-        this.showGender = !this.showGender;
-    }
+    // handleClickMore(event) {
+    //     this.showGender = !this.showGender;
+    // }
 
-    updateGender(gender: any) {
-        if (this.subject) {
-            if (gender) {
-                this.subject.gender = new OntologyClass(gender.id.value, gender.name);
-            } else {
-                this.subject.gender = undefined;
-            }
-            this.subjectChange.emit(this.subject);
-        }
-    }
+    // updateGender(gender: any) {
+    //     if (this.subject) {
+    //         if (gender) {
+    //             this.subject.gender = new OntologyClass(gender.id.value, gender.name);
+    //         } else {
+    //             this.subject.gender = undefined;
+    //         }
+    //         this.subjectChange.emit(this.subject);
+    //     }
+    // }
 
     updateStatus(status: any) {
         if (this.subject) {

@@ -27,6 +27,8 @@ export class VariantInterpretationComponent implements OnInit {
     expanded = false;
 
     splitterWidths = [50, 50];
+    splitterLeftWidth = 60;
+    splitterRightWidth = 40;
     viewLeftPane = true;
 
     constructor() {
@@ -38,10 +40,14 @@ export class VariantInterpretationComponent implements OnInit {
     collapseSplitter() {
         this.viewLeftPane = false;
         this.splitterWidths = [0.1, 99.9];
+        this.splitterLeftWidth = 0;
+        this.splitterRightWidth = 100;
     }
     expandSplitter() {
         this.viewLeftPane = true;
         this.splitterWidths = [50, 50];
+        this.splitterLeftWidth = 60;
+        this.splitterRightWidth = 40;
     }
     updateAcmgPathogenicity(event) {
         if (this.variantInterpretation) {
@@ -65,6 +71,10 @@ export class VariantInterpretationComponent implements OnInit {
     }
     updateVariantInterpretation(variantInterpretation: VariantInterpretation) {
         this.variantInterpretation = variantInterpretation;
+        if (this.variantInterpretation) {
+            this.splitterLeftWidth = 0;
+            this.splitterRightWidth = 100;
+        }
         this.variantInterpretationChange.emit(this.variantInterpretation);
     }
     updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
