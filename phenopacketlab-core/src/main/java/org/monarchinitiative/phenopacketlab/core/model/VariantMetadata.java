@@ -1,22 +1,17 @@
 package org.monarchinitiative.phenopacketlab.core.model;
 
-
 public class VariantMetadata {
 
-    String assembly;
-    String chr;
-    Long position;
-    String ref;
-    String alt;
-    String geneSymbol;
-    String hgncId;
-    String gHgvs;
-    String cHgvs;
-    String pHgvs;
+    private String chr;
+    private Long position;
+    private String ref;
+    private String alt;
+    private String geneSymbol;
+    private String hgncId;
+    private String gHgvs;
+    private String cHgvs;
+    private String pHgvs;
 
-    public VariantMetadata(String build) {
-        this.assembly = build;
-    }
     public String getChr() {
         return chr;
     }

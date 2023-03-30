@@ -76,7 +76,7 @@ public class VariantValidatorFunctionalAnnotationService implements FunctionalVa
             while (names.hasNext()) {
                 String key = names.next();
                 if (!key.equals("flag") && !key.equals("metadata")) {
-                    VariantMetadata variant = new VariantMetadata(build);
+                    VariantMetadata variant = new VariantMetadata();
 
                     JsonNode node = tree.get(key);
                     JsonNode geneNode = node.get("gene_ids");
