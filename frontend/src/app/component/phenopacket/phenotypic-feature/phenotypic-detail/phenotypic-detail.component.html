@@ -1,95 +1,48 @@
-<div class="row">
-  <div class="col-md-6" style="clear: both">
+<div class="grid p-fluid">
+  <div class="field col-12">
     <h2>
-      <b>{{ phenotypicDetailName }} </b>
+      <b>{{ phenotypicFeature.type?.label }} </b>
     </h2>
-    <h3>{{ termId }}</h3>
+    <h3>{{ phenotypicFeature.type?.id }}</h3>
   </div>
-  <div class="col-md-6">
-    <button
-      (click)="openEditDialog()"
-      mat-icon-button
-      type="submit"
-      class="pull-right"
-      matTooltip="Edit"
-      [matTooltipShowDelay]="2000"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
+
+  <div class="field col-12">
     <p>
-      {{ description }}
+      {{ phenotypicFeature.description }}
     </p>
   </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12"><b>Status:</b> {{ status }}</div>
-</div>
-
-<div class="row">
-  <div class="col-md-6"><b>Onset:</b> {{ onset }}</div>
-  <div class="col-md-6"><b>Resolution:</b> {{ resolution }}</div>
-</div>
-
-<div class="row">
-  <div class="col-md-6"><b>Severity:</b> {{ severity }}</div>
-  <div class="col-md-12"><b>Modifiers:</b> {{ modifiers }}</div>
-</div>
-<br />
-
-<div class="row">
-  <div class="col-md-12">
-    <b>Evidence:</b>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <table
-      mat-table
-      *ngIf="evidenceDatasource.isDataPresent() | async"
-      [dataSource]="evidenceDatasource"
-      class="mat-elevation-z2"
+  <div class="field col-12"><b>Status:</b> {{ phenotypicFeature.excluded ? 'Excluded' : 'Observed' }}</div>
+  <div class="field col-12 md:col-6"><b>Onset:</b> {{ phenotypicFeature.onset?.toString() }}</div>
+  <div class="field col-12 md:col-6"><b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}</div>
+  <div class="field col-12 md:col-6"><b>Severity:</b> {{ phenotypicFeature.severity?.toString() }}</div>
+  <div class="field col-12 md:col-6"><b>Modifiers:</b> {{ getModifiers() }}</div>
+  <div class="field col-12">
+    <p-table
+      [value]="phenotypicFeature?.evidences"
+      dataKey="key"
+      styleClass="phenopacket-list-tabs"
     >
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Id</th>
-        <td mat-cell *matCellDef="let element">{{ getEvidenceId(element) }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">
-          {{ getEvidenceName(element) }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="refid">
-        <th mat-header-cell *matHeaderCellDef>Reference Id</th>
-        <td mat-cell *matCellDef="let element">
-          {{ getReferenceId(element) }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="refname">
-        <th mat-header-cell *matHeaderCellDef>Reference Name</th>
-        <td mat-cell *matCellDef="let element">
-          {{ getReferenceName(element) }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">
-          {{ getReferenceDescription(element) }}
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="evidenceColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: evidenceColumns"></tr>
-    </table>
+      <ng-template pTemplate="caption">
+        <div class="table-header">Evidences</div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn style="min-width: 2rem">ID</th>
+          <th pResizableColumn>Name</th>
+          <th pResizableColumn>Reference ID</th>
+          <th pResizableColumn>Reference Name</th>
+          <th pResizableColumn>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-evidence>
+        <tr>
+          <td>{{ evidence.evidenceCode?.id }}</td>
+          <td>{{ evidence.evidenceCode?.label }}</td>
+          <td>{{ evidence.reference?.id }}</td>
+          <td>{{ evidence.reference?.reference }}</td>
+          <td>{{ evidence.reference?.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>
-<br>
-
