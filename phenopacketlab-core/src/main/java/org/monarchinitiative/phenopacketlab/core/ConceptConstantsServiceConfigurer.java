@@ -86,7 +86,6 @@ public class ConceptConstantsServiceConfigurer {
     }
 
     /**
-     * @deprecated
      * Use {@link #configureGenderConstants()} instead which returns LOINC terms.
      * @param resourceService resource
      * @return GSSO terms
@@ -182,6 +181,7 @@ public class ConceptConstantsServiceConfigurer {
     private static List<IdentifiedConcept> configureStructuralTypeConstants(ConceptResourceService resourceService) {
         return configureConstants(resourceService, "SO", TermId.of("SO:0001537"));
     }
+
     private static List<IdentifiedConcept> configureModifierConstants(ConceptResourceService resourceService) {
         return configureConstants(resourceService, "HP", HpoSubOntologyRootTermIds.CLINICAL_MODIFIER);
     }
@@ -211,6 +211,7 @@ public class ConceptConstantsServiceConfigurer {
     private static Optional<SubtreeNode> configureStructuralTypeTreeConstants(ConceptResourceService resourceService) {
         return configureTreeConstants(resourceService, TermId.of("SO:0001537"), "SO", null);
     }
+
     private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService) {
         // exclude laterality and severity from modifier nodes
         List<TermId> excludedNodes = new ArrayList<>();

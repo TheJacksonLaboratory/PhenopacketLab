@@ -24,6 +24,7 @@
             <groupId>org.monarchinitiative.svart</groupId>
             <artifactId>svart</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.monarchinitiative.phenol</groupId>
             <artifactId>phenol-io</artifactId>

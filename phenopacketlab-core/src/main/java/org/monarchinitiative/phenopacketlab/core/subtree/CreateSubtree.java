@@ -52,10 +52,12 @@ public class CreateSubtree {
                 childNodes.add(childNode);
             }
         }
+
         if (comparator != null)
             childNodes.sort(comparator);
 
         node.getChildren().addAll(childNodes);
+
         return node;
     }
 }

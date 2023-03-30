@@ -336,7 +336,7 @@
         "interpretationStatus": "CAUSATIVE",
         "variantInterpretation": {
           "acmgPathogenicityClassification": "PATHOGENIC",
-	  "therapeuticActionability": "UNKNOWN_ACTIONABILITY",
+    	  "therapeuticActionability": "UNKNOWN_ACTIONABILITY",
           "variationDescriptor": {
             "id": "variant id",
             "expressions": [{
