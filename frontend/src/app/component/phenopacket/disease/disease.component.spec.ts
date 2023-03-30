@@ -1,8 +1,7 @@
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
-import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogService } from 'primeng/dynamicdialog';
 import { SharedModule } from '../../shared/shared.module';
 
 import { DiseaseComponent } from './disease.component';
@@ -16,13 +15,11 @@ describe('DiseaseComponent', () => {
       declarations: [ DiseaseComponent ],
       imports: [
         NoopAnimationsModule,
-        BrowserModule,
         HttpClientModule,
-        MatDialogModule,
         SharedModule
       ],
       providers: [
-        HttpClient
+        { provide: DialogService, useValue: {} }
       ]
     })
     .compileComponents();

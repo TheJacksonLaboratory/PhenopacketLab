@@ -24,6 +24,18 @@ import { Utils } from '../../shared/utils';
     ],
 })
 export class PhenotypicFeatureComponent implements OnInit, OnChanges {
+
+   /**
+    * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
+    * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
+    */
+    @Input()
+    showAddButton = true;
+    @Input()
+    phenotypicFeatures: PhenotypicFeature[];
+    @Output()
+    onPhenotypicFeaturesChanged = new EventEmitter<PhenotypicFeature[]>();
+
     // search params
     itemName = 'Phenotypic feature';
     searchLabel = 'Phenotypic feature';
@@ -36,19 +48,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     // searchparams
     currSearchParams: any = {};
-
-    expandedElement: PhenotypicFeature | null;
-
-    /**
-     * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
-     * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
-     */
-    @Input()
-    showAddButton = true;
-    @Input()
-    phenotypicFeatures: PhenotypicFeature[];
-    @Output()
-    onPhenotypicFeaturesChanged = new EventEmitter<PhenotypicFeature[]>();
 
     ref: DynamicDialogRef;
     spinnerDialogRef: any;

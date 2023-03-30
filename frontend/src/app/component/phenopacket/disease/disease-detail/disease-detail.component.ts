@@ -1,12 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
-
 import { Disease } from 'src/app/models/disease';
-import { DiseaseDetailDialogComponent } from './disease-detail-dialog/disease-detail-dialog.component';
-import { OntologyClass } from 'src/app/models/base';
 
 @Component({
   selector: 'app-disease-detail',
@@ -21,72 +16,13 @@ import { OntologyClass } from 'src/app/models/base';
     ]),
   ]
 })
-export class DiseaseDetailComponent implements OnInit, OnDestroy {
+export class DiseaseDetailComponent implements OnInit {
 
   @Input() disease: Disease;
-  @Output() onDiseaseChanged = new EventEmitter<Disease>();
 
-  diseaseDetailName: string;
-  diseaseId: string;
-  isA: string;
-  description: string;
-  status: string;
-  onset: string;
-  resolution: string;
-  stage: string;
-  findings: OntologyClass[];
-  severity: string;
-  laterality: string;
-
-  ref: DynamicDialogRef;
-
-  constructor(public dialogService: DialogService, public messageService: MessageService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    if (this.disease) {
-      this.diseaseDetailName = this.disease.term.label;
-      this.diseaseId = this.disease.term.id;
-      this.description = this.disease.description;
-      this.updateDiseaseDetails();
-    }
-  }
-
-  updateDiseaseDetails() {
-    this.isA = this.disease.isA;
-    this.status = this.disease.excluded ? 'Excluded' : 'Observed';
-    this.onset = this.disease.onset?.toString();
-    this.resolution = this.disease.resolution?.toString();
-    this.laterality = this.disease.laterality?.label;
-    this.findings = this.disease.clinicalTnmFinding;
-    this.stage = this.disease.diseaseStage[0]?.toString();
-  }
-
-  openEditDialog() {
-    this.ref = this.dialogService.open(DiseaseDetailDialogComponent, {
-      header: 'Edit Disease',
-      width: '70%',
-      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
-      baseZIndex: 10000,
-      resizable: true,
-      draggable: true,
-      data: { disease: this.disease }
-    });
-
-    this.ref.onClose.subscribe((disease: Disease) => {
-      if (disease) {
-        console.log(disease);
-        this.disease = disease;
-        this.updateDiseaseDetails();
-        // emit change
-        this.onDiseaseChanged.emit(this.disease);
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.ref) {
-      this.ref.close();
-    }
   }
 
 }
