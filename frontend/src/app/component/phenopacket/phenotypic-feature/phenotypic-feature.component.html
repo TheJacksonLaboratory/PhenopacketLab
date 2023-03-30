@@ -58,6 +58,7 @@
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
           <td>{{ feature.onset?.toString() }}</td>
           <td>{{ feature.resolution?.toString() }}</td>
+          <td>{{ feature.severity?.toString() }}</td>
           <td>{{ getModifiers(feature) }}</td>
           <td>{{ getEvidences(feature) }}</td>
 
@@ -81,9 +82,9 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-feature>
         <tr>
-          <td colspan="8">
+          <td colspan="9">
             <div class="p-3">
-                <app-phenotypic-detail
+              <app-phenotypic-detail
                 [phenotypicFeature]="feature"
               ></app-phenotypic-detail>
             </div>
@@ -94,4 +95,3 @@
   </div>
 </div>
 <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
-

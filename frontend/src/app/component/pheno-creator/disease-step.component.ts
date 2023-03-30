@@ -87,10 +87,12 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     private _queryDiseaseById(id: string) {
         this.openSpinnerDialog();
         this.searchService.queryDiseasesById(id).subscribe(data => {
-            const disease = new Disease();
-            disease.term = new OntologyClass(data.id, data.label);
-            disease.excluded = false;
-            this.addDisease(disease);
+            if (data) {
+                const disease = new Disease();
+                disease.term = new OntologyClass(data.id, data.label);
+                disease.excluded = false;
+                this.addDisease(disease);
+            }
             this.spinnerDialogRef.close();
         },
             (error) => {
