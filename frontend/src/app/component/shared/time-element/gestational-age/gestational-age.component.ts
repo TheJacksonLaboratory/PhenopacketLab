@@ -94,7 +94,6 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
             this.gestationalAge.days = this.days;
 
         }
-        console.log(this.gestationalAge);
         this.gestationalAgeChange.emit(this.gestationalAge);
     }
     updateWeeks(event) {

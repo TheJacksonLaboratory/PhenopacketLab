@@ -239,8 +239,6 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   // Onset
   updateAgeOnset(timeElement: any) {
-    console.log('onset update');
-    console.log(timeElement);
     this.onset = timeElement;
   }
 
@@ -249,8 +247,6 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.phenotypicFeatures.forEach(feature => {
       feature.onset = this.onset.copy();
     });
-    console.log('apply onset');
-    console.log(this.onset);
   }
 
   editOnset() {

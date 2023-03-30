@@ -65,16 +65,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
         this.assembly = event.value;
     }
 
-    updateAcmgPathogenicity(acmgPathogenicity: AcmgPathogenicityClassification) {
-        console.log(acmgPathogenicity);
-        console.log(this.selectedAcmgPathogenicity);
-    }
-
-    updateTherapeuticActionability(therapeuticActionability: TherapeuticActionability) {
-        console.log(therapeuticActionability);
-        console.log(this.selectedTherapeuticActionability);
-    }
-
     openHGVSHelp() {
         this.showHGVSHelp = true;
     }

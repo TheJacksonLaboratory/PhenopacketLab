@@ -11,7 +11,6 @@
       placeholder="Select Acmg pathogenicity"
       [(ngModel)]="selectedAcmgPathogenicity"
       [options]="acmgClassifications"
-      (onChange)="updateAcmgPathogenicity($event)"
       class="w-full"
     ></p-dropdown>
   </div>
@@ -23,7 +22,6 @@
       placeholder="Select Therapeutic actionability"
       [(ngModel)]="selectedTherapeuticActionability"
       [options]="therapeuticActionabilities"
-      (onChange)="updateTherapeuticActionability($event)"
       class="w-full"
     ></p-dropdown>
   </div>

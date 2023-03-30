@@ -50,14 +50,10 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
-      console.log('cohort in validate nginit subscription');
-      console.log(this.cohort);
     });
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
-    console.log('cohort in validate;');
-    console.log(this.cohort);
   }
 
   ngOnDestroy(): void {
@@ -72,7 +68,6 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   validate() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
     this.disabled = false;
-    console.log('validate');
     // create the timestamp created date
     this.created = new Date().toISOString();
 
@@ -106,8 +101,6 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
       this.cohort.members.push(this.phenopacket);
     }
     this.cohortService.setCohort(this.cohort);
-    console.log('completed');
-    console.log(this.cohort);
     // reset phenopacket
     this.phenopacketService.phenopacket = undefined;
 

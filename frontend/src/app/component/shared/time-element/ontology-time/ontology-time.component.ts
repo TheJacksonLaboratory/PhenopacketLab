@@ -62,7 +62,6 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
         if (this.ontologyClass === undefined || this.ontologyClass === null) {
             this.ontologyClass = new OntologyClass();
         }
-        console.log(event);
         this.ontologyClass.label = event.node.label;
         this.ontologyClass.id = event.node.key;
 
