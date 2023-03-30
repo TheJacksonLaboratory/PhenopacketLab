@@ -4,7 +4,6 @@ import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeCo
 
 export class VariantMetadata {
     key?: number;
-    assembly: string;
     chr: string;
     position: number;
     ref: string;
@@ -18,7 +17,6 @@ export class VariantMetadata {
     genotype: string;
 
     constructor(variant: VariantMetadata) {
-        this.assembly = variant.assembly;
         this.chr = variant.chr;
         this.position = variant.position;
         this.ref = variant.ref;
@@ -32,11 +30,12 @@ export class VariantMetadata {
     }
     /**
      * Transform this Variant object into a "variantInterpretation" message of the GA4GH Phenopacket schema
+     * @param assembly build assembly used to make the variant search
      * @param acmg can be 'benign', 'likely benign', 'uncertain significance', 'likely pathogenic', 'pathogenic'
      * @param genotype can be 'heterozygous', 'homozygous' or 'hemizygous'
      * @return
      */
-    public toVariantInterpretation(acmg: string, genotype: string): VariantInterpretation {
+    public toVariantInterpretation(assembly: string, acmg: string, genotype: string): VariantInterpretation {
         const vDescriptor = new VariationDescriptor();
         const geneDescriptor = new GeneDescriptor();
         if (this.hgncId !== undefined && this.geneSymbol !== undefined) {
@@ -93,7 +92,7 @@ export class VariantMetadata {
             }
         }
         const vcfRecord = new VcfRecord();
-        vcfRecord.genomeAssembly = this.assembly;
+        vcfRecord.genomeAssembly = assembly;
         vcfRecord.chrom = this.chr;
         vcfRecord.pos = this.position;
         vcfRecord.alt = this.alt;

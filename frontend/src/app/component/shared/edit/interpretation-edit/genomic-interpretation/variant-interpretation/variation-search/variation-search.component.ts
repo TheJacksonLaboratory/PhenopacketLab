@@ -99,7 +99,7 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
                 this.interpretations = [];
                 for (const item of data) {
                     const variant = new VariantMetadata(item);
-                    const vInterpretation = variant.toVariantInterpretation(this.selectedAcmgPathogenicity, this.genotype);
+                    const vInterpretation = variant.toVariantInterpretation(build, this.selectedAcmgPathogenicity, this.genotype);
                     vInterpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
                     vInterpretation.acmgPathogenicityClassification = this.selectedAcmgPathogenicity;
                     vInterpretation.therapeuticActionability = this.selectedTherapeuticActionability;
@@ -138,7 +138,7 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     }
 
     updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
-
+        // TODO
     }
 
 }
