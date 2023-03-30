@@ -22,7 +22,7 @@ public class DiseaseController {
     }
 
     private static Function<HpoDisease, OntologyClassDto> diseaseToDto() {
-        return d -> new OntologyClassDto(d.id().getValue(), d.getDiseaseName());
+        return d -> new OntologyClassDto(d.id().getValue(), d.diseaseName());
     }
 
     @GetMapping("{id}")
