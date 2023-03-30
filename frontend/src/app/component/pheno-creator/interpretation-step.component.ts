@@ -130,7 +130,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
      * @param event
      */
     onRowSelect(event) {
-        console.log(event);
         this.selectedInterpretation = event.data;
     }
 

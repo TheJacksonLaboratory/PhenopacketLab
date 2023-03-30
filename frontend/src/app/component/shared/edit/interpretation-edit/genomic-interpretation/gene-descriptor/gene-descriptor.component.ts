@@ -81,7 +81,6 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
     }
 
     deleteAlternateId(id: any) {
-        console.log(id);
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete ' + id.value + '?',
             header: 'Confirm',

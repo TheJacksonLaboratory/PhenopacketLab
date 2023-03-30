@@ -17,7 +17,6 @@ export class GenomicInterpretationComponent implements OnInit {
     selectedInterpretationStatus: InterpretationStatus;
     interpretationStatuses = Object.keys(InterpretationStatus).filter((item) => isNaN(Number(item)));
 
-
     constructor(public searchService: InterpretationService) {
     }
 
@@ -25,9 +24,7 @@ export class GenomicInterpretationComponent implements OnInit {
     }
 
     updateInterpretationStatus(event) {
-        console.log(event);
         this.genomicInterpretation.interpretationStatus = event.value;
-        console.log(this.genomicInterpretation.interpretationStatus);
         this.genomicInterpretationChange.emit(this.genomicInterpretation);
     }
 

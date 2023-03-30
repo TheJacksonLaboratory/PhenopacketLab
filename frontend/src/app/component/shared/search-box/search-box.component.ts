@@ -104,7 +104,6 @@ export class SearchBoxComponent implements OnInit {
         // get list of items from localStorage TODO replace by localStorageKey
         const items = JSON.parse(localStorage.getItem(this.localStorageKey));
         const filteredList = items.filter(item =>
-            // console.log(item.name);
             item.label.toLowerCase().includes(filterValue.toLowerCase()));
         // display only a max of 10 items in the combo box
         if (filteredList.length > 9) {

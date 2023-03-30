@@ -101,7 +101,6 @@ export class DiseaseComponent implements OnInit, OnChanges {
       modal: true
     });
     this.searchService.queryDiseasesById(id).subscribe(data => {
-      console.log(data);
       if (data) {
         const disease = new Disease();
         disease.term = new OntologyClass(data.id, data.label);

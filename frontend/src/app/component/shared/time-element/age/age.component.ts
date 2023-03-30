@@ -32,8 +32,6 @@ export class AgeComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
-        console.log('ngInit Age');
-        console.log(this.age);
         if (this.age && this.age instanceof Age) {
             this.years = this.age.getYears();
             this.months = this.age.getMonths();
