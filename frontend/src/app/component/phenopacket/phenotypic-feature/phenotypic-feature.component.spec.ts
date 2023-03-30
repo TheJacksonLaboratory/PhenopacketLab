@@ -1,9 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DialogService } from 'primeng/dynamicdialog';
 import { SharedModule } from '../../shared/shared.module';
 import { PhenotypicFeatureComponent } from './phenotypic-feature.component';
 
@@ -19,9 +19,11 @@ describe('PhenotypicFeatureComponent', () => {
         BrowserModule,
         HttpClientModule,
         RouterTestingModule,
-        MatDialogModule,
         SharedModule,
         NoopAnimationsModule
+      ],
+      providers: [
+        { provide: DialogService, useValue: {} }
       ]
     })
     .compileComponents();
