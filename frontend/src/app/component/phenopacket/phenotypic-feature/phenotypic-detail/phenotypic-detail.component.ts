@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 @Component({
@@ -11,8 +11,6 @@ export class PhenotypicDetailComponent implements OnInit {
 
   @Input()
   phenotypicFeature: PhenotypicFeature;
-  @Output()
-  onPhenotypicFeatureChange = new EventEmitter<PhenotypicFeature>();
 
   constructor() { }
 
