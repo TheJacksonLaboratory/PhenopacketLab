@@ -54,7 +54,7 @@
           escape="false"
           tooltipPosition="bottom"
         >
-          {{ sex.name }} [{{ sex.id.value }}]
+        [{{ sex.id.value }}] {{ sex.name }} 
         </div>
       </ng-template>
     </p-dropdown>
@@ -192,18 +192,19 @@
     <p-dropdown
       id="causeOfDeath"
       placeholder="Select cause of death"
+      appendTo="body"
       [options]="causeOfDeaths"
       [virtualScroll]="true"
       [virtualScrollItemSize]="30"
       filter="true"
+      filterBy="label,id"
       optionLabel="label"
-      filterBy="label"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
     >
       <ng-template let-cause pTemplate="item">
-        <div [pTooltip]="cause.id" tooltipPosition="right" escape="false">
-          {{ cause.label }}
+        <div [pTooltip]="cause.label" showDelay="2000" tooltipPosition="bottom" escape="false">
+          [{{ cause.id }}] {{ cause.label }}
         </div>
       </ng-template>
     </p-dropdown>
