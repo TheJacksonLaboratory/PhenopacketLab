@@ -40,7 +40,7 @@
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
             ></button>
           </td>
-          <td><a href="https://hpo.jax.org/app/browse/disease/{{ disease.term?.id }}" target="_blank">{{ disease.term?.id }}</a></td>
+          <td><a href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></td>
           <td>{{ disease.term?.label }}</td>
           <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
           <td [innerHTML]="disease.onset?.toString() | safeText"></td>

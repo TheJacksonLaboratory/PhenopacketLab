@@ -135,6 +135,8 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
       this.phenotypicFeature.evidences = [];
       this.phenotypicFeature.evidenceNodes = [];
       for (const node of nodes) {
+        const obj = new OntologyClass(node.key, node.label);
+        obj.url = Evidence.getEvidenceUrl(node.key);
         const evidence = new Evidence(new OntologyClass(node.key, node.label));
         this.phenotypicFeature.evidences.push(evidence);
         this.phenotypicFeature.evidenceNodes.push(node);

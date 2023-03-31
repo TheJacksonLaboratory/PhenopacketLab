@@ -3,7 +3,7 @@
     <h2>
       <b>{{ disease.term?.label }} </b>
     </h2>
-    <h3><a href="https://hpo.jax.org/app/browse/disease/{{ disease.term?.id }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
+    <h3><a href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
   </div>
   <div class="field col-12">
     <p>

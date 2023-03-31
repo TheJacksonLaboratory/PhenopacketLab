@@ -53,6 +53,8 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   public static toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
     const ontologyList = [];
     for (const node of ontologyNodes) {
+      const obj = new OntologyClass(node['key'], node['label']);
+      obj.url = `https://hpo.jax.org/app/browse/disease/${obj.id}`;
       ontologyList.push(new OntologyClass(node['key'], node['label']));
     }
     return ontologyList;

@@ -36,7 +36,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-evidence>
         <tr>
-          <td>{{ evidence.evidenceCode?.id }}</td>
+          <td [innerHTML]="evidence.evidenceCode?.toString() | safeText"></td>
           <td>{{ evidence.evidenceCode?.label }}</td>
           <td>{{ evidence.reference?.id }}</td>
           <td>{{ evidence.reference?.reference }}</td>
