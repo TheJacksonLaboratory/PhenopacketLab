@@ -17,6 +17,7 @@
   [value]="nodes"
   placeholder="Select Item"
   [filter]="true"
+  filterBy="label,key"
   [selectionMode]="selectionMode"
   [propagateSelectionDown]="false"
   [propagateSelectionUp]="false"
@@ -30,11 +31,11 @@
         [(ngModel)]="node.state"
       ></p-triStateCheckbox>
 
-      {{ node.label }}
+      [{{ node.key }}] {{ node.label }}
     </ng-template>
   </div>
   <ng-template let-node pTemplate="default">
-    <span [pTooltip]="node.key">{{ node.label }}</span>
+    <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom">[{{ node.key }}] {{ node.label }}</span>
   </ng-template>
 </p-tree>
 <!-- <p-accordion>

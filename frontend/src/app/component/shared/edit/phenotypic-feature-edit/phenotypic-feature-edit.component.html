@@ -74,9 +74,20 @@
               (onChange)="updateSeverity($event)"
               pTooltip="The intensity or degree of a manifestation"
               showDelay="2000"
-              class="w-full"
+              
               [showClear]="true"
-            ></p-dropdown>
+            >
+              <ng-template let-severity pTemplate="item">
+                <div
+                  [pTooltip]="severity.label"
+                  showDelay="2000"
+                  tooltipPosition="bottom"
+                  escape="false"
+                >
+                  [{{ severity.id }}] {{ severity.label }}
+                </div>
+              </ng-template>
+            </p-dropdown>
           </div>
 
           <div class="field col-12">
