@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { SharedModule } from 'src/app/component/shared/shared.module';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
@@ -10,7 +11,8 @@ describe('PhenotypicDetailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhenotypicDetailComponent ]
+      declarations: [ PhenotypicDetailComponent ],
+      imports: [ SharedModule ]
     })
     .compileComponents();
   }));
