@@ -25,6 +25,9 @@ export class DiseaseDetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getDiseaseURL(id: string) {
+    return Disease.getDiseaseURL(id);
+  }
 }
 
 

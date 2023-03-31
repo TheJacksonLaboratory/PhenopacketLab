@@ -1,4 +1,5 @@
 import { OntologyClass, TimeElement } from './base';
+import { Disease } from './disease';
 
 export class Individual {
     id = '';
@@ -79,7 +80,7 @@ export class VitalStatus {
         }
         if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-            vitalSatus.causeOfDeath.url = 'https://hpo.jax.org/app/browse/disease/';
+            vitalSatus.causeOfDeath.url = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
         }
         if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];

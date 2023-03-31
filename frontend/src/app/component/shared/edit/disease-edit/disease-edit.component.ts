@@ -208,7 +208,9 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
             if (event) {
                 // reset previous selection
                 this.disease.diseaseStage = [];
-                this.disease.diseaseStage.push(new OntologyClass(event.node.key, event.node.label));
+                const diseaseStage = new OntologyClass(event.node.key, event.node.label);
+                diseaseStage.url = Disease.getDiseaseURL(event.node.key);
+                this.disease.diseaseStage.push(diseaseStage);
             } else {
                 this.disease.diseaseStage = undefined;
             }
@@ -219,7 +221,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         if (this.disease) {
             if (event) {
                 this.disease.laterality = event.value;
-                this.disease.laterality.url = 'https://hpo.jax.org/app/browse/term/';
+                this.disease.laterality.url = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
             } else {
                 this.disease.laterality = undefined;
             }

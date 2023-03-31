@@ -145,6 +145,10 @@ export class DiseaseComponent implements OnInit, OnChanges {
 
   }
 
+  getDiseaseURL(id: string) {
+    return Disease.getDiseaseURL(id);
+  }
+
 }
 
 

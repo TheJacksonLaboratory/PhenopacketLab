@@ -60,7 +60,7 @@ export class OntologyClass extends Convert {
         if (this.label && this.id && !this.url) {
             return `[${this.id}] ${this.label}`;
         } else if (this.label && this.id && this.url) {
-            return `[<a href="${this.url}${this.id}" target="_blank">${this.id}</a>] ${this.label}`;
+            return `[<a href="${this.url}" target="_blank">${this.id}</a>] ${this.label}`;
         }
         return '';
 
@@ -123,6 +123,7 @@ export class Evidence extends Convert {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
+            evidence.evidenceCode.url = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
         } else {
             throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`);
         }
@@ -130,6 +131,10 @@ export class Evidence extends Convert {
             evidence.reference = ExternalReference.convert(obj['reference']);
         }
         return evidence;
+    }
+
+    public static getEvidenceUrl(id: string) {
+        return `http://purl.obolibrary.org/obo/ECO_${id.split(':')[1]}`;
     }
 }
 export class Procedure {
@@ -348,7 +353,7 @@ export class TimeElement extends Convert {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
-            timeElement.ontologyClass.url = 'https://hpo.jax.org/app/browse/term/';
+            timeElement.ontologyClass.url = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
         } else if (obj['timestamp']) {
             timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {
