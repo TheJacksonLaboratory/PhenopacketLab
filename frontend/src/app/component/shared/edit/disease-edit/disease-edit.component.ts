@@ -219,6 +219,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         if (this.disease) {
             if (event) {
                 this.disease.laterality = event.value;
+                this.disease.laterality.url = 'https://hpo.jax.org/app/browse/term/';
             } else {
                 this.disease.laterality = undefined;
             }

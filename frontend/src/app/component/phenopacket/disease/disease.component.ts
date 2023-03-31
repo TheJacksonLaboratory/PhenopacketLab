@@ -106,6 +106,7 @@ export class DiseaseComponent implements OnInit, OnChanges {
         disease.term = new OntologyClass(data.id, data.label);
         disease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
         this.phenopacketDiseases.push(disease);
+        this.showTable = true;
         this.onDiseasesChanged.emit(this.phenopacketDiseases);
       }
       this.spinnerDialogRef.close();

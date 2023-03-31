@@ -79,6 +79,7 @@ export class VitalStatus {
         }
         if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
+            vitalSatus.causeOfDeath.url = 'https://hpo.jax.org/app/browse/disease/';
         }
         if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];

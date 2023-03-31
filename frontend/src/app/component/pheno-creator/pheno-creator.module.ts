@@ -57,7 +57,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { TextMiningComponent } from './text-mining/text-mining.component';
-import { TextPipe } from './text-mining/text.pipe';
 import { WordDialogComponent } from './text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
@@ -133,7 +132,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         FileStepComponent,
         ValidateStepComponent,
         TextMiningComponent,
-        TextPipe,
         WordDialogComponent,
         ProfileSelectionComponent
     ],

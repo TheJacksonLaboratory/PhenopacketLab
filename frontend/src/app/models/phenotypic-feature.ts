@@ -45,9 +45,13 @@ export class PhenotypicFeature extends Convert {
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
+            phenotypicFeature.severity.url = 'https://hpo.jax.org/app/browse/term/';
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
+            phenotypicFeature.modifiers.forEach(modifier => {
+                modifier.url = 'https://hpo.jax.org/app/browse/term/';
+            });
         }
         if (obj['onset']) {
             phenotypicFeature.onset = TimeElement.convert(obj['onset']);
