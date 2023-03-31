@@ -63,9 +63,9 @@ export class Disease extends Convert {
     }
 
     public static getDiseaseURL(id: string) {
-        if (id.startsWith('OMIM')) {
+        if (id?.startsWith('OMIM')) {
           return `https://www.omim.org/entry/${id.split(':')[1]}`;
-        } else if (id.startsWith('ORPHA')) {
+        } else if (id?.startsWith('ORPHA')) {
           return `https://hpo.jax.org/app/browse/disease/${id}`;
         }
         return id;

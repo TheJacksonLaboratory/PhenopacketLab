@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedModule } from 'src/app/component/shared/shared.module';
 import { Disease } from 'src/app/models/disease';
 
 import { DiseaseDetailComponent } from './disease-detail.component';
@@ -9,7 +10,8 @@ describe('DiseaseDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiseaseDetailComponent ]
+      declarations: [ DiseaseDetailComponent ],
+      imports: [ SharedModule ]
     })
     .compileComponents();
   });
