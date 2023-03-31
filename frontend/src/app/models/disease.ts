@@ -50,6 +50,7 @@ export class Disease extends Convert {
         }
         if (obj['laterality']) {
             disease.laterality = OntologyClass.convert(obj['laterality']);
+            disease.laterality.url = 'https://hpo.jax.org/app/browse/term/';
         }
         if (obj['description']) {
             disease.description = obj['description'];

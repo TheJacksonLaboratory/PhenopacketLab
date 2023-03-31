@@ -35,12 +35,14 @@ export class OntologyClass extends Convert {
     key?: string;
     id = '';
     label = '';
+    url?: string;
 
-    constructor(id?: string, label?: string, key?: string) {
+    constructor(id?: string, label?: string, key?: string, url?: string) {
         super();
         this.id = id;
         this.label = label;
         this.key = key;
+        this.url = url;
     }
 
     static create(obj: any): OntologyClass {
@@ -55,8 +57,10 @@ export class OntologyClass extends Convert {
     }
 
     toString() {
-        if (this.label && this.id) {
-            return `${this.label} [${this.id}]`;
+        if (this.label && this.id && !this.url) {
+            return `[${this.id}] ${this.label}`;
+        } else if (this.label && this.id && this.url) {
+            return `[<a href="${this.url}${this.id}" target="_blank">${this.id}</a>] ${this.label}`;
         }
         return '';
 
@@ -344,6 +348,7 @@ export class TimeElement extends Convert {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
+            timeElement.ontologyClass.url = 'https://hpo.jax.org/app/browse/term/';
         } else if (obj['timestamp']) {
             timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {

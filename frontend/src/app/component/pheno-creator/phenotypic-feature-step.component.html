@@ -63,7 +63,7 @@
               <tr [pSelectableRow]="feature">
                 <td>{{ feature.type?.label }}</td>
                 <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-                <td>{{ feature.onset?.toString() }}</td>
+                <td [innerHTML]="feature.onset?.toString() | safeText"></td>
                 <td>
                   <button
                     pButton

@@ -3,7 +3,7 @@
     <h2>
       <b>{{ disease.term?.label }} </b>
     </h2>
-    <h3>{{ disease.term?.id }}</h3>
+    <h3><a href="https://hpo.jax.org/app/browse/disease/{{ disease.term?.id }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
   </div>
   <div class="field col-12">
     <p>
@@ -15,7 +15,7 @@
     <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Onset:</b> {{ disease.onset?.toString() }}
+    <b>Onset:</b> <span [innerHTML]="disease.onset?.toString() | safeText"></span>
   </div>
   <div class="field col-12 md:col-6">
     <b>Resolution:</b> {{ disease.resolution?.toString() }}
@@ -32,7 +32,7 @@
     </ul>
   </div>
   <div class="field col-12 md:col-6">
-    <b>Laterality: </b> {{ disease.laterality }}
+    <b>Laterality: </b> <span [innerHTML]="disease.laterality?.toString() | safeText"></span>
   </div>
   <div class="field col-12 md:col-6">
 

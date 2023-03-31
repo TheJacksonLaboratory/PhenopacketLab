@@ -28,6 +28,7 @@ import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic
 import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
 import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
 import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
+import { TextPipe } from './text.pipe';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-
     VariationDescriptorComponent,
     VariationSearchComponent,
     GeneDescriptorComponent,
-    LabelCreatorDialogComponent
+    LabelCreatorDialogComponent,
+    TextPipe
   ],
   exports: [
     MessageDialogComponent,
@@ -88,7 +90,8 @@ import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-
     LabelCreatorDialogComponent,
     PrimeModule,
     MaterialModule,
-    AngularSplitModule
+    AngularSplitModule,
+    TextPipe
   ]
 })
 export class SharedModule { }
