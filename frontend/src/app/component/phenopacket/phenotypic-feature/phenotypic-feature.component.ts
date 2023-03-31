@@ -73,7 +73,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         this.ref = this.dialogService.open(PhenotypicDetailDialogComponent, {
             header: 'Edit Phenotypic feature',
             width: '70%',
-            contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+            contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
             resizable: true,
             draggable: true,

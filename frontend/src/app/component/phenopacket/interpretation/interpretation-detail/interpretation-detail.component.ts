@@ -57,7 +57,7 @@ export class InterpretationDetailComponent implements OnInit {
         this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
             header: 'Edit Interpretation',
             width: '70%',
-            contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+            contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
             resizable: true,
             draggable: true,

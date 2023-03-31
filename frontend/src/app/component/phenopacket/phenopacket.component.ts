@@ -130,7 +130,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(IndividualDialogComponent, {
       header: 'Edit Individual',
       width: '70%',
-      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+      contentStyle: { 'overflow': 'auto' },
       baseZIndex: 10000,
       resizable: true,
       draggable: true,

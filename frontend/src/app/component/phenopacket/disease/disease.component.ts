@@ -120,7 +120,7 @@ export class DiseaseComponent implements OnInit, OnChanges {
     this.ref = this.dialogService.open(DiseaseDetailDialogComponent, {
       header: 'Edit Disease',
       width: '70%',
-      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+      contentStyle: { 'overflow': 'auto' },
       baseZIndex: 10000,
       resizable: true,
       draggable: true,
