@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GeneDescriptor, GenomicInterpretation, InterpretationStatus, VariantInterpretation } from 'src/app/models/interpretation';
+import { ProfileSelection } from 'src/app/models/profile';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 
 @Component({
@@ -11,6 +12,8 @@ export class GenomicInterpretationComponent implements OnInit {
 
     @Input()
     genomicInterpretation: GenomicInterpretation;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     genomicInterpretationChange = new EventEmitter<GenomicInterpretation>();
 
