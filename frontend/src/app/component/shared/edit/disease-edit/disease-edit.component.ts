@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -15,6 +16,8 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
 
     @Input()
     disease: Disease;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     diseaseChange = new EventEmitter<Disease>();
 
@@ -153,6 +156,13 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         });
     }
 
+    isRareProfile(): boolean {
+        if (this.profile) {
+            return this.profile === ProfileSelection.RARE_DISEASE;
+        }
+        return false;
+    }
+
     initializeDiseaseStageSelected(stage: OntologyClass) {
         // update when a disease is selected
         if (stage === undefined) {
@@ -195,15 +205,26 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
     updateDiseaseStage(event) {
         if (this.disease) {
-            // reset previous selection
-            this.disease.diseaseStage = [];
-            this.disease.diseaseStage.push(new OntologyClass(event.node.key, event.node.label));
+            if (event) {
+                // reset previous selection
+                this.disease.diseaseStage = [];
+                const diseaseStage = new OntologyClass(event.node.key, event.node.label);
+                diseaseStage.url = Disease.getDiseaseURL(event.node.key);
+                this.disease.diseaseStage.push(diseaseStage);
+            } else {
+                this.disease.diseaseStage = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }
-    updateLaterality(laterality) {
+    updateLaterality(event) {
         if (this.disease) {
-            this.disease.laterality = laterality;
+            if (event) {
+                this.disease.laterality = event.value;
+                this.disease.laterality.url = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
+            } else {
+                this.disease.laterality = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }
@@ -227,7 +248,11 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                     this.disease.clinicalTnmFinding.splice(index, 1);
                 }
             });
-            this.disease.clinicalTnmFinding.push(new OntologyClass(event.node.key, event.node.label, tnm));
+            if (event) {
+                this.disease.clinicalTnmFinding.push(new OntologyClass(event.node.key, event.node.label, tnm));
+            } else {
+                this.disease.clinicalTnmFinding = undefined;
+            }
             this.diseaseChange.emit(this.disease);
         }
     }

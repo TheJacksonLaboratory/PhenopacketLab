@@ -58,7 +58,6 @@ export class TimeElementComponent implements OnInit, OnDestroy {
     } else {
       this.timeElementTypes = ['Age', 'Age range', 'Gestational age'];
     }
-    console.log('time element ngInit');
     this.initialize();
     this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
       if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {

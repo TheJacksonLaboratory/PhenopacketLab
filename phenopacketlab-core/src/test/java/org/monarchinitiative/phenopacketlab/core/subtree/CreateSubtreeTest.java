@@ -30,7 +30,7 @@ public class CreateSubtreeTest {
     @Test
     public void createSubtree() {
         TermId onset = TermId.of("HP:0003674");
-        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, null);
+        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, null, null);
         assertThat(root.isPresent(), equalTo(true));
         assertThat(root.get().getKey(), equalTo(onset.getValue()));
         assertThat(root.get().getLabel(), equalTo("Onset"));
@@ -45,7 +45,7 @@ public class CreateSubtreeTest {
     @Test
     public void createSortedSubtree() {
         TermId onset = TermId.of("HP:0003674");
-        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, Comparator.comparing(SubtreeNode::getLabel));
+        Optional<SubtreeNode> root = CreateSubtree.createSubtree(onset, HPO, Comparator.comparing(SubtreeNode::getLabel), null);
         assertThat(root.isPresent(), equalTo(true));
         assertThat(root.get().getKey(), equalTo(onset.getValue()));
         assertThat(root.get().getLabel(), equalTo("Onset"));

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -10,9 +10,10 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { Utils } from '../shared/utils';
 
 @Component({
-    providers: [ConfirmationService],
+    providers: [ConfirmationService, DialogService],
     selector: 'app-phenotypic-feature-step',
     templateUrl: './phenotypic-feature-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
@@ -29,7 +30,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     selectedFeature: PhenotypicFeature;
     // searchparams
     currSearchParams: any = {};
-    spinnerDialogRef: any;
+    spinnerDialogRef: DynamicDialogRef;
 
     expandedTextMining = false;
 
@@ -40,7 +41,8 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
-        private router: Router, public dialog: MatDialog,
+        private dialogService: DialogService,
+        private router: Router,
         private primengConfig: PrimeNGConfig) {
     }
 
@@ -94,7 +96,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.openSpinnerDialog();
         this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
             const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.name);
+            phenotypicFeature.type = new OntologyClass(data.id, data.label);
             phenotypicFeature.excluded = false;
             this.addPhenotypicFeature(phenotypicFeature);
             this.spinnerDialogRef.close();
@@ -106,24 +108,10 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     }
 
     openSpinnerDialog() {
-        this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-            panelClass: 'transparent',
-            disableClose: true
+        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+            closable: false,
+            modal: true
         });
-    }
-
-    /**
-     *
-     * @returns Returns the biggest key
-     */
-    getBiggestKey() {
-        let key = 0;
-        for (const feature of this.phenotypicFeatures) {
-            if ((feature.key) >= key) {
-                key = feature.key;
-            }
-        }
-        return key;
     }
 
     /**
@@ -134,7 +122,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             return;
         }
         // set unique key for feature table
-        phenotypicFeature.key = this.getBiggestKey() + 1;
+        phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
         this.phenotypicFeatures.push(phenotypicFeature);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.phenotypicFeatures = this.phenotypicFeatures.slice();
@@ -201,9 +189,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 this.router.navigate([`creator/${profile.path}/measurements`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`creator/${profile.path}/diseases`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
                 this.router.navigate([`creator/${profile.path}/diseases`]);
                 return;
             }

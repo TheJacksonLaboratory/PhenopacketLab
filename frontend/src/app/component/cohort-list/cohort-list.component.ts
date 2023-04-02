@@ -5,7 +5,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Cohort } from 'src/app/models/cohort';
-import { Individual, Sex } from 'src/app/models/individual';
+import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyData } from '../family-list/family-data';
 import { MessageDialogComponent } from '../shared/message-dialog/message-dialog.component';
@@ -25,7 +25,7 @@ export class CohortListComponent implements OnInit {
   cohortMap: Map<String, Phenopacket>;
   selected = new UntypedFormControl(0);
 
-  //Table items
+  // Table items
   displayedColumns = ['id', 'dob', 'sex', 'remove'];
 
   datasource = new MatTableDataSource<Phenopacket>();
@@ -37,7 +37,7 @@ export class CohortListComponent implements OnInit {
   ngOnInit(): void {
     this.cohort = new FamilyData().COHORT_DATA;
     this.cohortMap = new Map<string, Phenopacket>();
-    for (let individual of this.cohort.members) {
+    for (const individual of this.cohort.members) {
       this.individualTabs.push(individual);
       this.cohortMap.set(individual.id, individual);
     }
@@ -45,7 +45,7 @@ export class CohortListComponent implements OnInit {
   }
 
   addTab() {
-    let newPheno = new Phenopacket();
+    const newPheno = new Phenopacket();
     newPheno.id = `new-patient-${this.individualTabs.length + 1}`;
     newPheno.subject = new Individual();
     this.individualTabs.push(newPheno);
@@ -83,17 +83,17 @@ export class CohortListComponent implements OnInit {
     return dialogRef;
 
   }
-  
+
   changeId(id: string, index: number) {
-    let selectedIndividual = this.individualTabs[index];
+    const selectedIndividual = this.individualTabs[index];
     selectedIndividual.id = id;
   }
-  changeSex(sex: Sex, index: number) {
-    let selectedIndividual = this.individualTabs[index];
+  changeSex(sex: string, index: number) {
+    const selectedIndividual = this.individualTabs[index];
     selectedIndividual.subject.sex = sex;
   }
   changeDob(dob: Date, index: number) {
-    let selectedIndividual = this.individualTabs[index];
+    const selectedIndividual = this.individualTabs[index];
     selectedIndividual.subject.dateOfBirth = dob.toISOString();
   }
 
@@ -101,15 +101,15 @@ export class CohortListComponent implements OnInit {
     if (!this.individualTabs.includes(element)) {
       this.individualTabs.push(element);
     }
-    for(let i = 0; i < this.individualTabs.length; i++) {
+    for (let i = 0; i < this.individualTabs.length; i++) {
       if (element === this.individualTabs[i]) {
         this.selected.setValue(i + 1);
       }
     }
-    
+
   }
   closeTab(index: number) {
-    this.individualTabs.splice(index, 1)
+    this.individualTabs.splice(index, 1);
   }
 
   formatDate(date: Date, format: string) {

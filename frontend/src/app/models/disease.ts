@@ -41,6 +41,9 @@ export class Disease extends Convert {
         }
         if (obj['diseaseStage']) {
             disease.diseaseStage = OntologyClass.convert(obj['diseaseStage']);
+            disease.diseaseStage.forEach(stage => {
+                stage.url = Disease.getDiseaseURL(stage.id);
+            });
         }
         if (obj['clinicalTnmFinding']) {
             disease.clinicalTnmFinding = OntologyClass.convert(obj['clinicalTnmFinding']);
@@ -50,6 +53,7 @@ export class Disease extends Convert {
         }
         if (obj['laterality']) {
             disease.laterality = OntologyClass.convert(obj['laterality']);
+            disease.laterality.url = `https://hpo.jax.org/app/browse/term/${disease.laterality.id}`;
         }
         if (obj['description']) {
             disease.description = obj['description'];
@@ -57,33 +61,44 @@ export class Disease extends Convert {
 
         return disease;
     }
+
+    public static getDiseaseURL(id: string) {
+        if (id?.startsWith('OMIM')) {
+            return `https://www.omim.org/entry/${id.split(':')[1]}`;
+        } else if (id?.startsWith('ORPHA')) {
+            return `https://hpo.jax.org/app/browse/disease/${id}`;
+        } else if (id?.startsWith('MONDO')) {
+            return `http://purl.obolibrary.org/obo/MONDO_${id.split(':')[1]}`;
+        }
+        return id;
+    }
 }
 
 export class Laterality {
     static VALUES = [new OntologyClass('HP:0012834', 'Right'),
-                new OntologyClass('HP:0012835', 'Left'),
-                new OntologyClass('HP:0012833', 'Unilateral'),
-                new OntologyClass('HP:0012832', 'Bilateral')];
+    new OntologyClass('HP:0012835', 'Left'),
+    new OntologyClass('HP:0012833', 'Unilateral'),
+    new OntologyClass('HP:0012832', 'Bilateral')];
 }
 export class Onset {
     static VALUES = [new OntologyClass('HP:0030674', 'Antenatal onset'),
-                new OntologyClass('HP:0011460', 'Embryonal onset'),
-                new OntologyClass('HP:0011461', 'Fetal onset'),
-                new OntologyClass('HP:0034199', 'Late first trimester onset'),
-                new OntologyClass('HP:0034198', 'Second trimester onset'),
-                new OntologyClass('HP:0034197', 'Third trimester onset'),
-                new OntologyClass('HP:0003577', 'Congenital onset'),
-                new OntologyClass('HP:0003623', 'Neonatal onset'),
-                new OntologyClass('HP:0003593', 'Infantile onset'),
-                new OntologyClass('HP:0011463', 'Childhood onset'),
-                new OntologyClass('HP:0003621', 'Juvenile onset'),
-                new OntologyClass('HP:0003581', 'Adult onset'),
-                new OntologyClass('HP:0011462', 'Young adult onset'),
-                new OntologyClass('HP:0025708', 'Early young adult onset'),
-                new OntologyClass('HP:0025709', 'Intermediate young adult onset'),
-                new OntologyClass('HP:0025710', 'Late young adult onset'),
-                new OntologyClass('HP:0003596', 'Middle age onset'),
-                new OntologyClass('HP:0003584', 'Late onset')];
+    new OntologyClass('HP:0011460', 'Embryonal onset'),
+    new OntologyClass('HP:0011461', 'Fetal onset'),
+    new OntologyClass('HP:0034199', 'Late first trimester onset'),
+    new OntologyClass('HP:0034198', 'Second trimester onset'),
+    new OntologyClass('HP:0034197', 'Third trimester onset'),
+    new OntologyClass('HP:0003577', 'Congenital onset'),
+    new OntologyClass('HP:0003623', 'Neonatal onset'),
+    new OntologyClass('HP:0003593', 'Infantile onset'),
+    new OntologyClass('HP:0011463', 'Childhood onset'),
+    new OntologyClass('HP:0003621', 'Juvenile onset'),
+    new OntologyClass('HP:0003581', 'Adult onset'),
+    new OntologyClass('HP:0011462', 'Young adult onset'),
+    new OntologyClass('HP:0025708', 'Early young adult onset'),
+    new OntologyClass('HP:0025709', 'Intermediate young adult onset'),
+    new OntologyClass('HP:0025710', 'Late young adult onset'),
+    new OntologyClass('HP:0003596', 'Middle age onset'),
+    new OntologyClass('HP:0003584', 'Late onset')];
 }
 export class Severities {
     static VALUES = [

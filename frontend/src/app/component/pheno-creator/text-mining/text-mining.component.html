@@ -49,8 +49,11 @@
       *ngIf="visible"
       [value]="phenotypicFeatures"
       dataKey="key"
-      [scrollable]="true"
+      styleClass="p-datatable-gridlines"
+      scrollDirection="horizontal"
+      responsiveLayout="scroll"
       [resizableColumns]="true"
+      [tableStyle]="{ width: 'max-content'}"   
     >
       <ng-template pTemplate="caption">
         <div class="table-header">Reviewed phenotypic features</div>

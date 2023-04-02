@@ -3,8 +3,8 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.monarchinitiative.phenopacketlab.core.ConceptConstantsService;
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
-import org.monarchinitiative.phenopacketlab.model.Concept;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.Concept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +30,14 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "structural", headers = "Accept=application/json")
-    public ResponseEntity<List<Concept>> getStructuralType() {
+    public ResponseEntity<List<IdentifiedConcept>> getStructuralType() {
         return ResponseEntity.ok(conceptConstantsService.structuralTypeConstants());
+    }
+
+    @GetMapping(value = "tree-structural", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getStructuralTypeTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.structuralTypeTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @GetMapping(value = "allelic_state", headers = "Accept=application/json")
@@ -50,7 +56,7 @@ public class ConceptConstantsController {
     }
 
     @GetMapping(value = "gender", headers = "Accept=application/json")
-    public ResponseEntity<List<IdentifiedConcept>> getGenderValues() {
+    public ResponseEntity<List<Concept>> getGenderValues() {
         return ResponseEntity.ok(conceptConstantsService.genderConstants());
     }
 
@@ -102,6 +108,12 @@ public class ConceptConstantsController {
     @GetMapping(value = "tree-disease-stages", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getDiseaseStagesTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.diseaseStagesTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-allelic-states", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getAllelicStatesTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.allelicStateTreeConstants();
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 

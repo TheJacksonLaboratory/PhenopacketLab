@@ -40,9 +40,6 @@ export class FileStepComponent implements OnInit, OnDestroy {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`creator/${profile.path}/validate`]);
                 return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`creator/${profile.path}/validate`]);
-                return;
             }
             // Possible other profiles to come
         }
@@ -50,9 +47,6 @@ export class FileStepComponent implements OnInit, OnDestroy {
     prevPage() {
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/medical-actions`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
                 this.router.navigate([`creator/${profile.path}/medical-actions`]);
                 return;
             }

@@ -1,4 +1,4 @@
-const API_URL = 'http://34.75.209.93:8080/api/v1';
+const API_URL = 'http://35.196.41.242:8080/api/v1';
 
 export const environment = {
   production: true,
@@ -19,5 +19,8 @@ export const environment = {
   TNM_METASTASIS_URL: `${API_URL}/constants/tree-tnm-metastasis`,
   DISEASE_STAGES_URL: `${API_URL}/constants/tree-disease-stages`,
   HPO_DISEASE_URL: `${API_URL}/diseases`,
-  TEXT_MINING_URL: `${API_URL}/textminer`
+  TEXT_MINING_URL: `${API_URL}/textminer`,
+  FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
+  ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
+  STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`
 };

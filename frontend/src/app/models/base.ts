@@ -1,3 +1,5 @@
+import { Utils } from '../component/shared/utils';
+
 /**
  * Class to convert to list or list of phenopacket model objects.
  * the Phenopacket model objects that can have more than one instance should
@@ -10,6 +12,7 @@ export class Convert {
             const array = [];
             for (const item of obj) {
                 const it = this.create(item);
+                it.key = Utils.getBiggestKey(array) + 1;
                 array.push(it);
             }
             return array;
@@ -32,12 +35,14 @@ export class OntologyClass extends Convert {
     key?: string;
     id = '';
     label = '';
+    url?: string;
 
-    constructor(id?: string, label?: string, key?: string) {
+    constructor(id?: string, label?: string, key?: string, url?: string) {
         super();
         this.id = id;
         this.label = label;
         this.key = key;
+        this.url = url;
     }
 
     static create(obj: any): OntologyClass {
@@ -52,8 +57,10 @@ export class OntologyClass extends Convert {
     }
 
     toString() {
-        if (this.label && this.id) {
-            return `${this.label} [${this.id}]`;
+        if (this.label && this.id && !this.url) {
+            return `[${this.id}] ${this.label}`;
+        } else if (this.label && this.id && this.url) {
+            return `[<a href="${this.url}" target="_blank">${this.id}</a>] ${this.label}`;
         }
         return '';
 
@@ -116,6 +123,7 @@ export class Evidence extends Convert {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
+            evidence.evidenceCode.url = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
         } else {
             throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`);
         }
@@ -123,6 +131,10 @@ export class Evidence extends Convert {
             evidence.reference = ExternalReference.convert(obj['reference']);
         }
         return evidence;
+    }
+
+    public static getEvidenceUrl(id: string) {
+        return `http://purl.obolibrary.org/obo/ECO_${id.split(':')[1]}`;
     }
 }
 export class Procedure {
@@ -341,6 +353,7 @@ export class TimeElement extends Convert {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
+            timeElement.ontologyClass.url = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
         } else if (obj['timestamp']) {
             timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {

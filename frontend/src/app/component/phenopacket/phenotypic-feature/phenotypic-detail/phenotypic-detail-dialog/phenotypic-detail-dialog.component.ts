@@ -13,7 +13,7 @@ export class PhenotypicDetailDialogComponent {
   phenotypicFeature: PhenotypicFeature;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
-    this.phenotypicFeature = config.data?.feature;
+    this.phenotypicFeature = config.data?.phenotypicFeature;
   }
 
   updatePhenotypicFeature(phenotypicFeature) {

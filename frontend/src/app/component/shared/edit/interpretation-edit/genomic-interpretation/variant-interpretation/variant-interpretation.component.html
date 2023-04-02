@@ -1,0 +1,88 @@
+<p-toast position="center" key="cen"></p-toast>
+<p-button
+  *ngIf="!viewLeftPane"
+  icon="pi pi-angle-double-right"
+  styleClass="p-button-text p-button-rounded"
+  (onClick)="expandSplitter()"
+  pTooltip="Expand"
+></p-button>
+<p-button
+  *ngIf="viewLeftPane"
+  icon="pi pi-angle-double-left"
+  styleClass="p-button-text p-button-rounded"
+  (onClick)="collapseSplitter()"
+  pTooltip="Collapse"
+></p-button>
+
+<as-split direction="horizontal">
+  <as-split-area [size]="splitterLeftWidth">
+    <div class="col flex justify-content-center">
+      <app-variation-search (variantInterpretationChange)="updateVariantInterpretation($event)"
+      ></app-variation-search>
+    </div>
+  </as-split-area>
+  <as-split-area [size]="splitterRightWidth">
+    <div class="col flex justify-content-center">
+      <div class="grid fluid">
+        <div class="field col-12">
+          <b>Variant Interpretation</b>
+          <br />
+          This element represents the interpretation of a variant according to
+          the American College of Medical Genetics (ACMG) variant interpretation
+          guidelines.
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="acmg">Acmg pathogenicity classification</label>
+          <p-dropdown
+            id="acmg"
+            appendTo="body"
+            placeholder="Select Acmg pathogenicity"
+            [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
+            [options]="acmgClassifications"
+            (onChange)="updateAcmgPathogenicity($event)"
+            class="w-full"
+          ></p-dropdown>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="therapeutic">Therapeutic actionability</label>
+          <p-dropdown
+            id="therapeutic"
+            appendTo="body"
+            placeholder="Select Therapeutic actionability"
+            [ngModel]="variantInterpretation?.therapeuticActionability"
+            [options]="therapeuticActionabilities"
+            (onChange)="updateTherapeuticActionability($event)"
+            class="w-full"
+          ></p-dropdown>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12">
+          <app-variation-descriptor
+            [variationDescriptor]="variantInterpretation?.variationDescriptor"
+            (variationDescriptorChange)="updateVariationDescriptor($event)"
+          ></app-variation-descriptor>
+        </div>
+        <!-- We display the gene descriptor only in edit mode, not in the stepper process -->
+        <div *ngIf="variantInterpretation && profile === undefined" class="field col-12">
+          <p-accordion>
+            <p-accordionTab header="Gene descriptor">
+              <app-gene-descriptor
+                [geneDescriptor]="variantInterpretation?.variationDescriptor?.geneContext"
+                (geneDescriptorChange)="updateGeneDescriptor($event)"
+              ></app-gene-descriptor>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-4">
+          <button
+            pButton
+            type="button"
+            label="Delete interpretation"
+            (click)="updateVariantInterpretation(undefined)"
+            icon="pi pi-trash"
+            class="p-button-warning"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </as-split-area>
+</as-split>

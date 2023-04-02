@@ -1,8 +1,8 @@
 package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
-import org.monarchinitiative.phenopacketlab.model.IdentifiedConcept;
-import org.monarchinitiative.phenopacketlab.model.Concept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.Concept;
 
 import java.util.List;
 import java.util.Map;
@@ -11,35 +11,39 @@ import java.util.Optional;
 class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     private final List<IdentifiedConcept> sexConstants;
-    private final List<IdentifiedConcept> genderConstants;
+    private final List<Concept> genderConstants;
     private final List<IdentifiedConcept> allelicStateConstants;
     private final List<IdentifiedConcept> lateralityConstants;
     private final List<IdentifiedConcept> modifierConstants;
-    private final Optional<SubtreeNode> modifierTreeConstants;
+    private final SubtreeNode modifierTreeConstants;
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
-    private final Optional<SubtreeNode> onsetTreeConstants;
-    private final Optional<SubtreeNode> tnmTumorTreeConstants;
-    private final Optional<SubtreeNode> tnmNodeTreeConstants;
-    private final Optional<SubtreeNode> tnmMetastasisTreeConstants;
-    private final Optional<SubtreeNode> diseaseStagesTreeConstants;
-    private final List<Concept> structuralTypeConstants;
+    private final SubtreeNode onsetTreeConstants;
+    private final SubtreeNode tnmTumorTreeConstants;
+    private final SubtreeNode tnmNodeTreeConstants;
+    private final SubtreeNode tnmMetastasisTreeConstants;
+    private final SubtreeNode diseaseStagesTreeConstants;
+    private final SubtreeNode allelicStateTreeConstants;
+    private final List<IdentifiedConcept> structuralTypeConstants;
+    private final SubtreeNode structuralTypeTreeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
     ConceptConstantsServiceImpl(List<IdentifiedConcept> sexConstants,
-                                List<IdentifiedConcept> genderConstants,
+                                List<Concept> genderConstants,
                                 List<IdentifiedConcept> allelicStateConstants,
                                 List<IdentifiedConcept> lateralityConstants,
                                 List<IdentifiedConcept> modifierConstants,
-                                Optional<SubtreeNode> modifierTreeConstants,
+                                SubtreeNode modifierTreeConstants,
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
-                                Optional<SubtreeNode> onsetTreeConstants,
-                                Optional<SubtreeNode> tnmTumorTreeConstants,
-                                Optional<SubtreeNode> tnmNodeTreeConstants,
-                                Optional<SubtreeNode> tnmMetastasisTreeConstants,
-                                Optional<SubtreeNode> diseaseStagesTreeConstants,
-                                List<Concept> structuralTypeConstants,
+                                SubtreeNode onsetTreeConstants,
+                                SubtreeNode tnmTumorTreeConstants,
+                                SubtreeNode tnmNodeTreeConstants,
+                                SubtreeNode tnmMetastasisTreeConstants,
+                                SubtreeNode diseaseStagesTreeConstants,
+                                SubtreeNode allelicStateTreeConstants,
+                                List<IdentifiedConcept> structuralTypeConstants,
+                                SubtreeNode structuralTypeTreeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
         this.genderConstants = genderConstants;
@@ -54,7 +58,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.tnmNodeTreeConstants = tnmNodeTreeConstants;
         this.tnmMetastasisTreeConstants = tnmMetastasisTreeConstants;
         this.diseaseStagesTreeConstants = diseaseStagesTreeConstants;
+        this.allelicStateTreeConstants = allelicStateTreeConstants;
         this.structuralTypeConstants = structuralTypeConstants;
+        this.structuralTypeTreeConstants = structuralTypeTreeConstants;
         this.contigConstants = contigConstants;
     }
 
@@ -64,7 +70,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     }
 
     @Override
-    public List<IdentifiedConcept> genderConstants() {
+    public List<Concept> genderConstants() {
         return genderConstants;
     }
 
@@ -85,7 +91,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     @Override
     public Optional<SubtreeNode> modifierTreeConstants() {
-        return modifierTreeConstants;
+        return Optional.ofNullable(modifierTreeConstants);
     }
 
     @Override
@@ -99,26 +105,30 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     }
 
     @Override
-    public Optional<SubtreeNode> tnmTumorTreeConstants() { return tnmTumorTreeConstants; }
+    public Optional<SubtreeNode> tnmTumorTreeConstants() { return Optional.ofNullable(tnmTumorTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> tnmNodeTreeConstants() { return tnmNodeTreeConstants; }
+    public Optional<SubtreeNode> tnmNodeTreeConstants() { return Optional.ofNullable(tnmNodeTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return tnmMetastasisTreeConstants; }
+    public Optional<SubtreeNode> tnmMetastasisTreeConstants() { return Optional.ofNullable(tnmMetastasisTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> diseaseStagesTreeConstants() { return diseaseStagesTreeConstants; }
+    public Optional<SubtreeNode> diseaseStagesTreeConstants() { return Optional.ofNullable(diseaseStagesTreeConstants); }
 
     @Override
-    public Optional<SubtreeNode> onsetTreeConstants() {
-        return onsetTreeConstants;
-    }
+    public Optional<SubtreeNode> onsetTreeConstants() { return Optional.ofNullable(onsetTreeConstants); }
 
     @Override
-    public List<Concept> structuralTypeConstants() {
+    public Optional<SubtreeNode> allelicStateTreeConstants() { return Optional.ofNullable(allelicStateTreeConstants); }
+
+    @Override
+    public List<IdentifiedConcept> structuralTypeConstants() {
         return structuralTypeConstants;
     }
+
+    @Override
+    public Optional<SubtreeNode> structuralTypeTreeConstants() { return Optional.ofNullable(structuralTypeTreeConstants); }
 
     @Override
     public List<Concept> contigConstants(String genomeAssembly) {

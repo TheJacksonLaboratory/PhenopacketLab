@@ -45,9 +45,18 @@ export class PhenotypicFeature extends Convert {
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
+            phenotypicFeature.severity.url = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
+            phenotypicFeature.modifierNodes = [];
+            for (const modifier of phenotypicFeature.modifiers) {
+                modifier.url = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
+                const node = new OntologyTreeNode();
+                node.label = modifier.label;
+                node.key = modifier.id;
+                phenotypicFeature.modifierNodes.push(node);
+            }
         }
         if (obj['onset']) {
             phenotypicFeature.onset = TimeElement.convert(obj['onset']);
@@ -57,6 +66,13 @@ export class PhenotypicFeature extends Convert {
         }
         if (obj['evidence']) {
             phenotypicFeature.evidences = Evidence.convert(obj['evidence']);
+            phenotypicFeature.evidenceNodes = [];
+            for (const evidence of phenotypicFeature.evidences) {
+                const node = new OntologyTreeNode();
+                node.label = evidence.evidenceCode.label;
+                node.key = evidence.evidenceCode.id;
+                phenotypicFeature.evidenceNodes.push(node);
+            }
         }
 
         return phenotypicFeature;

@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Family } from 'src/app/models/family';
-import { Individual, Sex } from 'src/app/models/individual';
+import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { FamilyService } from 'src/app/services/family.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -203,7 +203,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.individualTabsMap.delete(phenopacket.id);
     this.individualTabsMap.set(selectedIndividual.id, selectedIndividual);
   }
-  changeSex(sex: Sex, phenopacket: Phenopacket) {
+  changeSex(sex: string, phenopacket: Phenopacket) {
     const selectedIndividual = this.individualTabsMap.get(phenopacket.id);
     selectedIndividual.subject.sex = sex;
   }
@@ -249,7 +249,7 @@ export class FamilyListComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
     // this.changeDetectorRefs.detectChanges();
   }
-  openFileUploadDialog(){
+  openFileUploadDialog() {
     return;
   }
 }

@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -24,43 +25,7 @@ export class PhenoCreatorAllComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.items = [{
-      label: 'Individual',
-      routerLink: 'individual'
-    },
-    {
-      label: 'Phenotypic Feature(s)',
-      routerLink: 'phenotypic-features'
-    },
-    {
-      label: 'Measurement(s)',
-      routerLink: 'measurements'
-    },
-    {
-      label: 'Biosample(s)',
-      routerLink: 'biosamples'
-    },
-    {
-      label: 'Interpretation(s)',
-      routerLink: 'interpretations'
-    },
-    {
-      label: 'Disease(s)',
-      routerLink: 'diseases'
-    },
-    {
-      label: 'Medical Action(s)',
-      routerLink: 'medical-actions'
-    },
-    {
-      label: 'File(s)',
-      routerLink: 'files'
-    },
-    {
-      label: 'Validate',
-      routerLink: 'validate'
-    }
-    ];
+    this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
 
     this.subscription = this.phenopacketService.validated$.subscribe((phenopacket) => {
       this.messageService.add({ severity: 'success', summary: 'Phenopacket created',

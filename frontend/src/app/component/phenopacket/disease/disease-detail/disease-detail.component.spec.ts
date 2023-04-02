@@ -1,10 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { SharedModule } from 'src/app/component/shared/shared.module';
+import { Disease } from 'src/app/models/disease';
 
 import { DiseaseDetailComponent } from './disease-detail.component';
 
@@ -15,16 +11,7 @@ describe('DiseaseDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailComponent ],
-      imports: [
-        MatDialogModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTooltipModule
-      ],
-      providers: [
-        DialogService,
-        MessageService
-      ]
+      imports: [ SharedModule ]
     })
     .compileComponents();
   });
@@ -32,6 +19,7 @@ describe('DiseaseDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DiseaseDetailComponent);
     component = fixture.componentInstance;
+    component.disease = new Disease();
     fixture.detectChanges();
   });
 

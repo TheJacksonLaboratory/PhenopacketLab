@@ -5,8 +5,8 @@ import org.monarchinitiative.phenol.ontology.data.Dbxref;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.model.OntologyConceptResource;
-import org.monarchinitiative.phenopacketlab.model.Resource;
+import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;

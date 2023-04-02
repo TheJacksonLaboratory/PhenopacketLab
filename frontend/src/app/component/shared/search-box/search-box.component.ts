@@ -78,7 +78,7 @@ export class SearchBoxComponent implements OnInit {
     initSearch(searchItems: any) {
         this.selectedSearchItem.emit(this.searchCriteria);
         if (!this.searchCriteria.selectedItems) {
-            this.searchCriteria.selectedItems = []
+            this.searchCriteria.selectedItems = [];
         }
     }
 
@@ -102,10 +102,9 @@ export class SearchBoxComponent implements OnInit {
 
     private _searchItems(filterValue: string) {
         // get list of items from localStorage TODO replace by localStorageKey
-        let items = JSON.parse(localStorage.getItem(this.localStorageKey));
-        let filteredList = items.filter(item => 
-            // console.log(item.name);
-            item.name.toLowerCase().includes(filterValue.toLowerCase()));
+        const items = JSON.parse(localStorage.getItem(this.localStorageKey));
+        const filteredList = items.filter(item =>
+            item.label.toLowerCase().includes(filterValue.toLowerCase()));
         // display only a max of 10 items in the combo box
         if (filteredList.length > 9) {
             this.itemCount = 10;
@@ -118,7 +117,7 @@ export class SearchBoxComponent implements OnInit {
 
     public selectedChanged(value: any, displayValue: string) {
         if (!this.searchCriteria.selectedItems) {
-            this.searchCriteria.selectedItems = []
+            this.searchCriteria.selectedItems = [];
         }
         this.searchCriteria.selectedItems = [];
         this.searchCriteria.selectedItems.push({
@@ -131,7 +130,7 @@ export class SearchBoxComponent implements OnInit {
     private _searchItem() {
 
         this.searchCriteria.selectedSearchBy = this.selectedSearchBy;
-        //this.showFilterOptions();
+        // this.showFilterOptions();
         this.selectedSearchItem.emit(this.searchCriteria);
     }
 
@@ -144,9 +143,9 @@ export class SearchBoxComponent implements OnInit {
     }
 
     remove(selected: any) {
-        const indx = this.searchCriteria.selectedItems.indexOf(selected)
+        const indx = this.searchCriteria.selectedItems.indexOf(selected);
         if (indx > -1) {
-            this.searchCriteria.selectedItems.splice(indx, 1)
+            this.searchCriteria.selectedItems.splice(indx, 1);
         }
         this.selectedSearchItem.emit(this.searchCriteria);
     }
@@ -157,7 +156,7 @@ export class SearchBoxComponent implements OnInit {
         } else {
             this.showFilters = true;
         }
-        this.showFiltersChange.emit(this.showFilters)
+        this.showFiltersChange.emit(this.showFilters);
     }
 
 }

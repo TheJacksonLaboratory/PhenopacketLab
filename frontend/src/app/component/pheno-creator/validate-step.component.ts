@@ -23,9 +23,11 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   disabled = true;
 
   metadata: MetaData;
-  createdBy: string;
+  createdByPrefix: string;
+  createdBySuffix: string;
   created: string;
-  submittedBy: string;
+  submittedByPrefix: string;
+  submittedBySuffix: string;
   schemaVersion = '2.0';
   // whether the inplace createBy and SubmittedBy are active
   active = true;
@@ -48,14 +50,10 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
-      console.log('cohort in validate nginit subscription');
-      console.log(this.cohort);
     });
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
-    console.log('cohort in validate;');
-    console.log(this.cohort);
   }
 
   ngOnDestroy(): void {
@@ -66,34 +64,43 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
       this.profileSelectionSubscription.unsubscribe();
     }
   }
+
   validate() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
     this.disabled = false;
-    console.log('validate');
     // create the timestamp created date
     this.created = new Date().toISOString();
 
-    this.active = false;
     // set metadata
     const metadata = new MetaData();
-    metadata.createdBy = this.createdBy;
+    if (this.createdBySuffix !== undefined) {
+      this.createdByPrefix = 'ORCiD:';
+    } else {
+      this.createdByPrefix = 'Anonymous';
+    }
+    if (this.submittedBySuffix !== undefined) {
+      this.submittedByPrefix = 'ORCiD:';
+    } else {
+      this.submittedByPrefix = 'Anonymous';
+    }
+    metadata.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+    metadata.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
     metadata.created = this.created;
-    metadata.submittedBy = this.submittedBy;
     // TODO
     metadata.resources = [];
     // TODO
     metadata.externalReferences = [];
     metadata.phenopacketSchemaVersion = this.schemaVersion;
     this.phenopacket.metaData = metadata;
+    this.active = false;
   }
+
   complete() {
     // add to cohort
     if (this.cohort) {
       this.cohort.members.push(this.phenopacket);
     }
     this.cohortService.setCohort(this.cohort);
-    console.log('completed');
-    console.log(this.cohort);
     // reset phenopacket
     this.phenopacketService.phenopacket = undefined;
 
@@ -112,10 +119,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
         this.router.navigate([`creator/${profile.path}/files`]);
         return;
       } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-        this.router.navigate([`creator/${profile.path}/diseases`]);
-        return;
-      } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-        this.router.navigate([`creator/${profile.path}/files`]);
+        this.router.navigate([`creator/${profile.path}/interpretations`]);
         return;
       }
       // Possible other profiles to come

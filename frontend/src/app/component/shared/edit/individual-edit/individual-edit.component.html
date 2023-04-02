@@ -1,22 +1,22 @@
 <div class="grid p-fluid">
   <div class="field col-12">
     <label for="individualId"><b>Individual ID</b></label>
-        <input
-          id="individualId"
-          #id="ngModel"
-          type="text"
-          required
-          pInputText
-          [(ngModel)]="subject.id"
-          [ngClass]="{
-            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
-          }"
-        />
-        <small
-          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
-          class="p-error"
-          >Individual ID is required.</small
-        >
+    <input
+      id="individualId"
+      #id="ngModel"
+      type="text"
+      required
+      pInputText
+      [(ngModel)]="subject.id"
+      [ngClass]="{
+        'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+      }"
+    />
+    <small
+      *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+      class="p-error"
+      >Individual ID is required.</small
+    >
   </div>
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
@@ -24,7 +24,7 @@
   </div> -->
   <div class="field col-12">
     <label for="lastEncounterDate"
-      ><b>Age of clinical examination</b> (Time of last encounter)</label
+      ><b>Age at last clinical encounter</b></label
     >
     <app-time-element
       id="lastEncounterDate"
@@ -45,7 +45,19 @@
       pTooltip="Observed apparent sex of the individual"
       showDelay="2000"
       class="w-full"
-    ></p-dropdown>
+      optionLabel="name"
+      [showClear]="true"
+    >
+      <ng-template let-sex pTemplate="item">
+        <div
+          [pTooltip]="sex.definition"
+          escape="false"
+          tooltipPosition="bottom"
+        >
+        [{{ sex.id.value }}] {{ sex.name }} 
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
 
   <div class="field col-12 md:col-4">
@@ -54,33 +66,82 @@
       id="karyotypicSex"
       appendTo="body"
       placeholder="Select karyotypic sex"
+      [(ngModel)]="selectedKaryotypicSex"
       [options]="getKaryotypicSexes()"
-      [ngModel]="subject?.karyotypicSex"
       (ngModelChange)="updateKaryotypicSex($event)"
       pTooltip="The karyotypic sex of the individual"
       showDelay="2000"
       class="w-full"
-    ></p-dropdown>
+      optionLabel="name"
+      [showClear]="true"
+    >
+      <ng-template let-karyosex pTemplate="item">
+        <div
+          [pTooltip]="karyosex.definition"
+          escape="false"
+          tooltipPosition="bottom"
+        >
+          {{ karyosex.name }}
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
-  <div class="field col-12 md:col-4">
+  <div class="field col-12 md:col-4"></div>
+<!-- We do not need gender for now -->
+  <!-- <div *ngIf="!showGender" class="field col-12 md:col-1 align-items-center">
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-ellipsis-h"
+      class="p-button-rounded p-button-text"
+      pTooltip="Show more options"
+      (click)="handleClickMore($event)"
+    ></button>
+  </div>
+  <div *ngIf="!showGender" class="field col-12 md:col-3"></div>
+  <div *ngIf="showGender" class="field col-12 md:col-3">
     <label for="gender">Gender</label>
     <p-dropdown
       id="gender"
       appendTo="body"
       placeholder="Select gender"
       [options]="genders"
-      [ngModel]="subject?.gender"
+      [(ngModel)]="selectedGender"
       (ngModelChange)="updateGender($event)"
       pTooltip="Self-identified gender"
       showDelay="2000"
       class="w-full"
-    ></p-dropdown>
+      optionLabel="name"
+      [showClear]="true"
+    >
+      <ng-template let-gender pTemplate="item">
+        <div
+          [pTooltip]="gender.definition"
+          escape="false"
+          tooltipPosition="bottom"
+        >
+          {{ gender.name }} [{{ gender.id.value }}]
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
+  <div *ngIf="showGender" class="field col-12 md:col-1">
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-angle-double-left"
+      class="p-button-rounded p-button-text"
+      pTooltip="Show less"
+      (click)="handleClickMore($event)"
+    ></button>
+  </div> -->
 </div>
 <br />
 <h3><b>Vital Status</b></h3>
 <div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
+  <div class="field col-12 md:col-4">
     <label for="status">Status</label>
     <p-dropdown
       id="status"
@@ -89,22 +150,31 @@
       [options]="getStatuses()"
       [ngModel]="subject?.vitalStatus?.status"
       (ngModelChange)="updateStatus($event)"
-      pTooltip="The life status of the individual"
+      pTooltip="The vital status of the individual e.g. whether they are alive or the time and cause of death. RECOMMENDED"
+      tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
+      [showClear]="true"
     ></p-dropdown>
   </div>
-  <div class="field col-12 md:col-6">
+  <div class="field col-12 md:col-4"></div>
+  <div class="field col-12 md:col-4"></div>
+
+  <div
+    class="field col-12 md:col-4"
+    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+  >
     <label for="survivalTime">Survival time (days)</label>
     <p-inputNumber
       id="survivalTime"
       [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
       (onInput)="updateSurvivalTime($event)"
+      pTooltip="Number of days the patient was alive after their primary diagnosis"
+      tooltipPosition="bottom"
     ></p-inputNumber>
   </div>
-
   <div
-    class="field col-6"
+    class="field col-12 md:col-4"
     *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
   >
     <label for="timeOfDeath">Time of death</label>
@@ -115,22 +185,28 @@
     ></app-time-element>
   </div>
   <div
-    class="field col-6"
+    class="field col-12 md:col-4"
     *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
   >
     <label for="causeOfDeath">Cause of death</label>
     <p-dropdown
       id="causeOfDeath"
       placeholder="Select cause of death"
+      appendTo="body"
       [options]="causeOfDeaths"
       [virtualScroll]="true"
       [virtualScrollItemSize]="30"
       filter="true"
-      optionLabel="name"
-      filterBy="name"
+      filterBy="label,id"
+      optionLabel="label"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
-    ></p-dropdown>
-
+    >
+      <ng-template let-cause pTemplate="item">
+        <div [pTooltip]="cause.label" showDelay="2000" tooltipPosition="bottom" escape="false">
+          [{{ cause.id }}] {{ cause.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
   </div>
 </div>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Disease } from 'src/app/models/disease';
-import { Individual, KaryotypicSex, Sex, } from 'src/app/models/individual';
+import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
@@ -37,8 +37,8 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   @Output() onIndividualChange = new EventEmitter<Individual>();
 
   summary = '';
-  sex: any = Sex.UNKNOWN_SEX;
-  karyotypicSex: any = KaryotypicSex.UNKNOWN_KARYOTYPE;
+  sex = 'UNKNOWN_SEX';
+  karyotypicSex = 'UNKNOWN_KARYOTYPE';
   gender: any;
   // dob: Date;
   individual: Individual;
@@ -130,7 +130,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(IndividualDialogComponent, {
       header: 'Edit Individual',
       width: '70%',
-      contentStyle: { 'min-height': '500px', 'overflow': 'auto' },
+      contentStyle: { 'overflow': 'auto' },
       baseZIndex: 10000,
       resizable: true,
       draggable: true,

@@ -9,9 +9,71 @@ export enum ProfileSelection {
  */
 export class Profile {
 
+    static rareMenuItems = [{
+        label: 'Individual',
+        routerLink: 'individual'
+    },
+    {
+        label: 'Phenotypic Feature(s)',
+        routerLink: 'phenotypic-features'
+    },
+    {
+        label: 'Disease diagnoses',
+        routerLink: 'diseases'
+    },
+    {
+        label: 'Interpretation(s)',
+        routerLink: 'interpretations'
+    },
+    {
+        label: 'Validate',
+        routerLink: 'validate'
+    }
+    ];
+    static allMenuItems = [{
+        label: 'Individual',
+        routerLink: 'individual'
+    },
+    {
+        label: 'Phenotypic Feature(s)',
+        routerLink: 'phenotypic-features'
+    },
+    {
+        label: 'Measurement(s)',
+        routerLink: 'measurements'
+    },
+    {
+        label: 'Biosample(s)',
+        routerLink: 'biosamples'
+    },
+    {
+        label: 'Disease diagnoses',
+        routerLink: 'diseases'
+    },
+    {
+        label: 'Interpretation(s)',
+        routerLink: 'interpretations'
+    },
+    {
+        label: 'Medical Action(s)',
+        routerLink: 'medical-actions'
+    },
+    {
+        label: 'File(s)',
+        routerLink: 'files'
+    },
+    {
+        label: 'Validate',
+        routerLink: 'validate'
+    }
+    ];
     static profileSelectionOptions = [
         // tslint:disable-next-line:max-line-length
-        { label: 'Rare disease', value: ProfileSelection.RARE_DISEASE, path: 'rare', steps: ['phenotypic-features', 'diseases', 'validate'] },
-        { label: 'All available steps', value: ProfileSelection.ALL_AVAILABLE, path: 'all', steps: ['phenotypic-features', 'measurements', 'biosamples', 'interpretations', 'diseases', 'medical-actions', 'files', 'validate'] }
+        {
+            label: 'Rare disease', value: ProfileSelection.RARE_DISEASE, path: 'rare', steps: Profile.rareMenuItems
+        },
+        {
+            label: 'All available steps', value: ProfileSelection.ALL_AVAILABLE, path: 'all', steps: Profile.allMenuItems
+        }
     ];
 }

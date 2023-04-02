@@ -10,6 +10,7 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
+import { Utils } from '../shared/utils';
 
 @Component({
     providers: [ConfirmationService],
@@ -86,10 +87,12 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     private _queryDiseaseById(id: string) {
         this.openSpinnerDialog();
         this.searchService.queryDiseasesById(id).subscribe(data => {
-            const disease = new Disease();
-            disease.term = new OntologyClass(data.id, data.name);
-            disease.excluded = false;
-            this.addDisease(disease);
+            if (data) {
+                const disease = new Disease();
+                disease.term = new OntologyClass(data.id, data.label);
+                disease.excluded = false;
+                this.addDisease(disease);
+            }
             this.spinnerDialogRef.close();
         },
             (error) => {
@@ -106,20 +109,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     }
 
     /**
-     *
-     * @returns Returns the biggest key
-     */
-    getBiggestKey() {
-        let key = 0;
-        for (const disease of this.diseases) {
-            if ((disease.key) >= key) {
-                key = disease.key;
-            }
-        }
-        return key;
-    }
-
-    /**
      * Adds a new disease.
      **/
     addDisease(disease?: Disease) {
@@ -127,7 +116,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
             return;
         }
         // set unique key for feature table
-        disease.key = this.getBiggestKey() + 1;
+        disease.key = Utils.getBiggestKey(this.diseases) + 1;
         this.diseases.push(disease);
         // we copy the array after each update so the ngChange method is triggered on the child component
         this.diseases = this.diseases.slice();
@@ -183,13 +172,10 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`creator/${profile.path}/validate`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`creator/${profile.path}/medical-actions`]);
+                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             }
         }
@@ -200,13 +186,10 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/interpretations`]);
+                this.router.navigate([`creator/${profile.path}/biosamples`]);
                 return;
             } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
                 this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`creator/${profile.path}/interpretations`]);
                 return;
             }
         }

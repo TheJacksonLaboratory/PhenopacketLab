@@ -1,59 +1,40 @@
-<div class="row">
-  <div class="col-md-6" style="clear: both">
+<div class="grid p-fluid">
+  <div class="field col-12">
     <h2>
-      <b>{{ diseaseDetailName }} </b>
+      <b>{{ disease.term?.label }} </b>
     </h2>
-    <h3>{{ diseaseId }}</h3>
+    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
   </div>
-  <div class="col-md-6">
-    <button
-      (click)="openEditDialog()"
-      mat-icon-button
-      type="submit"
-      class="pull-right"
-      matTooltip="Edit"
-      [matTooltipShowDelay]="2000"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
+  <div class="field col-12">
+    <p>
+      {{ disease.description }}
+    </p>
   </div>
-</div>
-<div class="row">
-  <p>
-    {{ description }}
-  </p>
-</div>
-<div class="row">
-  <div class="col-md-6"><b>Type:</b> {{ isA }}</div>
-  <div class="col-md-6"><b>Status:</b> {{ status }}</div>
-</div>
-
-<div class="row">
-  <div class="col-md-6"><b>Onset:</b> {{ onset }}</div>
-  <div class="col-md-6"><b>Resolution:</b> {{ resolution }}</div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <b>Disease stage: </b> {{ stage }}
-    <!-- <br />
-    <ul>
-      <li *ngFor="let disStage of disease?.diseaseStage">
-        {{ disStage.label }} [{{ disStage.id }}]
-      </li>
-    </ul> -->
+  <div class="field col-12 md:col-6"><b>Type:</b> {{ disease.isA }}</div>
+  <div class="field col-12 md:col-6">
+    <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
   </div>
-  <div class="col-md-6">
+  <div class="field col-12 md:col-6">
+    <b>Onset:</b> <span *ngIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span>
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Resolution:</b> {{ disease.resolution?.toString() }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Disease stage: </b> {{ disease.diseaseStage }}
+  </div>
+  <div class="field col-12 md:col-6">
     <b>Clinical TNM finding:</b><br />
     <ul>
-      <li *ngFor="let finding of findings">
+      <li *ngFor="let finding of disease.clinicalTnmFinding">
         {{ finding.label }} [{{ finding.id }}]
       </li>
     </ul>
   </div>
+  <div class="field col-12 md:col-6">
+    <b>Laterality: </b> <span *ngIf="disease.laterality" [innerHTML]="disease.laterality?.toString() | safeText"></span>
+  </div>
+  <div class="field col-12 md:col-6">
+
+  </div>
 </div>
-<div class="row">
-  <div class="col-md-6"><b>Severity: </b> {{ severity }}</div>
-  <div class="col-md-6"><b>Laterality:</b> {{ laterality }}</div>
-</div>
-<br />

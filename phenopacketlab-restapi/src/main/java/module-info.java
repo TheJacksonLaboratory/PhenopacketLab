@@ -18,6 +18,8 @@ module phenopacketlab.restapi {
     requires com.google.protobuf;
     requires com.google.protobuf.util;
 
+    requires io.swagger.v3.oas.annotations;
+
     opens org.monarchinitiative.phenopacketlab.restapi;
     opens org.monarchinitiative.phenopacketlab.restapi.controller;
     opens org.monarchinitiative.phenopacketlab.restapi.controller.dto;

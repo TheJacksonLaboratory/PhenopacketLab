@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { InterpretationComponent } from './interpretation.component';
 
@@ -12,8 +13,12 @@ describe('InterpretationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ InterpretationComponent ],
       imports: [
-        MatDialogModule,
         FormsModule
+      ],
+      providers: [
+        { provide: DialogService, useValue: {} },
+        { provide: MessageService, useValue: {} },
+        { provide: ConfirmationService, useValue: {} }
       ]
     })
     .compileComponents();

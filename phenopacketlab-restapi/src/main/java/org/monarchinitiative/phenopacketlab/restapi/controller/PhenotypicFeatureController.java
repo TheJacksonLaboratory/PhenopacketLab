@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
-import org.monarchinitiative.phenopacketlab.restapi.controller.dto.PhenotypicFeatureDto;
+import org.monarchinitiative.phenopacketlab.restapi.controller.dto.OntologyClassDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,19 +21,19 @@ public class PhenotypicFeatureController {
         this.phenotypicFeatureService = phenotypicFeatureService;
     }
 
-    private static Function<Term, PhenotypicFeatureDto> phenotypicFeatureToDto() {
-        return d -> new PhenotypicFeatureDto(d.id().getValue(), d.getName());
+    private static Function<Term, OntologyClassDto> phenotypicFeatureToDto() {
+        return d -> new OntologyClassDto(d.id().getValue(), d.getName());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<PhenotypicFeatureDto> phenotypicFeatureById(@PathVariable("id") String id) {
+    public ResponseEntity<OntologyClassDto> phenotypicFeatureById(@PathVariable("id") String id) {
         TermId phenotypicFeatureId = TermId.of(id);
         return ResponseEntity.of(phenotypicFeatureService.phenotypicFeatureById(phenotypicFeatureId)
                 .map(phenotypicFeatureToDto()));
     }
 
     @GetMapping
-    public ResponseEntity<List<PhenotypicFeatureDto>> allPhenotypicFeatures() {
+    public ResponseEntity<List<OntologyClassDto>> allPhenotypicFeatures() {
         return ResponseEntity.ok(phenotypicFeatureService.phenotypicFeatures()
                 .map(phenotypicFeatureToDto())
                 .collect(Collectors.toList()));

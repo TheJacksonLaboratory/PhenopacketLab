@@ -42,9 +42,6 @@ export class MeasurementStepComponent implements OnInit, OnDestroy {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
                 this.router.navigate([`creator/${profile.path}/biosamples`]);
                 return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
-                this.router.navigate([`creator/${profile.path}/biosamples`]);
-                return;
             }
             // Possible other profiles to come
         }
@@ -54,9 +51,6 @@ export class MeasurementStepComponent implements OnInit, OnDestroy {
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.OTHER && profile.value === ProfileSelection.OTHER) {
                 this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
                 return;
             }

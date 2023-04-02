@@ -1,6 +1,8 @@
 import { Convert, OntologyClass } from './base';
 
 export class Interpretation extends Convert {
+    // key parameter not part of the phenopacket schema, used for primeng table
+    key?: number;
     id: string;
     progressStatus: ProgressStatus;
     diagnosis: Diagnosis;
@@ -59,13 +61,16 @@ export class Diagnosis {
 }
 
 export enum InterpretationStatus {
-    UNKNOWN_STATUS = 'UNKNWON_STATUS',
+    UNKNOWN_STATUS = 'UNKNOWN_STATUS',
     REJECTED = 'REJECTED',
     CANDIDATE = 'CANDIDATE',
     CONTRIBUTORY = 'CONTRIBUTORY',
     CAUSATIVE = 'CAUSATIVE'
 }
+
 export class GenomicInterpretation extends Convert {
+    // used for unique identifier in a table, not part of the phenopacket schema
+    key?: number;
     subjectOrBiosampleId: string;
     interpretationStatus: InterpretationStatus;
     // call
@@ -108,6 +113,13 @@ export enum TherapeuticActionability {
     UNKNOWN_ACTIONABILITY = 'UNKNOWN_ACTIONABILITY',
     NOT_ACTIONABLE = 'NOT_ACTIONABLE',
     ACTIONABLE = 'ACTIONABLE'
+}
+export enum MoleculeContext {
+    unspecified_molecule_context = 'unspecified_molecule_context',
+    genomic = 'genomic',
+    transcript = 'transcript',
+    protein = 'protein',
+    UNRECOGNIZED = 'UNRECOGNIZED'
 }
 /**
  * VRS object : https://vrs.ga4gh.org/en/stable/schema.html
@@ -174,6 +186,7 @@ export class Extension extends Convert {
     }
 }
 export class Expression extends Convert {
+    key?: number;
     syntax: string;
     value: string;
     version: string;
@@ -204,7 +217,7 @@ export class VariationDescriptor {
     xrefs: string[];
     alternateLabels: string[];
     extensions: Extension[];
-    moleculeContext: string;
+    moleculeContext: MoleculeContext;
     structuralType: OntologyClass;
     vrsRefAlleleSeq: string;
     allelicState: OntologyClass;
@@ -265,6 +278,8 @@ export class VariationDescriptor {
 }
 export class VariantInterpretation {
     static className = 'VariantInterpretation';
+
+    key?: number;
     acmgPathogenicityClassification: AcmgPathogenicityClassification;
     therapeuticActionability: TherapeuticActionability;
     variationDescriptor: VariationDescriptor;

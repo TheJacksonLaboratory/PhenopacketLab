@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Individual, KaryotypicSex, Sex, Status } from 'src/app/models/individual';
+import { ConstantObject, Individual, KaryotypicSex, Status } from 'src/app/models/individual';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -23,12 +23,16 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 
-    selectedSex: string;
-    sexes: string[];
+    selectedSex: ConstantObject;
+    sexes: ConstantObject[];
     sexSubscription: Subscription;
 
-    genders: OntologyClass[];
-    genderSubscription: Subscription;
+    selectedKaryotypicSex: KaryotypicSex;
+
+    showGender = false;
+    // genders: ConstantObject[];
+    // selectedGender: ConstantObject;
+    // genderSubscription: Subscription;
 
     constructor(public phenopacketService: PhenopacketService, public diseaseService: DiseaseSearchService) {
     }
@@ -39,23 +43,28 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.causeOfDeaths = diseases;
         });
         this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
-            if (this.sexes === undefined) {
-                this.sexes = [];
-            }
+            this.sexes = sexes;
             for (const sex of sexes) {
-                this.sexes.push(sex.name);
+                if (this.subject && this.subject.sex === sex.name) {
+                   this.selectedSex = sex;
+                }
             }
         });
-        this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
-            if (this.genders === undefined) {
-                this.genders = [];
-            }
-            for (const gender of genders) {
-                this.genders.push(new OntologyClass(gender.id.value, gender.name));
-            }
-        });
+        // this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
+        //     this.genders = genders;
+        //     console.log(genders);
+        //     for (const gender of genders) {
+        //         if (this.subject && this.subject.gender?.label === gender.name) {
+        //            this.selectedGender = gender;
+        //         }
+        //     }
+        // });
         if (this.subject) {
-            this.selectedSex = this.subject.sex;
+            for (const karyosex of KaryotypicSex.VALUES) {
+                if (this.subject.karyotypicSex === karyosex.name) {
+                    this.selectedKaryotypicSex = karyosex;
+                 }
+            }
         }
     }
     ngOnDestroy(): void {
@@ -65,9 +74,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         if (this.sexSubscription) {
             this.sexSubscription.unsubscribe();
         }
-        if (this.genderSubscription) {
-            this.genderSubscription.unsubscribe();
-        }
+        // if (this.genderSubscription) {
+        //     this.genderSubscription.unsubscribe();
+        // }
     }
 
     /**
@@ -76,31 +85,49 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
       */
     updateTimeOfLastEncounter(timeOfLastEncounter: any) {
         if (this.subject) {
-            console.log('update Time Of Last encounter');
-            console.log(timeOfLastEncounter);
             this.subject.timeAtLastEncounter = timeOfLastEncounter;
             this.subjectChange.emit(this.subject);
         }
     }
 
     updateSex(event: any) {
-        if (this.subject && event) {
-            this.subject.sex = event.value;
-            this.subjectChange.emit(this.subject);
-        }
-    }
-    updateKaryotypicSex(karyoSex: any) {
         if (this.subject) {
-            this.subject.karyotypicSex = karyoSex;
+            if (event.value) {
+                this.subject.sex = event.value.name;
+            }
+            if (event.value === undefined || event.value === null) {
+                this.subject.sex = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
-    updateGender(gender: any) {
+
+    updateKaryotypicSex(karyotypicSex: KaryotypicSex) {
         if (this.subject) {
-            this.subject.gender = gender;
+            if (karyotypicSex) {
+                this.subject.karyotypicSex = karyotypicSex.name;
+            } else {
+                this.subject.karyotypicSex = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
+
+    // handleClickMore(event) {
+    //     this.showGender = !this.showGender;
+    // }
+
+    // updateGender(gender: any) {
+    //     if (this.subject) {
+    //         if (gender) {
+    //             this.subject.gender = new OntologyClass(gender.id.value, gender.name);
+    //         } else {
+    //             this.subject.gender = undefined;
+    //         }
+    //         this.subjectChange.emit(this.subject);
+    //     }
+    // }
+
     updateStatus(status: any) {
         if (this.subject) {
             this.subject.vitalStatus.status = status;
@@ -125,18 +152,17 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     updateCauseOfDeath(event) {
         if (this.subject) {
-            this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.name);
+            if (event) {
+                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.label);
+            } else {
+                this.subject.vitalStatus.causeOfDeath = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
-    getSexes() {
-        // tslint:disable-next-line:radix
-        return Object.values(Sex).filter(x => !(parseInt(x) >= 0));
-    }
 
     getKaryotypicSexes() {
-        // tslint:disable-next-line:radix
-        return Object.values(KaryotypicSex).filter(x => !(parseInt(x) >= 0));
+        return KaryotypicSex.VALUES;
     }
     getStatuses() {
         // tslint:disable-next-line:radix

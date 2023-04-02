@@ -1,7 +1,7 @@
 package org.monarchinitiative.phenopacketlab.core.miner;
 
-import org.monarchinitiative.phenopacketlab.model.MinedConcept;
-import org.monarchinitiative.phenopacketlab.model.MinedText;
+import org.monarchinitiative.phenopacketlab.core.model.MinedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.MinedText;
 
 import java.util.ArrayList;
 import java.util.List;

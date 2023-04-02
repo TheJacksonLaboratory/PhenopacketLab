@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Disease } from 'src/app/models/disease';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { MondoDisease } from 'src/app/models/mondo-disease';
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
+import { Disease } from 'src/app/models/disease';
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DiseaseDetailDialogComponent } from './disease-detail/disease-detail-dialog/disease-detail-dialog.component';
+import { Utils } from '../../shared/utils';
 import { OntologyClass } from 'src/app/models/base';
 
 @Component({
@@ -43,79 +44,44 @@ export class DiseaseComponent implements OnInit, OnChanges {
   placeHolderTxt = 'Enter disease name';
   localStorageKey = 'hpo_diseases';
 
-  // Table items
-  displayedColumns = ['id', 'name', 'status', 'onset', 'resolution', 'metadata', 'remove'];
-
-  expandedElement: Disease | null;
-
-  // diseases: MondoDisease[] = [];
-  datasource = new DataPresentMatTableDataSource<Disease>();
+  showTable = false;
 
   diseaseCount: number;
   // searchparams
   currSearchParams: any = {};
 
-  dialogRef: any;
+  ref: DynamicDialogRef;
   spinnerDialogRef: any;
 
-
-  constructor(public searchService: DiseaseSearchService, public dialog: MatDialog) { }
+  constructor(public searchService: DiseaseSearchService, public dialogService: DialogService,
+    private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.datasource.data = this.phenopacketDiseases;
     this.onDiseasesChanged.emit(this.phenopacketDiseases);
   }
 
   ngOnInit(): void {
-    // if (this.phenopacketDiseases === undefined) {
-    //   this.phenopacketDiseases = [];
-    // }
-    this.datasource.data = this.phenopacketDiseases;
-    // this.onDiseasesChanged.emit(this.phenopacketDiseases);
-  }
-
-  addDisease(disease: Disease) {
-    // this.phenopacketDiseases.push(disease);
-    // this.datasource.data = this.phenopacketDiseases;
-    // this.onDiseasesChanged.emit(this.phenopacketDiseases);
-
-    if (disease === undefined) {
-      const newDisease = new Disease();
-      newDisease.term = new OntologyClass('id', 'name');
-      newDisease.excluded = false;
-      this.phenopacketDiseases.push(newDisease);
-      this.datasource.data = this.phenopacketDiseases;
-      this.onDiseasesChanged.emit(this.phenopacketDiseases);
-    } else if (disease && this.showAddButton) {
-      this.phenopacketDiseases.push(disease);
-      this.datasource.data = this.phenopacketDiseases;
-      this.onDiseasesChanged.emit(this.phenopacketDiseases);
-    } else if (disease && !this.showAddButton) {
-      this.onDiseasesChanged.emit([disease]);
+    if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
+      this.showTable = true;
     }
   }
 
-  removeDisease(element: Disease) {
-    const msgData = { 'title': 'Remove Disease' };
-    msgData['description'] = `Remove "${element.term.label}" from disease list ?`;
-    msgData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: msgData
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.phenopacketDiseases.forEach((disease, index) => {
-          if (disease === element) {
-            this.phenopacketDiseases.splice(index, 1);
-
-          }
-        });
-        this.datasource.data = this.phenopacketDiseases;
-        this.onDiseasesChanged.emit(this.phenopacketDiseases);
+  deleteDisease(disease: Disease) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete \'' + disease.term?.id + '\'?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.phenopacketDiseases = this.phenopacketDiseases.filter(val => val.key !== disease.key);
+        if (this.phenopacketDiseases.length === 0) {
+          this.showTable = false;
+        }
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Disease Deleted', life: 3000 });
+      },
+      reject: () => {
+        this.confirmationService.close();
       }
     });
-    return dialogRef;
   }
 
   onSearchCriteriaChange(searchCriteria: any) {
@@ -130,42 +96,59 @@ export class DiseaseComponent implements OnInit, OnChanges {
   }
 
   private _queryDiseasesById(id: string) {
-    this.openSpinnerDialog();
+    this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+      closable: false,
+      modal: true
+    });
     this.searchService.queryDiseasesById(id).subscribe(data => {
-      const dis = new MondoDisease(data);
-      // convert MondoDisease to phenopacket Disease
-      const disease = dis.getPhenoDisease();
-      this.addDisease(disease);
+      if (data) {
+        const disease = new Disease();
+        disease.term = new OntologyClass(data.id, data.label);
+        disease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
+        this.phenopacketDiseases.push(disease);
+        this.showTable = true;
+        this.onDiseasesChanged.emit(this.phenopacketDiseases);
+      }
       this.spinnerDialogRef.close();
     },
       (error) => {
+        console.log(error);
         this.spinnerDialogRef.close();
       });
   }
 
-  openSpinnerDialog() {
-    this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-      panelClass: 'transparent',
-      disableClose: true
+  editDisease(disease?: Disease) {
+    this.ref = this.dialogService.open(DiseaseDetailDialogComponent, {
+      header: 'Edit Disease',
+      width: '70%',
+      contentStyle: { 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      data: { disease: disease }
     });
-  }
 
-  expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element;
-  }
-
-  changeDisease(disease: Disease) {
-    for (let i = 0; i < this.phenopacketDiseases.length; i++) {
-      if (this.phenopacketDiseases[i].term.id === disease.term.id) {
-        this.phenopacketDiseases[i] = disease;
-        this.datasource.data = this.phenopacketDiseases;
+    this.ref.onClose.subscribe((editedDisease: Disease) => {
+      if (editedDisease) {
+        const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.key === editedDisease.key);
+        if (indexToUpdate === -1) {
+          this.phenopacketDiseases.push(editedDisease);
+        } else {
+          this.phenopacketDiseases[indexToUpdate] = editedDisease;
+          this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
+        }
+        this.showTable = true;
+        // emit change
+        this.onDiseasesChanged.emit(this.phenopacketDiseases);
       }
-    }
+    });
+
   }
 
-  getStatus(disease: Disease) {
-    return disease.excluded ? 'Excluded' : 'Observed';
+  getDiseaseURL(id: string) {
+    return Disease.getDiseaseURL(id);
   }
+
 }
 
 
