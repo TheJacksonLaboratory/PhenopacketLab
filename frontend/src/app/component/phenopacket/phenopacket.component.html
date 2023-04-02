@@ -42,7 +42,7 @@
                                 <b>Time of death: </b> {{ timeOfDeath }}
                             </div>
                             <div class="field col-12 md:col-6">
-                                <b>Cause of death: </b> {{ causeOfDeath }}
+                                <b>Cause of death: </b> <span *ngIf="causeOfDeath" [innerHTML]="causeOfDeath | safeText"></span>
                             </div>
                             <div class="field col-12 md:col-6">
                                 <b>Survival time (days): </b> {{ survivalTime }}

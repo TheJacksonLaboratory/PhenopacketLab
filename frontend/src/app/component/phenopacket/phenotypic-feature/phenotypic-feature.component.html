@@ -56,11 +56,11 @@
           </td>
           <td>{{ feature.type.label }}</td>
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-          <td [innerHTML]="feature.onset?.toString() | safeText"></td>
+          <td><span *ngIf="feature.onset" [innerHTML]="feature.onset?.toString() | safeText"></span></td>
           <td>{{ feature.resolution?.toString() }}</td>
-          <td [innerHTML]="feature.severity?.toString() | safeText"></td>
-          <td [innerHTML]="getModifiers(feature) | safeText"></td>
-          <td [innerHTML]="getEvidences(feature) | safeText"></td>
+          <td><span *ngIf="feature.severity" [innerHTML]="feature.severity?.toString() | safeText"></span></td>
+          <td><span *ngIf="feature.modifiers" [innerHTML]="getModifiers(feature) | safeText"></span></td>
+          <td><span *ngIf="feature.evidences" [innerHTML]="getEvidences(feature) | safeText"></span></td>
           <td>
             <button
               pButton

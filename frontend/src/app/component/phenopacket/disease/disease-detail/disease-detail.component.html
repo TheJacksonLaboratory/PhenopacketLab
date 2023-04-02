@@ -3,7 +3,7 @@
     <h2>
       <b>{{ disease.term?.label }} </b>
     </h2>
-    <h3><a href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
+    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
   </div>
   <div class="field col-12">
     <p>
@@ -15,7 +15,7 @@
     <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Onset:</b> <span [innerHTML]="disease.onset?.toString() | safeText"></span>
+    <b>Onset:</b> <span *ngIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span>
   </div>
   <div class="field col-12 md:col-6">
     <b>Resolution:</b> {{ disease.resolution?.toString() }}
@@ -32,7 +32,7 @@
     </ul>
   </div>
   <div class="field col-12 md:col-6">
-    <b>Laterality: </b> <span [innerHTML]="disease.laterality?.toString() | safeText"></span>
+    <b>Laterality: </b> <span *ngIf="disease.laterality" [innerHTML]="disease.laterality?.toString() | safeText"></span>
   </div>
   <div class="field col-12 md:col-6">
 
