@@ -7,6 +7,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { Utils } from 'src/app/component/shared/utils';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
     providers: [ConfirmationService],
@@ -20,6 +21,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     phenopacket: Phenopacket;
     @Input()
     interpretation: Interpretation;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     interpretationChange = new EventEmitter<Interpretation>();
 

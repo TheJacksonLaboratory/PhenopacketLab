@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AcmgPathogenicityClassification, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -13,6 +14,8 @@ export class VariantInterpretationComponent implements OnInit {
 
     @Input()
     variantInterpretation: VariantInterpretation;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     variantInterpretationChange = new EventEmitter<VariantInterpretation>();
 
@@ -26,7 +29,6 @@ export class VariantInterpretationComponent implements OnInit {
 
     expanded = false;
 
-    splitterWidths = [50, 50];
     splitterLeftWidth = 60;
     splitterRightWidth = 40;
     viewLeftPane = true;
@@ -35,17 +37,18 @@ export class VariantInterpretationComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.variantInterpretation) {
+            this.collapseSplitter();
+        }
     }
 
     collapseSplitter() {
         this.viewLeftPane = false;
-        this.splitterWidths = [0.1, 99.9];
         this.splitterLeftWidth = 0;
         this.splitterRightWidth = 100;
     }
     expandSplitter() {
         this.viewLeftPane = true;
-        this.splitterWidths = [50, 50];
         this.splitterLeftWidth = 60;
         this.splitterRightWidth = 40;
     }
