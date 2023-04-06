@@ -47,7 +47,7 @@
               <tr [pSelectableRow]="disease">
                 <td>{{ disease.term?.label }}</td>
                 <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
-                <td [innerHTML]="disease.onset?.toString() | safeText"></td>
+                <td><span *NgIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span></td>
                 <td>
                   <button
                     pButton
