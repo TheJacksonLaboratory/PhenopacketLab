@@ -34,8 +34,8 @@ public class TextMiningController {
         }
         // TODO we could add isExactMatch as a parameter to the endpoint
         boolean isExactMatch = true;
-        MinedText result = textMiningService.mineText(payload, phenopacketLabDataDirectory != null ?
-                phenopacketLabDataDirectory.toString() : "" + "/hp.json", isExactMatch);
+        MinedText result = textMiningService.mineText(payload,
+                phenopacketLabDataDirectory + "/hp.json", isExactMatch);
         // query hpo for labels
         result.getConcepts().forEach(concept -> {
             TermId phenotypicFeatureId = TermId.of(concept.getId());
