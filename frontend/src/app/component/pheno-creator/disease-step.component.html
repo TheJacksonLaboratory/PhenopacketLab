@@ -46,7 +46,7 @@
             <ng-template pTemplate="body" let-disease>
               <tr [pSelectableRow]="disease">
                 <td>{{ disease.term?.label }}</td>
-                <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
+                <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
                 <td><span *NgIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span></td>
                 <td>
                   <button

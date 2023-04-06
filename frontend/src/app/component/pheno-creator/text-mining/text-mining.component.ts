@@ -128,7 +128,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.phenotypicFeatures = [];
         concepts.forEach((term, idx) => {
           this.idxList.push([term.start, term.end]);
-          this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, term.excluded, MiningState.UNKNWON, idx));
+          const excluded = !term.present;
+          this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, excluded, MiningState.UNKNWON, idx));
         });
 
         // show result in formatted text

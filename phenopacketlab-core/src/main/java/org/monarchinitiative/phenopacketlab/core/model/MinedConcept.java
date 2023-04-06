@@ -8,14 +8,14 @@ public class MinedConcept {
     String label;
     int start;
     int end;
-    boolean excluded;
+    boolean isPresent;
 
-    public MinedConcept(String id, String label, int start, int end, boolean excluded) {
+    public MinedConcept(String id, String label, int start, int end, boolean isPresent) {
         this.id = id;
         this.label = label;
         this.start = start;
         this.end = end;
-        this.excluded = excluded;
+        this.isPresent = isPresent;
     }
 
     public String getId() {
@@ -42,11 +42,11 @@ public class MinedConcept {
     public void setEnd(int end) {
         this.end = end;
     }
-    public boolean isExcluded() {
-        return excluded;
+    public boolean isPresent() {
+        return isPresent;
     }
-    public void setExcluded(boolean excluded) {
-        this.excluded = excluded;
+    public void setIsPresent(boolean isPresent) {
+        this.isPresent = isPresent;
     }
 
     @Override
@@ -54,11 +54,11 @@ public class MinedConcept {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MinedConcept that = (MinedConcept) o;
-        return Objects.equals(id, that.id) && Objects.equals(label, that.label) && Objects.equals(start, that.start) && Objects.equals(end, that.end) && Objects.equals(excluded, that.excluded);
+        return Objects.equals(id, that.id) && Objects.equals(label, that.label) && Objects.equals(start, that.start) && Objects.equals(end, that.end) && Objects.equals(isPresent, that.isPresent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, label, start, end, excluded);
+        return Objects.hash(id, label, start, end, isPresent);
     }
 }
