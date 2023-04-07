@@ -79,7 +79,7 @@
         <module>phenopacketlab-spring-boot-autoconfigure</module>
         <module>phenopacketlab-spring-boot-test</module>
         <module>phenopacketlab-restapi</module>
-        <module>frontend</module>
+        <module>phenopacketlab-frontend</module>
     </modules>
 
     <dependencyManagement>

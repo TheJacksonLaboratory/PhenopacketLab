@@ -1,0 +1,321 @@
+<div class="row">
+  <div class="col-md-11"></div>
+
+  <div class="col-md-1">
+    <button
+      (click)="openEditDialog()"
+      mat-icon-button
+      type="submit"
+      class="pull-right"
+      matTooltip="Edit"
+      [matTooltipShowDelay]="2000"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="row">
+  <!-- Variant descriptor -->
+  <div class="col-md-4">
+    <div class="row">
+      <div class="wrap col-md-12">
+        <b>ID:</b>
+        <br />
+        {{ id }}
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="wrap col-md-12">
+        <b>Label:</b>
+        <br />
+        {{ label }}
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="wrap col-md-12">
+        <b>Allelic state:</b>
+        <br />
+        {{ allelicState?.toString() }}
+        <br />
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="wrap col-md-12">
+        <b>VRS reference allele sequence:</b>
+        <br />
+        {{ vrsRefAlleleSeq }}
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="wrap col-md-12">
+        <b>Structural type:</b>
+        <br />
+        {{ structuralType?.toString() }}
+        <br />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Description:</b>
+        <br />
+        {{ description }}
+        <br />
+        <br />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="add-button-container col-md-12">
+                <button
+                  mat-raised-button
+                  (click)="addLabelsRow()"
+                  class="add-button mat-elevation-z2"
+                >
+                  Add alternate label
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table
+                  *ngIf="labelsDatasource.isDataPresent() | async"
+                  mat-table
+                  class="table-hover mat-elevation-z2"
+                  [dataSource]="labelsDatasource"
+                >
+                  <ng-container
+                    [matColumnDef]="col.key"
+                    *ngFor="let col of labelsColumnsSchema"
+                  >
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ col.label }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                        <div class="pull-right" *ngSwitchCase="'isEdit'">
+                          <button
+                            mat-button
+                            (click)="element.isEdit = !element.isEdit"
+                          >
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                          <button
+                            mat-button
+                            class="pull-right"
+                            (click)="removeLabelsRow(element.id)"
+                          >
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </div>
+                        <!-- <span *ngSwitchCase="'date'">
+                                                                    {{ element[col.key] | date: 'mediumDate' }}
+                                                                </span> -->
+                        <span *ngSwitchDefault>
+                          {{ element[col.key] }}
+                        </span>
+                      </div>
+                      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                          <button
+                            mat-button
+                            (click)="editRow(element)"
+                            [disabled]="disableLabelsSubmit(element.id)"
+                          >
+                            Done
+                          </button>
+                        </div>
+                        <mat-form-field
+                          class="form-input"
+                          appearance="outline"
+                          *ngSwitchDefault
+                        >
+                          <input
+                            matInput
+                            [required]="col.required"
+                            [pattern]="col.pattern"
+                            [type]="col.type"
+                            [(ngModel)]="element[col.key]"
+                            (change)="
+                              inputLabelsHandler($event, element.id, col.key)
+                            "
+                          />
+                        </mat-form-field>
+                      </div>
+                    </td>
+                  </ng-container>
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="labelsDisplayedColumns"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: labelsDisplayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="add-button-container col-md-12">
+                <button
+                  mat-raised-button
+                  (click)="addXrefsRow()"
+                  class="add-button mat-elevation-z2"
+                >
+                  Add cross-references
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table
+                  *ngIf="xrefsDatasource.isDataPresent() | async"
+                  mat-table
+                  class="table-hover mat-elevation-z2"
+                  [dataSource]="xrefsDatasource"
+                >
+                  <ng-container
+                    [matColumnDef]="col.key"
+                    *ngFor="let col of xrefsColumnsSchema"
+                  >
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ col.label }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+                        <div class="pull-right" *ngSwitchCase="'isEdit'">
+                          <button
+                            mat-button
+                            (click)="element.isEdit = !element.isEdit"
+                          >
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                          <button
+                            mat-button
+                            class="pull-right"
+                            (click)="removeXrefsRow(element.id)"
+                          >
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </div>
+                        <!-- <span *ngSwitchCase="'date'">
+                                                                    {{ element[col.key] | date: 'mediumDate' }}
+                                                                </span> -->
+                        <span *ngSwitchDefault>
+                          {{ element[col.key] }}
+                        </span>
+                      </div>
+                      <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                        <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                          <button
+                            mat-button
+                            (click)="editRow(element)"
+                            [disabled]="disableXrefsSubmit(element.id)"
+                          >
+                            Done
+                          </button>
+                        </div>
+                        <mat-form-field
+                          class="form-input"
+                          appearance="outline"
+                          *ngSwitchDefault
+                        >
+                          <input
+                            matInput
+                            [required]="col.required"
+                            [pattern]="col.pattern"
+                            [type]="col.type"
+                            [(ngModel)]="element[col.key]"
+                            (change)="
+                              inputXrefsHandler($event, element.id, col.key)
+                            "
+                          />
+                        </mat-form-field>
+                      </div>
+                    </td>
+                  </ng-container>
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="xrefsDisplayedColumns"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: xrefsDisplayedColumns"
+                  ></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Gene context </mat-panel-title>
+              <mat-panel-description>
+                A specific gene context that applies to this variant
+                <!-- <mat-icon>account_circle</mat-icon> -->
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="geneContext">
+              <app-gene-descriptor [geneDescriptor]="geneContext"></app-gene-descriptor>
+            </div>
+            <div *ngIf="geneContext == undefined">
+              <button
+                mat-raised-button
+                (click)="openAddGeneContextDialog()"
+                type="submit"
+                class="add-button mat-elevation-z2"
+              >
+                Add gene context <mat-icon>search</mat-icon>
+              </button>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> VCF record </mat-panel-title>
+              <mat-panel-description>
+                A VCF Record of the variant
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div *ngIf="vcfRecord">
+              <app-vcf-record
+                [vcfRecord]="vcfRecord"
+                (onVcfRecordChanged)="changeVcfRecord($event)"
+              ></app-vcf-record>
+            </div>
+            <div *ngIf="vcfRecord == undefined">
+              <button
+                mat-raised-button
+                (click)="openAddVcfRecordDialog()"
+                type="submit"
+                class="add-button mat-elevation-z2"
+              >
+                Add VCF Record <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>
