@@ -19,7 +19,7 @@
       *ngFor="let option of itemOptions"
       (onSelectionChange)="selectedChanged(option, option.label)"
     >
-      {{ option.label }}
+      [{{option.id}}] {{ option.label }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
