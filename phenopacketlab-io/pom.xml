@@ -11,13 +11,6 @@
 
     <artifactId>phenopacketlab-io</artifactId>
 
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.monarchinitiative.phenopacketlab</groupId>
@@ -32,12 +25,13 @@
             <groupId>org.monarchinitiative.phenol</groupId>
             <artifactId>phenol-io</artifactId>
         </dependency>
-        <!--   we look up on the github project page until it is available on maven     -->
+        <!-- https://mvnrepository.com/artifact/org.monarchinitiative.fenominal/fenominal-core -->
         <dependency>
-            <groupId>com.github.monarch-initiative</groupId>
-            <artifactId>fenominal</artifactId>
-            <version>0.7.8</version>
+            <groupId>org.monarchinitiative.fenominal</groupId>
+            <artifactId>fenominal-core</artifactId>
+            <version>0.7.9</version>
         </dependency>
+
         <!--        <dependency>-->
         <!--            <groupId>org.monarchinitiative.fenominal</groupId>-->
         <!--            <artifactId>fenominal-core</artifactId>-->
