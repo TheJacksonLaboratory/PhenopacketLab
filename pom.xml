@@ -64,7 +64,8 @@
         <phenopacket.version>2.0.2</phenopacket.version>
         <protobuf.version>3.19.3</protobuf.version>
 
-        <phenol.version>2.0.0-RC4</phenol.version>
+        <phenol.version>2.0.0</phenol.version>
+        <fenominal.version>0.7.9</fenominal.version>
         <biodownload.version>1.1.0</biodownload.version>
         <picocli.version>4.6.2</picocli.version>
 
@@ -98,6 +99,11 @@
                 <groupId>org.monarchinitiative.phenol</groupId>
                 <artifactId>phenol-io</artifactId>
                 <version>${phenol.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.monarchinitiative.fenominal</groupId>
+                <artifactId>fenominal-core</artifactId>
+                <version>${fenominal.version}</version>
             </dependency>
 
             <dependency>

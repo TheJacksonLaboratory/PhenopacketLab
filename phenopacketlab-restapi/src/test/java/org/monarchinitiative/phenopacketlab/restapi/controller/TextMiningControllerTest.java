@@ -6,8 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningOptions;
 import org.monarchinitiative.phenopacketlab.core.model.MinedText;
-import org.monarchinitiative.phenopacketlab.io.FenominalTextMiningService;
+import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +38,10 @@ public class TextMiningControllerTest {
 
     private MockMvc mockMvc;
 
+    private TextMiningOptions options = TextMiningOptions.builder()
+            .doFuzzyMatching(true)
+            .build();
+
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(textMiningController, hpoController)
@@ -47,7 +52,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void mineText() throws Exception {
-        when(textMiningService.mineText("This is an example text", "/hp.json", true))
+        when(textMiningService.mineText("This is an example text", options))
                 .thenReturn(new MinedText("This is an example text", new ArrayList<>()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer")
@@ -62,7 +67,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void textMined_missingPayload() throws Exception {
-        when(textMiningService.mineText(null, "/hp.json", true))
+        when(textMiningService.mineText(null, options))
                 .thenReturn(new MinedText(null, null));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer"))

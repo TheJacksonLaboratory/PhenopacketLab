@@ -1,6 +1,7 @@
 module phenopacketlab.core {
     requires transitive org.monarchinitiative.phenol.core;
     requires transitive org.monarchinitiative.phenol.annotations;
+    requires org.monarchinitiative.fenominal.core;
 
     requires org.monarchitiative.svart;
 

@@ -24,6 +24,10 @@
             <groupId>org.monarchinitiative.svart</groupId>
             <artifactId>svart</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.monarchinitiative.fenominal</groupId>
+            <artifactId>fenominal-core</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.monarchinitiative.phenol</groupId>

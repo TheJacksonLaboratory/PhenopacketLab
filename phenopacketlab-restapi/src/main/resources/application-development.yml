@@ -7,7 +7,9 @@ phenopacketlab:
   loader-threads: 4
   # Keep track of used Phenopacket Schema artifact.
   phenopacket-schema-version: @phenopacket.version@
-
+  text-mining:
+    # Choose the text mining provider (just `FENOMINAL` for now).
+    provider: 'FENOMINAL'
 
 api:
   version: /api/v1

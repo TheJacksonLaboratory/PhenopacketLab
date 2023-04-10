@@ -13,7 +13,7 @@ import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
-import org.monarchinitiative.phenopacketlab.io.FenominalTextMiningService;
+import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
@@ -114,8 +114,13 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public TextMiningService textMiningService() {
-        return new FenominalTextMiningService();
+    public TextMiningService textMiningService(OntologyConceptResource hpo) {
+        return switch (properties.getTextMining().getProvider()) {
+            case FENOMINAL -> {
+                LOGGER.info("Using fenominal for text mining");
+                yield new FenominalTextMiningService(hpo.getOntology());
+            }
+        };
     }
 
     @Bean

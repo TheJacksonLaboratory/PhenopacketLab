@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenol.annotations.io.hpo.DiseaseDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import java.util.Set;
 
@@ -13,6 +14,8 @@ public class PhenopacketLabProperties {
     private Set<DiseaseDatabase> diseaseDatabases = DiseaseDatabase.allKnownDiseaseDatabases();
 
     private String phenopacketSchemaVersion;
+    @NestedConfigurationProperty
+    private TextMiningConfiguration textMining = new TextMiningConfiguration();
 
     public String getDataDirectory() {
         return dataDirectory;
@@ -46,4 +49,22 @@ public class PhenopacketLabProperties {
         this.phenopacketSchemaVersion = phenopacketSchemaVersion;
     }
 
+    public TextMiningConfiguration getTextMining() {
+        return textMining;
+    }
+
+    public void setTextMining(TextMiningConfiguration textMining) {
+        this.textMining = textMining;
+    }
+
+    @Override
+    public String toString() {
+        return "PhenopacketLabProperties{" +
+                "dataDirectory='" + dataDirectory + '\'' +
+                ", loaderThreads=" + loaderThreads +
+                ", diseaseDatabases=" + diseaseDatabases +
+                ", phenopacketSchemaVersion='" + phenopacketSchemaVersion + '\'' +
+                ", textMining=" + textMining +
+                '}';
+    }
 }
