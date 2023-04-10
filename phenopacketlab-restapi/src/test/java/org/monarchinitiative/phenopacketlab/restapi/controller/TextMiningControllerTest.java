@@ -7,8 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningOptions;
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.model.MinedText;
-import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +29,7 @@ public class TextMiningControllerTest {
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
     @Mock(lenient = true)
-    public FenominalTextMiningService textMiningService;
+    public TextMiningService textMiningService;
 
     @InjectMocks
     public TextMiningController textMiningController;
@@ -38,7 +38,7 @@ public class TextMiningControllerTest {
 
     private MockMvc mockMvc;
 
-    private TextMiningOptions options = TextMiningOptions.builder()
+    private final TextMiningOptions options = TextMiningOptions.builder()
             .doFuzzyMatching(true)
             .build();
 
