@@ -1,5 +1,5 @@
 steps:
-  - name: maven:3.6.0-jdk-11-slim
+  - name: maven:3.8.3-openjdk-17-slim
     entrypoint: 'mvn'
     args: ['clean', 'install', '-DskipTests']
   - name: 'gcr.io/cloud-builders/docker'
