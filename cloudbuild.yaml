@@ -3,5 +3,6 @@ steps:
     entrypoint: 'mvn'
     args: ['clean', 'install', '-DskipTests']
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/jax-robinson-phenopacket/phenopacketlab-backend', '.' ]
-images: [ 'gcr.io/jax-robinson-phenopacket/phenopacketlab-backend' ]
+    args: [ 'build', '-t', 'us-east1-docker.pkg.dev/jax-robinson-phenopacket/phenopacketlab-backend-sqa-01', '.' ]
+images:
+  - 'us-east1-docker.pkg.dev/jax-robinson-phenopacket/phenopacketlab-backend-sqa-01'
