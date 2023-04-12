@@ -4,7 +4,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Disease } from 'src/app/models/disease';
 import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { File } from 'src/app/models/base';
+import { File, OntologyClass } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -46,7 +46,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
 
   status = '';
   timeOfDeath = '';
-  causeOfDeath = '';
+  causeOfDeath: OntologyClass;
   survivalTime: number;
 
   active = 'top';
@@ -68,7 +68,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
       this.gender = this.individual.gender;
       // status
       this.status = this.individual?.vitalStatus?.status?.toString();
-      this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath?.toString();
+      this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath;
       this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
       this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;
     }
@@ -149,7 +149,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   updateIndividual() {
     this.sex = this.individual.sex;
     this.karyotypicSex = this.individual.karyotypicSex;
-    this.causeOfDeath = this.individual.vitalStatus?.causeOfDeath?.toString();
+    this.causeOfDeath = this.individual.vitalStatus?.causeOfDeath;
     this.gender = this.individual.gender?.toString();
     this.lastEncounterDate = this.individual.timeAtLastEncounter?.toString();
     this.status = this.individual.vitalStatus?.status;

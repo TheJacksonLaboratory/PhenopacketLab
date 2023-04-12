@@ -42,7 +42,7 @@
                                 <b>Time of death: </b> {{ timeOfDeath }}
                             </div>
                             <div class="field col-12 md:col-6">
-                                <b>Cause of death: </b> <span *ngIf="causeOfDeath" [innerHTML]="causeOfDeath | safeText"></span>
+                                <b>Cause of death: </b> <a *ngIf="causeOfDeath" [href]="causeOfDeath?.url" target="_blank">[{{causeOfDeath?.id}}]</a> {{causeOfDeath?.label}}
                             </div>
                             <div class="field col-12 md:col-6">
                                 <b>Survival time (days): </b> {{ survivalTime }}

@@ -3,7 +3,15 @@
     <h2>
       <b>{{ phenotypicFeature.type?.label }} </b>
     </h2>
-    <h3><a href="https://hpo.jax.org/app/browse/term/{{ phenotypicFeature.type?.id }}" target="_blank">{{ phenotypicFeature.type?.id }}</a></h3>
+    <h3>
+      <a
+        href="https://hpo.jax.org/app/browse/term/{{
+          phenotypicFeature.type?.id
+        }}"
+        target="_blank"
+        >{{ phenotypicFeature.type?.id }}</a
+      >
+    </h3>
   </div>
 
   <div class="field col-12">
@@ -11,11 +19,45 @@
       {{ phenotypicFeature.description }}
     </p>
   </div>
-  <div class="field col-12"><b>Status:</b> {{ phenotypicFeature.excluded ? 'Excluded' : 'Observed' }}</div>
-  <div class="field col-12 md:col-6"><b>Onset:</b> <span *ngIf="phenotypicFeature.onset" [innerHTML]="phenotypicFeature.onset?.toString() | safeText"></span></div>
-  <div class="field col-12 md:col-6"><b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}</div>
-  <div class="field col-12 md:col-6"><b>Severity:</b> <span *ngIf="phenotypicFeature.severity" [innerHTML]="phenotypicFeature.severity?.toString() | safeText"></span></div>
-  <div class="field col-12 md:col-6"><b>Modifiers:</b> <span [innerHTML]="getModifiers() | safeText"></span></div>
+  <div class="field col-12">
+    <b>Status:</b> {{ phenotypicFeature.excluded ? "Excluded" : "Observed" }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Onset:</b>
+    <a
+      *ngIf="phenotypicFeature.onset?.ontologyClass"
+      [href]="phenotypicFeature.onset.ontologyClass.url"
+      target="_blank"
+      >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
+    >
+    {{ phenotypicFeature.onset?.ontologyClass?.label }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Severity:</b>
+    <a
+      *ngIf="phenotypicFeature.severity"
+      [href]="phenotypicFeature.severity?.url"
+      target="_blank"
+      >[{{ phenotypicFeature.severity?.id }}]</a
+    >
+    {{ phenotypicFeature.severity?.label }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Modifiers:</b>
+    <span
+      *ngFor="
+        let modifier of phenotypicFeature.modifiers;
+        let indexOfelement = index
+      "
+    >
+      <a [href]="modifier.url" target="_blank">[{{ modifier.id }}]</a>
+      {{ modifier.label
+      }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1">, </span>
+    </span>
+  </div>
   <div class="field col-12">
     <p-table
       [value]="phenotypicFeature?.evidences"
@@ -36,7 +78,15 @@
       </ng-template>
       <ng-template pTemplate="body" let-evidence>
         <tr>
-          <td ><span *ngIf="evidence.evidenceCode" [innerHTML]="evidence.evidenceCode?.toString() | safeText"></span></td>
+          <td>
+            <a
+              *ngIf="evidence.evidenceCode"
+              [href]="evidence.evidenceCode?.url"
+              target="_blank"
+              >[{{ evidence.evidenceCode?.id }}]</a
+            >
+            {{ evidence.evidenceCode?.label }}
+          </td>
           <td>{{ evidence.evidenceCode?.label }}</td>
           <td>{{ evidence.reference?.id }}</td>
           <td>{{ evidence.reference?.reference }}</td>

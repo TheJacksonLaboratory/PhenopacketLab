@@ -63,7 +63,7 @@
               <tr [pSelectableRow]="feature">
                 <td>{{ feature.type?.label }}</td>
                 <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-                <td><span *ngIf="feature.onset" [innerHTML]="feature.onset?.toString() | safeText"></span></td>
+                <td><a *ngIf="feature.onset?.ontologyClass" [href]="feature.onset.ontologyClass.url" target="_blank">[{{feature.onset.ontologyClass.id}}]</a> {{feature.onset?.ontologyClass?.label}}</td>
                 <td>
                   <button
                     pButton

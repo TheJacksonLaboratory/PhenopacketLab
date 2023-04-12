@@ -47,7 +47,7 @@
               <tr [pSelectableRow]="disease">
                 <td>{{ disease.term?.label }}</td>
                 <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
-                <td><span *NgIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span></td>
+                <td><a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}</td>
                 <td>
                   <button
                     pButton

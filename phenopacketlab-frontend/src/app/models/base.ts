@@ -57,10 +57,8 @@ export class OntologyClass extends Convert {
     }
 
     toString() {
-        if (this.label && this.id && !this.url) {
+        if (this.label && this.id) {
             return `[${this.id}] ${this.label}`;
-        } else if (this.label && this.id && this.url) {
-            return `[<a href="${this.url}" target="_blank">${this.id}</a>] ${this.label}`;
         }
         return '';
 

@@ -56,11 +56,19 @@
           </td>
           <td>{{ feature.type.label }}</td>
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-          <td><span *ngIf="feature.onset" [innerHTML]="feature.onset?.toString() | safeText"></span></td>
+          <td><a *ngIf="feature.onset?.ontologyClass" [href]="feature.onset.ontologyClass.url" target="_blank">[{{feature.onset.ontologyClass.id}}]</a> {{feature.onset?.ontologyClass?.label}}</td>
           <td>{{ feature.resolution?.toString() }}</td>
-          <td><span *ngIf="feature.severity" [innerHTML]="feature.severity?.toString() | safeText"></span></td>
-          <td><span *ngIf="feature.modifiers" [innerHTML]="getModifiers(feature) | safeText"></span></td>
-          <td><span *ngIf="feature.evidences" [innerHTML]="getEvidences(feature) | safeText"></span></td>
+          <td><a *ngIf="feature.severity" [href]="feature.severity?.url" target="_blank">[{{feature.severity?.id}}]</a> {{feature.severity?.label}}</td>
+          <td>
+            <span *ngFor="let modifier of feature.modifiers; let indexOfelement=index;">
+              <a [href]="modifier.url" target="_blank">[{{modifier.id}}]</a> {{modifier.label}}<span *ngIf="indexOfelement < feature.modifiers?.length - 1">, </span>
+            </span>
+          </td>
+          <td>
+            <span *ngFor="let evidence of feature.evidences; let indexOfelement=index;">
+              <a [href]="evidence.evidenceCode?.url" target="_blank">[{{evidence.evidenceCode?.id}}]</a> {{evidence.evidenceCode?.label}}<span *ngIf="indexOfelement < feature.evidences?.length - 1">, </span>
+            </span>
+          </td>
           <td>
             <button
               pButton

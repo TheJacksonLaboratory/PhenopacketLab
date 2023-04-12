@@ -15,7 +15,8 @@
     <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Onset:</b> <span *ngIf="disease.onset" [innerHTML]="disease.onset?.toString() | safeText"></span>
+    <b>Onset:</b> <a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}
+
   </div>
   <div class="field col-12 md:col-6">
     <b>Resolution:</b> {{ disease.resolution?.toString() }}
@@ -27,12 +28,12 @@
     <b>Clinical TNM finding:</b><br />
     <ul>
       <li *ngFor="let finding of disease.clinicalTnmFinding">
-        {{ finding.label }} [{{ finding.id }}]
+        [{{ finding.id }}] {{ finding.label }}
       </li>
     </ul>
   </div>
   <div class="field col-12 md:col-6">
-    <b>Laterality: </b> <span *ngIf="disease.laterality" [innerHTML]="disease.laterality?.toString() | safeText"></span>
+    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.url" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
   </div>
   <div class="field col-12 md:col-6">
 
