@@ -45,7 +45,7 @@ jobs:
       # authenticate
       - name: base 64 key
         run: |-
-          cat ${{ secrets.GOOGLE_CLOUD_SA }} | base64 -d > key.json
+          cat ${{ secrets.GOOGLE_CLOUD_SA }} > key.json
       - name: gcloud activate
         run: |-
           gcloud auth activate-service-account --key-file=key.json
