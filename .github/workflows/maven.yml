@@ -42,6 +42,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # authenticate
+      - name: base 64 key
+        run: |-
+          cat $GOOGLE_CLOUD_SA | base64 -d > key.json
+      - name: gcloud activate
+        run: |-
+          gcloud auth activate-service-account --key-file=key.json
+
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
         with:
