@@ -21,8 +21,6 @@ jobs:
       matrix:
         os: [ windows-latest, macOS-latest, ubuntu-latest ]
         jdk: [ 17 ]
-        env: [ sqa ]
-#        env: [ prod, dev, sqa ]
 
     steps:
       - uses: actions/checkout@v2
@@ -39,6 +37,13 @@ jobs:
     needs: build-test-backend
     name: Setup, Build Docker Img, Publish, and Deploy to Cloud Run
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+#        env: [ sqa ]
+         env: [ prod, dev, sqa ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -51,7 +56,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build Backend with Maven
-        run: ./mvnw --projects phenopacketlab-restapi --also-make --batch-mode verify
+        run: ./mvnw -DskipTests package
 
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
@@ -70,11 +75,11 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env}}-01 .
+        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env }}-01 .
 
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env}}-01
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env }}-01
 
       # Deploy the Docker image to the Cloud run service
       - name: Deploy
