@@ -46,9 +46,9 @@ jobs:
 #      - name: base 64 key
 #        run: |-
 #          cat  > key.json
-      - name: gcloud activate
-        run: |-
-          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_SA }}
+#      - name: gcloud activate
+#        run: |-
+#          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_SA }}
 
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
