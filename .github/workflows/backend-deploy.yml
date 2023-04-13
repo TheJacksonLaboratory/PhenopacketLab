@@ -1,0 +1,64 @@
+name: Backend Manual Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - prod
+          - dev
+          - sqa
+
+jobs:
+  deploy-backend:
+    name: Setup, Build Docker Img, Publish, and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # build backend
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build Backend with Maven
+        run: ./mvnw -DskipTests package
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_key: ${{ secrets.GOOGLE_CLOUD_SA }}
+          export_default_credentials: true
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - name: authenticate gcloud
+        run: |
+          gcloud auth configure-docker -q
+
+      # Download the data folder locally
+      - name: Get_data
+        run: gsutil cp -r gs://jax-robinson-phenopacket-project-data/data .
+
+      # Build docker image
+      - name: Image_build
+        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01 .
+
+      # Push image to Google Container Registry
+      - name: Image_push
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01
+
+      # Deploy the Docker image to the Cloud run service
+      - name: Deploy
+        run: |
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01 \
+          --platform managed \
+          --allow-unauthenticated \
+          --memory 4G
