@@ -1,3 +1,4 @@
+name: Backend Manual Deployment
 on:
   workflow_dispatch:
     inputs:
