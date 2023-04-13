@@ -54,8 +54,13 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v0
         with:
 #          service_account_email: $GOOGLE_CLOUD_SA
-          service_account_key: $GOOGLE_CLOUD_SA
+          service_account_key: ${{ secrets.GOOGLE_CLOUD_SA }}
           export_default_credentials: true
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - name: authenticate gcloud
+        run: |
+          gcloud auth configure-docker -q
 
       # Download the data folder locally
       - name: Get_data
@@ -65,21 +70,17 @@ jobs:
       # Build docker image
       - name: Image_build
         run: |-
-          docker build -t gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ matrix.env}}-01 .
-
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - run: |
-          gcloud auth configure-docker -q
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env}}-01 .
 
       # Push image to Google Container Registry
       - name: Image_push
         run: |-
-          docker push gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ matrix.env}}-01
+          docker push gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env}}-01
 
       # Deploy the Docker image to the Cloud run service
       - name: Deploy
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ matrix.env}}-01 --image gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ matrix.env}}-01 \
+          gcloud run deploy phenopacketlab-backend-${{ matrix.env}}-01 --image gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ matrix.env}}-01 \
           --platform managed \
           --allow-unauthenticated \
           --memory 4G
