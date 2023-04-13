@@ -42,14 +42,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # authenticate
-#      - name: base 64 key
-#        run: |-
-#          cat  > key.json
-#      - name: gcloud activate
-#        run: |-
-#          gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_SA }}
-
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
         with:
@@ -65,7 +57,7 @@ jobs:
       # Download the data folder locally
       - name: Get_data
         run: |-
-          gsutil cp gs://jax-robinson-phenopacket-project-data/data .
+          gsutil cp -r gs://jax-robinson-phenopacket-project-data/data .
 
       # Build docker image
       - name: Image_build
