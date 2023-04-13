@@ -1,4 +1,5 @@
 name: Backend Manual Deployment
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,7 +7,6 @@ on:
         description: 'Environment to deploy to (can be prod, dev or sqa)'
         required: true
         default: 'sqa'
-        value: 'prod'
 
 jobs:
   deploy-backend:
