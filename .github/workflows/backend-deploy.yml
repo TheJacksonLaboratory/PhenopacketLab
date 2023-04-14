@@ -1,17 +1,21 @@
-name: Backend Manual Deployment
+name: Backend SQA test Deployment
 
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      environment:
+#        description: 'Environment to deploy to'
+#        required: true
+#        default: 'dev'
+#        type: choice
+#        options:
+#          - prod
+#          - dev
+#          - sqa
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-          - prod
-          - dev
-          - sqa
+  push:
+    branches:
+      - make_text_mining_work
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
@@ -52,19 +56,19 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 .
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-sqa-01 .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |
           gcloud auth configure-docker -q
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-sqa-01
 
       # Deploy the Docker image to the Cloud run service
       - name: Deploy
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 \
+          gcloud run deploy phenopacketlab-backend-sqa-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-sqa-01 \
           --platform managed \
           --allow-unauthenticated \
           --memory 4G
