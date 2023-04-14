@@ -52,19 +52,19 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t gcr.io/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 .
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |
           gcloud auth configure-docker -q
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push gcr.io/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01
 
       # Deploy the Docker image to the Cloud run service
       - name: Deploy
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image gcr.io/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 \
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 \
           --platform managed \
           --allow-unauthenticated \
           --memory 4G
