@@ -71,8 +71,7 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          service_account: $SA_EMAIL
-          credentials_json: $GCP_CREDENTIAL
+          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
       # Deploy the Docker image to the Cloud run service
       - name: Auth & Deploy
         run: |
