@@ -18,6 +18,8 @@ on:
       - make_text_mining_work
 
 env:
+  SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
+  GOOGLE_CLOUD_SA: ${{ secrets.GOOGLE_CLOUD_SA }}
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
 
 jobs:
@@ -68,7 +70,8 @@ jobs:
       # Deploy the Docker image to the Cloud run service
       - name: Auth & Deploy
         run: |
-          gcloud auth login --cred-file=${{ secrets.GOOGLE_CLOUD_SA }}
+          cat $GOOGLE_CLOUD_SA | base64 -d > key.json
+          gcloud auth activate-service-account --key-file=key.json
           gcloud run deploy phenopacketlab-backend-sqa-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
