@@ -68,7 +68,7 @@ jobs:
       # Deploy the Docker image to the Cloud run service
       - name: Auth & Deploy
         run: |
-          gcloud auth login --service-account=${{ secrets.GCP_SA_EMAIL }}
+          gcloud auth login --cred-file=${{ secrets.GOOGLE_CLOUD_SA }}
           gcloud run deploy phenopacketlab-backend-sqa-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
