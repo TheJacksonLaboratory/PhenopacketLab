@@ -47,9 +47,9 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           export_default_credentials: true
 
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - name: authenticate gcloud
-        run: gcloud auth configure-docker -q
+#      # Configure docker to use the gcloud command-line tool as a credential helper
+#      - name: authenticate gcloud
+#        run: gcloud auth configure-docker -q
 
       # Download the data folder locally
       - name: Get_data
@@ -66,8 +66,9 @@ jobs:
         run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
 
       # Deploy the Docker image to the Cloud run service
-      - name: Deploy
+      - name: Auth & Deploy
         run: |
+          gcloud auth login --service-account=${{ secrets.GCP_SA_EMAIL }}
           gcloud run deploy phenopacketlab-backend-sqa-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
