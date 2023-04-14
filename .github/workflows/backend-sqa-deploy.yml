@@ -42,6 +42,7 @@ jobs:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
         with:
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
           service_account_key: ${{ secrets.GOOGLE_CLOUD_SA }}
           project_id: ${{ secrets.GCP_PROJECT }}
           export_default_credentials: true
@@ -71,4 +72,5 @@ jobs:
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
+          --project $PROJECT_ID
           --memory 4G
