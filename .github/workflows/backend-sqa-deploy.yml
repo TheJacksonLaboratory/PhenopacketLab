@@ -20,9 +20,6 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
 
-env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-
 jobs:
   deploy-backend:
     name: Setup, Build Docker Img, Publish, and Deploy to Cloud Run
