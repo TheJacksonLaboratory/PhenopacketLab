@@ -19,7 +19,7 @@ on:
 
 env:
   SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
-  GOOGLE_CLOUD_SA: ${{ secrets.GOOGLE_CLOUD_SA }}
+  GCP_CREDENTIAL: ${{ secrets.GCP_CREDENTIAL }}
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
 
 jobs:
@@ -72,7 +72,7 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           service_account: $SA_EMAIL
-          credentials_json: $GOOGLE_CLOUD_SA
+          credentials_json: $GCP_CREDENTIAL
       # Deploy the Docker image to the Cloud run service
       - name: Auth & Deploy
         run: |
