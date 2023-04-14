@@ -54,6 +54,9 @@ jobs:
       - name: Image_build
         run: docker build -t gcr.io/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01 .
 
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: |
+          gcloud auth configure-docker -q
       # Push image to Google Container Registry
       - name: Image_push
         run: docker push gcr.io/$PROJECT_ID/phenopacketlab-backend-${{ inputs.environment }}-01
