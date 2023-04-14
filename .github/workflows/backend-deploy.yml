@@ -49,16 +49,16 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01 .
+        run: docker build -t gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ inputs.environment }}-01 .
 
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01
+        run: docker push gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ inputs.environment }}-01
 
       # Deploy the Docker image to the Cloud run service
       - name: Deploy
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image gcr.io/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend-${{ inputs.environment }}-01 \
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image gcr.io/jax-robinson-phenopacket/phenopacketlab-backend-${{ inputs.environment }}-01 \
           --platform managed \
           --allow-unauthenticated \
           --memory 4G
