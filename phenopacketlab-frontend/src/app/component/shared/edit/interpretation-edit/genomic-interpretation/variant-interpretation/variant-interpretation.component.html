@@ -17,7 +17,8 @@
 <as-split direction="horizontal">
   <as-split-area [size]="splitterLeftWidth">
     <div class="col flex justify-content-center">
-      <app-variation-search (variantInterpretationChange)="updateVariantInterpretation($event)"
+      <app-variation-search
+        (variantInterpretationChange)="updateVariantInterpretation($event)"
       ></app-variation-search>
     </div>
   </as-split-area>
@@ -39,9 +40,23 @@
             placeholder="Select Acmg pathogenicity"
             [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
             [options]="acmgClassifications"
+            required
             (onChange)="updateAcmgPathogenicity($event)"
             class="w-full"
+            [ngClass]="{
+              'ng-dirty':
+                !variantInterpretation?.acmgPathogenicityClassification &&
+                submitted
+            }"
           ></p-dropdown>
+          <small
+            *ngIf="
+              !variantInterpretation?.acmgPathogenicityClassification &&
+              submitted
+            "
+            class="p-error"
+            >Acmg pathogenicity is required.</small
+          >
         </div>
         <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
           <label for="therapeutic">Therapeutic actionability</label>
@@ -51,9 +66,23 @@
             placeholder="Select Therapeutic actionability"
             [ngModel]="variantInterpretation?.therapeuticActionability"
             [options]="therapeuticActionabilities"
+            required
             (onChange)="updateTherapeuticActionability($event)"
             class="w-full"
+            [ngClass]="{
+              'ng-dirty':
+                !variantInterpretation?.therapeuticActionability &&
+                submitted
+            }"
           ></p-dropdown>
+          <small
+            *ngIf="
+              !variantInterpretation?.therapeuticActionability &&
+              submitted
+            "
+            class="p-error"
+            >Therapeutic actionability is required.</small
+          >
         </div>
         <div *ngIf="variantInterpretation" class="field col-12">
           <app-variation-descriptor
@@ -62,11 +91,16 @@
           ></app-variation-descriptor>
         </div>
         <!-- We display the gene descriptor only in edit mode, not in the stepper process -->
-        <div *ngIf="variantInterpretation && profile === undefined" class="field col-12">
+        <div
+          *ngIf="variantInterpretation && profile === undefined"
+          class="field col-12"
+        >
           <p-accordion>
             <p-accordionTab header="Gene descriptor">
               <app-gene-descriptor
-                [geneDescriptor]="variantInterpretation?.variationDescriptor?.geneContext"
+                [geneDescriptor]="
+                  variantInterpretation?.variationDescriptor?.geneContext
+                "
                 (geneDescriptorChange)="updateGeneDescriptor($event)"
               ></app-gene-descriptor>
             </p-accordionTab>

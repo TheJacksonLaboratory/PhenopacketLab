@@ -16,6 +16,8 @@ export class VariantInterpretationComponent implements OnInit {
     variantInterpretation: VariantInterpretation;
     @Input()
     profile: ProfileSelection;
+    @Input()
+    submitted: boolean;
     @Output()
     variantInterpretationChange = new EventEmitter<VariantInterpretation>();
 

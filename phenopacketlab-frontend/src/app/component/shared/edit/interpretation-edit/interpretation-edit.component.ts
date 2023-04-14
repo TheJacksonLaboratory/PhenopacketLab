@@ -8,6 +8,7 @@ import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { Utils } from 'src/app/component/shared/utils';
 import { ProfileSelection } from 'src/app/models/profile';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
     providers: [ConfirmationService],
@@ -26,6 +27,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     @Output()
     interpretationChange = new EventEmitter<Interpretation>();
 
+    submitted = false;
+
     visible = false;
     genomicInterpretationVisible = false;
     id: string;
@@ -40,7 +43,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     // genomic interpretations
     genomicInterpretations: GenomicInterpretation[];
 
-    constructor(public searchService: InterpretationService,
+    constructor(public phenopacketService: PhenopacketService,
+        public searchService: InterpretationService,
         public diseaseService: DiseaseSearchService,
         private messageService: MessageService,
         private primengConfig: PrimeNGConfig) {
@@ -60,7 +64,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
             this.id = this.interpretation.id;
             this.selectedProgressStatus = this.interpretation.progressStatus;
             this.selectedDisease = this.interpretation.diagnosis?.disease;
-            this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations ;
+            this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations;
             if (this.genomicInterpretations && this.genomicInterpretations.length > 0) {
                 this.genomicInterpretationVisible = true;
             }
@@ -105,16 +109,25 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     }
 
     updateInterpretation() {
+        this.submitted = true;
         if (this.id === undefined) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please fill in the interpretation ID.' });
             return;
         }
+        // check if id already exist
+        const phenopacket = this.phenopacketService.phenopacket;
+        for (const interpret of phenopacket.interpretations) {
+            if (interpret.id === this.id) {
+                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
+                return;
+            }
+        }
         if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the interpretation progress status.' });
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the progress status.' });
             return;
         }
         if (this.selectedDisease === undefined || this.selectedDisease === null) {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select a disease term for the interpretation diagnosis.' });
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select a disease term for the disease diagnosis.' });
             return;
         }
         if (this.genomicInterpretations) {

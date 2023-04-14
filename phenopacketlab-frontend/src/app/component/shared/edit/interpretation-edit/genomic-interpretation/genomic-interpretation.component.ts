@@ -14,6 +14,8 @@ export class GenomicInterpretationComponent implements OnInit {
     genomicInterpretation: GenomicInterpretation;
     @Input()
     profile: ProfileSelection;
+    @Input()
+    submitted: boolean;
     @Output()
     genomicInterpretationChange = new EventEmitter<GenomicInterpretation>();
 

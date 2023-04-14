@@ -20,18 +20,27 @@
       placeholder="Select interpretation status"
       [ngModel]="genomicInterpretation?.interpretationStatus"
       [options]="interpretationStatuses"
+      required
       (onChange)="updateInterpretationStatus($event)"
       pTooltip="Interpretation status"
       showDelay="2000"
       class="w-full"
       showClear="true"
+      [ngClass]="{
+        'ng-dirty':
+          !genomicInterpretation?.interpretationStatus && submitted
+      }"
     >
     </p-dropdown>
+    <small *ngIf="!genomicInterpretation?.interpretationStatus && submitted" class="p-error"
+      >Interpretation status is required.</small
+    >
   </div>
 
   <app-variant-search-interpretation
     [variantInterpretation]="genomicInterpretation?.variantInterpretation"
     [profile]="profile"
+    [submitted]="submitted"
     (variantInterpretationChange)="addVariantInterpretation($event)"
   ></app-variant-search-interpretation>
 </div>

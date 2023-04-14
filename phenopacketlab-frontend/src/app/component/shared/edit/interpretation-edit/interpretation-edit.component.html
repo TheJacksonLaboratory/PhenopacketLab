@@ -6,10 +6,17 @@
       id="interpretationid"
       type="text"
       aria-describedby="Interpretation ID"
+      required
       pInputText
       [(ngModel)]="id"
-      (ngModelChange)="onIdChange($event)"
+      [ngClass]="{
+        'ng-dirty': !id && submitted
+      }"
     />
+    <!-- (ngModelChange)="onIdChange($event)" -->
+    <small *ngIf="!id && submitted" class="p-error"
+      >Interpretation ID is required.</small
+    >
   </div>
   <div class="field col-12 md:col-6">
     <label for="progressstatus">Progress status</label>
@@ -22,9 +29,18 @@
       (onChange)="updateProgressStatus($event)"
       pTooltip="Progress status"
       showDelay="2000"
+      required
       class="w-full"
       showClear="true"
+      [ngClass]="{
+        'ng-dirty': !selectedProgressStatus && submitted
+      }"
     ></p-dropdown>
+    <small
+      *ngIf="!selectedProgressStatus && submitted"
+      class="p-error"
+      >Progress status is required.</small
+    >
   </div>
   <!-- <div class="field col-12 md:col-12">
     <span class="p-float-label">
@@ -54,11 +70,15 @@
             appendTo="body"
             [virtualScroll]="true"
             [virtualScrollItemSize]="30"
+            required
             filter="true"
             filterBy="label"
             [(ngModel)]="selectedDisease"
             optionLabel="label"
             showClear="true"
+            [ngClass]="{
+              'ng-dirty': !selectedDisease && submitted
+            }"
           >
             <ng-template let-disease pTemplate="item">
               <div
@@ -70,6 +90,11 @@
               </div>
             </ng-template>
           </p-dropdown>
+          <small
+            *ngIf="!selectedDisease && submitted"
+            class="p-error"
+            >Disease diagnosis is required.</small
+          >
         </div>
         <div class="field col-12 md:col-6"></div>
         <div class="field col-12">
@@ -146,6 +171,7 @@
                           genomicinterpretation
                         )
                       "
+                      [submitted]="submitted"
                     ></app-genomic-interpretation>
                   </div>
                 </td>
