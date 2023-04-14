@@ -67,11 +67,14 @@ jobs:
       - name: Image_push
         run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
 
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          service_account: $SA_EMAIL
       # Deploy the Docker image to the Cloud run service
       - name: Auth & Deploy
         run: |
-          cat $GOOGLE_CLOUD_SA | base64 -d > key.json
-          gcloud auth activate-service-account --key-file=key.json
           gcloud run deploy phenopacketlab-backend-sqa-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
