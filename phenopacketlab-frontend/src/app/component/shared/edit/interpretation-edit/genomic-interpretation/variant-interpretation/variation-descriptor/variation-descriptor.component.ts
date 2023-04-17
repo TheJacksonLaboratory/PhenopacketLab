@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { Utils } from 'src/app/component/shared/utils';
@@ -43,10 +43,14 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     structuralTypesSubscription: Subscription;
     structuralTypeSelectedSubscription: Subscription;
 
+    clonedExpressions: { [s: string]: Expression } = {};
+    clonedVcfRecord: VcfRecord;
+
     expanded = false;
 
     constructor(public searchService: InterpretationService,
-        public interpretationService: InterpretationService) {
+        public interpretationService: InterpretationService,
+        public messageService: MessageService) {
     }
 
     ngOnInit() {
@@ -104,6 +108,21 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     deleteExpression(expression: Expression) {
         this.variationDescriptor.expressions = this.variationDescriptor.expressions.filter(val => val.key !== expression.key);
     }
+    onExpressionEditInit(expression: Expression) {
+        console.log(expression);
+        this.clonedExpressions[expression.key] = { ...expression };
+    }
+
+    onExpressionEditSave(expression: Expression) {
+        delete this.clonedExpressions[expression.key];
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Expression is updated' });
+    }
+
+    onExpressionEditCancel(expression: Expression, index: number) {
+        this.variationDescriptor.expressions[index] = this.clonedExpressions[expression.key];
+        delete this.clonedExpressions[expression.key];
+    }
+
     addVCFRecord() {
         if (this.variationDescriptor) {
             if (!this.variationDescriptor.vcfRecord) {
@@ -111,6 +130,21 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
             }
         }
     }
+
+    onVcfRecordEditInit(vcfrecord: VcfRecord) {
+        this.clonedVcfRecord = VcfRecord.clone(vcfrecord);
+    }
+
+    onVcfRecordEditSave() {
+        this.clonedVcfRecord = undefined;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'VcfRecord is updated' });
+    }
+
+    onVcfRecordEditCancel() {
+        this.variationDescriptor.vcfRecord = this.clonedVcfRecord;
+        this.clonedVcfRecord = undefined;
+    }
+
     initializeStructuralTypeSelected(type: OntologyClass) {
         // update when an interpretation is selected
         if (type === undefined) {

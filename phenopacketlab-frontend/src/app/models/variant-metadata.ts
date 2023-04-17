@@ -1,3 +1,4 @@
+import { Utils } from '../component/shared/utils';
 import { OntologyClass } from './base';
 import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeContext, VariantInterpretation,
     VariationDescriptor, VcfRecord } from './interpretation';
@@ -50,18 +51,21 @@ export class VariantMetadata {
             if (vDescriptor.expressions === undefined) {
                 vDescriptor.expressions = [];
             }
+            hgvsExpression.key = Utils.getBiggestKey(vDescriptor.expressions) + 1;
             vDescriptor.expressions.push(hgvsExpression);
         }
         if (this.phgvs !== undefined) {
             const pHgvsExpression = new Expression();
             pHgvsExpression.syntax = 'hgvs.p';
             pHgvsExpression.value = this.phgvs;
+            pHgvsExpression.key = Utils.getBiggestKey(vDescriptor.expressions) + 1;
             vDescriptor.expressions.push(pHgvsExpression);
         }
         if (this.ghgvs != null) {
             const gHgvsExpression = new Expression();
             gHgvsExpression.syntax = 'hgvs.g';
             gHgvsExpression.value = this.ghgvs;
+            gHgvsExpression.key = Utils.getBiggestKey(vDescriptor.expressions) + 1;
             vDescriptor.expressions.push(gHgvsExpression);
         }
         vDescriptor.moleculeContext = MoleculeContext.genomic;

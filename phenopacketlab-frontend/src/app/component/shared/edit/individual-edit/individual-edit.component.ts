@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { ConstantObject, Individual, KaryotypicSex, Status } from 'src/app/models/individual';
+import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -14,6 +15,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     @Input()
     subject: Individual;
+    @Input()
+    profile: ProfileSelection;
     @Output()
     subjectChange = new EventEmitter<Individual>();
     @Output()
@@ -53,6 +56,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                 }
             }
         });
+        // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
+        if (this.profile === undefined) {
+            this.isPrivateInfoWarnSelected = true;
+        }
         // this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
         //     this.genders = genders;
         //     console.log(genders);

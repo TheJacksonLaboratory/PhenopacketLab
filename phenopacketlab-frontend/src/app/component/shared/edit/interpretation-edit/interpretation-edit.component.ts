@@ -61,6 +61,10 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         });
         // statuses
         this.progressStatuses = this.getProgressStatuses();
+        // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
+        if (this.profile === undefined) {
+            this.isPrivateInfoWarnSelected = true;
+        }
         // initialize
         if (this.interpretation) {
             this.id = this.interpretation.id;

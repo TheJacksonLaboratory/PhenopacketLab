@@ -169,6 +169,19 @@ export class VcfRecord {
         }
         return vcfRecord;
     }
+    public static clone(obj: VcfRecord): VcfRecord {
+        const vcfRecord = new VcfRecord();
+        vcfRecord.chrom = obj.chrom;
+        vcfRecord.alt = obj.alt;
+        vcfRecord.id = obj.id;
+        vcfRecord.pos = obj.pos;
+        vcfRecord.ref = obj.ref;
+        vcfRecord.filter = obj.filter;
+        vcfRecord.info = obj.info;
+        vcfRecord.genomeAssembly = obj.genomeAssembly;
+        vcfRecord.qual = obj.qual;
+        return vcfRecord;
+    }
 }
 export class Extension extends Convert {
     name: string;

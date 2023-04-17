@@ -9,15 +9,14 @@
       pInputText
       required
       pTooltip="Descriptor ID; MUST be unique within document. REQUIRED."
+      tooltipPosition="bottom"
       [ngModel]="variationDescriptor?.id"
       (ngModelChange)="onIdChange($event)"
       [ngClass]="{
         'ng-dirty': !variationDescriptor?.id && submitted
       }"
     />
-    <small
-      *ngIf="!variationDescriptor?.id && submitted"
-      class="p-error"
+    <small *ngIf="!variationDescriptor?.id && submitted" class="p-error"
       >Variation ID is required.</small
     >
   </div>
@@ -29,33 +28,40 @@
       aria-describedby="Label"
       pInputText
       pTooltip="A primary label for the variation"
+      styleClass="p-datatable-sm"
+      tooltipPosition="bottom"
       [ngModel]="variationDescriptor?.label"
       (ngModelChange)="onLabelChange($event)"
     />
   </div>
   <div class="field col-12">
     <label for="description">Description</label>
-    <textarea
+    <input
       id="description"
+      type="text"
       pTooltip="A free-text description of the variation"
-      rows="2"
-      cols="30"
-      pInputTextarea
+      tooltipPosition="bottom"
+      pInputText
       [ngModel]="variationDescriptor?.description"
       (ngModelChange)="onDescriptionChange($event)"
-      [autoResize]="false"
-    ></textarea>
+    />
   </div>
-  <div class="field cold-12">
+  <div class="field col-12">
     <p-table
       [value]="variationDescriptor?.expressions"
       dataKey="key"
-      [tableStyle]="{ 'min-width': '50rem' }"
+      editMode="row"
+      styleClass="p-datatable-sm"
     >
       <ng-template pTemplate="caption">
+        <!-- Display add button if not in stepper or if no expression is present -->
         <div class="flex align-items-center justify-content-between">
           Expressions
           <p-button
+            *ngIf="
+              profile === undefined ||
+              variationDescriptor?.expressions?.length === 0
+            "
             icon="pi pi-plus"
             pTooltip="Add new expression"
             (onClick)="addExpression()"
@@ -83,15 +89,12 @@
             Version
           </th>
           <th></th>
+          <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-expression let-editing="editing">
-        <tr>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="expression?.syntax"
-            pEditableColumnField="syntax"
-          >
+      <ng-template pTemplate="body" let-expression let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="expression">
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText type="text" [(ngModel)]="expression.syntax" />
@@ -101,11 +104,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="expression.value"
-            pEditableColumnField="value"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input
@@ -120,11 +119,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="expression.version"
-            pEditableColumnField="version"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="expression.version" />
@@ -135,7 +130,42 @@
             </p-cellEditor>
           </td>
           <td>
-            <button
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onExpressionEditInit(expression)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onExpressionEditSave(expression)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onExpressionEditCancel(expression, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+
+          <td>
+            <button *ngIf="profile === undefined"
               pButton
               pRipple
               icon="pi pi-trash"
@@ -147,13 +177,14 @@
       </ng-template>
     </p-table>
   </div>
-  <div class="field cold-12">
+  <div class="field col-12">
     <p-table
       [resizableColumns]="true"
       [autoLayout]="true"
+      editMode="row"
+      styleClass="p-datatable-sm"
       [value]="[variationDescriptor?.vcfRecord]"
       dataKey="key"
-      [tableStyle]="{ 'min-width': '50rem' }"
     >
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
@@ -202,15 +233,12 @@
           >
             Info
           </th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-vcfrecord let-editing="editing">
-        <tr>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.genomeAssembly"
-            pEditableColumnField="genomeAssembly"
-          >
+        <tr [pEditableRow]="vcfrecord">
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input
@@ -224,11 +252,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.chrom"
-            pEditableColumnField="chrom"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input
@@ -243,11 +267,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.pos"
-            pEditableColumnField="pos"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.pos" />
@@ -257,11 +277,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.id"
-            pEditableColumnField="id"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.id" />
@@ -271,11 +287,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.ref"
-            pEditableColumnField="ref"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.ref" />
@@ -285,11 +297,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.alt"
-            pEditableColumnField="alt"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.alt" />
@@ -299,11 +307,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.qual"
-            pEditableColumnField="qual"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.qual" />
@@ -313,11 +317,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.filter"
-            pEditableColumnField="filter"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.filter" />
@@ -327,11 +327,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td
-            pTooltip="Click on cell to edit"
-            [pEditableColumn]="vcfrecord.info"
-            pEditableColumnField="info"
-          >
+          <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText [(ngModel)]="vcfrecord.info" />
@@ -340,6 +336,40 @@
                 {{ vcfrecord.info }}
               </ng-template>
             </p-cellEditor>
+          </td>
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onVcfRecordEditInit(vcfrecord)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onVcfRecordEditSave()"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onVcfRecordEditCancel()"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
           </td>
         </tr>
       </ng-template>

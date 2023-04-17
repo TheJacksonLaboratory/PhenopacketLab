@@ -27,6 +27,7 @@
       <div class="field col-12">
         <app-individual-edit
           [subject]="phenopacket?.subject"
+          [profile]="profileSelection"
           [submitted]="submitted"
           (isPrivateInfoWarnSelectedChanged)="updateIsPrivateInfoWarnSelected($event)"
           (subjectChange)="updateSubject($event)"
