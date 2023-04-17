@@ -69,7 +69,7 @@ jobs:
 
       # Test docker image
       - name: Test docker image
-        run: docker run -rm us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
+        run: docker run --rm us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
