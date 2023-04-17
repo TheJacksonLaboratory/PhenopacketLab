@@ -20,6 +20,6 @@ RUN echo $(ls)
 RUN echo "java -Dspring.profiles.active=${config} -Dphenopacketlab.data-directory=${data_path} -jar phenopacketlab-restapi-${build_version}.jar"
 
 CMD ["sh", "-c", "java -Dspring.profiles.active=${config} -Dphenopacketlab.data-directory=${data_path} -jar phenopacketlab-restapi-${build_version}.jar"]
-#EXPOSE 8080/tcp
+EXPOSE 8080/tcp
 
 
