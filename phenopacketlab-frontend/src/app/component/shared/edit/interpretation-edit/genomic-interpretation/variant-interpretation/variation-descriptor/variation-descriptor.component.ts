@@ -6,6 +6,7 @@ import { Utils } from 'src/app/component/shared/utils';
 import { OntologyClass } from 'src/app/models/base';
 import { Expression, MoleculeContext, VariationDescriptor, VcfRecord } from 'src/app/models/interpretation';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { ProfileSelection } from 'src/app/models/profile';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 
 @Component({
@@ -18,6 +19,10 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
 
     @Input()
     variationDescriptor: VariationDescriptor;
+    @Input()
+    profile: ProfileSelection;
+    @Input()
+    submitted: boolean;
     @Output()
     variationDescriptorChange = new EventEmitter<VariationDescriptor>();
 

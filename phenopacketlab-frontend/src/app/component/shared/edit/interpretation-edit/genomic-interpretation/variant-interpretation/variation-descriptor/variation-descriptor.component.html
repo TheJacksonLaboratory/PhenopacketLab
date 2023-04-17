@@ -7,10 +7,19 @@
       type="text"
       aria-describedby="Variation ID"
       pInputText
+      required
       pTooltip="Descriptor ID; MUST be unique within document. REQUIRED."
       [ngModel]="variationDescriptor?.id"
       (ngModelChange)="onIdChange($event)"
+      [ngClass]="{
+        'ng-dirty': !variationDescriptor?.id && submitted
+      }"
     />
+    <small
+      *ngIf="!variationDescriptor?.id && submitted"
+      class="p-error"
+      >Variation ID is required.</small
+    >
   </div>
   <div class="field col-12 md:col-6">
     <label for="label">Label</label>
@@ -149,7 +158,8 @@
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
           VCF Record
-          <p-button *ngIf="!variationDescriptor?.vcfRecord"
+          <p-button
+            *ngIf="!variationDescriptor?.vcfRecord"
             icon="pi pi-plus"
             pTooltip="Add new expression"
             (onClick)="addVCFRecord()"
@@ -344,13 +354,11 @@
       [ngModel]="variationDescriptor?.moleculeContext"
       [options]="moleculeContexts"
       (onChange)="updateMoleculeContext($event)"
-      class="w-full"
       [showClear]="true"
     ></p-dropdown>
   </div>
   <div class="field col-12 md:col-6">
     <label for="allelic">Allelic State</label>
-
     <p-treeSelect
       ngDefaultControl
       id="allelic"
@@ -371,7 +379,8 @@
       </ng-template>
     </p-treeSelect>
   </div>
-  <div class="field col-12 md:col-6">
+  <!-- Display only if in edit mode and not in the stepper -->
+  <div *ngIf="profile === undefined" class="field col-12 md:col-6">
     <label for="structural">Structural type</label>
     <p-treeSelect
       ngDefaultControl
@@ -395,7 +404,7 @@
       </ng-template>
     </p-treeSelect>
   </div>
-  <div class="field col-12 md:col-6">
+  <div *ngIf="profile === undefined" class="field col-12 md:col-6">
     <label for="refalseq">Ref Allele Sequence</label>
     <input
       id="refalseq"

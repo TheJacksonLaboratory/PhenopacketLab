@@ -28,6 +28,7 @@
         <app-individual-edit
           [subject]="phenopacket?.subject"
           [submitted]="submitted"
+          (isPrivateInfoWarnSelectedChanged)="updateIsPrivateInfoWarnSelected($event)"
           (subjectChange)="updateSubject($event)"
         ></app-individual-edit>
       </div>

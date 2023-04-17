@@ -16,10 +16,13 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     subject: Individual;
     @Output()
     subjectChange = new EventEmitter<Individual>();
+    @Output()
+    isPrivateInfoWarnSelectedChanged = new EventEmitter<boolean>();
 
     @Input()
     submitted: boolean;
 
+    isPrivateInfoWarnSelected: boolean;
     causeOfDeaths: any[];
     causeOfDeathSubscription: Subscription;
 
@@ -88,6 +91,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.subject.timeAtLastEncounter = timeOfLastEncounter;
             this.subjectChange.emit(this.subject);
         }
+    }
+
+    updateIsPrivateInfoWarnSelected() {
+        this.isPrivateInfoWarnSelectedChanged.emit(this.isPrivateInfoWarnSelected);
     }
 
     updateSex(event: any) {

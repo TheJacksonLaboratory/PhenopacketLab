@@ -87,6 +87,8 @@
         <div *ngIf="variantInterpretation" class="field col-12">
           <app-variation-descriptor
             [variationDescriptor]="variantInterpretation?.variationDescriptor"
+            [profile]="profile"
+            [submitted]="submitted"
             (variationDescriptorChange)="updateVariationDescriptor($event)"
           ></app-variation-descriptor>
         </div>

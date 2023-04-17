@@ -17,15 +17,22 @@
       class="p-error"
       >Individual ID is required.</small
     >
+    <p-checkbox
+      label="I confirm that this ID is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information."
+      [binary]="true"
+      [(ngModel)]="isPrivateInfoWarnSelected"
+      labelStyleClass="label-active"
+      (onChange)="updateIsPrivateInfoWarnSelected()"
+      [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
+    ></p-checkbox>
   </div>
+
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
     <p-chips id="alternateIds" [(ngModel)]="subject.alternateIds"></p-chips>
   </div> -->
   <div class="field col-12">
-    <label for="lastEncounterDate"
-      ><b>Age at last clinical encounter</b></label
-    >
+    <label for="lastEncounterDate"><b>Age at last clinical encounter</b></label>
     <app-time-element
       id="lastEncounterDate"
       [timeElement]="subject?.timeAtLastEncounter"
@@ -54,7 +61,7 @@
           escape="false"
           tooltipPosition="bottom"
         >
-        [{{ sex.id.value }}] {{ sex.name }} 
+          [{{ sex.id.value }}] {{ sex.name }}
         </div>
       </ng-template>
     </p-dropdown>
@@ -87,7 +94,7 @@
     </p-dropdown>
   </div>
   <div class="field col-12 md:col-4"></div>
-<!-- We do not need gender for now -->
+  <!-- We do not need gender for now -->
   <!-- <div *ngIf="!showGender" class="field col-12 md:col-1 align-items-center">
     <button
       pButton
@@ -203,7 +210,12 @@
       showClear="true"
     >
       <ng-template let-cause pTemplate="item">
-        <div [pTooltip]="cause.label" showDelay="2000" tooltipPosition="bottom" escape="false">
+        <div
+          [pTooltip]="cause.label"
+          showDelay="2000"
+          tooltipPosition="bottom"
+          escape="false"
+        >
           [{{ cause.id }}] {{ cause.label }}
         </div>
       </ng-template>

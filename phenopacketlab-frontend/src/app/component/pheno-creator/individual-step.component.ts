@@ -21,6 +21,8 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
+    isPrivateInfoWarnSelected: boolean;
+
     summary: string;
 
     constructor(public phenopacketService: PhenopacketService, private router: Router) {
@@ -47,6 +49,10 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         }
     }
 
+    updateIsPrivateInfoWarnSelected(isPrivateInfoWarnSelected: boolean) {
+        this.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
+    }
+
     updateSubject(subject: Individual) {
         if (this.phenopacket) {
             this.phenopacket.subject = subject;
@@ -54,7 +60,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        if (this.phenopacket.id && this.phenopacket.subject.id) {
+        if (this.phenopacket.id && this.phenopacket.subject.id && this.isPrivateInfoWarnSelected) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {

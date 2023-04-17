@@ -17,6 +17,13 @@
     <small *ngIf="!id && submitted" class="p-error"
       >Interpretation ID is required.</small
     >
+    <p-checkbox
+      label="I confirm that this ID is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information."
+      [binary]="true"
+      [(ngModel)]="isPrivateInfoWarnSelected"
+      labelStyleClass="label-active"
+      [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
+    ></p-checkbox>
   </div>
   <div class="field col-12 md:col-6">
     <label for="progressstatus">Progress status</label>

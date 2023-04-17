@@ -29,6 +29,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     submitted = false;
 
+    isPrivateInfoWarnSelected: boolean;
+
     visible = false;
     genomicInterpretationVisible = false;
     id: string;
@@ -154,6 +156,11 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                     return;
                 }
             }
+        }
+        // check if personal info has been checked
+        if (!this.isPrivateInfoWarnSelected) {
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please, confirm that the ID used is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information.` });
+            return;
         }
 
         // initialize new interpretation object
