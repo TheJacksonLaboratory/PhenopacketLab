@@ -79,5 +79,6 @@ jobs:
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
-          --project $PROJECT_ID
-          --memory 4G
+          --project $PROJECT_ID \
+          --memory 6Gi \
+          --cpu 2
