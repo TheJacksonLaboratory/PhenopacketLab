@@ -80,7 +80,7 @@ export class PhenotypicFeature extends Convert {
 }
 
 export enum MiningState {
-    UNKNWON,
+    UNKNOWN,
     APPROVED,
     REJECTED
 }

@@ -1,5 +1,6 @@
 <p-chips
   ngDefaultControl
+  [max]="selectedNodes?.length || 0"
   [(ngModel)]="selectedNodes"
   [allowDuplicate]="false"
   [addOnTab]="true"

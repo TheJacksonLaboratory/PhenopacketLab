@@ -1,6 +1,6 @@
 <div class="grid p-fluid">
   <div *ngIf="textSearchVisible" class="field col-12">
-    <br>
+    <br />
     <span class="p-float-label">
       <textarea
         id="float-input"
@@ -44,7 +44,21 @@
       (click)="rejectAll()"
     ></button>
   </div>
-  <div *ngIf="true" class="field col-12">
+  <div *ngIf="!textSearchVisible" class="field col-12">
+    <p-chips
+      [max]="textMinedFeatures?.length || 0"
+      [(ngModel)]="textMinedFeatures"
+      (onRemove)="onChipRemove($event)"
+    >
+      <ng-template let-featureName pTemplate="featureName">
+        <span [class]="getStyleClass(featureName)">{{
+          featureName
+        }}</span>
+      </ng-template>
+    </p-chips>
+  </div>
+
+  <!-- <div *ngIf="true" class="field col-12">
     <p-table
       *ngIf="visible"
       [value]="phenotypicFeatures"
@@ -53,7 +67,7 @@
       scrollDirection="horizontal"
       responsiveLayout="scroll"
       [resizableColumns]="true"
-      [tableStyle]="{ width: 'max-content'}"   
+      [tableStyle]="{ width: 'max-content' }"
     >
       <ng-template pTemplate="caption">
         <div class="table-header">Reviewed phenotypic features</div>
@@ -97,13 +111,11 @@
           <td>{{ feature.type?.id }}</td>
           <td>{{ feature.type?.label }}</td>
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-          <!-- <td>{{feature.onset?.toString()}}</td>
-          <td>{{feature.resolution?.toString()}}</td> -->
         </tr>
       </ng-template>
     </p-table>
-  </div>
-  <div *ngIf="true" class="field col-12">
+  </div> -->
+  <div *ngIf="!textSearchVisible" class="field col-12">
     <label for="onset"><b>Age of onset: </b></label>
     <app-time-element
       *ngIf="!onsetApplied"
@@ -114,6 +126,8 @@
       (timeElementEvent)="updateAgeOnset($event)"
       aria-labelledby="onset-label"
     ></app-time-element>
+  </div>
+  <div class="field col-12">
     <!-- <br *ngIf="onsetApplied"> -->
     <div *ngIf="onsetApplied" class="flex align-items-center">
       {{ onset?.toString() }}
@@ -128,25 +142,24 @@
         (click)="editOnset()"
       ></button>
     </div>
-    <div *ngIf="true" class="field col-6">
-      <button
-        *ngIf="!onsetApplied"
-        pButton
-        type="button"
-        label="Apply onset to all features"
-        (click)="applyOnset()"
-      ></button>
-    </div>
-    <div *ngIf="true" class="field col-6"></div>
+  </div>
 
-    <div *ngIf="!textSearchVisible" class="field col-5">
-      <button
-        pButton
-        type="button"
-        label="Add approved terms"
-        (click)="addApprovedTerms()"
-      ></button>
-    </div>
-    <div *ngIf="!textSearchVisible" class="field col-7"></div>
+  <div *ngIf="!textSearchVisible" class="field col-6">
+    <button
+      pButton
+      type="button"
+      label="Apply onset to all features"
+      (click)="applyOnset()"
+    ></button>
+  </div>
+  <div *ngIf="true" class="field col-6"></div>
+
+  <div *ngIf="!textSearchVisible" class="field col-6">
+    <button
+      pButton
+      type="button"
+      label="Add approved terms"
+      (click)="addApprovedTerms()"
+    ></button>
   </div>
 </div>

@@ -9,6 +9,10 @@ import { PhenotypeSearchService } from 'src/app/services/phenotype-search.servic
 import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
 
+const unknownColor = '#ff7800';
+const approvedColor = '#4BB543';
+const rejectedColor = '#F32013';
+
 @Component({
   selector: 'app-text-mining',
   templateUrl: 'text-mining.component.html',
@@ -36,6 +40,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   onsetsSubscription: Subscription;
   onsetApplied = false;
   onset: TimeElement;
+
+  textMinedFeatures: string[];
 
   constructor(private phenotypeSearchService: PhenotypeSearchService,
     public phenopacketService: PhenopacketService,
@@ -83,12 +89,12 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         if (index >= startEnd[0] && index <= startEnd[1]) {
           // start character
           if (index === startEnd[0]) {
-            if (this.phenotypicFeatures[idx].textMiningState === MiningState.UNKNWON) {
-              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:#ff7800">${this.textSearch.charAt(index)}`;
+            if (this.phenotypicFeatures[idx].textMiningState === MiningState.UNKNOWN) {
+              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:${unknownColor}">${this.textSearch.charAt(index)}`;
             } else if (this.phenotypicFeatures[idx].textMiningState === MiningState.APPROVED) {
-              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:#4BB543;text-decoration: underline;">${this.textSearch.charAt(index)}`;
+              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:${approvedColor};text-decoration: underline;">${this.textSearch.charAt(index)}`;
             } else if (this.phenotypicFeatures[idx].textMiningState === MiningState.REJECTED) {
-              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:#F32013;text-decoration: line-through;">${this.textSearch.charAt(index)}`;
+              this.formattedText = `${this.formattedText}<a class='btn' style="cursor:pointer"><span id="id-${idx}" style="color:${rejectedColor};text-decoration: line-through;">${this.textSearch.charAt(index)}`;
             }
           }
           // end character
@@ -126,10 +132,13 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         // reset
         this.idxList = [];
         this.phenotypicFeatures = [];
+        this.textMinedFeatures = [];
         concepts.forEach((term, idx) => {
           this.idxList.push([term.start, term.end]);
           const excluded = !term.present;
-          this.phenotypicFeatures.push(new PhenotypicFeature(term.id, term.label, excluded, MiningState.UNKNWON, idx));
+          const feature = new PhenotypicFeature(term.id, term.label, excluded, MiningState.UNKNOWN, idx);
+          this.phenotypicFeatures.push(feature);
+          this.textMinedFeatures.push(feature.type.toString());
         });
 
         // show result in formatted text
@@ -161,6 +170,31 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
+  onChipRemove(event) {
+    let myFeature: PhenotypicFeature;
+    for (const feature of this.phenotypicFeatures) {
+      if (feature.type.toString() === event.value) {
+        feature.textMiningState = MiningState.REJECTED;
+        myFeature = feature;
+      }
+    }
+    this.formatText();
+  }
+
+  getStyleClass(featureName: string) {
+    for (const feature of this.phenotypicFeatures) {
+      if (featureName === feature.type.toString()) {
+        if (feature.textMiningState === MiningState.UNKNOWN) {
+          return 'unknown';
+        } else if (feature.textMiningState === MiningState.APPROVED) {
+          return 'approved';
+        } else if (feature.textMiningState === MiningState.REJECTED) {
+          return 'rejected';
+        }
+      }
+    }
+  }
+
   /**
    * open dialog to approve or reject term
    * @param idx
@@ -179,6 +213,19 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.phenotypicFeatures.forEach(feature => {
           if (feature.key === vettedFeature.key) {
             feature.textMiningState = vettedFeature.state;
+            if (feature.textMiningState === MiningState.REJECTED) {
+              const index = this.textMinedFeatures.indexOf(feature.type.toString(), 0);
+              if (index > -1) {
+                this.textMinedFeatures.splice(index, 1);
+              }
+            } else if (feature.textMiningState === MiningState.UNKNOWN || feature.textMiningState === MiningState.APPROVED) {
+              this.textMinedFeatures = [];
+              for (const item of this.phenotypicFeatures) {
+                if (item.textMiningState !== MiningState.REJECTED) {
+                  this.textMinedFeatures.push(item.type.toString());
+                }
+              }
+            }
           }
         });
         this.formatText();
@@ -190,12 +237,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    * Approve all terms
    */
   approveAll() {
+    this.textMinedFeatures = [];
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.APPROVED;
+      this.textMinedFeatures.push(feature.type.toString());
     });
     this.formatText();
   }
   rejectAll() {
+    this.textMinedFeatures = [];
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.REJECTED;
     });
@@ -222,7 +272,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   stateUnknown() {
-    return MiningState.UNKNWON;
+    return MiningState.UNKNOWN;
   }
   stateApproved() {
     return MiningState.APPROVED;
