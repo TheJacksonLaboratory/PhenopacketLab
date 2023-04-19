@@ -61,7 +61,7 @@ import { WordDialogComponent } from './text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
     imports: [
@@ -111,7 +111,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         DialogModule,
         DynamicDialogModule,
         ProgressSpinnerModule,
-        ScrollPanelModule
+        ScrollPanelModule,
+        ChipModule
 
     ],
     exports: [

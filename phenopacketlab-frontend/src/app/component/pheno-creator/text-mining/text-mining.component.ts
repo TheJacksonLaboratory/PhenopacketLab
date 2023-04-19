@@ -185,15 +185,39 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     for (const feature of this.phenotypicFeatures) {
       if (featureName === feature.type.toString()) {
         if (feature.textMiningState === MiningState.UNKNOWN) {
-          return 'unknown';
+          return `background-color: ${unknownColor};color: white;`;
         } else if (feature.textMiningState === MiningState.APPROVED) {
-          return 'approved';
+          return `background-color: ${approvedColor};color: white;`;
         } else if (feature.textMiningState === MiningState.REJECTED) {
-          return 'rejected';
+          return `background-color: ${rejectedColor};color: white;`;
         }
       }
     }
   }
+
+  // getStyleClass(featureName: string) {
+  //   for (const feature of this.phenotypicFeatures) {
+  //     if (featureName === feature.type.toString()) {
+  //       if (feature.textMiningState === MiningState.UNKNOWN) {
+  //         return `p-chips-token unknown`;
+  //       } else if (feature.textMiningState === MiningState.APPROVED) {
+  //         return `p-chips-token approved`;
+  //       } else if (feature.textMiningState === MiningState.REJECTED) {
+  //         return `p-chips-token rejected`;
+  //       }
+  //     }
+  //   }
+  // }
+  // modifyBackground() {
+  //   let colorOfInterest = this.generateBackground();
+  //   let chipsOfInterest = document.querySelectorAll<HTMLElement>('li.p-chips-token');
+  //   console.log(chipsOfInterest);
+  //   if (chipsOfInterest.length > 0) {
+  //     let chipOfInterest = chipsOfInterest[chipsOfInterest.length - 1];
+  //     chipOfInterest.style.backgroundColor = colorOfInterest;
+  //     chipOfInterest.style.color = 'white';
+  //   }
+  // }
 
   /**
    * open dialog to approve or reject term

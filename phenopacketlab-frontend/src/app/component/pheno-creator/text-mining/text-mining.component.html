@@ -45,17 +45,23 @@
     ></button>
   </div>
   <div *ngIf="!textSearchVisible" class="field col-12">
-    <p-chips
+
+    <!-- <div class="card flex align-items-center gap-2 flex-wrap"></div> -->
+    <div *ngFor="let featureName of textMinedFeatures">
+      <p-chip [label]="featureName" [removable]="true"></p-chip>
+    </div>
+
+    <!-- <p-chips
       [max]="textMinedFeatures?.length || 0"
       [(ngModel)]="textMinedFeatures"
       (onRemove)="onChipRemove($event)"
     >
       <ng-template let-featureName pTemplate="featureName">
-        <span [class]="getStyleClass(featureName)">{{
+        <span [style]="getStyleClass(featureName)">{{
           featureName
         }}</span>
       </ng-template>
-    </p-chips>
+    </p-chips> -->
   </div>
 
   <!-- <div *ngIf="true" class="field col-12">
