@@ -10,6 +10,7 @@ jobs:
     uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml@make_text_mining_work
     with:
       environment: sqa
-      sa-email: ${{ secrets.GCP_SA_EMAIL }}
-      gcp-credential: ${{ secrets.GCP_CREDENTIAL }}
-      project-id: ${{ secrets.GCP_PROJECT }}
+    secrets:
+      gcp_sa_mail: ${{ secrets.GCP_SA_EMAIL }}
+      gcp_credential: ${{ secrets.GCP_CREDENTIAL }}
+      gcp_project: ${{ secrets.GCP_PROJECT }}
