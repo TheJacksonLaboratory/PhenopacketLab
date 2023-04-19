@@ -7,11 +7,18 @@ on:
         required: true
         type: string
         description: can be prod, dev or sqa
-
-env:
-  SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
-  GCP_CREDENTIAL: ${{ secrets.GCP_CREDENTIAL }}
-  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+      sa-email:
+        required: true
+        type: string
+        description: service account email
+      gcp-credential:
+        required: true
+        type: string
+        description: gcp credential
+      project-id:
+        required: true
+        type: string
+        description: project id
 
 jobs:
   deploy-backend:
@@ -35,9 +42,9 @@ jobs:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
         with:
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GOOGLE_CLOUD_SA }}
-          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_email: ${{ inputs.sa-email }}
+          service_account_key: ${{ inputs.gcp-credential }}
+          project_id: ${{ inputs.project-id }}
           export_default_credentials: true
 
       # Download the data folder locally
@@ -46,23 +53,23 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend .
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/${{ inputs.project-id }}/phenopacketlab-backend .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: gcloud auth configure-docker us-docker.pkg.dev
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/${{ inputs.project-id }}/phenopacketlab-backend
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+          credentials_json: ${{ inputs.gcp-credential }}
       # Deploy the Docker image to the Cloud run service
       - name: Deploy to Cloud Run environment
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ inputs.project-id }}/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
