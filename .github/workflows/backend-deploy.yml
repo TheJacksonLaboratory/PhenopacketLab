@@ -37,9 +37,9 @@ jobs:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
         with:
-          service_account_email: ${{ secrets.SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_CREDENTIAL }}
-          project_id: ${{ secrets.GCP_PROJECT }}
+          service_account_email: ${{ secrets.sa_email }}
+          service_account_key: ${{ secrets.gcp_credential }}
+          project_id: ${{ secrets.gcp_project }}
           export_default_credentials: true
 
       # Download the data folder locally
@@ -48,23 +48,23 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend .
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.gcp_project }}/phenopacketlab-backend .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: gcloud auth configure-docker us-docker.pkg.dev
       # Push image to Google Container Registry
       - name: Image_push
-        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.gcp_project }}/phenopacketlab-backend
 
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+          credentials_json: ${{ secrets.gcp_credential }}
       # Deploy the Docker image to the Cloud run service
       - name: Deploy to Cloud Run environment
         run: |
-          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend \
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.gcp_project }}/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
