@@ -1,12 +1,12 @@
-name: SQA Backend Deployment
+name: Dev Backend Deployment
 
 on:
   push:
     branches:
-      - sqa
+      - dev
 
 jobs:
   call-workflow-passing-data:
     uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml
     with:
-      config-path: sqa
+      config-path: dev

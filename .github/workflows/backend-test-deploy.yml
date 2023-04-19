@@ -1,12 +1,12 @@
-name: SQA Backend Deployment
+name: Current branch to SQA Backend Deployment
 
 on:
   push:
     branches:
-      - sqa
+      - make_text_mining_work
 
 jobs:
   call-workflow-passing-data:
     uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml
     with:
-      config-path: sqa
+      config-path: sqaA

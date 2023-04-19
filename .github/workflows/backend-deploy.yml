@@ -1,0 +1,71 @@
+name: Backend Deployment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: can be prod, dev or sqa
+
+env:
+  SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
+  GCP_CREDENTIAL: ${{ secrets.GCP_CREDENTIAL }}
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+
+jobs:
+  deploy-backend:
+    name: Setup, Build Docker Img, Publish, and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # build backend
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build Backend with Maven
+        run: ./mvnw -DskipTests package
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          service_account_key: ${{ secrets.GOOGLE_CLOUD_SA }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      # Download the data folder locally
+      - name: Get_data
+        run: gsutil cp -r gs://jax-robinson-phenopacket-project-data/data .
+
+      # Build docker image
+      - name: Image_build
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend .
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: gcloud auth configure-docker us-docker.pkg.dev
+      # Push image to Google Container Registry
+      - name: Image_push
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+      # Deploy the Docker image to the Cloud run service
+      - name: Deploy to Cloud Run environment
+        run: |
+          gcloud run deploy phenopacketlab-backend-${{ inputs.environment }}-01 --image us-docker.pkg.dev/jax-cs-registry/docker/$PROJECT_ID/phenopacketlab-backend \
+          --region us-east1 \
+          --platform managed \
+          --allow-unauthenticated \
+          --project $PROJECT_ID \
+          --memory 6Gi \
+          --cpu 2
