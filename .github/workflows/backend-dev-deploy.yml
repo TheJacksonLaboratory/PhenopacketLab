@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml
+    uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml@dev
     with:
-      config-path: dev
+      environment: dev

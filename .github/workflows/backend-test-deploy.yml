@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml
+    uses: TheJacksonLaboratory/PhenopacketLab/.github/workflows/backend-deploy.yml@make_text_mining_work
     with:
-      config-path: sqaA
+      environment: sqa
