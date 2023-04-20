@@ -3,11 +3,12 @@
 # versions of node. It will then deploy the generated dist folder to the corresponding Google Cloud Bucket
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Dev Phenopacketlab CI/CD
+name: Production Phenopacketlab CI/CD
 
 on:
   push:
-    branches: [ development ]
+    branches:
+      - 'releases/**'
 
 jobs:
   build-test-backend:
@@ -81,7 +82,7 @@ jobs:
       # Deploy the Docker image to the Cloud run service
       - name: Deploy to Cloud Run environment
         run: |
-          gcloud run deploy phenopacketlab-backend-dev-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend \
+          gcloud run deploy phenopacketlab-backend-prod-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend \
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
@@ -178,4 +179,4 @@ jobs:
 
       - name: Deploy Dist folder to Google Bucket
         run: |
-          gsutil -m -o "GSUtil:parallel_process_count=1" cp -r -z js,css ./dist/phenopacketlab-frontend/* gs://phenopacketlab-frontend-dev-01
+          gsutil -m -o "GSUtil:parallel_process_count=1" cp -r -z js,css ./dist/phenopacketlab-frontend/* gs://phenopacketlab-frontend-prod-01

@@ -85,7 +85,7 @@ jobs:
           --region us-east1 \
           --platform managed \
           --allow-unauthenticated \
-          --project $PROJECT_ID \
+          --project ${{ secrets.GCP_PROJECT }} \
           --memory 6Gi \
           --cpu 2
 
