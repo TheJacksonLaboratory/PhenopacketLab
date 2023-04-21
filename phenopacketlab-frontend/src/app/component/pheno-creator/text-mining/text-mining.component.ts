@@ -170,10 +170,10 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
-  onChipRemove(event) {
+  onChipRemove(featureName) {
     let myFeature: PhenotypicFeature;
     for (const feature of this.phenotypicFeatures) {
-      if (feature.type.toString() === event.value) {
+      if (feature.type.toString() === featureName) {
         feature.textMiningState = MiningState.REJECTED;
         myFeature = feature;
       }
@@ -185,39 +185,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     for (const feature of this.phenotypicFeatures) {
       if (featureName === feature.type.toString()) {
         if (feature.textMiningState === MiningState.UNKNOWN) {
-          return `background-color: ${unknownColor};color: white;`;
+          return { 'background-color': unknownColor, 'color': 'white' };
         } else if (feature.textMiningState === MiningState.APPROVED) {
-          return `background-color: ${approvedColor};color: white;`;
+          return { 'background-color': approvedColor, 'color': 'white' };
         } else if (feature.textMiningState === MiningState.REJECTED) {
-          return `background-color: ${rejectedColor};color: white;`;
+          return { 'background-color': rejectedColor, 'color': 'white' };
         }
       }
     }
   }
-
-  // getStyleClass(featureName: string) {
-  //   for (const feature of this.phenotypicFeatures) {
-  //     if (featureName === feature.type.toString()) {
-  //       if (feature.textMiningState === MiningState.UNKNOWN) {
-  //         return `p-chips-token unknown`;
-  //       } else if (feature.textMiningState === MiningState.APPROVED) {
-  //         return `p-chips-token approved`;
-  //       } else if (feature.textMiningState === MiningState.REJECTED) {
-  //         return `p-chips-token rejected`;
-  //       }
-  //     }
-  //   }
-  // }
-  // modifyBackground() {
-  //   let colorOfInterest = this.generateBackground();
-  //   let chipsOfInterest = document.querySelectorAll<HTMLElement>('li.p-chips-token');
-  //   console.log(chipsOfInterest);
-  //   if (chipsOfInterest.length > 0) {
-  //     let chipOfInterest = chipsOfInterest[chipsOfInterest.length - 1];
-  //     chipOfInterest.style.backgroundColor = colorOfInterest;
-  //     chipOfInterest.style.color = 'white';
-  //   }
-  // }
 
   /**
    * open dialog to approve or reject term
@@ -234,24 +210,19 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const vettedFeature = result.data;
-        this.phenotypicFeatures.forEach(feature => {
+        // update the mining state of the phenotypic feature
+        for (const feature of this.phenotypicFeatures) {
           if (feature.key === vettedFeature.key) {
             feature.textMiningState = vettedFeature.state;
-            if (feature.textMiningState === MiningState.REJECTED) {
-              const index = this.textMinedFeatures.indexOf(feature.type.toString(), 0);
-              if (index > -1) {
-                this.textMinedFeatures.splice(index, 1);
-              }
-            } else if (feature.textMiningState === MiningState.UNKNOWN || feature.textMiningState === MiningState.APPROVED) {
-              this.textMinedFeatures = [];
-              for (const item of this.phenotypicFeatures) {
-                if (item.textMiningState !== MiningState.REJECTED) {
-                  this.textMinedFeatures.push(item.type.toString());
-                }
-              }
-            }
           }
-        });
+        }
+        // set textMinedFeatures
+        this.textMinedFeatures = [];
+        for (const feature of this.phenotypicFeatures) {
+          if (feature.textMiningState !== MiningState.REJECTED) {
+            this.textMinedFeatures.push(feature.type.toString());
+          }
+        }
         this.formatText();
       }
     });

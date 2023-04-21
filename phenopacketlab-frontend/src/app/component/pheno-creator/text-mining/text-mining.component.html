@@ -45,10 +45,15 @@
     ></button>
   </div>
   <div *ngIf="!textSearchVisible" class="field col-12">
-
-    <!-- <div class="card flex align-items-center gap-2 flex-wrap"></div> -->
-    <div *ngFor="let featureName of textMinedFeatures">
-      <p-chip [label]="featureName" [removable]="true"></p-chip>
+    <div class="card flex align-items-center gap-2 flex-wrap">
+      <span *ngFor="let featureName of textMinedFeatures">
+        <p-chip
+          [label]="featureName"
+          [removable]="true"
+          [style]="getStyleClass(featureName)"
+          (onRemove)="onChipRemove(featureName)"
+        ></p-chip>
+      </span>
     </div>
 
     <!-- <p-chips
@@ -64,63 +69,6 @@
     </p-chips> -->
   </div>
 
-  <!-- <div *ngIf="true" class="field col-12">
-    <p-table
-      *ngIf="visible"
-      [value]="phenotypicFeatures"
-      dataKey="key"
-      styleClass="p-datatable-gridlines"
-      scrollDirection="horizontal"
-      responsiveLayout="scroll"
-      [resizableColumns]="true"
-      [tableStyle]="{ width: 'max-content' }"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-header">Reviewed phenotypic features</div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th pResizableColumn></th>
-          <th pResizableColumn>ID</th>
-          <th pResizableColumn>Label</th>
-          <th pResizableColumn>Status</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-feature>
-        <tr [pSelectableRow]="feature">
-          <td>
-            <button
-              *ngIf="feature?.textMiningState === stateApproved()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-check"
-              class="p-button-rounded p-button-success p-button-text"
-            ></button>
-            <button
-              *ngIf="feature?.textMiningState === stateUnknown()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-question"
-              class="p-button-rounded p-button-warning p-button-text"
-            ></button>
-            <button
-              *ngIf="feature?.textMiningState === stateRejected()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-times"
-              class="p-button-rounded p-button-danger p-button-text"
-            ></button>
-          </td>
-          <td>{{ feature.type?.id }}</td>
-          <td>{{ feature.type?.label }}</td>
-          <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div> -->
   <div *ngIf="!textSearchVisible" class="field col-12">
     <label for="onset"><b>Age of onset: </b></label>
     <app-time-element
