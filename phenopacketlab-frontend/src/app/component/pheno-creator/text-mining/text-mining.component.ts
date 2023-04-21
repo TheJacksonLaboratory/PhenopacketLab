@@ -122,6 +122,16 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
+  setChips() {
+    this.textMinedFeatures = undefined;
+    this.textMinedFeatures = [];
+    for (const feature of this.phenotypicFeatures) {
+      if (feature.textMiningState !== MiningState.REJECTED) {
+        this.textMinedFeatures.push(feature.type.toString());
+      }
+    }
+  }
+
   submit() {
     this.textSearchVisible = false;
     this.openSpinnerDialog();
@@ -170,12 +180,10 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
-  onChipRemove(event) {
-    let myFeature: PhenotypicFeature;
+  onChipRemove(featureName) {
     for (const feature of this.phenotypicFeatures) {
-      if (feature.type.toString() === event.value) {
+      if (feature.type.toString() === featureName) {
         feature.textMiningState = MiningState.REJECTED;
-        myFeature = feature;
       }
     }
     this.formatText();
@@ -185,39 +193,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     for (const feature of this.phenotypicFeatures) {
       if (featureName === feature.type.toString()) {
         if (feature.textMiningState === MiningState.UNKNOWN) {
-          return `background-color: ${unknownColor};color: white;`;
+          return { 'background-color': unknownColor, 'color': 'white' };
         } else if (feature.textMiningState === MiningState.APPROVED) {
-          return `background-color: ${approvedColor};color: white;`;
+          return { 'background-color': approvedColor, 'color': 'white' };
         } else if (feature.textMiningState === MiningState.REJECTED) {
-          return `background-color: ${rejectedColor};color: white;`;
+          return { 'background-color': rejectedColor, 'color': 'white' };
         }
       }
     }
   }
-
-  // getStyleClass(featureName: string) {
-  //   for (const feature of this.phenotypicFeatures) {
-  //     if (featureName === feature.type.toString()) {
-  //       if (feature.textMiningState === MiningState.UNKNOWN) {
-  //         return `p-chips-token unknown`;
-  //       } else if (feature.textMiningState === MiningState.APPROVED) {
-  //         return `p-chips-token approved`;
-  //       } else if (feature.textMiningState === MiningState.REJECTED) {
-  //         return `p-chips-token rejected`;
-  //       }
-  //     }
-  //   }
-  // }
-  // modifyBackground() {
-  //   let colorOfInterest = this.generateBackground();
-  //   let chipsOfInterest = document.querySelectorAll<HTMLElement>('li.p-chips-token');
-  //   console.log(chipsOfInterest);
-  //   if (chipsOfInterest.length > 0) {
-  //     let chipOfInterest = chipsOfInterest[chipsOfInterest.length - 1];
-  //     chipOfInterest.style.backgroundColor = colorOfInterest;
-  //     chipOfInterest.style.color = 'white';
-  //   }
-  // }
 
   /**
    * open dialog to approve or reject term
@@ -234,25 +218,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const vettedFeature = result.data;
-        this.phenotypicFeatures.forEach(feature => {
+
+        // update the mining state of the phenotypic feature
+        for (const feature of this.phenotypicFeatures) {
           if (feature.key === vettedFeature.key) {
             feature.textMiningState = vettedFeature.state;
-            if (feature.textMiningState === MiningState.REJECTED) {
-              const index = this.textMinedFeatures.indexOf(feature.type.toString(), 0);
-              if (index > -1) {
-                this.textMinedFeatures.splice(index, 1);
-              }
-            } else if (feature.textMiningState === MiningState.UNKNOWN || feature.textMiningState === MiningState.APPROVED) {
-              this.textMinedFeatures = [];
-              for (const item of this.phenotypicFeatures) {
-                if (item.textMiningState !== MiningState.REJECTED) {
-                  this.textMinedFeatures.push(item.type.toString());
-                }
-              }
-            }
           }
-        });
+        }
         this.formatText();
+        this.setChips();
       }
     });
   }
@@ -261,23 +235,24 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    * Approve all terms
    */
   approveAll() {
-    this.textMinedFeatures = [];
+    this.textMinedFeatures = undefined;
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.APPROVED;
-      this.textMinedFeatures.push(feature.type.toString());
     });
     this.formatText();
+    this.setChips();
   }
   rejectAll() {
-    this.textMinedFeatures = [];
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.REJECTED;
     });
     this.formatText();
+    this.setChips();
   }
   startOver() {
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
+    this.textMinedFeatures = [];
     this.visible = false;
   }
   addApprovedTerms() {
@@ -290,6 +265,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     // reset table
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
+    this.textMinedFeatures = [];
     this.visible = false;
 
     this.phenotypicFeaturesChange.emit(approvedFeatures);

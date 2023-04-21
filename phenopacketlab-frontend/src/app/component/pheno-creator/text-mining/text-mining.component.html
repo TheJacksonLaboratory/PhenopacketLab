@@ -20,6 +20,36 @@
     <h2>Review text mining results</h2>
     <div [innerHTML]="formattedText | safeText"></div>
   </div>
+
+  <!-- <div *ngIf="!textSearchVisible" class="field col-12">
+    <div class="card flex align-items-center gap-2 flex-wrap">
+      <span *ngFor="let featureName of textMinedFeatures">
+        <p-chip
+          [removable]="true"
+          [style]="getStyleClass(featureName)"
+          (onRemove)="onChipRemove(featureName)"
+        >
+          <div class="p-2">{{ featureName }}</div>
+        </p-chip>
+      </span>
+    </div> -->
+
+    <div *ngIf="!textSearchVisible" class="field col-12">
+      <p-chips
+      [max]="textMinedFeatures?.length || 0"
+      [(ngModel)]="textMinedFeatures"
+      (onRemove)="onChipRemove($event)"
+    >
+      <ng-template let-featureName pTemplate="featureName">
+        <li class="p-chips-token" [style]="getStyleClass(featureName)">
+          {{
+            featureName
+          }}
+        </li>
+      </ng-template>
+    </p-chips>
+  </div>
+
   <div *ngIf="!textSearchVisible" class="field col-4">
     <button
       pButton
@@ -44,97 +74,11 @@
       (click)="rejectAll()"
     ></button>
   </div>
-  <div *ngIf="!textSearchVisible" class="field col-12">
 
-    <!-- <div class="card flex align-items-center gap-2 flex-wrap"></div> -->
-    <div *ngFor="let featureName of textMinedFeatures">
-      <p-chip [label]="featureName" [removable]="true"></p-chip>
-    </div>
-
-    <!-- <p-chips
-      [max]="textMinedFeatures?.length || 0"
-      [(ngModel)]="textMinedFeatures"
-      (onRemove)="onChipRemove($event)"
-    >
-      <ng-template let-featureName pTemplate="featureName">
-        <span [style]="getStyleClass(featureName)">{{
-          featureName
-        }}</span>
-      </ng-template>
-    </p-chips> -->
-  </div>
-
-  <!-- <div *ngIf="true" class="field col-12">
-    <p-table
-      *ngIf="visible"
-      [value]="phenotypicFeatures"
-      dataKey="key"
-      styleClass="p-datatable-gridlines"
-      scrollDirection="horizontal"
-      responsiveLayout="scroll"
-      [resizableColumns]="true"
-      [tableStyle]="{ width: 'max-content' }"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-header">Reviewed phenotypic features</div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th pResizableColumn></th>
-          <th pResizableColumn>ID</th>
-          <th pResizableColumn>Label</th>
-          <th pResizableColumn>Status</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-feature>
-        <tr [pSelectableRow]="feature">
-          <td>
-            <button
-              *ngIf="feature?.textMiningState === stateApproved()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-check"
-              class="p-button-rounded p-button-success p-button-text"
-            ></button>
-            <button
-              *ngIf="feature?.textMiningState === stateUnknown()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-question"
-              class="p-button-rounded p-button-warning p-button-text"
-            ></button>
-            <button
-              *ngIf="feature?.textMiningState === stateRejected()"
-              pButton
-              pRipple
-              type="button"
-              icon="pi pi-times"
-              class="p-button-rounded p-button-danger p-button-text"
-            ></button>
-          </td>
-          <td>{{ feature.type?.id }}</td>
-          <td>{{ feature.type?.label }}</td>
-          <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div> -->
-  <div *ngIf="!textSearchVisible" class="field col-12">
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-3">
     <label for="onset"><b>Age of onset: </b></label>
-    <app-time-element
-      *ngIf="!onsetApplied"
-      id="onset"
-      [timeElement]="onset"
-      [ontologyNodes]="onsetsNodes"
-      [useOntologyClass]="true"
-      (timeElementEvent)="updateAgeOnset($event)"
-      aria-labelledby="onset-label"
-    ></app-time-element>
   </div>
-  <div class="field col-12">
-    <!-- <br *ngIf="onsetApplied"> -->
+  <div class="field col-12 md:col-9">
     <div *ngIf="onsetApplied" class="flex align-items-center">
       {{ onset?.toString() }}
       <button
@@ -149,18 +93,31 @@
       ></button>
     </div>
   </div>
-
-  <div *ngIf="!textSearchVisible" class="field col-6">
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-8">
+    <app-time-element
+      *ngIf="!onsetApplied"
+      id="onset"
+      [timeElement]="onset"
+      [ontologyNodes]="onsetsNodes"
+      [useOntologyClass]="true"
+      (timeElementEvent)="updateAgeOnset($event)"
+      aria-labelledby="onset-label"
+    ></app-time-element>
+  </div>
+  <div
+    *ngIf="!textSearchVisible && !onsetApplied"
+    class="field col-12 md:col-4"
+  >
     <button
       pButton
+      [disabled]="onset === undefined || onset === null"
       type="button"
       label="Apply onset to all features"
       (click)="applyOnset()"
     ></button>
   </div>
-  <div *ngIf="true" class="field col-6"></div>
 
-  <div *ngIf="!textSearchVisible" class="field col-6">
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-4">
     <button
       pButton
       type="button"
@@ -168,4 +125,5 @@
       (click)="addApprovedTerms()"
     ></button>
   </div>
+  <div *ngIf="true" class="field col-12 md:col-8"></div>
 </div>
