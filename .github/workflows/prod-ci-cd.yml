@@ -167,7 +167,7 @@ jobs:
       - name: Build
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
-        run: npm run build
+        run: npm run buildProd
 
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@v0
