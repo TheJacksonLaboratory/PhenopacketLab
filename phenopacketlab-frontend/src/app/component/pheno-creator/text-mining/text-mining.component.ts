@@ -122,6 +122,16 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
+  setChips() {
+    this.textMinedFeatures = undefined;
+    this.textMinedFeatures = [];
+    for (const feature of this.phenotypicFeatures) {
+      if (feature.textMiningState !== MiningState.REJECTED) {
+        this.textMinedFeatures.push(feature.type.toString());
+      }
+    }
+  }
+
   submit() {
     this.textSearchVisible = false;
     this.openSpinnerDialog();
@@ -171,11 +181,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   onChipRemove(featureName) {
-    let myFeature: PhenotypicFeature;
     for (const feature of this.phenotypicFeatures) {
       if (feature.type.toString() === featureName) {
         feature.textMiningState = MiningState.REJECTED;
-        myFeature = feature;
       }
     }
     this.formatText();
@@ -210,20 +218,15 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const vettedFeature = result.data;
+
         // update the mining state of the phenotypic feature
         for (const feature of this.phenotypicFeatures) {
           if (feature.key === vettedFeature.key) {
             feature.textMiningState = vettedFeature.state;
           }
         }
-        // set textMinedFeatures
-        this.textMinedFeatures = [];
-        for (const feature of this.phenotypicFeatures) {
-          if (feature.textMiningState !== MiningState.REJECTED) {
-            this.textMinedFeatures.push(feature.type.toString());
-          }
-        }
         this.formatText();
+        this.setChips();
       }
     });
   }
@@ -232,23 +235,24 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    * Approve all terms
    */
   approveAll() {
-    this.textMinedFeatures = [];
+    this.textMinedFeatures = undefined;
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.APPROVED;
-      this.textMinedFeatures.push(feature.type.toString());
     });
     this.formatText();
+    this.setChips();
   }
   rejectAll() {
-    this.textMinedFeatures = [];
     this.phenotypicFeatures.forEach(feature => {
       feature.textMiningState = MiningState.REJECTED;
     });
     this.formatText();
+    this.setChips();
   }
   startOver() {
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
+    this.textMinedFeatures = [];
     this.visible = false;
   }
   addApprovedTerms() {
@@ -261,6 +265,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     // reset table
     this.textSearchVisible = true;
     this.phenotypicFeatures = [];
+    this.textMinedFeatures = [];
     this.visible = false;
 
     this.phenotypicFeaturesChange.emit(approvedFeatures);

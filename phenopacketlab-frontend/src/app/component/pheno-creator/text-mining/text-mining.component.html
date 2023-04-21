@@ -21,29 +21,33 @@
     <div [innerHTML]="formattedText | safeText"></div>
   </div>
 
-  <div *ngIf="!textSearchVisible" class="field col-12">
+  <!-- <div *ngIf="!textSearchVisible" class="field col-12">
     <div class="card flex align-items-center gap-2 flex-wrap">
       <span *ngFor="let featureName of textMinedFeatures">
         <p-chip
-          [label]="featureName"
           [removable]="true"
           [style]="getStyleClass(featureName)"
           (onRemove)="onChipRemove(featureName)"
-        ></p-chip>
+        >
+          <div class="p-2">{{ featureName }}</div>
+        </p-chip>
       </span>
-    </div>
+    </div> -->
 
-    <!-- <p-chips
+    <div *ngIf="!textSearchVisible" class="field col-12">
+      <p-chips
       [max]="textMinedFeatures?.length || 0"
       [(ngModel)]="textMinedFeatures"
       (onRemove)="onChipRemove($event)"
     >
       <ng-template let-featureName pTemplate="featureName">
-        <span [style]="getStyleClass(featureName)">{{
-          featureName
-        }}</span>
+        <li class="p-chips-token" [style]="getStyleClass(featureName)">
+          {{
+            featureName
+          }}
+        </li>
       </ng-template>
-    </p-chips> -->
+    </p-chips>
   </div>
 
   <div *ngIf="!textSearchVisible" class="field col-4">
@@ -100,7 +104,10 @@
       aria-labelledby="onset-label"
     ></app-time-element>
   </div>
-  <div *ngIf="!textSearchVisible && !onsetApplied" class="field col-12 md:col-4">
+  <div
+    *ngIf="!textSearchVisible && !onsetApplied"
+    class="field col-12 md:col-4"
+  >
     <button
       pButton
       [disabled]="onset === undefined || onset === null"
@@ -119,5 +126,4 @@
     ></button>
   </div>
   <div *ngIf="true" class="field col-12 md:col-8"></div>
-
 </div>
