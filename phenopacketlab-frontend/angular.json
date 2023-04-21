@@ -65,6 +65,22 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "sqa": {
+              "optimization": false,
+              "sourceMap": true,
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sqa.ts"
+                }
+              ]
             }
           }
         },
@@ -79,6 +95,9 @@
             },
             "production": {
               "browserTarget": "frontend:build:production"
+            },
+            "sqa": {
+              "browserTarget": "frontend:build:sqa"
             }
           }
         },
