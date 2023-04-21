@@ -20,30 +20,7 @@
     <h2>Review text mining results</h2>
     <div [innerHTML]="formattedText | safeText"></div>
   </div>
-  <div *ngIf="!textSearchVisible" class="field col-4">
-    <button
-      pButton
-      type="button"
-      label="Start over"
-      (click)="startOver()"
-    ></button>
-  </div>
-  <div *ngIf="!textSearchVisible" class="field col-4">
-    <button
-      pButton
-      type="button"
-      label="Approve all"
-      (click)="approveAll()"
-    ></button>
-  </div>
-  <div *ngIf="!textSearchVisible" class="field col-4">
-    <button
-      pButton
-      type="button"
-      label="Reject all"
-      (click)="rejectAll()"
-    ></button>
-  </div>
+
   <div *ngIf="!textSearchVisible" class="field col-12">
     <div class="card flex align-items-center gap-2 flex-wrap">
       <span *ngFor="let featureName of textMinedFeatures">
@@ -69,20 +46,35 @@
     </p-chips> -->
   </div>
 
-  <div *ngIf="!textSearchVisible" class="field col-12">
-    <label for="onset"><b>Age of onset: </b></label>
-    <app-time-element
-      *ngIf="!onsetApplied"
-      id="onset"
-      [timeElement]="onset"
-      [ontologyNodes]="onsetsNodes"
-      [useOntologyClass]="true"
-      (timeElementEvent)="updateAgeOnset($event)"
-      aria-labelledby="onset-label"
-    ></app-time-element>
+  <div *ngIf="!textSearchVisible" class="field col-4">
+    <button
+      pButton
+      type="button"
+      label="Start over"
+      (click)="startOver()"
+    ></button>
   </div>
-  <div class="field col-12">
-    <!-- <br *ngIf="onsetApplied"> -->
+  <div *ngIf="!textSearchVisible" class="field col-4">
+    <button
+      pButton
+      type="button"
+      label="Approve all"
+      (click)="approveAll()"
+    ></button>
+  </div>
+  <div *ngIf="!textSearchVisible" class="field col-4">
+    <button
+      pButton
+      type="button"
+      label="Reject all"
+      (click)="rejectAll()"
+    ></button>
+  </div>
+
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-3">
+    <label for="onset"><b>Age of onset: </b></label>
+  </div>
+  <div class="field col-12 md:col-9">
     <div *ngIf="onsetApplied" class="flex align-items-center">
       {{ onset?.toString() }}
       <button
@@ -97,18 +89,28 @@
       ></button>
     </div>
   </div>
-
-  <div *ngIf="!textSearchVisible" class="field col-6">
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-8">
+    <app-time-element
+      *ngIf="!onsetApplied"
+      id="onset"
+      [timeElement]="onset"
+      [ontologyNodes]="onsetsNodes"
+      [useOntologyClass]="true"
+      (timeElementEvent)="updateAgeOnset($event)"
+      aria-labelledby="onset-label"
+    ></app-time-element>
+  </div>
+  <div *ngIf="!textSearchVisible && !onsetApplied" class="field col-12 md:col-4">
     <button
       pButton
+      [disabled]="onset === undefined || onset === null"
       type="button"
       label="Apply onset to all features"
       (click)="applyOnset()"
     ></button>
   </div>
-  <div *ngIf="true" class="field col-6"></div>
 
-  <div *ngIf="!textSearchVisible" class="field col-6">
+  <div *ngIf="!textSearchVisible" class="field col-12 md:col-4">
     <button
       pButton
       type="button"
@@ -116,4 +118,6 @@
       (click)="addApprovedTerms()"
     ></button>
   </div>
+  <div *ngIf="true" class="field col-12 md:col-8"></div>
+
 </div>
