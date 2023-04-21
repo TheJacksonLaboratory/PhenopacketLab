@@ -124,7 +124,7 @@ jobs:
       - name: Build
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
-        run: npm run build
+        run: npm run buildProd
 
       - run: sudo apt-get install xvfb
       - name: Test
