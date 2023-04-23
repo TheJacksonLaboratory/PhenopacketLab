@@ -10,9 +10,9 @@
   "scripts": {
     "ng": "node --max_old_space_size=4096 ./node_modules/.bin/ng",
     "start": "ng serve -c dev",
-    "build": "ng build --configuration=dev --base-href /app/ --deploy-url=/phenopacketlab-frontend-dev-01/",
-    "buildProd": "ng build --aot --configuration=production --base-href /app/ --deploy-url=/phenopacketlab-frontend-prod-01/",
-    "buildSqa": "ng build --aot --configuration=sqa --base-href /app/ --deploy-url=/phenopacketlab-frontend-sqa-01/",
+    "build": "ng build --configuration=dev --base-href /phenopacketlab-frontend-dev-01/ --deploy-url /phenopacketlab-frontend-dev-01/",
+    "buildProd": "ng build --aot --configuration=production --base-href /phenopacketlab-frontend-prod-01/ --deploy-url /phenopacketlab-frontend-prod-01/",
+    "buildSqa": "ng build --aot --configuration=sqa --base-href /phenopacketlab-frontend-sqa-01/ --deploy-url /phenopacketlab-frontend-sqa-01/",
     "buildWatch": "ng build --aot --configuration=dev --watch=true --base-href /app/",
     "test": "ng test --watch false --progress=false",
     "lint": "ng lint",
