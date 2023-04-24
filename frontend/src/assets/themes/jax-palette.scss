@@ -298,9 +298,9 @@ $jax-green: (
 );
 
 $jax-white:(
-  400: #fffff,
+  400: #ffffff,
   contrast:(
-    50: #fffff
+    50: #ffffff
     )
 );
 
@@ -311,3 +311,6 @@ $warn:    mat-palette($jax-red);
 $ghost:   mat-palette($jax-white);
 $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

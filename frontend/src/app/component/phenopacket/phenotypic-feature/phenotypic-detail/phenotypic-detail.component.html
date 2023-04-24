@@ -1,0 +1,48 @@
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <h2>
+      <b>{{ phenotypicFeature.type?.label }} </b>
+    </h2>
+    <h3><a href="https://hpo.jax.org/app/browse/term/{{ phenotypicFeature.type?.id }}" target="_blank">{{ phenotypicFeature.type?.id }}</a></h3>
+  </div>
+
+  <div class="field col-12">
+    <p>
+      {{ phenotypicFeature.description }}
+    </p>
+  </div>
+  <div class="field col-12"><b>Status:</b> {{ phenotypicFeature.excluded ? 'Excluded' : 'Observed' }}</div>
+  <div class="field col-12 md:col-6"><b>Onset:</b> <span *ngIf="phenotypicFeature.onset" [innerHTML]="phenotypicFeature.onset?.toString() | safeText"></span></div>
+  <div class="field col-12 md:col-6"><b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}</div>
+  <div class="field col-12 md:col-6"><b>Severity:</b> <span *ngIf="phenotypicFeature.severity" [innerHTML]="phenotypicFeature.severity?.toString() | safeText"></span></div>
+  <div class="field col-12 md:col-6"><b>Modifiers:</b> <span [innerHTML]="getModifiers() | safeText"></span></div>
+  <div class="field col-12">
+    <p-table
+      [value]="phenotypicFeature?.evidences"
+      dataKey="key"
+      styleClass="phenopacket-list-tabs"
+    >
+      <ng-template pTemplate="caption">
+        <div class="table-header">Evidences</div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn style="min-width: 2rem">ID</th>
+          <th pResizableColumn>Name</th>
+          <th pResizableColumn>Reference ID</th>
+          <th pResizableColumn>Reference Name</th>
+          <th pResizableColumn>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-evidence>
+        <tr>
+          <td ><span *ngIf="evidence.evidenceCode" [innerHTML]="evidence.evidenceCode?.toString() | safeText"></span></td>
+          <td>{{ evidence.evidenceCode?.label }}</td>
+          <td>{{ evidence.reference?.id }}</td>
+          <td>{{ evidence.reference?.reference }}</td>
+          <td>{{ evidence.reference?.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

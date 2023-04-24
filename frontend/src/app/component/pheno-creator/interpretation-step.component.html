@@ -1,0 +1,90 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <as-split direction="vertical">
+      <as-split-area [size]="75">
+        <p-card
+          header="Create an interpretation"
+          subheader="Use the UI below to create or edit an interpretation."
+        >
+          <app-interpretation-edit
+            [interpretation]="selectedInterpretation"
+            [phenopacket]="phenopacket"
+            [profile]="profileSelection"
+            (interpretationChange)="addInterpretation($event)"
+          ></app-interpretation-edit>
+        </p-card>
+      </as-split-area>
+      <as-split-area [size]="25">
+        <p-card
+          header="Created interpretation(s)"
+          subheader="List of created interpretations with a Diagnosis (a disease and genomic interpretation)."
+        >
+          <p-table
+            *ngIf="visible"
+            [value]="interpretations"
+            [(selection)]="selectedInterpretation"
+            styleClass="p-datatable-gridlines"
+            scrollDirection="horizontal"
+            responsiveLayout="scroll"
+            [resizableColumns]="true"
+            [tableStyle]="{ width: 'max-content' }"
+            dataKey="key"
+            selectionMode="single"
+            (onRowSelect)="onRowSelect($event)"
+          >
+            <ng-template pTemplate="caption">
+              <div class="table-header">Added interpretations</div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th pResizableColumn>ID</th>
+                <th pResizableColumn>Progress status</th>
+                <th pResizableColumn>Diagnosis</th>
+                <th pResizableColumn></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-interpretation>
+              <tr [pSelectableRow]="interpretation">
+                <td>{{ interpretation.id }}</td>
+                <td>{{ interpretation.progressStatus }}</td>
+                <td>{{ interpretation.diagnosis?.disease?.toString() }}</td>
+                <td>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning"
+                    (click)="deleteInterpretation(interpretation)"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </as-split-area>
+    </as-split>
+  </div>
+  <div class="field col-12">
+      <div class="flex justify-content-between flex-wrap">
+        <div class="flex align-items-center justify-content-center margin-left">
+          <p-button
+            label="Back"
+            (onClick)="prevPage()"
+            icon="pi pi-angle-left"
+            iconPos="left"
+          ></p-button>
+        </div>
+        <div class="flex align-items-center justify-content-center margin-right">
+          <p-button
+            label="Next"
+            (onClick)="nextPage()"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>

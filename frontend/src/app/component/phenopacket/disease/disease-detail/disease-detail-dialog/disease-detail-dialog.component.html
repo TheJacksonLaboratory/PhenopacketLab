@@ -1,0 +1,18 @@
+<app-disease-edit [disease]="disease" (diseaseChange)="updateDisease($event)"></app-disease-edit>
+
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Ok"
+    (click)="onOkClick()"
+  ></button>
+</div>

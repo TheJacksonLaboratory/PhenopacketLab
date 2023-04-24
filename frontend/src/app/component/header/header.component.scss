@@ -1,0 +1,57 @@
+.header {
+  min-height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  display: flex;
+  color: #ffffff;
+  background: #26A69A;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .jax-logo {
+      height: 50px;
+      padding: .25rem;
+    }
+    .jax-logo:hover {
+      opacity: .75
+    }
+    .text {
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      margin: 0 0 0 .5rem;
+      opacity: 0.85;
+    }
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    .action {
+      position: relative;
+      padding: 10px;
+      color: #fff;
+      text-decoration: none;
+      text-align: center;
+      text-transform: uppercase;
+
+      &:hover {
+        opacity: .75;
+        scale: 1.25;
+      }
+    }
+  }
+}
+
+

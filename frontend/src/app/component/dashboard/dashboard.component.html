@@ -1,28 +1,28 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>Angular components for Phenopacket</h3>
-                                <p>Click on the sidebar to select examples of Angular UI.</p>
-                                <p>TODO: the data used to create the trees should be downloaded from one of the
-                                    phenotype data sources using BioDownload. Finally, the SelectableOntologyTree node
-                                    behaviour needs to have inherited behaviour for the toggle state of each tree node.
-                                </p>
-                                <p>This is a response from the Spring Boot backend: {{message}}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <br>
-                        </div>
+<p-card header="Phenopacket UI creator/editor">
+  <div class="grid p-fluid">
+    <div class="field col-12">
+      <p>
+        The Phenopacket Lab application is meant to be a user interface to
+        upload, edit and save Phenopackets. Phenopackets are JSON or YAML files
+        with a structure that follows the
+        <a
+          href="https://phenopacket-schema.readthedocs.io/en/master/basics.html"
+          target="_blank"
+          >Phenopacket Schema</a
+        >
+        standard. It is an open standard for sharing disease and phenotype
+        information to improve our ability to understand, diagnose and treat
+        both rare and common diseases.
+      </p>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      <p>
+        This application is still under development and allows currently only
+        the upload of JSON phenopacket files. Future features will include
+        Phenopacket saving, export and search. A user authentication will also
+        be implemented in order to enable users to save their phenopackets on
+        the website. Finally a Phenopacket wizard creation is being implemented
+        to ease the process of creating a Phenopacket from scratch.
+      </p>
     </div>
-</div>
+  </div>
+</p-card>

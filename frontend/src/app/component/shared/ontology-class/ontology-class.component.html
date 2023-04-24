@@ -1,0 +1,12 @@
+<div class="p-fluid grid formgrid">
+  <div class="field col-12 md:col-6">
+    <label for="label" class="block">Label</label>
+    <input id="label" aria-describedby="label-help" pInputText [(ngModel)]="label" (change)="updateOntologyClass()"/>
+    <small id="label-help" class="block">Enter the label for the ontology class.</small>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="id" class="block">Id</label>
+    <input id="id" aria-describedby="id-help" pInputText [(ngModel)]="id" (change)="updateOntologyClass()"/>
+    <small id="id-help" class="block">Enter the ID for the ontology class.</small>
+  </div>
+</div>

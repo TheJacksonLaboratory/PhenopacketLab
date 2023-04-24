@@ -1,0 +1,34 @@
+[
+  {
+    "name": "UNKNOWN_SEX",
+    "definition": "Not known, observed, recorded; or reported as unknown by the data contributor.",
+    "synonyms": [
+      "Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated"
+    ],
+    "id": { "value": "NCIT:C17998", "prefix": "NCIT", "id": "C17998" }
+  },
+  {
+    "name": "FEMALE",
+    "definition": "An animal who is observed by researcher or clinician to be female, the sex that ordinarily produces ova.",
+    "synonyms": [
+      "Female", "FEMALE", "Female Phenotype"
+    ],
+    "id": { "value": "NCIT:C46113", "prefix": "NCIT", "id": "C46113" }
+  },
+  {
+    "name": "MALE",
+    "definition": "An animal who is observed by researcher or clinician to be male, the sex that ordinarily produces sperm.",
+    "synonyms": [
+      "Male", "MALE", "Male Phenotype"
+    ],
+    "id": { "value": "NCIT:C46112", "prefix": "NCIT", "id": "C46112" }
+  },
+  {
+    "name": "OTHER",
+    "definition": "A person (one of unisexual specimens) who is born with genitalia and/or secondary sexual characteristics of indeterminate sex, or which combine features of both sexes.",
+    "synonyms": [
+      "Intersex", "Intersexed", "UNDIFFERENTIATED"
+    ],
+    "id": { "value": "NCIT:C45908", "prefix": "NCIT", "id": "C45908" }
+  }
+]

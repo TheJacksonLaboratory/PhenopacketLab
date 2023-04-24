@@ -1,12 +1,30 @@
-<div class="wrapper">
-    <div class="sidebar" data-color="blue" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
-        <app-sidebar></app-sidebar>
+<app-header (toggleNav)="sideNavOpen = $event"></app-header>
+<p-toast baseZIndex="11" position="bottom-right" showTransitionOption="100ms ease-out" hideTransitionOptions="100ms ease-in"></p-toast>
+<div class="main flex-row">
+  <p-sidebar *ngIf="activeSidenav" [visible]="activeSidenav" styleClass="p-sidebar-sm" class="sidebar flex-1" [showCloseIcon]="false" [closeOnEscape]="false" transitionOptions="0ms">
+    <app-sidebar></app-sidebar>
+  </p-sidebar>
+  <div class="content-wrapper flex flex-column" [ngClass]="{'full': activeSidenav === false, 'pl-short': activeSidenav === true}">
+    <div class="content">
+      <router-outlet></router-outlet>
     </div>
-    <div class="main-panel">
-        <!-- <app-navbar></app-navbar> -->
-        <router-outlet></router-outlet>
-        <!-- <app-footer></app-footer> -->
-
+    <div class="footer flex flex-row grid">
+      <div class="col-3 footer-hr">
+        <hr>
+      </div>
+      <div class="col-2 footer-link">
+        <a href="https://www.jax.org/" target="_blank">The Jackson Laboratory</a>
+      </div>
+      <div class="col-2 footer-link">
+        <a href="https://github.com/TheJacksonLaboratory/PhenopacketLab/issues/new" target="_blank">Report Issue</a>
+      </div>
+      <div class="col-2 footer-link">
+        <a href="https://raw.githubusercontent.com/TheJacksonLaboratory/PhenopacketLab/development/LICENSE" target="_blank">License</a>
+      </div>
+      <div class="col-3 footer-hr">
+        <hr>
+      </div>
     </div>
+  </div>
 </div>
 

@@ -1,0 +1,33 @@
+{
+  "payload": "Here we present a 13-year-old girl with inherited myopathy associated with collagenopathy.\n\nDuring the neonatal period weak sucking, decreased muscle tone, joint laxity and hyperextension of elbows, knees and wrists were observed.\n\nNo joint dislocations or sprains occurred. Mental development, including speech, was normal.",
+  "concepts": [
+    {
+      "id": "HP:0003198",
+      "label": "Myopathy",
+      "start": 50,
+      "end": 58,
+      "excluded": false
+    },
+    {
+      "id": "HP:0002033",
+      "label": "Poor suck",
+      "start": 119,
+      "end": 131,
+      "excluded": false
+    },
+    {
+      "id": "HP:0001388",
+      "label": "Joint laxity",
+      "start": 156,
+      "end": 168,
+      "excluded": false
+    },
+    {
+      "id": "HP:0001373",
+      "label": "Joint dislocation",
+      "start": 235,
+      "end": 253,
+      "excluded": true
+    }
+  ]
+}

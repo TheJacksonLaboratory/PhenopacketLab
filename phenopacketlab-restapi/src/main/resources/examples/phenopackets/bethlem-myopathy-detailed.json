@@ -1,0 +1,465 @@
+{
+  "id": "bethlem-myopathy-phenopacket-id",
+  "subject": {
+    "id": "proband A",
+    "alternateIds": ["son", "patient"],
+    "dateOfBirth": "1992-05-12T00:00:00Z",
+    "timeAtLastEncounter": {
+      "age": {
+        "iso8601duration": "P14Y"
+      }
+    },
+    "vitalStatus": {
+      "status": "ALIVE"
+    },
+    "sex": "MALE",
+    "karyotypicSex": "XY",
+    "taxonomy": {
+      "id": "NCBITaxon:9606",
+      "label": "Homo sapiens"
+    }
+  },
+  "phenotypicFeatures": [{
+    "description": "The defect was observed at the 1st visit.",
+    "type": {
+      "id": "HP:0001629",
+      "label": "Ventricular septal defect"
+    },
+    "severity": {
+      "id": "HP:0012826",
+      "label": "Moderate"
+    },
+    "modifiers": [{
+      "id": "HP:0003677",
+      "label": "Slowly progressive"
+    }, {
+      "id": "HP:0045089",
+      "label": "Distinctive finding"
+    }],
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0011463",
+        "label": "Childhood onset"
+      }
+    },
+    "resolution": {
+      "age": {
+        "iso8601duration": "P13Y"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "description": "No coarse features were apparent.",
+    "type": {
+      "id": "HP:0000280",
+      "label": "Coarse facial features"
+    },
+    "excluded": true,
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0008689",
+      "label": "Bilateral cryptorchidism"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0003577",
+        "label": "Congenital onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0001561",
+      "label": "Polyhydramnios"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0011461",
+        "label": "Fetal onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0000054",
+      "label": "Micropenis"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0003577",
+        "label": "Congenital onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0001798",
+      "label": "Anonychia"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0003577",
+        "label": "Congenital onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0001320",
+      "label": "Cerebellar vermis hypoplasia"
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0000518",
+      "label": "Cataract"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0003593",
+        "label": "Infantile onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0002198",
+      "label": "Dilated fourth ventricle"
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }, {
+    "type": {
+      "id": "HP:0100333",
+      "label": "Unilateral cleft lip"
+    },
+    "onset": {
+      "ontologyClass": {
+        "id": "HP:0003577",
+        "label": "Congenital onset"
+      }
+    },
+    "evidence": [{
+      "evidenceCode": {
+        "id": "ECO:0000033",
+        "label": "author statement supported by traceable reference"
+      },
+      "reference": {
+        "id": "PMID:30808312",
+        "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+      }
+    }]
+  }],
+  "measurements": [{
+    "description": "Platelet measurement",
+    "assay": {
+      "id": "LOINC:26515-7",
+      "label": "Platelets [#/volume] in Blood"
+    },
+    "value": {
+      "quantity": {
+        "unit": {
+          "id": "UO:0000316",
+          "label": "cells per microliter"
+        },
+        "value": 24000.0,
+        "referenceRange": {
+          "unit": {
+            "id": "UO:0000316",
+            "label": "cells per microliter"
+          },
+          "low": 150000.0,
+          "high": 450000.0
+        }
+      }
+    },
+    "timeObserved": {
+      "timestamp": "2020-10-01T10:54:20.123Z"
+    },
+    "procedure": {
+      "code": {
+        "id": "C173496",
+        "label": "Peripheral Blood"
+      },
+      "performed": {
+        "timestamp": "2020-09-29T10:54:20.012Z"
+      }
+    }
+  },
+  {
+    "description": "Customized blood pressure measurement description.",
+    "assay": {
+      "id": "55417-0",
+      "label": "Short blood pressure panel"
+    },
+    "complexValue": {
+      "typedQuantities": [
+        {
+          "type": {
+            "id": "NCIT:C25298",
+            "label": "Systolic Blood Pressure"
+          },
+          "quantity": {
+            "unit": {
+              "id": "NCIT:C49670",
+              "label": "Millimeter of Mercury"
+            },
+            "value": 165.0,
+            "referenceRange": {
+              "unit": {
+                "id": "NCIT:C49670",
+                "label": "Millimeter of Mercury"
+              },
+              "low": 110.0,
+              "high": 125.0
+            }
+          }
+        },
+        {
+          "type": {
+            "id": "NCIT:C25299",
+            "label": "Diastolic Blood Pressure"
+          },
+          "quantity": {
+            "unit": {
+              "id": "NCIT:C49670",
+              "label": "Millimeter of Mercury"
+            },
+            "value": 105.0,
+            "referenceRange": {
+              "unit": {
+                "id": "NCIT:C49670",
+                "label": "Millimeter of Mercury"
+              },
+              "low": 70.0,
+              "high": 80.0
+            }
+          }
+        }
+      ]
+    },
+    "timeObserved": {
+      "timestamp": "2020-10-01T10:54:20.123Z"
+    }
+  }],
+  "interpretations": [{
+    "id": "arbitrary interpretation id",
+    "progressStatus": "COMPLETED",
+    "diagnosis": {
+      "disease": {
+        "id": "OMIM:158810",
+        "label": "Bethlem myopathy 1"
+      },
+      "genomicInterpretations": [{
+        "subjectOrBiosampleId": "arbitrary interpretation id",
+        "interpretationStatus": "CAUSATIVE",
+        "variantInterpretation": {
+          "acmgPathogenicityClassification": "PATHOGENIC",
+    	  "therapeuticActionability": "UNKNOWN_ACTIONABILITY",
+          "variationDescriptor": {
+            "id": "variant id",
+            "expressions": [{
+              "syntax": "hgvs",
+              "value": "NM_001848.2:c.877G\u003eA"
+            }],
+            "allelicState": {
+              "id": "GENO:0000135",
+              "label": "heterozygous"
+            },
+            "geneContext": {
+              "valueId": "HGNC:3477",
+              "symbol": "ETF1",
+              "alternateIds": [
+                "ensembl:ENSG00000120705",
+                "ncbigene:2107",
+                "ucsc:uc003ldc.6",
+                "OMIM:600285"
+              ],
+              "alternateSymbols": [
+                "SUP45L1",
+                "ERF1",
+                "ERF",
+                "eRF1",
+                "TB3-1",
+                "RF1"
+              ],
+              "xrefs": [
+                "VGNC:97422",
+                "MGI:2385071",
+                "RGD:1305712",
+                "ensembl:ENSRNOG00000019450",
+                "ncbigene:307503"
+              ]
+            },
+            "vcfRecord": {
+              "genomeAssembly": "GRCh38",
+              "chrom": "Y",
+              "pos": 123456,
+              "id": "sequence-v-id",
+              "ref": "TGCTGT",
+              "alt": "T",
+              "filter": "PASS",
+              "info": "DP=11"
+            }
+          }
+        }
+      }]
+    }
+  }],
+  "diseases": [{
+    "term": {
+      "id": "OMIM:158810",
+      "label": "Bethlem myopathy 1"
+    },
+    "onset": {
+      "age": {
+        "iso8601duration": "P3Y"
+      }
+    }
+  },
+  {
+    "term": {
+      "id": "OMIM:616471",
+      "label": "Bethlem myopathy 2"
+    },
+    "excluded": true
+  }],
+  "medicalActions": [{
+    "treatment": {
+      "agent": {
+        "id": "CHEBI:41879",
+        "label": "dexamethasone"
+      },
+      "doseIntervals": [{
+        "quantity": {
+          "unit": {
+            "id": "UO:0000022",
+            "label": "milligram"
+          },
+          "value": 6.0
+        },
+        "scheduleFrequency": {
+          "id": "NCIT:C125004",
+          "label": "Once Daily"
+        },
+        "interval": {
+          "start": "2020-10-01T00:00:00Z",
+          "end": "2020-10-31T00:00:00Z"
+        }
+      }],
+      "drugType": "PRESCRIPTION",
+      "cumulativeDose": {
+        "unit": {
+          "id": "UO:0000022",
+          "label": "milligram"
+        },
+        "value": 180.0
+      }
+    }
+  }],
+  "metaData": {
+    "created": "2021-05-14T10:35:00Z",
+    "createdBy": "anonymous biocurator",
+    "resources": [{
+      "id": "hp",
+      "name": "human phenotype ontology",
+      "url": "http://purl.obolibrary.org/obo/hp.owl",
+      "version": "2021-08-02",
+      "namespacePrefix": "HP",
+      "iriPrefix": "http://purl.obolibrary.org/obo/HP_"
+    }, {
+      "id": "geno",
+      "name": "Genotype Ontology",
+      "url": "http://purl.obolibrary.org/obo/geno.owl",
+      "version": "2020-03-08",
+      "namespacePrefix": "GENO",
+      "iriPrefix": "http://purl.obolibrary.org/obo/GENO_"
+    }],
+    "phenopacketSchemaVersion": "2.0",
+    "externalReferences": [{
+      "id": "PMID:30808312",
+      "description": "COL6A1 mutation leading to Bethlem myopathy with recurrent hematuria: a case report"
+    }]
+  }
+}

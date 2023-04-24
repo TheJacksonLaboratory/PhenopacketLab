@@ -1,0 +1,107 @@
+<p-card>
+  <ng-template pTemplate="title"> Validate phenopacket </ng-template>
+  <ng-template pTemplate="subtitle">
+    Before the phenopacket is created, it has to be validated and its
+    corresponding metadata created.
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="grid p-fluid">
+      <div class="field col-12"><b>Created:</b> {{ created }}</div>
+      <div class="field col-12">
+        <b>Phenopacket schema version:</b> {{ schemaVersion }}
+      </div>
+      <div class="field col-6">
+        <label for="createdBy"><b>Created by:</b></label>
+        <span>
+          <p-inplace
+            id="createdBy"
+            closable="closable"
+            [style]="{ 'min-height': '33px' }"
+            [active]="active"
+          >
+            <ng-template pTemplate="display">
+              {{ createdByPrefix }}{{ createdBySuffix }} <i class="pi pi-user-edit"></i>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <!-- <input
+                type="text"
+                [(ngModel)]="createdByPrefix"
+                pInputText
+                pTooltip="Name of person who created the phenopacket"
+                tooltipPosition="bottom"
+              /> -->
+              <!-- <div style="text-align: center;">{{ createdByPrefix }}</div> -->
+              <p-inputMask
+                mask="9999-9999-9999-999*"
+                [(ngModel)]="createdBySuffix"
+                placeholder="999-9999-9999-999*"
+                pTooltip="ORCiD"
+                tooltipPosition="bottom"
+              ></p-inputMask>
+            </ng-template>
+          </p-inplace>
+        </span>
+      </div>
+      <div class="field col-6">
+        <label for="submittedBy"><b>Submitted by:</b></label>
+        <span>
+          <p-inplace
+            id="submittedBy"
+            closable="closable"
+            [style]="{ 'min-height': '33px' }"
+            [active]="active"
+          >
+            <ng-template pTemplate="display">
+              {{ submittedByPrefix }}{{ submittedBySuffix }} <i class="pi pi-user-edit"></i>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <!-- <input
+                type="text"
+                [(ngModel)]="submittedByPrefix"
+                pInputText
+                pTooltip="Name of person who submitted the phenopacket"
+                tooltipPosition="bottom"
+              /> -->
+              <!-- {{ submittedByPrefix }} -->
+              <p-inputMask
+                mask="9999-9999-9999-999*"
+                [(ngModel)]="submittedBySuffix"
+                placeholder="999-9999-9999-999*"
+                pTooltip="ORCiD"
+                tooltipPosition="bottom"
+              ></p-inputMask>
+            </ng-template>
+          </p-inplace>
+        </span>
+      </div>
+    </div>
+    <div class="flex justify-content-start flex-wrap">
+      <p-button
+        (onClick)="validate()"
+        label="Validate"
+        styleClass="p-button"
+      ></p-button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-between flex-wrap">
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Back"
+          (onClick)="prevPage()"
+          icon="pi pi-angle-left"
+          iconPos="left"
+        ></p-button>
+      </div>
+      <div class="flex align-items-center justify-content-center">
+        <p-button
+          label="Complete"
+          [disabled]="disabled"
+          (onClick)="complete()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>

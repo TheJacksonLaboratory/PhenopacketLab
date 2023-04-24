@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Assay:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ getAssay() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Measurement value:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ getMeasurementValue() }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="row">
+      <div class="col-md-12">
+        <b>Time of measurement:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ getTimeOfMeasurement() }}
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Procedure:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                Code:
+                <br />
+                {{ procedureCode?.toString() }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                Body site:
+                <br />
+                {{ bodySite?.toString() }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                Performed on:
+                <br />
+                {{ performed?.toString() }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12">
+        <b>Description:</b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{ description }}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-1">
+    <button
+      (click)="openEditDialog()"
+      mat-icon-button
+      type="submit"
+      class="pull-right"
+      matTooltip="Edit"
+      [matTooltipShowDelay]="2000"
+      disabled="true"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>

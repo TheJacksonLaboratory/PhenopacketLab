@@ -1,0 +1,103 @@
+<div class="about grid static-content-profile">
+  <div class="wrapper col-8 col-offset-2">
+    <div class="subsection">
+      <h2 class="subsection-title">About</h2>
+      <p>
+        An application to upload, edit and save Phenopackets. Phenopackets are JSON or YAML
+        files with a structure that follows the Phenopacket Schema
+        standard. An open standard for sharing disease and phenotype
+        information to improve our ability to understand, diagnose and
+        treat both rare and common diseases. <span class="text-red-300">This application is still under development and
+        only allows upload of JSON phenopacket files.</span> Our current roadmap includes creation, saving,
+        and searching of phenopackets as well as user authentication.
+      </p>
+      <div class="action-wrapper">
+        <a pButton class="p-button-sm" label="View Schema" href="https://phenopacket-schema.readthedocs.io/en/master/basics.html" target="_blank"></a>
+        <a pButton class="p-button-sm p-button-secondary" label="Request New Feature" href="https://github.com/TheJacksonLaboratory/PhenopacketLab/issues/new" target="_blank"></a>
+      </div>
+    </div>
+    <div class="subsection team">
+      <h2 class="subsection-title flex">Our Team</h2>
+      <div class="grid">
+        <div class="contact-card col-12 md:col-3" *ngFor="let contact of contacts">
+          <div class="contact-img">
+            <img [src]="contact.src" [alt]="contact.name">
+          </div>
+          <div class="contact-bio">
+            <h3 class="contact-name">{{contact.name}}</h3>
+            <h5 class="contact-title">{{contact.title}}</h5>
+            <div class="linkouts">
+              <a [href]="contact.external_link" target="_blank">
+                <i class="pi pi-globe"></i>
+              </a>
+              <a class="ml-3" [href]="'mailto:' + contact.email" target="_blank">
+                <i class="pi pi-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="subsection alt grid publications">
+        <h2 class="subsection-title">Relevant Publications</h2>
+        <div class="col-md-10">
+          <ul>
+            <li>
+              <h4>
+                <a
+                        href="https://doi.org/10.1002/ggn2.202200016"
+                        target="_blank"
+                >
+                  GA4GH Phenopackets: A Practical Introduction
+                </a>
+              </h4>
+              <p>
+                Ladewig, M. S., Jacobsen, J. O. B., Wagner, A. H., Danis,
+                D., El Kassaby, B., Gargano, M., Groza, T., Baudis, M.,
+                Steinhaus, R., Seelow, D., Bechrakis, N. E., Mungall, C.
+                J., Schofield, P. N., Elemento, O., Smith, L., McMurry, J.
+                A., Munoz-Torres, M., Haendel, M. A., Robinson, P. N.
+                <br />
+                Advanced Genetics 2022, 2200016.
+                https://doi.org/10.1002/ggn2.202200016
+              </p>
+            </li>
+            <br />
+            <li>
+              <h4>
+                <a
+                        href="https://doi.org/10.1038/s41587-022-01357-4"
+                        target="_blank"
+                >
+                  The GA4GH Phenopacket schema defines a computable
+                  representation of clinical data
+                </a>
+              </h4>
+              <p>
+                Jacobsen, J.O.B, Baudis, M., Baynam, G.S., Beckmann, J.S.,
+                Beltran, S., Buske, O.J., Callahan, T.J., Chute, C.J.,
+                Courtot, M., Danis, D., Elemento, O., Essenwanger A.,
+                Freimuth, R.R., Gargano, M.A, Groza, T., Hamosh, A.,
+                Harris, N.L., Kaliyaperumal, R., Kent Lloyd, K.C.,
+                Khalifa, A., Krawitz, P.M., Köhler, S., Laraway, B.J.,
+                Lehväslaiho, H., Matalonga, L., McMurry, J.A.,
+                Metke-Jimenez, A., Mungall, C.J., Munoz-Torres, M.C.,
+                Ogishima, S., Papakonstantinou, A., Piscia, D., Pontikos,
+                N., Queralt-Rosinach, N., Roos, M., Sass, J., Schofield,
+                P.N, Seelow, D., Siapos, A., Smedley, D., Smith, L.D.,
+                Steinhaus, R., Chandrabose Sundaramurthi, J., Swietlik,
+                E.M., Thun, S., Vasilevsky, N.A., Wagner, A.H., Warner,
+                J.L., Weiland, C., The GAGH Phenopacket Modeling
+                Consortium, Haendel, M.A., Robinson, P.N.
+                <br />
+                Nat Biotechnol 40, 817–820 (2022).
+                https://doi.org/10.1038/s41587-022-01357-4
+              </p>
+            </li>
+            <br />
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,86 @@
+{
+    "key": "GENO:0000875",
+    "label": "allelic state",
+    "children": [
+      {
+        "key": "GENO:0000918",
+        "label": "organellar plasmy",
+        "children": [
+          { "key": "GENO:0000603", "label": "heteroplasmic", "children": [] },
+          { "key": "GENO:0000602", "label": "homoplasmic", "children": [] }
+        ]
+      },
+      {
+        "key": "GENO:0000133",
+        "label": "zygosity",
+        "children": [
+          {
+            "key": "GENO:0000392",
+            "label": "aneusomic zygosity",
+            "children": [
+              {
+                "key": "GENO:0000394",
+                "label": "trisomic heterozygous",
+                "children": []
+              },
+              {
+                "key": "GENO:0000393",
+                "label": "trisomic homozygous",
+                "children": []
+              }
+            ]
+          },
+          {
+            "key": "GENO:0000391",
+            "label": "disomic zygosity",
+            "children": [
+              {
+                "key": "GENO:0000134",
+                "label": "hemizygous",
+                "children": [
+                  {
+                    "key": "GENO:0000604",
+                    "label": "hemizygous X-linked",
+                    "children": []
+                  },
+                  {
+                    "key": "GENO:0000605",
+                    "label": "hemizygous Y-linked",
+                    "children": []
+                  },
+                  {
+                    "key": "GENO:0000606",
+                    "label": "hemizygous insertion-linked",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "key": "GENO:0000135",
+                "label": "heterozygous",
+                "children": [
+                  {
+                    "key": "GENO:0000402",
+                    "label": "compound heterozygous",
+                    "children": []
+                  },
+                  {
+                    "key": "GENO:0000458",
+                    "label": "simple heterozygous",
+                    "children": []
+                  }
+                ]
+              },
+              { "key": "GENO:0000136", "label": "homozygous", "children": [] }
+            ]
+          },
+          {
+            "key": "GENO:0000137",
+            "label": "unspecified zygosity",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+  

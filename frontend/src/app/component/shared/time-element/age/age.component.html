@@ -1,0 +1,34 @@
+<div class="p-fluid grid formgrid">
+  <div class="field col-12 md:col-4">
+    <label for="years">Years</label>
+    <p-inputNumber id="years"
+      [(ngModel)]="years"
+      (onInput)="updateYears($event)"
+      [min]="0"
+      [max]="120"
+    >
+    </p-inputNumber>
+  </div>
+  <div class="field col-12 md:col-4">
+    <label for="months">Months</label>
+    <p-inputNumber
+      [(ngModel)]="months"
+      (onInput)="updateMonths($event)"
+      id="months"
+      [min]="0"
+      [max]="11"
+    >
+    </p-inputNumber>
+  </div>
+  <div class="field col-12 md:col-4">
+    <label for="days">Days</label>
+    <p-inputNumber
+      [(ngModel)]="days"
+      (onInput)="updateDays($event)"
+      id="days"
+      [min]="0"
+      [max]="31"
+    >
+    </p-inputNumber>
+  </div>
+</div>

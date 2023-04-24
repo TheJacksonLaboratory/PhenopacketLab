@@ -1,0 +1,17 @@
+<p-treeSelect
+    ngDefaultControl
+    id="ontologyClass"
+    appendTo="body"
+    [(ngModel)]="ontologyClass"
+    [options]="ontologyNodes"
+    (onNodeSelect)="updateOntologyClass($event)"
+    [metaKeySelection]="false"
+    placeholder="Select item"
+    [filter]="true"
+    filterBy="label,key"
+    [filterInputAutoFocus]="true"
+  >
+  <ng-template let-node pTemplate="default">
+    <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom">[{{ node.key }}] {{ node.label }}</span>
+  </ng-template>
+</p-treeSelect>

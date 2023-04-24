@@ -1,36 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-
-declare const $: any;
-declare interface RouteInfo {
-    path: string;
-    title: string;
-    icon: string;
-    class: string;
-}
-export const ROUTES: RouteInfo[] = [
-    { path: '/selectable-ontology-tree', title: 'Selectable Ontology Tree',  icon: 'account_tree', class: '' },
-    { path: '/simple-ontology-tree', title: 'Simple Ontology Tree',  icon:'account_tree', class: '' },
-    { path: '/phenotypic-feature', title: 'Phenotypic Feature',  icon:'list', class: '' },
-    { path: '/aboutUs', title: 'About',  icon:'explore', class: '' },
-];
-
+import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  menuItems: any[];
+export class SidebarComponent implements OnInit{
 
-  constructor() { }
+  items: MenuItem[];
+
+  constructor() {
+  }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.items = [
+      {label: 'Phenopackets', icon: 'pi pi-fw pi-users', routerLink: '/dashboard'},
+      {label: 'Add Phenopacket', icon: 'pi pi-fw pi-plus', routerLink: '/profile-selection', styleClass: "submenu"}
+    ];
   }
-  isMobileMenu() {
-      if ($(window).width() > 991) {
-          return false;
-      }
-      return true;
-  };
+
 }

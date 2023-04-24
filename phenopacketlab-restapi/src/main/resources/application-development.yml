@@ -1,0 +1,21 @@
+phenopacketlab:
+  # Path to folder with data files prepared by running `phenopacketlab-ingest ingest`
+  data-directory:
+  # Disease databases to use
+  #disease-databases: ['OMIM', 'ORPHANET', 'DECIPHER']
+  # Numer of threads used to load resources during startup.
+  loader-threads: 4
+  # Keep track of used Phenopacket Schema artifact.
+  phenopacket-schema-version: @phenopacket.version@
+
+
+api:
+  version: /api/v1
+
+# TODO - figure out the database details
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:default
+#    username: sa
+#    password: sa
+#    driver-class-name: org.h2.Driver

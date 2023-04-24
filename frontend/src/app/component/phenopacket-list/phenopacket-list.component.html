@@ -1,0 +1,67 @@
+<div class="phenopacket-list">
+  <div class="flex p-3 card-btn-wrapper">
+    <p-fileUpload #fubauto mode="basic" name="file[]" [customUpload]="true"
+                  (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
+                  chooseIcon="pi-file-import" accept=".json" multiple="multiple">
+    </p-fileUpload>
+    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button>
+  </div>
+  <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
+    <p-tabPanel header="Phenopackets" class="first-panel">
+      <p-table [value]="phenopackets" selectionMode="single" (onRowSelect)="openTab($event.data)">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Identifier</th>
+            <th>Last Encounter</th>
+            <th>Sex</th>
+            <th style="width: 8rem"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-phenopacket>
+          <tr [pSelectableRow]="phenopacket">
+            <td>{{phenopacket.id}}</td>
+            <td>{{phenopacket.subject?.timeAtLastEncounter != null ? phenopacket.subject?.timeAtLastEncounter : '-'}}</td>
+            <td>
+              {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
+            </td>
+            <td class="actions">
+              <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="removeIndividual(phenopacket)"></button>
+              <button pButton type="button" class="p-button" icon="pi pi-download" (click)="downloadPhenopacket(phenopacket)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="4">
+              No phenopackets found.
+            </td>
+          <tr>
+       </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel
+            *ngFor="let phenopacket of tabs; let index = index"
+            [header]="phenopacket.id"
+            [closable]="true"
+    >
+      <div class="grid p-fluid">
+        <div class="field col-12">
+          <app-phenopacket
+                  [phenopacket]="phenopacket"
+                  (onIdChanged)="changeId($event, tabIndex)"
+                  (onSexChanged)="changeSex($event, tabIndex)"
+                  (onDobChanged)="changeDob($event, tabIndex)"
+          >
+          </app-phenopacket>
+        </div>
+      </div>
+    </p-tabPanel>
+
+  </p-tabView>
+  <p-confirmDialog #cd [style]="{width: '50vw'}" key="positionDialog" position="bottom-right" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
+    <ng-template pTemplate="footer">
+      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+      <button type="button" class="p-button-outlined" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    </ng-template>
+  </p-confirmDialog>
+</div>

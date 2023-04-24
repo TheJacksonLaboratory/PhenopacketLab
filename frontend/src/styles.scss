@@ -1,0 +1,248 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+// For more information: https://material.angular.io/guide/theming
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$phenopacketlab-primary: mat.define-palette(mat.$teal-palette, 800);
+$phenopacketlab-accent: mat.define-palette(mat.$lime-palette, 700);
+
+// The warn palette is optional (defaults to red).
+$phenopacketlab-warn: mat.define-palette(mat.$amber-palette, 800); //mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$phenopacketlab-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $phenopacketlab-primary,
+      accent: $phenopacketlab-accent,
+      warn: $phenopacketlab-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($phenopacketlab-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0 auto;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+}
+
+$dark-cerulean: #004D40; // JAX blue
+
+// Wrap elements in tables
+.wrap {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+// All styles below have been inherited from mpd-curation
+.row {
+  margin-left: inherit;
+  margin-right: inherit;
+}
+
+.form-horizontal .form-group {
+  margin-left: inherit;
+  margin-right: inherit;
+}
+
+.left-bord-rad-4px {
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+}
+
+.mat-dialog-actions {
+  display: block !important;
+}
+
+.mat-step-label {
+  width: 100% !important;
+}
+
+// TEXT SIZES
+.text6 {
+  font-size: 6pt;
+}
+.text7 {
+  font-size: 7pt;
+}
+.text8 {
+  font-size: 8pt;
+}
+.text9 {
+  font-size: 9pt;
+}
+.text10 {
+  font-size: 10pt;
+}
+.text11 {
+  font-size: 11pt;
+}
+.text12 {
+  font-size: 12pt;
+}
+.text13 {
+  font-size: 13pt;
+}
+.text14 {
+  font-size: 14pt;
+}
+.text15 {
+  font-size: 15pt;
+}
+.text16 {
+  font-size: 16pt;
+}
+.text18 {
+  font-size: 18pt;
+}
+.text22 {
+  font-size: 22pt;
+}
+
+// TEXT COLORS
+.black {
+  color: #000000;
+}
+.blue {
+  color: #009ed0;
+}
+.dark-cerulean {
+  color: $dark-cerulean;
+}
+.white {
+  color: #ffffff;
+}
+.yellow {
+  color: #cccc00;
+}
+
+span.gray7 {
+  color: #777;
+}
+span.graya {
+  color: #aaa;
+}
+span.green {
+  color: #4a4;
+}
+
+// BACKGROUND COLORS
+.bg-dark-cerulean {
+  background-color: $dark-cerulean;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
+// OTHER
+.v-bottom {
+  vertical-align: bottom;
+}
+.table {
+  margin-bottom: 0;
+} // overrides bootstrap .table {...}
+.pager {
+  margin: 0 0 10px 0;
+} // overrides bootstrap .pager{...} margin
+
+// MARGINS
+.top-margin-1 {
+  margin-top: 1em;
+}
+.bottom-margin-1 {
+  margin-bottom: 1em;
+}
+.y-margin-1 {
+  margin: 1em 0;
+}
+.y-margin-2 {
+  margin: 2em 0;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+// QC plots
+fieldset.plot-control-panel-border {
+  border: 1px groove #ddd !important;
+  padding: 0 0.6em 0.6em 0.6em !important;
+  margin: 0 0.3em 1.5em 0.3em !important;
+  -webkit-box-shadow: 0 0 0 0 #000;
+  box-shadow: 0 0 0 0 #000;
+  height: 60px;
+  background: #f8f8f8;
+}
+
+legend.plot-control-panel-border {
+  font-size: 0.9em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+  margin-bottom: 5px;
+}
+
+.mat-tooltip {
+  font-size: 12px !important;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.button-tooltip-container {
+  height: fit-content;
+  width: fit-content;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.p-sidebar-mask {
+  display: none !important;
+}
+
+.code-highlight {
+  pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #7a828e12;
+    border-radius: 6px;
+    text-align: left;
+    white-space: pre-line;
+    font-style: italic;
+  }
+}

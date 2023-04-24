@@ -1,0 +1,55 @@
+<p-dropdown
+  appendTo="body"
+  [options]="timeElementTypes"
+  [(ngModel)]="selectedAgeType"
+  (onChange)="ageTypeChange($event)"
+  placeholder="Select an age type"
+  [showClear]="true"
+></p-dropdown>
+
+<div *ngIf="selectedAgeType === ageType">
+  <app-age
+    (ageEvent)="updateTimeElement($event)"
+    [age]="age"
+    [timeElementId]="timeElementId"
+  ></app-age>
+</div>
+
+<div *ngIf="selectedAgeType === ageRangeType">
+  <app-age-range
+    (ageRangeChange)="updateTimeElement($event)"
+    [ageRange]="ageRange"
+    [timeElementId]="timeElementId"
+  ></app-age-range>
+</div>
+
+<div *ngIf="selectedAgeType === gestationalAgeType">
+  <app-gestational-age
+    (gestationalAgeChange)="updateTimeElement($event)"
+    [gestationalAge]="gestationalAge"
+    [timeElementId]="timeElementId"
+  ></app-gestational-age>
+</div>
+
+<div
+  *ngIf="timeElementTypes.length === 4 && selectedAgeType === ontologyClassType"
+>
+  <app-ontology-time
+    (ontologyClassChange)="updateTimeElement($event)"
+    [ontologyClass]="ontologyClass"
+    [timeElementId]="timeElementId"
+    [ontologyNodes]="ontologyNodes"
+
+  ></app-ontology-time>
+  <!-- <p-treeSelect
+    id="ontologyClass"
+    appendTo="body"
+    [(ngModel)]="selectedOntologyClass"
+    [options]="ontologyNodes"
+    (onNodeSelect)="updateOntologyClass($event)"
+    [metaKeySelection]="false"
+    placeholder="Select item"
+    [filter]="true"
+    [filterInputAutoFocus]="true"
+  ></p-treeSelect> -->
+</div>

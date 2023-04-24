@@ -1,0 +1,87 @@
+{
+  "key": "NCIT:C48884",
+  "label": "Generic Regional Lymph Nodes TNM Finding",
+  "children": [
+    {
+      "key": "NCIT:C48705",
+      "label": "N0 Stage Finding",
+      "children": [
+        {
+          "key": "NCIT:C95922",
+          "label": "N0 (i+) Stage Finding",
+          "children": []
+        },
+        {
+          "key": "NCIT:C95921",
+          "label": "N0 (i-) Stage Finding",
+          "children": []
+        },
+        {
+          "key": "NCIT:C95925",
+          "label": "N0 (mol+) Stage Finding",
+          "children": []
+        },
+        {
+          "key": "NCIT:C95923",
+          "label": "N0 (mol-) Stage Finding",
+          "children": []
+        }
+      ]
+    },
+    {
+      "key": "NCIT:C48706",
+      "label": "N1 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48707", "label": "N1a Stage Finding", "children": [] },
+        {
+          "key": "NCIT:C48708",
+          "label": "N1b Stage Finding",
+          "children": [
+            {
+              "key": "NCIT:C95929",
+              "label": "N1bI Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C95935",
+              "label": "N1bII Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C95936",
+              "label": "N1bIII Stage Finding",
+              "children": []
+            },
+            {
+              "key": "NCIT:C95937",
+              "label": "N1bIV Stage Finding",
+              "children": []
+            }
+          ]
+        },
+        { "key": "NCIT:C48709", "label": "N1c Stage Finding", "children": [] },
+        { "key": "NCIT:C95955", "label": "N1mi Stage Finding", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C48786",
+      "label": "N2 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48711", "label": "N2a Stage Finding", "children": [] },
+        { "key": "NCIT:C48712", "label": "N2b Stage Finding", "children": [] },
+        { "key": "NCIT:C48713", "label": "N2c Stage Finding", "children": [] }
+      ]
+    },
+    {
+      "key": "NCIT:C48714",
+      "label": "N3 Stage Finding",
+      "children": [
+        { "key": "NCIT:C48715", "label": "N3a Stage Finding", "children": [] },
+        { "key": "NCIT:C48716", "label": "N3b Stage Finding", "children": [] },
+        { "key": "NCIT:C48717", "label": "N3c Stage Finding", "children": [] }
+      ]
+    },
+    { "key": "NCIT:C96026", "label": "N4 Stage Finding", "children": [] },
+    { "key": "NCIT:C48718", "label": "NX Stage Finding", "children": [] }
+  ]
+}

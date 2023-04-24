@@ -1,15 +1,19 @@
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { SelectableOntologyTreeComponent } from './component/ontology-tree/selectable/selectable-ontology-tree.component';
-import { SimpleOntologyTreeComponent } from './component/ontology-tree/simple/simple-ontology-tree.component';
-import { PhenotypicFeatureComponent } from './component/phenotypic-feature/phenotypic-feature.component';
+import { AboutComponent } from './component/about/about.component';
+import { HelpComponent } from "./component/help/help.component";
+import { ProfileSelectionComponent } from './component/pheno-creator/profile-selection/profile-selection.component';
+import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
 
 
 const routes: Routes = [
-  { path: 'aboutUs', component: DashboardComponent },
-  { path: 'phenotypic-feature', component: PhenotypicFeatureComponent },
-  { path: 'simple-ontology-tree', component: SimpleOntologyTreeComponent },
-  { path: 'selectable-ontology-tree', component: SelectableOntologyTreeComponent }
+  { path: 'dashboard', component: PhenopacketListComponent },
+  { path: 'profile-selection', component: ProfileSelectionComponent },
+  { path: 'creator', loadChildren: () => import('./component/pheno-creator/pheno-creator.module').then(m => m.PhenoCreatorModule) },
+  // { path: 'families', component: FamilyListComponent },
+  // { path: 'cohorts', component: CohortListComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'help', component: HelpComponent },
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const ROUTING = RouterModule.forRoot(routes);
