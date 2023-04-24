@@ -8,7 +8,7 @@ name: Test/Dev Phenopacketlab CI/CD
 on:
   push:
     branches:
-      - 'tests/*'
+      - 'test/*'
 
 jobs:
   build-test-backend:
