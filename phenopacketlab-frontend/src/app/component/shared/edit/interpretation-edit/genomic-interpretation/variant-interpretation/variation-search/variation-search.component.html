@@ -95,7 +95,7 @@
           <th pResizableColumn style="min-width: 2rem">Chr</th>
           <th pResizableColumn>HGVS</th>
           <th pResizableColumn>Gene symbol</th>
-          <th pResizableColumn>Molecule context</th>
+          <!-- <th pResizableColumn>Molecule context</th> -->
           <th pResizableColumn></th>
         </tr>
       </ng-template>
@@ -118,9 +118,9 @@
           <td>
             {{ interpretation.variationDescriptor.geneContext?.symbol }}
           </td>
-          <td>
+          <!-- <td>
             {{ interpretation.variationDescriptor.moleculeContext }}
-          </td>
+          </td> -->
           <td>
             <button
               pButton
@@ -135,7 +135,7 @@
       </ng-template>
       <ng-template pTemplate="rowexpansion" let-interpretation>
         <tr>
-          <td colspan="6">
+          <td colspan="5">
             <div class="p-3">
               <app-variation-descriptor
                 [variationDescriptor]="interpretation.variationDescriptor"
