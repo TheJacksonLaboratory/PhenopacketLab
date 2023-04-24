@@ -7,8 +7,8 @@ name: Production Phenopacketlab CI/CD
 
 on:
   push:
-    branches:
-      - 'releases/**'
+    tags:
+      - '*.*.*'
 
 jobs:
   build-test-backend:
