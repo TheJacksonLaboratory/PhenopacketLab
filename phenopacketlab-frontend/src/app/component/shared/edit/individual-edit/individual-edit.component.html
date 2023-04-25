@@ -17,6 +17,8 @@
       class="p-error"
       >Individual ID is required.</small
     >
+  </div>
+  <div class="field col-12">
     <p-checkbox
       label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
       [binary]="true"
@@ -26,6 +28,7 @@
       [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
     ></p-checkbox>
   </div>
+  <br>
 
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
