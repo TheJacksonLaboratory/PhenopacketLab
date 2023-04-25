@@ -9,9 +9,8 @@ on:
       - '*'             # matches every branch that doesn't contain a '/'
       - '*/*'           # matches every branch containing a single '/'
       - '**'            # matches every branch
-      - '!development'  # exclude development
       - '!sqa'          # exclude sqa branch
-      - '!release/*'    # exclude releases branches
+      - '!test/*'       # exclude Test dev branches
 
 jobs:
   build:
