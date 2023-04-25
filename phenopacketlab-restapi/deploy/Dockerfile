@@ -9,7 +9,6 @@ ENV JAVA_OPTS="-XX:PermSize=4096 -XX:MaxPermSize=1024"
 # copy datapath
 ADD ${data_path} ${data_path}
 # copy jar
-#COPY ${JAR_FILE} phenopacketlab-restapi-0.1-SNAPSHOT.jar
 COPY target/phenopacketlab-restapi-${build_version}.jar .
 
 # They are big do not leave them in image.

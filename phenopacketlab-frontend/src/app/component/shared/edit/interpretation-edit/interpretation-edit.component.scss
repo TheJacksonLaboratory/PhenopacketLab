@@ -1,0 +1,11 @@
+.card {
+    overflow-x:auto;
+    overflow-y:auto;
+}
+
+.label-active:checked {
+    color: black;
+}
+.label-active {
+    color: red;
+}

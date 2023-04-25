@@ -1,0 +1,81 @@
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <app-search-box
+      [showHint]="false"
+      [itemName]="itemName"
+      [searchLabel]="searchLabel"
+      [placeHolderTxt]="placeHolderTxt"
+      [localStorageKey]="localStorageKey"
+      [searchService]="searchService"
+      (selectedSearchItem)="onSearchCriteriaChange($event)"
+      [resetSearch]="false"
+    ></app-search-box>
+  </div>
+  <div *ngIf="showTable" class="field col-12">
+    <p-table
+      [value]="phenopacketDiseases"
+      dataKey="key"
+      styleClass="phenopacket-list-tabs"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 5rem"></th>
+          <th pResizableColumn style="min-width: 2rem">Disease Identifier</th>
+          <th pResizableColumn>Disease Name</th>
+          <th pResizableColumn>Status</th>
+          <th pResizableColumn>Onset</th>
+          <th pResizableColumn>Resolution</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-disease let-expanded="expanded">
+        <tr>
+          <td>
+            <button
+              type="button"
+              pButton
+              pRipple
+              [pRowToggler]="disease"
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            ></button>
+          </td>
+          <td><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></td>
+          <td>{{ disease.term?.label }}</td>
+          <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
+          <td><a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}</td>
+          <td>{{ disease.resolution?.toString() }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editDisease(disease)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteDisease(disease)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-disease>
+        <tr>
+          <td colspan="7">
+            <div class="p-3">
+              <app-disease-detail
+                [disease]="disease"
+              >
+              </app-disease-detail>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>

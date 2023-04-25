@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningOptions;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.model.MinedText;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,13 @@ public class TextMiningController {
         if (payload == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(textMiningService.mineText(payload));
+
+        TextMiningOptions options = TextMiningOptions.builder()
+                .doFuzzyMatching(true) // TODO we could add isExactMatch as a parameter to the endpoint
+                .build();
+        MinedText result = textMiningService.mineText(payload, options);
+
+        return ResponseEntity.ok(result);
     }
 
 }

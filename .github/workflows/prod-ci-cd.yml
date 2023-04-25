@@ -1,0 +1,182 @@
+# This workflow will build a Java project with Maven For the Backend then deploy to its corresponding CloudRun Service.
+# For the Frontend, it will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different
+# versions of node. It will then deploy the generated dist folder to the corresponding Google Cloud Bucket
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Production Phenopacketlab CI/CD
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build-test-backend:
+    runs-on: ${{ matrix.os }}
+    env:
+      JDK_VERSION: ${{ matrix.jdk }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        jdk: [ 17 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build with Maven
+        run: ./mvnw --projects phenopacketlab-restapi --also-make --batch-mode verify
+
+  deploy-backend:
+    needs: [build-test-backend]
+    name: Setup, Build Docker Img, Publish, and Deploy to Cloud Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # build backend
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      - name: Build Backend with Maven
+        run: ./mvnw -DskipTests package
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_email: ${{ secrets.SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_CREDENTIAL }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      # Download the data folder locally from Google Bucket
+      - name: Get_data
+        run: gsutil cp -r gs://jax-robinson-phenopacket-project-data/data .
+
+      # Build docker image
+      - name: Image_build
+        run: docker build -t us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend .
+
+      # Configure docker to use the gcloud command-line tool as a credential helper
+      - run: gcloud auth configure-docker us-docker.pkg.dev
+      # Push image to Google Container Registry
+      - name: Image_push
+        run: docker push us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend
+
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIAL }}
+      # Deploy the Docker image to the Cloud run service
+      - name: Deploy to Cloud Run environment
+        run: |
+          gcloud run deploy phenopacketlab-backend-prod-01 --image us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend \
+          --region us-east1 \
+          --platform managed \
+          --allow-unauthenticated \
+          --project ${{ secrets.GCP_PROJECT }} \
+          --memory 6Gi \
+          --cpu 2
+
+  # Frontend build and Tests
+  build-test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./phenopacketlab-frontend/
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: npm run buildProd
+
+      - run: sudo apt-get install xvfb
+      - name: Test
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: xvfb-run --auto-servernum npm test
+
+  deploy-frontend:
+    needs: [ build-test-frontend ]
+    name: Build and Deploy Dist folder to Google Bucket
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./phenopacketlab-frontend/
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: npm run buildProd
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          service_account_email: ${{ secrets.SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_CREDENTIAL }}
+          project_id: ${{ secrets.GCP_PROJECT }}
+          export_default_credentials: true
+
+      - name: Deploy Dist folder to Google Bucket
+        run: |
+          gsutil -m -o "GSUtil:parallel_process_count=1" cp -r -z js,css ./dist/phenopacketlab-frontend/* gs://phenopacketlab-frontend-prod-01

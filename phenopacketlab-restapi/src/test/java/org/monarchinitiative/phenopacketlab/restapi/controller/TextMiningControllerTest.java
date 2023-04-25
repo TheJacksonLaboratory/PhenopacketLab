@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.monarchinitiative.phenopacketlab.core.miner.TextMiningOptions;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.model.MinedText;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,21 @@ public class TextMiningControllerTest {
 
     @Mock(lenient = true)
     public TextMiningService textMiningService;
+
     @InjectMocks
-    public TextMiningController controller;
+    public TextMiningController textMiningController;
+    @InjectMocks
+    public PhenotypicFeatureController hpoController;
+
     private MockMvc mockMvc;
+
+    private final TextMiningOptions options = TextMiningOptions.builder()
+            .doFuzzyMatching(true)
+            .build();
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+        mockMvc = MockMvcBuilders.standaloneSetup(textMiningController, hpoController)
                 .addPlaceholderValue("api.version", "/api/v1")
                 .setControllerAdvice(HANDLER)
                 .build();
@@ -43,7 +52,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void mineText() throws Exception {
-        when(textMiningService.mineText("This is an example text"))
+        when(textMiningService.mineText("This is an example text", options))
                 .thenReturn(new MinedText("This is an example text", new ArrayList<>()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer")
@@ -58,7 +67,7 @@ public class TextMiningControllerTest {
 
     @Test
     public void textMined_missingPayload() throws Exception {
-        when(textMiningService.mineText(null))
+        when(textMiningService.mineText(null, options))
                 .thenReturn(new MinedText(null, null));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer"))

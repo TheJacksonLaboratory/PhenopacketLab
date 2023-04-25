@@ -1,0 +1,41 @@
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <h2>
+      <b>{{ disease.term?.label }} </b>
+    </h2>
+    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
+  </div>
+  <div class="field col-12">
+    <p>
+      {{ disease.description }}
+    </p>
+  </div>
+  <div class="field col-12 md:col-6"><b>Type:</b> {{ disease.isA }}</div>
+  <div class="field col-12 md:col-6">
+    <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Onset:</b> <a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}
+
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Resolution:</b> {{ disease.resolution?.toString() }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Disease stage: </b> {{ disease.diseaseStage }}
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Clinical TNM finding:</b><br />
+    <ul>
+      <li *ngFor="let finding of disease.clinicalTnmFinding">
+        [{{ finding.id }}] {{ finding.label }}
+      </li>
+    </ul>
+  </div>
+  <div class="field col-12 md:col-6">
+    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.url" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
+  </div>
+  <div class="field col-12 md:col-6">
+
+  </div>
+</div>

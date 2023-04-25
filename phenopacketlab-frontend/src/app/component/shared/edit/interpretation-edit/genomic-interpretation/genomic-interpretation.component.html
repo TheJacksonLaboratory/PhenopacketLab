@@ -1,0 +1,46 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="subjectid">Subject ID</label>
+    <input
+      id="subjectid"
+      type="text"
+      [disabled]="true"
+      aria-describedby="Subject ID"
+      pInputText
+      [ngModel]="genomicInterpretation?.subjectOrBiosampleId"
+      pTooltip="Set in Individual Page as the Individual ID"
+    />
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="interpretationstatus">Interpretation Status</label>
+    <p-dropdown
+      id="interpretationstatus"
+      appendTo="body"
+      placeholder="Select interpretation status"
+      [ngModel]="genomicInterpretation?.interpretationStatus"
+      [options]="interpretationStatuses"
+      required
+      (onChange)="updateInterpretationStatus($event)"
+      pTooltip="Interpretation status"
+      showDelay="2000"
+      class="w-full"
+      showClear="true"
+      [ngClass]="{
+        'ng-dirty':
+          !genomicInterpretation?.interpretationStatus && submitted
+      }"
+    >
+    </p-dropdown>
+    <small *ngIf="!genomicInterpretation?.interpretationStatus && submitted" class="p-error"
+      >Interpretation status is required.</small
+    >
+  </div>
+
+  <app-variant-search-interpretation
+    [variantInterpretation]="genomicInterpretation?.variantInterpretation"
+    [profile]="profile"
+    [submitted]="submitted"
+    (variantInterpretationChange)="addVariantInterpretation($event)"
+  ></app-variant-search-interpretation>
+</div>

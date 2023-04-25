@@ -1,0 +1,25 @@
+<mat-form-field class="example-full-width">
+  <input
+    type="text"
+    placeholder="{{ placeHolderTxt }}"
+    attr.aria-label="{{ searchLabel }}"
+    matInput
+    [formControl]="myControl"
+    [matAutocomplete]="auto"
+  />
+  <mat-icon color="warn" matSuffix>search</mat-icon>
+
+  <mat-autocomplete #auto="matAutocomplete">
+    <span *ngIf="itemCount > 0"
+      ><span
+        ><b>{{ itemName }}</b> </span
+      ><span style="font-size: x-small"> Count({{ itemCount }})</span></span
+    >
+    <mat-option
+      *ngFor="let option of itemOptions"
+      (onSelectionChange)="selectedChanged(option, option.label)"
+    >
+      [{{option.id}}] {{ option.label }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

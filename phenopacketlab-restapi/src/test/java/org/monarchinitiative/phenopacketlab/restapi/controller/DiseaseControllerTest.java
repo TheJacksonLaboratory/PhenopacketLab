@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenol.annotations.base.Ratio;
+import org.monarchinitiative.phenol.annotations.base.Sex;
 import org.monarchinitiative.phenol.annotations.base.temporal.Age;
 import org.monarchinitiative.phenol.annotations.base.temporal.PointInTime;
 import org.monarchinitiative.phenol.annotations.base.temporal.TemporalInterval;
@@ -104,20 +105,32 @@ public class DiseaseControllerTest {
     }
 
     private static HpoDiseaseAnnotation arachnodactyly() {
-        return new TestHpoDiseaseAnnotation(TermId.of("HP:0001166"),
-                Ratio.of(1, 1),
-                List.of(TemporalInterval.openEnd(PointInTime.birth())),
-                List.of(),
-                List.of(AnnotationReference.of(TermId.of("PMID:123456"), EvidenceCode.PCS))
+        return HpoDiseaseAnnotation.of(
+                TermId.of("HP:0001166"),
+                List.of(
+                        HpoDiseaseAnnotationRecord.of(
+                                Ratio.of(1, 1),
+                                TemporalInterval.openEnd(PointInTime.birth()),
+                                List.of(AnnotationReference.of(TermId.of("PMID:123456"), EvidenceCode.PCS)),
+                                null,
+                                List.of()
+                        )
+                )
         );
     }
 
     private static HpoDiseaseAnnotation hypertension() {
-        return new TestHpoDiseaseAnnotation(TermId.of("HP:0000822"),
-                Ratio.of(1, 1),
-                List.of(TemporalInterval.openEnd(Age.postnatal(42, 3, 0))),
-                List.of(),
-                List.of(AnnotationReference.of(TermId.of("PMID:987456"), EvidenceCode.PCS))
+        return HpoDiseaseAnnotation.of(
+                TermId.of("HP:0000822"),
+                List.of(
+                        HpoDiseaseAnnotationRecord.of(
+                                Ratio.of(1, 1),
+                                TemporalInterval.openEnd(Age.postnatal(42, 3, 0)),
+                                List.of(AnnotationReference.of(TermId.of("PMID:987456"), EvidenceCode.PCS)),
+                                null,
+                                List.of()
+                        )
+                )
         );
     }
 }
