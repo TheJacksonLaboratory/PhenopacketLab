@@ -91,57 +91,43 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 5rem"></th>
           <th pResizableColumn style="min-width: 2rem">Chr</th>
+          <th pResizableColumn>Position</th>
+          <th pResizableColumn>Ref</th>
+          <th pResizableColumn>Alt</th>
           <th pResizableColumn>HGVS</th>
           <th pResizableColumn>Gene symbol</th>
-          <!-- <th pResizableColumn>Molecule context</th> -->
           <th pResizableColumn></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-interpretation let-expanded="expanded">
         <tr [pSelectableRow]="interpretation">
           <td>
-            <button
-              type="button"
-              pButton
-              pRipple
-              [pRowToggler]="interpretation"
-              class="p-button-text p-button-rounded p-button-plain"
-              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-            ></button>
+            {{ interpretation.variationDescriptor.vcfRecord?.chrom }}
           </td>
           <td>
-            {{ interpretation.variationDescriptor.vcfRecord?.chrom }}
+            {{ interpretation.variationDescriptor.vcfRecord?.pos }}
+          </td>
+          <td>
+            {{ interpretation.variationDescriptor.vcfRecord?.ref }}
+          </td>
+          <td>
+            {{ interpretation.variationDescriptor.vcfRecord?.alt }}
           </td>
           <td>{{ getHgvsExpression(interpretation, "hgvs.c") }}</td>
           <td>
             {{ interpretation.variationDescriptor.geneContext?.symbol }}
           </td>
-          <!-- <td>
-            {{ interpretation.variationDescriptor.moleculeContext }}
-          </td> -->
           <td>
             <button
               pButton
               pRipple
               icon="pi pi-plus"
+              label="Add"
               pTooltip="Add interpretation"
               class="p-button-rounded p-button-primary"
               (click)="addInterpretation(interpretation)"
             ></button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="rowexpansion" let-interpretation>
-        <tr>
-          <td colspan="5">
-            <div class="p-3">
-              <app-variation-descriptor
-                [variationDescriptor]="interpretation.variationDescriptor"
-                (variationDescriptorChange)="updateVariationDescriptor($event)"
-              ></app-variation-descriptor>
-            </div>
           </td>
         </tr>
       </ng-template>

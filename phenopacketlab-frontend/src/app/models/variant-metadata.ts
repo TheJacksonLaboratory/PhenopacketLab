@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Utils } from '../component/shared/utils';
 import { OntologyClass } from './base';
 import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeContext, VariantInterpretation,
@@ -102,7 +103,7 @@ export class VariantMetadata {
         vcfRecord.alt = this.alt;
         vcfRecord.ref = this.ref;
         vDescriptor.vcfRecord = vcfRecord;
-        vDescriptor.id = Date.now().toString();
+        vDescriptor.id = uuidv4();
         vInterpretation.variationDescriptor = vDescriptor;
         return vInterpretation;
     }

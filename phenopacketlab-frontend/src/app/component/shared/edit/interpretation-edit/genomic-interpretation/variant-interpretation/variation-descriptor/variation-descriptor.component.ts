@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+
 import { Utils } from 'src/app/component/shared/utils';
 import { OntologyClass } from 'src/app/models/base';
 import { Expression, MoleculeContext, VariationDescriptor, VcfRecord } from 'src/app/models/interpretation';
@@ -26,10 +28,9 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     @Output()
     variationDescriptorChange = new EventEmitter<VariationDescriptor>();
 
-    id: string;
+    // id: string;
     label: string;
     description: string;
-
 
     moleculeContexts = Object.keys(MoleculeContext).filter((item) => isNaN(Number(item)));
     // allelic states
@@ -77,6 +78,13 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     onIdChange(id: string) {
         if (this.variationDescriptor) {
             this.variationDescriptor.id = id;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
+    }
+
+    generateNewID() {
+        if (this.variationDescriptor) {
+            this.variationDescriptor.id = uuidv4();
             this.variationDescriptorChange.emit(this.variationDescriptor);
         }
     }

@@ -2,24 +2,35 @@
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
     <label for="variationid">Variation ID</label>
-    <input
-      id="variationid"
-      type="text"
-      aria-describedby="Variation ID"
-      pInputText
-      required
-      pTooltip="Descriptor ID; MUST be unique within document. REQUIRED."
-      tooltipPosition="bottom"
-      [ngModel]="variationDescriptor?.id"
-      (ngModelChange)="onIdChange($event)"
-      [ngClass]="{
-        'ng-dirty': !variationDescriptor?.id && submitted
-      }"
-    />
+    <div class="p-inputgroup">
+      <input
+        id="variationid"
+        type="text"
+        aria-describedby="Variation ID"
+        pInputText
+        required
+        pTooltip="Descriptor ID; MUST be unique within document. REQUIRED."
+        tooltipPosition="bottom"
+        [ngModel]="variationDescriptor?.id"
+        (ngModelChange)="onIdChange($event)"
+        [ngClass]="{
+          'ng-dirty': !variationDescriptor?.id && submitted
+        }"
+      />
+
+      <button
+        pButton
+        icon="pi pi-replay"
+        pTooltip="Generate new ID"
+        (click)="generateNewID()"
+      ></button>
+      <!-- class="p-button-rounded p-button-primary" -->
+    </div>
     <small *ngIf="!variationDescriptor?.id && submitted" class="p-error"
       >Variation ID is required.</small
     >
   </div>
+
   <div class="field col-12 md:col-6">
     <label for="label">Label</label>
     <input
@@ -92,7 +103,12 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-expression let-editing="editing" let-ri="rowIndex">
+      <ng-template
+        pTemplate="body"
+        let-expression
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
         <tr [pEditableRow]="expression">
           <td>
             <p-cellEditor>
@@ -165,7 +181,8 @@
           </td>
 
           <td>
-            <button *ngIf="profile === undefined"
+            <button
+              *ngIf="profile === undefined"
               pButton
               pRipple
               icon="pi pi-trash"
