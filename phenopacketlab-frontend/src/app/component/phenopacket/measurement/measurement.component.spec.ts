@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
-
 import { MeasurementComponent } from './measurement.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 describe('MeasurementComponent', () => {
   let component: MeasurementComponent;
@@ -11,7 +11,11 @@ describe('MeasurementComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ MeasurementComponent ],
       imports: [
-        MatDialogModule
+      ],
+      providers: [
+        { provide: DialogService, useValue: {} },
+        { provide: MessageService, useValue: {} },
+        { provide: ConfirmationService, useValue: {} }
       ]
     })
     .compileComponents();

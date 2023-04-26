@@ -1,6 +1,9 @@
 import { Convert, OntologyClass, Procedure, TimeElement } from './base';
 
 export class Measurement extends Convert {
+    // key parameter not part of the phenopacket schema, used for primeng table
+    key?: number;
+
     description: string;
     assay: OntologyClass;
     value: Value;

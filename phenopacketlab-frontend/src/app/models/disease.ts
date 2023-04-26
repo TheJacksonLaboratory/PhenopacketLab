@@ -16,11 +16,12 @@ export class Disease extends Convert {
     description: string;
     isA: string;
 
-    constructor(id?: string, label?: string) {
+    constructor(id?: string, label?: string, key?: number) {
         super();
         this.term = new OntologyClass(id, label);
         this.diseaseStage = [];
         this.clinicalTnmFinding = [];
+        this.key = key;
     }
 
     static create(obj: any): Disease {
