@@ -2,7 +2,7 @@
 FROM openjdk:17-alpine
 
 ENV config=development
-ENV build_version=0.1-SNAPSHOT
+ENV build_version=0.0.1
 ENV data_path=/data
 ENV JAVA_OPTS="-XX:PermSize=4096 -XX:MaxPermSize=1024"
 
