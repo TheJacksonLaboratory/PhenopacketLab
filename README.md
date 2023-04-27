@@ -5,8 +5,8 @@
 
 This Maven project is a project to show how an Angular/Springboot application can provide UIs that could be used for the Phenopacket software. The project is made of an Angular part (Frontend) and a Java Spring Boot part (`phenopacketlab-restapi`). 
 
-The Single-page application can be accessed at the following URL: http://35.227.26.28/dashboard 
-The Spring Boot RESTful API which serves the application with all the necessary ontologies can be found at this URL: http://35.196.41.242:8080/swagger-ui/index.html
+The Single-page application can be accessed at the following URL (dev version): https://phenopacketlab-dev.jax.org
+The Spring Boot RESTful API which serves the application with all the necessary ontologies can be found at this URL: https://phenopacketlab-dev.jax.org/swagger-ui/index.html
 
 The project can be deployed in  multiple ways: 
 * frontend dist folder can be deployed by being copied in a Web server and the backend can be deployed as a war file.
