@@ -180,7 +180,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     }
   }
 
-  onChipRemove(featureName) {
+  onChipRemove(event) {
+    const featureName = event.value;
     for (const feature of this.phenotypicFeatures) {
       if (feature.type.toString() === featureName) {
         feature.textMiningState = MiningState.REJECTED;
