@@ -122,12 +122,15 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
         // check if id already exist
         const phenopacket = this.phenopacketService.phenopacket;
-        for (const interpret of phenopacket.interpretations) {
-            if (interpret.id === this.id) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
-                return;
+        if (phenopacket) {
+            for (const interpret of phenopacket.interpretations) {
+                if (interpret.id === this.id) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
+                    return;
+                }
             }
         }
+
         if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the progress status.' });
             return;
