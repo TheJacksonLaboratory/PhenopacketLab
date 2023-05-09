@@ -17,6 +17,7 @@
         aria-describedby="Value ID"
         pInputText
         pTooltip="Official identifier of the gene. REQUIRED."
+        tooltipPosition="bottom"
         [ngModel]="geneDescriptor?.valueId"
         (ngModelChange)="onValueIdChange($event)"
       />
@@ -29,6 +30,7 @@
         aria-describedby="Symbol"
         pInputText
         pTooltip="Official gene symbol. REQUIRED."
+        tooltipPosition="bottom"
         [ngModel]="geneDescriptor?.symbol"
         (ngModelChange)="onSymbolChange($event)"
       />
@@ -39,6 +41,7 @@
         pInputTextarea
         id="description"
         pTooltip="A free-text description of the gene"
+        tooltipPosition="bottom"
         rows="1"
         cols="20"
         [ngModel]="geneDescriptor?.description"
@@ -54,6 +57,7 @@
         [resizableColumns]="true"
         dataKey="key"
         pTooltip="Alternative identifier(s) of the gene"
+        tooltipPosition="bottom"
       >
         <ng-template pTemplate="caption">
           <div class="table-header">Alternate IDs</div>

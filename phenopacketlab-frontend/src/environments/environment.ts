@@ -2,10 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const URL = 'http://localhost:8080';
 const API_URL = 'http://localhost:8080/api/v1';
 
 export const environment = {
   production: false,
+  API_DOC: `${URL}/swagger-ui/index.html`,
   MESSAGE_URL: `${API_URL}/message`,
   PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL: `${API_URL}/phenotypic-features`,
   PHENOPACKETLAB_DISEASE_URL: `${API_URL}/diseases`,

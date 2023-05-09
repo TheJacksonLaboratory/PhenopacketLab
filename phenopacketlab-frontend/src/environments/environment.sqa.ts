@@ -1,7 +1,9 @@
+const URL = 'https://phenopacketlab-sqa.jax.org';
 const API_URL = 'https://phenopacketlab-sqa.jax.org/api/v1';
 
 export const environment = {
   production: false,
+  API_DOC: `${URL}/swagger-ui/index.html`,
   MESSAGE_URL: `${API_URL}/message`,
   PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL: `${API_URL}/phenotypic-features`,
   PHENOPACKETLAB_DISEASE_URL: `${API_URL}/diseases`,

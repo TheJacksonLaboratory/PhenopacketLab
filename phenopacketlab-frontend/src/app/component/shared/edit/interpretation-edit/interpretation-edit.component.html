@@ -35,6 +35,7 @@
       [options]="progressStatuses"
       (onChange)="updateProgressStatus($event)"
       pTooltip="Progress status"
+      tooltipPosition="bottom"
       showDelay="2000"
       required
       class="w-full"
@@ -43,9 +44,7 @@
         'ng-dirty': !selectedProgressStatus && submitted
       }"
     ></p-dropdown>
-    <small
-      *ngIf="!selectedProgressStatus && submitted"
-      class="p-error"
+    <small *ngIf="!selectedProgressStatus && submitted" class="p-error"
       >Progress status is required.</small
     >
   </div>
@@ -79,9 +78,9 @@
             [virtualScrollItemSize]="30"
             required
             filter="true"
-            filterBy="label"
-            [(ngModel)]="selectedDisease"
+            filterBy="label,id"
             optionLabel="label"
+            [(ngModel)]="selectedDisease"
             showClear="true"
             [ngClass]="{
               'ng-dirty': !selectedDisease && submitted
@@ -89,20 +88,20 @@
           >
             <ng-template let-disease pTemplate="item">
               <div
-                [pTooltip]="disease.id"
-                tooltipPosition="left"
+                [pTooltip]="disease.label"
+                showDelay="2000"
+                tooltipPosition="bottom"
                 escape="false"
               >
-                {{ disease.label }}
+                [{{ disease.id }}] {{ disease.label }}
               </div>
             </ng-template>
           </p-dropdown>
-          <small
-            *ngIf="!selectedDisease && submitted"
-            class="p-error"
+          <small *ngIf="!selectedDisease && submitted" class="p-error"
             >Disease diagnosis is required.</small
           >
         </div>
+
         <div class="field col-12 md:col-6"></div>
         <div class="field col-12">
           <button

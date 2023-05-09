@@ -10,6 +10,7 @@
       pInputText
       [ngModel]="genomicInterpretation?.subjectOrBiosampleId"
       pTooltip="Set in Individual Page as the Individual ID"
+      tooltipPosition="bottom"
     />
   </div>
   <div class="field col-12 md:col-6">
@@ -23,6 +24,7 @@
       required
       (onChange)="updateInterpretationStatus($event)"
       pTooltip="Interpretation status"
+      tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
       showClear="true"

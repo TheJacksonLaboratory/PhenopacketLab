@@ -22,6 +22,7 @@
         pButton
         icon="pi pi-replay"
         pTooltip="Generate new ID"
+        tooltipPosition="bottom"
         (click)="generateNewID()"
       ></button>
       <!-- class="p-button-rounded p-button-primary" -->
@@ -39,8 +40,8 @@
       aria-describedby="Label"
       pInputText
       pTooltip="A primary label for the variation"
-      styleClass="p-datatable-sm"
       tooltipPosition="bottom"
+      styleClass="p-datatable-sm"
       [ngModel]="variationDescriptor?.label"
       (ngModelChange)="onLabelChange($event)"
     />
@@ -75,6 +76,7 @@
             "
             icon="pi pi-plus"
             pTooltip="Add new expression"
+            tooltipPosition="bottom"
             (onClick)="addExpression()"
           ></p-button>
         </div>
@@ -83,18 +85,21 @@
         <tr>
           <th
             pTooltip="A name for the expression syntax. REQUIRED."
+            tooltipPosition="bottom"
             style="width: 20%"
           >
             Syntax
           </th>
           <th
             pTooltip="The concept expression as a string. REQUIRED."
+            tooltipPosition="bottom"
             style="width: 40%"
           >
             Value
           </th>
           <th
             pTooltip="An optional version of the expression syntax."
+            tooltipPosition="bottom"
             style="width: 20%"
           >
             Version
@@ -218,34 +223,49 @@
         <tr>
           <th
             pTooltip="Identifier for the genome assembly used to call the allele. REQUIRED."
+            tooltipPosition="bottom"
           >
             Assembly
           </th>
-          <th pTooltip="Chromosome or contig identifier. REQUIRED.">Chr</th>
+          <th
+            pTooltip="Chromosome or contig identifier. REQUIRED."
+            tooltipPosition="bottom"
+          >
+            Chr
+          </th>
           <th
             pTooltip="The reference position, with the 1st base having position 1. REQUIRED."
+            tooltipPosition="bottom"
           >
             Position
           </th>
           <th
             pTooltip="Identifier: Semicolon-separated list of unique identifiers where available. If this is a dbSNP variant thers number(s) should be used."
+            tooltipPosition="bottom"
           >
             ID
           </th>
-          <th pTooltip="Reference base. REQUIRED.">Ref</th>
-          <th pTooltip="Alternate base. REQUIRED.">Alt</th>
+          <th pTooltip="Reference base. REQUIRED." tooltipPosition="bottom">
+            Ref
+          </th>
+          <th pTooltip="Alternate base. REQUIRED." tooltipPosition="bottom">
+            Alt
+          </th>
           <th
             pTooltip="Quality: Phred-scaled quality score for the assertion made in ALT."
+            tooltipPosition="bottom"
           >
             Qual
           </th>
           <th
             pTooltip="Filter status: PASS if this position has passed all filters."
+            tooltipPosition="bottom"
           >
             Filter
           </th>
           <th
             pTooltip="Additional information: Semicolon-separated series of additional information fields"
+            tooltipPosition="bottom"
             style="width: 20%"
           >
             Info
@@ -411,6 +431,7 @@
       id="allelic"
       appendTo="body"
       pTooltip="The zygosity of the variant as determined in all of the samples represented in this Phenopacket is represented using a list of terms taken from the Genotype Ontology (GENO)."
+      tooltipPosition="bottom"
       [ngModel]="variationDescriptor?.allelicState"
       [options]="allelicStatesNodes"
       (onNodeSelect)="updateAllelicState($event)"
@@ -439,6 +460,7 @@
       [metaKeySelection]="false"
       placeholder="Select Structural type"
       pTooltip="The structural variant type associated with this variant, such as a substitution, deletion, or fusion."
+      tooltipPosition="bottom"
       [filter]="true"
       [filterInputAutoFocus]="true"
       [showClear]="true"
@@ -459,6 +481,7 @@
       aria-describedby="Ref Allele Sequence"
       pInputText
       pTooltip="A Sequence corresponding to a “ref allele”, describing the sequence expected at a SequenceLocation reference."
+      tooltipPosition="bottom"
       [ngModel]="variationDescriptor?.vrsRefAlleleSeq"
       (ngModelChange)="onVrsRefAlleleSeqChange($event)"
     />

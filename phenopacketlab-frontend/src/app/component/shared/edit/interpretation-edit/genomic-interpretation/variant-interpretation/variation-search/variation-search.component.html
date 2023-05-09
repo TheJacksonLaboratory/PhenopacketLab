@@ -46,6 +46,7 @@
         (click)="openHGVSHelp()"
         icon="pi pi-external-link"
         pTooltip="Show Help"
+        tooltipPosition="bottom"
       ></p-button>
     </div>
     E.g.
@@ -63,6 +64,7 @@
       [(ngModel)]="genotype"
       [options]="genotypes"
       pTooltip="Genotype"
+      tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
     ></p-dropdown>
@@ -75,6 +77,7 @@
       type="button"
       label="Search"
       pTooltip="Search variant by HGVS"
+      tooltipPosition="bottom"
       (click)="searchVariantByHGVS()"
     ></button>
   </div>
@@ -125,6 +128,7 @@
               icon="pi pi-plus"
               label="Add"
               pTooltip="Add interpretation"
+              tooltipPosition="bottom"
               class="p-button-rounded p-button-primary"
               (click)="addInterpretation(interpretation)"
             ></button>
