@@ -103,7 +103,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
 
   updateModifiers(nodeModifiers: OntologyTreeNode[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers);
+      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers, 'https://hpo.jax.org/app/browse/term');
       this.phenotypicFeature.modifierNodes = nodeModifiers;
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }

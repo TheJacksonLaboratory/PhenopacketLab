@@ -23,20 +23,22 @@
     <b>Status:</b> {{ phenotypicFeature.excluded ? "Excluded" : "Observed" }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Onset:</b>
-    <a
-      *ngIf="phenotypicFeature.onset?.ontologyClass"
-      [href]="phenotypicFeature.onset.ontologyClass.url"
-      target="_blank"
-      >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
-    >
-    {{ phenotypicFeature.onset?.ontologyClass?.label }}
+    <b>Onset: </b>
+    <span *ngIf="phenotypicFeature.onset?.ontologyClass">
+      <a [href]="phenotypicFeature.onset.ontologyClass.url" target="_blank"
+        >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
+      >
+      {{ phenotypicFeature.onset.ontologyClass.label }}
+    </span>
+    <span *ngIf="!phenotypicFeature.onset?.ontologyClass">{{
+      phenotypicFeature.onset?.toString()
+    }}</span>
   </div>
   <div class="field col-12 md:col-6">
     <b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Severity:</b>
+    <b>Severity: </b>
     <a
       *ngIf="phenotypicFeature.severity"
       [href]="phenotypicFeature.severity?.url"
@@ -55,7 +57,9 @@
     >
       <a [href]="modifier.url" target="_blank">[{{ modifier.id }}]</a>
       {{ modifier.label
-      }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1">, </span>
+      }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1"
+        >,
+      </span>
     </span>
   </div>
   <div class="field col-12">

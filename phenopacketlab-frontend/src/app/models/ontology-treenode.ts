@@ -48,13 +48,14 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   /**
    * Convert to OntologyClass
    * @param ontologyNodes
+   * @param urlPrefix
    * @returns
    */
-  public static toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
+  public static toOntologyClass(ontologyNodes: OntologyTreeNode[], urlPrefix: string) {
     const ontologyList = [];
     for (const node of ontologyNodes) {
       const obj = new OntologyClass(node['key'], node['label']);
-      obj.url = `https://hpo.jax.org/app/browse/disease/${obj.id}`;
+      obj.url = `${urlPrefix}/${obj.id}`;
       ontologyList.push(new OntologyClass(node['key'], node['label']));
     }
     return ontologyList;
