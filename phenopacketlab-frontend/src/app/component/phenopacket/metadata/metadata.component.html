@@ -17,11 +17,9 @@
   <div class="field col-12">
     <b>Phenopacket schema version:</b> {{ phenopacketSchemaVersion }}
   </div>
-  <div class="field col-12">
-    <b>Updates:</b>
-    <br />
+  <div *ngIf="updates && updates.length > 0" class="field col-12">
+    <ng-template pTemplate="caption"> Updates </ng-template>
     <p-table
-      *ngIf="updates && updates.length > 0"
       [value]="updates"
       [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-sm"
@@ -42,15 +40,13 @@
       </ng-template>
     </p-table>
   </div>
-  <div class="field col-12">
-    <b>Resources:</b>
-    <br />
-    <p-table
-      *ngIf="resources && resources.length > 0"
+  <div *ngIf="resources && resources.length > 0" class="field col-12">
+    <p-table 
       [value]="resources"
       [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-sm"
     >
+      <ng-template pTemplate="caption"> Resources </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>ID</th>
@@ -69,15 +65,13 @@
       </ng-template>
     </p-table>
   </div>
-  <div class="field col-12">
-    <b>External references:</b>
-    <br />
-    <p-table
-      *ngIf="externalReferences && externalReferences.length > 0"
+  <div *ngIf="externalReferences && externalReferences.length > 0" class="field col-12">
+    <p-table 
       [value]="externalReferences"
       [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-sm"
     >
+      <ng-template pTemplate="caption"> External references </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>ID</th>
