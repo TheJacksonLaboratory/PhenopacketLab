@@ -50,7 +50,7 @@ import { MedicalActionDetailDialogComponent } from './medical-action/medical-act
 import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
-import { MetadataComponent, ResourceDetailComponent } from './metadata/metadata.component';
+import { MetadataComponent } from './metadata/metadata.component';
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
 import { InterpretationDetailDialogComponent } from './interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
@@ -127,7 +127,6 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     FileDetailComponent,
     FileDetailDialogComponent,
     MetadataComponent,
-    ResourceDetailComponent,
     InterpretationComponent,
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,
@@ -156,7 +155,6 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     FileComponent,
     FileDetailComponent,
     MetadataComponent,
-    ResourceDetailComponent,
     InterpretationComponent,
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,

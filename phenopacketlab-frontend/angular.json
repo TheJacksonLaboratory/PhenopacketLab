@@ -25,6 +25,9 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
             ],
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "scripts": []
           },
           "configurations": {
