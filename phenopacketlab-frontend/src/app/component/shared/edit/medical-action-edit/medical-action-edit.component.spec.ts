@@ -1,30 +1,32 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog.component';
+import { MedicalActionEditComponent } from './medical-action-edit.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
-describe('MedicalActionDetailDialogComponent', () => {
-  let component: MedicalActionDetailDialogComponent;
-  let fixture: ComponentFixture<MedicalActionDetailDialogComponent>;
+describe('MedicalActionEditComponent', () => {
+  let component: MedicalActionEditComponent;
+  let fixture: ComponentFixture<MedicalActionEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MedicalActionDetailDialogComponent ],
+      declarations: [ MedicalActionEditComponent ],
       imports: [
         NoopAnimationsModule,
         HttpClientModule,
       ],
       providers: [
-        { provide: DynamicDialogConfig, useValue: {} },
-        { provide: DynamicDialogRef, useValue: {} }
+        DynamicDialogRef,
+        DynamicDialogConfig,
+        { provide: MessageService, useValue: {} },
       ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MedicalActionDetailDialogComponent);
+    fixture = TestBed.createComponent(MedicalActionEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

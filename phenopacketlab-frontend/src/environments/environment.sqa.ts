@@ -24,5 +24,9 @@ export const environment = {
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
-  STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`
+  STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
+  MEDICAL_ACTION_TREATMENT_INTENTS_URL: `${API_URL}/medical-actions/treatment-intents`,
+  MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
+  MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
+  MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`
 };

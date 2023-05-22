@@ -289,6 +289,13 @@ export class TimeInterval {
         }
         return interval;
     }
+
+    toString() {
+        if (this.start && this.end) {
+            return `${this.start} - ${this.end}`;
+        }
+        return '';
+    }
 }
 
 export class GestationalAge {
