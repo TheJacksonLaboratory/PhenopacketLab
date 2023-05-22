@@ -77,10 +77,10 @@ public class ConceptConstantsServiceConfigurer {
 
         List<IdentifiedConcept> concepts = new ArrayList<>(4);
 
-        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C17998"), "UNKNOWN_SEX", "Not known, observed, recorded; or reported as unknown by the data contributor.", Arrays.asList("Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated")));
-        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46113"), "FEMALE", "An animal who is observed by researcher or clinician to be female, the sex that ordinarily produces ova.", Arrays.asList("Female", "FEMALE", "Female Phenotype")));
-        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46112"), "MALE", "An animal who is observed by researcher or clinician to be male, the sex that ordinarily produces sperm.", Arrays.asList("Male", "MALE", "Male Phenotype")));
-        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C45908"), "OTHER", "A person (one of unisexual specimens) who is born with genitalia and/or secondary sexual characteristics of indeterminate sex, or which combine features of both sexes.", Arrays.asList("Intersex", "Intersexed", "UNDIFFERENTIATED")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C17998"), "UNKNOWN_SEX", "Not assessed or not available. Maps to NCIT:C17998", Arrays.asList("Unknown", "U", "UNKNOWN", "Not Known", "{Unknown}", "UNK", "Unknown/Not Stated")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46113"), "FEMALE", "Female sex. Maps to NCIT:C46113", Arrays.asList("Female", "FEMALE", "Female Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C46112"), "MALE", "Male sex. Maps to NCIT:C46112", Arrays.asList("Male", "MALE", "Male Phenotype")));
+        concepts.add(IdentifiedConcept.of(TermId.of("NCIT:C45908"), "OTHER", "It is not possible to accurately assess the applicability of MALE/FEMALE. Maps to NCIT:C45908", Arrays.asList("Intersex", "Intersexed", "UNDIFFERENTIATED")));
 
         return concepts;
     }
