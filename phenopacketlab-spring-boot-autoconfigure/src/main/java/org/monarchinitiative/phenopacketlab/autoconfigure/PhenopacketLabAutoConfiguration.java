@@ -10,10 +10,10 @@ import org.monarchinitiative.phenopacketlab.core.*;
 import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
+import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
-import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
@@ -127,8 +127,17 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadata phenopacketLabMetadata() {
-        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
+    public PhenopacketLabMetadata phenopacketLabMetadata(ConceptResourceService conceptResourceService) {
+        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion(),
+                conceptResourceService.forPrefix("HP").get().getResource(),
+                conceptResourceService.forPrefix("EFO").get().getResource(),
+                conceptResourceService.forPrefix("GENO").get().getResource(),
+                conceptResourceService.forPrefix("MONDO").get().getResource(),
+                conceptResourceService.forPrefix("SO").get().getResource(),
+                conceptResourceService.forPrefix("UBERON").get().getResource(),
+                conceptResourceService.forPrefix("HGNC").get().getResource(),
+                conceptResourceService.forPrefix("NCIT").get().getResource(),
+                conceptResourceService.forPrefix("GSSO").get().getResource());
     }
 
     private static Properties readProperties() {

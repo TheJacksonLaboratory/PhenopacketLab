@@ -11,4 +11,5 @@ module phenopacketlab.io {
     requires com.fasterxml.jackson.databind;
 
     exports org.monarchinitiative.phenopacketlab.io;
+    opens org.monarchinitiative.phenopacketlab.io to com.fasterxml.jackson.databind;
 }

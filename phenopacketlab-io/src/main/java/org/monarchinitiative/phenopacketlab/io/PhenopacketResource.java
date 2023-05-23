@@ -4,11 +4,11 @@ import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.util.Objects;
 
-class PhenopacketResource implements Resource {
+public class PhenopacketResource implements Resource {
 
     private final org.phenopackets.schema.v2.core.Resource resource;
 
-    PhenopacketResource(org.phenopackets.schema.v2.core.Resource resource) {
+    public PhenopacketResource(org.phenopackets.schema.v2.core.Resource resource) {
         this.resource = Objects.requireNonNull(resource);
     }
 
