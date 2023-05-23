@@ -17,5 +17,4 @@ module phenopacketlab.core {
 
     opens org.monarchinitiative.phenopacketlab.core.model to com.fasterxml.jackson.databind;
     opens org.monarchinitiative.phenopacketlab.core.subtree to com.fasterxml.jackson.databind;
-    exports org.monarchinitiative.phenopacketlab.core.metadata;
 }
