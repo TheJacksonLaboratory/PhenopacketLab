@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const URL = 'http://localhost:8080';
-const API_URL = 'http://localhost:8080/api/v1';
+const API_URL = `${URL}/api/v1`;
 
 export const environment = {
   production: false,
@@ -32,7 +32,8 @@ export const environment = {
   MEDICAL_ACTION_TREATMENT_INTENTS_URL: `${API_URL}/medical-actions/treatment-intents`,
   MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
-  MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`
+  MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
+  METADATA_URL: `${API_URL}/metadata`
 };
 
 /*
