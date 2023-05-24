@@ -16,6 +16,7 @@ import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.ValidateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -138,6 +139,11 @@ public class PhenopacketLabAutoConfiguration {
                 conceptResourceService.forPrefix("HGNC").get().getResource(),
                 conceptResourceService.forPrefix("NCIT").get().getResource(),
                 conceptResourceService.forPrefix("GSSO").get().getResource());
+    }
+
+    @Bean
+    public ValidateService validatePhenopacketService() {
+        return new ValidateService();
     }
 
     private static Properties readProperties() {

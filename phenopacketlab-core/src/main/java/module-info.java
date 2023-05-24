@@ -2,10 +2,12 @@ module phenopacketlab.core {
     requires transitive org.monarchinitiative.phenol.core;
     requires transitive org.monarchinitiative.phenol.annotations;
     requires org.monarchinitiative.fenominal.core;
-
     requires org.monarchitiative.svart;
 
     requires org.slf4j;
+    requires org.phenopackets.schema;
+    requires org.phenopackets.phenopackettools.validator.jsonschema;
+    requires org.phenopackets.phenopackettools.validator.core;
 
     exports org.monarchinitiative.phenopacketlab.core;
     exports org.monarchinitiative.phenopacketlab.core.disease;
