@@ -128,17 +128,8 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadata phenopacketLabMetadata(ConceptResourceService conceptResourceService) {
-        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion(),
-                conceptResourceService.forPrefix("HP").get().getResource(),
-                conceptResourceService.forPrefix("EFO").get().getResource(),
-                conceptResourceService.forPrefix("GENO").get().getResource(),
-                conceptResourceService.forPrefix("MONDO").get().getResource(),
-                conceptResourceService.forPrefix("SO").get().getResource(),
-                conceptResourceService.forPrefix("UBERON").get().getResource(),
-                conceptResourceService.forPrefix("HGNC").get().getResource(),
-                conceptResourceService.forPrefix("NCIT").get().getResource(),
-                conceptResourceService.forPrefix("GSSO").get().getResource());
+    public PhenopacketLabMetadata phenopacketLabMetadata() {
+        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
     }
 
     @Bean

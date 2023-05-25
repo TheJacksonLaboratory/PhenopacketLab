@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ConceptResourceServiceImpl implements ConceptResourceService {
 
@@ -76,27 +77,22 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
 
     @Override
     public Optional<IdentifiedConceptResource> forPrefix(String prefix) {
-        switch (prefix.toUpperCase()) {
-            case "EFO":
-                return Optional.of(efo);
-            case "GENO":
-                return Optional.of(geno);
-            case "HP":
-                return Optional.of(hp);
-            case "MONDO":
-                return Optional.of(mondo);
-            case "SO":
-                return Optional.of(so);
-            case "UBERON":
-                return Optional.of(uberon);
-            case "HGNC":
-                return Optional.of(hgnc);
-            case "NCIT":
-                return Optional.of(ncit);
-            case "GSSO":
-                return Optional.of(gsso);
-            default:
-                return Optional.empty();
-        }
+        return switch (prefix.toUpperCase()) {
+            case "EFO" -> Optional.of(efo);
+            case "GENO" -> Optional.of(geno);
+            case "HP" -> Optional.of(hp);
+            case "MONDO" -> Optional.of(mondo);
+            case "SO" -> Optional.of(so);
+            case "UBERON" -> Optional.of(uberon);
+            case "HGNC" -> Optional.of(hgnc);
+            case "NCIT" -> Optional.of(ncit);
+            case "GSSO" -> Optional.of(gsso);
+            default -> Optional.empty();
+        };
+    }
+
+    @Override
+    public Stream<IdentifiedConceptResource> conceptResources() {
+        return Stream.of(efo, geno, hp, mondo, so, uberon, hgnc, ncit, gsso);
     }
 }

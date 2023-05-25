@@ -4,6 +4,7 @@ import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Service for {@link IdentifiedConceptResource}s used in PhenopacketLab.
@@ -18,5 +19,11 @@ public interface ConceptResourceService {
      * if {@link IdentifiedConceptResource} for given {@code prefix} is not available.
      */
     Optional<IdentifiedConceptResource> forPrefix(String prefix);
+
+    Stream<IdentifiedConceptResource> conceptResources();
+
+    default Stream<Resource> resources() {
+        return conceptResources().map(IdentifiedConceptResource::getResource);
+    }
 
 }
