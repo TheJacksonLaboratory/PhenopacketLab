@@ -48,6 +48,19 @@
         <tag>v${project.version}</tag>
     </scm>
 
+    <repositories>
+        <repository>
+            <!-- Enable snapshot artifacts. -->
+            <id>ossrh-snapshots</id>
+            <name>OSSRH Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -62,7 +75,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <phenopacket.version>2.0.2</phenopacket.version>
-        <phenopacket-tools.version>1.0.0-RC3</phenopacket-tools.version>
+        <phenopacket-tools.version>1.0.0-RC4-SNAPSHOT</phenopacket-tools.version>
         <protobuf.version>3.19.3</protobuf.version>
 
         <phenol.version>2.0.0</phenol.version>
