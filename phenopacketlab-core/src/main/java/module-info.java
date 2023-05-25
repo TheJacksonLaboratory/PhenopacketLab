@@ -5,6 +5,7 @@ module phenopacketlab.core {
     requires org.monarchitiative.svart;
 
     requires org.slf4j;
+    // TODO - remove after upgrade to phenopacket-tools-validator-jsonschema > 1.0.0-RC3
     requires org.phenopackets.schema;
     requires org.phenopackets.phenopackettools.validator.jsonschema;
     requires org.phenopackets.phenopackettools.validator.core;

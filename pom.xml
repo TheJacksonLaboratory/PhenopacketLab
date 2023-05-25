@@ -62,6 +62,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <phenopacket.version>2.0.2</phenopacket.version>
+        <phenopacket-tools.version>1.0.0-RC3</phenopacket-tools.version>
         <protobuf.version>3.19.3</protobuf.version>
 
         <phenol.version>2.0.0</phenol.version>
@@ -110,6 +111,16 @@
                 <groupId>org.phenopackets</groupId>
                 <artifactId>phenopacket-schema</artifactId>
                 <version>${phenopacket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-validator-core</artifactId>
+                <version>${phenopacket-tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-validator-jsonschema</artifactId>
+                <version>${phenopacket-tools.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.protobuf</groupId>
