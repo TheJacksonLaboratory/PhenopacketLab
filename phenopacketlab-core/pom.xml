@@ -40,6 +40,14 @@
             <groupId>org.phenopackets.phenopackettools</groupId>
             <artifactId>phenopacket-tools-validator-jsonschema</artifactId>
         </dependency>
+        <!-- We need the annotations to describe how to serialize the model classes.
+        The dependency has `provided` scope since not all clients need to do serialization,
+        and those that do need `jackson-databind` anyway. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.monarchinitiative.phenol</groupId>
             <artifactId>phenol-io</artifactId>

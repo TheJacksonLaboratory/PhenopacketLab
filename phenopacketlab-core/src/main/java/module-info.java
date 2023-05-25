@@ -9,6 +9,7 @@ module phenopacketlab.core {
     requires org.phenopackets.schema;
     requires org.phenopackets.phenopackettools.validator.jsonschema;
     requires org.phenopackets.phenopackettools.validator.core;
+    requires com.fasterxml.jackson.databind;
 
     exports org.monarchinitiative.phenopacketlab.core;
     exports org.monarchinitiative.phenopacketlab.core.disease;
