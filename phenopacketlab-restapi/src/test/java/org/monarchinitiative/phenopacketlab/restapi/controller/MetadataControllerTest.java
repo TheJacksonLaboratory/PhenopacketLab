@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -22,9 +21,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.startsWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,8 +30,6 @@ public class MetadataControllerTest {
 
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
-    @Mock
-    public PhenopacketLabMetadata metadataService;
     @Mock
     public ConceptResourceService conceptResourceService;
 
@@ -58,9 +54,9 @@ public class MetadataControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        // TODO fix assertion...
-//      assertThat(response.getContentAsString(), equalTo("{\"name\":\"Human Phenotype Ontology\",\"id\":\"hp\", \"version\":\"2022-12-15\", \"namespacePrefix\":\"HP\", \"iriPrefix\":\"http://purl.obolibrary.org/obo/HP_\", \"url\":\"http://purl.obolibrary.org/obo/hp.json\"}"));
-        assertThat(response.getContentAsString(), equalTo("{\"version\":\"\",\"name\":\"\",\"id\":\"\",\"namespacePrefix\":\"\",\"iriPrefix\":\"\",\"url\":\"\"}"));
+        String expected = "{\"version\":\"2022-12-15\",\"name\":\"Human Phenotype Ontology\",\"id\":\"hp\",\"namespacePrefix\":\"HP\",\"iriPrefix\":\"http://purl.obolibrary.org/obo/HP_\",\"url\":\"http://purl.obolibrary.org/obo/hp.json\"}";
+        String actual = response.getContentAsString();
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -88,8 +84,9 @@ public class MetadataControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        // TODO fix assertion...
-        assertThat(response.getContentAsString(), startsWith("[{\"version\":\"\",\"name\":\"\",\"id\":\"\",\"url\":\"\",\"namespacePrefix\":\"\",\"iriPrefix\":\"\"},{\"version\":\"\",\"name\":\"\",\"id\":\"\",\"url\":\"\",\"namespacePrefix\":\"\",\"iriPrefix\":\"\"},{\"version\":\"\",\"name\":\"\",\"id\":\"\",\"url\":\"\",\"namespacePrefix\":\"\",\"iriPrefix\":\"\"},{\"version\":\""));
+        String expected = "[{\"version\":\"2022-12-15\",\"name\":\"Human Phenotype Ontology\",\"id\":\"hp\",\"namespacePrefix\":\"HP\",\"iriPrefix\":\"http://purl.obolibrary.org/obo/HP_\",";
+        String actual = response.getContentAsString();
+        assertTrue(actual.startsWith(expected));
     }
 
     private IdentifiedConceptResource createResource(String prefix) {
