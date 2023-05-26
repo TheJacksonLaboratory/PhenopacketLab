@@ -42,6 +42,7 @@ public class MetadataController {
                                                        * HGNC
                                                        * NCIT
                                                        * GSSO
+                                                       * ECO
                                                        """) String prefix) {
         return conceptResourceService.forPrefix(prefix.toUpperCase())
                 .map(IdentifiedConceptResource::getResource)

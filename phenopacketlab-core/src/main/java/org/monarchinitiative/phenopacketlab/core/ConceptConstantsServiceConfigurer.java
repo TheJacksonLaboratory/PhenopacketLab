@@ -37,6 +37,7 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
         Optional<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
+        List<IdentifiedConcept> evidenceConstants = configureEvidenceConstants(resourceService);
         Optional<SubtreeNode> evidenceTreeConstants = configureEvidenceTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
@@ -56,6 +57,7 @@ public class ConceptConstantsServiceConfigurer {
                 lateralityConstants,
                 modifierConstants,
                 modifierTreeConstants.orElse(null),
+                evidenceConstants,
                 evidenceTreeConstants.orElse(null),
                 severityConstants,
                 onsetConstants,
@@ -186,6 +188,23 @@ public class ConceptConstantsServiceConfigurer {
 
     private static List<IdentifiedConcept> configureModifierConstants(ConceptResourceService resourceService) {
         return configureConstants(resourceService, "HP", HpoSubOntologyRootTermIds.CLINICAL_MODIFIER);
+    }
+
+    private static List<IdentifiedConcept> configureEvidenceConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> ecoOptional = resourceService.forPrefix("ECO");
+        if (ecoOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure evidence constants due to missing ECO concept resource!");
+            return List.of();
+        }
+        IdentifiedConceptResource eco = ecoOptional.get();
+        List<IdentifiedConcept> concepts = new ArrayList<>(5);
+        retrieveIdentifiedConcept(eco, "ECO:0006016", concepts, "Missing ECO:0006016");
+        retrieveIdentifiedConcept(eco, "ECO:0007339", concepts, "Missing ECO:0007339");
+        retrieveIdentifiedConcept(eco, "ECO:0006017", concepts, "Missing ECO:0006017");
+        retrieveIdentifiedConcept(eco, "ECO:0000033", concepts, "Missing ECO:0000033");
+        retrieveIdentifiedConcept(eco, "ECO:0006154", concepts, "Missing ECO:0006154");
+
+        return Collections.unmodifiableList(concepts);
     }
 
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
