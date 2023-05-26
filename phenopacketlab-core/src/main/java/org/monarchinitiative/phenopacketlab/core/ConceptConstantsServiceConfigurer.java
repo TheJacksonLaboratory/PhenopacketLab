@@ -37,6 +37,7 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> lateralityConstants = configureLateralityConstants(resourceService);
         List<IdentifiedConcept> modifierConstants = configureModifierConstants(resourceService);
         Optional<SubtreeNode> modifierTreeConstants = configureModifierTreeConstants(resourceService);
+        Optional<SubtreeNode> evidenceTreeConstants = configureEvidenceTreeConstants(resourceService);
         List<IdentifiedConcept> severityConstants = configureSeverityConstants(resourceService);
         List<IdentifiedConcept> onsetConstants = configureOnsetConstants(resourceService);
         Optional<SubtreeNode> onsetTreeConstants = configureOnsetTreeConstants(resourceService);
@@ -55,6 +56,7 @@ public class ConceptConstantsServiceConfigurer {
                 lateralityConstants,
                 modifierConstants,
                 modifierTreeConstants.orElse(null),
+                evidenceTreeConstants.orElse(null),
                 severityConstants,
                 onsetConstants,
                 onsetTreeConstants.orElse(null),
@@ -218,6 +220,10 @@ public class ConceptConstantsServiceConfigurer {
         excludedNodes.add(TermId.of("HP:0012831")); // Laterality
         excludedNodes.add(TermId.of("HP:0012824")); // Severity
         return configureTreeConstants(resourceService, TermId.of("HP:0012823"), "HP", excludedNodes);
+    }
+
+    private static Optional<SubtreeNode> configureEvidenceTreeConstants(ConceptResourceService resourceService) {
+        return configureTreeConstants(resourceService, TermId.of("ECO:0000000"), "ECO", null);
     }
 
     private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService) {

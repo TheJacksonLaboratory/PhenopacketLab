@@ -28,6 +28,8 @@ public interface ConceptConstantsService {
 
     Optional<SubtreeNode> modifierTreeConstants();
 
+    Optional<SubtreeNode> evidenceTreeConstants();
+
     Optional<SubtreeNode> onsetTreeConstants();
 
     Optional<SubtreeNode> tnmTumorTreeConstants();

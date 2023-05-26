@@ -180,6 +180,25 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
+    public static OntologyConceptResource eco(InputStream is) {
+        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("ECO", "http://purl.obolibrary.org/obo/ECO_"));
+        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "ECO");
+        Resource resource = ecoResource(getOntologyVersion(ontology));
+        return OntologyConceptResource.of(ontology, resource);
+    }
+
+    private static Resource ecoResource(String version) {
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
+                .setId("eco")
+                .setName("Evidence & Conclusion Ontology (ECO)")
+                .setUrl("http://purl.obolibrary.org/obo/eco.owl")
+                .setVersion(version)
+                .setNamespacePrefix("ECO")
+                .setIriPrefix("http://purl.obolibrary.org/obo/ECO_")
+                .build();
+        return new PhenopacketResource(resource);
+    }
+
     private static String getOntologyVersion(Ontology ontology) {
         return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
     }

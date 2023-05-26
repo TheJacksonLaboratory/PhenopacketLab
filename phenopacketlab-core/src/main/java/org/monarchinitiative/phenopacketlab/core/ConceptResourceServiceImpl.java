@@ -18,6 +18,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     private final IdentifiedConceptResource hgnc;
     private final OntologyConceptResource ncit;
     private final OntologyConceptResource gsso;
+    private final OntologyConceptResource eco;
 
     public ConceptResourceServiceImpl(OntologyConceptResource efo,
                                       OntologyConceptResource geno,
@@ -27,7 +28,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
                                       OntologyConceptResource uberon,
                                       IdentifiedConceptResource hgnc,
                                       OntologyConceptResource ncit,
-                                      OntologyConceptResource gsso) {
+                                      OntologyConceptResource gsso,
+                                      OntologyConceptResource eco) {
         this.efo = Objects.requireNonNull(efo);
         this.geno = Objects.requireNonNull(geno);
         this.hp = Objects.requireNonNull(hp);
@@ -37,6 +39,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         this.hgnc = Objects.requireNonNull(hgnc);
         this.ncit = Objects.requireNonNull(ncit);
         this.gsso = Objects.requireNonNull(gsso);
+        this.eco = Objects.requireNonNull(eco);
     }
 
     public OntologyConceptResource efo() {
@@ -75,6 +78,10 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         return gsso;
     }
 
+    public OntologyConceptResource eco() {
+        return eco;
+    }
+
     @Override
     public Optional<IdentifiedConceptResource> forPrefix(String prefix) {
         return switch (prefix.toUpperCase()) {
@@ -87,6 +94,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
             case "HGNC" -> Optional.of(hgnc);
             case "NCIT" -> Optional.of(ncit);
             case "GSSO" -> Optional.of(gsso);
+            case "ECO" -> Optional.of(eco);
             default -> Optional.empty();
         };
     }

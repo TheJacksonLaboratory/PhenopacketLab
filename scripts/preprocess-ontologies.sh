@@ -20,6 +20,7 @@ UBERON_PURL=http://purl.obolibrary.org/obo/uberon.owl
 NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
 GSSO_PURL=http://purl.obolibrary.org/obo/gsso.owl
 UO_PURL=http://purl.obolibrary.org/obo/uo.owl
+ECO_PURL=http://purl.obolibrary.org/obo/eco.owl
 
 ONTOLOGIES=(
     "${EFO_PURL}"
@@ -31,6 +32,7 @@ ONTOLOGIES=(
     "${NCIT_PURL}"
     "${GSSO_PURL}"
     "${UO_PURL}"
+    "${ECO_PURL}"
   )
 
 check () {

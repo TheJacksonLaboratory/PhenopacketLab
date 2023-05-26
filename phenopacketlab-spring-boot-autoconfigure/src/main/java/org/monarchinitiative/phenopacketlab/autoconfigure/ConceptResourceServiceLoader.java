@@ -54,7 +54,8 @@ class ConceptResourceServiceLoader {
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
-                new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso)
+                new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
+                new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco)
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -84,7 +85,7 @@ class ConceptResourceServiceLoader {
         else
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
-        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso);
+        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso, result.eco);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
@@ -111,6 +112,7 @@ class ConceptResourceServiceLoader {
         private IdentifiedConceptResource hgnc;
         private OntologyConceptResource ncit;
         private OntologyConceptResource gsso;
+        private OntologyConceptResource eco;
 
 
         public void setEfo(OntologyConceptResource efo) {
@@ -147,6 +149,10 @@ class ConceptResourceServiceLoader {
 
         public void setGsso(OntologyConceptResource gsso) {
             this.gsso = gsso;
+        }
+
+        public void setEco(OntologyConceptResource eco) {
+            this.eco = eco;
         }
     }
 
