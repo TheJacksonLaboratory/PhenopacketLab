@@ -47,7 +47,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
     );
     // get Evidences
-    this.evidencesNodes = this.getEvidences();
+    this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
+      const nodes = [];
+      for (const evidence of evidences) {
+        nodes.push({ label: evidence.name, key: evidence.id.value, leaf: true, parent: undefined });
+      }
+      this.evidencesNodes = nodes;
+    });
     // get onsets
     this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
@@ -74,6 +80,9 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     if (this.severitySubscription) {
       this.severitySubscription.unsubscribe();
     }
+    if (this.evidencesSubscription) {
+      this.evidencesSubscription.unsubscribe();
+    }
   }
 
   getPhenotypicOnsetId() {
@@ -84,14 +93,6 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   getSeverities() {
     return Severities.VALUES;
-  }
-
-  getEvidences() {
-    const nodes = [];
-    for (const evidence of Evidence.VALUES) {
-      nodes.push({ label: evidence.label, key: evidence.id, leaf: true, parent: undefined });
-    }
-    return nodes;
   }
 
   updateExcluded(event) {

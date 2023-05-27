@@ -7,6 +7,7 @@ import { ProfileSelection } from '../models/profile';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
+const evidencesUrl = environment.EVIDENCES_URL;
 const mondoDiseasesUrl = environment.MONDO_DISEASES_URL;
 const onsetsUrl = environment.ONSETS_URL;
 const tnmTumorFindingsUrl = environment.TNM_TUMOR_URL;
@@ -47,6 +48,9 @@ export class PhenopacketService {
 
     getModifiers(): Observable<any> {
         return this.http.get(modifiersUrl);
+    }
+    getEvidences(): Observable<any> {
+        return this.http.get(evidencesUrl);
     }
     getMondoDiseases(): Observable<any> {
         return this.http.get(mondoDiseasesUrl);

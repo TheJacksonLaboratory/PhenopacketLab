@@ -52,7 +52,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.sexes = sexes;
             for (const sex of sexes) {
                 if (this.subject && this.subject.sex === sex.name) {
-                   this.selectedSex = sex;
+                    this.selectedSex = sex;
                 }
             }
         });
@@ -73,7 +73,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             for (const karyosex of KaryotypicSex.VALUES) {
                 if (this.subject.karyotypicSex === karyosex.name) {
                     this.selectedKaryotypicSex = karyosex;
-                 }
+                }
             }
         }
     }

@@ -18,6 +18,7 @@ export const environment = {
   SEVERITY_URL: `${API_URL}/constants/severity`,
   LATERALITY_URL: `${API_URL}/constants/laterality`,
   MODIFIERS_URL: `${API_URL}/constants/treemodifier`,
+  EVIDENCES_URL: `${API_URL}/constants/evidence`,
   MONDO_DISEASES_URL: `${API_URL}/mondo-diseases`,
   ONSETS_URL: `${API_URL}/constants/treeonset`,
   TNM_TUMOR_URL: `${API_URL}/constants/tree-tnm-tumor`,
