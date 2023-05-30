@@ -8,7 +8,7 @@ module phenopacketlab.core {
     // TODO - remove after upgrade to phenopacket-tools-validator-jsonschema > 1.0.0-RC3
     requires org.phenopackets.schema;
     requires org.phenopackets.phenopackettools.validator.jsonschema;
-    requires org.phenopackets.phenopackettools.validator.core;
+    requires transitive org.phenopackets.phenopackettools.validator.core;
     requires com.fasterxml.jackson.databind;
 
     exports org.monarchinitiative.phenopacketlab.core;
