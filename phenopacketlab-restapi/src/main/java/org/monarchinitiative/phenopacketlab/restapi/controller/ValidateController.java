@@ -1,6 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.monarchinitiative.phenopacketlab.core.ValidateService;
+import org.phenopackets.phenopackettools.validator.core.ValidationResults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,10 @@ public class ValidateController {
     }
 
     @PostMapping
-    public ResponseEntity<String> validatePhenopacket(@RequestBody String phenopacketString) {
+    public ResponseEntity<ValidationResults> validatePhenopacket(@RequestBody String phenopacketString) {
         if (phenopacketString == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        String result = validateService.validate(phenopacketString);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(validateService.validate(phenopacketString).get());
     }
 }

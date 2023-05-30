@@ -8,12 +8,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenopacketlab.core.ValidateService;
 
+import org.phenopackets.phenopackettools.validator.core.ValidationLevel;
+import org.phenopackets.phenopackettools.validator.core.ValidationResult;
+import org.phenopackets.phenopackettools.validator.core.ValidationResults;
+import org.phenopackets.phenopackettools.validator.core.ValidatorInfo;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -43,7 +51,7 @@ public class ValidateControllerTest {
     @Test
     public void validateSuccess() throws Exception {
         when(validateService.validate(CORRECT_PHENOPACKET))
-                .thenReturn("Phenopacket has been successfully validated.");
+                .thenReturn(Optional.of(getCorrectResult()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                         .contentType("text/plain")
@@ -52,14 +60,13 @@ public class ValidateControllerTest {
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response.getContentAsString(), equalTo("Phenopacket has been successfully validated."));
+        assertThat(response.getContentAsString(), equalTo("{\"validators\":[],\"validationResults\":[]}"));
     }
 
     @Test
     public void validateFail() throws Exception {
         when(validateService.validate(INCORRECT_PHENOPACKET))
-                .thenReturn("Error messages: \n" +
-                        "com.google.protobuf.InvalidProtocolBufferException: Cannot find field: isProband in message org.phenopackets.schema.v2.Phenopacket");
+                .thenReturn(Optional.of(getIncorrectResult()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                 .contentType("text/plain")
@@ -68,8 +75,7 @@ public class ValidateControllerTest {
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response.getContentAsString(), equalTo("Error messages: \n" +
-                "com.google.protobuf.InvalidProtocolBufferException: Cannot find field: isProband in message org.phenopackets.schema.v2.Phenopacket"));
+        assertThat(response.getContentAsString(), equalTo("{\"validators\":[{\"validatorId\":\"BaseValidator\",\"validatorName\":\"Base syntax validator\",\"description\":\"The base syntax validation of a phenopacket, family, or cohort\"},{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"}],\"validationResults\":[{\"validatorInfo\":{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"},\"level\":\"ERROR\",\"category\":\"Ontology Not In MetaData\",\"message\":\"No ontology corresponding to ID 'OMIM:154700 ' found in MetaData\"},{\"validatorInfo\":{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"},\"level\":\"ERROR\",\"category\":\"Ontology Not In MetaData\",\"message\":\"No ontology corresponding to ID 'DrugCentral:1610' found in MetaData\"},{\"validatorInfo\":{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"},\"level\":\"ERROR\",\"category\":\"Ontology Not In MetaData\",\"message\":\"No ontology corresponding to ID 'NCIT:C38288' found in MetaData\"},{\"validatorInfo\":{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"},\"level\":\"ERROR\",\"category\":\"Ontology Not In MetaData\",\"message\":\"No ontology corresponding to ID 'UO:0000022' found in MetaData\"},{\"validatorInfo\":{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"},\"level\":\"ERROR\",\"category\":\"Ontology Not In MetaData\",\"message\":\"No ontology corresponding to ID 'NCIT:C64496' found in MetaData\"}]}"));
     }
 
     @Test
@@ -78,218 +84,234 @@ public class ValidateControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    private final String CORRECT_PHENOPACKET =
-                "{\n" +
-                "  \"id\": \"arbitrary.id\",\n" +
-                "  \"subject\": {\n" +
-                "    \"id\": \"proband A\",\n" +
-                "    \"timeAtLastEncounter\": {\n" +
-                "      \"age\": {\n" +
-                "        \"iso8601duration\": \"P38Y\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"sex\": \"MALE\"\n" +
-                "  },\n" +
-                "  \"biosamples\": [{\n" +
-                "    \"id\": \"biosample 1\",\n" +
-                "    \"individualId\": \"proband A\",\n" +
-                "    \"sampledTissue\": {\n" +
-                "      \"id\": \"NCIT:C12389\",\n" +
-                "      \"label\": \"Esophagus\"\n" +
-                "    },\n" +
-                "    \"timeOfCollection\": {\n" +
-                "      \"age\": {\n" +
-                "        \"iso8601duration\": \"P49Y2M\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"tumorProgression\": {\n" +
-                "      \"id\": \"NCIT:C4813\",\n" +
-                "      \"label\": \"Recurrent Malignant Neoplasm\"\n" +
-                "    },\n" +
-                "    \"procedure\": {\n" +
-                "      \"code\": {\n" +
-                "        \"id\": \"NCIT:C15189\",\n" +
-                "        \"label\": \"Biopsy\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  }, {\n" +
-                "    \"id\": \"biosample 2\",\n" +
-                "    \"individualId\": \"proband A\",\n" +
-                "    \"sampledTissue\": {\n" +
-                "      \"id\": \"NCIT:C139196\",\n" +
-                "      \"label\": \"Esophageal Lymph Node\"\n" +
-                "    },\n" +
-                "    \"timeOfCollection\": {\n" +
-                "      \"age\": {\n" +
-                "        \"iso8601duration\": \"P48Y3M\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"histologicalDiagnosis\": {\n" +
-                "      \"id\": \"NCIT:C4024\",\n" +
-                "      \"label\": \"Esophageal Squamous Cell Carcinoma\"\n" +
-                "    },\n" +
-                "    \"tumorProgression\": {\n" +
-                "      \"id\": \"NCIT:C84509\",\n" +
-                "      \"label\": \"Primary Malignant Neoplasm\"\n" +
-                "    },\n" +
-                "    \"diagnosticMarkers\": [{\n" +
-                "      \"id\": \"NCIT:C131711\",\n" +
-                "      \"label\": \"Human Papillomavirus-18 Positive\"\n" +
-                "    }],\n" +
-                "    \"procedure\": {\n" +
-                "      \"code\": {\n" +
-                "        \"id\": \"NCIT:C15189\",\n" +
-                "        \"label\": \"Biopsy\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  }, {\n" +
-                "    \"id\": \"biosample 3\",\n" +
-                "    \"individualId\": \"proband A\",\n" +
-                "    \"sampledTissue\": {\n" +
-                "      \"id\": \"NCIT:C12468\",\n" +
-                "      \"label\": \"Lung\"\n" +
-                "    },\n" +
-                "    \"timeOfCollection\": {\n" +
-                "      \"age\": {\n" +
-                "        \"iso8601duration\": \"P50Y7M\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    \"tumorProgression\": {\n" +
-                "      \"id\": \"NCIT:C3261\",\n" +
-                "      \"label\": \"Metastatic Neoplasm\"\n" +
-                "    },\n" +
-                "    \"procedure\": {\n" +
-                "      \"code\": {\n" +
-                "        \"id\": \"NCIT:C15189\",\n" +
-                "        \"label\": \"Biopsy\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  }],\n" +
-                "  \"diseases\": [{\n" +
-                "    \"term\": {\n" +
-                "      \"id\": \"NCIT:C4024\",\n" +
-                "      \"label\": \"Esophageal Squamous Cell Carcinoma\"\n" +
-                "    },\n" +
-                "    \"clinicalTnmFinding\": [{\n" +
-                "      \"id\": \"NCIT:C48724\",\n" +
-                "      \"label\": \"T2 Stage Finding\"\n" +
-                "    }, {\n" +
-                "      \"id\": \"NCIT:C48706\",\n" +
-                "      \"label\": \"N1 Stage Finding\"\n" +
-                "    }, {\n" +
-                "      \"id\": \"NCIT:C48699\",\n" +
-                "      \"label\": \"M0 Stage Finding\"\n" +
-                "    }]\n" +
-                "  }],\n" +
-                "  \"metaData\": {\n" +
-                "    \"created\": \"2021-05-14T10:35:00Z\",\n" +
-                "    \"createdBy\": \"anonymous biocurator\",\n" +
-                "    \"resources\": [{\n" +
-                "      \"id\": \"ncit\",\n" +
-                "      \"name\": \"NCI Thesaurus\",\n" +
-                "      \"url\": \"http://purl.obolibrary.org/obo/ncit.owl\",\n" +
-                "      \"version\": \"21.05d\",\n" +
-                "      \"namespacePrefix\": \"NCIT\",\n" +
-                "      \"iriPrefix\": \"http://purl.obolibrary.org/obo/NCIT_\"\n" +
-                "    }, {\n" +
-                "      \"id\": \"efo\",\n" +
-                "      \"name\": \"Experimental Factor Ontology\",\n" +
-                "      \"url\": \"http://www.ebi.ac.uk/efo/efo.owl\",\n" +
-                "      \"version\": \"3.34.0\",\n" +
-                "      \"namespacePrefix\": \"EFO\",\n" +
-                "      \"iriPrefix\": \"http://purl.obolibrary.org/obo/EFO_\"\n" +
-                "    }, {\n" +
-                "      \"id\": \"uberon\",\n" +
-                "      \"name\": \"Uber-anatomy ontology\",\n" +
-                "      \"url\": \"http://purl.obolibrary.org/obo/uberon.owl\",\n" +
-                "      \"version\": \"2021-07-27\",\n" +
-                "      \"namespacePrefix\": \"UBERON\",\n" +
-                "      \"iriPrefix\": \"http://purl.obolibrary.org/obo/UBERON_\"\n" +
-                "    }, {\n" +
-                "      \"id\": \"ncbitaxon\",\n" +
-                "      \"name\": \"NCBI organismal classification\",\n" +
-                "      \"url\": \"http://purl.obolibrary.org/obo/ncbitaxon.owl\",\n" +
-                "      \"version\": \"2021-06-10\",\n" +
-                "      \"namespacePrefix\": \"NCBITaxon\",\n" +
-                "      \"iriPrefix\": \"http://purl.obolibrary.org/obo/NCBITaxon_\"\n" +
-                "    }],\n" +
-                "    \"phenopacketSchemaVersion\": \"2.0\"\n" +
-                "  }\n" +
-                "}";
+    private final static String CORRECT_PHENOPACKET =
+            """
+                    {
+                      "id": "arbitrary.id",
+                      "subject": {
+                        "id": "proband A",
+                        "timeAtLastEncounter": {
+                          "age": {
+                            "iso8601duration": "P38Y"
+                          }
+                        },
+                        "sex": "MALE"
+                      },
+                      "biosamples": [{
+                        "id": "biosample 1",
+                        "individualId": "proband A",
+                        "sampledTissue": {
+                          "id": "NCIT:C12389",
+                          "label": "Esophagus"
+                        },
+                        "timeOfCollection": {
+                          "age": {
+                            "iso8601duration": "P49Y2M"
+                          }
+                        },
+                        "tumorProgression": {
+                          "id": "NCIT:C4813",
+                          "label": "Recurrent Malignant Neoplasm"
+                        },
+                        "procedure": {
+                          "code": {
+                            "id": "NCIT:C15189",
+                            "label": "Biopsy"
+                          }
+                        }
+                      }, {
+                        "id": "biosample 2",
+                        "individualId": "proband A",
+                        "sampledTissue": {
+                          "id": "NCIT:C139196",
+                          "label": "Esophageal Lymph Node"
+                        },
+                        "timeOfCollection": {
+                          "age": {
+                            "iso8601duration": "P48Y3M"
+                          }
+                        },
+                        "histologicalDiagnosis": {
+                          "id": "NCIT:C4024",
+                          "label": "Esophageal Squamous Cell Carcinoma"
+                        },
+                        "tumorProgression": {
+                          "id": "NCIT:C84509",
+                          "label": "Primary Malignant Neoplasm"
+                        },
+                        "diagnosticMarkers": [{
+                          "id": "NCIT:C131711",
+                          "label": "Human Papillomavirus-18 Positive"
+                        }],
+                        "procedure": {
+                          "code": {
+                            "id": "NCIT:C15189",
+                            "label": "Biopsy"
+                          }
+                        }
+                      }, {
+                        "id": "biosample 3",
+                        "individualId": "proband A",
+                        "sampledTissue": {
+                          "id": "NCIT:C12468",
+                          "label": "Lung"
+                        },
+                        "timeOfCollection": {
+                          "age": {
+                            "iso8601duration": "P50Y7M"
+                          }
+                        },
+                        "tumorProgression": {
+                          "id": "NCIT:C3261",
+                          "label": "Metastatic Neoplasm"
+                        },
+                        "procedure": {
+                          "code": {
+                            "id": "NCIT:C15189",
+                            "label": "Biopsy"
+                          }
+                        }
+                      }],
+                      "diseases": [{
+                        "term": {
+                          "id": "NCIT:C4024",
+                          "label": "Esophageal Squamous Cell Carcinoma"
+                        },
+                        "clinicalTnmFinding": [{
+                          "id": "NCIT:C48724",
+                          "label": "T2 Stage Finding"
+                        }, {
+                          "id": "NCIT:C48706",
+                          "label": "N1 Stage Finding"
+                        }, {
+                          "id": "NCIT:C48699",
+                          "label": "M0 Stage Finding"
+                        }]
+                      }],
+                      "metaData": {
+                        "created": "2021-05-14T10:35:00Z",
+                        "createdBy": "anonymous biocurator",
+                        "resources": [{
+                          "id": "ncit",
+                          "name": "NCI Thesaurus",
+                          "url": "http://purl.obolibrary.org/obo/ncit.owl",
+                          "version": "21.05d",
+                          "namespacePrefix": "NCIT",
+                          "iriPrefix": "http://purl.obolibrary.org/obo/NCIT_"
+                        }, {
+                          "id": "efo",
+                          "name": "Experimental Factor Ontology",
+                          "url": "http://www.ebi.ac.uk/efo/efo.owl",
+                          "version": "3.34.0",
+                          "namespacePrefix": "EFO",
+                          "iriPrefix": "http://purl.obolibrary.org/obo/EFO_"
+                        }, {
+                          "id": "uberon",
+                          "name": "Uber-anatomy ontology",
+                          "url": "http://purl.obolibrary.org/obo/uberon.owl",
+                          "version": "2021-07-27",
+                          "namespacePrefix": "UBERON",
+                          "iriPrefix": "http://purl.obolibrary.org/obo/UBERON_"
+                        }, {
+                          "id": "ncbitaxon",
+                          "name": "NCBI organismal classification",
+                          "url": "http://purl.obolibrary.org/obo/ncbitaxon.owl",
+                          "version": "2021-06-10",
+                          "namespacePrefix": "NCBITaxon",
+                          "iriPrefix": "http://purl.obolibrary.org/obo/NCBITaxon_"
+                        }],
+                        "phenopacketSchemaVersion": "2.0"
+                      }
+                    }""";
 
-    private final String INCORRECT_PHENOPACKET =
-                "{\n" +
-                        "   \"id\": \"phenoacket-id1\",\n" +
-                        "   \"subject\": {\n" +
-                        "      \"id\": \"\",\n" +
-                        "      \"alternateIds\": [],\n" +
-                        "      \"vitalStatus\": {\n" +
-                        "         \"status\": \"DECEASED\"\n" +
-                        "      },\n" +
-                        "      \"sex\": \"OTHER_SEX\"\n" +
-                        "   },\n" +
-                        "   \"phenotypicFeatures\": [\n" +
-                        "      {\n" +
-                        "         \"excluded\": false,\n" +
-                        "         \"type\": {\n" +
-                        "            \"id\": \"HP:0003198\",\n" +
-                        "            \"label\": \"Myopathy\"\n" +
-                        "         },\n" +
-                        "         \"onset\": {\n" +
-                        "            \"age\": {\n" +
-                        "               \"iso8601duration\": \"P12Y5M\"\n" +
-                        "            }\n" +
-                        "         }\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "         \"excluded\": false,\n" +
-                        "         \"type\": {\n" +
-                        "            \"id\": \"HP:0002033\",\n" +
-                        "            \"label\": \"Poor suck\"\n" +
-                        "         },\n" +
-                        "         \"onset\": {\n" +
-                        "            \"age\": {\n" +
-                        "               \"iso8601duration\": \"P12Y5M\"\n" +
-                        "            }\n" +
-                        "         }\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "         \"excluded\": false,\n" +
-                        "         \"type\": {\n" +
-                        "            \"id\": \"HP:0001388\",\n" +
-                        "            \"label\": \"Joint laxity\"\n" +
-                        "         },\n" +
-                        "         \"onset\": {\n" +
-                        "            \"age\": {\n" +
-                        "               \"iso8601duration\": \"P12Y5M\"\n" +
-                        "            }\n" +
-                        "         }\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "         \"excluded\": true,\n" +
-                        "         \"type\": {\n" +
-                        "            \"id\": \"HP:0001373\",\n" +
-                        "            \"label\": \"Joint dislocation\"\n" +
-                        "         },\n" +
-                        "         \"onset\": {\n" +
-                        "            \"age\": {\n" +
-                        "               \"iso8601duration\": \"P12Y5M\"\n" +
-                        "            }\n" +
-                        "         }\n" +
-                        "      }\n" +
-                        "   ],\n" +
-                        "   \"measurements\": [],\n" +
-                        "   \"biosamples\": [],\n" +
-                        "   \"interpretations\": [],\n" +
-                        "   \"diseases\": [],\n" +
-                        "   \"medicalActions\": [],\n" +
-                        "   \"files\": [],\n" +
-                        "   \"isProband\": false,\n" +
-                        "   \"metadata\": {\n" +
-                        "      \"created\": \"2023-01-23T17:49:53.841Z\",\n" +
-                        "      \"resources\": [],\n" +
-                        "      \"externalReferences\": [],\n" +
-                        "      \"phenopacketSchemaVersion\": \"2.0\"\n" +
-                        "   }\n" +
-                        "}";
+    private final static String INCORRECT_PHENOPACKET =
+            """
+                    {
+                      "id": "id-C",
+                      "subject": {
+                        "id": "proband C",
+                        "timeAtLastEncounter": {
+                          "age": {
+                            "iso8601duration": "P27Y"
+                          }
+                        },
+                        "sex": "FEMALE"
+                      },
+                      "diseases": [{
+                        "term": {
+                          "id": "OMIM:154700 ",
+                          "label": "Marfan syndrome"
+                        }
+                      }],
+                      "medicalActions": [{
+                        "treatment": {
+                          "agent": {
+                            "id": "DrugCentral:1610",
+                            "label": "losartan"
+                          },
+                          "routeOfAdministration": {
+                            "id": "NCIT:C38288",
+                            "label": "Oral Route of Administration"
+                          },
+                          "doseIntervals": [{
+                            "quantity": {
+                              "unit": {
+                                "id": "UO:0000022",
+                                "label": "milligram"
+                              },
+                              "value": 30.0
+                            },
+                            "scheduleFrequency": {
+                              "id": "NCIT:C64496",
+                              "label": "Twice Daily"
+                            },
+                            "interval": {
+                              "start": "2019-03-20T00:00:00Z",
+                              "end": "2021-03-20T00:00:00Z"
+                            }
+                          }]
+                        }
+                      }],
+                      "metaData": {
+                        "created": "2021-05-14T10:35:00Z",
+                        "createdBy": "anonymous biocurator",
+                        "resources": [{
+                          "id": "hp",
+                          "name": "human phenotype ontology",
+                          "url": "http://purl.obolibrary.org/obo/hp.owl",
+                          "version": "2021-08-02",
+                          "namespacePrefix": "HP",
+                          "iriPrefix": "http://purl.obolibrary.org/obo/HP_"
+                        }],
+                        "phenopacketSchemaVersion": "2.0"
+                      }
+                    }""";
+
+    private ValidationResults getCorrectResult() {
+        return ValidationResults.empty();
+    }
+
+    private ValidationResults getIncorrectResult() {
+        ValidationResult result0 = ValidationResult.of(ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies"),
+                ValidationLevel.ERROR, "Ontology Not In MetaData", "No ontology corresponding to ID 'OMIM:154700 ' found in MetaData");
+
+        ValidationResult result1 = ValidationResult.of(ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies"),
+                ValidationLevel.ERROR, "Ontology Not In MetaData", "No ontology corresponding to ID 'DrugCentral:1610' found in MetaData");
+
+        ValidationResult result2 = ValidationResult.of(ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies"),
+                ValidationLevel.ERROR, "Ontology Not In MetaData", "No ontology corresponding to ID 'NCIT:C38288' found in MetaData");
+        ValidationResult result3 = ValidationResult.of(ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies"),
+                ValidationLevel.ERROR, "Ontology Not In MetaData", "No ontology corresponding to ID 'UO:0000022' found in MetaData");
+
+        ValidationResult result4 = ValidationResult.of(ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies"),
+                ValidationLevel.ERROR, "Ontology Not In MetaData", "No ontology corresponding to ID 'NCIT:C64496' found in MetaData");
+
+        ValidatorInfo baseValidator = ValidatorInfo.baseSyntaxValidation();
+        ValidatorInfo metadataValidator = ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies");
+
+        ValidationResults.Builder builder = ValidationResults.builder();
+        builder.addResults(baseValidator, List.of());
+        builder.addResults(metadataValidator, Arrays.asList(result0, result1, result2, result3, result4)).build();
+        return builder.build();
+    }
 }

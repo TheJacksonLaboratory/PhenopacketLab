@@ -25,4 +25,6 @@ module phenopacketlab.restapi {
     opens org.monarchinitiative.phenopacketlab.restapi.controller;
     opens org.monarchinitiative.phenopacketlab.restapi.controller.dto;
     opens org.monarchinitiative.phenopacketlab.restapi.controller.test;
+
+    requires transitive org.phenopackets.phenopackettools.validator.core;
 }
