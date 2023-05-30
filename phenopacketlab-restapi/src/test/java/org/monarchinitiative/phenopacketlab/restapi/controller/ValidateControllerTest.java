@@ -51,7 +51,7 @@ public class ValidateControllerTest {
     @Test
     public void validateSuccess() throws Exception {
         when(validateService.validate(CORRECT_PHENOPACKET))
-                .thenReturn(Optional.of(getCorrectResult()));
+                .thenReturn(getCorrectResult());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                         .contentType("text/plain")
@@ -60,13 +60,13 @@ public class ValidateControllerTest {
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response.getContentAsString(), equalTo("{\"validators\":[],\"validationResults\":[]}"));
+        assertThat(response.getContentAsString(), equalTo("{\"validators\":[{\"validatorId\":\"BaseValidator\",\"validatorName\":\"Base syntax validator\",\"description\":\"The base syntax validation of a phenopacket, family, or cohort\"},{\"validatorId\":\"MetaDataValidator\",\"validatorName\":\"MetaData validator\",\"description\":\"Validate that the MetaData section describes all used ontologies\"}],\"validationResults\":[]}"));
     }
 
     @Test
     public void validateFail() throws Exception {
         when(validateService.validate(INCORRECT_PHENOPACKET))
-                .thenReturn(Optional.of(getIncorrectResult()));
+                .thenReturn(getIncorrectResult());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                 .contentType("text/plain")
@@ -288,7 +288,13 @@ public class ValidateControllerTest {
                     }""";
 
     private ValidationResults getCorrectResult() {
-        return ValidationResults.empty();
+        ValidatorInfo baseValidator = ValidatorInfo.baseSyntaxValidation();
+        ValidatorInfo metadataValidator = ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies");
+
+        ValidationResults.Builder builder = ValidationResults.builder();
+        builder.addResults(baseValidator, List.of());
+        builder.addResults(metadataValidator, List.of()).build();
+        return builder.build();
     }
 
     private ValidationResults getIncorrectResult() {
