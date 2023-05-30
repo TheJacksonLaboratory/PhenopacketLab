@@ -21,6 +21,6 @@ public class ValidateController {
         if (phenopacketString == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(validateService.validate(phenopacketString).get());
+        return ResponseEntity.ok(validateService.validate(phenopacketString));
     }
 }
