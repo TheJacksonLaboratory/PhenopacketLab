@@ -22,8 +22,20 @@ public interface ConceptResourceService {
 
     Stream<IdentifiedConceptResource> conceptResources();
 
+    /**
+     * Get {@link IdentifiedConceptResource} given a phenopacket string
+     *
+     * @param phenopacketString phenopacket as a string
+     * @return resource metadata
+     */
+    Stream<IdentifiedConceptResource> conceptResourcesForPhenopacket(String phenopacketString);
+
     default Stream<Resource> resources() {
         return conceptResources().map(IdentifiedConceptResource::getResource);
+    }
+
+    default Stream<Resource> resourcesForPhenopacket(String phenopacketString) {
+        return conceptResourcesForPhenopacket(phenopacketString).map(IdentifiedConceptResource::getResource);
     }
 
 }

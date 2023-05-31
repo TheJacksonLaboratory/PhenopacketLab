@@ -19,10 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,6 +103,38 @@ public class MetadataControllerTest {
         String actual = response.getContentAsString();
         JSONArray jsonActual = new JSONArray(actual);
         Map<String, Map<String, String>> resourcesMap = expectedFullMetadata();
+        // Compare object returned with expected map for each ontology
+        for (int i=0; i < jsonActual.length(); i++) {
+            JSONObject object = jsonActual.getJSONObject(i);
+            String resourcePrefix = (String) object.get("namespacePrefix");
+            Map<String, String> resourceMap = resourcesMap.get(resourcePrefix);
+            assertEquals(resourceMap.get("name"), object.get("name"));
+            assertEquals(resourceMap.get("id"), object.get("id"));
+            assertEquals(resourceMap.get("url"), object.get("url"));
+            assertEquals(resourceMap.get("namespacePrefix"), object.get("namespacePrefix"));
+            assertEquals(resourceMap.get("version"), object.get("version"));
+            assertEquals(resourceMap.get("iriPrefix"), object.get("iriPrefix"));
+        }
+    }
+
+    @Test
+    public void getMetadataForPhenopacket() throws Exception {
+        when(conceptResourceService.resourcesForPhenopacket(TestData.INCORRECT_PHENOPACKET))
+                .thenReturn(Stream.of(
+                        createResource("MONDO"),
+                        createResource("HGNC"),
+                        createResource("NCIT")).map(IdentifiedConceptResource::getResource));
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/metadata")
+                        .contentType("text/plain")
+                        .content(TestData.INCORRECT_PHENOPACKET))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+        String actual = response.getContentAsString();
+        JSONArray jsonActual = new JSONArray(actual);
+        Map<String, Map<String, String>> resourcesMap = expectedMissingMetadata();
         // Compare object returned with expected map for each ontology
         for (int i=0; i < jsonActual.length(); i++) {
             JSONObject object = jsonActual.getJSONObject(i);
@@ -278,6 +307,38 @@ public class MetadataControllerTest {
         uoMap.put("iriPrefix", "http://purl.obolibrary.org/obo/UO_");
         uoMap.put("version", "UNKNOWN");
         map.put("UO", uoMap);
+        return map;
+    }
+
+    private Map<String, Map<String, String>> expectedMissingMetadata() {
+        Map<String, Map<String, String>> map = new HashMap<>();
+
+        Map<String, String> mondoMap = new HashMap<>();
+        mondoMap.put("name", "MONDO Disease Ontology");
+        mondoMap.put("id", "mondo");
+        mondoMap.put("url", "http://purl.obolibrary.org/obo/mondo.json");
+        mondoMap.put("namespacePrefix", "MONDO");
+        mondoMap.put("iriPrefix", "http://purl.obolibrary.org/obo/MONDO_");
+        mondoMap.put("version", "2022-12-01");
+        map.put("MONDO", mondoMap);
+
+        Map<String, String> hgncMap = new HashMap<>();
+        hgncMap.put("name", "HUGO Gene Nomenclature Committee");
+        hgncMap.put("id", "hgnc");
+        hgncMap.put("url", "http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt");
+        hgncMap.put("namespacePrefix", "HGNC");
+        hgncMap.put("iriPrefix", "http://identifiers.org/hgnc/HGNC:");
+        hgncMap.put("version", "HGNC_VERSION");
+        map.put("HGNC", hgncMap);
+
+        Map<String, String> ncitMap = new HashMap<>();
+        ncitMap.put("name", "NCI Thesaurus");
+        ncitMap.put("id", "ncit");
+        ncitMap.put("url", "http://purl.obolibrary.org/obo/ncit.owl");
+        ncitMap.put("namespacePrefix", "NCIT");
+        ncitMap.put("iriPrefix", "http://purl.obolibrary.org/obo/NCIT_");
+        ncitMap.put("version", "22.07d");
+        map.put("NCIT", ncitMap);
         return map;
     }
 }
