@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,12 +49,12 @@ public class ValidateControllerTest {
 
     @Test
     public void validateSuccess() throws Exception {
-        when(validateService.validate(CORRECT_PHENOPACKET))
+        when(validateService.validate(TestData.CORRECT_PHENOPACKET))
                 .thenReturn(getCorrectResult());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                         .contentType("text/plain")
-                        .content(CORRECT_PHENOPACKET))
+                        .content(TestData.CORRECT_PHENOPACKET))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -65,12 +64,12 @@ public class ValidateControllerTest {
 
     @Test
     public void validateFail() throws Exception {
-        when(validateService.validate(INCORRECT_PHENOPACKET))
+        when(validateService.validate(TestData.INCORRECT_PHENOPACKET))
                 .thenReturn(getIncorrectResult());
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/validate")
                 .contentType("text/plain")
-                .content(INCORRECT_PHENOPACKET))
+                .content(TestData.INCORRECT_PHENOPACKET))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -84,208 +83,9 @@ public class ValidateControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    private final static String CORRECT_PHENOPACKET =
-            """
-                    {
-                      "id": "arbitrary.id",
-                      "subject": {
-                        "id": "proband A",
-                        "timeAtLastEncounter": {
-                          "age": {
-                            "iso8601duration": "P38Y"
-                          }
-                        },
-                        "sex": "MALE"
-                      },
-                      "biosamples": [{
-                        "id": "biosample 1",
-                        "individualId": "proband A",
-                        "sampledTissue": {
-                          "id": "NCIT:C12389",
-                          "label": "Esophagus"
-                        },
-                        "timeOfCollection": {
-                          "age": {
-                            "iso8601duration": "P49Y2M"
-                          }
-                        },
-                        "tumorProgression": {
-                          "id": "NCIT:C4813",
-                          "label": "Recurrent Malignant Neoplasm"
-                        },
-                        "procedure": {
-                          "code": {
-                            "id": "NCIT:C15189",
-                            "label": "Biopsy"
-                          }
-                        }
-                      }, {
-                        "id": "biosample 2",
-                        "individualId": "proband A",
-                        "sampledTissue": {
-                          "id": "NCIT:C139196",
-                          "label": "Esophageal Lymph Node"
-                        },
-                        "timeOfCollection": {
-                          "age": {
-                            "iso8601duration": "P48Y3M"
-                          }
-                        },
-                        "histologicalDiagnosis": {
-                          "id": "NCIT:C4024",
-                          "label": "Esophageal Squamous Cell Carcinoma"
-                        },
-                        "tumorProgression": {
-                          "id": "NCIT:C84509",
-                          "label": "Primary Malignant Neoplasm"
-                        },
-                        "diagnosticMarkers": [{
-                          "id": "NCIT:C131711",
-                          "label": "Human Papillomavirus-18 Positive"
-                        }],
-                        "procedure": {
-                          "code": {
-                            "id": "NCIT:C15189",
-                            "label": "Biopsy"
-                          }
-                        }
-                      }, {
-                        "id": "biosample 3",
-                        "individualId": "proband A",
-                        "sampledTissue": {
-                          "id": "NCIT:C12468",
-                          "label": "Lung"
-                        },
-                        "timeOfCollection": {
-                          "age": {
-                            "iso8601duration": "P50Y7M"
-                          }
-                        },
-                        "tumorProgression": {
-                          "id": "NCIT:C3261",
-                          "label": "Metastatic Neoplasm"
-                        },
-                        "procedure": {
-                          "code": {
-                            "id": "NCIT:C15189",
-                            "label": "Biopsy"
-                          }
-                        }
-                      }],
-                      "diseases": [{
-                        "term": {
-                          "id": "NCIT:C4024",
-                          "label": "Esophageal Squamous Cell Carcinoma"
-                        },
-                        "clinicalTnmFinding": [{
-                          "id": "NCIT:C48724",
-                          "label": "T2 Stage Finding"
-                        }, {
-                          "id": "NCIT:C48706",
-                          "label": "N1 Stage Finding"
-                        }, {
-                          "id": "NCIT:C48699",
-                          "label": "M0 Stage Finding"
-                        }]
-                      }],
-                      "metaData": {
-                        "created": "2021-05-14T10:35:00Z",
-                        "createdBy": "anonymous biocurator",
-                        "resources": [{
-                          "id": "ncit",
-                          "name": "NCI Thesaurus",
-                          "url": "http://purl.obolibrary.org/obo/ncit.owl",
-                          "version": "21.05d",
-                          "namespacePrefix": "NCIT",
-                          "iriPrefix": "http://purl.obolibrary.org/obo/NCIT_"
-                        }, {
-                          "id": "efo",
-                          "name": "Experimental Factor Ontology",
-                          "url": "http://www.ebi.ac.uk/efo/efo.owl",
-                          "version": "3.34.0",
-                          "namespacePrefix": "EFO",
-                          "iriPrefix": "http://purl.obolibrary.org/obo/EFO_"
-                        }, {
-                          "id": "uberon",
-                          "name": "Uber-anatomy ontology",
-                          "url": "http://purl.obolibrary.org/obo/uberon.owl",
-                          "version": "2021-07-27",
-                          "namespacePrefix": "UBERON",
-                          "iriPrefix": "http://purl.obolibrary.org/obo/UBERON_"
-                        }, {
-                          "id": "ncbitaxon",
-                          "name": "NCBI organismal classification",
-                          "url": "http://purl.obolibrary.org/obo/ncbitaxon.owl",
-                          "version": "2021-06-10",
-                          "namespacePrefix": "NCBITaxon",
-                          "iriPrefix": "http://purl.obolibrary.org/obo/NCBITaxon_"
-                        }],
-                        "phenopacketSchemaVersion": "2.0"
-                      }
-                    }""";
 
-    private final static String INCORRECT_PHENOPACKET =
-            """
-                    {
-                      "id": "id-C",
-                      "subject": {
-                        "id": "proband C",
-                        "timeAtLastEncounter": {
-                          "age": {
-                            "iso8601duration": "P27Y"
-                          }
-                        },
-                        "sex": "FEMALE"
-                      },
-                      "diseases": [{
-                        "term": {
-                          "id": "OMIM:154700 ",
-                          "label": "Marfan syndrome"
-                        }
-                      }],
-                      "medicalActions": [{
-                        "treatment": {
-                          "agent": {
-                            "id": "DrugCentral:1610",
-                            "label": "losartan"
-                          },
-                          "routeOfAdministration": {
-                            "id": "NCIT:C38288",
-                            "label": "Oral Route of Administration"
-                          },
-                          "doseIntervals": [{
-                            "quantity": {
-                              "unit": {
-                                "id": "UO:0000022",
-                                "label": "milligram"
-                              },
-                              "value": 30.0
-                            },
-                            "scheduleFrequency": {
-                              "id": "NCIT:C64496",
-                              "label": "Twice Daily"
-                            },
-                            "interval": {
-                              "start": "2019-03-20T00:00:00Z",
-                              "end": "2021-03-20T00:00:00Z"
-                            }
-                          }]
-                        }
-                      }],
-                      "metaData": {
-                        "created": "2021-05-14T10:35:00Z",
-                        "createdBy": "anonymous biocurator",
-                        "resources": [{
-                          "id": "hp",
-                          "name": "human phenotype ontology",
-                          "url": "http://purl.obolibrary.org/obo/hp.owl",
-                          "version": "2021-08-02",
-                          "namespacePrefix": "HP",
-                          "iriPrefix": "http://purl.obolibrary.org/obo/HP_"
-                        }],
-                        "phenopacketSchemaVersion": "2.0"
-                      }
-                    }""";
+
+
 
     private ValidationResults getCorrectResult() {
         ValidatorInfo baseValidator = ValidatorInfo.baseSyntaxValidation();
