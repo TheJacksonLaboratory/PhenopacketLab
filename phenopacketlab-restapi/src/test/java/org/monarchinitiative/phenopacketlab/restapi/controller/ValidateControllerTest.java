@@ -83,10 +83,6 @@ public class ValidateControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-
-
-
-
     private ValidationResults getCorrectResult() {
         ValidatorInfo baseValidator = ValidatorInfo.baseSyntaxValidation();
         ValidatorInfo metadataValidator = ValidatorInfo.of("MetaDataValidator", "MetaData validator", "Validate that the MetaData section describes all used ontologies");
