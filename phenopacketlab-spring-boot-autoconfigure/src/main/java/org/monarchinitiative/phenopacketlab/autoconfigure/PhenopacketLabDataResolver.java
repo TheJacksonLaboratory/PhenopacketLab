@@ -80,6 +80,10 @@ public class PhenopacketLabDataResolver {
         return phenopacketLabDataDirectory.resolve("eco.json");
     }
 
+    public Path chebiJsonPath() {
+        return phenopacketLabDataDirectory.resolve("chebi.json");
+    }
+
     public Path drugCentralPath() {
         return phenopacketLabDataDirectory.resolve("drugcentral.csv");
     }
