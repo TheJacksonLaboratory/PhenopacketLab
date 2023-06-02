@@ -4,7 +4,16 @@
                   (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
                   chooseIcon="pi-file-import" accept=".json" multiple="multiple">
     </p-fileUpload>
-    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button>
+    <!-- <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button> -->
+    <button
+        pButton
+        class="p-button-outlined ml-1"
+        label="Create"
+        (click)="startRareDisease()"
+        icon="pi pi-plus"
+        pTooltip="Create a phenopacket in the context of rare disease"
+        tooltipPosition="bottom"
+      ></button>
   </div>
   <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
     <p-tabPanel header="Phenopackets" class="first-panel">
