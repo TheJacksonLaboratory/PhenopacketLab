@@ -2,10 +2,10 @@ package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
+import org.monarchinitiative.phenopacketlab.core.ConceptResourceServiceImpl;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
-import org.monarchinitiative.phenopacketlab.core.ConceptResourceServiceImpl;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,8 @@ class ConceptResourceServiceLoader {
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
                 new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
-                new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco)
+                new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco),
+                new ResourceTuple<>(dataResolver.chebiJsonPath(), ConceptResourceLoaders::chebi, result::setChebi)
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -85,7 +86,7 @@ class ConceptResourceServiceLoader {
         else
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
-        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso, result.eco);
+        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso, result.eco, result.chebi);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
@@ -113,6 +114,7 @@ class ConceptResourceServiceLoader {
         private OntologyConceptResource ncit;
         private OntologyConceptResource gsso;
         private OntologyConceptResource eco;
+        private OntologyConceptResource chebi;
 
 
         public void setEfo(OntologyConceptResource efo) {
@@ -154,6 +156,8 @@ class ConceptResourceServiceLoader {
         public void setEco(OntologyConceptResource eco) {
             this.eco = eco;
         }
+
+        public void setChebi(OntologyConceptResource chebi) { this.chebi = chebi; }
     }
 
     private static class ResourceTuple<T> {
