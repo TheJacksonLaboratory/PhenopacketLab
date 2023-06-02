@@ -20,7 +20,17 @@ public interface ConceptResourceService {
      */
     Optional<IdentifiedConceptResource> forPrefix(String prefix);
 
-    Stream<IdentifiedConceptResource> conceptResources();
+    /**
+     * Get a {@linkplain Stream} of {@link Resource}s managed by the service.
+     */
+    Stream<Resource> conceptResources();
+
+    /**
+     * Get a {@linkplain Stream} of namespace prefixes of the {@link Resource}s managed by the service.
+     */
+    default Stream<String> conceptResourcePrefixes() {
+        return conceptResources().map(Resource::getNamespacePrefix);
+    }
 
     /**
      * Get {@link IdentifiedConceptResource} given a phenopacket string
@@ -28,12 +38,10 @@ public interface ConceptResourceService {
      * @param phenopacketString phenopacket as a string
      * @return resource metadata
      */
+    @Deprecated(forRemoval = true) // Remove the function, not a good functionality for this service.
     Stream<IdentifiedConceptResource> conceptResourcesForPhenopacket(String phenopacketString);
 
-    default Stream<Resource> resources() {
-        return conceptResources().map(IdentifiedConceptResource::getResource);
-    }
-
+    @Deprecated(forRemoval = true) // Remove the function, not a good functionality for this service.
     default Stream<Resource> resourcesForPhenopacket(String phenopacketString) {
         return conceptResourcesForPhenopacket(phenopacketString).map(IdentifiedConceptResource::getResource);
     }

@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.phenopackets.phenopackettools.validator.core.ValidationResult;
 import org.phenopackets.phenopackettools.validator.core.ValidationResults;
 import org.phenopackets.phenopackettools.validator.core.ValidationWorkflowRunner;
@@ -53,46 +54,6 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         runner = JsonSchemaValidationWorkflowRunner.phenopacketBuilder().build();
     }
 
-    public OntologyConceptResource efo() {
-        return efo;
-    }
-
-    public OntologyConceptResource geno() {
-        return geno;
-    }
-
-    public OntologyConceptResource hp() {
-        return hp;
-    }
-
-    public OntologyConceptResource mondo() {
-        return mondo;
-    }
-
-    public OntologyConceptResource so() {
-        return so;
-    }
-
-    public OntologyConceptResource uberon() {
-        return uberon;
-    }
-
-    public IdentifiedConceptResource hgnc() {
-        return hgnc;
-    }
-
-    public OntologyConceptResource ncit() {
-        return ncit;
-    }
-
-    public OntologyConceptResource gsso() {
-        return gsso;
-    }
-
-    public OntologyConceptResource eco() {
-        return eco;
-    }
-
     @Override
     public Optional<IdentifiedConceptResource> forPrefix(String prefix) {
         return switch (prefix.toUpperCase()) {
@@ -111,8 +72,9 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     }
 
     @Override
-    public Stream<IdentifiedConceptResource> conceptResources() {
-        return Stream.of(efo, geno, hp, mondo, so, uberon, hgnc, ncit, gsso, eco);
+    public Stream<Resource> conceptResources() {
+        return Stream.of(efo, geno, hp, mondo, so, uberon, hgnc, ncit, gsso, eco)
+                .map(IdentifiedConceptResource::getResource);
     }
 
     @Override
