@@ -17,13 +17,13 @@ import java.util.List;
 @RequestMapping(value = "${api.version}/metadata")
 public class MetadataController {
 
-    private final PhenopacketLabMetadata metadataService;
+    private final PhenopacketLabMetadata metadata;
     private final ConceptResourceService conceptResourceService;
 
 
-    public MetadataController(PhenopacketLabMetadata metadataService,
+    public MetadataController(PhenopacketLabMetadata metadata,
                               ConceptResourceService conceptResourceService) {
-        this.metadataService = metadataService;
+        this.metadata = metadata;
         this.conceptResourceService = conceptResourceService;
     }
 
@@ -59,7 +59,7 @@ public class MetadataController {
 
     @GetMapping(value="version")
     public ResponseEntity<String> phenopacketVersion() {
-        return ResponseEntity.ok(metadataService.phenopacketSchemaVersion());
+        return ResponseEntity.ok(metadata.phenopacketSchemaVersion());
     }
 
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing Metadata resources for phenopacket") })
