@@ -14,6 +14,7 @@ import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningServic
 import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
 import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
 import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
+import org.monarchinitiative.phenopacketlab.io.PhenopacketLabMetadataServiceImpl;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.ValidateService;
@@ -128,8 +129,8 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadata phenopacketLabMetadata() {
-        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
+    public PhenopacketLabMetadataService phenopacketLabMetadataService() {
+        return new PhenopacketLabMetadataServiceImpl(properties.phenopacketSchemaVersion());
     }
 
     @Bean

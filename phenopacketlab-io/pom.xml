@@ -26,8 +26,20 @@
             <artifactId>phenol-io</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.phenopackets.phenopackettools</groupId>
+            <artifactId>phenopacket-tools-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.phenopackets.phenopackettools</groupId>
+            <artifactId>phenopacket-tools-util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
     </dependencies>
 

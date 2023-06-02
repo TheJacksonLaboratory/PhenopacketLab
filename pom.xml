@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Phenopacket Lab</name>
-    <description>An app for creating phenopackets</description>
+    <description>An Single-Page Application for creating phenopackets</description>
     <url>https://github.com/TheJacksonLaboratory/PhenopacketLab</url>
     <inceptionYear>2022</inceptionYear>
 
@@ -132,6 +132,16 @@
             </dependency>
             <dependency>
                 <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-util</artifactId>
+                <version>${phenopacket-tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-io</artifactId>
+                <version>${phenopacket-tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
                 <artifactId>phenopacket-tools-validator-jsonschema</artifactId>
                 <version>${phenopacket-tools.version}</version>
             </dependency>
@@ -154,6 +164,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-csv</artifactId>
                 <version>1.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.12.0</version>
             </dependency>
             <dependency>
                 <groupId>org.monarchinitiative.svart</groupId>

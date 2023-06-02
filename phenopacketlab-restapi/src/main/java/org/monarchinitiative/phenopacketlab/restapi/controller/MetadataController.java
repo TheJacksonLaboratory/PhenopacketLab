@@ -1,13 +1,10 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
-import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
-import org.monarchinitiative.phenopacketlab.core.model.Resource;
-import org.springframework.http.HttpStatus;
+
+import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadataService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,44 +14,10 @@ import java.util.List;
 @RequestMapping(value = "${api.version}/metadata")
 public class MetadataController {
 
-    private final PhenopacketLabMetadata metadataService;
-    private final ConceptResourceService conceptResourceService;
+    private final PhenopacketLabMetadataService metadataService;
 
-
-    public MetadataController(PhenopacketLabMetadata metadataService,
-                              ConceptResourceService conceptResourceService) {
+    public MetadataController(PhenopacketLabMetadataService metadataService) {
         this.metadataService = metadataService;
-        this.conceptResourceService = conceptResourceService;
-    }
-
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get resource metadata given one of the accepted prefixes") })
-    @GetMapping("{prefix}")
-    public ResponseEntity<Resource> metadataByPrefix(@PathVariable("prefix")
-    // TODO - update the description string
-                                                         @Parameter(description = """
-                                                       __Accepted:__
-
-                                                       * HP
-                                                       * EFO
-                                                       * GENO
-                                                       * MONDO
-                                                       * SO
-                                                       * UBERON
-                                                       * HGNC
-                                                       * NCIT
-                                                       * GSSO
-                                                       * ECO
-                                                       """) String prefix) {
-        return conceptResourceService.forPrefix(prefix.toUpperCase())
-                .map(IdentifiedConceptResource::getResource)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.badRequest().build());
-    }
-
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get all known resources metadata ") })
-    @GetMapping
-    public ResponseEntity<List<Resource>> metadata() {
-        return ResponseEntity.ok(conceptResourceService.resources().toList());
     }
 
     @GetMapping(value="version")
@@ -62,13 +25,10 @@ public class MetadataController {
         return ResponseEntity.ok(metadataService.phenopacketSchemaVersion());
     }
 
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing Metadata resources for phenopacket") })
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing resource prefixes for phenopacket") })
     @PostMapping
-    public ResponseEntity<List<Resource>> metadataForPhenopacket(@RequestBody String phenopacketString) {
-        if (phenopacketString == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.ok(conceptResourceService.resourcesForPhenopacket(phenopacketString).toList());
+    public ResponseEntity<List<String>> resourcePrefixesForPhenopacket(@RequestBody String phenopacketString) {
+        return ResponseEntity.ok(metadataService.resourcesPrefixesForPhenopacket(phenopacketString).toList());
     }
 
 }
