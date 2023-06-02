@@ -1,5 +1,7 @@
 package org.monarchinitiative.phenopacketlab.core.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.monarchinitiative.phenol.ontology.data.Identified;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
@@ -8,6 +10,8 @@ import java.util.List;
 /**
  * {@link IdentifiedConcept} is an entity that has an {@link #id()} and all attributes of a {@link Concept}.
  */
+@JsonSerialize(as = IdentifiedConcept.class)
+@JsonPropertyOrder({"id", "name", "definition", "synonyms"})
 public interface IdentifiedConcept extends Identified, Concept {
 
     /**

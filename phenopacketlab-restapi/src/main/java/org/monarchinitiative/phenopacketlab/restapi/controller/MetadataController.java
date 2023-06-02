@@ -54,7 +54,7 @@ public class MetadataController {
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get all known resources metadata ") })
     @GetMapping
     public ResponseEntity<List<Resource>> metadata() {
-        return ResponseEntity.ok(conceptResourceService.resources().toList());
+        return ResponseEntity.ok(conceptResourceService.conceptResources().toList());
     }
 
     @GetMapping(value="version")

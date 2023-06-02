@@ -83,7 +83,7 @@ public class MetadataControllerTest {
 
     @Test
     public void getAllMetadata() throws Exception {
-        when(conceptResourceService.resources())
+        when(conceptResourceService.conceptResources())
                 .thenReturn(Stream.of(
                         createResource("HP"),
                         createResource("EFO"),
