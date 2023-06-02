@@ -14,6 +14,7 @@ import org.phenopackets.schema.v2.core.OntologyClass;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -34,7 +35,7 @@ public class PhenopacketLabMetadataServiceImpl implements PhenopacketLabMetadata
 
     @Override
     public Stream<String> resourcesPrefixesForPhenopacket(String phenopacketString) {
-        InputStream targetStream = IOUtils.toInputStream(phenopacketString, "UTF_8");
+        InputStream targetStream = IOUtils.toInputStream(phenopacketString, Charset.defaultCharset());
         Message message;
         try {
             message = this.parser.parse(PhenopacketElement.PHENOPACKET, targetStream);
