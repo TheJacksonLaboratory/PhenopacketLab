@@ -53,7 +53,8 @@ export class DownloadService {
      */
     replacer(key, value) {
         // phenotypic features
-        if (key === 'key' || key === 'url' || key === 'modifierNodes' || key === 'evidenceNodes' || key === 'textMiningState' || key === 'adverseEventNodes') {
+        if (key === 'isProband' || key === 'key' || key === 'modifierNodes' || key === 'evidenceNodes'
+            || key === 'textMiningState' || key === 'adverseEventNodes') {
             return undefined;
         }
         return value;
