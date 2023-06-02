@@ -4,7 +4,9 @@ import java.util.Objects;
 
 /**
  * Data transfer object for HpoDisease.
+ * @deprecated use {@link org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept} instead.
  */
+@Deprecated
 public class OntologyClassDto {
 
     private String id;

@@ -10,6 +10,12 @@ phenopacketlab:
   text-mining:
     # Choose the text mining provider (just `FENOMINAL` for now).
     provider: 'FENOMINAL'
+  # Which
+  disease-database-prefixes:
+    - 'MONDO'
+    # - 'OMIM'
+    # - 'ORPHA'
+    # - 'DECIPHER'
 
 api:
   version: /api/v1

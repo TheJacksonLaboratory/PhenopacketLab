@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Class for parallel loading of {@link ConceptResourceService}.
+ * Class for parallel loading of {@link ConceptResourceService}s.
  */
 class ConceptResourceServiceLoader {
 
@@ -85,13 +85,24 @@ class ConceptResourceServiceLoader {
         else
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
 
-        return new ConceptResourceServiceImpl(result.efo, result.geno, result.hp, result.mondo, result.so, result.uberon, result.hgnc, result.ncit, result.gsso, result.eco);
+        // TODO - load the new identified concept resource service for OMIM, ORPHA, DECIPHER
+
+        return new ConceptResourceServiceImpl(result.efo,
+                result.geno,
+                result.hp,
+                result.mondo,
+                result.so,
+                result.uberon,
+                result.hgnc,
+                result.ncit,
+                result.gsso,
+                result.eco);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
         return () -> {
             try (InputStream is = new BufferedInputStream(Files.newInputStream(resource.resource))) {
-                resource.resultConsumer.accept(resource.loader.apply(is));
+                resource.consumer.accept(resource.loader.apply(is));
             } catch (IOException e) {
                 String message = String.format("Error parsing resource at %s: %s", resource.resource.toAbsolutePath(), e.getMessage());
                 errorConsumer.accept(message);
@@ -156,16 +167,6 @@ class ConceptResourceServiceLoader {
         }
     }
 
-    private static class ResourceTuple<T> {
-        private final Path resource;
-        private final Function<InputStream, T> loader;
-        private final Consumer<T> resultConsumer;
-
-        private ResourceTuple(Path resource, Function<InputStream, T> loader, Consumer<T> resultConsumer) {
-            this.resource = resource;
-            this.loader = loader;
-            this.resultConsumer = resultConsumer;
-        }
-    }
+    private record ResourceTuple<T>(Path resource, Function<InputStream, T> loader, Consumer<T> consumer) {}
 
 }
