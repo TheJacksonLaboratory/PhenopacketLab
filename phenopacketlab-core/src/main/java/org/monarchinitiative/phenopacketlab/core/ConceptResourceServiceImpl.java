@@ -2,16 +2,8 @@ package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
-import org.phenopackets.phenopackettools.validator.core.ValidationResult;
-import org.phenopackets.phenopackettools.validator.core.ValidationResults;
-import org.phenopackets.phenopackettools.validator.core.ValidationWorkflowRunner;
-import org.phenopackets.phenopackettools.validator.jsonschema.JsonSchemaValidationWorkflowRunner;
-import org.phenopackets.schema.v2.PhenopacketOrBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class ConceptResourceServiceImpl implements ConceptResourceService {
@@ -26,8 +18,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     private final OntologyConceptResource ncit;
     private final OntologyConceptResource gsso;
     private final OntologyConceptResource eco;
-
-    ValidationWorkflowRunner<PhenopacketOrBuilder> runner;
+    private final OntologyConceptResource chebi;
 
     public ConceptResourceServiceImpl(OntologyConceptResource efo,
                                       OntologyConceptResource geno,
@@ -38,7 +29,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
                                       IdentifiedConceptResource hgnc,
                                       OntologyConceptResource ncit,
                                       OntologyConceptResource gsso,
-                                      OntologyConceptResource eco) {
+                                      OntologyConceptResource eco,
+                                      OntologyConceptResource chebi) {
         this.efo = Objects.requireNonNull(efo);
         this.geno = Objects.requireNonNull(geno);
         this.hp = Objects.requireNonNull(hp);
@@ -49,8 +41,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         this.ncit = Objects.requireNonNull(ncit);
         this.gsso = Objects.requireNonNull(gsso);
         this.eco = Objects.requireNonNull(eco);
-
-        runner = JsonSchemaValidationWorkflowRunner.phenopacketBuilder().build();
+        this.chebi = Objects.requireNonNull(chebi);
     }
 
     public OntologyConceptResource efo() {
@@ -93,6 +84,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
         return eco;
     }
 
+    public OntologyConceptResource chebi() { return chebi; }
+
     @Override
     public Optional<IdentifiedConceptResource> forPrefix(String prefix) {
         return switch (prefix.toUpperCase()) {
@@ -106,53 +99,63 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
             case "NCIT" -> Optional.of(ncit);
             case "GSSO" -> Optional.of(gsso);
             case "ECO" -> Optional.of(eco);
+            case "CHEBI" -> Optional.of(chebi);
             default -> Optional.empty();
         };
     }
 
     @Override
     public Stream<IdentifiedConceptResource> conceptResources() {
-        return Stream.of(efo, geno, hp, mondo, so, uberon, hgnc, ncit, gsso, eco);
+        return Stream.of(efo, geno, hp, mondo, so, uberon, hgnc, ncit, gsso, eco, chebi);
     }
 
     @Override
-    public Stream<IdentifiedConceptResource> conceptResourcesForPhenopacket(String phenopacketString) {
-        ValidationResults results = runner.validate(phenopacketString);
+    public Stream<IdentifiedConceptResource> conceptResourcesForPrefixes(List<String> prefixes) {
         List<IdentifiedConceptResource> resourcesFound = new ArrayList<>();
-        for (ValidationResult result:results.validationResults()) {
-            if (result.validatorInfo().validatorId().equals("MetaDataValidator") && result.category().equals("Ontology Not In MetaData")) {
-                String missingId = result.message().split("'")[1];
-                if (missingId.startsWith("EFO")) {
-                    if (!resourcesFound.contains(efo))
-                        resourcesFound.add(efo);
-                } else if (missingId.startsWith("GENO")) {
-                    if (!resourcesFound.contains(geno))
-                        resourcesFound.add(geno);
-                } else if (missingId.startsWith("HP")) {
-                    if (!resourcesFound.contains(hp))
-                        resourcesFound.add(hp);
-                } else if (missingId.startsWith("MONDO") || missingId.startsWith("OMIM") || missingId.startsWith("ORPHA")) {
-                    if (!resourcesFound.contains(mondo))
-                        resourcesFound.add(mondo);
-                } else if (missingId.startsWith("SO")) {
-                    if (!resourcesFound.contains(so))
-                        resourcesFound.add(so);
-                } else if (missingId.startsWith("UBERON")) {
-                    if (!resourcesFound.contains(uberon))
-                        resourcesFound.add(uberon);
-                } else if (missingId.startsWith("HGNC") || missingId.startsWith("DrugCentral")) {
-                    if (!resourcesFound.contains(hgnc))
-                        resourcesFound.add(hgnc);
-                } else if (missingId.startsWith("NCIT")) {
-                    if (!resourcesFound.contains(ncit))
-                        resourcesFound.add(ncit);
-                } else if (missingId.startsWith("GSSO")) {
-                    if (!resourcesFound.contains(gsso))
-                        resourcesFound.add(gsso);
-                } else if (missingId.startsWith("ECO")) {
-                    if (!resourcesFound.contains(eco))
-                        resourcesFound.add(eco);
-                }
+        for (String prefix:prefixes) {
+            prefix = prefix.toUpperCase();
+            if (prefix.startsWith("EFO")) {
+                if (!resourcesFound.contains(efo))
+                    resourcesFound.add(efo);
+            } else if (prefix.startsWith("GENO")) {
+                if (!resourcesFound.contains(geno))
+                    resourcesFound.add(geno);
+            } else if (prefix.startsWith("HP")) {
+                if (!resourcesFound.contains(hp))
+                    resourcesFound.add(hp);
+            } else if (prefix.startsWith("MONDO")) {
+                if (!resourcesFound.contains(mondo))
+                    resourcesFound.add(mondo);
+            }
+            // TODO
+//            else if (ontoClass.getId().startsWith("OMIM")) {
+//                if (!resourcesFound.contains(omim))
+//                    resourcesFound.add(omim);
+//            } else if (ontoClass.getId().startsWith("ORPHA")) {
+//                if (!resourcesFound.contains(orpha))
+//                    resourcesFound.add(orpha);
+//            }
+            else if (prefix.startsWith("SO")) {
+                if (!resourcesFound.contains(so))
+                    resourcesFound.add(so);
+            } else if (prefix.startsWith("UBERON")) {
+                if (!resourcesFound.contains(uberon))
+                    resourcesFound.add(uberon);
+            } else if (prefix.startsWith("HGNC") || prefix.startsWith("DrugCentral")) {
+                if (!resourcesFound.contains(hgnc))
+                    resourcesFound.add(hgnc);
+            } else if (prefix.startsWith("NCIT")) {
+                if (!resourcesFound.contains(ncit))
+                    resourcesFound.add(ncit);
+            } else if (prefix.startsWith("GSSO")) {
+                if (!resourcesFound.contains(gsso))
+                    resourcesFound.add(gsso);
+            } else if (prefix.startsWith("ECO")) {
+                if (!resourcesFound.contains(eco))
+                    resourcesFound.add(eco);
+            } else if (prefix.startsWith("CHEBI")) {
+                if (!resourcesFound.contains(chebi))
+                    resourcesFound.add(chebi);
             }
         }
         return resourcesFound.stream();
