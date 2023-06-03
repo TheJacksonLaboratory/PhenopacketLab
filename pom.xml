@@ -127,6 +127,11 @@
             </dependency>
             <dependency>
                 <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-builder</artifactId>
+                <version>${phenopacket-tools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
                 <artifactId>phenopacket-tools-validator-core</artifactId>
                 <version>${phenopacket-tools.version}</version>
             </dependency>

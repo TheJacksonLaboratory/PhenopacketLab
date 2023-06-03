@@ -75,7 +75,7 @@ public class PhenopacketLabAutoConfiguration {
     @Bean
     public BigBadDataBlob bigBadDataBlob(ExecutorService executorService,
                                          PhenopacketLabDataResolver phenopacketLabDataResolver) throws InvalidResourceException {
-        BigBadMultipurposeLoader loader = new BigBadMultipurposeLoader(executorService, phenopacketLabDataResolver);
+        BigBadMultipurposeLoader loader = new BigBadMultipurposeLoader(properties, executorService, phenopacketLabDataResolver);
         return loader.load();
     }
 

@@ -1,11 +1,13 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
+import org.monarchinitiative.phenol.annotations.io.hpo.DiseaseDatabase;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.core.*;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceAndHierarchyServices;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.io.HpoaAnnotationsLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,16 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class for parallel loading of {@link ConceptResourceService}s.
@@ -32,11 +32,13 @@ class BigBadMultipurposeLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BigBadMultipurposeLoader.class);
 
+    private final PhenopacketLabProperties properties;
     private final ExecutorService executor;
     private final PhenopacketLabDataResolver dataResolver;
 
-    BigBadMultipurposeLoader(ExecutorService executor,
+    BigBadMultipurposeLoader(PhenopacketLabProperties properties, ExecutorService executor,
                              PhenopacketLabDataResolver dataResolver) {
+        this.properties = properties;
         this.executor = Objects.requireNonNull(executor);
         this.dataResolver = Objects.requireNonNull(dataResolver);
     }
@@ -49,6 +51,7 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.genoJsonPath(), ConceptResourceLoaders::geno, result::setGeno),
                 new ResourceTuple<>(dataResolver.hgncCompleteSetPath(), is -> HgncConceptLoader.load(is, "HGNC_VERSION"), result::setHgnc),
                 new ResourceTuple<>(dataResolver.hpJsonPath(), ConceptResourceLoaders::hpo, result::setHp),
+                new ResourceTuple<>(dataResolver.hpoAnnotationPath(), is -> HpoaAnnotationsLoader.load(is, prepareDiseaseDatabases(properties.getDiseaseDatabasePrefixes())), result::addAllOthers),
                 new ResourceTuple<>(dataResolver.mondoJsonPath(), ConceptResourceLoaders::mondo, result::setMondo),
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
@@ -89,11 +92,22 @@ class BigBadMultipurposeLoader {
         return mapToBigBadDataBlob(result);
     }
 
+    private List<DiseaseDatabase> prepareDiseaseDatabases(List<String> diseaseDatabasePrefixes) {
+        List<DiseaseDatabase> databases = new ArrayList<>();
+        for (String prefix : diseaseDatabasePrefixes) {
+            switch (prefix.toUpperCase()) {
+                case "ORPHA", "ORPHANET" -> databases.add(DiseaseDatabase.ORPHANET);
+                case "OMIM" -> databases.add(DiseaseDatabase.OMIM);
+                case "DECIPHER" -> databases.add(DiseaseDatabase.DECIPHER);
+            }
+        }
+        return databases;
+    }
+
     private static BigBadDataBlob mapToBigBadDataBlob(Resources result) {
         // It is just a coincidence that most of the identified concept resources and ontology hierarchy services
         // are backed by Phenol Ontology. That will change in near future though.
-        ConceptResourceServiceImpl conceptResourceService = new ConceptResourceServiceImpl(
-                result.efo.conceptResource(),
+        IdentifiedConceptResource[] spelledOut = {result.efo.conceptResource(),
                 result.geno.conceptResource(),
                 result.hp.conceptResource(),
                 result.mondo.conceptResource(),
@@ -102,7 +116,11 @@ class BigBadMultipurposeLoader {
                 result.hgnc,
                 result.ncit.conceptResource(),
                 result.gsso.conceptResource(),
-                result.eco.conceptResource());
+                result.eco.conceptResource()};
+
+        IdentifiedConceptResource[] all = Stream.concat(Arrays.stream(spelledOut), result.others.stream())
+                .toArray(IdentifiedConceptResource[]::new);
+        ConceptResourceServiceImpl conceptResourceService = new ConceptResourceServiceImpl(all);
 
         OntologyHierarchyServiceRegistry hierarchyServiceRegistry = new OntologyServiceHierarchyRegistryImpl(
                 result.efo.hierarchyService(),
@@ -143,6 +161,7 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices ncit;
         private ConceptResourceAndHierarchyServices gsso;
         private ConceptResourceAndHierarchyServices eco;
+        private final List<IdentifiedConceptResource> others = new ArrayList<>();
 
 
         public void setEfo(ConceptResourceAndHierarchyServices efo) {
@@ -184,6 +203,11 @@ class BigBadMultipurposeLoader {
         public void setEco(ConceptResourceAndHierarchyServices eco) {
             this.eco = eco;
         }
+
+        public synchronized void addAllOthers(List<IdentifiedConceptResource> resources) {
+            others.addAll(resources);
+        }
+
     }
 
     private record ResourceTuple<T>(Path resource, Function<InputStream, T> loader, Consumer<T> consumer) {}

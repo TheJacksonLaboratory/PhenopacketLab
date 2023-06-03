@@ -2,6 +2,7 @@ module phenopacketlab.io {
 
     requires transitive phenopacketlab.core;
     requires org.phenopackets.schema;
+    requires org.phenopackets.phenopackettools.builder;
     requires org.monarchinitiative.phenol.core;
     requires org.monarchinitiative.phenol.io;
 
