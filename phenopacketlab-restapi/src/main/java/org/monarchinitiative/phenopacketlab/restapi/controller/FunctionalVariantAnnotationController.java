@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping(value = "/api/v1/functional-annotation/{build}/{description}/{transcript}")
+@RequestMapping(value = "${api.version}/functional-annotation/{build}/{description}/{transcript}")
 //@Tag(name = "Variant endpoint", description = "Given a genome build, an HGVS description and a transcript id, the endpoint will return a Variant object.")
 public class FunctionalVariantAnnotationController {
 
