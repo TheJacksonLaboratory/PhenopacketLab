@@ -2,7 +2,7 @@ package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.core.*;
-import org.monarchinitiative.phenopacketlab.io.ConceptResourceAndHierarchyService;
+import org.monarchinitiative.phenopacketlab.io.ConceptResourceAndHierarchyServices;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
@@ -133,39 +133,39 @@ class BigBadMultipurposeLoader {
     }
 
     private static class Resources {
-        private ConceptResourceAndHierarchyService efo;
-        private ConceptResourceAndHierarchyService geno;
-        private ConceptResourceAndHierarchyService hp;
-        private ConceptResourceAndHierarchyService mondo;
-        private ConceptResourceAndHierarchyService so;
-        private ConceptResourceAndHierarchyService uberon;
+        private ConceptResourceAndHierarchyServices efo;
+        private ConceptResourceAndHierarchyServices geno;
+        private ConceptResourceAndHierarchyServices hp;
+        private ConceptResourceAndHierarchyServices mondo;
+        private ConceptResourceAndHierarchyServices so;
+        private ConceptResourceAndHierarchyServices uberon;
         private IdentifiedConceptResource hgnc;
-        private ConceptResourceAndHierarchyService ncit;
-        private ConceptResourceAndHierarchyService gsso;
-        private ConceptResourceAndHierarchyService eco;
+        private ConceptResourceAndHierarchyServices ncit;
+        private ConceptResourceAndHierarchyServices gsso;
+        private ConceptResourceAndHierarchyServices eco;
 
 
-        public void setEfo(ConceptResourceAndHierarchyService efo) {
+        public void setEfo(ConceptResourceAndHierarchyServices efo) {
             this.efo = efo;
         }
 
-        public void setGeno(ConceptResourceAndHierarchyService geno) {
+        public void setGeno(ConceptResourceAndHierarchyServices geno) {
             this.geno = geno;
         }
 
-        public void setHp(ConceptResourceAndHierarchyService hp) {
+        public void setHp(ConceptResourceAndHierarchyServices hp) {
             this.hp = hp;
         }
 
-        public void setMondo(ConceptResourceAndHierarchyService mondo) {
+        public void setMondo(ConceptResourceAndHierarchyServices mondo) {
             this.mondo = mondo;
         }
 
-        public void setSo(ConceptResourceAndHierarchyService so) {
+        public void setSo(ConceptResourceAndHierarchyServices so) {
             this.so = so;
         }
 
-        public void setUberon(ConceptResourceAndHierarchyService uberon) {
+        public void setUberon(ConceptResourceAndHierarchyServices uberon) {
             this.uberon = uberon;
         }
 
@@ -173,15 +173,15 @@ class BigBadMultipurposeLoader {
             this.hgnc = hgnc;
         }
 
-        public void setNcit(ConceptResourceAndHierarchyService ncit) {
+        public void setNcit(ConceptResourceAndHierarchyServices ncit) {
             this.ncit = ncit;
         }
 
-        public void setGsso(ConceptResourceAndHierarchyService gsso) {
+        public void setGsso(ConceptResourceAndHierarchyServices gsso) {
             this.gsso = gsso;
         }
 
-        public void setEco(ConceptResourceAndHierarchyService eco) {
+        public void setEco(ConceptResourceAndHierarchyServices eco) {
             this.eco = eco;
         }
     }

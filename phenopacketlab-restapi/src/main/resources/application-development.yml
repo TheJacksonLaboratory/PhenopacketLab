@@ -13,7 +13,7 @@ phenopacketlab:
   # Set vocabularies for using as disease concepts.
   disease-database-prefixes:
     - 'MONDO'
-    - 'OMIM'
+    # - 'OMIM'
     # - 'ORPHA'
     # - 'DECIPHER'
   # Set vocabularies for using as phenotype features.

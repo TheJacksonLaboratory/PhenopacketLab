@@ -17,7 +17,7 @@ public class ConceptResourceLoaders {
     private ConceptResourceLoaders() {
     }
 
-    public static ConceptResourceAndHierarchyService mondo(InputStream is) {
+    public static ConceptResourceAndHierarchyServices mondo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is, "MONDO");
         Resource resource = mondoResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -37,7 +37,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService hpo(InputStream is) {
+    public static ConceptResourceAndHierarchyServices hpo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = hpoResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -57,7 +57,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService uberon(InputStream is) {
+    public static ConceptResourceAndHierarchyServices uberon(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uberonResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -76,7 +76,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService geno(InputStream is) {
+    public static ConceptResourceAndHierarchyServices geno(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = genoResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -95,7 +95,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService uo(InputStream is) {
+    public static ConceptResourceAndHierarchyServices uo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uoResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -114,7 +114,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService efo(InputStream is) {
+    public static ConceptResourceAndHierarchyServices efo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = efoResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -133,7 +133,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService so(InputStream is) {
+    public static ConceptResourceAndHierarchyServices so(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = soResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -152,7 +152,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService ncit(InputStream is) {
+    public static ConceptResourceAndHierarchyServices ncit(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = ncitResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
@@ -171,7 +171,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService gsso(InputStream is) {
+    public static ConceptResourceAndHierarchyServices gsso(InputStream is) {
         CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("GSSO", "http://purl.obolibrary.org/obo/GSSO_"));
         Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "GSSO");
         Resource resource = gssoResource(getOntologyVersion(ontology));
@@ -191,7 +191,7 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static ConceptResourceAndHierarchyService eco(InputStream is) {
+    public static ConceptResourceAndHierarchyServices eco(InputStream is) {
         CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("ECO", "http://purl.obolibrary.org/obo/ECO_"));
         Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "ECO");
         Resource resource = ecoResource(getOntologyVersion(ontology));
@@ -211,9 +211,9 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    private static ConceptResourceAndHierarchyService addHierarchyService(OntologyConceptResource conceptResource) {
+    private static ConceptResourceAndHierarchyServices addHierarchyService(OntologyConceptResource conceptResource) {
         OntologyHierarchyService hierarchyService = new PhenolOntologyHierarchyService(conceptResource.resource().getNamespacePrefix(), conceptResource.ontology());
-        return new ConceptResourceAndHierarchyService(conceptResource, hierarchyService);
+        return new ConceptResourceAndHierarchyServices(conceptResource, hierarchyService);
     }
 
     private static String getOntologyVersion(Ontology ontology) {

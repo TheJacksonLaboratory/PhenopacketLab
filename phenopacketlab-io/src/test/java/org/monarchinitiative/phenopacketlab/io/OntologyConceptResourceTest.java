@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 public class OntologyConceptResourceTest {
 
-    private static ConceptResourceAndHierarchyService loadOntologyResource(Path ontologyPath, Function<InputStream, ConceptResourceAndHierarchyService> loader) throws IOException {
+    private static ConceptResourceAndHierarchyServices loadOntologyResource(Path ontologyPath, Function<InputStream, ConceptResourceAndHierarchyServices> loader) throws IOException {
         try (InputStream is = Files.newInputStream(ontologyPath)) {
             return loader.apply(is);
         }
@@ -29,7 +29,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadMondo() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResourceLoaders::mondo);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResourceLoaders::mondo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
@@ -58,7 +58,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadHpo() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResourceLoaders::hpo);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResourceLoaders::hpo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
@@ -76,7 +76,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadGeno() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResourceLoaders::geno);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResourceLoaders::geno);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
@@ -94,7 +94,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUberon() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResourceLoaders::uberon);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResourceLoaders::uberon);
         IdentifiedConceptResource cr = crhs.conceptResource();
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
@@ -111,7 +111,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUo() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
@@ -127,7 +127,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadEfo() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
@@ -143,7 +143,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadSo() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
@@ -159,7 +159,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadNcit() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
@@ -175,7 +175,7 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadGsso() throws IOException {
-        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
+        ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
         assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
