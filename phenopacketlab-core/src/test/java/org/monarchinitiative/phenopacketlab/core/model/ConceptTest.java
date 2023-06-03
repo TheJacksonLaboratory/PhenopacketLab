@@ -20,9 +20,9 @@ public class ConceptTest extends BaseSerializationTest {
         String actual = OBJECT_MAPPER.writeValueAsString(concept);
         assertThat(actual, equalTo("""
                 {
-                  "name" : "Arachnodactyly",
-                  "definition" : "Abnormally long and slender fingers (\\"spider fingers\\").",
-                  "synonyms" : [ "Long slender fingers", "Spider fingers" ]
+                  "lbl" : "Arachnodactyly",
+                  "def" : "Abnormally long and slender fingers (\\"spider fingers\\").",
+                  "syn" : [ "Long slender fingers", "Spider fingers" ]
                 }"""));
     }
 
@@ -36,9 +36,9 @@ public class ConceptTest extends BaseSerializationTest {
         String actual = OBJECT_MAPPER.writeValueAsString(concept);
         assertThat(actual, equalTo("""
                 {
-                  "name" : "Jimmy",
-                  "definition" : null,
-                  "synonyms" : [ ]
+                  "lbl" : "Jimmy",
+                  "def" : null,
+                  "syn" : [ ]
                 }"""));
     }
 }

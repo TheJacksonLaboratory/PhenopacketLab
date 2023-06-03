@@ -10,12 +10,15 @@ phenopacketlab:
   text-mining:
     # Choose the text mining provider (just `FENOMINAL` for now).
     provider: 'FENOMINAL'
-  # Which
+  # Set vocabularies for using as disease concepts.
   disease-database-prefixes:
     - 'MONDO'
-    # - 'OMIM'
+    - 'OMIM'
     # - 'ORPHA'
     # - 'DECIPHER'
+  # Set vocabularies for using as phenotype features.
+  phenotype-prefixes:
+    - 'HP'
 
 api:
   version: /api/v1

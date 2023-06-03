@@ -1,8 +1,7 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.junit.jupiter.api.Test;
-import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
-import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
+import org.monarchinitiative.phenopacketlab.core.*;
 import org.springframework.beans.factory.BeanCreationException;
 
 import java.nio.file.Path;
@@ -22,9 +21,20 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
         Path datadirectory = context.getBean("phenopacketLabDataDirectory", Path.class);
         assertThat(datadirectory.getFileName(), equalTo(Path.of("data")));
 
-        assertThat(context.getBean(PhenopacketLabDataResolver.class), is(notNullValue()));
-        assertThat(context.getBean(HpoService.class), is(notNullValue()));
-        assertThat(context.getBean(DiseaseService.class), is(notNullValue()));
+        assertThat(context.getBean(PhenopacketLabDataResolver.class),
+                is(notNullValue(PhenopacketLabDataResolver.class)));
+        assertThat(context.getBean(ConceptResourceService.class),
+                is(notNullValue(ConceptResourceService.class)));
+        assertThat(context.getBean(OntologyHierarchyServiceRegistry.class),
+                is(notNullValue(OntologyHierarchyServiceRegistry.class)));
+
+        DiseaseService diseaseService = context.getBean(DiseaseService.class);
+        assertThat(diseaseService, is(notNullValue()));
+        assertThat(diseaseService.diseaseNamespacePrefixes(), equalTo(List.of()));
+
+        PhenotypicFeatureService phenotypicFeatureService = context.getBean(PhenotypicFeatureService.class);
+        assertThat(phenotypicFeatureService, is(notNullValue()));
+        assertThat(phenotypicFeatureService.phenotypeNamespacePrefixes(), equalTo(List.of()));
     }
 
     @Test

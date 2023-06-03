@@ -37,7 +37,7 @@ public class DrugCentralResourceLoaderTest {
         assertThat(concepts.get(5).getDefinition(), is(nullValue()));
 
 
-        Resource resource = cr.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("drugcentral"));
         assertThat(resource.getName(), equalTo("DrugCentral: online drug information resource"));
         assertThat(resource.getUrl(), equalTo("https://unmtid-shinyapps.net/download/drugcentral.dump.010_05_2021.sql.gz"));

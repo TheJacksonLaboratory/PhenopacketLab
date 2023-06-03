@@ -11,6 +11,7 @@ public class PhenopacketLabProperties {
     private String dataDirectory;
     private int loaderThreads = 2;
     private List<String> diseaseDatabasePrefixes = List.of();
+    private List<String> phenotypePrefixes = List.of();
 
     private String phenopacketSchemaVersion;
     @NestedConfigurationProperty
@@ -40,6 +41,14 @@ public class PhenopacketLabProperties {
         this.diseaseDatabasePrefixes = diseaseDatabasePrefixes;
     }
 
+    public List<String> getPhenotypePrefixes() {
+        return phenotypePrefixes;
+    }
+
+    public void setPhenotypePrefixes(List<String> phenotypePrefixes) {
+        this.phenotypePrefixes = phenotypePrefixes;
+    }
+
     public String phenopacketSchemaVersion() {
         return phenopacketSchemaVersion;
     }
@@ -62,6 +71,7 @@ public class PhenopacketLabProperties {
                 "dataDirectory='" + dataDirectory + '\'' +
                 ", loaderThreads=" + loaderThreads +
                 ", diseaseDatabasePrefixes=" + diseaseDatabasePrefixes +
+                ", phenotypePrefixes=" + phenotypePrefixes +
                 ", phenopacketSchemaVersion='" + phenopacketSchemaVersion + '\'' +
                 ", textMining=" + textMining +
                 '}';

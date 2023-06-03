@@ -1,12 +1,11 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
-import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
+import org.monarchinitiative.phenopacketlab.core.*;
+import org.monarchinitiative.phenopacketlab.io.ConceptResourceAndHierarchyService;
 import org.monarchinitiative.phenopacketlab.io.ConceptResourceLoaders;
 import org.monarchinitiative.phenopacketlab.io.HgncConceptLoader;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
-import org.monarchinitiative.phenopacketlab.core.ConceptResourceServiceImpl;
-import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,20 +28,20 @@ import java.util.stream.Collectors;
 /**
  * Class for parallel loading of {@link ConceptResourceService}s.
  */
-class ConceptResourceServiceLoader {
+class BigBadMultipurposeLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConceptResourceServiceLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BigBadMultipurposeLoader.class);
 
     private final ExecutorService executor;
     private final PhenopacketLabDataResolver dataResolver;
 
-    ConceptResourceServiceLoader(ExecutorService executor,
-                                 PhenopacketLabDataResolver dataResolver) {
+    BigBadMultipurposeLoader(ExecutorService executor,
+                             PhenopacketLabDataResolver dataResolver) {
         this.executor = Objects.requireNonNull(executor);
         this.dataResolver = Objects.requireNonNull(dataResolver);
     }
 
-    ConceptResourceService load() throws InvalidResourceException {
+    BigBadDataBlob load() throws InvalidResourceException {
         Resources result = new Resources();
         List<String> errors = Collections.synchronizedList(new LinkedList<>());
         List<ResourceTuple<?>> resources = List.of(
@@ -87,16 +86,36 @@ class ConceptResourceServiceLoader {
 
         // TODO - load the new identified concept resource service for OMIM, ORPHA, DECIPHER
 
-        return new ConceptResourceServiceImpl(result.efo,
-                result.geno,
-                result.hp,
-                result.mondo,
-                result.so,
-                result.uberon,
+        return mapToBigBadDataBlob(result);
+    }
+
+    private static BigBadDataBlob mapToBigBadDataBlob(Resources result) {
+        // It is just a coincidence that most of the identified concept resources and ontology hierarchy services
+        // are backed by Phenol Ontology. That will change in near future though.
+        ConceptResourceServiceImpl conceptResourceService = new ConceptResourceServiceImpl(
+                result.efo.conceptResource(),
+                result.geno.conceptResource(),
+                result.hp.conceptResource(),
+                result.mondo.conceptResource(),
+                result.so.conceptResource(),
+                result.uberon.conceptResource(),
                 result.hgnc,
-                result.ncit,
-                result.gsso,
-                result.eco);
+                result.ncit.conceptResource(),
+                result.gsso.conceptResource(),
+                result.eco.conceptResource());
+
+        OntologyHierarchyServiceRegistry hierarchyServiceRegistry = new OntologyServiceHierarchyRegistryImpl(
+                result.efo.hierarchyService(),
+                result.geno.hierarchyService(),
+                result.hp.hierarchyService(),
+                result.mondo.hierarchyService(),
+                result.so.hierarchyService(),
+                result.uberon.hierarchyService(),
+                result.ncit.hierarchyService(),
+                result.gsso.hierarchyService(),
+                result.eco.hierarchyService()
+        );
+        return new BigBadDataBlob(conceptResourceService, hierarchyServiceRegistry);
     }
 
     private static <T> Runnable prepareTask(ResourceTuple<T> resource, Consumer<String> errorConsumer, CountDownLatch latch) {
@@ -114,39 +133,39 @@ class ConceptResourceServiceLoader {
     }
 
     private static class Resources {
-        private OntologyConceptResource efo;
-        private OntologyConceptResource geno;
-        private OntologyConceptResource hp;
-        private OntologyConceptResource mondo;
-        private OntologyConceptResource so;
-        private OntologyConceptResource uberon;
+        private ConceptResourceAndHierarchyService efo;
+        private ConceptResourceAndHierarchyService geno;
+        private ConceptResourceAndHierarchyService hp;
+        private ConceptResourceAndHierarchyService mondo;
+        private ConceptResourceAndHierarchyService so;
+        private ConceptResourceAndHierarchyService uberon;
         private IdentifiedConceptResource hgnc;
-        private OntologyConceptResource ncit;
-        private OntologyConceptResource gsso;
-        private OntologyConceptResource eco;
+        private ConceptResourceAndHierarchyService ncit;
+        private ConceptResourceAndHierarchyService gsso;
+        private ConceptResourceAndHierarchyService eco;
 
 
-        public void setEfo(OntologyConceptResource efo) {
+        public void setEfo(ConceptResourceAndHierarchyService efo) {
             this.efo = efo;
         }
 
-        public void setGeno(OntologyConceptResource geno) {
+        public void setGeno(ConceptResourceAndHierarchyService geno) {
             this.geno = geno;
         }
 
-        public void setHp(OntologyConceptResource hp) {
+        public void setHp(ConceptResourceAndHierarchyService hp) {
             this.hp = hp;
         }
 
-        public void setMondo(OntologyConceptResource mondo) {
+        public void setMondo(ConceptResourceAndHierarchyService mondo) {
             this.mondo = mondo;
         }
 
-        public void setSo(OntologyConceptResource so) {
+        public void setSo(ConceptResourceAndHierarchyService so) {
             this.so = so;
         }
 
-        public void setUberon(OntologyConceptResource uberon) {
+        public void setUberon(ConceptResourceAndHierarchyService uberon) {
             this.uberon = uberon;
         }
 
@@ -154,15 +173,15 @@ class ConceptResourceServiceLoader {
             this.hgnc = hgnc;
         }
 
-        public void setNcit(OntologyConceptResource ncit) {
+        public void setNcit(ConceptResourceAndHierarchyService ncit) {
             this.ncit = ncit;
         }
 
-        public void setGsso(OntologyConceptResource gsso) {
+        public void setGsso(ConceptResourceAndHierarchyService gsso) {
             this.gsso = gsso;
         }
 
-        public void setEco(OntologyConceptResource eco) {
+        public void setEco(ConceptResourceAndHierarchyService eco) {
             this.eco = eco;
         }
     }

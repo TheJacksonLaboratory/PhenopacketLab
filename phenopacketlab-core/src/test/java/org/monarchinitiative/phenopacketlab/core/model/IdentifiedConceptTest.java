@@ -25,9 +25,9 @@ public class IdentifiedConceptTest extends BaseSerializationTest {
                   "id" : {
                     "value" : "HP:0001166"
                   },
-                  "name" : "Arachnodactyly",
-                  "definition" : "Abnormally long and slender fingers (\\"spider fingers\\").",
-                  "synonyms" : [ "Long slender fingers", "Spider fingers" ]
+                  "lbl" : "Arachnodactyly",
+                  "def" : "Abnormally long and slender fingers (\\"spider fingers\\").",
+                  "syn" : [ "Long slender fingers", "Spider fingers" ]
                 }"""));
     }
 
@@ -44,9 +44,9 @@ public class IdentifiedConceptTest extends BaseSerializationTest {
                   "id" : {
                     "value" : "HP:1234567"
                   },
-                  "name" : "Jimmy",
-                  "definition" : null,
-                  "synonyms" : [ ]
+                  "lbl" : "Jimmy",
+                  "def" : null,
+                  "syn" : [ ]
                 }"""));
     }
 }

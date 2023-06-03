@@ -14,7 +14,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
 
     public ConceptResourceServiceImpl(IdentifiedConceptResource... resources) {
         conceptResources = Arrays.stream(resources)
-                .collect(Collectors.toMap(icr -> icr.getResource().getNamespacePrefix(),
+                .collect(Collectors.toMap(icr -> icr.resource().getNamespacePrefix(),
                         Function.identity()));
     }
 
@@ -26,7 +26,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     @Override
     public Stream<Resource> conceptResources() {
         return conceptResources.values().stream()
-                .map(IdentifiedConceptResource::getResource);
+                .map(IdentifiedConceptResource::resource);
     }
 
     @Override

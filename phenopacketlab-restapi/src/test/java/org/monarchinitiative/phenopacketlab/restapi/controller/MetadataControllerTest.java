@@ -94,7 +94,7 @@ public class MetadataControllerTest {
                         createResource("HGNC"),
                         createResource("NCIT"),
                         createResource("GSSO")
-                ).map(IdentifiedConceptResource::getResource));
+                ).map(IdentifiedConceptResource::resource));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/metadata"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -123,7 +123,7 @@ public class MetadataControllerTest {
                 .thenReturn(Stream.of(
                         createResource("MONDO"),
                         createResource("HGNC"),
-                        createResource("NCIT")).map(IdentifiedConceptResource::getResource));
+                        createResource("NCIT")).map(IdentifiedConceptResource::resource));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/metadata")
                         .contentType("text/plain")

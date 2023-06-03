@@ -4,6 +4,8 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.io.utils.CurieUtil;
 import org.monarchinitiative.phenol.io.utils.CurieUtilBuilder;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
+import org.monarchinitiative.phenopacketlab.core.OntologyHierarchyService;
+import org.monarchinitiative.phenopacketlab.core.PhenolOntologyHierarchyService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
@@ -15,10 +17,11 @@ public class ConceptResourceLoaders {
     private ConceptResourceLoaders() {
     }
 
-    public static OntologyConceptResource mondo(InputStream is) {
+    public static ConceptResourceAndHierarchyService mondo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is, "MONDO");
         Resource resource = mondoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource mondoResource(String version) {
@@ -34,10 +37,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource hpo(InputStream is) {
+    public static ConceptResourceAndHierarchyService hpo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = hpoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource hpoResource(String version) {
@@ -53,10 +57,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource uberon(InputStream is) {
+    public static ConceptResourceAndHierarchyService uberon(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uberonResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource uberonResource(String version) {
@@ -71,10 +76,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource geno(InputStream is) {
+    public static ConceptResourceAndHierarchyService geno(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = genoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource genoResource(String version) {
@@ -89,10 +95,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource uo(InputStream is) {
+    public static ConceptResourceAndHierarchyService uo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = uoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource uoResource(String version) {
@@ -107,10 +114,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource efo(InputStream is) {
+    public static ConceptResourceAndHierarchyService efo(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = efoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource efoResource(String version) {
@@ -125,10 +133,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource so(InputStream is) {
+    public static ConceptResourceAndHierarchyService so(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = soResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource soResource(String version) {
@@ -143,10 +152,11 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource ncit(InputStream is) {
+    public static ConceptResourceAndHierarchyService ncit(InputStream is) {
         Ontology ontology = OntologyLoader.loadOntology(is);
         Resource resource = ncitResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource ncitResource(String version) {
@@ -161,11 +171,12 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource gsso(InputStream is) {
+    public static ConceptResourceAndHierarchyService gsso(InputStream is) {
         CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("GSSO", "http://purl.obolibrary.org/obo/GSSO_"));
         Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "GSSO");
         Resource resource = gssoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource gssoResource(String version) {
@@ -180,11 +191,12 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    public static OntologyConceptResource eco(InputStream is) {
+    public static ConceptResourceAndHierarchyService eco(InputStream is) {
         CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("ECO", "http://purl.obolibrary.org/obo/ECO_"));
         Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "ECO");
         Resource resource = ecoResource(getOntologyVersion(ontology));
-        return OntologyConceptResource.of(ontology, resource);
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
     }
 
     private static Resource ecoResource(String version) {
@@ -197,6 +209,11 @@ public class ConceptResourceLoaders {
                 .setIriPrefix("http://purl.obolibrary.org/obo/ECO_")
                 .build();
         return new PhenopacketResource(resource);
+    }
+
+    private static ConceptResourceAndHierarchyService addHierarchyService(OntologyConceptResource conceptResource) {
+        OntologyHierarchyService hierarchyService = new PhenolOntologyHierarchyService(conceptResource.resource().getNamespacePrefix(), conceptResource.ontology());
+        return new ConceptResourceAndHierarchyService(conceptResource, hierarchyService);
     }
 
     private static String getOntologyVersion(Ontology ontology) {

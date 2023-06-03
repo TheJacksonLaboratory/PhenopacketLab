@@ -45,7 +45,7 @@ public interface ConceptResourceService {
 
     @Deprecated(forRemoval = true) // Remove the function, not a good functionality for this service.
     default Stream<Resource> resourcesForPhenopacket(String phenopacketString) {
-        return conceptResourcesForPhenopacket(phenopacketString).map(IdentifiedConceptResource::getResource);
+        return conceptResourcesForPhenopacket(phenopacketString).map(IdentifiedConceptResource::resource);
     }
 
 }

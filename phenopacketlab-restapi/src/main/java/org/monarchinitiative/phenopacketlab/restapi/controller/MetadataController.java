@@ -46,7 +46,7 @@ public class MetadataController {
                                                        * ECO
                                                        """) String prefix) {
         return conceptResourceService.forPrefix(prefix.toUpperCase())
-                .map(IdentifiedConceptResource::getResource)
+                .map(IdentifiedConceptResource::resource)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
     }

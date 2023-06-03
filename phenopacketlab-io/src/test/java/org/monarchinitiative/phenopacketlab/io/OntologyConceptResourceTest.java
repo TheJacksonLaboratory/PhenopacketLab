@@ -5,6 +5,7 @@ import org.monarchinitiative.phenol.ontology.data.Dbxref;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 public class OntologyConceptResourceTest {
 
-    private static OntologyConceptResource loadOntologyResource(Path ontologyPath, Function<InputStream, OntologyConceptResource> loader) throws IOException {
+    private static ConceptResourceAndHierarchyService loadOntologyResource(Path ontologyPath, Function<InputStream, ConceptResourceAndHierarchyService> loader) throws IOException {
         try (InputStream is = Files.newInputStream(ontologyPath)) {
             return loader.apply(is);
         }
@@ -28,10 +29,13 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadMondo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResourceLoaders::mondo);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("mondo.module.json"), ConceptResourceLoaders::mondo);
+        IdentifiedConceptResource cr = crhs.conceptResource();
+
+        assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
         // Test the `Ontology`.
-        Ontology ontology = or.getOntology();
+        Ontology ontology = ((OntologyConceptResource) cr).ontology();
         assertThat(ontology.countAllTerms(), equalTo(7));
         TermId achooSyndromeId = TermId.of("MONDO:0007038");
         assertThat(ontology.containsTerm(achooSyndromeId), equalTo(true));
@@ -43,7 +47,7 @@ public class OntologyConceptResourceTest {
 
 
         // Test the `Resource`.
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("mondo"));
         assertThat(resource.getName(), equalTo("MONDO Disease Ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/mondo.json"));
@@ -54,11 +58,14 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadHpo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResourceLoaders::hpo);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("hp.module.json"), ConceptResourceLoaders::hpo);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        Resource resource = or.getResource();
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("hp"));
         assertThat(resource.getName(), equalTo("Human Phenotype Ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/hp.json"));
@@ -69,11 +76,14 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadGeno() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResourceLoaders::geno);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("geno.json"), ConceptResourceLoaders::geno);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        Resource resource = or.getResource();
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("geno"));
         assertThat(resource.getName(), equalTo("Genotype Ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/geno.json"));
@@ -84,11 +94,13 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUberon() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResourceLoaders::uberon);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uberon.module.json"), ConceptResourceLoaders::uberon);
+        IdentifiedConceptResource cr = crhs.conceptResource();
+        assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("uberon"));
         assertThat(resource.getName(), equalTo("Uber-anatomy ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/uberon.json"));
@@ -99,11 +111,12 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadUo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("uo"));
         assertThat(resource.getName(), equalTo("Units of measurement ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/uo.owl"));
@@ -114,11 +127,12 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadEfo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("efo"));
         assertThat(resource.getName(), equalTo("Experimental Factor Ontology"));
         assertThat(resource.getUrl(), equalTo("http://www.ebi.ac.uk/efo/efo.owl"));
@@ -129,11 +143,12 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadSo() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("so"));
         assertThat(resource.getName(), equalTo("Sequence types and features ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/so.owl"));
@@ -144,11 +159,12 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadNcit() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("ncit"));
         assertThat(resource.getName(), equalTo("NCI Thesaurus"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/ncit.owl"));
@@ -159,11 +175,12 @@ public class OntologyConceptResourceTest {
 
     @Test
     public void loadGsso() throws IOException {
-        OntologyConceptResource or = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
+        ConceptResourceAndHierarchyService crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
+        IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(or.getOntology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
 
-        Resource resource = or.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("gsso"));
         assertThat(resource.getName(), equalTo("GSSO - the Gender, Sex, and Sexual Orientation ontology"));
         assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/gsso.owl"));
