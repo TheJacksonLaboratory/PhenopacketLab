@@ -56,7 +56,7 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
+                <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository>
     </repositories>
@@ -78,7 +78,7 @@
         <phenopacket-tools.version>1.0.0-RC4-SNAPSHOT</phenopacket-tools.version>
         <protobuf.version>3.19.3</protobuf.version>
 
-        <phenol.version>2.0.0</phenol.version>
+        <phenol.version>2.0.1-SNAPSHOT</phenol.version>
         <fenominal.version>0.7.9</fenominal.version>
         <biodownload.version>1.1.0</biodownload.version>
         <picocli.version>4.6.2</picocli.version>
@@ -124,6 +124,11 @@
                 <groupId>org.phenopackets</groupId>
                 <artifactId>phenopacket-schema</artifactId>
                 <version>${phenopacket.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.phenopackets.phenopackettools</groupId>
+                <artifactId>phenopacket-tools-builder</artifactId>
+                <version>${phenopacket-tools.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.phenopackets.phenopackettools</groupId>
@@ -205,6 +210,12 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit-jupiter.version}</version>
@@ -234,6 +245,11 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -278,7 +294,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M5</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>

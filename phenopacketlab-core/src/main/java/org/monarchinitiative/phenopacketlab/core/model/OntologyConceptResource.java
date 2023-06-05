@@ -4,12 +4,11 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenol.ontology.data.TermSynonym;
-import org.monarchinitiative.phenopacketlab.core.model.util.MappingIterator;
+import org.monarchinitiative.phenopacketlab.core.util.MappingIterator;
 
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * On top of the functionality provided by {@link IdentifiedConceptResource}, instances of {@link OntologyConceptResource}
@@ -21,22 +20,21 @@ public interface OntologyConceptResource extends IdentifiedConceptResource {
         return new OntologyConceptResourceDefault(ontology, resource);
     }
 
-    Ontology getOntology();
+    Ontology ontology();
 
     @Override
     default Iterator<IdentifiedConcept> iterator() {
-        // TODO - how about the obsolete terms?
-        return MappingIterator.of(getOntology().getTerms().iterator(), termToConcept());
+        return MappingIterator.of(ontology().getNonObsoleteTermIds().iterator(), this::conceptForTermId);
     }
 
     @Override
     default int size() {
-        return getOntology().countAllTerms();
+        return ontology().countNonObsoleteTerms();
     }
 
     @Override
     default Optional<IdentifiedConcept> conceptForTermId(TermId termId) {
-        return Optional.ofNullable(getOntology().getTermMap().get(termId))
+        return Optional.ofNullable(ontology().getTermMap().get(termId))
                 .flatMap(termToConcept());
     }
 
@@ -46,6 +44,6 @@ public interface OntologyConceptResource extends IdentifiedConceptResource {
                 t.getDefinition(),
                 t.getSynonyms().stream()
                         .map(TermSynonym::getValue)
-                        .collect(Collectors.toList())));
+                        .toList()));
     }
 }

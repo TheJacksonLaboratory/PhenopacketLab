@@ -34,10 +34,10 @@ public class DrugCentralResourceLoaderTest {
         assertThat(concepts.getFirst(), equalTo(IdentifiedConcept.of(TermId.of("DrugCentral:5392"), "capmatinib", "Capmatinib is a kinase inhibitor indicated for the treatment of adult patients with metastatic non-small cell lung cancer (NSCLC) whose tumors have a mutation that leads to mesenchymal-epithelial transition (MET) exon 14 skipping as detected by an FDA-approved test.", List.of())));
         assertThat(concepts.getLast(), equalTo(IdentifiedConcept.of(TermId.of("DrugCentral:5376"), "remdesivir", "Remdesivir is an investigational nucleotide analog with broad-spectrum antiviral activity. Remdesivir has demonstrated in vitro and in vivo activity in animal models against the viral pathogens MERS and SARS, which are also coronaviruses and are structurally similar to COVID-19. The limited preclinical data on remdesivir in MERS and SARS indicate that remdesivir may have potential activity against COVID-19. The only direct-acting antiviral (DAA) currently approved by FDA for the treatment of COVID-19 in certain populations.", List.of())));
         // Check the special case when the definition is absent.
-        assertThat(concepts.get(5).getDefinition().isEmpty(), equalTo(true));
+        assertThat(concepts.get(5).getDefinition(), is(nullValue()));
 
 
-        Resource resource = cr.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("drugcentral"));
         assertThat(resource.getName(), equalTo("DrugCentral: online drug information resource"));
         assertThat(resource.getUrl(), equalTo("https://unmtid-shinyapps.net/download/drugcentral.dump.010_05_2021.sql.gz"));

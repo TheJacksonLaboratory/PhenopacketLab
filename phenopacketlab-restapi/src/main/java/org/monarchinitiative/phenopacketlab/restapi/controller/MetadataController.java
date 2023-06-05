@@ -1,35 +1,23 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
 
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadataService;
-
-import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "${api.version}/metadata")
 public class MetadataController {
 
-    private final PhenopacketLabMetadataService metadataService;
+    private final PhenopacketLabMetadata metadata;
 
-    public MetadataController(PhenopacketLabMetadataService metadataService) {
-        this.metadataService = metadataService;
-    }
+    public MetadataController(PhenopacketLabMetadata metadata) {
+        this.metadata = metadata;
+     }
 
     @GetMapping(value="version")
     public ResponseEntity<String> phenopacketVersion() {
-        return ResponseEntity.ok(metadataService.phenopacketSchemaVersion());
-    }
-
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing resource prefixes for phenopacket") })
-    @PostMapping
-    public ResponseEntity<List<Resource>> resourcePrefixesForPhenopacket(@RequestBody String phenopacketString) {
-        return ResponseEntity.ok(metadataService.resourcesForPhenopacket(phenopacketString).toList());
+        return ResponseEntity.ok(metadata.phenopacketSchemaVersion());
     }
 
 }
