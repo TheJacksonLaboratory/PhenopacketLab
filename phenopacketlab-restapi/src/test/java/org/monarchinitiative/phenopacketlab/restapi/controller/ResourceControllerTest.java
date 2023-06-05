@@ -70,7 +70,7 @@ public class ResourceControllerTest {
                         createResource("HGNC"),
                         createResource("NCIT"),
                         createResource("GSSO")
-                ).map(IdentifiedConceptResource::getResource));
+                ).map(IdentifiedConceptResource::resource));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

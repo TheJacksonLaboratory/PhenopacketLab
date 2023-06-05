@@ -8,14 +8,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// TODO(ielis) - check the IMPL and remove the bad method
 public class ConceptResourceServiceImpl implements ConceptResourceService {
 
     private final Map<String, IdentifiedConceptResource> conceptResources;
 
     public ConceptResourceServiceImpl(IdentifiedConceptResource... resources) {
         conceptResources = Arrays.stream(resources)
-                .collect(Collectors.toMap(icr -> icr.getResource().getNamespacePrefix(),
+                .collect(Collectors.toMap(icr -> icr.resource().getNamespacePrefix(),
                         Function.identity()));
     }
 
@@ -27,7 +26,7 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     @Override
     public Stream<Resource> conceptResources() {
         return conceptResources.values().stream()
-                .map(IdentifiedConceptResource::getResource);
+                .map(IdentifiedConceptResource::resource);
     }
 
 }
