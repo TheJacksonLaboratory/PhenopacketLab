@@ -46,9 +46,18 @@ public class HpoaAnnotationsLoader {
     private static Resource getResource(String namespacePrefix, HpoaDiseaseDataContainer diseaseData) {
         return switch (namespacePrefix) {
             case "OMIM" -> new PhenopacketResource(Resources.omimVersion(diseaseData.version().orElse("UNKNOWN_VERSION")));
-            case "ORPHA", "ORPHANET" -> Resource.of("orpha", "Orphanet", "TODO",
-                    diseaseData.version().orElse("UNKNOWN_VERSION"), "ORPHA", "TODO");
-            case "DECIPHER" -> Resource.of("decipher", "Decipher", "", diseaseData.version().orElse("UNKNOWN_VERSION"), "", "");
+            case "ORPHA" -> Resource.of("orpha",
+                    "Orphanet",
+                    "https://www.orpha.net",
+                    diseaseData.version().orElse("UNKNOWN_VERSION"),
+                    "ORPHA",
+                    "https://www.orpha.net/consor/cgi-bin/OC_Exp.php?Lng=GB&Expert=");
+            case "DECIPHER" -> Resource.of("decipher",
+                    "Decipher",
+                    "https://www.deciphergenomics.org/",
+                    diseaseData.version().orElse("UNKNOWN_VERSION"),
+                    "DECIPHER",
+                    "https://www.deciphergenomics.org/syndrome/");
 
             default -> throw new IllegalStateException("Unexpected value: " + namespacePrefix);
         };
