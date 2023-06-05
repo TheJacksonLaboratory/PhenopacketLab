@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Individual } from 'src/app/models/individual';
+import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -30,10 +31,14 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // We only manage rare disease profile for now
+        this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
             this.phenopacket.subject = new Individual();
+            this.phenopacket.metaData = new MetaData();
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
@@ -60,7 +65,8 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        if (this.phenopacket.id && this.phenopacket.subject.id && this.isPrivateInfoWarnSelected) {
+        if (this.phenopacket.id && this.phenopacket.subject.id
+            && this.isPrivateInfoWarnSelected && this.phenopacket.subject.vitalStatus.status) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {

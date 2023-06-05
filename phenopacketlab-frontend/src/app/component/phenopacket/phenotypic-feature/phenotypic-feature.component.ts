@@ -163,9 +163,9 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         return '';
     }
     getEvidences(phenotypicFeature: PhenotypicFeature) {
-        if (phenotypicFeature.evidences) {
+        if (phenotypicFeature.evidence) {
             const result = [];
-            phenotypicFeature.evidences.forEach(evidence => {
+            phenotypicFeature.evidence.forEach(evidence => {
                 result.push(evidence.evidenceCode.toString());
             });
             return result.join(',');

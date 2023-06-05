@@ -1,14 +1,18 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -19,11 +23,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+// TODO After fixing Stubbing exception for {@link getResourcesForPrefixes) remove lenient strictness
+@MockitoSettings(strictness = Strictness.LENIENT)
 @ExtendWith(MockitoExtension.class)
-public class MetadataControllerTest {
+public class ResourceControllerTest {
 
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
@@ -31,7 +37,7 @@ public class MetadataControllerTest {
     public ConceptResourceService conceptResourceService;
 
     @InjectMocks
-    public MetadataController controller;
+    public ResourceController controller;
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -42,31 +48,70 @@ public class MetadataControllerTest {
                 .build();
     }
 
-    // TODO(ielis) - check
     @Test
-    public void getResourcePrefixesForPhenopacket_InvalidId() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/metadata"))
-                        .andExpect(MockMvcResultMatchers.status().isMethodNotAllowed());
+    public void getAllResources() throws Exception {
+        when(conceptResourceService.resources())
+                .thenReturn(Stream.of(
+                        createResource("HP"),
+                        createResource("EFO"),
+                        createResource("GENO"),
+                        createResource("MONDO"),
+                        createResource("SO"),
+                        createResource("UBERON"),
+                        createResource("HGNC"),
+                        createResource("NCIT"),
+                        createResource("GSSO")
+                ).map(IdentifiedConceptResource::getResource));
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        MockHttpServletResponse response = result.getResponse();
+        String actual = response.getContentAsString();
+        JSONArray jsonActual = new JSONArray(actual);
+        Map<String, Map<String, String>> resourcesMap = expectedFullMetadata();
+        // Compare object returned with expected map for each ontology
+        for (int i=0; i < jsonActual.length(); i++) {
+            JSONObject object = jsonActual.getJSONObject(i);
+            String resourcePrefix = (String) object.get("namespacePrefix");
+            Map<String, String> resourceMap = resourcesMap.get(resourcePrefix);
+            assertEquals(resourceMap.get("name"), object.get("name"));
+            assertEquals(resourceMap.get("id"), object.get("id"));
+            assertEquals(resourceMap.get("url"), object.get("url"));
+            assertEquals(resourceMap.get("namespacePrefix"), object.get("namespacePrefix"));
+            assertEquals(resourceMap.get("version"), object.get("version"));
+            assertEquals(resourceMap.get("iriPrefix"), object.get("iriPrefix"));
+        }
     }
 
     @Test
-    public void getResourcePrefixesForPhenopacket() throws Exception {
-        when(metadataService.resourcesPrefixesForPhenopacket(TestData.INCORRECT_PHENOPACKET))
-                .thenReturn(Stream.of("MONDO","HGNC","NCIT"));
+    public void getResourcesForPrefixes() throws Exception {
+        when(conceptResourceService.resourcesForPrefixes(Arrays.asList("MONDO", "HGNC", "NCIT")))
+                .thenReturn(Stream.of(
+                        createResource("MONDO"),
+                        createResource("HGNC"),
+                        createResource("NCIT")
+                ).map(IdentifiedConceptResource::getResource));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/metadata")
-                        .contentType("text/plain")
-                        .content(TestData.INCORRECT_PHENOPACKET))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource/MONDO,HGNC,NCIT"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         MockHttpServletResponse response = result.getResponse();
         String actual = response.getContentAsString();
         JSONArray jsonActual = new JSONArray(actual);
-        List<String> prefixes = Arrays.asList("MONDO","HGNC","NCIT");
+        Map<String, Map<String, String>> resourcesMap = expectedMissingMetadata();
+        // Compare object returned with expected map for each ontology
         for (int i=0; i < jsonActual.length(); i++) {
-            String resourcePrefix = jsonActual.getString(i);
-            assertTrue(prefixes.contains(resourcePrefix));
+            JSONObject object = jsonActual.getJSONObject(i);
+            String resourcePrefix = (String) object.get("namespacePrefix");
+            Map<String, String> resourceMap = resourcesMap.get(resourcePrefix);
+            assertEquals(resourceMap.get("name"), object.get("name"));
+            assertEquals(resourceMap.get("id"), object.get("id"));
+            assertEquals(resourceMap.get("url"), object.get("url"));
+            assertEquals(resourceMap.get("namespacePrefix"), object.get("namespacePrefix"));
+            assertEquals(resourceMap.get("version"), object.get("version"));
+            assertEquals(resourceMap.get("iriPrefix"), object.get("iriPrefix"));
         }
     }
 

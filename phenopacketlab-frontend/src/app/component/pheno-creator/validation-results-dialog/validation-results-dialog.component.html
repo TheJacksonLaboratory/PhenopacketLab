@@ -1,0 +1,81 @@
+<div class="grid p-fluid">
+  <div *ngIf="validationResults && validationResults.validators?.length > 0" class="field col-12">
+    The following validators were used for the validation of this phenopacket:
+  </div>
+  <div
+    *ngIf="validationResults && validationResults.validators?.length > 0"
+    class="field col-12"
+  >
+    <p-table
+      [value]="validationResults.validators"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption"> Validators </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-validator>
+        <tr>
+          <td>{{ validator.validatorName }}</td>
+          <td>{{ validator.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div
+    *ngIf="
+      validationResults?.validationResults &&
+      validationResults?.validationResults.length > 0
+    "
+    class="field col-12"
+  >
+    The Validation Results for your phenopacket are the following:
+  </div>
+  <div
+    *ngIf="
+      validationResults?.validationResults &&
+      validationResults?.validationResults.length === 0
+    "
+    class="field col-12"
+  >No errors were found in the validation.</div>
+  <div
+    *ngIf="
+      validationResults?.validationResults &&
+      validationResults?.validationResults.length > 0
+    "
+    class="field col-12"
+  >
+    <p-table
+      [value]="validationResults.validationResults"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption"> Validation Results </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Level</th>
+          <th>Validation Info</th>
+          <th>Category</th>
+          <th>Message</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-validationResult>
+        <tr>
+          <td>{{ validationResult.level }}</td>
+          <td>
+            [{{ validationResult.validatorInfo?.validatorId }}]
+            {{ validationResult.validatorInfo?.validatorName }}
+          </td>
+          <td>{{ validationResult.category }}</td>
+          <td>{{ validationResult.message }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
+

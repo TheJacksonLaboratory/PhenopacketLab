@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// TODO(ielis) - check the IMPL and remove the bad method
 public class ConceptResourceServiceImpl implements ConceptResourceService {
 
     private final Map<String, IdentifiedConceptResource> conceptResources;
@@ -30,8 +31,8 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
     }
 
     @Override
-    public Stream<IdentifiedConceptResource> conceptResourcesForPhenopacket(String phenopacketString) {
-        System.err.println("DO NOT USE ConceptResourceServiceImpl.conceptResourcesForPhenopacket(String)!");
-        return Stream.empty();
+    public Stream<IdentifiedConceptResource> conceptResourcesForPrefixes(List<String> prefixes) {
+        return null;
     }
+
 }

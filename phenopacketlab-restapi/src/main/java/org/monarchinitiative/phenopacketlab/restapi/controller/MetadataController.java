@@ -3,11 +3,12 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
-import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadata;
+
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,13 +63,10 @@ public class MetadataController {
         return ResponseEntity.ok(metadata.phenopacketSchemaVersion());
     }
 
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing Metadata resources for phenopacket") })
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing resource prefixes for phenopacket") })
     @PostMapping
-    public ResponseEntity<List<Resource>> metadataForPhenopacket(@RequestBody String phenopacketString) {
-        if (phenopacketString == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.ok(conceptResourceService.resourcesForPhenopacket(phenopacketString).toList());
+    public ResponseEntity<List<String>> resourcePrefixesForPhenopacket(@RequestBody String phenopacketString) {
+        return ResponseEntity.ok(conceptResourceService.resourcesPrefixesForPhenopacket(phenopacketString).toList());
     }
 
 }

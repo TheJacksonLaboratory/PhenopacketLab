@@ -58,6 +58,7 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
                 new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco)
+                // TODO(ielis) - load CHEBI, ECO, and HPOA
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());

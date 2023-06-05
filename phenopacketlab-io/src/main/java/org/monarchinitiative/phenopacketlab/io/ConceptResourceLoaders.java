@@ -216,6 +216,26 @@ public class ConceptResourceLoaders {
         return new ConceptResourceAndHierarchyServices(conceptResource, hierarchyService);
     }
 
+    public static ConceptResourceAndHierarchyServices chebi(InputStream is) {
+        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("CHEBI", "http://purl.obolibrary.org/obo/CHEBI_"));
+        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "CHEBI");
+        Resource resource = chebiResource(getOntologyVersion(ontology));
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource)
+        return addHierarchyService(conceptResource);
+    }
+
+    private static Resource chebiResource(String version) {
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
+                .setId("chebi")
+                .setName("Chemical Entities of Biological Interest (CHEBI)")
+                .setUrl("http://purl.obolibrary.org/obo/chebi.owl")
+                .setVersion(version)
+                .setNamespacePrefix("CHEBI")
+                .setIriPrefix("http://purl.obolibrary.org/obo/CHEBI_")
+                .build();
+        return new PhenopacketResource(resource);
+    }
+
     private static String getOntologyVersion(Ontology ontology) {
         return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
     }

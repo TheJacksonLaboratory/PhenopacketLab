@@ -43,7 +43,8 @@ export class PhenopacketService {
     }
 
     validatePhenopacket(phenopacket: string): Observable<any> {
-        return this.http.post(phenopacketValidateUrl, {data: phenopacket});
+        const headers = { 'content-type': 'text/plain'};
+        return this.http.post(phenopacketValidateUrl, phenopacket, { headers });
     }
 
     getModifiers(): Observable<any> {

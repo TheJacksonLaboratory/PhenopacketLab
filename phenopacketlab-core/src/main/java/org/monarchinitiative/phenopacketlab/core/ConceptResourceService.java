@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacketlab.core;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -35,17 +36,18 @@ public interface ConceptResourceService {
     }
 
     /**
-     * Get {@link IdentifiedConceptResource} given a phenopacket string
+     * Get all {@link IdentifiedConceptResource} for given {@code prefix} list, if available.
      *
-     * @param phenopacketString phenopacket as a string
-     * @return resource metadata
+     * @param prefixes List of String prefixes expected to match {@link Resource#getId()} of the {@link Resource} in {@link IdentifiedConceptResource}.
+     * @return List of {@link Resource} or {@link Optional#empty()}
+     * if {@link IdentifiedConceptResource} for given {@code prefixes} is not available.
      */
     @Deprecated(forRemoval = true) // Remove the function, not a good functionality for this service.
-    Stream<IdentifiedConceptResource> conceptResourcesForPhenopacket(String phenopacketString);
+    Stream<IdentifiedConceptResource> conceptResourcesForPrefixes(List<String> prefixes);
 
     @Deprecated(forRemoval = true) // Remove the function, not a good functionality for this service.
-    default Stream<Resource> resourcesForPhenopacket(String phenopacketString) {
-        return conceptResourcesForPhenopacket(phenopacketString).map(IdentifiedConceptResource::resource);
+    default Stream<Resource> resourcesForPrefixes(List<String> prefixes) {
+        return conceptResourcesForPrefixes(prefixes).map(IdentifiedConceptResource::resource);
     }
 
 }

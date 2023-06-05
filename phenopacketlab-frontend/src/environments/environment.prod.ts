@@ -30,5 +30,6 @@ export const environment = {
   MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
   MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
-  METADATA_URL: `${API_URL}/metadata`
+  METADATA_URL: `${API_URL}/metadata`,
+  RESOURCE_URL: `${API_URL}/resource`
 };

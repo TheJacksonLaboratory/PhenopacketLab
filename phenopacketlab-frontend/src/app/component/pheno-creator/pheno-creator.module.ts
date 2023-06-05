@@ -62,6 +62,7 @@ import { ProfileSelectionComponent } from './profile-selection/profile-selection
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ChipModule } from 'primeng/chip';
+import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 
 @NgModule({
     imports: [
@@ -132,6 +133,7 @@ import { ChipModule } from 'primeng/chip';
         MedicalActionStepComponent,
         FileStepComponent,
         ValidateStepComponent,
+        ValidationResultsDialogComponent,
         TextMiningComponent,
         WordDialogComponent,
         ProfileSelectionComponent

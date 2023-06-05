@@ -133,13 +133,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateEvidences(nodes: any[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.evidences = [];
+      this.phenotypicFeature.evidence = [];
       this.phenotypicFeature.evidenceNodes = [];
       for (const node of nodes) {
         const obj = new OntologyClass(node.key, node.label);
         obj.url = Evidence.getEvidenceUrl(node.key);
         const evidence = new Evidence(new OntologyClass(node.key, node.label));
-        this.phenotypicFeature.evidences.push(evidence);
+        this.phenotypicFeature.evidence.push(evidence);
         this.phenotypicFeature.evidenceNodes.push(node);
       }
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
@@ -147,8 +147,8 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   getSelectedEvidenceNodes() {
     const selectedNodes = [];
-    if (this.phenotypicFeature && this.phenotypicFeature.evidences) {
-      this.phenotypicFeature.evidences.forEach(evidence => {
+    if (this.phenotypicFeature && this.phenotypicFeature.evidence) {
+      this.phenotypicFeature.evidence.forEach(evidence => {
         const node = new OntologyTreeNode();
         node.key = evidence.evidenceCode.id;
         node.label = evidence.evidenceCode.label;

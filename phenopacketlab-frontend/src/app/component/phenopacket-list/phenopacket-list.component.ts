@@ -12,6 +12,8 @@ import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { UploadService } from '../../services/upload-service';
 import { Table } from 'primeng/table';
+import { ProfileSelection } from 'src/app/models/profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-phenopacket-list',
@@ -38,12 +40,14 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   cohortPhenopacketSubscription: Subscription;
   phenopackets: Phenopacket[];
   constructor(public phenopacketService: PhenopacketService,
-              private cohortService: CohortService,
-              private uploadService: UploadService,
-              public dialog: MatDialog,
-              private messageService: MessageService,
-              private confirmationService: ConfirmationService,
-              private datePipe: DatePipe, private downloadService: DownloadService) {
+    private cohortService: CohortService,
+    private uploadService: UploadService,
+    public dialog: MatDialog,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private datePipe: DatePipe,
+    private downloadService: DownloadService,
+    private router: Router) {
   }
   ngOnDestroy(): void {
     if (this.phenopacketSubscription) {
@@ -75,9 +79,15 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         }
         // Remove them from the cohort.
         this.cohortService.removeCohortMember(individual);
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
       },
-      reject: () => {}, key: 'positionDialog'});
+      reject: () => { }, key: 'positionDialog'
+    });
+  }
+
+  startRareDisease() {
+    this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+    this.router.navigate(['creator/rare']);
   }
 
   downloadPhenopacket(phenopacket: Phenopacket) {
@@ -119,21 +129,21 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     console.log('---Uploading one or more files---');
     const files: File[] = event.files;
     files.map(file => this.uploadService.importFromFile(file).subscribe((newPhenopacket: Phenopacket) => {
-                const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
-                if (phenopacketListIds.includes(newPhenopacket.id)) {
-                  const errorMessage = `'${newPhenopacket.id}' already exists.`;
-                  this.messageService.add({severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage});
-                  this.clearFileUpload();
-                  return;
-                }
-                this.cohortService.addCohortMember(newPhenopacket);
-                this.clearFileUpload();
-                this.messageService.add({severity: 'success', summary: 'Phenopacket Upload Success!'});
-              }, (error) => {
-                this.clearFileUpload();
-                const detail = error?.detail != null ? error.detail : 'Please try again.';
-                this.messageService.add({severity: 'error', summary: error.message, detail: detail});
-              })
+      const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
+      if (phenopacketListIds.includes(newPhenopacket.id)) {
+        const errorMessage = `'${newPhenopacket.id}' already exists.`;
+        this.messageService.add({ severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage });
+        this.clearFileUpload();
+        return;
+      }
+      this.cohortService.addCohortMember(newPhenopacket);
+      this.clearFileUpload();
+      this.messageService.add({ severity: 'success', summary: 'Phenopacket Upload Success!' });
+    }, (error) => {
+      this.clearFileUpload();
+      const detail = error?.detail != null ? error.detail : 'Please try again.';
+      this.messageService.add({ severity: 'error', summary: error.message, detail: detail });
+    })
     );
   }
 
