@@ -58,7 +58,7 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
                 new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco)
-                // TODO(ielis) - load CHEBI, ECO, and HPOA
+                // TODO(ielis) - load CHEBI and ECO
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -87,8 +87,6 @@ class BigBadMultipurposeLoader {
             LOGGER.info("Resources were loaded");
         else
             throw new InvalidResourceException(String.format("Error(s): %s", errors.stream().collect(Collectors.joining("', '", "'", "'"))));
-
-        // TODO - load the new identified concept resource service for OMIM, ORPHA, DECIPHER
 
         return mapToBigBadDataBlob(result);
     }

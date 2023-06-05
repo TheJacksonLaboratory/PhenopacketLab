@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
 import org.monarchinitiative.phenopacketlab.core.PhenopacketResourceService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
@@ -32,8 +30,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-// TODO After fixing Stubbing exception for {@link getResourcesForPrefixes) remove lenient strictness
-@MockitoSettings(strictness = Strictness.LENIENT)
+
 @ExtendWith(MockitoExtension.class)
 public class ResourceControllerTest {
 
@@ -94,13 +91,11 @@ public class ResourceControllerTest {
     }
 
     @ParameterizedTest
-    @CsvSource(
-            {
-                    "MONDO",
-                    "HGNC",
-                    "NCIT",
-            }
-    )
+    @CsvSource({
+            "MONDO",
+            "HGNC",
+            "NCIT",
+    })
     public void getResourceForPrefix(String namespacePrefix) throws Exception {
         when(conceptResourceService.forPrefix(namespacePrefix))
                 .thenReturn(Optional.of(createResource(namespacePrefix)));
