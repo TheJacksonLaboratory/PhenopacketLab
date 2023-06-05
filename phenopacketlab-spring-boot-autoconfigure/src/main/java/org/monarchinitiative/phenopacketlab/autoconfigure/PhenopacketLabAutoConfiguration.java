@@ -9,7 +9,7 @@ import org.monarchinitiative.phenopacketlab.core.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
 import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
 import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
-import org.monarchinitiative.phenopacketlab.io.PhenopacketLabMetadataServiceImpl;
+import org.monarchinitiative.phenopacketlab.io.PhenopacketResourceServiceImpl;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.ValidateService;
@@ -119,6 +119,11 @@ public class PhenopacketLabAutoConfiguration {
 
 
     @Bean
+    public PhenopacketResourceService phenopacketResourceService(ConceptResourceService conceptResourceService) {
+        return new PhenopacketResourceServiceImpl(conceptResourceService);
+    }
+
+    @Bean
     public TextMiningService textMiningService(OntologyConceptResource hpo) {
         return switch (properties.getTextMining().getProvider()) {
             case FENOMINAL -> {
@@ -132,8 +137,8 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadataService phenopacketLabMetadataService() {
-        return new PhenopacketLabMetadataServiceImpl(properties.phenopacketSchemaVersion());
+    public PhenopacketLabMetadata phenopacketLabMetadataService() {
+        return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
     }
 
     @Bean

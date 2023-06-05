@@ -1,60 +1,58 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
+import org.monarchinitiative.phenopacketlab.core.PhenopacketResourceService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.PrefixResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "${api.version}/resource")
 public class ResourceController {
 
     private final ConceptResourceService resourceService;
+    private final PhenopacketResourceService phenopacketResourceService;
 
-    public ResourceController(ConceptResourceService resourceService) {
+    public ResourceController(ConceptResourceService resourceService,
+                              PhenopacketResourceService phenopacketResourceService) {
         this.resourceService = resourceService;
+        this.phenopacketResourceService = phenopacketResourceService;
     }
 
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get all known resources") })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+            description = "Get all known resources")
+    })
     @GetMapping
     public ResponseEntity<List<Resource>> resources() {
-        return ResponseEntity.ok(resourceService.resources().toList());
+        return ResponseEntity.ok(resourceService.conceptResources().toList());
     }
 
-    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get resource metadata given one of the accepted prefixes (Separated by comma)") })
-    @GetMapping("{prefixes}")
-    public ResponseEntity<List<Resource>> resourcesByPrefixes(@PathVariable("prefixes")
-                                                     // TODO - update the description string
-                                                     @Parameter(description = """
-                                                       __Accepted:__
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+            description = "Get resource metadata given an ontology namespace prefix (e.g. `MONDO`)")
+    })
+    @GetMapping("{prefix}")
+    public ResponseEntity<Resource> resourceByPrefix(@PathVariable("prefix") String prefix) {
+        return ResponseEntity.of(resourceService.forPrefix(prefix)
+                .map(IdentifiedConceptResource::resource));
+    }
 
-                                                       * HP
-                                                       * EFO
-                                                       * GENO
-                                                       * MONDO
-                                                       * SO
-                                                       * UBERON
-                                                       * HGNC
-                                                       * NCIT
-                                                       * GSSO
-                                                       * ECO
-                                                       * CHEBI
-                                                       
-                                                      Example: HP,GENO,ECO
-                                                       """) String[] prefixes) {
-        return ResponseEntity.ok(resourceService.conceptResourcesForPrefixes(List.of(prefixes))
-                .map(IdentifiedConceptResource::getResource)
-                .collect(Collectors.toList()));
 
+    @ApiResponses(value = { @ApiResponse(responseCode = "200",
+            description = """
+                          Get a list of resources to put into Metadata for given top-level element of phenopacket.
+                          """) })
+    @PostMapping
+    // TODO - handle the exception
+    public ResponseEntity<List<PrefixResource>> resourcePrefixesForPhenopacketElement(@RequestBody String phenopacketElementJson) throws IOException {
+        return ResponseEntity.ok(phenopacketResourceService.getPrefixResourcesForPhenopacketElement(phenopacketElementJson));
     }
 }

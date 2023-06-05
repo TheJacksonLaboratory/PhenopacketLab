@@ -11,7 +11,7 @@ import java.util.List;
  * {@link IdentifiedConcept} is an entity that has an {@link #id()} and all attributes of a {@link Concept}.
  */
 @JsonSerialize(as = IdentifiedConcept.class)
-@JsonPropertyOrder({"id", "name", "definition", "synonyms"})
+@JsonPropertyOrder({"id", "lbl", "def", "syn"})
 public interface IdentifiedConcept extends Identified, Concept {
 
     /**

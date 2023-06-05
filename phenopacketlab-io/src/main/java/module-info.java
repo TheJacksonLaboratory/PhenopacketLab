@@ -13,7 +13,6 @@ module phenopacketlab.io {
     requires com.fasterxml.jackson.databind;
     requires org.phenopackets.phenopackettools.io;
     requires org.phenopackets.phenopackettools.util;
-    requires org.apache.commons.io;
 
     exports org.monarchinitiative.phenopacketlab.io;
 }

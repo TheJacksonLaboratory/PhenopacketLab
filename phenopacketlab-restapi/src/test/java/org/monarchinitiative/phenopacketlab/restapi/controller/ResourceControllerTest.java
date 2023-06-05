@@ -5,13 +5,17 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
+import org.monarchinitiative.phenopacketlab.core.PhenopacketResourceService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.PrefixResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +27,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +41,9 @@ public class ResourceControllerTest {
 
     @Mock
     public ConceptResourceService conceptResourceService;
+
+    @Mock
+    private PhenopacketResourceService phenopacketResourceService;
 
     @InjectMocks
     public ResourceController controller;
@@ -50,7 +59,7 @@ public class ResourceControllerTest {
 
     @Test
     public void getAllResources() throws Exception {
-        when(conceptResourceService.resources())
+        when(conceptResourceService.conceptResources())
                 .thenReturn(Stream.of(
                         createResource("HP"),
                         createResource("EFO"),
@@ -61,7 +70,7 @@ public class ResourceControllerTest {
                         createResource("HGNC"),
                         createResource("NCIT"),
                         createResource("GSSO")
-                ).map(IdentifiedConceptResource::getResource));
+                ).map(IdentifiedConceptResource::resource));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -84,38 +93,74 @@ public class ResourceControllerTest {
         }
     }
 
-    @Test
-    public void getResourcesForPrefixes() throws Exception {
-        when(conceptResourceService.resourcesForPrefixes(Arrays.asList("MONDO", "HGNC", "NCIT")))
-                .thenReturn(Stream.of(
-                        createResource("MONDO"),
-                        createResource("HGNC"),
-                        createResource("NCIT")
-                ).map(IdentifiedConceptResource::getResource));
+    @ParameterizedTest
+    @CsvSource(
+            {
+                    "MONDO",
+                    "HGNC",
+                    "NCIT",
+            }
+    )
+    public void getResourceForPrefix(String namespacePrefix) throws Exception {
+        when(conceptResourceService.forPrefix(namespacePrefix))
+                .thenReturn(Optional.of(createResource(namespacePrefix)));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource/MONDO,HGNC,NCIT"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/resource/%s".formatted(namespacePrefix)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         MockHttpServletResponse response = result.getResponse();
-        String actual = response.getContentAsString();
-        JSONArray jsonActual = new JSONArray(actual);
-        Map<String, Map<String, String>> resourcesMap = expectedMissingMetadata();
-        // Compare object returned with expected map for each ontology
-        for (int i=0; i < jsonActual.length(); i++) {
-            JSONObject object = jsonActual.getJSONObject(i);
-            String resourcePrefix = (String) object.get("namespacePrefix");
-            Map<String, String> resourceMap = resourcesMap.get(resourcePrefix);
-            assertEquals(resourceMap.get("name"), object.get("name"));
-            assertEquals(resourceMap.get("id"), object.get("id"));
-            assertEquals(resourceMap.get("url"), object.get("url"));
-            assertEquals(resourceMap.get("namespacePrefix"), object.get("namespacePrefix"));
-            assertEquals(resourceMap.get("version"), object.get("version"));
-            assertEquals(resourceMap.get("iriPrefix"), object.get("iriPrefix"));
-        }
+        JSONObject actual = new JSONObject(response.getContentAsString());
+        Map<String, String> resourceMap = expectedMissingMetadata().get(namespacePrefix);
+
+        assertEquals(resourceMap.get("name"), actual.get("name"));
+        assertEquals(resourceMap.get("id"), actual.get("id"));
+        assertEquals(resourceMap.get("url"), actual.get("url"));
+        assertEquals(resourceMap.get("namespacePrefix"), actual.get("namespacePrefix"));
+        assertEquals(resourceMap.get("version"), actual.get("version"));
+        assertEquals(resourceMap.get("iriPrefix"), actual.get("iriPrefix"));
     }
 
-    private IdentifiedConceptResource createResource(String prefix) {
+    @Test
+    public void getResourcePrefixesForPhenopacket() throws Exception {
+        when(phenopacketResourceService.getPrefixResourcesForPhenopacketElement(TestData.INCORRECT_PHENOPACKET))
+                .thenReturn(List.of(
+                        createPrefixResource("MONDO"),
+                        createPrefixResource("HGNC"),
+                        createPrefixResource("NCIT")
+                ));
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/resource")
+                        .contentType("text/plain")
+                        .content(TestData.INCORRECT_PHENOPACKET))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+        assertThat(response.getContentType(), equalTo("application/json"));
+
+
+        JSONArray jsonActual = new JSONArray(response.getContentAsString());
+        List<String> prefixes = new ArrayList<>();
+        List<Object> resources = new ArrayList<>();
+        for (int i = 0; i < jsonActual.length(); i++) {
+            JSONObject a = (JSONObject) jsonActual.get(i);
+            prefixes.add(a.getString("prefix"));
+            resources.add(a.get("resource"));
+        }
+
+        assertThat(prefixes, hasSize(3));
+        assertThat(prefixes, hasItems("MONDO", "HGNC", "NCIT"));
+
+        assertThat(resources, hasSize(3));
+        assertThat(resources, everyItem(is(notNullValue())));
+    }
+
+    private static PrefixResource createPrefixResource(String prefix) {
+        return PrefixResource.of(prefix, createResource(prefix).resource());
+    }
+
+    private static IdentifiedConceptResource createResource(String prefix) {
         Resource resource = switch (prefix.toUpperCase()) {
             case "HP" -> Resource.of("hp",
                     "Human Phenotype Ontology",

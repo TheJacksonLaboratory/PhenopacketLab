@@ -220,7 +220,7 @@ public class ConceptResourceLoaders {
         CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("CHEBI", "http://purl.obolibrary.org/obo/CHEBI_"));
         Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "CHEBI");
         Resource resource = chebiResource(getOntologyVersion(ontology));
-        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource)
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
         return addHierarchyService(conceptResource);
     }
 

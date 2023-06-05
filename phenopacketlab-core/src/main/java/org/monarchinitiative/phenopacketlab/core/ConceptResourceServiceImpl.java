@@ -30,9 +30,4 @@ public class ConceptResourceServiceImpl implements ConceptResourceService {
                 .map(IdentifiedConceptResource::resource);
     }
 
-    @Override
-    public Stream<IdentifiedConceptResource> conceptResourcesForPrefixes(List<String> prefixes) {
-        return null;
-    }
-
 }
