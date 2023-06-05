@@ -129,8 +129,8 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadataService phenopacketLabMetadataService() {
-        return new PhenopacketLabMetadataServiceImpl(properties.phenopacketSchemaVersion());
+    public PhenopacketLabMetadataService phenopacketLabMetadataService(ConceptResourceService resourceService) {
+        return new PhenopacketLabMetadataServiceImpl(properties.phenopacketSchemaVersion(), resourceService);
     }
 
     @Bean

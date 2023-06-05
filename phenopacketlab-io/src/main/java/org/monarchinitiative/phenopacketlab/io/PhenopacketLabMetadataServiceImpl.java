@@ -3,7 +3,9 @@ package org.monarchinitiative.phenopacketlab.io;
 import com.google.protobuf.Message;
 import org.apache.commons.io.IOUtils;
 
+import org.monarchinitiative.phenopacketlab.core.ConceptResourceService;
 import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadataService;
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.phenopackets.phenopackettools.core.PhenopacketElement;
 import org.phenopackets.phenopackettools.core.PhenopacketSchemaVersion;
 import org.phenopackets.phenopackettools.io.PhenopacketParserFactory;
@@ -23,9 +25,12 @@ public class PhenopacketLabMetadataServiceImpl implements PhenopacketLabMetadata
     private final String phenopacketSchemaVersion;
     PhenopacketParser parser;
 
-    public PhenopacketLabMetadataServiceImpl(String phenopacketSchemaVersion) {
+    ConceptResourceService resourceService;
+
+    public PhenopacketLabMetadataServiceImpl(String phenopacketSchemaVersion, ConceptResourceService resourceService) {
         this.phenopacketSchemaVersion = phenopacketSchemaVersion;
         this.parser = PhenopacketParserFactory.getInstance().forFormat(PhenopacketSchemaVersion.V2);
+        this.resourceService = resourceService;
     }
 
     @Override
@@ -34,7 +39,9 @@ public class PhenopacketLabMetadataServiceImpl implements PhenopacketLabMetadata
     }
 
     @Override
-    public Stream<String> resourcesPrefixesForPhenopacket(String phenopacketString) {
+    public Stream<Resource> resourcesForPhenopacket(String phenopacketString) {
+        List<Resource> resourcesFound = new ArrayList<>();
+
         InputStream targetStream = IOUtils.toInputStream(phenopacketString, Charset.defaultCharset());
         Message message;
         try {
@@ -43,53 +50,65 @@ public class PhenopacketLabMetadataServiceImpl implements PhenopacketLabMetadata
             throw new RuntimeException(e);
         }
         Stream<OntologyClass> ontologies = MessageUtils.findInstancesOfType(message, OntologyClass.class);
-        List<String> foundPrefixes = new ArrayList<>();
         ontologies.forEach(ontoClass -> {
             if (ontoClass.getId().startsWith("EFO")) {
-                if (!foundPrefixes.contains("EFO"))
-                    foundPrefixes.add("EFO");
+                Resource res = resourceService.forPrefix("EFO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("GENO")) {
-                if (!foundPrefixes.contains("GENO"))
-                    foundPrefixes.add("GENO");
+                Resource res = resourceService.forPrefix("GENO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("HP")) {
-                if (!foundPrefixes.contains("HP"))
-                    foundPrefixes.add("HP");
+                Resource res = resourceService.forPrefix("HP").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("MONDO")) {
-                if (!foundPrefixes.contains("MONDO"))
-                    foundPrefixes.add("MONDO");
+                Resource res = resourceService.forPrefix("MONDO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             }
             // TODO
 //            else if (ontoClass.getId().startsWith("OMIM")) {
-//                if (!foundPrefixes.contains("OMIM"))
-//                    foundPrefixes.add("OMIM");
+//            Resource res = resourceService.forPrefix("OMIM").get().getResource();
+//                if (!resourcesFound.contains(res))
+//                    resourcesFound.add(res);
 //            } else if (ontoClass.getId().startsWith("ORPHA")) {
-//                if (!foundPrefixes.contains("ORPHA"))
-//                    foundPrefixes.add("ORPHA");
+//            Resource res = resourceService.forPrefix("ORPHA").get().getResource();
+//                if (!resourcesFound.contains(res))
+//                    resourcesFound.add(res);
 //            }
             else if (ontoClass.getId().startsWith("SO")) {
-                if (!foundPrefixes.contains("SO"))
-                    foundPrefixes.add("SO");
+                Resource res = resourceService.forPrefix("SO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("UBERON")) {
-                if (!foundPrefixes.contains("UBERON"))
-                    foundPrefixes.add("UBERON");
+                Resource res = resourceService.forPrefix("UBERON").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("HGNC") || ontoClass.getId().startsWith("DrugCentral")) {
-                if (!foundPrefixes.contains("HGNC"))
-                    foundPrefixes.add("HGNC");
+                Resource res = resourceService.forPrefix("HGNC").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("NCIT")) {
-                if (!foundPrefixes.contains("NCIT"))
-                    foundPrefixes.add("NCIT");
+                Resource res = resourceService.forPrefix("NCIT").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("GSSO")) {
-                if (!foundPrefixes.contains("GSSO"))
-                    foundPrefixes.add("GSSO");
+                Resource res = resourceService.forPrefix("GSSO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("ECO")) {
-                if (!foundPrefixes.contains("ECO"))
-                    foundPrefixes.add("ECO");
+                Resource res = resourceService.forPrefix("ECO").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             } else if (ontoClass.getId().startsWith("CHEBI")) {
-                if (!foundPrefixes.contains("CHEBI"))
-                    foundPrefixes.add("CHEBI");
+                Resource res = resourceService.forPrefix("CHEBI").get().getResource();
+                if (!resourcesFound.contains(res))
+                    resourcesFound.add(res);
             }
         });
-        return foundPrefixes.stream();
+        return resourcesFound.stream();
     }
 
     @Override

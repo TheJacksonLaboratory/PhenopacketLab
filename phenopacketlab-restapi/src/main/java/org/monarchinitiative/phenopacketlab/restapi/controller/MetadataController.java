@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import org.monarchinitiative.phenopacketlab.core.PhenopacketLabMetadataService;
 
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,8 @@ public class MetadataController {
 
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Get Missing resource prefixes for phenopacket") })
     @PostMapping
-    public ResponseEntity<List<String>> resourcePrefixesForPhenopacket(@RequestBody String phenopacketString) {
-        return ResponseEntity.ok(metadataService.resourcesPrefixesForPhenopacket(phenopacketString).toList());
+    public ResponseEntity<List<Resource>> resourcePrefixesForPhenopacket(@RequestBody String phenopacketString) {
+        return ResponseEntity.ok(metadataService.resourcesForPhenopacket(phenopacketString).toList());
     }
 
 }

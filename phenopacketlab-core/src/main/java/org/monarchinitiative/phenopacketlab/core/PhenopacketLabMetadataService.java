@@ -1,5 +1,8 @@
 package org.monarchinitiative.phenopacketlab.core;
 
+
+import org.monarchinitiative.phenopacketlab.core.model.Resource;
+
 import java.util.stream.Stream;
 
 public interface PhenopacketLabMetadataService {
@@ -7,6 +10,6 @@ public interface PhenopacketLabMetadataService {
 
     String phenopacketSchemaVersion();
 
-    Stream<String> resourcesPrefixesForPhenopacket(String phenopacketString);
+    Stream<Resource> resourcesForPhenopacket(String phenopacketString);
 
 }
