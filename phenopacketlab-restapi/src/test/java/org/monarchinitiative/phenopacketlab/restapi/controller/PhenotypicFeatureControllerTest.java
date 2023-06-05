@@ -45,26 +45,26 @@ public class PhenotypicFeatureControllerTest {
 
     @Test
     public void phenotypicFeatureById() throws Exception {
-        TermId phenotypicFeatureId = TermId.of("OMIM:123456");
+        TermId phenotypicFeatureId = TermId.of("HP:123456");
         when(phenotypicFeatureService.phenotypeConceptById(phenotypicFeatureId))
                 .thenReturn(Optional.of(createPhenotypicFeature(phenotypicFeatureId.getValue(), "First")));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/OMIM:123456"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/HP:123456"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertThat(response.getContentAsString(), equalTo("""
-                {"id":{"value":"OMIM:123456"},"lbl":"First","def":null,"syn":[]}"""));
+                {"id":"HP:123456","lbl":"First","def":null,"syn":[]}"""));
     }
 
     @Test
     public void phenotypicFeatureById_missingPhenotypicFeature() throws Exception {
-        TermId diseaseId = TermId.of("OMIM:123456");
+        TermId diseaseId = TermId.of("HP:123456");
         when(phenotypicFeatureService.phenotypeConceptById(diseaseId))
                 .thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/OMIM:123456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/HP:123456"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -78,8 +78,8 @@ public class PhenotypicFeatureControllerTest {
     public void getAllPhenotypicFeatures() throws Exception {
         when(phenotypicFeatureService.allPhenotypeConcepts())
                 .thenReturn(Stream.of(
-                        createPhenotypicFeature("OMIM:123456", "First"),
-                        createPhenotypicFeature("OMIM:987654", "Second")
+                        createPhenotypicFeature("HP:123456", "First"),
+                        createPhenotypicFeature("HP:987654", "Second")
                 ));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features"))
@@ -87,8 +87,8 @@ public class PhenotypicFeatureControllerTest {
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(), equalTo("""
-                [{"id":{"value":"OMIM:123456"},"lbl":"First","def":null,"syn":[]},""" + """
-                {"id":{"value":"OMIM:987654"},"lbl":"Second","def":null,"syn":[]}]"""));
+                [{"id":"HP:123456","lbl":"First","def":null,"syn":[]},""" + """
+                {"id":"HP:987654","lbl":"Second","def":null,"syn":[]}]"""));
     }
 
     private static IdentifiedConcept createPhenotypicFeature(String curie, String label) {

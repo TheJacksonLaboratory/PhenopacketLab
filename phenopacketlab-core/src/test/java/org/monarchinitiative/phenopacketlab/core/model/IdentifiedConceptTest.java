@@ -22,9 +22,7 @@ public class IdentifiedConceptTest extends BaseSerializationTest {
         String actual = OBJECT_MAPPER.writeValueAsString(concept);
         assertThat(actual, equalTo("""
                 {
-                  "id" : {
-                    "value" : "HP:0001166"
-                  },
+                  "id" : "HP:0001166",
                   "lbl" : "Arachnodactyly",
                   "def" : "Abnormally long and slender fingers (\\"spider fingers\\").",
                   "syn" : [ "Long slender fingers", "Spider fingers" ]
@@ -41,9 +39,7 @@ public class IdentifiedConceptTest extends BaseSerializationTest {
         String actual = OBJECT_MAPPER.writeValueAsString(concept);
         assertThat(actual, equalTo("""
                 {
-                  "id" : {
-                    "value" : "HP:1234567"
-                  },
+                  "id" : "HP:1234567",
                   "lbl" : "Jimmy",
                   "def" : null,
                   "syn" : [ ]

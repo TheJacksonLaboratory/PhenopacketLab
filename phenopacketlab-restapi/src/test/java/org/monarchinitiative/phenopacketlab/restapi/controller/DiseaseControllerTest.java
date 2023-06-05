@@ -55,7 +55,7 @@ public class DiseaseControllerTest {
         MockHttpServletResponse response = result.getResponse();
 
         assertThat(response.getContentAsString(), equalTo("""
-                {"id":{"value":"OMIM:123456"},"lbl":"First","def":"Blaaaaah","syn":["A","B"]}"""));
+                {"id":"OMIM:123456","lbl":"First","def":"Blaaaaah","syn":["A","B"]}"""));
     }
 
     @Test
@@ -88,9 +88,9 @@ public class DiseaseControllerTest {
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(),
                 equalTo("""
-                        [{"id":{"value":"OMIM:123456"},"lbl":"First","def":"Something should be here",""" + """
+                        [{"id":"OMIM:123456","lbl":"First","def":"Something should be here",""" + """
                         "syn":["A","B"]},""" + """
-                        {"id":{"value":"OMIM:987654"},"lbl":"Second","def":"Something else",""" + """
+                        {"id":"OMIM:987654","lbl":"Second","def":"Something else",""" + """
                         "syn":["C","D"]}]"""));
     }
 
