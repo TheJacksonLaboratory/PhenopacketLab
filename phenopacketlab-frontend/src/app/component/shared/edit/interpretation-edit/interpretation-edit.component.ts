@@ -41,6 +41,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     progressStatuses: ProgressStatus[];
     // diseases
     diseases: OntologyClass[];
+    diseaseItems: any[] = [];
+    selectedDiseaseItem: any;
     diseaseSubscription: Subscription;
     // genomic interpretations
     genomicInterpretations: GenomicInterpretation[];
@@ -57,7 +59,11 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
         // get diseases
         this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
-            this.diseases = diseases;
+            this.diseaseItems = diseases;
+            if (this.interpretation) {
+                this.selectedDisease = this.interpretation.diagnosis?.disease;
+                this.selectedDiseaseItem = this.getSelectedDiseaseItem(this.selectedDisease);
+            }
         });
         // statuses
         this.progressStatuses = this.getProgressStatuses();
@@ -112,6 +118,19 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     }
     updateProgressStatus(event) {
         this.selectedProgressStatus = event.value;
+    }
+
+    getSelectedDiseaseItem(diseaseTerm: OntologyClass) {
+        for (const item of this.diseaseItems) {
+            if (item.id.value === diseaseTerm.id) {
+                return item;
+            }
+        }
+    }
+
+    updateDiseaseItemSelection(event) {
+        const diseaseItem = event.value;
+        this.selectedDisease = new OntologyClass(diseaseItem.id.value, diseaseItem.lbl);
     }
 
     updateInterpretation() {

@@ -50,7 +50,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
       const nodes = [];
       for (const evidence of evidences) {
-        nodes.push({ label: evidence.name, key: evidence.id.value, leaf: true, parent: undefined });
+        nodes.push({ label: evidence.lbl, key: evidence.id.value, leaf: true, parent: undefined });
       }
       this.evidencesNodes = nodes;
     });
@@ -65,7 +65,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
         if (this.severities === undefined) {
           this.severities = [];
         }
-        this.severities.push(new OntologyClass(severity.id.value, severity.name));
+        this.severities.push(new OntologyClass(severity.id.value, severity.lbl));
       });
     });
   }

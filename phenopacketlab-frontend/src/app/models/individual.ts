@@ -90,9 +90,9 @@ export class VitalStatus {
 }
 
 export class ConstantObject {
-    name: string;
-    definition: string;
-    synonyms: string[];
+    lbl: string;
+    def: string;
+    syn: string[];
     id: Id;
 }
 export class Id {

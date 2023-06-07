@@ -72,32 +72,33 @@
             id="disease"
             placeholder="Select disease"
             dataKey="id"
-            [options]="diseases"
+            [options]="diseaseItems"
             appendTo="body"
             [virtualScroll]="true"
             [virtualScrollItemSize]="30"
             required
             filter="true"
-            filterBy="label,id"
-            optionLabel="label"
-            [(ngModel)]="selectedDisease"
+            filterBy="lbl,id.value"
+            optionLabel="lbl"
+            [(ngModel)]="selectedDiseaseItem"
+            (onChange)="updateDiseaseItemSelection($event)"
             showClear="true"
             [ngClass]="{
-              'ng-dirty': !selectedDisease && submitted
+              'ng-dirty': !selectedDiseaseItem && submitted
             }"
           >
-            <ng-template let-disease pTemplate="item">
+            <ng-template let-item pTemplate="item">
               <div
-                [pTooltip]="disease.label"
+                [pTooltip]="item.lbl"
                 showDelay="2000"
                 tooltipPosition="bottom"
                 escape="false"
               >
-                [{{ disease.id }}] {{ disease.label }}
+                [{{ item.id.value }}] {{ item.lbl }}
               </div>
             </ng-template>
           </p-dropdown>
-          <small *ngIf="!selectedDisease && submitted" class="p-error"
+          <small *ngIf="!selectedDiseaseItem && submitted" class="p-error"
             >Disease diagnosis is required.</small
           >
         </div>

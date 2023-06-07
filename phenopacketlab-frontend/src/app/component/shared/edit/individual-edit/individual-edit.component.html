@@ -28,7 +28,7 @@
       [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
     ></p-checkbox>
   </div>
-  <br>
+  <br />
 
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
@@ -56,16 +56,12 @@
       tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
-      optionLabel="name"
+      optionLabel="lbl"
       [showClear]="true"
     >
       <ng-template let-sex pTemplate="item">
-        <div
-          [pTooltip]="sex.definition"
-          escape="false"
-          tooltipPosition="bottom"
-        >
-          {{ sex.name }}
+        <div [pTooltip]="sex.def" escape="false" tooltipPosition="bottom">
+          {{ sex.lbl }}
         </div>
       </ng-template>
     </p-dropdown>
@@ -213,22 +209,28 @@
       placeholder="Select cause of death"
       appendTo="body"
       [options]="causeOfDeaths"
+      [ngModel]="selectedCauseOfDeath"
       [virtualScroll]="true"
       [virtualScrollItemSize]="30"
       filter="true"
-      filterBy="label,id"
-      optionLabel="label"
+      filterBy="lbl,id.value"
+      optionLabel="lbl"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
     >
+      <ng-template pTemplate="selectedItem">
+        <div *ngIf="selectedCauseOfDeath">
+          <div>[{{ selectedCauseOfDeath.id?.value }}] {{ selectedCauseOfDeath.lbl }}</div>
+        </div>
+      </ng-template>
       <ng-template let-cause pTemplate="item">
         <div
-          [pTooltip]="cause.label"
-          showDelay="2000"
+          [pTooltip]="cause.lbl"
+          showDelay="1000"
           tooltipPosition="bottom"
           escape="false"
         >
-          [{{ cause.id }}] {{ cause.label }}
+          [{{ cause.id.value }}] {{ cause.lbl }}
         </div>
       </ng-template>
     </p-dropdown>

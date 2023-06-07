@@ -27,6 +27,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     isPrivateInfoWarnSelected: boolean;
     causeOfDeaths: any[];
+    selectedCauseOfDeath: any;
     causeOfDeathSubscription: Subscription;
 
     selectedSex: ConstantObject;
@@ -47,11 +48,20 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         // get cause of death
         this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
             this.causeOfDeaths = diseases;
+            // init selectedCauseOfDeath
+            if (this.subject.vitalStatus?.causeOfDeath) {
+                for (const cause of diseases) {
+                    if (cause.id.value === this.subject.vitalStatus?.causeOfDeath.id) {
+                        this.selectedCauseOfDeath = cause;
+                        break;
+                    }
+                }
+            }
         });
         this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
             this.sexes = sexes;
             for (const sex of sexes) {
-                if (this.subject && this.subject.sex === sex.name) {
+                if (this.subject && this.subject.sex === sex.lbl) {
                     this.selectedSex = sex;
                 }
             }
@@ -107,7 +117,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     updateSex(event: any) {
         if (this.subject) {
             if (event.value) {
-                this.subject.sex = event.value.name;
+                this.subject.sex = event.value.lbl;
             }
             if (event.value === undefined || event.value === null) {
                 this.subject.sex = undefined;
@@ -167,7 +177,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     updateCauseOfDeath(event) {
         if (this.subject) {
             if (event) {
-                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.label);
+                this.selectedCauseOfDeath = event.value;
+                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id.value, event.value.lbl);
             } else {
                 this.subject.vitalStatus.causeOfDeath = undefined;
             }
