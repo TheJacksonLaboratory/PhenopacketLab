@@ -59,31 +59,23 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
       // navigate to first page of creator as phenopacket is not created
       this.router.navigate(['creator/individual']);
     }
-    if (this.phenopacket.metaData === undefined) {
-      this.phenopacket.metaData = new MetaData();
-    }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
     });
     // initialize metadata
-    this.phenopacket.metaData.createdBy = '';
-    this.phenopacket.metaData.submittedBy = '';
-    this.phenopacket.metaData.resources = undefined;
-    // create the timestamp created date
-    this.created = new Date().toISOString();
-    this.phenopacket.metaData.created = this.created;
-    this.phenopacket.metaData.externalReferences = [];
-    this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+    this.initializeMetadata();
     // Retrieve all missing resource prefixes in phenopacket metadata
-    this.metadataSubscription = this.metadataService.getResourcePrefixesForPhenopacket(
-        this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixes => {
-      // Retrieve all missing resources for the list of prefixes
-      this.metadataService.getResourceForPrefixes(prefixes).subscribe(resources => {
-        if (this.phenopacket && this.phenopacket.metaData) {
-          this.phenopacket.metaData.resources = undefined;
-          this.phenopacket.metaData.resources = resources;
-        }
-      });
+    this.metadataSubscription = this.metadataService.getResourcesForPhenopacket(
+        this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
+      const resources = [];
+      for (const item of prefixResources) {
+        resources.push(item.resource);
+      }
+      this.initializeMetadata();
+      if (this.phenopacket && this.phenopacket.metaData) {
+        this.phenopacket.metaData.resources = undefined;
+        this.phenopacket.metaData.resources = resources;
+      }
     });
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
@@ -105,9 +97,21 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
   }
 
+  initializeMetadata() {
+    if (this.phenopacket.metaData === undefined) {
+      this.phenopacket.metaData = new MetaData();
+    }
+    // initialize metadata
+    this.phenopacket.metaData.createdBy = '';
+    this.phenopacket.metaData.submittedBy = '';
+    this.phenopacket.metaData.resources = undefined;
+    // create the timestamp created date
+    this.created = new Date().toISOString();
+    this.phenopacket.metaData.created = this.created;
+    this.phenopacket.metaData.externalReferences = [];
+    this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+  }
   validate() {
-    console.log(this.phenopacket);
-    console.log(this.getPhenopacketJSON(this.phenopacket));
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
       this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
         header: 'Validation results',
