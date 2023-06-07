@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -9,7 +9,6 @@ import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
 import { Utils } from '../shared/utils';
 
 @Component({
@@ -22,15 +21,14 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
 
     visible = false;
     phenopacket: Phenopacket;
-    phenotypicFeatures: PhenotypicFeature[] = [];
     submitted = false;
     phenopacketSubscription: Subscription;
 
     // table contents of phenotypic features
     selectedFeature: PhenotypicFeature;
-    // searchparams
-    currSearchParams: any = {};
-    spinnerDialogRef: DynamicDialogRef;
+    phenotypicFeatures: PhenotypicFeature[] = [];
+    featureItems: any[];
+    phenotypicFeatureSubscription: Subscription;
 
     expandedTextMining = false;
 
@@ -55,13 +53,16 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             this.router.navigate(['creator/individual']);
         } else {
             this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
+            console.log(this.phenotypicFeatures);
             if (this.phenotypicFeatures) {
                 if (this.phenotypicFeatures.length > 0) {
                     this.visible = true;
                 }
             }
         }
-
+        this.phenotypicFeatureSubscription = this.searchService.getAllPhenotypicFeatures().subscribe(features => {
+            this.featureItems = features;
+        });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
@@ -79,39 +80,18 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
-    }
-
-    // Used for phenotypic feature search bar
-    onSearchCriteriaChange(searchCriteria: any) {
-        this.currSearchParams.offset = 0;
-        const id = searchCriteria.selectedItems[0].selectedValue.id;
-
-        if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
-            this.currSearchParams = searchCriteria;
-            this._queryPhenotypicFeatureById(id);
+        if (this.phenotypicFeatureSubscription) {
+            this.phenotypicFeatureSubscription.unsubscribe();
         }
     }
 
-    private _queryPhenotypicFeatureById(id: string) {
-        this.openSpinnerDialog();
-        this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
-            const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.label);
-            phenotypicFeature.excluded = false;
-            this.addPhenotypicFeature(phenotypicFeature);
-            this.spinnerDialogRef.close();
-        },
-            (error) => {
-                console.log(error);
-                this.spinnerDialogRef.close();
-            });
-    }
-
-    openSpinnerDialog() {
-        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true
-        });
+    featureItemSelected(item: any) {
+        if (item) {
+            const feature = new PhenotypicFeature();
+            feature.type = new OntologyClass(item.id.value, item.lbl);
+            feature.description = item.def;
+            this.addPhenotypicFeature(feature);
+        }
     }
 
     /**

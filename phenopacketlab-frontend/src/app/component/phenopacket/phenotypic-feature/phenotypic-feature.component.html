@@ -14,14 +14,13 @@
   <div class="field col-12">
     <app-search-box
       [showHint]="false"
-      [itemName]="itemName"
-      [searchLabel]="searchLabel"
-      [placeHolderTxt]="placeHolderTxt"
-      [localStorageKey]="localStorageKey"
-      [searchService]="searchService"
-      (selectedSearchItem)="onSearchCriteriaChange($event)"
-      [resetSearch]="false"
+      [itemName]="'Phenotypic feature'"
+      [searchLabel]="'Phenotypic feature'"
+      [placeHolderTxt]="'Enter a phenotypic feature name'"
+      [items]="featureItems"
+      (selectedItemChange)="featureItemSelected($event)"
     ></app-search-box>
+    
   </div>
   <div *ngIf="showTable" class="field col-12">
     <p-table

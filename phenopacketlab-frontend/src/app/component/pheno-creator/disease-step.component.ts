@@ -9,7 +9,6 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { SpinnerDialogComponent } from '../shared/spinner-dialog/spinner-dialog.component';
 import { Utils } from '../shared/utils';
 
 @Component({
@@ -29,12 +28,12 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
 
     // table contents of diseases
     selectedDisease: Disease;
-    // searchparams
-    currSearchParams: any = {};
-    spinnerDialogRef: any;
 
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
+
+    diseaseItems: any[];
+    diseaseSubscription: Subscription;
 
     submitted = false;
 
@@ -63,6 +62,9 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
+        this.diseaseSubscription = this.searchService.getAllHpoDiseases().subscribe(diseases => {
+            this.diseaseItems = diseases;
+        });
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
@@ -71,43 +73,18 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
-    }
-
-    // Used for disease search bar
-    onSearchCriteriaChange(searchCriteria: any) {
-        this.currSearchParams.offset = 0;
-        const id = searchCriteria.selectedItems[0].selectedValue.id;
-
-        if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
-            this.currSearchParams = searchCriteria;
-            this._queryDiseaseById(id);
+        if (this.diseaseSubscription) {
+            this.diseaseSubscription.unsubscribe();
         }
     }
 
-    private _queryDiseaseById(id: string) {
-        this.openSpinnerDialog();
-        this.searchService.queryDiseasesById(id).subscribe(data => {
-            if (data) {
-                const disease = new Disease();
-                disease.term = new OntologyClass(data.id, data.label);
-                disease.excluded = false;
-                this.addDisease(disease);
-            }
-            this.spinnerDialogRef.close();
-        },
-            (error) => {
-                console.log(error);
-                this.spinnerDialogRef.close();
-            });
+    diseaseItemSelected(item: any) {
+        if (item) {
+            const disease = new Disease();
+            disease.term = new OntologyClass(item.id.value, item.lbl);
+            this.addDisease(disease);
+        }
     }
-
-    openSpinnerDialog() {
-        this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-            panelClass: 'transparent',
-            disableClose: true
-        });
-    }
-
     /**
      * Adds a new disease.
      **/

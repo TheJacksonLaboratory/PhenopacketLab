@@ -1,15 +1,13 @@
 <div class="grid p-fluid">
   <div class="field col-12">
     <app-search-box
-      [showHint]="false"
-      [itemName]="itemName"
-      [searchLabel]="searchLabel"
-      [placeHolderTxt]="placeHolderTxt"
-      [localStorageKey]="localStorageKey"
-      [searchService]="searchService"
-      (selectedSearchItem)="onSearchCriteriaChange($event)"
-      [resetSearch]="false"
-    ></app-search-box>
+    [showHint]="false"
+    [itemName]="'Disease'"
+    [searchLabel]="'Disease term'"
+    [placeHolderTxt]="'Enter a disease term'"
+    [items]="diseaseItems"
+    (selectedItemChange)="diseaseItemSelected($event)"
+  ></app-search-box>
   </div>
   <div *ngIf="showTable" class="field col-12">
     <p-table
