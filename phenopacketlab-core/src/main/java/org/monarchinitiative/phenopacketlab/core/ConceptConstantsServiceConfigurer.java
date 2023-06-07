@@ -248,7 +248,8 @@ public class ConceptConstantsServiceConfigurer {
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         // exclude laterality and severity from modifier nodes
         List<TermId> excludedNodes = new ArrayList<>();
-        excludedNodes.add(TermId.of("HP:0012831")); // Laterality
+        // laterality is present in modifier as shown in example in paper : https://onlinelibrary.wiley.com/doi/10.1002/ggn2.202200016#ggn2202200016-bib-0008
+//        excludedNodes.add(TermId.of("HP:0012831")); // Laterality
         excludedNodes.add(TermId.of("HP:0012824")); // Severity
         return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("HP:0012823"), "HP", excludedNodes);
     }
