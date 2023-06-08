@@ -14,6 +14,9 @@ import { UploadService } from '../../services/upload-service';
 import { Table } from 'primeng/table';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Router } from '@angular/router';
+import { MetadataService } from 'src/app/services/metadata.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
   selector: 'app-phenopacket-list',
@@ -34,11 +37,12 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   tabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
   tabIndex = 0;
-  displayedColumns = ['id', 'timeOfLastEncounter', 'sex', 'download', 'remove'];
 
   phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
   phenopackets: Phenopacket[];
+  ref: DynamicDialogRef;
+
   constructor(public phenopacketService: PhenopacketService,
     private cohortService: CohortService,
     private uploadService: UploadService,
@@ -47,15 +51,9 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe,
     private downloadService: DownloadService,
+    private dialogService: DialogService,
+    private metadataService: MetadataService,
     private router: Router) {
-  }
-  ngOnDestroy(): void {
-    if (this.phenopacketSubscription) {
-      this.phenopacketSubscription.unsubscribe();
-    }
-    if (this.cohortPhenopacketSubscription) {
-      this.cohortPhenopacketSubscription.unsubscribe();
-    }
   }
 
   ngOnInit(): void {
@@ -63,6 +61,18 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       this.cohort = cohort;
       this.phenopackets = cohort.members;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.phenopacketSubscription) {
+      this.phenopacketSubscription.unsubscribe();
+    }
+    if (this.cohortPhenopacketSubscription) {
+      this.cohortPhenopacketSubscription.unsubscribe();
+    }
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   removeIndividual(individual: Phenopacket) {
@@ -145,6 +155,37 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       this.messageService.add({ severity: 'error', summary: error.message, detail: detail });
     })
     );
+  }
+
+  validatePhenopacket(phenopacket: Phenopacket) {
+    // validate phenopacket
+    const phenopacketStr = this.downloadService.saveAsJson(phenopacket, false);
+    this.phenopacketService.validatePhenopacket(phenopacketStr).subscribe(validationResults => {
+      this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
+        header: 'Validation results',
+        width: '50%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        resizable: true,
+        data: {
+          validationResults: validationResults,
+          phenopacket: phenopacket
+        }
+      });
+      this.ref.onClose.subscribe(validatedPheno => {
+        console.log(validationResults);
+        this.cohortService.getCohort().subscribe(cohort => {
+          // remove old pheno
+          const index = cohort.members.indexOf(phenopacket, 0);
+          if (index > -1) {
+            cohort.members.splice(index, 1);
+          }
+          // add updated pheno
+          cohort.members.push(validatedPheno);
+        });
+      });
+
+    });
   }
 
   clearFileUpload() {
