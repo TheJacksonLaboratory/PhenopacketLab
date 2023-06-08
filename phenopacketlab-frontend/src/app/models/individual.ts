@@ -80,7 +80,7 @@ export class VitalStatus {
         }
         if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-            vitalSatus.causeOfDeath.url = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
+            vitalSatus.causeOfDeath.termUrl = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
         }
         if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];

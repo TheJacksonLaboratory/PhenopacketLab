@@ -129,7 +129,7 @@
           escape="false"
           tooltipPosition="bottom"
         >
-          {{ gender.name }} [{{ gender.id.value }}]
+          {{ gender.lbl }} [{{ gender.id }}]
         </div>
       </ng-template>
     </p-dropdown>
@@ -213,14 +213,14 @@
       [virtualScroll]="true"
       [virtualScrollItemSize]="30"
       filter="true"
-      filterBy="lbl,id.value"
+      filterBy="lbl,id"
       optionLabel="lbl"
       (onChange)="updateCauseOfDeath($event)"
       showClear="true"
     >
       <ng-template pTemplate="selectedItem">
         <div *ngIf="selectedCauseOfDeath">
-          <div>[{{ selectedCauseOfDeath.id?.value }}] {{ selectedCauseOfDeath.lbl }}</div>
+          <div>[{{ selectedCauseOfDeath.id }}] {{ selectedCauseOfDeath.lbl }}</div>
         </div>
       </ng-template>
       <ng-template let-cause pTemplate="item">
@@ -230,7 +230,7 @@
           tooltipPosition="bottom"
           escape="false"
         >
-          [{{ cause.id.value }}] {{ cause.lbl }}
+          [{{ cause.id }}] {{ cause.lbl }}
         </div>
       </ng-template>
     </p-dropdown>

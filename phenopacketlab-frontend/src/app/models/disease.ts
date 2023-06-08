@@ -43,7 +43,7 @@ export class Disease extends Convert {
         if (obj['diseaseStage']) {
             disease.diseaseStage = OntologyClass.convert(obj['diseaseStage']);
             disease.diseaseStage.forEach(stage => {
-                stage.url = Disease.getDiseaseURL(stage.id);
+                stage.termUrl = Disease.getDiseaseURL(stage.id);
             });
         }
         if (obj['clinicalTnmFinding']) {
@@ -54,7 +54,7 @@ export class Disease extends Convert {
         }
         if (obj['laterality']) {
             disease.laterality = OntologyClass.convert(obj['laterality']);
-            disease.laterality.url = `https://hpo.jax.org/app/browse/term/${disease.laterality.id}`;
+            disease.laterality.termUrl = `https://hpo.jax.org/app/browse/term/${disease.laterality.id}`;
         }
         if (obj['description']) {
             disease.description = obj['description'];

@@ -57,7 +57,7 @@
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
           <td>
             <span *ngIf="feature.onset?.ontologyClass"
-              ><a [href]="feature.onset.ontologyClass.url" target="_blank"
+              ><a [href]="feature.onset.ontologyClass.termUrl" target="_blank"
                 >[{{ feature.onset.ontologyClass.id }}]</a
               >
               {{ feature.onset.ontologyClass.label }}</span
@@ -69,7 +69,7 @@
           <td>
             <a
               *ngIf="feature.severity"
-              [href]="feature.severity?.url"
+              [href]="feature.severity?.termUrl"
               target="_blank"
               >[{{ feature.severity?.id }}]</a
             >
@@ -82,7 +82,7 @@
                 let indexOfelement = index
               "
             >
-              <a [href]="modifier.url" target="_blank">[{{ modifier.id }}]</a>
+              <a [href]="modifier.termUrl" target="_blank">[{{ modifier.id }}]</a>
               {{ modifier.label
               }}<span *ngIf="indexOfelement < feature.modifiers?.length - 1"
                 >,
@@ -96,7 +96,7 @@
                 let indexOfelement = index
               "
             >
-              <a [href]="evidence.evidenceCode?.url" target="_blank"
+              <a [href]="evidence.evidenceCode?.termUrl" target="_blank"
                 >[{{ evidence.evidenceCode?.id }}]</a
               >
               {{ evidence.evidenceCode?.label

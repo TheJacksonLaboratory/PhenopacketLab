@@ -44,7 +44,7 @@
           <td>
             <span *ngIf="disease.onset?.ontologyClass"
               ><a
-                [href]="disease.onset.ontologyClass.url"
+                [href]="disease.onset.ontologyClass.termUrl"
                 target="_blank"
                 >[{{ disease.onset.ontologyClass.id }}]</a
               >

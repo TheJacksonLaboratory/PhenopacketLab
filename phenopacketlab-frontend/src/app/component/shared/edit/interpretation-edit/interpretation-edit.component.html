@@ -78,7 +78,7 @@
             [virtualScrollItemSize]="30"
             required
             filter="true"
-            filterBy="lbl,id.value"
+            filterBy="lbl,id"
             optionLabel="lbl"
             [(ngModel)]="selectedDiseaseItem"
             (onChange)="updateDiseaseItemSelection($event)"
@@ -94,7 +94,7 @@
                 tooltipPosition="bottom"
                 escape="false"
               >
-                [{{ item.id.value }}] {{ item.lbl }}
+                [{{ item.id }}] {{ item.lbl }}
               </div>
             </ng-template>
           </p-dropdown>

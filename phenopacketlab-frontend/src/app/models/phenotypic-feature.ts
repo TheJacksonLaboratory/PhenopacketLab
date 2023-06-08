@@ -45,13 +45,13 @@ export class PhenotypicFeature extends Convert {
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
-            phenotypicFeature.severity.url = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
+            phenotypicFeature.severity.termUrl = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
             phenotypicFeature.modifierNodes = [];
             for (const modifier of phenotypicFeature.modifiers) {
-                modifier.url = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
+                modifier.termUrl = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
                 const node = new OntologyTreeNode();
                 node.label = modifier.label;
                 node.key = modifier.id;

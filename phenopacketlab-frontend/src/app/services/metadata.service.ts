@@ -22,12 +22,7 @@ export class MetadataService {
         return this.http.get(`${metadataUrl}/${prefix}`);
     }
 
-    public getResourcePrefixesForPhenopacket(phenopacketString: string): Observable<any> {
-        const headers = { 'content-type': 'text/plain' };
-        return this.http.post(metadataUrl, phenopacketString, {headers});
-    }
-
-    public getResourcesForPhenopacket(phenopacketString: string): Observable<any> {
+    public getPrefixResourcesForPhenopacket(phenopacketString: string): Observable<any> {
         const headers = { 'content-type': 'text/plain' };
         return this.http.post(resourceUrl, phenopacketString, {headers});
     }

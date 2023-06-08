@@ -122,7 +122,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     getSelectedDiseaseItem(diseaseTerm: OntologyClass) {
         for (const item of this.diseaseItems) {
-            if (item.id.value === diseaseTerm.id) {
+            if (item.id === diseaseTerm.id) {
                 return item;
             }
         }
@@ -130,7 +130,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     updateDiseaseItemSelection(event) {
         const diseaseItem = event.value;
-        this.selectedDisease = new OntologyClass(diseaseItem.id.value, diseaseItem.lbl);
+        this.selectedDisease = new OntologyClass(diseaseItem.id, diseaseItem.lbl);
     }
 
     updateInterpretation() {

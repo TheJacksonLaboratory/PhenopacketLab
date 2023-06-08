@@ -70,7 +70,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     featureItemSelected(item: any) {
         if (item) {
             const feature = new PhenotypicFeature();
-            feature.type = new OntologyClass(item.id.value, item.lbl);
+            feature.type = new OntologyClass(item.id, item.lbl);
             feature.description = item.def;
             this.editPhenotypicFeature(feature);
         }

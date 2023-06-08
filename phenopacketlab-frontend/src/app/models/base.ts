@@ -34,17 +34,17 @@ export class Convert {
 
 export class OntologyClass extends Convert {
     // used for tnm finding or node key. Not part of the phenopacket schema
+    termUrl?: string;
     key?: string;
     id = '';
     label = '';
-    url?: string;
 
-    constructor(id?: string, label?: string, key?: string, url?: string) {
+    constructor(id?: string, label?: string, key?: string, termUrl?: string) {
         super();
         this.id = id;
         this.label = label;
         this.key = key;
-        this.url = url;
+        this.termUrl = termUrl;
     }
 
     static create(obj: any): OntologyClass {
@@ -123,7 +123,7 @@ export class Evidence extends Convert {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
-            evidence.evidenceCode.url = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
+            evidence.evidenceCode.termUrl = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
         } else {
             throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`);
         }
@@ -325,7 +325,7 @@ export class TimeElement extends Convert {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
-            timeElement.ontologyClass.url = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
+            timeElement.ontologyClass.termUrl = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
         } else if (obj['timestamp']) {
             timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {

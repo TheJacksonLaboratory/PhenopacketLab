@@ -88,8 +88,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     featureItemSelected(item: any) {
         if (item) {
             const feature = new PhenotypicFeature();
-            feature.type = new OntologyClass(item.id.value, item.lbl);
-            feature.description = item.def;
+            feature.type = new OntologyClass(item.id, item.lbl);
             this.addPhenotypicFeature(feature);
         }
     }

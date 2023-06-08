@@ -51,7 +51,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             // init selectedCauseOfDeath
             if (this.subject.vitalStatus?.causeOfDeath) {
                 for (const cause of diseases) {
-                    if (cause.id.value === this.subject.vitalStatus?.causeOfDeath.id) {
+                    if (cause.id === this.subject.vitalStatus?.causeOfDeath.id) {
                         this.selectedCauseOfDeath = cause;
                         break;
                     }
@@ -144,7 +144,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     // updateGender(gender: any) {
     //     if (this.subject) {
     //         if (gender) {
-    //             this.subject.gender = new OntologyClass(gender.id.value, gender.name);
+    //             this.subject.gender = new OntologyClass(gender.id, gender.name);
     //         } else {
     //             this.subject.gender = undefined;
     //         }
@@ -178,7 +178,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         if (this.subject) {
             if (event) {
                 this.selectedCauseOfDeath = event.value;
-                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id.value, event.value.lbl);
+                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.lbl);
             } else {
                 this.subject.vitalStatus.causeOfDeath = undefined;
             }

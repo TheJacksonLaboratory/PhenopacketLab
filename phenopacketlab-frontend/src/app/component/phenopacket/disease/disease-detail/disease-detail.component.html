@@ -17,7 +17,7 @@
   <div class="field col-12 md:col-6">
     <b>Onset:</b>
     <span *ngIf="disease.onset?.ontologyClass"
-      ><a [href]="disease.onset.ontologyClass.url" target="_blank"
+      ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
         >[{{ disease.onset.ontologyClass.id }}]</a
       >
       {{ disease.onset.ontologyClass.label }}</span
@@ -41,7 +41,7 @@
     </ul>
   </div>
   <div class="field col-12 md:col-6">
-    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.url" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
+    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.termUrl" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
   </div>
   <div class="field col-12 md:col-6">
   </div>

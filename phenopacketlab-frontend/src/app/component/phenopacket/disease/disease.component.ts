@@ -73,7 +73,7 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   diseaseItemSelected(item: any) {
     if (item) {
       const disease = new Disease();
-      disease.term = new OntologyClass(item.id.value, item.lbl);
+      disease.term = new OntologyClass(item.id, item.lbl);
       this.addDisease(disease);
     }
   }

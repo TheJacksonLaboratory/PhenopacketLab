@@ -70,7 +70,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                 if (this.lateralities === undefined) {
                     this.lateralities = [];
                 }
-                this.lateralities.push(new OntologyClass(laterality.id.value, laterality.name));
+                this.lateralities.push(new OntologyClass(laterality.id, laterality.lbl));
             });
         });
         // TNM findings
@@ -209,7 +209,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                 // reset previous selection
                 this.disease.diseaseStage = [];
                 const diseaseStage = new OntologyClass(event.node.key, event.node.label);
-                diseaseStage.url = Disease.getDiseaseURL(event.node.key);
+                diseaseStage.termUrl = Disease.getDiseaseURL(event.node.key);
                 this.disease.diseaseStage.push(diseaseStage);
             } else {
                 this.disease.diseaseStage = undefined;
@@ -221,7 +221,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         if (this.disease) {
             if (event) {
                 this.disease.laterality = event.value;
-                this.disease.laterality.url = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
+                this.disease.laterality.termUrl = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
             } else {
                 this.disease.laterality = undefined;
             }

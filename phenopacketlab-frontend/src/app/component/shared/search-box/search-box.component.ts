@@ -45,7 +45,7 @@ export class SearchBoxComponent implements OnInit {
         const query = event.query;
         for (let i = 0; i < this.items.length; i++) {
             const item = this.items[i];
-            if (item.id.value.toLowerCase().indexOf(query.toLowerCase()) === 0
+            if (item.id.toLowerCase().indexOf(query.toLowerCase()) === 0
                 || item.lbl.toLowerCase().indexOf(query.toLowerCase()) === 0) {
                 filtered.push(item);
             }

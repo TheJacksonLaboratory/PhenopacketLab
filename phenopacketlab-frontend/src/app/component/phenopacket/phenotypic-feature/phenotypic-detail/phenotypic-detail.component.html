@@ -25,7 +25,7 @@
   <div class="field col-12 md:col-6">
     <b>Onset: </b>
     <span *ngIf="phenotypicFeature.onset?.ontologyClass">
-      <a [href]="phenotypicFeature.onset.ontologyClass.url" target="_blank"
+      <a [href]="phenotypicFeature.onset.ontologyClass.termUrl" target="_blank"
         >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
       >
       {{ phenotypicFeature.onset.ontologyClass.label }}
@@ -41,7 +41,7 @@
     <b>Severity: </b>
     <a
       *ngIf="phenotypicFeature.severity"
-      [href]="phenotypicFeature.severity?.url"
+      [href]="phenotypicFeature.severity?.termUrl"
       target="_blank"
       >[{{ phenotypicFeature.severity?.id }}]</a
     >
@@ -55,7 +55,7 @@
         let indexOfelement = index
       "
     >
-      <a [href]="modifier.url" target="_blank">[{{ modifier.id }}]</a>
+      <a [href]="modifier.termUrl" target="_blank">[{{ modifier.id }}]</a>
       {{ modifier.label
       }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1"
         >,
@@ -85,7 +85,7 @@
           <td>
             <a
               *ngIf="evidence.evidenceCode"
-              [href]="evidence.evidenceCode?.url"
+              [href]="evidence.evidenceCode?.termUrl"
               target="_blank"
               >[{{ evidence.evidenceCode?.id }}]</a
             >
