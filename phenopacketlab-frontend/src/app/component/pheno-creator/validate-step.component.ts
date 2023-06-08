@@ -10,7 +10,7 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MetaData } from '../../models/metadata';
 import { MetadataService } from 'src/app/services/metadata.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
+import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
   selector: 'app-validate-step',
@@ -65,7 +65,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // initialize metadata
     this.initializeMetadata();
     // Retrieve all missing resource prefixes in phenopacket metadata
-    this.metadataSubscription = this.metadataService.getResourcesForPhenopacket(
+    this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
         this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
       const resources = [];
       for (const item of prefixResources) {
@@ -119,7 +119,8 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,
         resizable: true,
-        data: { validationResults: validationResults }
+        data: { validationResults: validationResults,
+          phenopacket: this.phenopacket }
       });
     });
     this.disabled = false;

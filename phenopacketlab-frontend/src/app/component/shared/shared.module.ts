@@ -30,6 +30,7 @@ import { VariationSearchComponent } from './edit/interpretation-edit/genomic-int
 import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
 import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
+import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-a
     GeneDescriptorComponent,
     LabelCreatorDialogComponent,
     TextPipe,
-    MedicalActionEditComponent
+    MedicalActionEditComponent,
+    ValidationResultsDialogComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -94,7 +96,8 @@ import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-a
     MaterialModule,
     AngularSplitModule,
     TextPipe,
-    MedicalActionEditComponent
+    MedicalActionEditComponent,
+    ValidationResultsDialogComponent
   ]
 })
 export class SharedModule { }

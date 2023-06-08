@@ -1,5 +1,8 @@
 <div class="grid p-fluid">
-  <div *ngIf="validationResults && validationResults.validators?.length > 0" class="field col-12">
+  <div
+    *ngIf="validationResults && validationResults.validators?.length > 0"
+    class="field col-12"
+  >
     The following validators were used for the validation of this phenopacket:
   </div>
   <div
@@ -41,7 +44,20 @@
       validationResults?.validationResults.length === 0
     "
     class="field col-12"
-  >No errors were found in the validation.</div>
+  >
+    No errors were found in the validation.
+  </div>
+  <div
+    *ngIf="
+      validationResults?.validationResults &&
+      validationResults?.validationResults.length > 0
+    "
+    class="field col-12"
+  >
+    <b>{{ validationResults?.validationResults.length }}</b> errors were found.
+    You can try fixing some of these by clicking on the button below and/or
+    navigate the phenopacket and add the missing properties.
+  </div>
   <div
     *ngIf="
       validationResults?.validationResults &&
@@ -54,7 +70,13 @@
       [tableStyle]="{ 'min-width': '50rem' }"
       styleClass="p-datatable-sm"
     >
-      <ng-template pTemplate="caption"> Validation Results </ng-template>
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          Validation Results
+          <button *ngIf="!loading" pButton class="p-button-warning" icon="pi pi-check-circle" pTooltip="Fix errors" tooltipPosition="bottom" (click)="fixErrors()"></button>
+          <button *ngIf="loading" pButton class="p-button-warning" icon="fa fa-spinner fa-spin" disabled="true"></button>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th>Level</th>
@@ -77,5 +99,9 @@
     </p-table>
   </div>
 </div>
-<p-button icon="pi pi-check" (click)="closeDialog()" label="Ok" styleClass="p-button-text"></p-button>
-
+<p-button
+  icon="pi pi-check"
+  (click)="closeDialog()"
+  label="Ok"
+  styleClass="p-button-text"
+></p-button>

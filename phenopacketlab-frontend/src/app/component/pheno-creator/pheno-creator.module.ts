@@ -39,6 +39,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ChipModule } from 'primeng/chip';
 
 import { AngularSplitModule } from 'angular-split';
 
@@ -60,9 +62,6 @@ import { TextMiningComponent } from './text-mining/text-mining.component';
 import { WordDialogComponent } from './text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ChipModule } from 'primeng/chip';
-import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 
 @NgModule({
     imports: [
@@ -133,7 +132,6 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
         MedicalActionStepComponent,
         FileStepComponent,
         ValidateStepComponent,
-        ValidationResultsDialogComponent,
         TextMiningComponent,
         WordDialogComponent,
         ProfileSelectionComponent
