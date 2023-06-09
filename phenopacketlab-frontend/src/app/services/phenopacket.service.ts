@@ -28,6 +28,7 @@ export class PhenopacketService {
     phenopacketSubject = new Subject<Phenopacket>();
 
     profileSelection = new BehaviorSubject<ProfileSelection>(ProfileSelection.ALL_AVAILABLE);
+    isPrivateInfoWarnSelected = new BehaviorSubject<boolean>(false);
 
     private validated = new Subject<any>();
     validated$ = this.validated.asObservable();
@@ -88,6 +89,12 @@ export class PhenopacketService {
     }
     getProfileSelection(): Observable<ProfileSelection> {
         return this.profileSelection.asObservable();
+    }
+    setPrivateInfoWarnSelected(isPrivateInfoWarnSelected: boolean) {
+        this.isPrivateInfoWarnSelected.next(isPrivateInfoWarnSelected);
+    }
+    getIsPrivateInfoWarnSelected(): Observable<boolean> {
+        return this.isPrivateInfoWarnSelected.asObservable();
     }
  }
 

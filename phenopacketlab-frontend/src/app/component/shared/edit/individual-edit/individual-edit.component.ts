@@ -25,6 +25,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     @Input()
     submitted: boolean;
 
+    @Input()
     isPrivateInfoWarnSelected: boolean;
     causeOfDeaths: any[];
     selectedCauseOfDeath: any;

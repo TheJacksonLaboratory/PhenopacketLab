@@ -23,6 +23,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
 
     isPrivateInfoWarnSelected: boolean;
+    privateInfoWarnSelectedSubscription: Subscription;
 
     summary: string;
 
@@ -33,7 +34,6 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // We only manage rare disease profile for now
         this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
-
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
@@ -43,6 +43,11 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
+        this.privateInfoWarnSelectedSubscription = this.phenopacketService.getIsPrivateInfoWarnSelected().subscribe(privateInfoSelected => {
+            this.isPrivateInfoWarnSelected = privateInfoSelected;
+            console.log(this.isPrivateInfoWarnSelected);
+        });
+
     }
 
     ngOnDestroy() {
@@ -52,10 +57,14 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
+        if (this.privateInfoWarnSelectedSubscription) {
+            this.privateInfoWarnSelectedSubscription.unsubscribe();
+        }
     }
 
     updateIsPrivateInfoWarnSelected(isPrivateInfoWarnSelected: boolean) {
         this.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
+        this.phenopacketService.setPrivateInfoWarnSelected(isPrivateInfoWarnSelected);
     }
 
     updateSubject(subject: Individual) {
