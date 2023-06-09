@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { ConstantObject, Individual, KaryotypicSex, Status } from 'src/app/models/individual';
+import { ConstantObject, Individual, KaryotypicSex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -154,7 +154,14 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     updateStatus(status: any) {
         if (this.subject) {
-            this.subject.vitalStatus.status = status;
+            if (status) {
+                if (this.subject.vitalStatus === undefined) {
+                    this.subject.vitalStatus = new VitalStatus();
+                }
+                this.subject.vitalStatus.status = status;
+            } else {
+                this.subject.vitalStatus = undefined;
+            }
             this.subjectChange.emit(this.subject);
         }
     }
