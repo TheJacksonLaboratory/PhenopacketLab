@@ -34,7 +34,7 @@ export class ValidationResultsDialogComponent {
   }
 
   /**
-   * Try to fix the validationResults found
+   * Try to fix the validationResults found (the metadata errors)
    */
   fixErrors() {
     let metadata = this.phenopacket.metaData;

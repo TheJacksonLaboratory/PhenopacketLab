@@ -55,8 +55,9 @@
     class="field col-12"
   >
     <b>{{ validationResults?.validationResults.length }}</b> errors were found.
-    You can try fixing some of these by clicking on the button below and/or
-    navigate the phenopacket and add the missing properties.
+    You can fix the 'MetadataValidator' errors by clicking on the button below.
+    Other syntactic errors can be fixed by returning to the corresponding
+    phenopacket property and adding/editing it accordingly.
   </div>
   <div
     *ngIf="
@@ -73,8 +74,22 @@
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
           Validation Results
-          <button *ngIf="!loading" pButton class="p-button-warning" icon="pi pi-check-circle" pTooltip="Fix errors" tooltipPosition="bottom" (click)="fixErrors()"></button>
-          <button *ngIf="loading" pButton class="p-button-warning" icon="fa fa-spinner fa-spin" disabled="true"></button>
+          <button
+            *ngIf="!loading"
+            pButton
+            class="p-button-warning"
+            icon="pi pi-check-circle"
+            pTooltip="Fix Metadata errors"
+            tooltipPosition="bottom"
+            (click)="fixErrors()"
+          ></button>
+          <button
+            *ngIf="loading"
+            pButton
+            class="p-button-warning"
+            icon="fa fa-spinner fa-spin"
+            disabled
+          ></button>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
