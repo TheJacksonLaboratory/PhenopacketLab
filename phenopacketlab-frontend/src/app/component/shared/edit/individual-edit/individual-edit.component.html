@@ -161,16 +161,9 @@
       pTooltip="The vital status of the individual e.g. whether they are alive or the time and cause of death. RECOMMENDED"
       tooltipPosition="bottom"
       showDelay="2000"
-      required
       class="w-full"
       [showClear]="true"
-      [ngClass]="{
-        'ng-dirty': !subject.vitalStatus.status && submitted
-      }"
     ></p-dropdown>
-    <small *ngIf="!subject.vitalStatus.status && submitted" class="p-error"
-      >Vital status is required.</small
-    >
   </div>
   <div class="field col-12 md:col-4"></div>
   <div class="field col-12 md:col-4"></div>

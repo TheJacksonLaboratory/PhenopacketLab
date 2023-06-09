@@ -6,7 +6,7 @@ export class Individual {
     alternateIds: string[] = [];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
-    vitalStatus: VitalStatus = new VitalStatus();
+    vitalStatus: VitalStatus;
     sex: string;
     karyotypicSex: string;
     gender: OntologyClass;
