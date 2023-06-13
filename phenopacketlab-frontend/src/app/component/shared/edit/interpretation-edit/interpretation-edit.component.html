@@ -104,25 +104,23 @@
         </div>
 
         <div class="field col-12 md:col-6"></div>
-        <div class="field col-12">
-          <button
-            pButton
-            label="Add Genomic Interpretation"
-            (click)="addGenomicInterpretation()"
-            icon="pi pi-plus"
-            class="p-button-text"
-            style="width: 300px"
-          ></button>
-        </div>
 
-        <div *ngIf="genomicInterpretationVisible" class="field col-12">
+        <div class="field col-12">
           <p-table
             [value]="genomicInterpretations"
             dataKey="key"
             [tableStyle]="{ 'min-width': '60rem' }"
           >
             <ng-template pTemplate="caption">
-              <div class="table-header">Genomic Interpretation(s)</div>
+              <div class="flex align-items-center justify-content-between">
+                Genomic Interpretation(s)
+                <p-button
+                  icon="pi pi-plus"
+                  pTooltip="Add Genomic Interpretation"
+                  tooltipPosition="bottom"
+                  (onClick)="addGenomicInterpretation()"
+                ></p-button>
+              </div>
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
