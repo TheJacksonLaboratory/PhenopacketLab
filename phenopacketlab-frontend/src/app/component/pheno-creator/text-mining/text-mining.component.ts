@@ -1,6 +1,8 @@
 import { AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import { TimeElement } from 'src/app/models/base';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -34,7 +36,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   selectedPhenotypicFeature: PhenotypicFeature;
   phenotypicFeatures: PhenotypicFeature[];
 
-  spinnerDialogRef: any;
+  spinnerDialogRef: DynamicDialogRef;
 
   onsetsNodes: OntologyTreeNode[];
   onsetsSubscription: Subscription;
@@ -46,7 +48,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   constructor(private phenotypeSearchService: PhenotypeSearchService,
     public phenopacketService: PhenopacketService,
     private elementRef: ElementRef,
-    public dialog: MatDialog) {
+    public dialogService: DialogService) {
 
   }
 
@@ -158,7 +160,6 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
           this.visible = true;
         }
       }
-
       this.spinnerDialogRef.close();
     },
       (error) => {
@@ -169,9 +170,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   openSpinnerDialog() {
-    this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-      panelClass: 'transparent',
-      disableClose: true
+    this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+      closable: false,
+      modal: true
     });
   }
   updateExcluded(event) {
@@ -209,16 +210,16 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    * @param idx
    */
   openDialog(idx) {
-    this.dialog.closeAll();
+    // this.dialogService.closeAll();
 
-    const dialogRef = this.dialog.open(WordDialogComponent, {
+    const dialogRef = this.dialogService.open(WordDialogComponent, {
       data: {
         feature: this.phenotypicFeatures[idx]
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.onClose.subscribe(result => {
       if (result) {
-        const vettedFeature = result.data;
+        const vettedFeature = result;
 
         // update the mining state of the phenotypic feature
         for (const feature of this.phenotypicFeatures) {

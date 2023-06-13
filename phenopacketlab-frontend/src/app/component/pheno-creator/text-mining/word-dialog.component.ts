@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 @Component({
@@ -11,9 +12,8 @@ export class WordDialogComponent {
 
     phenotypicFeature: PhenotypicFeature;
 
-    constructor(public dialogRef: MatDialogRef<WordDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) {
-        this.phenotypicFeature = data['feature'];
+    constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+        this.phenotypicFeature = config.data?.feature;
     }
 
     updateExcluded(event) {
@@ -22,10 +22,10 @@ export class WordDialogComponent {
         }
     }
     approve() {
-        this.dialogRef.close({ data: {key: this.phenotypicFeature.key, state: MiningState.APPROVED}});
+        this.ref.close({ key: this.phenotypicFeature.key, state: MiningState.APPROVED });
     }
     reject() {
-        this.dialogRef.close({data: {key: this.phenotypicFeature.key, state: MiningState.REJECTED}});
+        this.ref.close({ key: this.phenotypicFeature.key, state: MiningState.REJECTED });
     }
 
 }
