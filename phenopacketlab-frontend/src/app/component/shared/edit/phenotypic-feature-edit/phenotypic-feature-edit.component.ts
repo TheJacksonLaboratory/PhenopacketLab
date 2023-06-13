@@ -47,7 +47,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
     );
     // get Evidences
-    this.evidencesNodes = this.getEvidences();
+    this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
+      const nodes = [];
+      for (const evidence of evidences) {
+        nodes.push({ label: evidence.lbl, key: evidence.id, leaf: true, parent: undefined });
+      }
+      this.evidencesNodes = nodes;
+    });
     // get onsets
     this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
@@ -59,7 +65,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
         if (this.severities === undefined) {
           this.severities = [];
         }
-        this.severities.push(new OntologyClass(severity.id.value, severity.name));
+        this.severities.push(new OntologyClass(severity.id, severity.lbl));
       });
     });
   }
@@ -74,6 +80,9 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     if (this.severitySubscription) {
       this.severitySubscription.unsubscribe();
     }
+    if (this.evidencesSubscription) {
+      this.evidencesSubscription.unsubscribe();
+    }
   }
 
   getPhenotypicOnsetId() {
@@ -86,14 +95,6 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     return Severities.VALUES;
   }
 
-  getEvidences() {
-    const nodes = [];
-    for (const evidence of Evidence.VALUES) {
-      nodes.push({ label: evidence.label, key: evidence.id, leaf: true, parent: undefined });
-    }
-    return nodes;
-  }
-
   updateExcluded(event) {
     if (this.phenotypicFeature) {
       this.phenotypicFeature.excluded = !event.checked;
@@ -103,7 +104,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
 
   updateModifiers(nodeModifiers: OntologyTreeNode[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers);
+      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers, 'https://hpo.jax.org/app/browse/term');
       this.phenotypicFeature.modifierNodes = nodeModifiers;
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
     }
@@ -132,13 +133,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateEvidences(nodes: any[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.evidences = [];
+      this.phenotypicFeature.evidence = [];
       this.phenotypicFeature.evidenceNodes = [];
       for (const node of nodes) {
         const obj = new OntologyClass(node.key, node.label);
-        obj.url = Evidence.getEvidenceUrl(node.key);
+        obj.termUrl = Evidence.getEvidenceUrl(node.key);
         const evidence = new Evidence(new OntologyClass(node.key, node.label));
-        this.phenotypicFeature.evidences.push(evidence);
+        this.phenotypicFeature.evidence.push(evidence);
         this.phenotypicFeature.evidenceNodes.push(node);
       }
       this.phenotypicFeatureChange.emit(this.phenotypicFeature);
@@ -146,8 +147,8 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   getSelectedEvidenceNodes() {
     const selectedNodes = [];
-    if (this.phenotypicFeature && this.phenotypicFeature.evidences) {
-      this.phenotypicFeature.evidences.forEach(evidence => {
+    if (this.phenotypicFeature && this.phenotypicFeature.evidence) {
+      this.phenotypicFeature.evidence.forEach(evidence => {
         const node = new OntologyTreeNode();
         node.key = evidence.evidenceCode.id;
         node.label = evidence.evidenceCode.label;

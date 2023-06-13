@@ -1,7 +1,7 @@
 <p-toast position="center" key="cen"></p-toast>
 <div class="grid p-fluid">
   <div class="field col-12 center">
-    <b>Variation Search</b>
+    <b>Enter variant data</b>
   </div>
   <div class="field col-12 md:col-6">
     <label for="acmg">Acmg pathogenicity classification</label>
@@ -28,7 +28,7 @@
 
   <div class="field col-12">
     This interface uses the Variant Validator
-    <a href="https://rest.variantvalidator.org/" target="_blank">API</a>
+    <b><a href="https://rest.variantvalidator.org/" target="_blank">API</a></b>
     in order to find and create new variant interpretation in the phenopacket.
   </div>
   <div class="field col-12">
@@ -46,6 +46,7 @@
         (click)="openHGVSHelp()"
         icon="pi pi-external-link"
         pTooltip="Show Help"
+        tooltipPosition="bottom"
       ></p-button>
     </div>
     E.g.
@@ -63,6 +64,7 @@
       [(ngModel)]="genotype"
       [options]="genotypes"
       pTooltip="Genotype"
+      tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
     ></p-dropdown>
@@ -73,8 +75,7 @@
     <button
       pButton
       type="button"
-      label="Search"
-      pTooltip="Search variant by HGVS"
+      label="Validate variant"
       (click)="searchVariantByHGVS()"
     ></button>
   </div>
@@ -125,6 +126,7 @@
               icon="pi pi-plus"
               label="Add"
               pTooltip="Add interpretation"
+              tooltipPosition="bottom"
               class="p-button-rounded p-button-primary"
               (click)="addInterpretation(interpretation)"
             ></button>

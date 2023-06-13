@@ -7,6 +7,7 @@ import { ProfileSelection } from '../models/profile';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
+const evidencesUrl = environment.EVIDENCES_URL;
 const mondoDiseasesUrl = environment.MONDO_DISEASES_URL;
 const onsetsUrl = environment.ONSETS_URL;
 const tnmTumorFindingsUrl = environment.TNM_TUMOR_URL;
@@ -27,6 +28,7 @@ export class PhenopacketService {
     phenopacketSubject = new Subject<Phenopacket>();
 
     profileSelection = new BehaviorSubject<ProfileSelection>(ProfileSelection.ALL_AVAILABLE);
+    isPrivateInfoWarnSelected = new BehaviorSubject<boolean>(false);
 
     private validated = new Subject<any>();
     validated$ = this.validated.asObservable();
@@ -42,11 +44,15 @@ export class PhenopacketService {
     }
 
     validatePhenopacket(phenopacket: string): Observable<any> {
-        return this.http.post(phenopacketValidateUrl, {data: phenopacket});
+        const headers = { 'content-type': 'text/plain'};
+        return this.http.post(phenopacketValidateUrl, phenopacket, { headers });
     }
 
     getModifiers(): Observable<any> {
         return this.http.get(modifiersUrl);
+    }
+    getEvidences(): Observable<any> {
+        return this.http.get(evidencesUrl);
     }
     getMondoDiseases(): Observable<any> {
         return this.http.get(mondoDiseasesUrl);
@@ -83,6 +89,12 @@ export class PhenopacketService {
     }
     getProfileSelection(): Observable<ProfileSelection> {
         return this.profileSelection.asObservable();
+    }
+    setPrivateInfoWarnSelected(isPrivateInfoWarnSelected: boolean) {
+        this.isPrivateInfoWarnSelected.next(isPrivateInfoWarnSelected);
+    }
+    getIsPrivateInfoWarnSelected(): Observable<boolean> {
+        return this.isPrivateInfoWarnSelected.asObservable();
     }
  }
 

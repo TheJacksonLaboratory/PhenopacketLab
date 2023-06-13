@@ -117,7 +117,6 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         this.variationDescriptor.expressions = this.variationDescriptor.expressions.filter(val => val.key !== expression.key);
     }
     onExpressionEditInit(expression: Expression) {
-        console.log(expression);
         this.clonedExpressions[expression.key] = { ...expression };
     }
 

@@ -6,6 +6,6 @@ package org.monarchinitiative.phenopacketlab.core.model;
  */
 public interface ResourceAware {
 
-    Resource getResource();
+    Resource resource();
 
 }

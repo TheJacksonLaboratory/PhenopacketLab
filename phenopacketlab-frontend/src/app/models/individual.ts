@@ -6,7 +6,7 @@ export class Individual {
     alternateIds: string[] = [];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
-    vitalStatus: VitalStatus = new VitalStatus();
+    vitalStatus: VitalStatus;
     sex: string;
     karyotypicSex: string;
     gender: OntologyClass;
@@ -80,7 +80,7 @@ export class VitalStatus {
         }
         if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-            vitalSatus.causeOfDeath.url = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
+            vitalSatus.causeOfDeath.termUrl = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
         }
         if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
@@ -90,9 +90,9 @@ export class VitalStatus {
 }
 
 export class ConstantObject {
-    name: string;
-    definition: string;
-    synonyms: string[];
+    lbl: string;
+    def: string;
+    syn: string[];
     id: Id;
 }
 export class Id {

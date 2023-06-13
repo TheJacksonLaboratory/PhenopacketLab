@@ -5,6 +5,7 @@
   styleClass="p-button-text p-button-rounded"
   (onClick)="expandSplitter()"
   pTooltip="Expand"
+  tooltipPosition="bottom"
 ></p-button>
 <p-button
   *ngIf="viewLeftPane"
@@ -12,6 +13,7 @@
   styleClass="p-button-text p-button-rounded"
   (onClick)="collapseSplitter()"
   pTooltip="Collapse"
+  tooltipPosition="bottom"
 ></p-button>
 
 <as-split direction="horizontal">

@@ -12,6 +12,11 @@ import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { UploadService } from '../../services/upload-service';
 import { Table } from 'primeng/table';
+import { ProfileSelection } from 'src/app/models/profile';
+import { Router } from '@angular/router';
+import { MetadataService } from 'src/app/services/metadata.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
   selector: 'app-phenopacket-list',
@@ -32,26 +37,23 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   tabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
   tabIndex = 0;
-  displayedColumns = ['id', 'timeOfLastEncounter', 'sex', 'download', 'remove'];
 
   phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
   phenopackets: Phenopacket[];
+  ref: DynamicDialogRef;
+
   constructor(public phenopacketService: PhenopacketService,
-              private cohortService: CohortService,
-              private uploadService: UploadService,
-              public dialog: MatDialog,
-              private messageService: MessageService,
-              private confirmationService: ConfirmationService,
-              private datePipe: DatePipe, private downloadService: DownloadService) {
-  }
-  ngOnDestroy(): void {
-    if (this.phenopacketSubscription) {
-      this.phenopacketSubscription.unsubscribe();
-    }
-    if (this.cohortPhenopacketSubscription) {
-      this.cohortPhenopacketSubscription.unsubscribe();
-    }
+    private cohortService: CohortService,
+    private uploadService: UploadService,
+    public dialog: MatDialog,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private datePipe: DatePipe,
+    private downloadService: DownloadService,
+    private dialogService: DialogService,
+    private metadataService: MetadataService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -59,6 +61,18 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       this.cohort = cohort;
       this.phenopackets = cohort.members;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.phenopacketSubscription) {
+      this.phenopacketSubscription.unsubscribe();
+    }
+    if (this.cohortPhenopacketSubscription) {
+      this.cohortPhenopacketSubscription.unsubscribe();
+    }
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
   removeIndividual(individual: Phenopacket) {
@@ -75,9 +89,15 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         }
         // Remove them from the cohort.
         this.cohortService.removeCohortMember(individual);
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.`});
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
       },
-      reject: () => {}, key: 'positionDialog'});
+      reject: () => { }, key: 'positionDialog'
+    });
+  }
+
+  startRareDisease() {
+    this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+    this.router.navigate(['creator/rare']);
   }
 
   downloadPhenopacket(phenopacket: Phenopacket) {
@@ -119,22 +139,53 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     console.log('---Uploading one or more files---');
     const files: File[] = event.files;
     files.map(file => this.uploadService.importFromFile(file).subscribe((newPhenopacket: Phenopacket) => {
-                const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
-                if (phenopacketListIds.includes(newPhenopacket.id)) {
-                  const errorMessage = `'${newPhenopacket.id}' already exists.`;
-                  this.messageService.add({severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage});
-                  this.clearFileUpload();
-                  return;
-                }
-                this.cohortService.addCohortMember(newPhenopacket);
-                this.clearFileUpload();
-                this.messageService.add({severity: 'success', summary: 'Phenopacket Upload Success!'});
-              }, (error) => {
-                this.clearFileUpload();
-                const detail = error?.detail != null ? error.detail : 'Please try again.';
-                this.messageService.add({severity: 'error', summary: error.message, detail: detail});
-              })
+      const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
+      if (phenopacketListIds.includes(newPhenopacket.id)) {
+        const errorMessage = `'${newPhenopacket.id}' already exists.`;
+        this.messageService.add({ severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage });
+        this.clearFileUpload();
+        return;
+      }
+      this.cohortService.addCohortMember(newPhenopacket);
+      this.clearFileUpload();
+      this.messageService.add({ severity: 'success', summary: 'Phenopacket Upload Success!' });
+    }, (error) => {
+      this.clearFileUpload();
+      const detail = error?.detail != null ? error.detail : 'Please try again.';
+      this.messageService.add({ severity: 'error', summary: error.message, detail: detail });
+    })
     );
+  }
+
+  validatePhenopacket(phenopacket: Phenopacket) {
+    // validate phenopacket
+    const phenopacketStr = this.downloadService.saveAsJson(phenopacket, false);
+    this.phenopacketService.validatePhenopacket(phenopacketStr).subscribe(validationResults => {
+      this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
+        header: 'Validation results',
+        width: '50%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        resizable: true,
+        data: {
+          validationResults: validationResults,
+          phenopacket: phenopacket
+        }
+      });
+      this.ref.onClose.subscribe(validatedPheno => {
+        console.log(validationResults);
+        this.cohortService.getCohort().subscribe(cohort => {
+          // remove old pheno
+          const index = cohort.members.indexOf(phenopacket, 0);
+          if (index > -1) {
+            cohort.members.splice(index, 1);
+          }
+          // add updated pheno
+          cohort.members.push(validatedPheno);
+        });
+      });
+
+    });
   }
 
   clearFileUpload() {

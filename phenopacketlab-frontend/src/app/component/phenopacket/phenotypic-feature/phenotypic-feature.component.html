@@ -14,14 +14,13 @@
   <div class="field col-12">
     <app-search-box
       [showHint]="false"
-      [itemName]="itemName"
-      [searchLabel]="searchLabel"
-      [placeHolderTxt]="placeHolderTxt"
-      [localStorageKey]="localStorageKey"
-      [searchService]="searchService"
-      (selectedSearchItem)="onSearchCriteriaChange($event)"
-      [resetSearch]="false"
+      [itemName]="'Phenotypic feature'"
+      [searchLabel]="'Phenotypic feature'"
+      [placeHolderTxt]="'Enter a phenotypic feature name'"
+      [items]="featureItems"
+      (selectedItemChange)="featureItemSelected($event)"
     ></app-search-box>
+    
   </div>
   <div *ngIf="showTable" class="field col-12">
     <p-table
@@ -56,17 +55,54 @@
           </td>
           <td>{{ feature.type.label }}</td>
           <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-          <td><a *ngIf="feature.onset?.ontologyClass" [href]="feature.onset.ontologyClass.url" target="_blank">[{{feature.onset.ontologyClass.id}}]</a> {{feature.onset?.ontologyClass?.label}}</td>
-          <td>{{ feature.resolution?.toString() }}</td>
-          <td><a *ngIf="feature.severity" [href]="feature.severity?.url" target="_blank">[{{feature.severity?.id}}]</a> {{feature.severity?.label}}</td>
           <td>
-            <span *ngFor="let modifier of feature.modifiers; let indexOfelement=index;">
-              <a [href]="modifier.url" target="_blank">[{{modifier.id}}]</a> {{modifier.label}}<span *ngIf="indexOfelement < feature.modifiers?.length - 1">, </span>
+            <span *ngIf="feature.onset?.ontologyClass"
+              ><a [href]="feature.onset.ontologyClass.termUrl" target="_blank"
+                >[{{ feature.onset.ontologyClass.id }}]</a
+              >
+              {{ feature.onset.ontologyClass.label }}</span
+            ><span *ngIf="!feature.onset?.ontologyClass">{{
+              feature.onset?.toString()
+            }}</span>
+          </td>
+          <td>{{ feature.resolution?.toString() }}</td>
+          <td>
+            <a
+              *ngIf="feature.severity"
+              [href]="feature.severity?.termUrl"
+              target="_blank"
+              >[{{ feature.severity?.id }}]</a
+            >
+            {{ feature.severity?.label }}
+          </td>
+          <td>
+            <span
+              *ngFor="
+                let modifier of feature.modifiers;
+                let indexOfelement = index
+              "
+            >
+              <a [href]="modifier.termUrl" target="_blank">[{{ modifier.id }}]</a>
+              {{ modifier.label
+              }}<span *ngIf="indexOfelement < feature.modifiers?.length - 1"
+                >,
+              </span>
             </span>
           </td>
           <td>
-            <span *ngFor="let evidence of feature.evidences; let indexOfelement=index;">
-              <a [href]="evidence.evidenceCode?.url" target="_blank">[{{evidence.evidenceCode?.id}}]</a> {{evidence.evidenceCode?.label}}<span *ngIf="indexOfelement < feature.evidences?.length - 1">, </span>
+            <span
+              *ngFor="
+                let evidence of feature.evidences;
+                let indexOfelement = index
+              "
+            >
+              <a [href]="evidence.evidenceCode?.termUrl" target="_blank"
+                >[{{ evidence.evidenceCode?.id }}]</a
+              >
+              {{ evidence.evidenceCode?.label
+              }}<span *ngIf="indexOfelement < feature.evidences?.length - 1"
+                >,
+              </span>
             </span>
           </td>
           <td>

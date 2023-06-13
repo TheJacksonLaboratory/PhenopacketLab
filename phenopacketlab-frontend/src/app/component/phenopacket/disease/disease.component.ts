@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Disease } from 'src/app/models/disease';
-import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { DiseaseDetailDialogComponent } from './disease-detail/disease-detail-dialog/disease-detail-dialog.component';
 import { Utils } from '../../shared/utils';
 import { OntologyClass } from 'src/app/models/base';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-disease',
@@ -24,7 +24,7 @@ import { OntologyClass } from 'src/app/models/base';
     ]),
   ],
 })
-export class DiseaseComponent implements OnInit, OnChanges {
+export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
   * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
@@ -39,19 +39,15 @@ export class DiseaseComponent implements OnInit, OnChanges {
   @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
   // search box params
-  itemName = 'Disease';
-  searchLabel = 'Disease name';
-  placeHolderTxt = 'Enter disease name';
   localStorageKey = 'hpo_diseases';
 
   showTable = false;
 
   diseaseCount: number;
-  // searchparams
-  currSearchParams: any = {};
 
+  diseaseItems: any[];
+  diseaseSubscription: Subscription;
   ref: DynamicDialogRef;
-  spinnerDialogRef: any;
 
   constructor(public searchService: DiseaseSearchService, public dialogService: DialogService,
     private messageService: MessageService, private confirmationService: ConfirmationService) { }
@@ -64,6 +60,39 @@ export class DiseaseComponent implements OnInit, OnChanges {
     if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
       this.showTable = true;
     }
+    this.diseaseSubscription = this.searchService.getAllHpoDiseases().subscribe(diseases => {
+      this.diseaseItems = diseases;
+  });
+  }
+
+  ngOnDestroy(): void {
+    if (this.diseaseSubscription) {
+        this.diseaseSubscription.unsubscribe();
+    }
+}
+  diseaseItemSelected(item: any) {
+    if (item) {
+      const disease = new Disease();
+      disease.term = new OntologyClass(item.id, item.lbl);
+      this.addDisease(disease);
+    }
+  }
+  /**
+       * Adds a new disease.
+       **/
+  addDisease(disease?: Disease) {
+    if (disease === undefined) {
+      return;
+    }
+    // set unique key for feature table
+    disease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
+    this.phenopacketDiseases.push(disease);
+    // we copy the array after each update so the ngChange method is triggered on the child component
+    this.phenopacketDiseases = this.phenopacketDiseases.slice();
+    setTimeout(() => this.showTable = true, 0);
+
+    // make table visible
+    this.showTable = true;
   }
 
   deleteDisease(disease: Disease) {
@@ -82,39 +111,6 @@ export class DiseaseComponent implements OnInit, OnChanges {
         this.confirmationService.close();
       }
     });
-  }
-
-  onSearchCriteriaChange(searchCriteria: any) {
-    this.currSearchParams.offset = 0;
-    const id = searchCriteria.selectedItems[0].selectedValue.id;
-
-    if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
-      this.currSearchParams = searchCriteria;
-      this._queryDiseasesById(id);
-    }
-
-  }
-
-  private _queryDiseasesById(id: string) {
-    this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
-      closable: false,
-      modal: true
-    });
-    this.searchService.queryDiseasesById(id).subscribe(data => {
-      if (data) {
-        const disease = new Disease();
-        disease.term = new OntologyClass(data.id, data.label);
-        disease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
-        this.phenopacketDiseases.push(disease);
-        this.showTable = true;
-        this.onDiseasesChanged.emit(this.phenopacketDiseases);
-      }
-      this.spinnerDialogRef.close();
-    },
-      (error) => {
-        console.log(error);
-        this.spinnerDialogRef.close();
-      });
   }
 
   editDisease(disease?: Disease) {

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Diagnosis, GenomicInterpretation, Interpretation, ProgressStatus } from 'src/app/models/interpretation';
+import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
@@ -41,6 +41,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     progressStatuses: ProgressStatus[];
     // diseases
     diseases: OntologyClass[];
+    diseaseItems: any[] = [];
+    selectedDiseaseItem: any;
     diseaseSubscription: Subscription;
     // genomic interpretations
     genomicInterpretations: GenomicInterpretation[];
@@ -57,7 +59,11 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
         // get diseases
         this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
-            this.diseases = diseases;
+            this.diseaseItems = diseases;
+            if (this.interpretation) {
+                this.selectedDisease = this.interpretation.diagnosis?.disease;
+                this.selectedDiseaseItem = this.getSelectedDiseaseItem(this.selectedDisease);
+            }
         });
         // statuses
         this.progressStatuses = this.getProgressStatuses();
@@ -93,6 +99,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
         const genomicInterpretation = new GenomicInterpretation();
         genomicInterpretation.subjectOrBiosampleId = this.phenopacket.subject.id;
+        // default to UNKNOWN
+        genomicInterpretation.interpretationStatus = InterpretationStatus.UNKNOWN_STATUS;
         genomicInterpretation.key = Utils.getBiggestKey(this.genomicInterpretations) + 1;
         this.genomicInterpretations.push(genomicInterpretation);
         this.genomicInterpretationVisible = true;
@@ -114,6 +122,19 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.selectedProgressStatus = event.value;
     }
 
+    getSelectedDiseaseItem(diseaseTerm: OntologyClass) {
+        for (const item of this.diseaseItems) {
+            if (item.id === diseaseTerm.id) {
+                return item;
+            }
+        }
+    }
+
+    updateDiseaseItemSelection(event) {
+        const diseaseItem = event.value;
+        this.selectedDisease = new OntologyClass(diseaseItem.id, diseaseItem.lbl);
+    }
+
     updateInterpretation() {
         this.submitted = true;
         if (this.id === undefined) {
@@ -122,12 +143,15 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
         // check if id already exist
         const phenopacket = this.phenopacketService.phenopacket;
-        for (const interpret of phenopacket.interpretations) {
-            if (interpret.id === this.id) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
-                return;
+        if (phenopacket) {
+            for (const interpret of phenopacket.interpretations) {
+                if (interpret.id === this.id) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
+                    return;
+                }
             }
         }
+
         if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the progress status.' });
             return;

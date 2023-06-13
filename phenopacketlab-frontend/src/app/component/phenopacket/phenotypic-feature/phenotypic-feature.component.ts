@@ -4,11 +4,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { OntologyClass } from 'src/app/models/base';
-import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 import { Utils } from '../../shared/utils';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -25,10 +25,10 @@ import { Utils } from '../../shared/utils';
 })
 export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
-   /**
-    * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
-    * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
-    */
+    /**
+     * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
+     * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
+     */
     @Input()
     showAddButton = true;
     @Input()
@@ -46,9 +46,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     phenotypicCount: number;
 
-    // searchparams
-    currSearchParams: any = {};
-
+    phenotypicFeatureSubscription: Subscription;
+    featureItems: any[];
     ref: DynamicDialogRef;
     spinnerDialogRef: any;
 
@@ -63,10 +62,36 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
             this.showTable = true;
         }
+        this.phenotypicFeatureSubscription = this.searchService.getAllPhenotypicFeatures().subscribe(features => {
+            this.featureItems = features;
+        });
     }
 
-    addPhenotypicFeature(feature?: PhenotypicFeature) {
-        // TODO not needed
+    featureItemSelected(item: any) {
+        if (item) {
+            const feature = new PhenotypicFeature();
+            feature.type = new OntologyClass(item.id, item.lbl);
+            feature.description = item.def;
+            this.editPhenotypicFeature(feature);
+        }
+    }
+
+    /**
+       * Adds a new phenotypic feature.
+       **/
+    addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
+        if (phenotypicFeature === undefined) {
+            return;
+        }
+        // set unique key for feature table
+        phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
+        this.phenotypicFeatures.push(phenotypicFeature);
+        // we copy the array after each update so the ngChange method is triggered on the child component
+        this.phenotypicFeatures = this.phenotypicFeatures.slice();
+        setTimeout(() => this.showTable = true, 0);
+
+        // make table visible
+        this.showTable = true;
     }
 
     editPhenotypicFeature(feature?: PhenotypicFeature) {
@@ -120,38 +145,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         });
     }
 
-    onSearchCriteriaChange(searchCriteria: any) {
-        this.currSearchParams.offset = 0;
-        const id = searchCriteria.selectedItems[0].selectedValue.id;
-
-        if ((searchCriteria.selectedItems && searchCriteria.selectedItems.length > 0)) {
-            this.currSearchParams = searchCriteria;
-            this._queryPhenotypicFeatureById(id);
-        }
-    }
-
-    private _queryPhenotypicFeatureById(id: string) {
-        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true
-        });
-        this.searchService.queryPhenotypicFeatureById(id).subscribe(data => {
-            const phenotypicFeature = new PhenotypicFeature();
-            phenotypicFeature.type = new OntologyClass(data.id, data.label);
-            phenotypicFeature.description = data.description;
-            phenotypicFeature.excluded = false;
-            phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
-            this.phenotypicFeatures.push(phenotypicFeature);
-            this.showTable = true;
-            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
-            this.spinnerDialogRef.close();
-        },
-            (error) => {
-                console.log(error);
-                this.spinnerDialogRef.close();
-            });
-    }
-
     getModifiers(phenotypicFeature: PhenotypicFeature) {
         if (phenotypicFeature.modifiers) {
             const result = [];
@@ -163,9 +156,9 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         return '';
     }
     getEvidences(phenotypicFeature: PhenotypicFeature) {
-        if (phenotypicFeature.evidences) {
+        if (phenotypicFeature.evidence) {
             const result = [];
-            phenotypicFeature.evidences.forEach(evidence => {
+            phenotypicFeature.evidence.forEach(evidence => {
                 result.push(evidence.evidenceCode.toString());
             });
             return result.join(',');

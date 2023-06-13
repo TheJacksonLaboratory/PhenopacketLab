@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.monarchinitiative.phenopacketlab</groupId>
         <artifactId>PhenopacketLab</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -72,13 +72,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <argLine>--add-exports phenopacketlab.core/org.monarchinitiative.phenopacketlab.core.miner=ALL-UNNAMED</argLine>
-                </configuration>
             </plugin>
         </plugins>
     </build>

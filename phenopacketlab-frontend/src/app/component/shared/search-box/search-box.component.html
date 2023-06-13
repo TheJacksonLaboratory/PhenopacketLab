@@ -1,25 +1,23 @@
-<mat-form-field class="example-full-width">
-  <input
-    type="text"
-    placeholder="{{ placeHolderTxt }}"
-    attr.aria-label="{{ searchLabel }}"
-    matInput
-    [formControl]="myControl"
-    [matAutocomplete]="auto"
-  />
-  <mat-icon color="warn" matSuffix>search</mat-icon>
-
-  <mat-autocomplete #auto="matAutocomplete">
-    <span *ngIf="itemCount > 0"
-      ><span
-        ><b>{{ itemName }}</b> </span
-      ><span style="font-size: x-small"> Count({{ itemCount }})</span></span
+<p-autoComplete
+  [(ngModel)]="selectedItem"
+  appendTo="body"
+  [virtualScroll]="true"
+  [suggestions]="filteredItems"
+  [virtualScrollItemSize]="34"
+  (completeMethod)="filterItems($event)"
+  (onSelect)="itemSelected($event)"
+  field="lbl"
+  placeholder="{{ placeHolderTxt }}"
+  [dropdown]="true"
+>
+  <ng-template let-item pTemplate="item">
+    <div
+      [pTooltip]="item.lbl"
+      showDelay="1000"
+      tooltipPosition="bottom"
+      escape="false"
     >
-    <mat-option
-      *ngFor="let option of itemOptions"
-      (onSelectionChange)="selectedChanged(option, option.label)"
-    >
-      [{{option.id}}] {{ option.label }}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+      [{{ item.id }}] {{ item.lbl }}
+    </div>
+  </ng-template>
+</p-autoComplete>

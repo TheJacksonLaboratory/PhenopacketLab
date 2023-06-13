@@ -1,6 +1,6 @@
 {
   "name": "phenopacketlab-frontend",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "browser": {
     "fs": false,
@@ -49,6 +49,7 @@
     "primeng": "^14.2.2",
     "rxjs": "~6.5.2",
     "rxjs-compat": "6.5.4",
+    "tinyduration": "^3.2.4",
     "uuid": "^9.0.0",
     "webpack": "^5.74.0",
     "yamljs": "^0.3.0",

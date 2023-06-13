@@ -4,6 +4,7 @@ import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Service for {@link IdentifiedConceptResource}s used in PhenopacketLab.
@@ -13,10 +14,24 @@ public interface ConceptResourceService {
     /**
      * Get {@link IdentifiedConceptResource} for given {@code prefix}, if available.
      *
-     * @param prefix String expected to match {@link Resource#getId()} of the {@link Resource} in {@link IdentifiedConceptResource}.
+     * @param namespacePrefix String expected to match {@link Resource#getNamespacePrefix()} of the {@link Resource}
+     *                        in {@link IdentifiedConceptResource} (e.g. {@code MONDO}, {@code NCIT}).
      * @return optional with {@link IdentifiedConceptResource} or {@link Optional#empty()}
-     * if {@link IdentifiedConceptResource} for given {@code prefix} is not available.
+     * if {@link IdentifiedConceptResource} for given {@code namespacePrefix} is not available.
      */
-    Optional<IdentifiedConceptResource> forPrefix(String prefix);
+    Optional<IdentifiedConceptResource> forPrefix(String namespacePrefix);
+
+    /**
+     * Get a {@linkplain Stream} of {@link Resource}s managed by the service.
+     */
+    Stream<Resource> conceptResources();
+
+    /**
+     * Get a {@linkplain Stream} of namespace prefixes of the {@link Resource}s managed by the service.
+     */
+    default Stream<String> conceptResourcePrefixes() {
+        return conceptResources()
+                .map(Resource::getNamespacePrefix);
+    }
 
 }

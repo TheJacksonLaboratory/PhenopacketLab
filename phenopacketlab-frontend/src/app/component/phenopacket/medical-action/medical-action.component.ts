@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatDialog } from '@angular/material/dialog';
 
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
-import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 
 @Component({
     selector: 'app-medical-action',
@@ -22,7 +22,7 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
         ]),
     ],
 })
-export class MedicalActionComponent implements AfterViewInit, OnInit {
+export class MedicalActionComponent implements OnInit {
 
     @Input()
     medicalActions: MedicalAction[];
@@ -32,103 +32,82 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
     @Output() onMedicalActionChanged = new EventEmitter<MedicalAction[]>();
 
     // search params
-    itemName = 'Medical Action';
+    // itemName = 'Medical Action';
 
-    // Table items
-    displayedColumns = ['icon', 'action', 'id', 'target', 'intent', 'remove'];
+    ref: DynamicDialogRef;
 
-    medicalActionDataSource = new DataPresentMatTableDataSource<MedicalAction>();
-    medicalActionCount: number;
-
-    // searchparams
-    currSearchParams: any = {};
-
-    expandedElement: MedicalAction | null;
-
-    dialogRef: any;
     spinnerDialogRef: any;
+    showTable = false;
 
-    constructor(public dialog: MatDialog) {
+    constructor(public dialogService: DialogService, public messageService: MessageService,
+        public confirmationService: ConfirmationService) {
     }
 
     ngOnInit() {
-        if (this.medicalActions === undefined) {
-            this.medicalActions = [];
+        if (this.medicalActions && this.medicalActions.length > 0) {
+            let idx = 0;
+            for (const medicalAction of this.medicalActions) {
+                medicalAction.key = idx;
+                idx++;
+            }
+            this.showTable = true;
         }
-        this.medicalActionDataSource.data = this.medicalActions;
-        this.onMedicalActionChanged.emit(this.medicalActions);
-
-    }
-
-    ngAfterViewInit() {
-
     }
 
     /**
      * Add a new medical action with default values or no values
      */
     addMedicalAction(medicalAction?: MedicalAction) {
-        if (medicalAction === undefined) {
-            // Add through a dialog to choose from type of Actions
-            const medicalActionDetailData = { 'title': 'Edit medical action' };
-            medicalActionDetailData['diseases'] = this.diseases;
-            medicalActionDetailData['displayCancelButton'] = true;
-            const dialogRef = this.dialog.open(MedicalActionDetailDialogComponent, {
-                width: '1000px',
-                data: medicalActionDetailData
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result !== undefined) {
-                    const updatedMedicalAction = result.medical_action;
-                    if (updatedMedicalAction) {
-                        // update medical action
-                        this.medicalActions.push(updatedMedicalAction);
-                        this.medicalActionDataSource.data = this.medicalActions;
-                        // emit change
-                        this.onMedicalActionChanged.emit(this.medicalActions);
-                    }
-                }
-            });
-            return dialogRef;
-        } else {
-            this.medicalActions.push(medicalAction);
+        if (medicalAction === undefined || medicalAction === null) {
+            medicalAction = new MedicalAction();
         }
-        this.medicalActionDataSource.data = this.medicalActions;
-        this.onMedicalActionChanged.emit(this.medicalActions);
+        this.ref = this.dialogService.open(MedicalActionDetailDialogComponent, {
+            header: 'Edit Medical action',
+            width: '70%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { medicalAction: medicalAction }
+        });
 
-        // TODO push changes to api
+        this.ref.onClose.subscribe((medicAction: MedicalAction) => {
+            if (medicAction) {
+                const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
+                if (indexToUpdate === -1) {
+                    this.medicalActions.push(medicAction);
+                } else {
+                    this.medicalActions[indexToUpdate] = medicAction;
+                    this.medicalActions = Object.assign([], this.medicalActions);
+                }
+                this.showTable = true;
+                // emit change
+                this.onMedicalActionChanged.emit(this.medicalActions);
+            }
+        });
     }
 
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
-     * @param element
+     * @param medicalAction
      * @returns
      */
-    deleteMedicalAction(element: MedicalAction) {
-        const msgData = { 'title': 'Delete Medical Action' };
-        msgData['description'] = `Delete the Medical Action with the ID "${this.getId(element)}" ?`;
-        msgData['displayCancelButton'] = true;
-        const dialogRef = this.dialog.open(MessageDialogComponent, {
-            width: '400px',
-            data: msgData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.removeFromDatasource(element);
+    deleteMedicalAction(medicalAction: MedicalAction) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete \'' + this.getActionName(medicalAction) + '\'?',
+            header: 'Confirm',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.medicalActions = this.medicalActions.filter(val => val.key !== medicalAction.key);
+                if (this.medicalActions.length === 0) {
+                    this.showTable = false;
+                }
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medical action Deleted', life: 3000 });
+            },
+            reject: () => {
+                this.confirmationService.close();
             }
         });
-        return dialogRef;
-    }
-
-    removeFromDatasource(medicalAction: MedicalAction) {
-        this.medicalActions.forEach((element, index) => {
-            if (element === medicalAction) {
-                this.medicalActions.splice(index, 1);
-            }
-        });
-        this.medicalActionDataSource.data = this.medicalActions;
-        this.onMedicalActionChanged.emit(this.medicalActions);
-
     }
 
     getActionName(medicalAction: MedicalAction) {
@@ -195,10 +174,6 @@ export class MedicalActionComponent implements AfterViewInit, OnInit {
             }
             return '';
         }
-    }
-
-    expandCollapse(element: any) {
-        this.expandedElement = this.expandedElement === element ? null : element;
     }
 
 }

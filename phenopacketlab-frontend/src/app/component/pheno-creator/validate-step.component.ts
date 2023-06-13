@@ -8,11 +8,15 @@ import { CohortService } from 'src/app/services/cohort.service';
 import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MetaData } from '../../models/metadata';
+import { MetadataService } from 'src/app/services/metadata.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
   selector: 'app-validate-step',
   templateUrl: './validate-step.component.html',
-  styleUrls: ['./pheno-creator.component.scss']
+  styleUrls: ['./pheno-creator.component.scss'],
+  providers: [ DialogService ]
 })
 export class ValidateStepComponent implements OnInit, OnDestroy {
 
@@ -22,7 +26,6 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   submitted = false;
   disabled = true;
 
-  metadata: MetaData;
   createdByPrefix: string;
   createdBySuffix: string;
   created: string;
@@ -37,19 +40,42 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   profileSelectionSubscription: Subscription;
   profileSelection: ProfileSelection;
 
+  metadataSubscription: Subscription;
+
+  ref: DynamicDialogRef;
+
   constructor(public phenopacketService: PhenopacketService, private downloadService: DownloadService,
-              private cohortService: CohortService, private router: Router) {
+    private cohortService: CohortService,
+    private metadataService: MetadataService,
+    private dialogService: DialogService,
+    private router: Router) {
 
   }
 
   ngOnInit() {
     this.phenopacket = this.phenopacketService.phenopacket;
+
     if (this.phenopacket === undefined) {
       // navigate to first page of creator as phenopacket is not created
       this.router.navigate(['creator/individual']);
     }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
+    });
+    // initialize metadata
+    this.initializeMetadata();
+    // Retrieve all missing resource prefixes in phenopacket metadata
+    this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
+        this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
+      const resources = [];
+      for (const item of prefixResources) {
+        resources.push(item.resource);
+      }
+      this.initializeMetadata();
+      if (this.phenopacket && this.phenopacket.metaData) {
+        this.phenopacket.metaData.resources = undefined;
+        this.phenopacket.metaData.resources = resources;
+      }
     });
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
@@ -63,16 +89,45 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     if (this.profileSelectionSubscription) {
       this.profileSelectionSubscription.unsubscribe();
     }
+    if (this.metadataSubscription) {
+      this.metadataSubscription.unsubscribe();
+    }
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 
+  initializeMetadata() {
+    if (this.phenopacket.metaData === undefined) {
+      this.phenopacket.metaData = new MetaData();
+    }
+    // initialize metadata
+    this.phenopacket.metaData.createdBy = '';
+    this.phenopacket.metaData.submittedBy = '';
+    this.phenopacket.metaData.resources = undefined;
+    // create the timestamp created date
+    this.created = new Date().toISOString();
+    this.phenopacket.metaData.created = this.created;
+    this.phenopacket.metaData.externalReferences = [];
+    this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+  }
   validate() {
-    this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket));
+    this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
+      this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
+        header: 'Validation results',
+        width: '50%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        resizable: true,
+        data: { validationResults: validationResults,
+          phenopacket: this.phenopacket }
+      });
+    });
     this.disabled = false;
     // create the timestamp created date
     this.created = new Date().toISOString();
 
     // set metadata
-    const metadata = new MetaData();
     if (this.createdBySuffix !== undefined) {
       this.createdByPrefix = 'ORCiD:';
     } else {
@@ -83,15 +138,12 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     } else {
       this.submittedByPrefix = 'Anonymous';
     }
-    metadata.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
-    metadata.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
-    metadata.created = this.created;
-    // TODO
-    metadata.resources = [];
-    // TODO
-    metadata.externalReferences = [];
-    metadata.phenopacketSchemaVersion = this.schemaVersion;
-    this.phenopacket.metaData = metadata;
+    this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+    this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
+    this.phenopacket.metaData.created = this.created;
+    this.phenopacket.metaData.externalReferences = [];
+    this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+
     this.active = false;
   }
 
