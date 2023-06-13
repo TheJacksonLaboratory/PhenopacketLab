@@ -15,5 +15,5 @@ module phenopacketlab.core {
     exports org.monarchinitiative.phenopacketlab.core.functionalannotation;
     exports org.monarchinitiative.phenopacketlab.core.miner to phenopacketlab.restapi, phenopacketlab.autoconfigure, phenopacketlab.io;
     exports org.monarchinitiative.phenopacketlab.core.model;
-    exports org.monarchinitiative.phenopacketlab.core.subtree to phenopacketlab.restapi;
+    exports org.monarchinitiative.phenopacketlab.core.subtree to phenopacketlab.restapi, com.fasterxml.jackson.databind;
 }
