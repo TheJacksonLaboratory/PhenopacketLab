@@ -49,7 +49,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     phenotypicFeatureSubscription: Subscription;
     featureItems: any[];
     ref: DynamicDialogRef;
-    spinnerDialogRef: any;
 
     constructor(public searchService: PhenotypeSearchService, public dialogService: DialogService,
         private messageService: MessageService, private confirmationService: ConfirmationService) {
