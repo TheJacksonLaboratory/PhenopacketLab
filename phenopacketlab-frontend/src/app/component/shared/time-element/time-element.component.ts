@@ -55,9 +55,11 @@ export class TimeElementComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // if ontologyNodes are provided then we add the OntologyClass item in selection
     if (this.useOntologyClass) {
-      this.timeElementTypes = ['Age', 'Age range', 'Gestational age', 'Ontology class', 'Timestamp'];
+      // this.timeElementTypes = ['Age', 'Age range', 'Gestational age', 'Ontology class', 'Timestamp'];
+      this.timeElementTypes = ['Age', 'Gestational age', 'Ontology class', 'Timestamp'];
     } else {
-      this.timeElementTypes = ['Age', 'Age range', 'Gestational age', 'Timestamp'];
+      // this.timeElementTypes = ['Age', 'Age range', 'Gestational age', 'Timestamp'];
+      this.timeElementTypes = ['Age', 'Gestational age', 'Timestamp'];
     }
     this.initialize();
     this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
