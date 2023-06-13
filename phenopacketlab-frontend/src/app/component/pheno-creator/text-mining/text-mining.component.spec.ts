@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../../shared/shared.module';
 
 import { TextMiningComponent } from './text-mining.component';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 describe('TextMiningComponent', () => {
   let component: TextMiningComponent;
@@ -14,9 +14,14 @@ describe('TextMiningComponent', () => {
       declarations: [ TextMiningComponent ],
       imports: [
         HttpClientTestingModule,
-        MatDialogModule,
         SharedModule
+      ],
+      providers: [
+        DynamicDialogRef,
+        DynamicDialogConfig,
+        DialogService
       ]
+
     })
     .compileComponents();
   });
