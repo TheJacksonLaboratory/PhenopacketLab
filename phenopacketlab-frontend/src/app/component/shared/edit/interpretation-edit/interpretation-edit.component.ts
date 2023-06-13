@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Diagnosis, GenomicInterpretation, Interpretation, ProgressStatus } from 'src/app/models/interpretation';
+import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
@@ -99,6 +99,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         }
         const genomicInterpretation = new GenomicInterpretation();
         genomicInterpretation.subjectOrBiosampleId = this.phenopacket.subject.id;
+        // default to UNKNOWN
+        genomicInterpretation.interpretationStatus = InterpretationStatus.UNKNOWN_STATUS;
         genomicInterpretation.key = Utils.getBiggestKey(this.genomicInterpretations) + 1;
         this.genomicInterpretations.push(genomicInterpretation);
         this.genomicInterpretationVisible = true;
