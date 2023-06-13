@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { ConstantObject, Individual, KaryotypicSex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { SpinnerDialogComponent } from '../../spinner-dialog/spinner-dialog.component';
 
 @Component({
     selector: 'app-individual-edit',
@@ -42,10 +44,18 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     // selectedGender: ConstantObject;
     // genderSubscription: Subscription;
 
-    constructor(public phenopacketService: PhenopacketService, public diseaseService: DiseaseSearchService) {
+    spinnerDialogRef: DynamicDialogRef;
+
+    constructor(public phenopacketService: PhenopacketService,
+        public diseaseService: DiseaseSearchService,
+        public dialogService: DialogService) {
     }
 
     ngOnInit() {
+        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
+            closable: false,
+            modal: true
+        });
         // get cause of death
         this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
             this.causeOfDeaths = diseases;
@@ -58,7 +68,12 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+            this.spinnerDialogRef.close();
+        }, (error) => {
+            console.log(error);
+            this.spinnerDialogRef.close();
         });
+
         this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
             this.sexes = sexes;
             for (const sex of sexes) {
@@ -66,6 +81,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                     this.selectedSex = sex;
                 }
             }
+            this.spinnerDialogRef.close();
+        }, (error) => {
+            console.log(error);
+            this.spinnerDialogRef.close();
         });
         // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
         if (this.profile === undefined) {
