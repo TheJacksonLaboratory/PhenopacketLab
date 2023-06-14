@@ -55,13 +55,15 @@ export class ValidationResultsDialogComponent {
     this.loading = false;
     this.metadataService.getPrefixResourcesForPhenopacket(
         this.downloadService.saveAsJson(this.phenopacket, false)).subscribe(prefixResources => {
-      const resources = [];
+      let resources;
       this.loading = true;
+      if (prefixResources?.length > 0) {
+        resources = [];
+      }
       for (const item of prefixResources) {
         resources.push(item.resource);
       }
       if (this.phenopacket && this.phenopacket.metaData) {
-        this.phenopacket.metaData.resources = undefined;
         this.phenopacket.metaData.resources = resources;
       }
       // re-run validation
