@@ -51,6 +51,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         public searchService: InterpretationService,
         public diseaseService: DiseaseSearchService,
         private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private primengConfig: PrimeNGConfig) {
     }
 
@@ -151,7 +152,11 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                 }
             }
         }
-
+        // check if personal info has been checked
+        if (!this.isPrivateInfoWarnSelected) {
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please, confirm that the ID used is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information.` });
+            return;
+        }
         if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select the progress status.' });
             return;
@@ -183,24 +188,32 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                     this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please add a variant interpretation to the genomic interpretation.' });
                     return;
                 }
+                if (genomicInterpretation.interpretationStatus === InterpretationStatus.UNKNOWN_STATUS) {
+                    this.confirmationService.confirm({
+                        message: `The \'Interpretation Status\' of the genomic interpretation with the variation id \'${genomicInterpretation.variantInterpretation.variationDescriptor.id}\' is set to \'UNKNOWN\' for. Do you want to change it to another status or carry on with the saving of this interpretation?`,
+                        header: 'Confirmation',
+                        icon: 'pi pi-exclamation-triangle',
+                        accept: () => {
+                            // continue saving
+                            // initialize new interpretation object
+                            const interpretation = new Interpretation();
+                            interpretation.diagnosis = new Diagnosis();
+                            interpretation.id = this.id;
+                            interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
+                            interpretation.progressStatus = this.selectedProgressStatus;
+                            interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
+                            // emit change
+                            this.interpretationChange.emit(interpretation);
+                            this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });
+                        },
+                        reject: () => {
+                            return;
+                        }
+                    });
+                }
             }
         }
-        // check if personal info has been checked
-        if (!this.isPrivateInfoWarnSelected) {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please, confirm that the ID used is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information.` });
-            return;
-        }
 
-        // initialize new interpretation object
-        const interpretation = new Interpretation();
-        interpretation.diagnosis = new Diagnosis();
-        interpretation.id = this.id;
-        interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
-        interpretation.progressStatus = this.selectedProgressStatus;
-        interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
-        // emit change
-        this.interpretationChange.emit(interpretation);
-        this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });
     }
 
     getCall(genomicInterpretation: GenomicInterpretation) {
