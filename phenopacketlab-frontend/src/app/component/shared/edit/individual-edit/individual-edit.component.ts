@@ -54,8 +54,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
             closable: false,
-            modal: true
+            modal: true,
+            data: { loadingMessage: 'Loading ontologies...' }
         });
+
         // get cause of death
         this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
             this.causeOfDeaths = diseases;
