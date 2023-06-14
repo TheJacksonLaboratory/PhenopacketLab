@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-spinner-dialog',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class SpinnerDialogComponent {
 
-  constructor() { }
+  loadingMessage: string;
+
+  constructor(public config: DynamicDialogConfig) {
+    this.loadingMessage = config.data?.loadingMessage;
+  }
 
 }

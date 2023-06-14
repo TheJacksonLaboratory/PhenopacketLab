@@ -172,7 +172,8 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   openSpinnerDialog() {
     this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
       closable: false,
-      modal: true
+      modal: true,
+      data: { loadingMessage: 'Searching for feature terms...' }
     });
   }
   updateExcluded(event) {
