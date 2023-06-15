@@ -67,13 +67,15 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // Retrieve all missing resource prefixes in phenopacket metadata
     this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
         this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
-      const resources = [];
+      let resources;
+      if (prefixResources?.length > 0) {
+        resources = [];
+      }
       for (const item of prefixResources) {
         resources.push(item.resource);
       }
       this.initializeMetadata();
       if (this.phenopacket && this.phenopacket.metaData) {
-        this.phenopacket.metaData.resources = undefined;
         this.phenopacket.metaData.resources = resources;
       }
     });
@@ -108,7 +110,6 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     // create the timestamp created date
     this.created = new Date().toISOString();
     this.phenopacket.metaData.created = this.created;
-    this.phenopacket.metaData.externalReferences = [];
     this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
   }
   validate() {

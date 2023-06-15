@@ -3,7 +3,7 @@ import { Disease } from './disease';
 
 export class Individual {
     id = '';
-    alternateIds: string[] = [];
+    alternateIds: string[];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
     vitalStatus: VitalStatus;

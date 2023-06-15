@@ -84,10 +84,19 @@ export class AgeComponent implements OnInit, OnDestroy {
     }
     updateAge(value: number, type: string) {
         if (type === 'years') {
+            if (value > 120) {
+                value = 120;
+            }
             this.years = value;
         } else if (type === 'months') {
+            if (value > 11) {
+                value = 11;
+            }
             this.months = value;
         } else if (type === 'days') {
+            if (value > 31) {
+                value = 31;
+            }
             this.days = value;
         }
         if (this.age === undefined || this.age === null) {

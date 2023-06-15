@@ -139,7 +139,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     console.log('---Uploading one or more files---');
     const files: File[] = event.files;
     files.map(file => this.uploadService.importFromFile(file).subscribe((newPhenopacket: Phenopacket) => {
-      const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket.id);
+      const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket?.id);
       if (phenopacketListIds.includes(newPhenopacket.id)) {
         const errorMessage = `'${newPhenopacket.id}' already exists.`;
         this.messageService.add({ severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage });

@@ -86,10 +86,16 @@ export class GestationalAgeComponent implements OnInit, OnDestroy {
             this.gestationalAge = new GestationalAge();
         }
         if (type === 'weeks') {
+            if (value > 45) {
+                value = 45;
+            }
             this.weeks = value;
             this.gestationalAge.weeks = this.weeks;
 
         } else if (type === 'days') {
+            if (value > 31) {
+                value = 31;
+            }
             this.days = value;
             this.gestationalAge.days = this.days;
 
