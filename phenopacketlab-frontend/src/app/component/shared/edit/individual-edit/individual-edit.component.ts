@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
@@ -45,6 +45,11 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     // genderSubscription: Subscription;
 
     spinnerDialogRef: DynamicDialogRef;
+
+    // time of survival
+    rangeDates: Date[];
+    @ViewChild('rangecalendar') private calendar: any;
+    useCalendar: boolean;
 
     constructor(public phenopacketService: PhenopacketService,
         public diseaseService: DiseaseSearchService,
@@ -188,8 +193,25 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
     updateSurvivalTime(event: any) {
-        if (this.subject) {
-            this.subject.vitalStatus.survivalTimeInDays = event.value;
+        let numberOfDays: number;
+        // if event is Date, then call is from calendar range
+        if (event instanceof Date) {
+            if (this.rangeDates[1]) { // If second date is selected
+                this.calendar.overlayVisible = false;
+            }
+            // convert date range to # of days
+            if (this.rangeDates[0] < this.rangeDates[1]) {
+                const diff = Math.abs(this.rangeDates[1].getTime() - this.rangeDates[0].getTime());
+                numberOfDays = Math.ceil(diff / (1000 * 3600 * 24));
+            } else {
+                console.log('end date is smaller!');
+            }
+        } else {
+            numberOfDays = event.value;
+        }
+
+        if (this.subject && numberOfDays !== undefined) {
+            this.subject.vitalStatus.survivalTimeInDays = numberOfDays;
             this.subjectChange.emit(this.subject);
         }
     }

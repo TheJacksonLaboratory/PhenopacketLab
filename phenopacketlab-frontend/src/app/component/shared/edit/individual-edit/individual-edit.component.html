@@ -168,13 +168,35 @@
     *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
   >
     <label for="survivalTime">Survival time (days)</label>
-    <p-inputNumber
-      id="survivalTime"
-      [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
-      (onInput)="updateSurvivalTime($event)"
-      pTooltip="Number of days the patient was alive after their primary diagnosis"
-      tooltipPosition="bottom"
-    ></p-inputNumber>
+    <div class="flex align-items-center gap-1">
+      <p-checkbox
+        id="useCalendar"
+        [(ngModel)]="useCalendar"
+        [binary]="true"
+      ></p-checkbox>
+      <label for="useCalendar">Use calendar range</label>
+    </div>
+
+    <div *ngIf="useCalendar" class="margintop">
+      <p-calendar
+        #rangecalendar
+        [(ngModel)]="rangeDates"
+        (onSelect)="updateSurvivalTime($event)"
+        selectionMode="range"
+        [readonlyInput]="true"
+        pTooltip="Select a range of days with the first day being the date of diagnosis and the second the day of death. The number of survival days will be automatically set given this range."
+        tooltipPosition="bottom"
+      ></p-calendar>
+    </div>
+    <div class="margintop">
+      <p-inputNumber
+        id="survivalTime"
+        [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
+        (onInput)="updateSurvivalTime($event)"
+        pTooltip="Number of days the patient was alive after their primary diagnosis"
+        tooltipPosition="bottom"
+      ></p-inputNumber>
+    </div>
   </div>
   <div
     class="field col-12 md:col-4"
@@ -208,7 +230,9 @@
     >
       <ng-template pTemplate="selectedItem">
         <div *ngIf="selectedCauseOfDeath">
-          <div>[{{ selectedCauseOfDeath.id }}] {{ selectedCauseOfDeath.lbl }}</div>
+          <div>
+            [{{ selectedCauseOfDeath.id }}] {{ selectedCauseOfDeath.lbl }}
+          </div>
         </div>
       </ng-template>
       <ng-template let-cause pTemplate="item">
