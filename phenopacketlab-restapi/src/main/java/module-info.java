@@ -18,6 +18,13 @@ module phenopacketlab.restapi {
     // TODO(ielis) - consider removing after dropping `controller/test/*` and `util/Examples`
     requires com.google.protobuf;
     requires com.google.protobuf.util;
+	requires spring.security.oauth2.core;
+    requires spring.security.oauth2.jose;
+    requires spring.security.config;
+    requires spring.security.core;
+    requires spring.data.mongodb;
+    requires spring.core;
+    requires spring.data.commons;
 
     requires io.swagger.v3.oas.annotations;
 

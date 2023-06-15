@@ -14,10 +14,9 @@ phenopacketlab:
 api:
   version: /api/v1
 
-# TODO - figure out the database details
-#spring:
-#  datasource:
-#    url: jdbc:h2:mem:default
-#    username: sa
-#    password: sa
-#    driver-class-name: org.h2.Driver
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: phenopacketlab

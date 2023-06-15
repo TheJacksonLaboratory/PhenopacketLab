@@ -22,5 +22,29 @@ export const environment = {
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
-  STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`
+  STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
+  USER_URL: `${API_URL}/user`,
+  AUTH: {
+    domain: 'thejacksonlaboratory.auth0.com',
+    clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
+    authorizationParams: {
+      redirect_uri: window.location.origin
+    },
+
+    httpInterceptor: {
+      allowedList: [
+        {
+          // Match any request that starts 'https://{yourDomain}/api/v2/' (note the asterisk)
+          uri: `${API_URL}/api/`,
+          tokenOptions: {
+            authorizationParams: {
+              // The attached token should target this audience
+              audience: `${API_URL}/api/`
+            }
+          }
+        }
+      ]
+    }
+
+  }
 };
