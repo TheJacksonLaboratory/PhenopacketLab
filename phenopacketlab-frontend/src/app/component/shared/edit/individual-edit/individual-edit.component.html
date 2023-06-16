@@ -50,13 +50,13 @@
       appendTo="body"
       placeholder="Select sex"
       [(ngModel)]="selectedSex"
-      [options]="sexes"
+      [options]="getSexes()"
       (onChange)="updateSex($event)"
       pTooltip="Observed apparent sex of the individual"
       tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
-      optionLabel="lbl"
+      optionLabel="name"
       [showClear]="true"
     >
     </p-dropdown>

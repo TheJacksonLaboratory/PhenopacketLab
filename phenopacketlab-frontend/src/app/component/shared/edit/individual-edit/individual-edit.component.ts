@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { ConstantObject, Individual, KaryotypicSex, Status, VitalStatus } from 'src/app/models/individual';
+import { Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -32,9 +32,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     selectedCauseOfDeath: any;
     causeOfDeathSubscription: Subscription;
 
-    selectedSex: ConstantObject;
-    sexes: ConstantObject[];
-    sexSubscription: Subscription;
+    selectedSex: Sex;
+    // sexes: ConstantObject[];
+    // sexSubscription: Subscription;
 
     selectedKaryotypicSex: KaryotypicSex;
 
@@ -70,30 +70,17 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.sexSubscription = this.phenopacketService.getSex(this.dialogService).subscribe(sexes => {
-            this.sexes = sexes;
-            if (sexes) {
-                for (const sex of sexes) {
-                    if (this.subject && this.subject.sex === sex.lbl) {
-                        this.selectedSex = sex;
-                    }
-                }
-            }
-        });
         // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
         if (this.profile === undefined) {
             this.isPrivateInfoWarnSelected = true;
         }
-        // this.genderSubscription = this.phenopacketService.getGender().subscribe(genders => {
-        //     this.genders = genders;
-        //     console.log(genders);
-        //     for (const gender of genders) {
-        //         if (this.subject && this.subject.gender?.label === gender.name) {
-        //            this.selectedGender = gender;
-        //         }
-        //     }
-        // });
         if (this.subject) {
+            // set Sex
+            for (const sex of Sex.VALUES) {
+                if (this.subject && this.subject.sex === sex.name) {
+                    this.selectedSex = sex;
+                }
+            }
             for (const karyosex of KaryotypicSex.VALUES) {
                 if (this.subject.karyotypicSex === karyosex.name) {
                     this.selectedKaryotypicSex = karyosex;
@@ -105,12 +92,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         if (this.causeOfDeathSubscription) {
             this.causeOfDeathSubscription.unsubscribe();
         }
-        if (this.sexSubscription) {
-            this.sexSubscription.unsubscribe();
-        }
-        // if (this.genderSubscription) {
-        //     this.genderSubscription.unsubscribe();
-        // }
     }
 
     /**
@@ -224,6 +205,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
     }
 
+    getSexes() {
+        return Sex.VALUES;
+    }
     getKaryotypicSexes() {
         return KaryotypicSex.VALUES;
     }

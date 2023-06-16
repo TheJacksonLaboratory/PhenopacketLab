@@ -123,4 +123,20 @@ export class KaryotypicSex {
         this.id = id;
     }
 }
+export class Sex {
+    public static VALUES = [new Sex('UNKNOWN_SEX', 'Not assessed or not available. Maps to NCIT:C17998'),
+        new Sex('FEMALE', 'Female sex. Maps to NCIT:C46113'),
+        new Sex('MALE', 'Male sex. Maps to NCIT:C46112'),
+        new Sex('OTHER', 'It is not possible to accurately assess the applicability of MALE/FEMALE. Maps to NCIT:C45908')];
+
+    name: string;
+    definition;
+    id: Id;
+
+    constructor(name: string, definition: string, id?: Id) {
+        this.name = name;
+        this.definition = definition;
+        this.id = id;
+    }
+}
 
