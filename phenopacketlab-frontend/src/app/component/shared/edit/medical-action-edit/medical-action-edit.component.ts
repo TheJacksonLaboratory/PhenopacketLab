@@ -93,7 +93,9 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     });
     this.adverseEventsSubscription = this.medicalActionService.getAdverseEvents().subscribe(nodes => {
       // we get the children from the root node sent in response
-      this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
+      if (nodes) {
+        this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
+      }
     });
 
     this.updateMedicalAction();

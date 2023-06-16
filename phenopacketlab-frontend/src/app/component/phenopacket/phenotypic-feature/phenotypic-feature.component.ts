@@ -61,7 +61,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
             this.showTable = true;
         }
-        this.phenotypicFeatureSubscription = this.searchService.getAllPhenotypicFeatures().subscribe(features => {
+        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures(this.dialogService).subscribe(features => {
             this.featureItems = features;
         });
     }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
@@ -52,36 +53,48 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     lateralities: OntologyClass[];
     lateralitySubscription: Subscription;
 
-    constructor(public phenopacketService: PhenopacketService, private diseaseService: DiseaseSearchService) {
+    constructor(public phenopacketService: PhenopacketService,
+        private diseaseService: DiseaseSearchService,
+        private dialogService: DialogService) {
     }
 
     ngOnInit() {
         // get onsets
-        this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+        this.onsetsSubscription = this.phenopacketService.getOnsets(this.dialogService).subscribe(nodes => {
             // we get the children from the root node sent in response
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         // stages
         this.stages = this.getStages();
 
         // laterality
-        this.lateralitySubscription = this.phenopacketService.getLaterality().subscribe(lateralities => {
-            lateralities.forEach(laterality => {
-                if (this.lateralities === undefined) {
-                    this.lateralities = [];
-                }
-                this.lateralities.push(new OntologyClass(laterality.id, laterality.lbl));
-            });
+        this.lateralitySubscription = this.phenopacketService.getLateralities(this.dialogService).subscribe(lateralities => {
+            if (lateralities) {
+                lateralities.forEach(laterality => {
+                    if (this.lateralities === undefined) {
+                        this.lateralities = [];
+                    }
+                    this.lateralities.push(new OntologyClass(laterality.id, laterality.lbl));
+                });
+            }
         });
         // TNM findings
-        this.tumorSubscription = this.phenopacketService.getTnmTumorFindings().subscribe(nodes => {
-            this.tumorNodes = <OntologyTreeNode[]>nodes.children;
+        this.tumorSubscription = this.phenopacketService.getTnmTumorFindings(this.dialogService).subscribe(nodes => {
+            if (nodes) {
+                this.tumorNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
-        this.nodeSubscription = this.phenopacketService.getTnmNodeFindings().subscribe(nodes => {
-            this.nodeNodes = <OntologyTreeNode[]>nodes.children;
+        this.nodeSubscription = this.phenopacketService.getTnmNodeFindings(this.dialogService).subscribe(nodes => {
+            if (nodes) {
+                this.nodeNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
-        this.metastasisSubscription = this.phenopacketService.getTnmMetastasisFindings().subscribe(nodes => {
-            this.metastasisNodes = <OntologyTreeNode[]>nodes.children;
+        this.metastasisSubscription = this.phenopacketService.getTnmMetastasisFindings(this.dialogService).subscribe(nodes => {
+            if (nodes) {
+                this.metastasisNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.tnmFindingsSubscription = this.diseaseService.getTnmFindings().subscribe(findings => {
             // reset
@@ -94,14 +107,18 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         this.initializeTnmFindingSelected(this.disease?.clinicalTnmFinding);
 
         // Disease Stages
-        this.diseaseStagesSubscription = this.phenopacketService.getDiseaseStages().subscribe(nodes => {
-            this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
+        this.diseaseStagesSubscription = this.phenopacketService.getDiseaseStages(this.dialogService).subscribe(nodes => {
+            if (nodes) {
+                this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.diseaseStageSelectedSubscription = this.diseaseService.getStages().subscribe(stages => {
-            // reset
-            this.stageSelected = undefined;
-            // update when a disease is selected
-            this.initializeDiseaseStageSelected(stages[0]);
+            if (stages) {
+                // reset
+                this.stageSelected = undefined;
+                // update when a disease is selected
+                this.initializeDiseaseStageSelected(stages[0]);
+            }
         });
         this.initializeDiseaseStageSelected(this.disease?.diseaseStage[0]);
 

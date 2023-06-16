@@ -9,6 +9,7 @@ import { InterpretationService } from 'src/app/services/interpretation.service';
 import { Utils } from 'src/app/component/shared/utils';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
     providers: [ConfirmationService],
@@ -52,6 +53,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         public diseaseService: DiseaseSearchService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
+        private dialogService: DialogService,
         private primengConfig: PrimeNGConfig) {
     }
 
@@ -59,7 +61,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.primengConfig.ripple = true;
 
         // get diseases
-        this.diseaseSubscription = this.diseaseService.getAll().subscribe(diseases => {
+        this.diseaseSubscription = this.diseaseService.getDiseases(this.dialogService).subscribe(diseases => {
             this.diseaseItems = diseases;
             if (this.interpretation) {
                 this.selectedDisease = this.interpretation.diagnosis?.disease;

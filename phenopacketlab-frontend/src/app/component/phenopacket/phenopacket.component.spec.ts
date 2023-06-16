@@ -10,6 +10,7 @@ import { PhenotypeSearchService } from 'src/app/services/phenotype-search.servic
 import { PhenopacketComponent } from './phenopacket.component';
 import { PhenopacketModule } from './phenopacket.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 describe('PhenopacketComponent', () => {
   let component: PhenopacketComponent;
@@ -29,7 +30,9 @@ describe('PhenopacketComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        PhenotypeSearchService
+        PhenotypeSearchService,
+        DialogService,
+        DynamicDialogConfig
       ]
     })
     .compileComponents();

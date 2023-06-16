@@ -6,7 +6,6 @@ import { ConstantObject, Individual, KaryotypicSex, Status, VitalStatus } from '
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
-import { SpinnerDialogComponent } from '../../spinner-dialog/spinner-dialog.component';
 
 @Component({
     selector: 'app-individual-edit',
@@ -57,14 +56,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.spinnerDialogRef = this.dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading ontologies...' }
-        });
-
         // get cause of death
-        this.causeOfDeathSubscription = this.diseaseService.getAll().subscribe(diseases => {
+        this.causeOfDeathSubscription = this.diseaseService.getDiseases(this.dialogService).subscribe(diseases => {
             this.causeOfDeaths = diseases;
             // init selectedCauseOfDeath
             if (this.subject.vitalStatus?.causeOfDeath) {
@@ -75,23 +68,17 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-            this.spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            this.spinnerDialogRef.close();
         });
 
-        this.sexSubscription = this.phenopacketService.getSex().subscribe(sexes => {
+        this.sexSubscription = this.phenopacketService.getSex(this.dialogService).subscribe(sexes => {
             this.sexes = sexes;
-            for (const sex of sexes) {
-                if (this.subject && this.subject.sex === sex.lbl) {
-                    this.selectedSex = sex;
+            if (sexes) {
+                for (const sex of sexes) {
+                    if (this.subject && this.subject.sex === sex.lbl) {
+                        this.selectedSex = sex;
+                    }
                 }
             }
-            this.spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            this.spinnerDialogRef.close();
         });
         // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
         if (this.profile === undefined) {

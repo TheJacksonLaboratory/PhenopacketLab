@@ -60,7 +60,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        this.phenotypicFeatureSubscription = this.searchService.getAllPhenotypicFeatures().subscribe(features => {
+        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures(this.dialogService).subscribe(features => {
             this.featureItems = features;
         });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {

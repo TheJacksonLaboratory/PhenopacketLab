@@ -49,8 +49,10 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   diseaseSubscription: Subscription;
   ref: DynamicDialogRef;
 
-  constructor(public searchService: DiseaseSearchService, public dialogService: DialogService,
-    private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(public searchService: DiseaseSearchService,
+    public dialogService: DialogService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.onDiseasesChanged.emit(this.phenopacketDiseases);
@@ -60,7 +62,7 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
     if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
       this.showTable = true;
     }
-    this.diseaseSubscription = this.searchService.getAllHpoDiseases().subscribe(diseases => {
+    this.diseaseSubscription = this.searchService.getDiseases(this.dialogService).subscribe(diseases => {
       this.diseaseItems = diseases;
   });
   }

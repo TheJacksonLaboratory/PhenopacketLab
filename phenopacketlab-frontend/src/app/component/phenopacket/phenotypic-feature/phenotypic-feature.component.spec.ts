@@ -23,7 +23,7 @@ describe('PhenotypicFeatureComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: DialogService, useValue: {} }
+        DialogService
       ]
     })
     .compileComponents();

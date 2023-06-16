@@ -19,7 +19,7 @@ describe('DiseaseComponent', () => {
         SharedModule
       ],
       providers: [
-        { provide: DialogService, useValue: {} }
+        DialogService
       ]
     })
     .compileComponents();

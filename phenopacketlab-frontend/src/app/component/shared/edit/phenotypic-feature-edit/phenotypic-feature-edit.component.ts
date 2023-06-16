@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { Evidence, OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
@@ -35,38 +36,46 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   severities: OntologyClass[];
   severitySubscription: Subscription;
 
-  constructor(public phenopacketService: PhenopacketService) {
+  constructor(public phenopacketService: PhenopacketService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
 
     // Get modifiers
-    this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
+    this.modifiersSubscription = this.phenopacketService.getModifiers(this.dialogService).subscribe(nodes => {
       // we get the children from the root node sent in response
-      this.modifiersNodes = <OntologyTreeNode[]>nodes.children;
+      if (nodes) {
+        this.modifiersNodes = <OntologyTreeNode[]>nodes.children;
+      }
     }
     );
     // get Evidences
-    this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
-      const nodes = [];
-      for (const evidence of evidences) {
-        nodes.push({ label: evidence.lbl, key: evidence.id, leaf: true, parent: undefined });
+    this.evidencesSubscription = this.phenopacketService.getEvidences(this.dialogService).subscribe(evidences => {
+      if (evidences) {
+        const nodes = [];
+        for (const evidence of evidences) {
+          nodes.push({ label: evidence.lbl, key: evidence.id, leaf: true, parent: undefined });
+        }
+        this.evidencesNodes = nodes;
       }
-      this.evidencesNodes = nodes;
     });
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+    this.onsetsSubscription = this.phenopacketService.getOnsets(this.dialogService).subscribe(nodes => {
       // we get the children from the root node sent in response
-      this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+      if (nodes) {
+        this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+      }
     });
     // severity
-    this.severitySubscription = this.phenopacketService.getSeverity().subscribe(severities => {
-      severities.forEach(severity => {
-        if (this.severities === undefined) {
-          this.severities = [];
-        }
-        this.severities.push(new OntologyClass(severity.id, severity.lbl));
-      });
+    this.severitySubscription = this.phenopacketService.getSeverities(this.dialogService).subscribe(severities => {
+      if (severities) {
+        severities.forEach(severity => {
+          if (this.severities === undefined) {
+            this.severities = [];
+          }
+          this.severities.push(new OntologyClass(severity.id, severity.lbl));
+        });
+      }
     });
   }
 

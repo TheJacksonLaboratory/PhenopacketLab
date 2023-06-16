@@ -10,6 +10,7 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../shared/utils';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
     providers: [ConfirmationService],
@@ -41,6 +42,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
+        private dialogService: DialogService,
         private router: Router, private primengConfig: PrimeNGConfig,
         public dialog: MatDialog) {
     }
@@ -62,7 +64,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        this.diseaseSubscription = this.searchService.getAllHpoDiseases().subscribe(diseases => {
+        this.diseaseSubscription = this.searchService.getDiseases(this.dialogService).subscribe(diseases => {
             this.diseaseItems = diseases;
         });
     }
