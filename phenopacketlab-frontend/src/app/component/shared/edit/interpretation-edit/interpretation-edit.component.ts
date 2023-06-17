@@ -197,27 +197,31 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                         icon: 'pi pi-exclamation-triangle',
                         accept: () => {
                             // continue saving
-                            // initialize new interpretation object
-                            const interpretation = new Interpretation();
-                            interpretation.diagnosis = new Diagnosis();
-                            interpretation.id = this.id;
-                            interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
-                            interpretation.progressStatus = this.selectedProgressStatus;
-                            interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
-                            // emit change
-                            this.interpretationChange.emit(interpretation);
-                            this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });
+                            this.saveInterpretation();
                         },
                         reject: () => {
                             return;
                         }
                     });
+                } else {
+                    this.saveInterpretation();
                 }
             }
         }
-
     }
 
+    saveInterpretation() {
+        // initialize new interpretation object
+        const interpretation = new Interpretation();
+        interpretation.diagnosis = new Diagnosis();
+        interpretation.id = this.id;
+        interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
+        interpretation.progressStatus = this.selectedProgressStatus;
+        interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
+        // emit change
+        this.interpretationChange.emit(interpretation);
+        this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });
+    }
     getCall(genomicInterpretation: GenomicInterpretation) {
         if (genomicInterpretation.geneDescriptor === undefined && genomicInterpretation.variantInterpretation) {
             return 'VariantInterpretation';
