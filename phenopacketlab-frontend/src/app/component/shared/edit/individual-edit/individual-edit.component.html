@@ -51,12 +51,12 @@
       placeholder="Select sex"
       [(ngModel)]="selectedSex"
       [options]="getSexes()"
-      (onChange)="updateSex($event)"
+      (ngModelChange)="updateSex($event)"
       pTooltip="Observed apparent sex of the individual"
       tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
-      optionLabel="name"
+      optionLabel="lbl"
       [showClear]="true"
     >
     </p-dropdown>
@@ -75,7 +75,7 @@
       tooltipPosition="bottom"
       showDelay="2000"
       class="w-full"
-      optionLabel="name"
+      optionLabel="lbl"
       [showClear]="true"
     >
       <ng-template let-karyosex pTemplate="item">
@@ -84,7 +84,7 @@
           escape="false"
           tooltipPosition="bottom"
         >
-          {{ karyosex.name }}
+          {{ karyosex.lbl }}
         </div>
       </ng-template>
     </p-dropdown>

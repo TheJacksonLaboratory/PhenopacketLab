@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
-import { Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
+import { ConstantObject, Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -32,11 +32,11 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     selectedCauseOfDeath: any;
     causeOfDeathSubscription: Subscription;
 
-    selectedSex: Sex;
+    selectedSex: ConstantObject;
     // sexes: ConstantObject[];
     // sexSubscription: Subscription;
 
-    selectedKaryotypicSex: KaryotypicSex;
+    selectedKaryotypicSex: ConstantObject;
 
     showGender = false;
     // genders: ConstantObject[];
@@ -77,12 +77,12 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         if (this.subject) {
             // set Sex
             for (const sex of Sex.VALUES) {
-                if (this.subject && this.subject.sex === sex.name) {
+                if (this.subject.sex === sex.lbl) {
                     this.selectedSex = sex;
                 }
             }
             for (const karyosex of KaryotypicSex.VALUES) {
-                if (this.subject.karyotypicSex === karyosex.name) {
+                if (this.subject.karyotypicSex === karyosex.lbl) {
                     this.selectedKaryotypicSex = karyosex;
                 }
             }
@@ -109,22 +109,21 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         this.isPrivateInfoWarnSelectedChanged.emit(this.isPrivateInfoWarnSelected);
     }
 
-    updateSex(event: any) {
+    updateSex(sex: ConstantObject) {
         if (this.subject) {
-            if (event.value) {
-                this.subject.sex = event.value.lbl;
-            }
-            if (event.value === undefined || event.value === null) {
+            if (sex) {
+                this.subject.sex = sex.lbl;
+            } else {
                 this.subject.sex = undefined;
             }
             this.subjectChange.emit(this.subject);
         }
     }
 
-    updateKaryotypicSex(karyotypicSex: KaryotypicSex) {
+    updateKaryotypicSex(karyotypicSex: ConstantObject) {
         if (this.subject) {
             if (karyotypicSex) {
-                this.subject.karyotypicSex = karyotypicSex.name;
+                this.subject.karyotypicSex = karyotypicSex.lbl;
             } else {
                 this.subject.karyotypicSex = undefined;
             }
