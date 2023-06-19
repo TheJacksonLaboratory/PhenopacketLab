@@ -14,7 +14,7 @@ import { GridModule } from '@angular/flex-layout/grid';
 
 import { ROUTING } from './app.routing';
 import { HelpComponent } from './component/help/help.component';
-import { LoginComponent } from "./component/header/login.component";
+import { LoginComponent } from "./component/login/login.component";
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';

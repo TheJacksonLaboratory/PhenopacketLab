@@ -12,8 +12,12 @@ const routes: Routes = [
   // { path: 'families', component: FamilyListComponent },
   // { path: 'cohorts', component: CohortListComponent },
   { path: 'about', component: AboutComponent },
+<<<<<<< HEAD:phenopacketlab-frontend/src/app/app.routing.ts
   { path: 'help', component: HelpComponent },
   { path: '**', redirectTo: 'dashboard' },
+=======
+  { path: '**', redirectTo: '' },
+>>>>>>> 5e97a82 (moving login component to its own thing):frontend/src/app/app.routing.ts
 ];
 
 export const ROUTING = RouterModule.forRoot(routes);
