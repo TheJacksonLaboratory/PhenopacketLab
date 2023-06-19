@@ -256,7 +256,7 @@ export class PhenopacketService {
             this.loadTnmTumorFindings(dialogService);
         }
         // return severities for subscription even if the value is yet undefined.
-        return this.severities.asObservable();
+        return this.tnmTumorFindings.asObservable();
     }
 
     private loadTnmTumorFindings(dialogService: DialogService): void {
@@ -286,7 +286,7 @@ export class PhenopacketService {
             this.loadTnmNodeFindings(dialogService);
         }
         // return severities for subscription even if the value is yet undefined.
-        return this.severities.asObservable();
+        return this.tnmNodeFindings.asObservable();
     }
 
     private loadTnmNodeFindings(dialogService: DialogService): void {
@@ -316,7 +316,7 @@ export class PhenopacketService {
             this.loadTnmMetastasisFindings(dialogService);
         }
         // return severities for subscription even if the value is yet undefined.
-        return this.severities.asObservable();
+        return this.tnmMetastasisFindings.asObservable();
     }
 
     private loadTnmMetastasisFindings(dialogService: DialogService): void {
@@ -346,7 +346,7 @@ export class PhenopacketService {
             this.loadDiseaseStages(dialogService);
         }
         // return severities for subscription even if the value is yet undefined.
-        return this.severities.asObservable();
+        return this.diseaseStages.asObservable();
     }
 
     private loadDiseaseStages(dialogService: DialogService): void {

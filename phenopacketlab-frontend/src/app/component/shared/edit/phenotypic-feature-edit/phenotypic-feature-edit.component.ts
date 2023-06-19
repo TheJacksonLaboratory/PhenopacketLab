@@ -3,6 +3,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { Evidence, OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
+import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -33,7 +34,8 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   onsetsSubscription: Subscription;
 
   // severity
-  severities: OntologyClass[];
+  severities: ConstantObject[];
+  selectedSeverity: ConstantObject;
   severitySubscription: Subscription;
 
   constructor(public phenopacketService: PhenopacketService, private dialogService: DialogService) {
@@ -73,10 +75,12 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
           if (this.severities === undefined) {
             this.severities = [];
           }
-          this.severities.push(new OntologyClass(severity.id, severity.lbl));
+          this.severities.push(new ConstantObject(severity.lbl, severity.def, severity.id, severity.syn));
         });
       }
     });
+    this.initializeSeveritySelected(this.phenotypicFeature?.severity);
+
   }
 
   ngOnDestroy(): void {
@@ -104,6 +108,17 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     return Severities.VALUES;
   }
 
+  initializeSeveritySelected(severity: OntologyClass) {
+    if (severity === undefined || this.severities === undefined) {
+      return;
+    }
+    for (const sever of this.severities) {
+      if (sever.id === severity.id) {
+        this.selectedSeverity = sever;
+        return;
+      }
+    }
+  }
   updateExcluded(event) {
     if (this.phenotypicFeature) {
       this.phenotypicFeature.excluded = !event.checked;
@@ -120,8 +135,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   }
   updateSeverity(event) {
     if (this.phenotypicFeature) {
-      if (event) {
-        this.phenotypicFeature.severity = event.value;
+      if (event.value) {
+        this.phenotypicFeature.severity = new OntologyClass(
+          event.value.id,
+          event.value.lbl,
+          event.key,
+          `https://hpo.jax.org/app/browse/term/${event.value.id}`
+          );
       } else {
         this.phenotypicFeature.severity = undefined;
       }

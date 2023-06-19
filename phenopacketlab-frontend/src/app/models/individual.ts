@@ -93,20 +93,16 @@ export class ConstantObject {
     lbl: string;
     def: string;
     syn: string[];
-    id: Id;
+    id: string;
 
-    constructor(lbl: string, def: string, syn?: string[], id?: Id) {
+    constructor(lbl: string, def: string, id?: string, syn?: string[]) {
         this.lbl = lbl;
         this.def = def;
         this.syn = syn;
         this.id = id;
     }
 }
-export class Id {
-    value: string;
-    prefix: string;
-    id: string;
-}
+
 export class KaryotypicSex {
     public static VALUES = [new ConstantObject('UNKNOWN_KARYOTYPE', 'Untyped or inconclusive karyotyping'),
         new ConstantObject('XX', 'Female'),

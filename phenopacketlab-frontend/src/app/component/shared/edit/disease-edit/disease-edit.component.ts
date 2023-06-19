@@ -3,6 +3,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
+import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
@@ -50,7 +51,8 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     onsetsSubscription: Subscription;
 
     // laterality
-    lateralities: OntologyClass[];
+    lateralities: ConstantObject[];
+    lateralitySelected: ConstantObject;
     lateralitySubscription: Subscription;
 
     constructor(public phenopacketService: PhenopacketService,
@@ -76,10 +78,11 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                     if (this.lateralities === undefined) {
                         this.lateralities = [];
                     }
-                    this.lateralities.push(new OntologyClass(laterality.id, laterality.lbl));
+                    this.lateralities.push(new ConstantObject(laterality.lbl, laterality.def, laterality.id, laterality.syn));
                 });
             }
         });
+        this.initializeLateralitySelected(this.disease?.laterality);
         // TNM findings
         this.tumorSubscription = this.phenopacketService.getTnmTumorFindings(this.dialogService).subscribe(nodes => {
             if (nodes) {
@@ -152,6 +155,18 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         }
     }
 
+    initializeLateralitySelected(laterality: OntologyClass) {
+        if (laterality === undefined || this.lateralities === undefined) {
+            return;
+        }
+        for (const lateral of this.lateralities) {
+            if (lateral.id === laterality.id) {
+                this.lateralitySelected = lateral;
+                return;
+            }
+        }
+
+    }
     initializeTnmFindingSelected(findings: OntologyClass[]) {
         // update when a disease is selected
         if (findings === undefined) {
@@ -236,9 +251,12 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
     updateLaterality(event) {
         if (this.disease) {
-            if (event) {
-                this.disease.laterality = event.value;
-                this.disease.laterality.termUrl = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
+            if (event.value) {
+                this.disease.laterality = new OntologyClass(
+                    event.value.id,
+                    event.value.lbl,
+                    event.value.key,
+                    `https://hpo.jax.org/app/browse/term/${event.value.id}`);
             } else {
                 this.disease.laterality = undefined;
             }

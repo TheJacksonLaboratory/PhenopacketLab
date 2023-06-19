@@ -70,8 +70,9 @@
               appendTo="body"
               placeholder="Select severity"
               [options]="severities"
-              [ngModel]="phenotypicFeature?.severity"
+              [(ngModel)]="selectedSeverity"
               (onChange)="updateSeverity($event)"
+              optionLabel="lbl"
               pTooltip="The intensity or degree of a manifestation"
               tooltipPosition="bottom"
               showDelay="2000"
@@ -79,12 +80,12 @@
             >
               <ng-template let-severity pTemplate="item">
                 <div
-                  [pTooltip]="severity.label"
+                  [pTooltip]="severity.lbl"
                   showDelay="2000"
                   tooltipPosition="bottom"
                   escape="false"
                 >
-                  [{{ severity.id }}] {{ severity.label }}
+                  [{{ severity.id }}] {{ severity.lbl }}
                 </div>
               </ng-template>
             </p-dropdown>
