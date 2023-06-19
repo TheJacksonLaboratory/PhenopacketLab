@@ -92,7 +92,7 @@
           <td>
             <span
               *ngFor="
-                let evidence of feature.evidences;
+                let evidence of feature.evidence;
                 let indexOfelement = index
               "
             >
@@ -100,7 +100,7 @@
                 >[{{ evidence.evidenceCode?.id }}]</a
               >
               {{ evidence.evidenceCode?.label
-              }}<span *ngIf="indexOfelement < feature.evidences?.length - 1"
+              }}<span *ngIf="indexOfelement < feature.evidence?.length - 1"
                 >,
               </span>
             </span>

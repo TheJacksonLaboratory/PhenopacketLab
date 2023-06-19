@@ -102,14 +102,6 @@ export class ExternalReference extends Convert {
 }
 export class Evidence extends Convert {
 
-    static VALUES = [
-        new OntologyClass('ECO:0006016', 'author statement from published clinical study'),
-        new OntologyClass('ECO:0007539', 'author statement from published clinical study used in automatic assertion'),
-        new OntologyClass('ECO:0006017', 'author statement from published clinical study used in manual assertion'),
-        new OntologyClass('ECO:0000033', 'author statement supported by traceable reference'),
-        new OntologyClass('ECO:0006154', 'self-reported patient statement evidence')
-    ];
-
     evidenceCode: OntologyClass;
     reference: ExternalReference;
 
