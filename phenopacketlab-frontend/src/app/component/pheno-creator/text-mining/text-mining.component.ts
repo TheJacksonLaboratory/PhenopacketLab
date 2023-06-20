@@ -48,7 +48,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   constructor(private phenotypeSearchService: PhenotypeSearchService,
     public phenopacketService: PhenopacketService,
     private elementRef: ElementRef,
-    public dialogService: DialogService) {
+    private dialogService: DialogService) {
 
   }
 
@@ -58,7 +58,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.onset = phenopacket?.subject?.timeAtLastEncounter;
 
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets(this.dialogService).subscribe(nodes => {
+    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.onsetsNodes = <OntologyTreeNode[]>nodes.children;

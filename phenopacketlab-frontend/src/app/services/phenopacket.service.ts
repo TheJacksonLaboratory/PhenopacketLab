@@ -4,8 +4,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Phenopacket } from '../models/phenopacket';
 import { ProfileSelection } from '../models/profile';
-import { DialogService } from 'primeng/dynamicdialog';
-import { SpinnerDialogComponent } from '../component/shared/spinner-dialog/spinner-dialog.component';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
@@ -64,305 +62,175 @@ export class PhenopacketService {
 
     /**
      * Return modifiers as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getModifiers(dialogService: DialogService): Observable<any> {
+    getModifiers(): Observable<any> {
         // only if undefined, load from server
         if (this.modifiers.getValue() === undefined) {
             console.log('Loading modifiers...');
-            this.loadModifiers(dialogService);
+            this.http.get(modifiersUrl).subscribe(res => {
+                this.modifiers.next(res);
+            }, (error) => {
+                console.log(error);
+            });
         }
         // return modifiers for subscription even if the value is yet undefined.
         return this.modifiers.asObservable();
     }
 
-    private loadModifiers(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading modifiers ontology...' }
-        });
-        this.http.get(modifiersUrl).subscribe(res => {
-            this.modifiers.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return evidences as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getEvidences(dialogService: DialogService): Observable<any> {
+    getEvidences(): Observable<any> {
         // only if undefined, load from server
         if (this.evidences.getValue() === undefined) {
             console.log('Loading evidences...');
-            this.loadEvidences(dialogService);
-        }
+            this.http.get(evidencesUrl).subscribe(res => {
+                this.evidences.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return evidences for subscription even if the value is yet undefined.
         return this.evidences.asObservable();
     }
 
-    private loadEvidences(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading evidences ontology...' }
-        });
-        this.http.get(evidencesUrl).subscribe(res => {
-            this.evidences.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return sex as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getSex(dialogService: DialogService): Observable<any> {
+    getSex(): Observable<any> {
         // only if undefined, load from server
         if (this.sexes.getValue() === undefined) {
             console.log('Loading sexes...');
-            this.loadSexes(dialogService);
-        }
+            this.http.get(sexUrl).subscribe(res => {
+                this.sexes.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return evidences for subscription even if the value is yet undefined.
         return this.sexes.asObservable();
     }
 
-    private loadSexes(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading sex terms...' }
-        });
-        this.http.get(sexUrl).subscribe(res => {
-            console.log('result');
-            console.log(res);
-            this.sexes.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return onsets as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getOnsets(dialogService: DialogService): Observable<any> {
+    getOnsets(): Observable<any> {
         // only if undefined, load from server
         if (this.onsets.getValue() === undefined) {
             console.log('Loading onsets...');
-            this.loadOnsets(dialogService);
-        }
+            this.http.get(onsetsUrl).subscribe(res => {
+                this.onsets.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return onsets for subscription even if the value is yet undefined.
         return this.onsets.asObservable();
     }
 
-    private loadOnsets(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading onset terms...' }
-        });
-        this.http.get(onsetsUrl).subscribe(res => {
-            this.onsets.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return lateralities as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getLateralities(dialogService: DialogService): Observable<any> {
+    getLateralities(): Observable<any> {
         // only if undefined, load from server
         if (this.lateralities.getValue() === undefined) {
             console.log('Loading lateralities...');
-            this.loadLateralities(dialogService);
-        }
+            this.http.get(lateralityUrl).subscribe(res => {
+                this.lateralities.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return lateralities for subscription even if the value is yet undefined.
         return this.lateralities.asObservable();
     }
 
-    private loadLateralities(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading laterality terms...' }
-        });
-        this.http.get(lateralityUrl).subscribe(res => {
-            this.lateralities.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return severities as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getSeverities(dialogService: DialogService): Observable<any> {
+    getSeverities(): Observable<any> {
         // only if undefined, load from server
         if (this.severities.getValue() === undefined) {
             console.log('Loading severities...');
-            this.loadSeverities(dialogService);
-        }
+            this.http.get(severityUrl).subscribe(res => {
+                this.severities.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return severities for subscription even if the value is yet undefined.
         return this.severities.asObservable();
     }
 
-    private loadSeverities(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading severity terms...' }
-        });
-        this.http.get(severityUrl).subscribe(res => {
-            this.severities.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return tnmTumorFindings as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getTnmTumorFindings(dialogService: DialogService): Observable<any> {
+    getTnmTumorFindings(): Observable<any> {
         // only if undefined, load from server
         if (this.tnmTumorFindings.getValue() === undefined) {
             console.log('Loading tnmTumorFindings...');
-            this.loadTnmTumorFindings(dialogService);
-        }
+            this.http.get(tnmTumorFindingsUrl).subscribe(res => {
+                this.tnmTumorFindings.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return severities for subscription even if the value is yet undefined.
         return this.tnmTumorFindings.asObservable();
     }
 
-    private loadTnmTumorFindings(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading tnmTumorFindings terms...' }
-        });
-        this.http.get(tnmTumorFindingsUrl).subscribe(res => {
-            this.tnmTumorFindings.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return tnmNodeFindings as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getTnmNodeFindings(dialogService: DialogService): Observable<any> {
+    getTnmNodeFindings(): Observable<any> {
         // only if undefined, load from server
         if (this.tnmNodeFindings.getValue() === undefined) {
             console.log('Loading tnmNodeFindings...');
-            this.loadTnmNodeFindings(dialogService);
-        }
+            this.http.get(tnmNodeFindingsUrl).subscribe(res => {
+                this.tnmNodeFindings.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return severities for subscription even if the value is yet undefined.
         return this.tnmNodeFindings.asObservable();
     }
 
-    private loadTnmNodeFindings(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading tnmNodeFindings terms...' }
-        });
-        this.http.get(tnmNodeFindingsUrl).subscribe(res => {
-            this.tnmNodeFindings.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return TnmMetastasisFindings as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getTnmMetastasisFindings(dialogService: DialogService): Observable<any> {
+    getTnmMetastasisFindings(): Observable<any> {
         // only if undefined, load from server
         if (this.tnmMetastasisFindings.getValue() === undefined) {
             console.log('Loading TnmMetastasisFindings...');
-            this.loadTnmMetastasisFindings(dialogService);
-        }
+            this.http.get(tnmMetastasisFindingsUrl).subscribe(res => {
+                this.tnmMetastasisFindings.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return severities for subscription even if the value is yet undefined.
         return this.tnmMetastasisFindings.asObservable();
     }
 
-    private loadTnmMetastasisFindings(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading TnmMetastasisFindings terms...' }
-        });
-        this.http.get(tnmMetastasisFindingsUrl).subscribe(res => {
-            this.tnmMetastasisFindings.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
-
     /**
      * Return diseaseStages as an Observable
-     * @param dialogService DialogService used for spinnerDialog
      * @returns
      */
-    getDiseaseStages(dialogService: DialogService): Observable<any> {
+    getDiseaseStages(): Observable<any> {
         // only if undefined, load from server
         if (this.diseaseStages.getValue() === undefined) {
             console.log('Loading diseaseStages...');
-            this.loadDiseaseStages(dialogService);
-        }
+            this.http.get(diseaseStagesUrl).subscribe(res => {
+                this.diseaseStages.next(res);
+            }, (error) => {
+                console.log(error);
+            });        }
         // return severities for subscription even if the value is yet undefined.
         return this.diseaseStages.asObservable();
     }
 
-    private loadDiseaseStages(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading diseaseStages terms...' }
-        });
-        this.http.get(diseaseStagesUrl).subscribe(res => {
-            this.diseaseStages.next(res);
-            spinnerDialogRef.close();
-        }, (error) => {
-            console.log(error);
-            spinnerDialogRef.close();
-        });
-    }
     // getMondoDiseases(): Observable<any> {
     //     return this.http.get(mondoDiseasesUrl);
     // }

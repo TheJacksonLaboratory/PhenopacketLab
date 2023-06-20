@@ -50,7 +50,7 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   ref: DynamicDialogRef;
 
   constructor(public searchService: DiseaseSearchService,
-    public dialogService: DialogService,
+    private dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
 
@@ -62,7 +62,7 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
     if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
       this.showTable = true;
     }
-    this.diseaseSubscription = this.searchService.getDiseases(this.dialogService).subscribe(diseases => {
+    this.diseaseSubscription = this.searchService.getDiseases().subscribe(diseases => {
       this.diseaseItems = diseases;
   });
   }

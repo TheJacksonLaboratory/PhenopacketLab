@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { ConstantObject, Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
@@ -51,13 +51,12 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     useCalendar: boolean;
 
     constructor(public phenopacketService: PhenopacketService,
-        public diseaseService: DiseaseSearchService,
-        public dialogService: DialogService) {
+        public diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {
         // get cause of death
-        this.causeOfDeathSubscription = this.diseaseService.getDiseases(this.dialogService).subscribe(diseases => {
+        this.causeOfDeathSubscription = this.diseaseService.getDiseases().subscribe(diseases => {
             this.causeOfDeaths = diseases;
             // init selectedCauseOfDeath
             if (this.subject.vitalStatus?.causeOfDeath) {

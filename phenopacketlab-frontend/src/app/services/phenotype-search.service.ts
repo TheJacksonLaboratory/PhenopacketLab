@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TimeElement } from '../models/base';
-import { DialogService } from 'primeng/dynamicdialog';
-import { SpinnerDialogComponent } from '../component/shared/spinner-dialog/spinner-dialog.component';
 
 const phenotypicFeaturesUrl = environment.PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL;
 const textMinerUrl = environment.TEXT_MINING_URL;
@@ -23,28 +21,21 @@ export class PhenotypeSearchService {
     }
 
     // return diseases as an Observable
-    getPhenotypicFeatures(dialogService: DialogService): Observable<any> {
+    getPhenotypicFeatures(): Observable<any> {
         // only if undefined, load from server
         if (this.phenotypicFeatures.getValue() === undefined) {
             console.log('Loading features...');
-            this.loadPhenotypicFeatures(dialogService);
+            this.loadPhenotypicFeatures();
         }
         // return features for subscription even if the value is yet undefined.
         return this.phenotypicFeatures.asObservable();
     }
 
-    private loadPhenotypicFeatures(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading hpo ontology...' }
-        });
+    private loadPhenotypicFeatures(): void {
         this.http.get(phenotypicFeaturesUrl).subscribe(res => {
             this.phenotypicFeatures.next(res);
-            spinnerDialogRef.close();
         }, (error) => {
             console.log(error);
-            spinnerDialogRef.close();
         });
     }
 

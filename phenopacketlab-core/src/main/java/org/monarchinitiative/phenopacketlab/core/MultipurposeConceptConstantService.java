@@ -55,6 +55,11 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
         return findAllConceptsFromSelectedPrefixes(phenotypePrefixes);
     }
 
+    @Override
+    public Stream<IdentifiedConcept> seaerchPhenotypeConcepts(String query) {
+        return findAllConceptsFromSelectedPrefixes(phenotypePrefixes);
+    }
+
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {
         return prefixes.stream()
                 .map(conceptResourceService::forPrefix)

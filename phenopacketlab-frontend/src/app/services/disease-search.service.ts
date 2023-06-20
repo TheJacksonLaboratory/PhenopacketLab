@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OntologyClass, TimeElement } from '../models/base';
-import { DialogService } from 'primeng/dynamicdialog';
-import { SpinnerDialogComponent } from '../component/shared/spinner-dialog/spinner-dialog.component';
 
 const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
 const hpoDiseasesUrl = environment.HPO_DISEASE_URL;
@@ -25,28 +23,21 @@ export class DiseaseSearchService {
     }
 
     // return diseases as an Observable
-    getDiseases(dialogService: DialogService): Observable<any> {
+    getDiseases(): Observable<any> {
         // only if undefined, load from server
         if (this.diseases.getValue() === undefined) {
             console.log('Loading diseases...');
-            this.loadDiseases(dialogService);
+            this.loadDiseases();
         }
         // return diseases for subscription even if the value is yet undefined.
         return this.diseases.asObservable();
     }
 
-    private loadDiseases(dialogService: DialogService): void {
-        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
-            closable: false,
-            modal: true,
-            data: { loadingMessage: 'Loading disease ontology...' }
-        });
+    private loadDiseases(): void {
         this.http.get(phenopacketDiseasesUrl).subscribe(res => {
             this.diseases.next(res);
-            spinnerDialogRef.close();
         }, (error) => {
             console.log(error);
-            spinnerDialogRef.close();
         });
     }
 

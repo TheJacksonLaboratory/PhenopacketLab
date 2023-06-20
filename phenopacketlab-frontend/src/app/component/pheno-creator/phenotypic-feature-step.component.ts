@@ -39,7 +39,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
-        private dialogService: DialogService,
         private router: Router,
         private primengConfig: PrimeNGConfig) {
     }
@@ -60,7 +59,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures(this.dialogService).subscribe(features => {
+        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures().subscribe(features => {
             this.featureItems = features;
         });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {

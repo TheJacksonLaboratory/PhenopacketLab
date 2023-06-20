@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { Evidence, OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
@@ -38,13 +37,13 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
   selectedSeverity: ConstantObject;
   severitySubscription: Subscription;
 
-  constructor(public phenopacketService: PhenopacketService, private dialogService: DialogService) {
+  constructor(public phenopacketService: PhenopacketService) {
   }
 
   ngOnInit() {
 
     // Get modifiers
-    this.modifiersSubscription = this.phenopacketService.getModifiers(this.dialogService).subscribe(nodes => {
+    this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.modifiersNodes = <OntologyTreeNode[]>nodes.children;
@@ -52,7 +51,7 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
     }
     );
     // get Evidences
-    this.evidencesSubscription = this.phenopacketService.getEvidences(this.dialogService).subscribe(evidences => {
+    this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
       if (evidences) {
         const nodes = [];
         for (const evidence of evidences) {
@@ -62,14 +61,14 @@ export class PhenotypicFeatureEditComponent implements OnInit, OnDestroy {
       }
     });
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets(this.dialogService).subscribe(nodes => {
+    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
     // severity
-    this.severitySubscription = this.phenopacketService.getSeverities(this.dialogService).subscribe(severities => {
+    this.severitySubscription = this.phenopacketService.getSeverities().subscribe(severities => {
       if (severities) {
         severities.forEach(severity => {
           if (this.severities === undefined) {
