@@ -4,8 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OntologyClass, TimeElement } from '../models/base';
 
-const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
-const hpoDiseasesUrl = environment.HPO_DISEASE_URL;
+const phenopacketDiseasesUrl = environment.DISEASE_URL;
 
 @Injectable({
     providedIn: 'root'

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const bodySitesUrl = environment.PHENOPACKETLAB_BODY_SITE_URL;
+const bodySitesUrl = environment.BODY_SITE_URL;
 
 @Injectable({ providedIn: 'root' })
 export class MeasurementService {

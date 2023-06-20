@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TimeElement } from '../models/base';
 
-const phenotypicFeaturesUrl = environment.PHENOPACKETLAB_PHENOTYPIC_FEATURE_URL;
+const phenotypicFeaturesUrl = environment.PHENOTYPIC_FEATURE_URL;
 const textMinerUrl = environment.TEXT_MINING_URL;
 
 @Injectable({
