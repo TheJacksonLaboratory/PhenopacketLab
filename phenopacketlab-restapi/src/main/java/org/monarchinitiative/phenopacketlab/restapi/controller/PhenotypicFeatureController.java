@@ -3,13 +3,14 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.PhenotypicFeatureService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "${api.version}/phenotypic-features")
 public class PhenotypicFeatureController {
 
     private final PhenotypicFeatureService phenotypicFeatureService;
@@ -18,13 +19,26 @@ public class PhenotypicFeatureController {
         this.phenotypicFeatureService = phenotypicFeatureService;
     }
 
-    @GetMapping("{id}")
+    @RequestMapping(value = {"${api.version}/phenotypic-features/{id}"}, method = RequestMethod.GET)
     public ResponseEntity<IdentifiedConcept> phenotypicFeatureById(@PathVariable("id") String id) {
         TermId phenotypicFeatureId = TermId.of(id);
         return ResponseEntity.of(phenotypicFeatureService.phenotypeConceptById(phenotypicFeatureId));
     }
 
-    @GetMapping
+    @RequestMapping(value = {"${api.version}/phenotypic-features/search"}, method = RequestMethod.GET)
+    public ResponseEntity<List<IdentifiedConcept>> searchFeature(@RequestParam("query") String query,
+                                                                 @RequestParam("max") Optional<Integer> max) {
+        if (query == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        int maxResults = 10;
+        if (max.isPresent()) {
+            maxResults = max.get();
+        }
+        return ResponseEntity.ok(phenotypicFeatureService.searchPhenotypeConcepts(query, maxResults).toList());
+    }
+
+    @RequestMapping(value = {"${api.version}/phenotypic-features/all"}, method = RequestMethod.GET)
     public ResponseEntity<List<IdentifiedConcept>> allPhenotypicFeatures() {
         return ResponseEntity.ok(phenotypicFeatureService.allPhenotypeConcepts()
                 .toList());

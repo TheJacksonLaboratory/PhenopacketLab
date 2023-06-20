@@ -19,6 +19,8 @@ public interface PhenotypicFeatureService {
 
     Optional<IdentifiedConcept> phenotypeConceptById(TermId id);
 
+    Stream<IdentifiedConcept> searchPhenotypeConcepts(String query, int limit);
+
     Stream<IdentifiedConcept> allPhenotypeConcepts();
 
 }

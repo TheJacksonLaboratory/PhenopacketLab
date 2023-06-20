@@ -41,6 +41,12 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
     }
 
     @Override
+    public Stream<IdentifiedConcept> searchDiseaseConcepts(String query, int limit) {
+        return findAllConceptsFromSelectedPrefixes(diseasePrefixes)
+                .filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(limit);
+    }
+
+    @Override
     public Collection<String> phenotypeNamespacePrefixes() {
         return phenotypePrefixes;
     }
@@ -55,10 +61,11 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
         return findAllConceptsFromSelectedPrefixes(phenotypePrefixes);
     }
 
-//    @Override
-//    public Stream<IdentifiedConcept> searchPhenotypeConcepts(String query) {
-//        return findAllConceptsFromSelectedPrefixes(phenotypePrefixes);
-//    }
+    @Override
+    public Stream<IdentifiedConcept> searchPhenotypeConcepts(String query, int limit) {
+        return findAllConceptsFromSelectedPrefixes(phenotypePrefixes)
+                .filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(limit);
+    }
 
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {
         return prefixes.stream()

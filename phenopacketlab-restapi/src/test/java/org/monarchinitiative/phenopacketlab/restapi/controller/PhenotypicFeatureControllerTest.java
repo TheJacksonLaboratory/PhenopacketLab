@@ -82,13 +82,28 @@ public class PhenotypicFeatureControllerTest {
                         createPhenotypicFeature("HP:987654", "Second")
                 ));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(), equalTo("""
                 [{"id":"HP:123456","lbl":"First","def":null,"syn":[]},""" + """
                 {"id":"HP:987654","lbl":"Second","def":null,"syn":[]}]"""));
+    }
+
+    @Test
+    public void getSearchPhenotypicFeatures() throws Exception {
+        when(phenotypicFeatureService.searchPhenotypeConcepts("first", 10))
+                .thenReturn(Stream.of(
+                        createPhenotypicFeature("HP:123456", "First")
+                ));
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/search?query=first"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        MockHttpServletResponse response = result.getResponse();
+        assertThat(response.getContentAsString(), equalTo("""
+                [{"id":"HP:123456","lbl":"First","def":null,"syn":[]}]"""));
     }
 
     private static IdentifiedConcept createPhenotypicFeature(String curie, String label) {

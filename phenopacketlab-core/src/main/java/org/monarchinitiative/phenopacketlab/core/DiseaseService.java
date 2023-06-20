@@ -24,6 +24,14 @@ public interface DiseaseService {
     Optional<IdentifiedConcept> diseaseConceptById(TermId id);
 
     /**
+     * Search through disease concepts
+     * @param query search string
+     * @param limit max number of results
+     * @return List of found concepts
+     */
+    Stream<IdentifiedConcept> searchDiseaseConcepts(String query, int limit);
+
+    /**
      * Stream all disease concepts served by the service.
      */
     Stream<IdentifiedConcept> allDiseaseConcepts();
