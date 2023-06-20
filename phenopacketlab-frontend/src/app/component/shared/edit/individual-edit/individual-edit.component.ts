@@ -20,13 +20,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     profile: ProfileSelection;
     @Output()
     subjectChange = new EventEmitter<Individual>();
-    @Output()
-    isPrivateInfoWarnSelectedChanged = new EventEmitter<boolean>();
 
     @Input()
     submitted: boolean;
 
-    @Input()
     isPrivateInfoWarnSelected: boolean;
     causeOfDeaths: any[];
     selectedCauseOfDeath: any;
@@ -69,10 +66,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             }
         });
 
-        // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
-        if (this.profile === undefined) {
-            this.isPrivateInfoWarnSelected = true;
-        }
         if (this.subject) {
             // set Sex
             for (const sex of Sex.VALUES) {
@@ -85,6 +78,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                     this.selectedKaryotypicSex = karyosex;
                 }
             }
+            // set isPrivateInfoWarnSelected
+            this.isPrivateInfoWarnSelected = this.subject.isPrivateInfoWarnSelected;
         }
     }
     ngOnDestroy(): void {
@@ -105,7 +100,10 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
 
     updateIsPrivateInfoWarnSelected() {
-        this.isPrivateInfoWarnSelectedChanged.emit(this.isPrivateInfoWarnSelected);
+        if (this.subject) {
+            this.subject.isPrivateInfoWarnSelected = this.isPrivateInfoWarnSelected;
+        }
+        this.subjectChange.emit(this.subject);
     }
 
     updateSex(sex: ConstantObject) {

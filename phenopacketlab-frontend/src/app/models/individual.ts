@@ -2,6 +2,9 @@ import { OntologyClass, TimeElement } from './base';
 import { Disease } from './disease';
 
 export class Individual {
+    // not part of phenopacket schema
+    isPrivateInfoWarnSelected?: boolean;
+
     id = '';
     alternateIds: string[];
     dateOfBirth: string; // timestamp

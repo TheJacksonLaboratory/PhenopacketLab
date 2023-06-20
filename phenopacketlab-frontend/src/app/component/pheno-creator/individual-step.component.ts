@@ -38,15 +38,16 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
             this.phenopacket.subject = new Individual();
+            this.phenopacket.subject.isPrivateInfoWarnSelected = false;
             this.phenopacket.metaData = new MetaData();
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        this.privateInfoWarnSelectedSubscription = this.phenopacketService.getIsPrivateInfoWarnSelected().subscribe(privateInfoSelected => {
-            this.isPrivateInfoWarnSelected = privateInfoSelected;
-            console.log(this.isPrivateInfoWarnSelected);
-        });
+        // set isPrivateInfoSelected
+        if (this.phenopacket?.subject) {
+            this.isPrivateInfoWarnSelected = this.phenopacket.subject.isPrivateInfoWarnSelected;
+        }
 
     }
 
@@ -57,14 +58,6 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
-        if (this.privateInfoWarnSelectedSubscription) {
-            this.privateInfoWarnSelectedSubscription.unsubscribe();
-        }
-    }
-
-    updateIsPrivateInfoWarnSelected(isPrivateInfoWarnSelected: boolean) {
-        this.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
-        this.phenopacketService.setPrivateInfoWarnSelected(isPrivateInfoWarnSelected);
     }
 
     updateSubject(subject: Individual) {
@@ -75,7 +68,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
 
     nextPage() {
         if (this.phenopacket.id && this.phenopacket.subject.id
-            && this.isPrivateInfoWarnSelected) {
+            && this.phenopacket.subject.isPrivateInfoWarnSelected) {
             // TODO Check if id already exists
             this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {
