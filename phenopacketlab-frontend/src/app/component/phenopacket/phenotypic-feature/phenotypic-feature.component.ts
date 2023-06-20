@@ -71,7 +71,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             const feature = new PhenotypicFeature();
             feature.type = new OntologyClass(item.id, item.lbl);
             feature.description = item.def;
-            this.editPhenotypicFeature(feature);
+            this.addPhenotypicFeature(feature);
         }
     }
 
