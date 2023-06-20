@@ -38,7 +38,7 @@ describe('PhenopacketService', () => {
     }));
 
     it('getLaterality() should http GET lateralities', () => {
-        phenopacketService.getLateralities(dialogService).subscribe((lateralities) => {
+        phenopacketService.getLateralities().subscribe((lateralities) => {
             if (lateralities) {
                 expect(lateralities).toBe(lateralitiesData);
             }
@@ -50,7 +50,7 @@ describe('PhenopacketService', () => {
     });
 
     it('getModifiers() should http GET Modifiers', () => {
-        phenopacketService.getModifiers(dialogService).subscribe((modifiers) => {
+        phenopacketService.getModifiers().subscribe((modifiers) => {
             if (modifiers) {
                 expect(modifiers).toBe(modifiersData);
             }
@@ -62,7 +62,7 @@ describe('PhenopacketService', () => {
     });
 
     it('getSeverity() should http GET severities', () => {
-        phenopacketService.getSeverities(dialogService).subscribe((severities) => {
+        phenopacketService.getSeverities().subscribe((severities) => {
             if (severities) {
                 expect(severities).toBe(severitiesData);
             }
@@ -74,7 +74,7 @@ describe('PhenopacketService', () => {
     });
 
     it('getSex() should http GET sexes', () => {
-        phenopacketService.getSex(dialogService).subscribe((sexes) => {
+        phenopacketService.getSex().subscribe((sexes) => {
             if (sexes) {
                 expect(sexes).toBe(sexesData);
             }
