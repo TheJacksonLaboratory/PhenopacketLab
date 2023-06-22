@@ -1,7 +1,5 @@
 package org.monarchinitiative.phenopacketlab.core.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import java.util.List;
 import java.util.Objects;
 

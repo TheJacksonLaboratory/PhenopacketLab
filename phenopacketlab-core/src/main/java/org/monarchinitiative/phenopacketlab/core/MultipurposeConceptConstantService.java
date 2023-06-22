@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacketlab.core;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -62,16 +63,19 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
     }
 
     @Override
-    public Stream<IdentifiedConcept> searchPhenotypeConcepts(String query, int limit) {
-        return findAllConceptsFromSelectedPrefixes(phenotypePrefixes)
-                .filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(limit);
+    public SearchIdentifiedConcept searchPhenotypeConcepts(String query, int limit) {
+        List<IdentifiedConcept> allTerms = findAllConceptsFromSelectedPrefixes(phenotypePrefixes).toList();
+        List<IdentifiedConcept> foundTerms = allTerms.stream().filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(limit).toList();
+        return new SearchIdentifiedConcept(allTerms.size(), foundTerms);
     }
 
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {
         return prefixes.stream()
                 .map(conceptResourceService::forPrefix)
                 .flatMap(Optional::stream)
-                .flatMap(IdentifiedConceptResource::stream);
+                .flatMap(IdentifiedConceptResource::stream)
+                // TODO a temporary bugfix for an issue resulting from incorrect loading of the HPO/others.
+                .filter(ic -> prefixes.contains(ic.id().getPrefix()));
     }
 
     private Optional<IdentifiedConcept> findConceptFromSelectedPrefixes(TermId id, List<String> prefixes) {
