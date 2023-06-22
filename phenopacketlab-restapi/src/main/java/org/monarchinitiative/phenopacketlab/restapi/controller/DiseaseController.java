@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class DiseaseController {
     }
 
     @RequestMapping(value = {"${api.version}/diseases/search"}, method = RequestMethod.GET)
-    public ResponseEntity<List<IdentifiedConcept>> searchFeature(@RequestParam("query") String query,
+    public ResponseEntity<SearchIdentifiedConcept> searchFeature(@RequestParam("query") String query,
                                                                  @RequestParam("max") Optional<Integer> max) {
         if (query == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -35,7 +36,7 @@ public class DiseaseController {
         if (max.isPresent()) {
             maxResults = max.get();
         }
-        return ResponseEntity.ok(diseaseService.searchDiseaseConcepts(query, maxResults).toList());
+        return ResponseEntity.ok(diseaseService.searchDiseaseConcepts(query, maxResults));
     }
 
     @RequestMapping(value = {"${api.version}/diseases/all"}, method = RequestMethod.GET)

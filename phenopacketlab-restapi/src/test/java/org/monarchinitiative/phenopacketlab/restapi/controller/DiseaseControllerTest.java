@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -97,17 +98,16 @@ public class DiseaseControllerTest {
     @Test
     public void getSearchDiseases() throws Exception {
         when(diseaseService.searchDiseaseConcepts("first", 10))
-                .thenReturn(Stream.of(
+                .thenReturn(new SearchIdentifiedConcept(1, Stream.of(
                         createDisease("OMIM:123456", "First", "Something should be here", List.of("A", "B"))
-                ));
+                ).toList()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/search?query=first"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(), equalTo("""
-                        [{"id":"OMIM:123456","lbl":"First","def":"Something should be here",""" + """
-                        "syn":["A","B"]}]"""));
+                        {"numberOfTerms":1,"foundConcepts":[{"id":"OMIM:123456","lbl":"First","def":"Something should be here","syn":["A","B"]}]}"""));
     }
 
     private static IdentifiedConcept createDisease(String diseaseId, String diseaseName,

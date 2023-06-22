@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public interface DiseaseService {
      * @param limit max number of results
      * @return List of found concepts
      */
-    Stream<IdentifiedConcept> searchDiseaseConcepts(String query, int limit);
+    SearchIdentifiedConcept searchDiseaseConcepts(String query, int limit);
 
     /**
      * Stream all disease concepts served by the service.
