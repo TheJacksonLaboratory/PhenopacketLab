@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.PhenotypicFeatureService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -94,16 +95,16 @@ public class PhenotypicFeatureControllerTest {
     @Test
     public void getSearchPhenotypicFeatures() throws Exception {
         when(phenotypicFeatureService.searchPhenotypeConcepts("first", 10))
-                .thenReturn(Stream.of(
+                .thenReturn(new SearchIdentifiedConcept(1, Stream.of(
                         createPhenotypicFeature("HP:123456", "First")
-                ));
+                ).toList()));
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/search?query=first"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(), equalTo("""
-                [{"id":"HP:123456","lbl":"First","def":null,"syn":[]}]"""));
+                {"numberOfTerms":1,"foundConcepts":[{"id":"HP:123456","lbl":"First","def":null,"syn":[]}]}"""));
     }
 
     private static IdentifiedConcept createPhenotypicFeature(String curie, String label) {

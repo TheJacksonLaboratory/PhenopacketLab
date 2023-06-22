@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public interface PhenotypicFeatureService {
 
     Optional<IdentifiedConcept> phenotypeConceptById(TermId id);
 
-    Stream<IdentifiedConcept> searchPhenotypeConcepts(String query, int limit);
+    SearchIdentifiedConcept searchPhenotypeConcepts(String query, int limit);
 
     Stream<IdentifiedConcept> allPhenotypeConcepts();
 
