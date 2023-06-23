@@ -8,7 +8,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 import { Utils } from '../../shared/utils';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -46,8 +45,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     phenotypicCount: number;
 
-    phenotypicFeatureSubscription: Subscription;
-    featureItems: any[];
     ref: DynamicDialogRef;
 
     constructor(public searchService: PhenotypeSearchService, public dialogService: DialogService,
@@ -61,9 +58,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
         if (this.phenotypicFeatures && this.phenotypicFeatures.length > 0) {
             this.showTable = true;
         }
-        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures().subscribe(features => {
-            this.featureItems = features;
-        });
     }
 
     featureItemSelected(item: any) {

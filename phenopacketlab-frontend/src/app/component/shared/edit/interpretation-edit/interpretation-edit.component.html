@@ -1,5 +1,8 @@
 <p-toast position="center" key="cen"></p-toast>
-<p-confirmDialog position="center" [style]="{width: '50vw'}"></p-confirmDialog>
+<p-confirmDialog
+  position="center"
+  [style]="{ width: '50vw' }"
+></p-confirmDialog>
 
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
@@ -72,35 +75,32 @@
           <label for="disease">Disease</label>
           <p-dropdown
             id="disease"
-            placeholder="Select disease"
-            dataKey="id"
-            [options]="diseaseItems"
+            placeholder="Search for a disease"
             appendTo="body"
-            [virtualScroll]="true"
-            [virtualScrollItemSize]="30"
-            required
+            [options]="diseaseItems"
+            [(ngModel)]="selectedDisease"
             filter="true"
-            filterBy="lbl,id"
-            optionLabel="lbl"
-            [(ngModel)]="selectedDiseaseItem"
-            (onChange)="updateDiseaseItemSelection($event)"
+            filterBy="id,label"
+            (onFilter)="diseaseContentChanging($event.filter)"
+            (onChange)="updateDiseaseItemSelection($event.value)"
             showClear="true"
+            required
             [ngClass]="{
-              'ng-dirty': !selectedDiseaseItem && submitted
+              'ng-dirty': !selectedDisease && submitted
             }"
           >
-            <ng-template let-item pTemplate="item">
+            <ng-template let-cause pTemplate="item">
               <div
-                [pTooltip]="item.lbl"
-                showDelay="2000"
-                tooltipPosition="bottom"
+                [pTooltip]="cause.label"
+                showDelay="1000"
+                tooltipPosition="left"
                 escape="false"
               >
-                [{{ item.id }}] {{ item.lbl }}
+                [{{ cause.id }}] {{ cause.label }}
               </div>
             </ng-template>
           </p-dropdown>
-          <small *ngIf="!selectedDiseaseItem && submitted" class="p-error"
+          <small *ngIf="!selectedDisease && submitted" class="p-error"
             >Disease diagnosis is required.</small
           >
         </div>

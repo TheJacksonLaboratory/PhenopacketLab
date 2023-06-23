@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { OntologyClass } from 'src/app/models/base';
 import { ConstantObject, Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { Utils } from '../../utils';
 
 @Component({
     selector: 'app-individual-edit',
@@ -25,13 +27,18 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     submitted: boolean;
 
     isPrivateInfoWarnSelected: boolean;
-    causeOfDeaths: any[];
-    selectedCauseOfDeath: any;
-    causeOfDeathSubscription: Subscription;
+
+    // cause of death
+    causeOfDeathItems: OntologyClass[];
+    causeOfDeathItemsCount: number;
+    causeOfDeathSearchstate = 'inactive';
+    causeOfDeathQuery = new Subject();
+    causeOfDeathQueryText: string;
+    causeOfDeathNotFoundFlag = false;
+    loadingCauseOfDeathSearchResults = false;
+    selectedCauseOfDeath: OntologyClass;
 
     selectedSex: ConstantObject;
-    // sexes: ConstantObject[];
-    // sexSubscription: Subscription;
 
     selectedKaryotypicSex: ConstantObject;
 
@@ -53,18 +60,30 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         // get cause of death
-        this.causeOfDeathSubscription = this.diseaseService.getDiseases().subscribe(diseases => {
-            this.causeOfDeaths = diseases;
-            // init selectedCauseOfDeath
-            if (this.subject.vitalStatus?.causeOfDeath) {
-                for (const cause of diseases) {
-                    if (cause.id === this.subject.vitalStatus?.causeOfDeath.id) {
-                        this.selectedCauseOfDeath = cause;
-                        break;
-                    }
+        this.causeOfDeathQuery.pipe(debounceTime(425),
+            distinctUntilChanged()).subscribe((val: string) => {
+                if (this.hasValidCauseOfDeathInput(val)) {
+                    this.loadingCauseOfDeathSearchResults = true;
+                    this.causeOfDeathQueryText = val;
+                    this.diseaseService.searchDiseases(val).subscribe((data) => {
+                        this.causeOfDeathItems = [];
+                        for (const concept of data.foundConcepts) {
+                            this.causeOfDeathItems.push(new OntologyClass(concept.id, concept.lbl, concept.id));
+                        }
+                        this.causeOfDeathItemsCount = data.numberOfTerms;
+                        this.causeOfDeathNotFoundFlag = (this.causeOfDeathItemsCount === 0);
+                        this.causeOfDeathSearchstate = 'active';
+                    }, (error) => {
+                        console.log(error);
+                        this.loadingCauseOfDeathSearchResults = false;
+                    }, () => {
+                        this.loadingCauseOfDeathSearchResults = false;
+                    });
+
+                } else {
+                    this.causeOfDeathSearchstate = 'inactive';
                 }
-            }
-        });
+            }); // End debounce subscribe
 
         if (this.subject) {
             // set Sex
@@ -78,14 +97,17 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                     this.selectedKaryotypicSex = karyosex;
                 }
             }
+            // cause of death
+            if (this.subject.vitalStatus?.causeOfDeath) {
+                this.selectedCauseOfDeath = this.subject.vitalStatus.causeOfDeath;
+                this.causeOfDeathItems = [];
+                this.causeOfDeathItems.push(this.selectedCauseOfDeath);
+            }
             // set isPrivateInfoWarnSelected
             this.isPrivateInfoWarnSelected = this.subject.isPrivateInfoWarnSelected;
         }
     }
     ngOnDestroy(): void {
-        if (this.causeOfDeathSubscription) {
-            this.causeOfDeathSubscription.unsubscribe();
-        }
     }
 
     /**
@@ -189,16 +211,29 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.subjectChange.emit(this.subject);
         }
     }
-    updateCauseOfDeath(event) {
+
+    updateCauseOfDeath(causeOfDeath: any) {
         if (this.subject) {
-            if (event) {
-                this.selectedCauseOfDeath = event.value;
-                this.subject.vitalStatus.causeOfDeath = new OntologyClass(event.value.id, event.value.lbl);
+            if (causeOfDeath) {
+                if (this.causeOfDeathSearchstate === 'active') {
+                    this.causeOfDeathSearchstate = 'inactive';
+                }
+                this.selectedCauseOfDeath = causeOfDeath;
+                causeOfDeath.termUrl = Utils.getUrlForId(causeOfDeath.id);
+                this.subject.vitalStatus.causeOfDeath = causeOfDeath;
+                this.subjectChange.emit(this.subject);
+
             } else {
                 this.subject.vitalStatus.causeOfDeath = undefined;
+                this.subjectChange.emit(this.subject);
             }
-            this.subjectChange.emit(this.subject);
         }
+    }
+    causeOfDeathContentChanging(input: string) {
+        this.causeOfDeathQuery.next(input);
+    }
+    hasValidCauseOfDeathInput(qString: string) {
+        return (qString && qString.length >= 3);
     }
 
     getSexes() {

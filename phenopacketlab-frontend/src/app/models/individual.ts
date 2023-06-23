@@ -97,12 +97,14 @@ export class ConstantObject {
     def: string;
     syn: string[];
     id: string;
+    name: string;
 
     constructor(lbl: string, def: string, id?: string, syn?: string[]) {
         this.lbl = lbl;
         this.def = def;
         this.syn = syn;
         this.id = id;
+        this.name = `[${this.id}] ${this.lbl}`;
     }
 }
 

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { OntologyClass } from 'src/app/models/base';
 import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -9,6 +9,7 @@ import { InterpretationService } from 'src/app/services/interpretation.service';
 import { Utils } from 'src/app/component/shared/utils';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     providers: [ConfirmationService],
@@ -35,16 +36,19 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     genomicInterpretationVisible = false;
     id: string;
 
-    selectedDisease: OntologyClass;
     // progress status
     selectedProgressStatus: ProgressStatus;
     progressStatuses: ProgressStatus[];
     // diseases
-    diseases: OntologyClass[];
-    diseaseItems: any[] = [];
-    selectedDiseaseItem: any;
-    diseaseSubscription: Subscription;
-    // genomic interpretations
+    diseaseItems: OntologyClass[] = [];
+    selectedDisease: OntologyClass;
+    diseaseItemsCount: number;
+    diseaseItemsSearchstate = 'inactive';
+    diseaseQuery = new Subject();
+    diseaseQueryText: string;
+    diseaseItemsNotFoundFlag = false;
+    loadingDiseaseItemsSearchResults = false;
+
     genomicInterpretations: GenomicInterpretation[];
 
     constructor(public phenopacketService: PhenopacketService,
@@ -59,13 +63,31 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.primengConfig.ripple = true;
 
         // get diseases
-        this.diseaseSubscription = this.diseaseService.getDiseases().subscribe(diseases => {
-            this.diseaseItems = diseases;
-            if (this.interpretation) {
-                this.selectedDisease = this.interpretation.diagnosis?.disease;
-                this.selectedDiseaseItem = this.getSelectedDiseaseItem(this.selectedDisease);
-            }
-        });
+        this.diseaseQuery.pipe(debounceTime(425),
+            distinctUntilChanged()).subscribe((val: string) => {
+                if (this.hasValidDiseaseInput(val)) {
+                    this.loadingDiseaseItemsSearchResults = true;
+                    this.diseaseQueryText = val;
+                    this.diseaseService.searchDiseases(val).subscribe((data) => {
+                        this.diseaseItems = [];
+                        for (const concept of data.foundConcepts) {
+                            this.diseaseItems.push(new OntologyClass(concept.id, concept.lbl, concept.id));
+                        }
+                        this.diseaseItemsCount = data.numberOfTerms;
+                        this.diseaseItemsNotFoundFlag = (this.diseaseItemsCount === 0);
+                        this.diseaseItemsSearchstate = 'active';
+                    }, (error) => {
+                        console.log(error);
+                        this.loadingDiseaseItemsSearchResults = false;
+                    }, () => {
+                        this.loadingDiseaseItemsSearchResults = false;
+                    });
+
+                } else {
+                    this.diseaseItemsSearchstate = 'inactive';
+                }
+            }); // End debounce subscribe
+
         // statuses
         this.progressStatuses = this.getProgressStatuses();
         // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
@@ -77,6 +99,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
             this.id = this.interpretation.id;
             this.selectedProgressStatus = this.interpretation.progressStatus;
             this.selectedDisease = this.interpretation.diagnosis?.disease;
+            this.diseaseItems = [this.selectedDisease];
             this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations;
             if (this.genomicInterpretations && this.genomicInterpretations.length > 0) {
                 this.genomicInterpretationVisible = true;
@@ -85,9 +108,6 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.diseaseSubscription) {
-            this.diseaseSubscription.unsubscribe();
-        }
     }
 
     onIdChange(event) {
@@ -122,18 +142,15 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     updateProgressStatus(event) {
         this.selectedProgressStatus = event.value;
     }
-
-    getSelectedDiseaseItem(diseaseTerm: OntologyClass) {
-        for (const item of this.diseaseItems) {
-            if (item.id === diseaseTerm.id) {
-                return item;
-            }
-        }
+    diseaseContentChanging(input: string) {
+        this.diseaseQuery.next(input);
     }
-
-    updateDiseaseItemSelection(event) {
-        const diseaseItem = event.value;
-        this.selectedDisease = new OntologyClass(diseaseItem.id, diseaseItem.lbl);
+    hasValidDiseaseInput(qString: string) {
+        return (qString && qString.length >= 3);
+    }
+    updateDiseaseItemSelection(diseaseItem: OntologyClass) {
+        diseaseItem.termUrl = Utils.getUrlForId(diseaseItem.id);
+        this.selectedDisease = diseaseItem;
     }
 
     updateInterpretation() {
@@ -190,7 +207,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                 }
                 if (genomicInterpretation.interpretationStatus === InterpretationStatus.UNKNOWN_STATUS) {
                     this.confirmationService.confirm({
-                        message: `The \'Interpretation Status\' of the genomic interpretation with the variation id \'${genomicInterpretation.variantInterpretation.variationDescriptor.id}\' is set to \'UNKNOWN\' for. Do you want to change it to another status or carry on with the saving of this interpretation?`,
+                        message: `The \'Interpretation Status\' of the genomic interpretation with the variation id \'${genomicInterpretation.variantInterpretation.variationDescriptor.id}\' is set to \'UNKNOWN_STATUS\'. Click on \'Yes\' to keep the status value to \'UNKNOWN_STATUS\'. Click on \'No\' to keep editing the interpretation and change the status value.`,
                         header: 'Confirmation',
                         icon: 'pi pi-exclamation-triangle',
                         accept: () => {
@@ -205,6 +222,8 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
                     this.saveInterpretation();
                 }
             }
+        } else {
+            this.saveInterpretation();
         }
     }
 
@@ -215,7 +234,7 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         interpretation.id = this.id;
         interpretation.diagnosis.genomicInterpretations = this.genomicInterpretations;
         interpretation.progressStatus = this.selectedProgressStatus;
-        interpretation.diagnosis.disease = new OntologyClass(this.selectedDisease.id, this.selectedDisease.label);
+        interpretation.diagnosis.disease = this.selectedDisease;
         // emit change
         this.interpretationChange.emit(interpretation);
         this.messageService.add({ key: 'cen', severity: 'info', summary: 'Success', detail: `The interpretation with ID \'${interpretation.id}\' has been added to the phenopacket.` });

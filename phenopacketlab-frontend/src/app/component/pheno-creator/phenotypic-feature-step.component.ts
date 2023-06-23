@@ -27,8 +27,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     // table contents of phenotypic features
     selectedFeature: PhenotypicFeature;
     phenotypicFeatures: PhenotypicFeature[] = [];
-    featureItems: any[];
-    phenotypicFeatureSubscription: Subscription;
 
     expandedTextMining = false;
 
@@ -59,9 +57,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        this.phenotypicFeatureSubscription = this.searchService.getPhenotypicFeatures().subscribe(features => {
-            this.featureItems = features;
-        });
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
             this.phenotypicFeatures = phenopacket.phenotypicFeatures;
@@ -78,9 +73,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
-        }
-        if (this.phenotypicFeatureSubscription) {
-            this.phenotypicFeatureSubscription.unsubscribe();
         }
     }
 

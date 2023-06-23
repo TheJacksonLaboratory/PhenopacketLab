@@ -216,33 +216,24 @@
     <label for="causeOfDeath">Cause of death</label>
     <p-dropdown
       id="causeOfDeath"
-      placeholder="Select cause of death"
+      placeholder="Search for a cause of death"
       appendTo="body"
-      [options]="causeOfDeaths"
-      [ngModel]="selectedCauseOfDeath"
-      [virtualScroll]="true"
-      [virtualScrollItemSize]="30"
+      [options]="causeOfDeathItems"
+      [(ngModel)]="selectedCauseOfDeath"
       filter="true"
-      filterBy="lbl,id"
-      optionLabel="lbl"
-      (onChange)="updateCauseOfDeath($event)"
+      filterBy="id,label"
+      (onFilter)="causeOfDeathContentChanging($event.filter)"
+      (onChange)="updateCauseOfDeath($event.value)"
       showClear="true"
     >
-      <ng-template pTemplate="selectedItem">
-        <div *ngIf="selectedCauseOfDeath">
-          <div>
-            [{{ selectedCauseOfDeath.id }}] {{ selectedCauseOfDeath.lbl }}
-          </div>
-        </div>
-      </ng-template>
       <ng-template let-cause pTemplate="item">
         <div
-          [pTooltip]="cause.lbl"
+          [pTooltip]="cause.label"
           showDelay="1000"
           tooltipPosition="left"
           escape="false"
         >
-          [{{ cause.id }}] {{ cause.lbl }}
+          [{{ cause.id }}] {{ cause.label }}
         </div>
       </ng-template>
     </p-dropdown>

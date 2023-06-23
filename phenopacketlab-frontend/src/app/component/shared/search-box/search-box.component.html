@@ -1,23 +1,15 @@
 <p-autoComplete
-  [(ngModel)]="selectedItem"
   appendTo="body"
-  [virtualScroll]="true"
-  [suggestions]="filteredItems"
-  [virtualScrollItemSize]="34"
-  (completeMethod)="filterItems($event)"
-  (onSelect)="itemSelected($event)"
-  field="lbl"
+  [suggestions]="groupedItems"
+  (completeMethod)="contentChanging($event.query)"
+  (onSelect)="submitQuery($event)"
+  field="name"
+  [group]="true"
   placeholder="{{ placeHolderTxt }}"
-  [dropdown]="true"
 >
-  <ng-template let-item pTemplate="item">
-    <div
-      [pTooltip]="item.lbl"
-      showDelay="1000"
-      tooltipPosition="bottom"
-      escape="false"
-    >
-      [{{ item.id }}] {{ item.lbl }}
+  <ng-template let-group pTemplate="group">
+    <div class="flex align-items-center">
+      {{ group.label }}
     </div>
   </ng-template>
 </p-autoComplete>

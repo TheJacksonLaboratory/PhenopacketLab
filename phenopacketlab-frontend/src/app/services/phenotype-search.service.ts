@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TimeElement } from '../models/base';
 
 const phenotypicFeaturesUrl = environment.PHENOTYPIC_FEATURE_URL;
+const phenotypicFeaturesSearchUrl = environment.PHENOTYPIC_FEATURE_SEARCH_URL;
 const textMinerUrl = environment.TEXT_MINING_URL;
 
 @Injectable({
@@ -31,6 +32,14 @@ export class PhenotypeSearchService {
         return this.phenotypicFeatures.asObservable();
     }
 
+    searchPhenotypicFeatures(query: string): Observable<any> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        const params = new HttpParams().set('query', query).set('max', 10); // Create new HttpParams
+        const httpOptions: Object = { headers, params };
+        return this.http.get(phenotypicFeaturesSearchUrl, httpOptions);
+    }
+
     private loadPhenotypicFeatures(): void {
         this.http.get(phenotypicFeaturesUrl).subscribe(res => {
             this.phenotypicFeatures.next(res);
@@ -39,32 +48,9 @@ export class PhenotypeSearchService {
         });
     }
 
-    // getAll(): Observable<any> {
-    //     return this.getAllPhenotypicFeatures();
-    // }
-
-    // public getAllPhenotypicFeatures(): Observable<any> {
-    //     return this.http.get(phenotypicFeaturesUrl);
-    // }
-
-    // public queryPhenotypicFeature(paramsIn: any): Observable<any> {
-    //     return this.sendPhenotypicFeatureQueryRequest(paramsIn, phenotypicFeaturesUrl);
-    // }
-
-    // public queryPhenotypicFeatureById(id: string): Observable<any> {
-    //     return this.http.get(`${phenotypicFeaturesUrl}/${id}`);
-    // }
-
-    // private sendPhenotypicFeatureQueryRequest(paramsIn: any, url: string): Observable<any> {
-    //     const options = {
-    //         phenopacketId: paramsIn.phenoId,
-    //         max: paramsIn.max ? paramsIn.max : '',
-    //         offset: paramsIn.offset ? paramsIn.offset : '',
-    //         sortBy: paramsIn.sortBy ? paramsIn.sortBy : '',
-    //         sortDirection: paramsIn.sortDirection ? paramsIn.sortDirection : ''
-    //     };
-    //     return this.http.get(url, { params: options });
-    // }
+    public getPhenotypicFeatureById(id: string): Observable<any> {
+        return this.http.get(`${phenotypicFeaturesUrl}/${id}`);
+    }
 
     /**
      *

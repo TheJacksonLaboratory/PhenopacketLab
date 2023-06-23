@@ -32,9 +32,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    diseaseItems: any[];
-    diseaseSubscription: Subscription;
-
     submitted = false;
 
     constructor(public searchService: DiseaseSearchService,
@@ -62,9 +59,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        this.diseaseSubscription = this.searchService.getDiseases().subscribe(diseases => {
-            this.diseaseItems = diseases;
-        });
     }
     ngOnDestroy(): void {
         if (this.phenopacketSubscription) {
@@ -72,9 +66,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
-        }
-        if (this.diseaseSubscription) {
-            this.diseaseSubscription.unsubscribe();
         }
     }
 

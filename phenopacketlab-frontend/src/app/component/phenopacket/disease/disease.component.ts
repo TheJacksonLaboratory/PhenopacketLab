@@ -9,7 +9,6 @@ import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { DiseaseDetailDialogComponent } from './disease-detail/disease-detail-dialog/disease-detail-dialog.component';
 import { Utils } from '../../shared/utils';
 import { OntologyClass } from 'src/app/models/base';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-disease',
@@ -45,8 +44,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
 
   diseaseCount: number;
 
-  diseaseItems: any[];
-  diseaseSubscription: Subscription;
   ref: DynamicDialogRef;
 
   constructor(public searchService: DiseaseSearchService,
@@ -62,16 +59,10 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
     if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
       this.showTable = true;
     }
-    this.diseaseSubscription = this.searchService.getDiseases().subscribe(diseases => {
-      this.diseaseItems = diseases;
-  });
   }
 
   ngOnDestroy(): void {
-    if (this.diseaseSubscription) {
-        this.diseaseSubscription.unsubscribe();
-    }
-}
+  }
   diseaseItemSelected(item: any) {
     if (item) {
       const disease = new Disease();
