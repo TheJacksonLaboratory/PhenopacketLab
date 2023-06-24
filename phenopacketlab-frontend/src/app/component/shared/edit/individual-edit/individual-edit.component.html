@@ -38,7 +38,7 @@
     <label for="lastEncounterDate"><b>Age at last clinical encounter</b></label>
     <app-time-element
       id="lastEncounterDate"
-      [timeElement]="subject?.timeAtLastEncounter"
+      [timeElement]="timeOfLastEncounter"
       (timeElementEvent)="updateTimeOfLastEncounter($event)"
     ></app-time-element>
   </div>
@@ -90,56 +90,6 @@
     </p-dropdown>
   </div>
   <div class="field col-12 md:col-4"></div>
-  <!-- We do not need gender for now -->
-  <!-- <div *ngIf="!showGender" class="field col-12 md:col-1 align-items-center">
-    <button
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-ellipsis-h"
-      class="p-button-rounded p-button-text"
-      pTooltip="Show more options"
-      (click)="handleClickMore($event)"
-    ></button>
-  </div>
-  <div *ngIf="!showGender" class="field col-12 md:col-3"></div>
-  <div *ngIf="showGender" class="field col-12 md:col-3">
-    <label for="gender">Gender</label>
-    <p-dropdown
-      id="gender"
-      appendTo="body"
-      placeholder="Select gender"
-      [options]="genders"
-      [(ngModel)]="selectedGender"
-      (ngModelChange)="updateGender($event)"
-      pTooltip="Self-identified gender"
-      showDelay="2000"
-      class="w-full"
-      optionLabel="name"
-      [showClear]="true"
-    >
-      <ng-template let-gender pTemplate="item">
-        <div
-          [pTooltip]="gender.definition"
-          escape="false"
-          tooltipPosition="bottom"
-        >
-          {{ gender.lbl }} [{{ gender.id }}]
-        </div>
-      </ng-template>
-    </p-dropdown>
-  </div>
-  <div *ngIf="showGender" class="field col-12 md:col-1">
-    <button
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-angle-double-left"
-      class="p-button-rounded p-button-text"
-      pTooltip="Show less"
-      (click)="handleClickMore($event)"
-    ></button>
-  </div> -->
 </div>
 <br />
 <h3><b>Vital Status</b></h3>
@@ -151,7 +101,7 @@
       appendTo="body"
       placeholder="Select status"
       [options]="getStatuses()"
-      [ngModel]="subject?.vitalStatus?.status"
+      [(ngModel)]="status"
       (ngModelChange)="updateStatus($event)"
       pTooltip="The vital status of the individual e.g. whether they are alive or the time and cause of death. RECOMMENDED"
       tooltipPosition="bottom"
@@ -165,7 +115,7 @@
 
   <div
     class="field col-12 md:col-4"
-    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+    *ngIf="status === getDeceasedStatus()"
   >
     <label for="survivalTime">Survival time (days)</label>
     <div class="flex align-items-center gap-1">
@@ -200,7 +150,7 @@
   </div>
   <div
     class="field col-12 md:col-4"
-    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+    *ngIf="status === getDeceasedStatus()"
   >
     <label for="timeOfDeath">Time of death</label>
     <app-time-element
@@ -211,7 +161,7 @@
   </div>
   <div
     class="field col-12 md:col-4"
-    *ngIf="subject?.vitalStatus?.status === getDeceasedStatus()"
+    *ngIf="status === getDeceasedStatus()"
   >
     <label for="causeOfDeath">Cause of death</label>
     <p-dropdown
@@ -239,3 +189,4 @@
     </p-dropdown>
   </div>
 </div>
+<p-toast *ngIf="profile"></p-toast>
