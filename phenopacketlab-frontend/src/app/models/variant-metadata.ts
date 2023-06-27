@@ -99,7 +99,7 @@ export class VariantMetadata {
         const vcfRecord = new VcfRecord();
         vcfRecord.genomeAssembly = assembly;
         vcfRecord.chrom = this.chr;
-        vcfRecord.pos = this.position;
+        vcfRecord.pos = this.position.toString();
         vcfRecord.alt = this.alt;
         vcfRecord.ref = this.ref;
         vDescriptor.vcfRecord = vcfRecord;

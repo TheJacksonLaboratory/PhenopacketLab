@@ -2,11 +2,14 @@ import { OntologyClass, TimeElement } from './base';
 import { Disease } from './disease';
 
 export class Individual {
+    // not part of phenopacket schema
+    isPrivateInfoWarnSelected?: boolean;
+
     id = '';
-    alternateIds: string[] = [];
+    alternateIds: string[];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;
-    vitalStatus: VitalStatus = new VitalStatus();
+    vitalStatus: VitalStatus;
     sex: string;
     karyotypicSex: string;
     gender: OntologyClass;
@@ -80,7 +83,7 @@ export class VitalStatus {
         }
         if (obj['causeOfDeath']) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
-            vitalSatus.causeOfDeath.url = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
+            vitalSatus.causeOfDeath.termUrl = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
         }
         if (obj['survivalTimeInDays']) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
@@ -90,37 +93,38 @@ export class VitalStatus {
 }
 
 export class ConstantObject {
-    name: string;
-    definition: string;
-    synonyms: string[];
-    id: Id;
-}
-export class Id {
-    value: string;
-    prefix: string;
+    lbl: string;
+    def: string;
+    syn: string[];
     id: string;
-}
-export class KaryotypicSex {
-    public static VALUES = [new KaryotypicSex('UNKNOWN_KARYOTYPE', 'Untyped or inconclusive karyotyping'),
-        new KaryotypicSex('XX', 'Female'),
-        new KaryotypicSex('XY', 'Male'),
-        new KaryotypicSex('XO', 'Single X chromosome only'),
-        new KaryotypicSex('XXY', 'Two X and one Y chromosome'),
-        new KaryotypicSex('XXX', 'Three X chromosomes'),
-        new KaryotypicSex('XXYY', 'Two X chromosomes and two Y chromosomes'),
-        new KaryotypicSex('XXXY', 'Three X chromosomes and one Y chromosome'),
-        new KaryotypicSex('XXXX', 'Four X chromosomes'),
-        new KaryotypicSex('XYY', 'One X and two Y chromosomes'),
-        new KaryotypicSex('OTHER_KARYOTYPE', 'None of the above types')];
-
     name: string;
-    definition;
-    id: Id;
 
-    constructor(name: string, definition: string, id?: Id) {
-        this.name = name;
-        this.definition = definition;
+    constructor(lbl: string, def: string, id?: string, syn?: string[]) {
+        this.lbl = lbl;
+        this.def = def;
+        this.syn = syn;
         this.id = id;
+        this.name = `[${this.id}] ${this.lbl}`;
     }
+}
+
+export class KaryotypicSex {
+    public static VALUES = [new ConstantObject('UNKNOWN_KARYOTYPE', 'Untyped or inconclusive karyotyping'),
+        new ConstantObject('XX', 'Female'),
+        new ConstantObject('XY', 'Male'),
+        new ConstantObject('XO', 'Single X chromosome only'),
+        new ConstantObject('XXY', 'Two X and one Y chromosome'),
+        new ConstantObject('XXX', 'Three X chromosomes'),
+        new ConstantObject('XXYY', 'Two X chromosomes and two Y chromosomes'),
+        new ConstantObject('XXXY', 'Three X chromosomes and one Y chromosome'),
+        new ConstantObject('XXXX', 'Four X chromosomes'),
+        new ConstantObject('XYY', 'One X and two Y chromosomes'),
+        new ConstantObject('OTHER_KARYOTYPE', 'None of the above types')];
+}
+export class Sex {
+    public static VALUES = [new ConstantObject('UNKNOWN_SEX', 'Not assessed or not available. Maps to NCIT:C17998'),
+        new ConstantObject('FEMALE', 'Female sex. Maps to NCIT:C46113'),
+        new ConstantObject('MALE', 'Male sex. Maps to NCIT:C46112'),
+        new ConstantObject('OTHER', 'It is not possible to accurately assess the applicability of MALE/FEMALE. Maps to NCIT:C45908')];
 }
 

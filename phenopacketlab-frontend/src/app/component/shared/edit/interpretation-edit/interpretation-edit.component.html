@@ -1,4 +1,9 @@
 <p-toast position="center" key="cen"></p-toast>
+<p-confirmDialog
+  position="center"
+  [style]="{ width: '50vw' }"
+></p-confirmDialog>
+
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
     <label for="interpretationid">Interpretation ID</label>
@@ -35,6 +40,7 @@
       [options]="progressStatuses"
       (onChange)="updateProgressStatus($event)"
       pTooltip="Progress status"
+      tooltipPosition="bottom"
       showDelay="2000"
       required
       class="w-full"
@@ -43,9 +49,7 @@
         'ng-dirty': !selectedProgressStatus && submitted
       }"
     ></p-dropdown>
-    <small
-      *ngIf="!selectedProgressStatus && submitted"
-      class="p-error"
+    <small *ngIf="!selectedProgressStatus && submitted" class="p-error"
       >Progress status is required.</small
     >
   </div>
@@ -71,58 +75,54 @@
           <label for="disease">Disease</label>
           <p-dropdown
             id="disease"
-            placeholder="Select disease"
-            dataKey="id"
-            [options]="diseases"
+            placeholder="Search for a disease"
             appendTo="body"
-            [virtualScroll]="true"
-            [virtualScrollItemSize]="30"
-            required
-            filter="true"
-            filterBy="label"
+            [options]="diseaseItems"
             [(ngModel)]="selectedDisease"
-            optionLabel="label"
+            filter="true"
+            filterBy="id,label"
+            (onFilter)="diseaseContentChanging($event.filter)"
+            (onChange)="updateDiseaseItemSelection($event.value)"
             showClear="true"
+            required
             [ngClass]="{
               'ng-dirty': !selectedDisease && submitted
             }"
           >
-            <ng-template let-disease pTemplate="item">
+            <ng-template let-cause pTemplate="item">
               <div
-                [pTooltip]="disease.id"
+                [pTooltip]="cause.label"
+                showDelay="1000"
                 tooltipPosition="left"
                 escape="false"
               >
-                {{ disease.label }}
+                [{{ cause.id }}] {{ cause.label }}
               </div>
             </ng-template>
           </p-dropdown>
-          <small
-            *ngIf="!selectedDisease && submitted"
-            class="p-error"
+          <small *ngIf="!selectedDisease && submitted" class="p-error"
             >Disease diagnosis is required.</small
           >
         </div>
-        <div class="field col-12 md:col-6"></div>
-        <div class="field col-12">
-          <button
-            pButton
-            label="Add Genomic Interpretation"
-            (click)="addGenomicInterpretation()"
-            icon="pi pi-plus"
-            class="p-button-text"
-            style="width: 300px"
-          ></button>
-        </div>
 
-        <div *ngIf="genomicInterpretationVisible" class="field col-12">
+        <div class="field col-12 md:col-6"></div>
+
+        <div class="field col-12">
           <p-table
             [value]="genomicInterpretations"
             dataKey="key"
             [tableStyle]="{ 'min-width': '60rem' }"
           >
             <ng-template pTemplate="caption">
-              <div class="table-header">Genomic Interpretation(s)</div>
+              <div class="flex align-items-center justify-content-between">
+                Genomic Interpretation(s)
+                <p-button
+                  icon="pi pi-plus"
+                  pTooltip="Add Genomic Interpretation"
+                  tooltipPosition="bottom"
+                  (onClick)="addGenomicInterpretation()"
+                ></p-button>
+              </div>
             </ng-template>
             <ng-template pTemplate="header">
               <tr>

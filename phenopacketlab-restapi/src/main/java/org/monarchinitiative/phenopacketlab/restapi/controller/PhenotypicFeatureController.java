@@ -1,42 +1,48 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
-import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
-import org.monarchinitiative.phenopacketlab.restapi.controller.dto.OntologyClassDto;
+import org.monarchinitiative.phenopacketlab.core.PhenotypicFeatureService;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "${api.version}/phenotypic-features")
 public class PhenotypicFeatureController {
 
-    private final HpoService phenotypicFeatureService;
+    private final PhenotypicFeatureService phenotypicFeatureService;
 
-    public PhenotypicFeatureController(HpoService phenotypicFeatureService) {
+    public PhenotypicFeatureController(PhenotypicFeatureService phenotypicFeatureService) {
         this.phenotypicFeatureService = phenotypicFeatureService;
     }
 
-    private static Function<Term, OntologyClassDto> phenotypicFeatureToDto() {
-        return d -> new OntologyClassDto(d.id().getValue(), d.getName());
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<OntologyClassDto> phenotypicFeatureById(@PathVariable("id") String id) {
+    @RequestMapping(value = {"${api.version}/phenotypic-features/{id}"}, method = RequestMethod.GET)
+    public ResponseEntity<IdentifiedConcept> phenotypicFeatureById(@PathVariable("id") String id) {
         TermId phenotypicFeatureId = TermId.of(id);
-        return ResponseEntity.of(phenotypicFeatureService.phenotypicFeatureById(phenotypicFeatureId)
-                .map(phenotypicFeatureToDto()));
+        return ResponseEntity.of(phenotypicFeatureService.phenotypeConceptById(phenotypicFeatureId));
     }
 
-    @GetMapping
-    public ResponseEntity<List<OntologyClassDto>> allPhenotypicFeatures() {
-        return ResponseEntity.ok(phenotypicFeatureService.phenotypicFeatures()
-                .map(phenotypicFeatureToDto())
-                .collect(Collectors.toList()));
+    @RequestMapping(value = {"${api.version}/phenotypic-features/search"}, method = RequestMethod.GET)
+    public ResponseEntity<SearchIdentifiedConcept> searchFeature(@RequestParam("query") String query,
+                                                                 @RequestParam("max") Optional<Integer> max) {
+        if (query == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        int maxResults = 10;
+        if (max.isPresent()) {
+            maxResults = max.get();
+        }
+        return ResponseEntity.ok(phenotypicFeatureService.searchPhenotypeConcepts(query, maxResults));
+    }
+
+    @RequestMapping(value = {"${api.version}/phenotypic-features/all"}, method = RequestMethod.GET)
+    public ResponseEntity<List<IdentifiedConcept>> allPhenotypicFeatures() {
+        return ResponseEntity.ok(phenotypicFeatureService.allPhenotypeConcepts()
+                .toList());
     }
 
 }

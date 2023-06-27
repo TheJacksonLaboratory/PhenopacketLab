@@ -1,0 +1,464 @@
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-6">
+    <label for="treatmenttarget"><b>Treatment target:</b></label>
+    <p-dropdown
+      ngDefaultControl
+      id="treatmenttarget"
+      appendTo="body"
+      [options]="diseases"
+      [ngModel]="medicalAction?.treatmentTarget"
+      (onChange)="updateTreatmentTarget($event)"
+      optionLabel="label"
+      [filter]="true"
+      filterBy="label,id"
+      [showClear]="true"
+      placeholder="Select a target"
+    >
+      <ng-template let-target pTemplate="item">
+        <div
+          [pTooltip]="target.label"
+          showDelay="2000"
+          tooltipPosition="bottom"
+          escape="false"
+        >
+          [{{ target.id }}] {{ target.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="treatmentintent"><b>Treatment intent:</b></label>
+    <p-dropdown
+      ngDefaultControl
+      id="treatmentintent"
+      appendTo="body"
+      [options]="intents"
+      [ngModel]="medicalAction?.treatmentIntent"
+      (onChange)="updateTreatmentIntent($event)"
+      optionLabel="label"
+      [filter]="true"
+      filterBy="label,id"
+      [showClear]="true"
+      placeholder="Select an intent"
+    >
+      <ng-template let-intent pTemplate="item">
+        <div
+          [pTooltip]="intent.label"
+          showDelay="2000"
+          tooltipPosition="bottom"
+          escape="false"
+        >
+          [{{ intent.id }}] {{ intent.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <div class="field col-12 md:col-6">
+    <label for="treatmentresponse"><b>Response to treatment:</b></label>
+    <p-dropdown
+      ngDefaultControl
+      id="treatmentresponse"
+      appendTo="body"
+      [options]="responses"
+      [ngModel]="medicalAction?.responseToTreatment"
+      (onChange)="updateTreatmentResponse($event)"
+      optionLabel="label"
+      [filter]="true"
+      filterBy="label,id"
+      [showClear]="true"
+      placeholder="Select a treatment response"
+    >
+      <ng-template let-response pTemplate="item">
+        <div
+          [pTooltip]="response.label"
+          showDelay="2000"
+          tooltipPosition="bottom"
+          escape="false"
+        >
+          [{{ response.id }}] {{ response.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <div class="field col-12 md:col-6">
+    <label for="treatmenttermination"
+      ><b>Treatment termination reason:</b></label
+    >
+    <p-dropdown
+      ngDefaultControl
+      id="treatmenttermination"
+      appendTo="body"
+      [options]="terminationReasons"
+      [ngModel]="medicalAction?.treatmentTerminationReason"
+      (onChange)="updateTreatmentTerminationReason($event)"
+      optionLabel="label"
+      [filter]="true"
+      filterBy="label,id"
+      [showClear]="true"
+      placeholder="Select a treatment termination reason"
+    >
+      <ng-template let-termination pTemplate="item">
+        <div
+          [pTooltip]="termination.label"
+          showDelay="2000"
+          tooltipPosition="bottom"
+          escape="false"
+        >
+          [{{ termination.id }}] {{ termination.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="events"><b>Adverse event(s)</b></label>
+    <ontology-tree-select
+      id="events"
+      pTooltip="Adverse event ontology (ODAE)"
+      tooltipPosition="bottom"
+      showDelay="2000"
+      [selectionMode]="'checkbox'"
+      (selectedNodesChange)="updateAdverseEvents($event)"
+      [selectedNodes]="medicalAction?.adverseEventNodes"
+      [nodes]="adverseEventNodes"
+    ></ontology-tree-select>
+  </div>
+  <div class="field col-12 md:col-6"></div>
+
+  <div class="field col-12 md:col-3">
+    <label for="actiontype"><b>Select an action type:</b></label>
+    <p-dropdown
+      ngDefaultControl
+      id="actiontype"
+      appendTo="body"
+      [options]="actionTypes"
+      [(ngModel)]="actionType"
+      (onChange)="updateActionType($event)"
+      [showClear]="true"
+      placeholder="Select an action type"
+    >
+    </p-dropdown>
+  </div>
+  <div class="field col-12 md:col-9"></div>
+  <!-- Procedure medical action -->
+  <div *ngIf="actionType === 'Procedure'" class="field col-12">
+    <div class="grid p-fluid">
+      <div class="field col-12 md:col-6">
+        <label for="code"><b>Code:</b></label>
+        <ontology-class-input
+          id="code"
+          [ontologyObject]="procedureCode"
+          (ontologyObjectEvent)="changeProcedureCode($event)"
+        ></ontology-class-input>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="bodysite"><b>Body site:</b></label>
+        <p-dropdown
+          ngDefaultControl
+          id="bodysite"
+          appendTo="body"
+          [options]="radiationTherapyBodySites"
+          [ngModel]="bodySite"
+          (onChange)="changeBodySite($event)"
+          [showClear]="true"
+          [filter]="true"
+          placeholder="Select an body site"
+        >
+        </p-dropdown>
+      </div>
+      <div class="field col-12">
+        <b>Performed on: </b> {{ performed?.toString() }}
+      </div>
+    </div>
+  </div>
+  <!-- Treatement medical action -->
+  <div *ngIf="actionType === 'Treatment'" class="field col-12">
+    <div class="field col-12 md:col-6">
+      <label for="agent"><b>Agent:</b></label>
+      <ontology-class-input
+        id="agent"
+        [ontologyObject]="agent"
+        (ontologyObjectEvent)="changeAgent($event)"
+      ></ontology-class-input>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="routeOfAdministration"><b>Route of administration:</b></label>
+      <ontology-class-input
+        id="routeOfAdministration"
+        [ontologyObject]="routeOfAdministration"
+        (ontologyObjectEvent)="changeRouteOfAdministration($event)"
+      ></ontology-class-input>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="drugtype"><b>Drug type:</b></label>
+      <p-dropdown
+        ngDefaultControl
+        id="drugtype"
+        appendTo="body"
+        [options]="drugTypes"
+        [ngModel]="drugType"
+        (onChange)="onDrugTypeChange($event)"
+        [showClear]="true"
+        placeholder="Select an drug type"
+      >
+      </p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6"></div>
+
+    <div *ngIf="doseIntervalVisible" class="field col-12">
+      <!-- <p-table
+        [value]="doseIntervals"
+        dataKey="key"
+        [tableStyle]="{ 'min-width': '60rem' }"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header">Dose interval(s)</div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 5rem">Unit</th>
+            <th pResizableColumn style="min-width: 2rem">Value</th>
+            <th pResizableColumn>Schedule frequency</th>
+            <th pResizableColumn>Interval</th>
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-doseinterval>
+          <tr>
+            <td>{{ doseinterval.quantity?.unit }}</td>
+            <td>{{ doseinterval.quantity?.value }}</td>
+            <td>{{ doseinterval.scheduleFrequency?.toString() }}</td>
+            <td>{{ doseinterval.interval?.toString() }}</td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteDoseInterval(doseinterval)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table> -->
+      <p-table
+        [value]="doseIntervals"
+        dataKey="key"
+        editMode="row"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="caption">
+          <!-- Display add button if not in stepper or if no expression is present -->
+          <div class="flex align-items-center justify-content-between">
+            Dose interval(s)
+            <p-button
+              icon="pi pi-plus"
+              pTooltip="Add dose interval"
+              tooltipPosition="bottom"
+              (onClick)="addDoseInterval()"
+            ></p-button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Unit</th>
+            <th>Value</th>
+            <th>Schedule frequency</th>
+            <th>Interval</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template
+          pTemplate="body"
+          let-doseinterval
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
+          <tr [pEditableRow]="doseinterval">
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    type="text"
+                    [(ngModel)]="doseinterval.unit"
+                    required
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ doseinterval?.unit }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    type="text"
+                    [(ngModel)]="doseinterval.value"
+                    required
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ doseinterval?.value }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    [(ngModel)]="doseinterval.scheduleFrequency"
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ doseinterval.scheduleFrequency?.toString() }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText [(ngModel)]="doseinterval.interval" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ doseinterval.interval?.toString() }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <div class="flex align-items-center justify-content-center gap-2">
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  pInitEditableRow
+                  icon="pi pi-pencil"
+                  (click)="onDoseIntervalEditInit(doseinterval)"
+                  class="p-button-rounded p-button-text"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  pSaveEditableRow
+                  icon="pi pi-check"
+                  (click)="onDoseIntervalEditSave(doseinterval)"
+                  class="p-button-rounded p-button-text p-button-success mr-2"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  pCancelEditableRow
+                  icon="pi pi-times"
+                  (click)="onDoseIntervalEditCancel(doseinterval, ri)"
+                  class="p-button-rounded p-button-text p-button-danger"
+                ></button>
+              </div>
+            </td>
+
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-warning"
+                (click)="deleteDoseInterval(doseinterval)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="field col-12">
+      <b>Cumulative dose: </b>
+      {{
+        cumulativeDose?.value +
+          " " +
+          cumulativeDose?.unit.label +
+          " [" +
+          cumulativeDose?.unit.id +
+          "]"
+      }}
+    </div>
+  </div>
+  <!-- RadiationTherapy medical action -->
+  <div *ngIf="actionType === 'Radiation therapy'" class="field col-12">
+    <div class="field col-12 md:col-6">
+      <label for="modality"><b>Modality:</b></label>
+      <ontology-class-input
+        id="modality"
+        [ontologyObject]="modality"
+        (ontologyObjectEvent)="changeModality($event)"
+      ></ontology-class-input>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="bodysite1"><b>Body site:</b></label>
+      <p-dropdown
+        ngDefaultControl
+        id="bodysite1"
+        appendTo="body"
+        [options]="radiationTherapyBodySites"
+        [ngModel]="bodySite"
+        (onChange)="changeBodySite($event)"
+        [showClear]="true"
+        [filter]="true"
+        placeholder="Select an body site"
+      >
+      </p-dropdown>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="dosage"><b>Dosage:</b></label>
+      <p-inputNumber id="dosage" onInput="changeDosage($event)" placeholder="Dosage in Gy">
+      </p-inputNumber>
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="fractions"><b>Fractions:</b></label>
+      <p-inputNumber id="fractions" onInput="changeFractions($event)" placeholder="Fractions">
+      </p-inputNumber>
+    </div>
+  </div>
+
+  <!-- TherapeuticRegimen medical action -->
+  <div *ngIf="actionType === 'Therapeutic regimen'" class="field col-12">
+    <div class="grid p-fluid">
+      <div class="field col-12 md:col-6">
+        <label for="identifier"><b>Identifier:</b></label>
+        <ontology-class-input
+          id="identifier"
+          [ontologyObject]="identifier"
+          (ontologyObjectEvent)="changeIdentifier($event)"
+        ></ontology-class-input>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="regimenstatus"><b>Regimen status:</b></label>
+        <p-dropdown
+          ngDefaultControl
+          id="regimenstatus"
+          appendTo="body"
+          [options]="regimenStatuses"
+          [ngModel]="regimenStatus"
+          (onChange)="onRegimenStatusChange($event)"
+          [showClear]="true"
+          [filter]="true"
+          placeholder="Select an regimen status"
+        >
+        </p-dropdown>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="starttime"><b>Start time:</b></label>
+        <app-time-element id="starttime"></app-time-element>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="endtime"><b>End time:</b></label>
+        <app-time-element id="endtime"></app-time-element>
+      </div>
+    </div>
+  </div>
+</div>

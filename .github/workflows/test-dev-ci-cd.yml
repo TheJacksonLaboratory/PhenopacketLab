@@ -87,7 +87,7 @@ jobs:
           --platform managed \
           --allow-unauthenticated \
           --project ${{ secrets.GCP_PROJECT }} \
-          --memory 6Gi \
+          --memory 8Gi \
           --cpu 2
 
   # Frontend build and Tests

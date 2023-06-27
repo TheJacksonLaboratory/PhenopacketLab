@@ -32,7 +32,7 @@
 </div>
 
 <div
-  *ngIf="timeElementTypes.length === 4 && selectedAgeType === ontologyClassType"
+  *ngIf="useOntologyClass && selectedAgeType === ontologyClassType"
 >
   <app-ontology-time
     (ontologyClassChange)="updateTimeElement($event)"
@@ -52,4 +52,9 @@
     [filter]="true"
     [filterInputAutoFocus]="true"
   ></p-treeSelect> -->
+</div>
+<div *ngIf="selectedAgeType === timestampType">
+  <label for="timestamp">Timestamp</label>
+  <input pInputText id="timestamp" type="text" placeholder="YYYY-MM-DDTHH:mm:ss. sssZ" [ngModel]="timestamp" (ngModelChange)="updateTimeElement($event)"/>
+  <!-- <p-inputMask id="timestamp" mask="YYYY-MM-DDTHH:mm:ss. sssZ" [(ngModel)]="timestamp" placeholder="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (onInput)="updateTimeElement($event)"></p-inputMask> -->
 </div>

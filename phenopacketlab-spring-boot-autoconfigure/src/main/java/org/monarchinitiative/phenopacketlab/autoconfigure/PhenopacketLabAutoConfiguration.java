@@ -1,21 +1,18 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
-import org.monarchinitiative.phenol.annotations.formats.hpo.HpoDiseases;
-import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaderOptions;
-import org.monarchinitiative.phenol.annotations.io.hpo.HpoDiseaseLoaders;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.InvalidResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.MissingPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.autoconfigure.exception.UndefinedPhenopacketLabResourceException;
 import org.monarchinitiative.phenopacketlab.core.*;
-import org.monarchinitiative.phenopacketlab.core.disease.DiseaseService;
-import org.monarchinitiative.phenopacketlab.core.disease.PhenolDiseaseService;
+import org.monarchinitiative.phenopacketlab.core.MultipurposeConceptConstantService;
+import org.monarchinitiative.phenopacketlab.core.DiseaseService;
 import org.monarchinitiative.phenopacketlab.core.miner.TextMiningService;
-import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
-import org.monarchinitiative.phenopacketlab.core.ontology.PhenolHpoService;
-import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.miner.FenominalTextMiningService;
+import org.monarchinitiative.phenopacketlab.core.functionalannotation.FunctionalVariantAnnotationService;
+import org.monarchinitiative.phenopacketlab.io.PhenopacketResourceServiceImpl;
 import org.monarchinitiative.phenopacketlab.io.VariantValidatorFunctionalAnnotationService;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
+import org.monarchinitiative.phenopacketlab.core.ValidateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -28,6 +25,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,14 +74,26 @@ public class PhenopacketLabAutoConfiguration {
     }
 
     @Bean
-    public ConceptResourceService conceptResourceService(ExecutorService executorService, PhenopacketLabDataResolver phenopacketLabDataResolver) throws PhenopacketLabException {
-        ConceptResourceServiceLoader loader = new ConceptResourceServiceLoader(executorService, phenopacketLabDataResolver);
+    public BigBadDataBlob bigBadDataBlob(ExecutorService executorService,
+                                         PhenopacketLabDataResolver phenopacketLabDataResolver) throws InvalidResourceException {
+        BigBadMultipurposeLoader loader = new BigBadMultipurposeLoader(properties, executorService, phenopacketLabDataResolver);
         return loader.load();
     }
 
     @Bean
-    public ConceptConstantsService conceptConstantsService(ConceptResourceService conceptResourceService) {
-        return ConceptConstantsServiceConfigurer.configure(conceptResourceService);
+    public ConceptResourceService conceptResourceService(BigBadDataBlob bigBadDataBlob) {
+        return bigBadDataBlob.conceptResourceService();
+    }
+
+    @Bean
+    public OntologyHierarchyServiceRegistry ontologyHierarchyServiceRegistry(BigBadDataBlob bigBadDataBlob) {
+        return bigBadDataBlob.hierarchyServiceRegistry();
+    }
+
+    @Bean
+    public ConceptConstantsService conceptConstantsService(ConceptResourceService conceptResourceService,
+                                                           OntologyHierarchyServiceRegistry ontologyHierarchyServiceRegistry) {
+        return ConceptConstantsServiceConfigurer.configure(conceptResourceService, ontologyHierarchyServiceRegistry);
     }
 
     @Bean
@@ -94,23 +104,23 @@ public class PhenopacketLabAutoConfiguration {
                 .orElseThrow(() -> new RuntimeException("Missing HP concept resource!"));
     }
 
+    /**
+     * A stand-in for {@link DiseaseService} and {@link PhenotypicFeatureService}.
+     */
     @Bean
-    public HpoService hpoService(OntologyConceptResource hpo) {
-        return new PhenolHpoService(hpo.getOntology());
+    public MultipurposeConceptConstantService multiConceptConstantService(PhenopacketLabProperties properties,
+                                                                   ConceptResourceService conceptResourceService) {
+        List<String> diseasePrefixes = properties.getDiseaseDatabasePrefixes();
+        LOGGER.debug("Using disease prefixes: {}", diseasePrefixes);
+        List<String> phenotypePrefixes = properties.getPhenotypePrefixes();
+        LOGGER.debug("Using phenotype prefixes: {}", phenotypePrefixes);
+        return new MultipurposeConceptConstantService(conceptResourceService, diseasePrefixes, phenotypePrefixes);
     }
 
+
     @Bean
-    public DiseaseService diseaseService(PhenopacketLabDataResolver resolver,
-                                         OntologyConceptResource hpo) throws InvalidResourceException {
-        try {
-            Path annotationPath = resolver.hpoAnnotationPath();
-            LOGGER.debug("Reading HPO annotation file at {}", annotationPath.toAbsolutePath());
-            HpoDiseases diseases = HpoDiseaseLoaders.defaultLoader(hpo.getOntology(), HpoDiseaseLoaderOptions.defaultOptions())
-                    .load(annotationPath);
-            return new PhenolDiseaseService(diseases);
-        } catch (IOException e) {
-            throw new InvalidResourceException(e);
-        }
+    public PhenopacketResourceService phenopacketResourceService(ConceptResourceService conceptResourceService) {
+        return new PhenopacketResourceServiceImpl(conceptResourceService);
     }
 
     @Bean
@@ -118,7 +128,7 @@ public class PhenopacketLabAutoConfiguration {
         return switch (properties.getTextMining().getProvider()) {
             case FENOMINAL -> {
                 LOGGER.info("Using fenominal for text mining");
-                yield new FenominalTextMiningService(hpo.getOntology());
+                yield new FenominalTextMiningService(hpo.ontology());
             }
         };
     }
@@ -127,8 +137,13 @@ public class PhenopacketLabAutoConfiguration {
     public FunctionalVariantAnnotationService functionalVariantAnnotationService() { return new VariantValidatorFunctionalAnnotationService(); }
 
     @Bean
-    public PhenopacketLabMetadata phenopacketLabMetadata() {
+    public PhenopacketLabMetadata phenopacketLabMetadataService() {
         return new PhenopacketLabMetadata(properties.phenopacketSchemaVersion());
+    }
+
+    @Bean
+    public ValidateService validatePhenopacketService() {
+        return new ValidateService();
     }
 
     private static Properties readProperties() {

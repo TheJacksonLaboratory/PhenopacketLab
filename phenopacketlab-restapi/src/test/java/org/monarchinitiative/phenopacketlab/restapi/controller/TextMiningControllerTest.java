@@ -28,13 +28,11 @@ public class TextMiningControllerTest {
 
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
-    @Mock(lenient = true)
+    @Mock
     public TextMiningService textMiningService;
 
     @InjectMocks
     public TextMiningController textMiningController;
-    @InjectMocks
-    public PhenotypicFeatureController hpoController;
 
     private MockMvc mockMvc;
 
@@ -44,7 +42,7 @@ public class TextMiningControllerTest {
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(textMiningController, hpoController)
+        mockMvc = MockMvcBuilders.standaloneSetup(textMiningController)
                 .addPlaceholderValue("api.version", "/api/v1")
                 .setControllerAdvice(HANDLER)
                 .build();
@@ -67,9 +65,6 @@ public class TextMiningControllerTest {
 
     @Test
     public void textMined_missingPayload() throws Exception {
-        when(textMiningService.mineText(null, options))
-                .thenReturn(new MinedText(null, null));
-
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/textminer"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andReturn();

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { BaseSearchService } from 'src/app/services/base-search.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DiseaseSearchService } from 'src/app/services/disease-search.service';
+import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
+import { ConstantObject } from 'src/app/models/individual';
 
 
 @Component({
@@ -11,42 +14,16 @@ import { BaseSearchService } from 'src/app/services/base-search.service';
 export class SearchBoxComponent implements OnInit {
 
     @Input()
-    localStorageKey: string;
-    @Input()
     searchLabel: string;
     @Input()
     itemName: string;
-    @Input()
-    searchService: BaseSearchService;
-
+    // can be 'feature' or 'disease'
     @Input()
     searchType: string;
-
-    @Input()
-    selectedSearchBy: string;
-
-    @Output()
-    selectedSearchItem = new EventEmitter<any>();
-
     @Input()
     showHint;
-
-    @Input()
-    showFilters: boolean;
-
-    @Input()
-    resetSearch: boolean;
-
     @Output()
-    showFiltersChange = new EventEmitter<boolean>();
-
-    searchCriteria: any = { selectedItems: [] };
-
-    myControl = new UntypedFormControl();
-    myControlSubscription: any;
-
-    itemOptions: any[] = [];
-    itemCount: number;
+    selectedItemChange = new EventEmitter<any>();
 
     @Input()
     placeHolderTxt;
@@ -54,108 +31,90 @@ export class SearchBoxComponent implements OnInit {
     selectable = true;
     removable = true;
 
+    items: ConstantObject[];
+    groupedItems: any[];
+    itemsCount: number;
 
-    constructor() {
-    }
+    searchstate = 'inactive';
+    query = new Subject();
+    navFilter = 'feature';
+    queryString = '';
+    queryText: string;
+    notFoundFlag = false;
+    loadingSearchResults = false;
+
+    constructor(private phenotypicSearchService: PhenotypeSearchService,
+        private diseaseSearchService: DiseaseSearchService) { }
 
     ngOnInit() {
-        if (this.searchService) {
-            if (!this.resetSearch) {
-                this.searchCriteria = this.searchService.getSelectedSearchItems();
-            }
-            if (this.searchCriteria.selectedSearchBy) {
-                this.selectedSearchBy = this.searchCriteria.selectedSearchBy;
-                this.initSearch(this.searchCriteria);
-            }
-            this.setSearchBox();
-            this.searchService.getAll().subscribe(data => {
-                localStorage.setItem(this.localStorageKey, JSON.stringify(data));
+        this.query.pipe(debounceTime(425),
+            distinctUntilChanged()).subscribe((val: string) => {
+                if (this.hasValidInput(val)) {
+                    this.loadingSearchResults = true;
+                    this.queryText = val;
+                    if (this.searchType === 'feature') {
+                        this.phenotypicSearchService.searchPhenotypicFeatures(val).subscribe((data) => {
+                            this.setItems(data);
+                        }, (error) => {
+                            console.log(error);
+                            this.loadingSearchResults = false;
+                        }, () => {
+                            this.loadingSearchResults = false;
+                        });
+                    }
+                    if (this.searchType === 'disease') {
+                        this.diseaseSearchService.searchDiseases(val).subscribe((data) => {
+                            this.setItems(data);
+                        }, (error) => {
+                            console.log(error);
+                            this.loadingSearchResults = false;
+                        }, () => {
+                            this.loadingSearchResults = false;
+                        });
+                    }
+
+                } else {
+                    this.searchstate = 'inactive';
+                }
+            }); // End debounce subscribe
+    }
+
+    setItems(data: any) {
+        this.items = [];
+        for (const concept of data.foundConcepts) {
+            this.items.push(new ConstantObject(concept.lbl, concept.def, concept.id, concept.syn));
+        }
+        this.itemsCount = data.numberOfTerms;
+        this.groupedItems = [{ label: `${this.items.length} of ${this.itemsCount} displayed`, items: this.items }];
+
+        this.notFoundFlag = (this.itemsCount === 0);
+        this.searchstate = 'active';
+    }
+
+    contentChanging(input: string) {
+        this.query.next(input);
+    }
+
+    hasValidInput(qString: string) {
+        return (qString && qString.length >= 3);
+    }
+
+    // Submit query to search results page
+    submitQuery(input: any) {
+        console.log(input);
+        if (this.searchstate === 'active') {
+            this.searchstate = 'inactive';
+        }
+        if (this.searchType === 'feature') {
+            this.phenotypicSearchService.getPhenotypicFeatureById(input.id).subscribe(res => {
+                this.selectedItemChange.emit(res);
+            });
+        }
+        if (this.searchType === 'disease') {
+            this.diseaseSearchService.getDiseaseById(input.id).subscribe(res => {
+                this.selectedItemChange.emit(res);
             });
         }
     }
-
-
-    initSearch(searchItems: any) {
-        this.selectedSearchItem.emit(this.searchCriteria);
-        if (!this.searchCriteria.selectedItems) {
-            this.searchCriteria.selectedItems = [];
-        }
-    }
-
-    setSearchBox() {
-        if (this.myControlSubscription) {
-            this.myControlSubscription.unsubscribe();
-        }
-
-        this.myControlSubscription = this.myControl.valueChanges.subscribe(value => {
-            this.itemOptions = [];
-            if (value && value.length > 0) {
-                this._itemFilter(value);
-            }
-        });
-    }
-
-    private _itemFilter(value: string) {
-        const filterValue = value.toLowerCase();
-        this._searchItems(filterValue);
-    }
-
-    private _searchItems(filterValue: string) {
-        // get list of items from localStorage TODO replace by localStorageKey
-        const items = JSON.parse(localStorage.getItem(this.localStorageKey));
-        const filteredList = items.filter(item => {
-            const searchString = `${item.id} ${item.label}`;
-            return searchString.toLowerCase().includes(filterValue.toLowerCase());
-        });
-        // display only a max of 10 items in the combo box
-        if (filteredList.length > 9) {
-            this.itemCount = 10;
-            this.itemOptions = filteredList.slice(0, 10);
-        } else {
-            this.itemCount = filteredList.length;
-            this.itemOptions = filteredList;
-        }
-    }
-
-    public selectedChanged(value: any, displayValue: string) {
-        if (!this.searchCriteria.selectedItems) {
-            this.searchCriteria.selectedItems = [];
-        }
-        this.searchCriteria.selectedItems = [];
-        this.searchCriteria.selectedItems.push({
-            selectedValue: value,
-            displayedValue: displayValue
-        });
-        this.selectedSearchItem.emit(this.searchCriteria);
-    }
-
-    private _searchItem() {
-
-        this.searchCriteria.selectedSearchBy = this.selectedSearchBy;
-        // this.showFilterOptions();
-        this.selectedSearchItem.emit(this.searchCriteria);
-    }
-
-    reset() {
-        this.searchCriteria.selectedItems = [];
-
-        if (!this.resetSearch) {
-            this.selectedSearchItem.emit(this.searchCriteria);
-        }
-    }
-
-    remove(selected: any) {
-        const indx = this.searchCriteria.selectedItems.indexOf(selected);
-        if (indx > -1) {
-            this.searchCriteria.selectedItems.splice(indx, 1);
-        }
-        this.selectedSearchItem.emit(this.searchCriteria);
-    }
-
-    showFilterOptions() {
-        this.showFilters = !this.showFilters;
-        this.showFiltersChange.emit(this.showFilters);
-    }
-
 }
 

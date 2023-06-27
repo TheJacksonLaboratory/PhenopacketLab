@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 
 import { MedicalActionComponent } from './medical-action.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 describe('MedicalActionComponent', () => {
   let component: MedicalActionComponent;
@@ -11,7 +12,11 @@ describe('MedicalActionComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ MedicalActionComponent ],
       imports: [
-        MatDialogModule
+      ],
+      providers: [
+        { provide: DialogService, useValue: {} },
+        { provide: MessageService, useValue: {} },
+        { provide: ConfirmationService, useValue: {} }
       ]
     })
     .compileComponents();

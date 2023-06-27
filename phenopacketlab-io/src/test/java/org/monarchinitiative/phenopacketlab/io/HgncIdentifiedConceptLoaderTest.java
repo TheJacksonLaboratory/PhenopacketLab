@@ -33,7 +33,7 @@ public class HgncIdentifiedConceptLoaderTest {
         assertThat(concepts.getFirst(), equalTo(IdentifiedConcept.of(TermId.of("HGNC:5"), "A1BG", "alpha-1-B glycoprotein", List.of())));
         assertThat(concepts.getLast(), equalTo(IdentifiedConcept.of(TermId.of("HGNC:21"), "AATK", "apoptosis associated tyrosine kinase", List.of("lemur tyrosine kinase 1", "protein phosphatase 1, regulatory subunit 77"))));
 
-        Resource resource = cr.getResource();
+        Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("hgnc"));
         assertThat(resource.getName(), equalTo("HUGO Gene Nomenclature Committee"));
         assertThat(resource.getUrl(), equalTo("http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"));

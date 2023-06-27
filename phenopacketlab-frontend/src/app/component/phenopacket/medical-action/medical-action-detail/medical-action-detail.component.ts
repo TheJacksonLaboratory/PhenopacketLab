@@ -1,11 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { ExternalReference, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
-import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog/medical-action-detail-dialog.component';
 
 @Component({
   selector: 'app-medical-action-detail',
@@ -31,8 +28,6 @@ export class MedicalActionDetailComponent implements OnInit {
   agent: OntologyClass;
   routeOfAdministration: OntologyClass;
   doseIntervals: DoseInterval[] = [];
-  doseIntervalDatasource = new DataPresentMatTableDataSource<DoseInterval>();
-  doseIntervalColumns = ['unit', 'value', 'frequency', 'interval'];
   drugType: DrugType;
   cumulativeDose: Quantity;
   // radiationtherapy
@@ -48,7 +43,7 @@ export class MedicalActionDetailComponent implements OnInit {
 
   actionType: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit() {
     this.updateMedicalActionAction();
@@ -71,9 +66,6 @@ export class MedicalActionDetailComponent implements OnInit {
         this.agent = this.medicalAction.treatment.agent;
         this.routeOfAdministration = this.medicalAction.treatment.routeOfAdministration;
         this.doseIntervals = this.medicalAction.treatment.doseIntervals;
-        if (this.doseIntervals) {
-          this.doseIntervalDatasource.data = this.doseIntervals;
-        }
         this.drugType = this.medicalAction.treatment.drugType;
         this.cumulativeDose = this.medicalAction.treatment.cumulativeDose;
       } else if (this.medicalAction.radiationTherapy) {
@@ -94,30 +86,6 @@ export class MedicalActionDetailComponent implements OnInit {
 
   }
 
-  openEditDialog() {
-    const phenotypicDetailData = { 'title': 'Edit medical action' };
-    phenotypicDetailData['medical_action'] = this.medicalAction;
-    phenotypicDetailData['diseases'] = this.diseases;
-    phenotypicDetailData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MedicalActionDetailDialogComponent, {
-      width: '1000px',
-      data: phenotypicDetailData
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        const updatedMedicalAction = result.medical_action;
-        if (updatedMedicalAction) {
-          // update medical action
-          this.medicalAction = updatedMedicalAction;
-          this.updateMedicalActionAction();
-          // emit change
-          // this.onFeatureChanged.emit(this.phenotypicFeature);
-        }
-      }
-    });
-    return dialogRef;
-  }
-
   getIdentifier() {
     if (this.identifier) {
       if ((this.identifier as OntologyClass).label) {
@@ -129,60 +97,5 @@ export class MedicalActionDetailComponent implements OnInit {
     return '';
   }
 
-  // treatment
-  getAgentDisplay() {
-    if (this.agent) {
-      return `${this.agent.label} [${this.agent.id}]`;
-    }
-    return '';
-  }
-  getRouteOfAdministrationDisplay() {
-    if (this.routeOfAdministration) {
-      return `${this.routeOfAdministration.label} [${this.routeOfAdministration.id}]`;
-    }
-    return '';
-  }
-
-  getCumulativeDoseDisplay() {
-    if (this.cumulativeDose) {
-      return `${this.cumulativeDose.value} ${this.cumulativeDose.unit?.label} [${this.cumulativeDose.unit?.id}]`;
-    }
-    return '';
-  }
-
-  getQuantityUnitDisplay(element) {
-    if (element) {
-      return `${element.quantity?.unit?.label}`;
-    }
-    return '';
-  }
-
-  getQuantityValueDisplay(element) {
-    if (element) {
-      return `${element.quantity?.value}`;
-    }
-    return '';
-  }
-  getScheduleFrequencyDisplay(element) {
-    if (element.scheduleFrequency) {
-      return element.scheduleFrequency.label;
-    }
-    return '';
-  }
-
-  getIntervalDisplay(element) {
-    if (element) {
-      return `${element.interval.start} - ${element.interval.end}`;
-    }
-    return '';
-  }
-
-  // radiation therapy
-  getModalityDisplay() {
-    if (this.modality) {
-      return `${this.modality.label} [${this.modality.id}]`;
-    }
-    return '';
-  }
 
 }

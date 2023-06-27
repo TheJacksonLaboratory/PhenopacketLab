@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SharedModule } from 'src/app/component/shared/shared.module';
 import { PhenotypicDetailDialogComponent } from './phenotypic-detail-dialog.component';
 
@@ -30,7 +30,8 @@ describe('PhenotypicDetailDialogComponent', () => {
       ],
       providers: [
         DynamicDialogRef,
-        DynamicDialogConfig
+        DynamicDialogConfig,
+        DialogService
       ]
     })
     .compileComponents();

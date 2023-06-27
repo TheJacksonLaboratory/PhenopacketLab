@@ -130,7 +130,7 @@ export class Variation {
 export class VcfRecord {
     genomeAssembly: string;
     chrom: string;
-    pos: number;
+    pos: string;
     id: string;
     ref: string;
     alt: string;

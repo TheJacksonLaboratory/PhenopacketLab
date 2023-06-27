@@ -1,17 +1,17 @@
 package org.monarchinitiative.phenopacketlab.autoconfigure;
 
-import org.monarchinitiative.phenol.annotations.io.hpo.DiseaseDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-import java.util.Set;
+import java.util.List;
 
 @ConfigurationProperties(prefix = "phenopacketlab")
 public class PhenopacketLabProperties {
 
     private String dataDirectory;
     private int loaderThreads = 2;
-    private Set<DiseaseDatabase> diseaseDatabases = DiseaseDatabase.allKnownDiseaseDatabases();
+    private List<String> diseaseDatabasePrefixes = List.of();
+    private List<String> phenotypePrefixes = List.of();
 
     private String phenopacketSchemaVersion;
     @NestedConfigurationProperty
@@ -33,12 +33,20 @@ public class PhenopacketLabProperties {
         this.loaderThreads = loaderThreads;
     }
 
-    public Set<DiseaseDatabase> diseaseDatabases() {
-        return diseaseDatabases;
+    public List<String> getDiseaseDatabasePrefixes() {
+        return diseaseDatabasePrefixes;
     }
 
-    public void setDiseaseDatabases(Set<DiseaseDatabase> diseaseDatabases) {
-        this.diseaseDatabases = diseaseDatabases;
+    public void setDiseaseDatabasePrefixes(List<String> diseaseDatabasePrefixes) {
+        this.diseaseDatabasePrefixes = diseaseDatabasePrefixes;
+    }
+
+    public List<String> getPhenotypePrefixes() {
+        return phenotypePrefixes;
+    }
+
+    public void setPhenotypePrefixes(List<String> phenotypePrefixes) {
+        this.phenotypePrefixes = phenotypePrefixes;
     }
 
     public String phenopacketSchemaVersion() {
@@ -62,7 +70,8 @@ public class PhenopacketLabProperties {
         return "PhenopacketLabProperties{" +
                 "dataDirectory='" + dataDirectory + '\'' +
                 ", loaderThreads=" + loaderThreads +
-                ", diseaseDatabases=" + diseaseDatabases +
+                ", diseaseDatabasePrefixes=" + diseaseDatabasePrefixes +
+                ", phenotypePrefixes=" + phenotypePrefixes +
                 ", phenopacketSchemaVersion='" + phenopacketSchemaVersion + '\'' +
                 ", textMining=" + textMining +
                 '}';

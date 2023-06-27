@@ -22,8 +22,8 @@ class ConceptDefault implements Concept {
     }
 
     @Override
-    public Optional<String> getDefinition() {
-        return Optional.ofNullable(definition);
+    public String getDefinition() {
+        return definition;
     }
 
     @Override

@@ -4,7 +4,16 @@
                   (uploadHandler)="handleFileUpload($event)" [auto]="true" chooseLabel="Upload"
                   chooseIcon="pi-file-import" accept=".json" multiple="multiple">
     </p-fileUpload>
-    <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button>
+    <!-- <button pButton class="p-button-outlined ml-1" label="Create" icon="pi pi-plus" routerLink="/profile-selection"></button> -->
+    <button
+        pButton
+        class="p-button-outlined ml-1"
+        label="Create"
+        (click)="startRareDisease()"
+        icon="pi pi-plus"
+        pTooltip="Create a phenopacket in the context of rare disease"
+        tooltipPosition="bottom"
+      ></button>
   </div>
   <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
     <p-tabPanel header="Phenopackets" class="first-panel">
@@ -25,6 +34,7 @@
               {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
             </td>
             <td class="actions">
+              <button pButton type="button" class="p-button-warning" icon="pi pi-check" pTooltip="Validate phenopacket" tooltipPosition="bottom" (click)="validatePhenopacket(phenopacket)"></button>
               <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="removeIndividual(phenopacket)"></button>
               <button pButton type="button" class="p-button" icon="pi pi-download" (click)="downloadPhenopacket(phenopacket)"></button>
             </td>

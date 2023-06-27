@@ -42,7 +42,7 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
 
     expanded = false;
 
-    apiLink = environment.FUNCTIONAL_ANNOTATION_URL;
+    apiLink = `${environment.API_DOC}#/functional-variant-annotation-controller/annotate`;
 
     constructor(public searchService: InterpretationService,
         private confirmationService: ConfirmationService,

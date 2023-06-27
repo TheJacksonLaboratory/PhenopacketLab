@@ -26,7 +26,6 @@ export class PhenoCreatorRareComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
-
     this.subscription = this.phenopacketService.validated$.subscribe((phenopacket) => {
       this.messageService.add({
         severity: 'success', summary: 'Phenopacket created',

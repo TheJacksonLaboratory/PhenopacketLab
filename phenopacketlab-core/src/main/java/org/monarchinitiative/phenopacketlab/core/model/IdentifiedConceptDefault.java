@@ -37,7 +37,7 @@ class IdentifiedConceptDefault extends ConceptDefault implements IdentifiedConce
         return "IdentifiedConcept{" +
                 "id=" + id +
                 ", name='" + getName() + '\'' +
-                ", definition='" + getDefinition().orElse("") + '\'' +
+                ", definition='" + getDefinition() + '\'' +
                 ", synonyms=" + getSynonyms() +
                 '}';
     }

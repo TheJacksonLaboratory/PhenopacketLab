@@ -1,4 +1,6 @@
 import { Utils } from '../component/shared/utils';
+import { parse, serialize } from 'tinyduration';
+
 
 /**
  * Class to convert to list or list of phenopacket model objects.
@@ -32,17 +34,17 @@ export class Convert {
 
 export class OntologyClass extends Convert {
     // used for tnm finding or node key. Not part of the phenopacket schema
+    termUrl?: string;
     key?: string;
     id = '';
     label = '';
-    url?: string;
 
-    constructor(id?: string, label?: string, key?: string, url?: string) {
+    constructor(id?: string, label?: string, key?: string, termUrl?: string) {
         super();
         this.id = id;
         this.label = label;
         this.key = key;
-        this.url = url;
+        this.termUrl = termUrl;
     }
 
     static create(obj: any): OntologyClass {
@@ -100,14 +102,6 @@ export class ExternalReference extends Convert {
 }
 export class Evidence extends Convert {
 
-    static VALUES = [
-        new OntologyClass('ECO:0006016', 'author statement from published clinical study'),
-        new OntologyClass('ECO:0007539', 'author statement from published clinical study used in automatic assertion'),
-        new OntologyClass('ECO:0006017', 'author statement from published clinical study used in manual assertion'),
-        new OntologyClass('ECO:0000033', 'author statement supported by traceable reference'),
-        new OntologyClass('ECO:0006154', 'self-reported patient statement evidence')
-    ];
-
     evidenceCode: OntologyClass;
     reference: ExternalReference;
 
@@ -121,7 +115,7 @@ export class Evidence extends Convert {
         const evidence = new Evidence();
         if (obj['evidenceCode']) {
             evidence.evidenceCode = OntologyClass.convert(obj['evidenceCode']);
-            evidence.evidenceCode.url = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
+            evidence.evidenceCode.termUrl = Evidence.getEvidenceUrl(evidence.evidenceCode.id);
         } else {
             throw new Error(`Phenopacket file is missing 'evidenceCode' field in 'evidence' object.`);
         }
@@ -192,57 +186,22 @@ export class Age {
      * @returns an ISO8601 duration
      */
     public static convertToIso8601(years: number, months: number, days: number): string {
-        let isoStr: string;
-        let yearsStr = '';
-        if (years) {
-            yearsStr = `${years}Y`;
-        }
-        let monthsStr = '';
-        if (months) {
-            monthsStr = `${months}M`;
-        }
-        let daysStr = '';
-        if (days) {
-            daysStr = `${days}D`;
-        }
-        if (yearsStr !== '' || monthsStr !== '' || daysStr !== '') {
-            isoStr = `P${yearsStr}${monthsStr}${daysStr}`;
-        }
-        return isoStr;
+        return serialize({years: years, months: months, days: days, hours: 0, minutes: 0, seconds: 0 });
     }
 
     public getYears() {
         if (this.iso8601duration) {
-            const prefix = this.iso8601duration.split('Y');
-            if (prefix) {
-                // tslint:disable-next-line:radix
-                return parseInt(prefix[0]?.substring(1));
-            }
+            return parse(this.iso8601duration).years;
         }
     }
     public getMonths() {
         if (this.iso8601duration) {
-            let prefix = this.iso8601duration.split('M');
-            if (prefix.length > 0) {
-                prefix = prefix[0].split('Y');
-                if (prefix.length > 0) {
-                    // tslint:disable-next-line:radix
-                    return parseInt(prefix[1]);
-                }
-            } else {
-                return null;
-            }
+            return parse(this.iso8601duration).months;
         }
     }
     public getDays() {
         if (this.iso8601duration) {
-            const prefix = this.iso8601duration.split('M');
-            if (prefix.length > 0) {
-                // tslint:disable-next-line:radix
-                return parseInt(prefix[1]?.substring(0, prefix[1]?.length - 1));
-            } else {
-                return null;
-            }
+            return parse(this.iso8601duration).days;
         }
     }
 }
@@ -288,6 +247,13 @@ export class TimeInterval {
             throw new Error(`Phenopacket file is missing 'end' field in 'timeInterval' object.`);
         }
         return interval;
+    }
+
+    toString() {
+        if (this.start && this.end) {
+            return `${this.start} - ${this.end}`;
+        }
+        return '';
     }
 }
 
@@ -351,7 +317,7 @@ export class TimeElement extends Convert {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
         } else if (obj['ontologyClass']) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
-            timeElement.ontologyClass.url = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
+            timeElement.ontologyClass.termUrl = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
         } else if (obj['timestamp']) {
             timeElement.timestamp = obj['timestamp'];
         } else if (obj['interval']) {
@@ -408,7 +374,8 @@ export enum TimeElementType {
     AGE = 'Age',
     AGE_RANGE = 'Age range',
     GESTATIONAL_AGE = 'Gestational age',
-    ONTOLOGY_CLASS = 'Ontology class'
+    ONTOLOGY_CLASS = 'Ontology class',
+    TIMESTAMP = 'Timestamp'
 }
 export enum TimeElementId {
     INDIVIDUAL_TIME_OF_DEATH,
