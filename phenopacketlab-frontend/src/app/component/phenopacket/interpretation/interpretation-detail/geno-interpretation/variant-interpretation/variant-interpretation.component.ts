@@ -3,11 +3,11 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AcmgPathogenicityClassification, Expression, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VcfRecord } from 'src/app/models/interpretation';
-import { InterpretationDetailDialogComponent } from 'src/app/component/phenopacket/interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { OntologyClass } from 'src/app/models/base';
 import { DataPresentMatTableDataSource } from 'src/app/component/shared/DataPresentMatTableDataSource';
 import { GeneContextDialogComponent } from '../gene-descriptor/gene-context-dialog/gene-context-dialog.component';
 import { VcfRecordDialogComponent } from '../vcf-record/vcf-record-dialog/vcf-record-dialog.component';
+import { InterpretationDialogComponent } from 'src/app/component/shared/dialog/interpretation-dialog/interpretation-dialog.component';
 
 @Component({
   selector: 'app-variant-interpretation',
@@ -109,7 +109,7 @@ export class VariantInterpretationComponent implements OnInit {
     const genoInterpretationDetailData = { 'title': 'Edit Genomic Interpretation' };
     // genoInterpretationDetailData['interpretation'] = this.genoInterpretation;
     genoInterpretationDetailData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(InterpretationDetailDialogComponent, {
+    const dialogRef = this.dialog.open(InterpretationDialogComponent, {
       width: '1000px',
       data: genoInterpretationDetailData
     });

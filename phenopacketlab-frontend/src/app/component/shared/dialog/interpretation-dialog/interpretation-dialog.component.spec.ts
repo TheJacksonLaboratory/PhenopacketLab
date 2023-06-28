@@ -1,15 +1,15 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InterpretationDetailDialogComponent } from './interpretation-detail-dialog.component';
+import { InterpretationDialogComponent } from './interpretation-dialog.component';
 
-describe('InterpretationDetailDialogComponent', () => {
-  let component: InterpretationDetailDialogComponent;
-  let fixture: ComponentFixture<InterpretationDetailDialogComponent>;
+describe('InterpretationDialogComponent', () => {
+  let component: InterpretationDialogComponent;
+  let fixture: ComponentFixture<InterpretationDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InterpretationDetailDialogComponent ],
+      declarations: [ InterpretationDialogComponent ],
       imports: [
         HttpClientModule
       ],
@@ -22,7 +22,7 @@ describe('InterpretationDetailDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InterpretationDetailDialogComponent);
+    fixture = TestBed.createComponent(InterpretationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

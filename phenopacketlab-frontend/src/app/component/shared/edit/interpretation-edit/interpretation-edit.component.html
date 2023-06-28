@@ -7,17 +7,26 @@
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
     <label for="interpretationid">Interpretation ID</label>
-    <input
-      id="interpretationid"
-      type="text"
-      aria-describedby="Interpretation ID"
-      required
-      pInputText
-      [(ngModel)]="id"
-      [ngClass]="{
-        'ng-dirty': !id && submitted
-      }"
-    />
+    <div class="p-inputgroup">
+      <input
+        id="interpretationid"
+        type="text"
+        aria-describedby="Interpretation ID"
+        required
+        pInputText
+        [(ngModel)]="id"
+        [ngClass]="{
+          'ng-dirty': !id && submitted
+        }"
+      />
+      <button
+        pButton
+        icon="pi pi-replay"
+        pTooltip="Generate new ID"
+        tooltipPosition="bottom"
+        (click)="generateNewID()"
+      ></button>
+    </div>
     <!-- (ngModelChange)="onIdChange($event)" -->
     <small *ngIf="!id && submitted" class="p-error"
       >Interpretation ID is required.</small
@@ -26,6 +35,7 @@
       label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
       [binary]="true"
       [(ngModel)]="isPrivateInfoWarnSelected"
+      (onChange)="updateIsPrivateInfoWarn($event.checked)"
       labelStyleClass="label-active text-sm"
       [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
     ></p-checkbox>
@@ -91,12 +101,12 @@
           >
             <ng-template let-cause pTemplate="item">
               <div
-                [pTooltip]="cause.label"
+                [pTooltip]="cause?.label"
                 showDelay="1000"
                 tooltipPosition="left"
                 escape="false"
               >
-                [{{ cause.id }}] {{ cause.label }}
+                [{{ cause?.id }}] {{ cause?.label }}
               </div>
             </ng-template>
           </p-dropdown>
@@ -126,7 +136,6 @@
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th style="width: 5rem"></th>
                 <th pResizableColumn style="min-width: 2rem">Subject ID</th>
                 <th pResizableColumn>Status</th>
                 <th pResizableColumn>Call</th>
@@ -139,18 +148,6 @@
               let-expanded="expanded"
             >
               <tr>
-                <td>
-                  <button
-                    type="button"
-                    pButton
-                    pRipple
-                    [pRowToggler]="genomicinterpretation"
-                    class="p-button-text p-button-rounded p-button-plain"
-                    [icon]="
-                      expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
-                    "
-                  ></button>
-                </td>
                 <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td>
                 <td>{{ genomicinterpretation.interpretationStatus }}</td>
                 <td>{{ getCall(genomicinterpretation) }}</td>
@@ -158,29 +155,17 @@
                   <button
                     pButton
                     pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="editGenomicInterpretation(genomicinterpretation)"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
                     icon="pi pi-trash"
-                    class="p-button-rounded p-button-warning"
+                    class="p-button-rounded p-button-text p-button-warning"
                     (click)="deleteGenomicInterpretation(genomicinterpretation)"
                   ></button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="rowexpansion" let-genomicinterpretation>
-              <tr>
-                <td colspan="5">
-                  <div class="p-3">
-                    <app-genomic-interpretation
-                      [genomicInterpretation]="genomicinterpretation"
-                      [profile]="profile"
-                      (genomicInterpretationChange)="
-                        updateGenomicInterpretation(
-                          $event,
-                          genomicinterpretation
-                        )
-                      "
-                      [submitted]="submitted"
-                    ></app-genomic-interpretation>
-                  </div>
                 </td>
               </tr>
             </ng-template>

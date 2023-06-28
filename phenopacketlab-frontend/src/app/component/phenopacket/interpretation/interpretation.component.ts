@@ -4,8 +4,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Interpretation } from 'src/app/models/interpretation';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InterpretationDetailDialogComponent } from './interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 
 @Component({
     selector: 'app-interpretation',
@@ -51,8 +51,8 @@ export class InterpretationComponent implements OnInit {
         if (interpretation === undefined || interpretation === null) {
             interpretation = new Interpretation();
         }
-        this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
-            header: 'Edit Interpretation',
+        this.ref = this.dialogService.open(InterpretationDialogComponent, {
+            header: 'Enter Interpretation',
             width: '70%',
             contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,

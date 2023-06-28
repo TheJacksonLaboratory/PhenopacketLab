@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { InterpretationDialogComponent } from 'src/app/component/shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { GeneDescriptor, GenomicInterpretation, InterpretationStatus, VariantInterpretation } from 'src/app/models/interpretation';
-import { InterpretationDetailDialogComponent } from '../interpretation-detail-dialog/interpretation-detail-dialog.component';
 
 @Component({
   selector: 'app-geno-interpretation-detail',
@@ -52,7 +52,7 @@ export class GenoInterpretationDetailComponent implements OnInit {
     const genoInterpretationDetailData = { 'title': 'Edit Genomic Interpretation' };
     genoInterpretationDetailData['interpretation'] = this.genoInterpretation;
     genoInterpretationDetailData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(InterpretationDetailDialogComponent, {
+    const dialogRef = this.dialog.open(InterpretationDialogComponent, {
       width: '1000px',
       data: genoInterpretationDetailData
     });
