@@ -56,6 +56,8 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // generate new id
+        this.generateNewID();
         // Get allelic states
         this.allelicStateSubscription = this.interpretationService.getAllelicStates(this.dialogService).subscribe(nodes => {
             // we get the children from the root node sent in response

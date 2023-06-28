@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SpinnerDialogComponent } from 'src/app/component/shared/spinner-dialog/spinner-dialog.component';
-import { Utils } from 'src/app/component/shared/utils';
-import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
+import { VariantInterpretation } from 'src/app/models/interpretation';
 import { ProfileSelection } from 'src/app/models/profile';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
@@ -30,23 +29,18 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     interpretations: VariantInterpretation[];
     visible = false;
     hgvs: string;
-    showHGVSHelp: boolean;
     // We just support grch38 for now
     assembly = 'GRCh38/hg38';
     selectedTranscript: string;
-    transcriptDescription: string;
     transcript: string;
-    selectedAcmgPathogenicity = AcmgPathogenicityClassification.NOT_PROVIDED;
     genotype: string;
     genotypes = ['heterozygous', 'homozygous', 'hemizygous'];
     builds = ['GRCh37/hg19', 'GRCh38/hg38'];
-    transcripts = ['all', 'prefered'];
-    acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
-    selectedTherapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
-    therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
+    // acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
+    // selectedTherapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
+    // therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
 
     expanded = false;
-    noVariantFound = false;
 
     apiLink = `${environment.API_DOC}#/functional-variant-annotation-controller/annotate`;
 
@@ -65,14 +59,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     }
     updateHgvs(hgvs: string) {
         this.hgvs = hgvs;
-    }
-
-    updateAssembly(event: any) {
-        this.assembly = event.value;
-    }
-
-    openHGVSHelp() {
-        this.showHGVSHelp = true;
     }
 
     public searchVariantByHGVS() {
@@ -96,12 +82,16 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
                     variant = new VariantMetadata(item);
                     variant.genotype = this.genotype;
                 }
-                this.noVariantFound = variant === undefined;
+                if (variant === undefined) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `No variant corresponds to the description \'${this.hgvs}\'` });
+                    this.hgvs = '';
+                }
                 this.variantValidated.emit(variant);
                 this.spinnerDialogRef.close();
             },
                 (error) => {
                     console.log(error);
+                    this.hgvs = '';
                     this.spinnerDialogRef.close();
                 });
         } else {
@@ -126,10 +116,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
                 }
             }
         }
-    }
-
-    updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
-        // TODO
     }
 
 }
