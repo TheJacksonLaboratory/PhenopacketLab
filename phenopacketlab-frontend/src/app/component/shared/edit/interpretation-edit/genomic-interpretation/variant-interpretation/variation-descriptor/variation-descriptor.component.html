@@ -1,6 +1,6 @@
 <p-toast position="center" key="cen"></p-toast>
 <div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
+  <!-- <div class="field col-12 md:col-6">
     <label for="variationid">Variation ID</label>
     <div class="p-inputgroup">
       <input
@@ -21,17 +21,37 @@
       <button
         pButton
         icon="pi pi-replay"
-        pTooltip="Generate new ID"
-        tooltipPosition="bottom"
+        label="Generate ID"
         (click)="generateNewID()"
       ></button>
-      <!-- class="p-button-rounded p-button-primary" -->
     </div>
     <small *ngIf="!variationDescriptor?.id && submitted" class="p-error"
       >Variation ID is required.</small
     >
+  </div> -->
+  <div class="field col-12 md:col-6">
+    <label for="allelic">Allelic State</label>
+    <p-treeSelect
+      ngDefaultControl
+      id="allelic"
+      appendTo="body"
+      pTooltip="The zygosity of the variant as determined in all of the samples represented in this Phenopacket is represented using a list of terms taken from the Genotype Ontology (GENO)."
+      tooltipPosition="bottom"
+      [ngModel]="variationDescriptor?.allelicState"
+      [options]="allelicStatesNodes"
+      (onNodeSelect)="updateAllelicState($event)"
+      [metaKeySelection]="false"
+      placeholder="Select item"
+      [filter]="true"
+      [filterInputAutoFocus]="true"
+      [showClear]="true"
+      (onClear)="updateAllelicState($event)"
+    >
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.key">{{ node.label }}</span>
+      </ng-template>
+    </p-treeSelect>
   </div>
-
   <div class="field col-12 md:col-6">
     <label for="label">Label</label>
     <input
@@ -97,13 +117,13 @@
           >
             Value
           </th>
-          <th
+          <!-- <th
             pTooltip="An optional version of the expression syntax."
             tooltipPosition="bottom"
             style="width: 20%"
           >
             Version
-          </th>
+          </th> -->
           <th></th>
           <th></th>
         </tr>
@@ -424,29 +444,7 @@
       [showClear]="true"
     ></p-dropdown>
   </div>
-  <div class="field col-12 md:col-6">
-    <label for="allelic">Allelic State</label>
-    <p-treeSelect
-      ngDefaultControl
-      id="allelic"
-      appendTo="body"
-      pTooltip="The zygosity of the variant as determined in all of the samples represented in this Phenopacket is represented using a list of terms taken from the Genotype Ontology (GENO)."
-      tooltipPosition="bottom"
-      [ngModel]="variationDescriptor?.allelicState"
-      [options]="allelicStatesNodes"
-      (onNodeSelect)="updateAllelicState($event)"
-      [metaKeySelection]="false"
-      placeholder="Select item"
-      [filter]="true"
-      [filterInputAutoFocus]="true"
-      [showClear]="true"
-      (onClear)="updateAllelicState($event)"
-    >
-      <ng-template let-node pTemplate="default">
-        <span [pTooltip]="node.key">{{ node.label }}</span>
-      </ng-template>
-    </p-treeSelect>
-  </div>
+  
   <!-- Display only if in edit mode and not in the stepper -->
   <div *ngIf="profile === undefined" class="field col-12 md:col-6">
     <label for="structural">Structural type</label>

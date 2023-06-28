@@ -14,43 +14,66 @@
     <div class="col flex justify-content-center">
       <div class="grid p-fluid">
         <div class="field col-12">
-          <b>Variant found:</b>
+          <b>We found the following variant information:</b>
         </div>
-        <div class="field col-12 md:col-3">
-          <i>Chr</i>: {{ variantValidated?.chr }}
+        <div class="field col-12">
+          <label for="coordinates">
+            <b>Variant coordinates</b>
+          </label>
+          <div id="coordinates" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Chromosome</b>: {{ variantValidated?.chr }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Position</b>: {{ variantValidated?.position }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Reference Allele</b>: {{ variantValidated?.ref }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Alternate Allele</b>: {{ variantValidated?.alt }}
+            </div>
+          </div>
         </div>
-        <div class="field col-12 md:col-3">
-          <i>Position</i>: {{ variantValidated?.position }}
+
+        <div class="field col-12">
+          <label for="gene">
+            <b>Gene</b>
+          </label>
+          <div id="gene" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Gene symbol</b>: {{ variantValidated?.geneSymbol }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Gene ID</b>: {{ variantValidated?.hgncId }}
+            </div>
+            <div class="field col-12 md:col-6"></div>
+          </div>
         </div>
-        <div class="field col-12 md:col-3">
-          <i>Ref</i>: {{ variantValidated?.ref }}
+
+        <div class="field col-12">
+          <label for="annotation">
+            <b>Functional annotations</b>
+          </label>
+          <div id="annotation" class="grid p-fluid">
+            <div class="field col-12 md:col-4">
+              <b>Genomic</b>: {{ variantValidated?.ghgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Coding</b>: {{ variantValidated?.chgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Protein</b>: {{ variantValidated?.phgvs }}
+            </div>
+          </div>
         </div>
-        <div class="field col-12 md:col-3">
-          <i>Alt</i>: {{ variantValidated?.alt }}
-        </div>
-        <div class="field col-12 md:col-3">
-          <i>Gene symbol</i>: {{ variantValidated?.geneSymbol }}
-        </div>
-        <div class="field col-12 md:col-3">
-          <i>hgncId</i>: {{ variantValidated?.hgncId }}
-        </div>
-        <div class="field col-12 md:col-6"></div>
-        <div class="field col-12 md:col-3">
-          <i>gHgvs</i>: {{ variantValidated?.ghgvs }}
-        </div>
-        <div class="field col-12 md:col-3">
-          <i>cHgvs</i>: {{ variantValidated?.chgvs }}
-        </div>
-        <div class="field col-12 md:col-3">
-          <i>pHgvs</i>: {{ variantValidated?.phgvs }}
-        </div>
-        <div class="field col-12 md:col-3"></div>
+
         <div class="field col-12 md:col-3">
           <button
             pButton
             pRipple
             icon="pi pi-replay"
-            label="Restart"
+            label="Try again"
             pTooltip="Validate another variant"
             tooltipPosition="bottom"
             class="p-button-primary"
@@ -58,12 +81,13 @@
             (click)="resetVariantValidated()"
           ></button>
         </div>
+        <div class="field col-12 md:col-6"></div>
         <div class="field col-12 md:col-3">
           <button
             pButton
             pRipple
-            icon="pi pi-plus"
-            label="Add"
+            icon="pi pi-check"
+            label="OK"
             pTooltip="Add variant to genomic interpretation"
             tooltipPosition="bottom"
             class="p-button-primary"
@@ -71,7 +95,7 @@
             (click)="addVariantInterpretation()"
           ></button>
         </div>
-        <div class="field col-12 md:col-6"></div>
+        
       </div>
     </div>
   </as-split-area>

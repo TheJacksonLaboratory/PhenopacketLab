@@ -113,45 +113,43 @@
   <div class="field col-12 md:col-4"></div>
   <div class="field col-12 md:col-4"></div>
 
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
     <label for="survivalTime">Survival time (days)</label>
-    <div class="flex align-items-center gap-1">
-      <p-checkbox
-        id="useCalendar"
-        [(ngModel)]="useCalendar"
-        [binary]="true"
-      ></p-checkbox>
-      <label for="useCalendar">Use calendar range</label>
+
+    <!-- Do not display for now -->
+    <div *ngIf="false">
+      <div class="flex align-items-center gap-1">
+        <p-checkbox
+          id="useCalendar"
+          [(ngModel)]="useCalendar"
+          [binary]="true"
+        ></p-checkbox>
+        <label for="useCalendar">Use calendar range</label>
+      </div>
+
+      <div *ngIf="useCalendar" class="margintop">
+        <p-calendar
+          #rangecalendar
+          [(ngModel)]="rangeDates"
+          (onSelect)="updateSurvivalTime($event)"
+          selectionMode="range"
+          [readonlyInput]="true"
+          pTooltip="Select a range of days with the first day being the date of diagnosis and the second the day of death. The number of survival days will be automatically set given this range."
+          tooltipPosition="bottom"
+          [showIcon]="true"
+        ></p-calendar>
+      </div>
     </div>
 
-    <div *ngIf="useCalendar" class="margintop">
-      <p-calendar
-        #rangecalendar
-        [(ngModel)]="rangeDates"
-        (onSelect)="updateSurvivalTime($event)"
-        selectionMode="range"
-        [readonlyInput]="true"
-        pTooltip="Select a range of days with the first day being the date of diagnosis and the second the day of death. The number of survival days will be automatically set given this range."
-        tooltipPosition="bottom"
-      ></p-calendar>
-    </div>
-    <div class="margintop">
-      <p-inputNumber
-        id="survivalTime"
-        [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
-        (onInput)="updateSurvivalTime($event)"
-        pTooltip="Number of days the patient was alive after their primary diagnosis"
-        tooltipPosition="bottom"
-      ></p-inputNumber>
-    </div>
+    <p-inputNumber
+      id="survivalTime"
+      [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
+      (onInput)="updateSurvivalTime($event)"
+      pTooltip="Number of days the patient was alive after their primary diagnosis"
+      tooltipPosition="bottom"
+    ></p-inputNumber>
   </div>
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
     <label for="timeOfDeath">Time of death</label>
     <app-time-element
       id="timeOfDeath"
@@ -159,10 +157,7 @@
       (timeElementEvent)="updateTimeOfDeath($event)"
     ></app-time-element>
   </div>
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
     <label for="causeOfDeath">Cause of death</label>
     <p-dropdown
       id="causeOfDeath"

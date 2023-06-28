@@ -39,7 +39,7 @@
   ></app-variant-search-interpretation>
 </div>
 <br>
-<div class="p-dialog-footer">
+<div *ngIf="genomicInterpretation?.variantInterpretation" class="p-dialog-footer">
   <button
     pButton
     pRipple
@@ -51,7 +51,7 @@
     pButton
     pRipple
     type="button"
-    label="Save"
+    label="OK"
     (click)="onOkClick()"
   ></button>
 </div>

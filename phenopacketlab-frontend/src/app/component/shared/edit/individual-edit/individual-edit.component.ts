@@ -8,7 +8,6 @@ import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../../utils';
-import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-individual-edit',
@@ -52,8 +51,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     useCalendar: boolean;
 
     constructor(public phenopacketService: PhenopacketService,
-        public diseaseService: DiseaseSearchService,
-        private messageService: MessageService) {
+        public diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {
@@ -117,14 +115,9 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
       */
     updateTimeOfLastEncounter(timeOfLastEncounter: TimeElement) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                this.timeOfLastEncounter = timeOfLastEncounter;
-                this.subject.timeAtLastEncounter = timeOfLastEncounter;
-                this.subjectChange.emit(this.subject);
-            } else {
-                this.showPrivateInfoWarning();
-                this.timeOfLastEncounter = undefined;
-            }
+            this.timeOfLastEncounter = timeOfLastEncounter;
+            this.subject.timeAtLastEncounter = timeOfLastEncounter;
+            this.subjectChange.emit(this.subject);
         }
     }
 
@@ -137,53 +130,39 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
 
     updateSex(sex: ConstantObject) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                if (sex) {
-                    this.subject.sex = sex.lbl;
-                } else {
-                    this.subject.sex = undefined;
-                }
-                this.subjectChange.emit(this.subject);
+            if (sex) {
+                this.subject.sex = sex.lbl;
             } else {
-                this.showPrivateInfoWarning();
-                this.selectedSex = undefined;
+                this.subject.sex = undefined;
             }
+            this.subjectChange.emit(this.subject);
         }
     }
 
     updateKaryotypicSex(karyotypicSex: ConstantObject) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                if (karyotypicSex) {
-                    this.subject.karyotypicSex = karyotypicSex.lbl;
-                } else {
-                    this.subject.karyotypicSex = undefined;
-                }
-                this.subjectChange.emit(this.subject);
+            if (karyotypicSex) {
+                this.subject.karyotypicSex = karyotypicSex.lbl;
             } else {
-                this.showPrivateInfoWarning();
-                this.selectedKaryotypicSex = undefined;
+                this.subject.karyotypicSex = undefined;
             }
+            this.subjectChange.emit(this.subject);
+
         }
     }
 
     updateStatus(status: any) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                if (status) {
-                    if (this.subject.vitalStatus === undefined) {
-                        this.subject.vitalStatus = new VitalStatus();
-                    }
-                    this.subject.vitalStatus.status = status;
-                    this.status = status;
-                } else {
-                    this.subject.vitalStatus = undefined;
+            if (status) {
+                if (this.subject.vitalStatus === undefined) {
+                    this.subject.vitalStatus = new VitalStatus();
                 }
-                this.subjectChange.emit(this.subject);
+                this.subject.vitalStatus.status = status;
+                this.status = status;
             } else {
-                this.showPrivateInfoWarning();
-                this.status = undefined;
+                this.subject.vitalStatus = undefined;
             }
+            this.subjectChange.emit(this.subject);
         }
     }
     updateSurvivalTime(event: any) {
@@ -205,12 +184,8 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
         }
 
         if (this.subject && numberOfDays !== undefined) {
-            if (this.isPrivateInfoWarnSelected) {
-                this.subject.vitalStatus.survivalTimeInDays = numberOfDays;
-                this.subjectChange.emit(this.subject);
-            } else {
-                this.showPrivateInfoWarning();
-            }
+            this.subject.vitalStatus.survivalTimeInDays = numberOfDays;
+            this.subjectChange.emit(this.subject);
         }
     }
     /**
@@ -219,34 +194,25 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
      */
     updateTimeOfDeath(timeOfDeath: any) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                this.subject.vitalStatus.timeOfDeath = timeOfDeath;
-                this.subjectChange.emit(this.subject);
-            } else {
-                this.showPrivateInfoWarning();
-            }
+            this.subject.vitalStatus.timeOfDeath = timeOfDeath;
+            this.subjectChange.emit(this.subject);
         }
     }
 
     updateCauseOfDeath(causeOfDeath: any) {
         if (this.subject) {
-            if (this.isPrivateInfoWarnSelected) {
-                if (causeOfDeath) {
-                    if (this.causeOfDeathSearchstate === 'active') {
-                        this.causeOfDeathSearchstate = 'inactive';
-                    }
-                    this.selectedCauseOfDeath = causeOfDeath;
-                    causeOfDeath.termUrl = Utils.getUrlForId(causeOfDeath.id);
-                    this.subject.vitalStatus.causeOfDeath = causeOfDeath;
-                    this.subjectChange.emit(this.subject);
-
-                } else {
-                    this.subject.vitalStatus.causeOfDeath = undefined;
-                    this.subjectChange.emit(this.subject);
+            if (causeOfDeath) {
+                if (this.causeOfDeathSearchstate === 'active') {
+                    this.causeOfDeathSearchstate = 'inactive';
                 }
+                this.selectedCauseOfDeath = causeOfDeath;
+                causeOfDeath.termUrl = Utils.getUrlForId(causeOfDeath.id);
+                this.subject.vitalStatus.causeOfDeath = causeOfDeath;
+                this.subjectChange.emit(this.subject);
+
             } else {
-                this.showPrivateInfoWarning();
-                this.selectedCauseOfDeath = undefined;
+                this.subject.vitalStatus.causeOfDeath = undefined;
+                this.subjectChange.emit(this.subject);
             }
         }
     }
@@ -269,10 +235,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     }
     getDeceasedStatus() {
         return Status.DECEASED;
-    }
-
-    showPrivateInfoWarning() {
-        this.messageService.add({ severity: 'warn', summary: 'Warning', detail: `Please check that the ID entered doesn't include any medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information.` });
     }
 
 }

@@ -22,8 +22,7 @@
       <button
         pButton
         icon="pi pi-replay"
-        pTooltip="Generate new ID"
-        tooltipPosition="bottom"
+        label="Generate ID"
         (click)="generateNewID()"
       ></button>
     </div>
@@ -128,8 +127,7 @@
                 Genomic Interpretation(s)
                 <p-button
                   icon="pi pi-plus"
-                  pTooltip="Add Genomic Interpretation"
-                  tooltipPosition="bottom"
+                  label="Add genomic interpretation"
                   (onClick)="addGenomicInterpretation()"
                 ></p-button>
               </div>
@@ -177,9 +175,8 @@
   <div class="field col-12 right">
     <button
       pButton
-      label="Save Interpretation"
+      label="Add Interpretation"
       (click)="updateInterpretation()"
-      icon="pi pi-save"
       style="width: 300px"
     ></button>
   </div>
