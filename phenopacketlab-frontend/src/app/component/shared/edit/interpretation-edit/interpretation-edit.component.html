@@ -166,23 +166,34 @@
                     <div class="grid p-fluid">
                       <div class="field col-12 md:col-6">
                         <i>Annotations:</i>
-                        <br />
-                        <span
-                          *ngFor="
-                            let annotation of genomicinterpretation?.variantInterpretation?.variationDescriptor?.expressions; let i = index" [attr.data-index]="i"
-                        >
-                          {{ annotation.value }}
-                          <span *ngIf="i < genomicinterpretation?.variantInterpretation?.variationDescriptor?.expressions.length - 1"><br /></span>
-                        </span>
+                        <ul>
+                          <li
+                            *ngFor="
+                              let annotation of genomicinterpretation
+                                ?.variantInterpretation?.variationDescriptor
+                                ?.expressions
+                            "
+                          >
+                            {{ annotation.value }}
+                          </li>
+                        </ul>
                       </div>
                       <div class="field col-12 md:col-6">
                         <i>Allelic state:</i>
-                        <br>
-                        {{ genomicinterpretation?.variantInterpretation?.variationDescriptor?.allelicState?.label }}
+                        <ul>
+                          <li>
+                            {{
+                              genomicinterpretation?.variantInterpretation
+                                ?.variationDescriptor?.allelicState?.label
+                            }}
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </span>
-                  <span *ngIf="getCall(genomicinterpretation) === 'GeneDescriptor'">
+                  <span
+                    *ngIf="getCall(genomicinterpretation) === 'GeneDescriptor'"
+                  >
                     <!-- TODO -->
                   </span>
                 </td>
