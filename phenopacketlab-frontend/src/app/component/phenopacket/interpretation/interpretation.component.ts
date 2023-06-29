@@ -32,16 +32,12 @@ export class InterpretationComponent implements OnInit {
     ref: DynamicDialogRef;
 
     spinnerDialogRef: any;
-    showTable = false;
 
     constructor(public dialogService: DialogService, public messageService: MessageService,
         public confirmationService: ConfirmationService) {
     }
 
     ngOnInit() {
-        if (this.interpretations && this.interpretations.length > 0) {
-            this.showTable = true;
-        }
     }
 
     /**
@@ -71,7 +67,6 @@ export class InterpretationComponent implements OnInit {
                     this.interpretations[indexToUpdate] = interpret;
                     this.interpretations = Object.assign([], this.interpretations);
                 }
-                this.showTable = true;
                 // emit change
                 this.onInterpretationsChange.emit(this.interpretations);
             }
@@ -85,9 +80,6 @@ export class InterpretationComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.interpretations = this.interpretations.filter(val => val.id !== interpretation.id);
-                if (this.interpretations.length === 0) {
-                    this.showTable = false;
-                }
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Interpretation Deleted', life: 3000 });
             },
             reject: () => {
