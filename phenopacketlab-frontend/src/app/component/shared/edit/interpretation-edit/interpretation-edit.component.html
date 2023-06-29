@@ -6,7 +6,7 @@
 
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
-    <label for="interpretationid">Interpretation ID</label>
+    <label for="interpretationid">Interpretation ID *</label>
     <div class="p-inputgroup">
       <input
         id="interpretationid"
@@ -40,7 +40,7 @@
     ></p-checkbox>
   </div>
   <div class="field col-12 md:col-6">
-    <label for="progressstatus">Progress status</label>
+    <label for="progressstatus">Progress status *</label>
     <p-dropdown
       id="progressstatus"
       appendTo="body"
@@ -81,7 +81,7 @@
     >
       <div class="grid p-fluid">
         <div class="field col-12 md:col-6">
-          <label for="disease">Disease</label>
+          <label for="disease">Disease *</label>
           <p-dropdown
             id="disease"
             placeholder="Search for a disease"
@@ -125,11 +125,14 @@
             <ng-template pTemplate="caption">
               <div class="flex align-items-center justify-content-between">
                 Genomic Interpretation(s)
-                <p-button
+                <button
+                  pButton
                   icon="pi pi-plus"
+                  class="p-button-text"
                   label="Add genomic interpretation"
-                  (onClick)="addGenomicInterpretation()"
-                ></p-button>
+                  style="width: 300px"
+                  (click)="addGenomicInterpretation()"
+                ></button>
               </div>
             </ng-template>
             <ng-template pTemplate="header">

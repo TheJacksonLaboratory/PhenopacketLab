@@ -14,19 +14,6 @@
     >
   </div>
   <div class="field col-12 md:col-4">
-    <p-dropdown
-      id="genotype"
-      appendTo="body"
-      placeholder="Select genotype"
-      [(ngModel)]="genotype"
-      [options]="genotypes"
-      pTooltip="Genotype"
-      tooltipPosition="bottom"
-      showDelay="2000"
-      class="w-full"
-    ></p-dropdown>
-  </div>
-  <div class="field col-12 md:col-4">
     <button
       id="button"
       pButton
@@ -36,6 +23,7 @@
       (click)="searchVariantByHGVS()"
     ></button>
   </div>
+  <div class="field col-12 md:col-4"></div>
   <div class="field col-12">
     <p-accordion>
       <p-accordionTab header="Variant description examples">

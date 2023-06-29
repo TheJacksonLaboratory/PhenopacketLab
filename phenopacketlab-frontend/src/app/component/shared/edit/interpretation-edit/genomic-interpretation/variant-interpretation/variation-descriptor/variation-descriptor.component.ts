@@ -37,6 +37,8 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     allelicStatesNodes: OntologyTreeNode[];
     allelicStateSubscription: Subscription;
     selectedAllelicState: OntologyClass;
+    shortListAllelicStateSubscription: Subscription;
+    shortListAllelicStates: OntologyClass[];
 
     // structural types
     structuralTypesNodes: OntologyTreeNode[];
@@ -63,6 +65,16 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
             // we get the children from the root node sent in response
             if (nodes) {
                 this.allelicStatesNodes = <OntologyTreeNode[]>nodes.children;
+            }
+        });
+        // get short list of allelic states
+        this.shortListAllelicStateSubscription = this.interpretationService.getShortListOfAllelicStates(
+            this.dialogService).subscribe(data => {
+            if (data) {
+                this.shortListAllelicStates = [];
+                for (const item of data) {
+                    this.shortListAllelicStates.push(new OntologyClass(item.id, item.lbl));
+                }
             }
         });
         // structural types
@@ -177,7 +189,11 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     updateAllelicState(event) {
         if (this.variationDescriptor) {
             if (event) {
-                this.selectedAllelicState = new OntologyClass(event.node.key, event.node.label);
+                if (event.node) {
+                    this.selectedAllelicState = new OntologyClass(event.node.key, event.node.label);
+                } else {
+                    this.selectedAllelicState = event.value;
+                }
             } else {
                 this.selectedAllelicState = undefined;
             }

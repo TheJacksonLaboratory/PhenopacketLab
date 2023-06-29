@@ -21,11 +21,14 @@
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
           Added interpretations
-          <p-button
+          <button
+            pButton
             icon="pi pi-plus"
             label="Add interpretation"
-            (onClick)="addInterpretation()"
-          ></p-button>
+            class="p-button-text"
+            style="width: 250px"
+            (click)="addInterpretation()"
+          ></button>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
