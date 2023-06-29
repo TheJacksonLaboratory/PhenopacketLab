@@ -17,19 +17,20 @@
       class="p-error"
       >Individual ID is required.</small
     >
+    <div class="grid p-fluid mt-2">
+      <div class="field col-12">
+        <p-checkbox
+          label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
+          [binary]="true"
+          [(ngModel)]="isPrivateInfoWarnSelected"
+          labelStyleClass="label-active text-sm"
+          (onChange)="updateIsPrivateInfoWarnSelected()"
+          [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
+        ></p-checkbox>
+      </div>
+    </div>
   </div>
-  <div class="field col-12">
-    <p-checkbox
-      label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
-      [binary]="true"
-      [(ngModel)]="isPrivateInfoWarnSelected"
-      labelStyleClass="label-active text-sm"
-      (onChange)="updateIsPrivateInfoWarnSelected()"
-      [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
-    ></p-checkbox>
-  </div>
-  <br />
-
+  
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
     <p-chips id="alternateIds" [(ngModel)]="subject.alternateIds"></p-chips>
@@ -91,7 +92,6 @@
   </div>
   <div class="field col-12 md:col-4"></div>
 </div>
-<br />
 <h3><b>Vital Status</b></h3>
 <div class="grid p-fluid">
   <div class="field col-12 md:col-4">

@@ -118,6 +118,7 @@
             [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
             [options]="acmgClassifications"
             required
+            scrollHeight="18rem"
             (onChange)="updateAcmgPathogenicity($event)"
             class="w-full"
             [ngClass]="{
