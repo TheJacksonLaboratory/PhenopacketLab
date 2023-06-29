@@ -125,7 +125,7 @@
           <p-table
             [value]="genomicInterpretations"
             dataKey="key"
-            [tableStyle]="{ 'min-width': '60rem' }"
+            styleClass="p-datatable-sm"
           >
             <ng-template pTemplate="caption">
               <div class="flex align-items-center justify-content-between">
@@ -142,7 +142,7 @@
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th pResizableColumn style="min-width: 2rem">Subject ID</th>
+                <!-- <th pResizableColumn style="min-width: 2rem">Subject ID</th> -->
                 <th pResizableColumn>Status</th>
                 <th pResizableColumn>Call</th>
                 <th pResizableColumn></th>
@@ -154,9 +154,38 @@
               let-expanded="expanded"
             >
               <tr>
-                <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td>
+                <!-- <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td> -->
                 <td>{{ genomicinterpretation.interpretationStatus }}</td>
-                <td>{{ getCall(genomicinterpretation) }}</td>
+                <td>
+                  <span
+                    *ngIf="
+                      getCall(genomicinterpretation) === 'VariantInterpretation'
+                    "
+                  >
+                    <!-- If VariantInterpretation -->
+                    <div class="grid p-fluid">
+                      <div class="field col-12 md:col-6">
+                        <i>Annotations:</i>
+                        <br />
+                        <span
+                          *ngFor="
+                            let annotation of genomicinterpretation?.variantInterpretation?.variationDescriptor?.expressions; let i = index" [attr.data-index]="i"
+                        >
+                          {{ annotation.value }}
+                          <span *ngIf="i < genomicinterpretation?.variantInterpretation?.variationDescriptor?.expressions.length - 1"><br /></span>
+                        </span>
+                      </div>
+                      <div class="field col-12 md:col-6">
+                        <i>Allelic state:</i>
+                        <br>
+                        {{ genomicinterpretation?.variantInterpretation?.variationDescriptor?.allelicState?.label }}
+                      </div>
+                    </div>
+                  </span>
+                  <span *ngIf="getCall(genomicinterpretation) === 'GeneDescriptor'">
+                    <!-- TODO -->
+                  </span>
+                </td>
                 <td>
                   <button
                     pButton
