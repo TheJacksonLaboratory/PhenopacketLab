@@ -7,6 +7,7 @@ import { SpinnerDialogComponent } from '../component/shared/spinner-dialog/spinn
 
 const functionalAnnotationUrl = environment.FUNCTIONAL_ANNOTATION_URL;
 const allelicStatesUrl = environment.ALLELIC_STATE_URL;
+const shortListAllelicStatesUrl = environment.ALLELIC_STATE_SHORT_URL;
 const structuralTypeUrl = environment.STRUCTURAL_TYPE_URL;
 
 @Injectable({
@@ -16,6 +17,8 @@ export class InterpretationService {
 
     allelicStates = new BehaviorSubject<any>(undefined);
     structuralTypes = new BehaviorSubject<any>(undefined);
+    // short list of allelic states
+    shortListAllelicStates = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -47,6 +50,36 @@ export class InterpretationService {
         });
         this.http.get(allelicStatesUrl).subscribe(res => {
             this.allelicStates.next(res);
+            spinnerDialogRef.close();
+        }, (error) => {
+            console.log(error);
+            spinnerDialogRef.close();
+        });
+    }
+
+    /**
+     * Return short list of allelicStates as an Observable
+     * @param dialogService DialogService used for spinnerDialog
+     * @returns
+     */
+    getShortListOfAllelicStates(dialogService: DialogService): Observable<any> {
+        // only if undefined, load from server
+        if (this.shortListAllelicStates.getValue() === undefined) {
+            console.log('Loading short list allelic states...');
+            this.loadShortListAllelicStates(dialogService);
+        }
+        // return allelicStates for subscription even if the value is yet undefined.
+        return this.shortListAllelicStates.asObservable();
+    }
+
+    private loadShortListAllelicStates(dialogService: DialogService): void {
+        const spinnerDialogRef = dialogService.open(SpinnerDialogComponent, {
+            closable: false,
+            modal: true,
+            data: { loadingMessage: 'Loading short list of allelic states terms...' }
+        });
+        this.http.get(shortListAllelicStatesUrl).subscribe(res => {
+            this.shortListAllelicStates.next(res);
             spinnerDialogRef.close();
         }, (error) => {
             console.log(error);
