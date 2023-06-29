@@ -6,7 +6,7 @@
   <ng-template pTemplate="content">
     <div class="grid p-fluid">
       <div class="field col-12">
-        <label for="phenoId"><b>Phenopacket ID</b></label>
+        <label for="phenoId"><b>Phenopacket ID *</b></label>
         <div class="p-inputgroup">
           <input
             id="phenoId"
@@ -26,12 +26,13 @@
             label="Generate ID"
             (click)="generateNewID()"
           ></button>
-          <small
+          
+        </div>
+        <small
             *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
             class="p-error"
             >Phenopacket ID is required.</small
           >
-        </div>
       </div>
       <div class="field col-12">
         <app-individual-edit
