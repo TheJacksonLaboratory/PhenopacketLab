@@ -33,7 +33,6 @@ export class InterpretationDetailComponent implements OnInit {
     genomicInterpretations: GenomicInterpretation[];
 
     ref: DynamicDialogRef;
-    spinnerDialogRef: any;
 
     constructor(public dialogService: DialogService, public messageService: MessageService) {
 

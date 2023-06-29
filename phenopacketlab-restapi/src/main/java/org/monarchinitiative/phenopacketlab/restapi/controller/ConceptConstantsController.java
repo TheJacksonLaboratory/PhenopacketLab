@@ -65,9 +65,20 @@ public class ConceptConstantsController {
         return ResponseEntity.ok(conceptConstantsService.modifierConstants());
     }
 
+    @GetMapping(value = "evidence", headers = "Accept=application/json")
+    public ResponseEntity<List<IdentifiedConcept>> getEvidenceConstants() {
+        return ResponseEntity.ok(conceptConstantsService.evidenceConstants());
+    }
+
     @GetMapping(value = "treemodifier", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getModifierTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.modifierTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "evidencetree", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getEvidenceTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.evidenceTreeConstants();
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 

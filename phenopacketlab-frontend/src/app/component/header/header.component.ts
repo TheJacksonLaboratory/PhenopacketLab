@@ -1,3 +1,4 @@
+import packageInfo from '../../../../package.json';
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { MenuItem } from 'primeng/api';
@@ -10,11 +11,15 @@ import { filter } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
 
+  constructor(public authService: AuthService) {
+  }
+
   user: User;
 
   userActions: MenuItem[];
-  constructor(public authService: AuthService) {
-  }
+
+  version: string = packageInfo.version;
+
   ngOnInit() {
     this.authService.user$.pipe(filter((user) => user != null)).subscribe((user) => {
       this.user = user;
@@ -40,9 +45,8 @@ export class HeaderComponent implements OnInit {
    */
   logout() {
     this.authService.logout({
-      openUrl() {
-        window.location.replace(window.location.origin);
-      }
-    });
+      logoutParams: {
+        returnTo: window.location.origin,
+      }});
   }
 }

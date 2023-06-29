@@ -14,4 +14,14 @@ export class Utils {
         }
         return key;
     }
+
+    public static getUrlForId(id: string) {
+        if (id.toUpperCase().startsWith('HP')
+        || id.toUpperCase().startsWith('MONDO')) {
+            const splittedId = id.split(':');
+            const prefix = splittedId[0];
+            const suffix = splittedId[1];
+            return `http://purl.obolibrary.org/obo/${prefix}_${suffix}`;
+        }
+    }
 }

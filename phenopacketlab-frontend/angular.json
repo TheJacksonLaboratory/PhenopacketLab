@@ -12,6 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "sourceMap": true,
             "outputPath": "dist/phenopacketlab-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -24,6 +25,9 @@
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash"
             ],
             "scripts": []
           },

@@ -51,18 +51,23 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
 
     constructor(public searchService: InterpretationService,
         public interpretationService: InterpretationService,
-        public messageService: MessageService) {
+        public messageService: MessageService,
+        public dialogService: DialogService) {
     }
 
     ngOnInit() {
         // Get allelic states
-        this.allelicStateSubscription = this.interpretationService.getAllelicStates().subscribe(nodes => {
+        this.allelicStateSubscription = this.interpretationService.getAllelicStates(this.dialogService).subscribe(nodes => {
             // we get the children from the root node sent in response
-            this.allelicStatesNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.allelicStatesNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         // structural types
-        this.structuralTypesSubscription = this.interpretationService.getStructuralTypesValues().subscribe(nodes => {
-            this.structuralTypesNodes = <OntologyTreeNode[]>nodes.children;
+        this.structuralTypesSubscription = this.interpretationService.getStructuralTypes(this.dialogService).subscribe(nodes => {
+            if (nodes) {
+                this.structuralTypesNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
     }
 
@@ -117,7 +122,6 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         this.variationDescriptor.expressions = this.variationDescriptor.expressions.filter(val => val.key !== expression.key);
     }
     onExpressionEditInit(expression: Expression) {
-        console.log(expression);
         this.clonedExpressions[expression.key] = { ...expression };
     }
 

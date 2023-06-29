@@ -3,20 +3,27 @@
     <h2>
       <b>{{ disease.term?.label }} </b>
     </h2>
-    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a>  </h3>
+    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></h3>
   </div>
   <div class="field col-12">
     <p>
       {{ disease.description }}
     </p>
   </div>
-  <div class="field col-12 md:col-6"><b>Type:</b> {{ disease.isA }}</div>
   <div class="field col-12 md:col-6">
     <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
   </div>
   <div class="field col-12 md:col-6">
-    <b>Onset:</b> <a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}
-
+    <b>Onset:</b>
+    <span *ngIf="disease.onset?.ontologyClass"
+      ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
+        >[{{ disease.onset.ontologyClass.id }}]</a
+      >
+      {{ disease.onset.ontologyClass.label }}</span
+    >
+    <span *ngIf="!disease.onset?.ontologyClass">{{
+      disease.onset?.toString()
+    }}</span>
   </div>
   <div class="field col-12 md:col-6">
     <b>Resolution:</b> {{ disease.resolution?.toString() }}
@@ -33,9 +40,8 @@
     </ul>
   </div>
   <div class="field col-12 md:col-6">
-    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.url" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
+    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.termUrl" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
   </div>
   <div class="field col-12 md:col-6">
-
   </div>
 </div>

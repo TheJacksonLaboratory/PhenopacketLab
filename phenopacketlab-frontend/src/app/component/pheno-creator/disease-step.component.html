@@ -15,11 +15,9 @@
               [showHint]="false"
               [itemName]="'Disease'"
               [searchLabel]="'Disease'"
-              [placeHolderTxt]="'Enter a disease name'"
-              [localStorageKey]="'diseases'"
-              [searchService]="searchService"
-              (selectedSearchItem)="onSearchCriteriaChange($event)"
-              [resetSearch]="false"
+              [placeHolderTxt]="'Enter a disease term'"
+              [searchType]="'disease'"
+              (selectedItemChange)="diseaseItemSelected($event)"
             ></app-search-box>
           </div>
           <div class="field col-12">
@@ -54,7 +52,7 @@
                   <td>
                     <span *ngIf="disease.onset?.ontologyClass"
                       ><a
-                        [href]="disease.onset.ontologyClass.url"
+                        [href]="disease.onset.ontologyClass.termUrl"
                         target="_blank"
                         >[{{ disease.onset.ontologyClass.id }}]</a
                       >

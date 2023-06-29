@@ -1,15 +1,13 @@
 <div class="grid p-fluid">
   <div class="field col-12">
     <app-search-box
-      [showHint]="false"
-      [itemName]="itemName"
-      [searchLabel]="searchLabel"
-      [placeHolderTxt]="placeHolderTxt"
-      [localStorageKey]="localStorageKey"
-      [searchService]="searchService"
-      (selectedSearchItem)="onSearchCriteriaChange($event)"
-      [resetSearch]="false"
-    ></app-search-box>
+    [showHint]="false"
+    [itemName]="'Disease'"
+    [searchLabel]="'Disease term'"
+    [placeHolderTxt]="'Enter a disease term'"
+    [searchType]="'disease'"
+    (selectedItemChange)="diseaseItemSelected($event)"
+  ></app-search-box>
   </div>
   <div *ngIf="showTable" class="field col-12">
     <p-table
@@ -43,7 +41,19 @@
           <td><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></td>
           <td>{{ disease.term?.label }}</td>
           <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
-          <td><a *ngIf="disease.onset?.ontologyClass" [href]="disease.onset.ontologyClass.url" target="_blank">[{{disease.onset.ontologyClass.id}}]</a> {{disease.onset?.ontologyClass?.label}}</td>
+          <td>
+            <span *ngIf="disease.onset?.ontologyClass"
+              ><a
+                [href]="disease.onset.ontologyClass.termUrl"
+                target="_blank"
+                >[{{ disease.onset.ontologyClass.id }}]</a
+              >
+              {{ disease.onset.ontologyClass.label }}
+            </span>
+            <span *ngIf="!disease.onset?.ontologyClass">
+              {{ disease.onset?.toString() }}
+            </span>
+          </td>
           <td>{{ disease.resolution?.toString() }}</td>
           <td>
             <button
@@ -67,10 +77,7 @@
         <tr>
           <td colspan="7">
             <div class="p-3">
-              <app-disease-detail
-                [disease]="disease"
-              >
-              </app-disease-detail>
+              <app-disease-detail [disease]="disease"> </app-disease-detail>
             </div>
           </td>
         </tr>

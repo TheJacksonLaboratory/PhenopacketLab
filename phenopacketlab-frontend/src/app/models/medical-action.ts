@@ -1,8 +1,12 @@
 import { Convert, ExternalReference, OntologyClass, Procedure, TimeElement, TimeInterval } from './base';
 import { Quantity } from './measurement';
+import { OntologyTreeNode } from './ontology-treenode';
 
 
 export class MedicalAction extends Convert {
+    key?: number;
+    // parameter no part of phenopacket and that represents the adverse events as TreeNodes
+    adverseEventNodes?: OntologyTreeNode[];
     // can be Procedure, Treatment, RadiationTherapy or TherapeuticRegimen
     // action
     procedure: Procedure;
@@ -85,6 +89,7 @@ export class Treatment {
     }
 }
 export class DoseInterval extends Convert {
+    key?: number;
     quantity: Quantity;
     scheduleFrequency: OntologyClass;
     interval: TimeInterval;

@@ -14,7 +14,6 @@ import { GridModule } from '@angular/flex-layout/grid';
 
 import { AppRoutingModule } from './app.routing.module';
 import { HelpComponent } from './component/help/help.component';
-import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
@@ -65,10 +64,7 @@ const config: AuthConfig = {
     ],
     exports: [RouterModule],
     providers: [{ provide: MatDialogRef, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
-        // provider used to create a fake backend
-        // fakeBackendProvider
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

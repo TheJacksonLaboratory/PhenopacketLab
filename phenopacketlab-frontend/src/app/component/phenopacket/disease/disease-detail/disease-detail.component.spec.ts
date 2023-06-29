@@ -3,6 +3,7 @@ import { SharedModule } from 'src/app/component/shared/shared.module';
 import { Disease } from 'src/app/models/disease';
 
 import { DiseaseDetailComponent } from './disease-detail.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 describe('DiseaseDetailComponent', () => {
   let component: DiseaseDetailComponent;
@@ -11,7 +12,10 @@ describe('DiseaseDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailComponent ],
-      imports: [ SharedModule ]
+      imports: [ SharedModule ],
+      providers: [
+        DialogService
+      ]
     })
     .compileComponents();
   });

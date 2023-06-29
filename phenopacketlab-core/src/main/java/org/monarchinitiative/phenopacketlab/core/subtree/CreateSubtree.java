@@ -4,6 +4,9 @@ import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacketlab.core.OntologyHierarchyService;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 
 import java.util.*;
 
@@ -23,32 +26,36 @@ public class CreateSubtree {
      * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
      */
     public static Optional<SubtreeNode> createSubtree(TermId root,
-                                                      Ontology ontology,
+                                                      IdentifiedConceptResource conceptResource,
+                                                      OntologyHierarchyService hierarchyService,
                                                       Comparator<SubtreeNode> comparator,
-                                                      List<TermId> excludedNodes) {
-        Term rootTerm = ontology.getTermMap().get(root);
-        if (rootTerm == null)
+                                                      Collection<TermId> excludedNodes) {
+        Optional<IdentifiedConcept> rico = conceptResource.conceptForTermId(root);
+        if (rico.isEmpty())
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
-        SubtreeNode node = new SubtreeNode(root.getValue(), rootTerm.getName(), rootTerm.getDefinition());
-        return Optional.of(augmentWithChildren(ontology, root, node, comparator, excludedNodes));
+        IdentifiedConcept ric = rico.get();
+        SubtreeNode node = new SubtreeNode(root.getValue(), ric.getName(), ric.getDefinition());
+        return Optional.of(augmentWithChildren(conceptResource, hierarchyService, root, node, comparator, excludedNodes));
     }
 
-    private static SubtreeNode augmentWithChildren(Ontology ontology,
+    private static SubtreeNode augmentWithChildren(IdentifiedConceptResource conceptResource,
+                                                   OntologyHierarchyService hierarchyService,
                                                    TermId termId,
                                                    SubtreeNode node,
                                                    Comparator<SubtreeNode> comparator,
-                                                   List<TermId> excludedNodes) {
-        Collection<TermId> children = OntologyAlgorithm.getChildTerms(ontology, termId, false);
+                                                   Collection<TermId> excludedNodes) {
+        Collection<TermId> children = hierarchyService.children(termId).toList();
 
         List<SubtreeNode> childNodes = new ArrayList<>(children.size());
         for (TermId childTermId : children) {
             // if child term is not one of the excluded node do nothing
             if (excludedNodes == null || !excludedNodes.contains(childTermId)) {
                 // Term should always be non-null since we just got the termId from the `ontology`.
-                Term term = ontology.getTermMap().get(childTermId);
+                //noinspection OptionalGetWithoutIsPresent
+                IdentifiedConcept term = conceptResource.conceptForTermId(childTermId).get();
                 SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName(), term.getDefinition());
-                augmentWithChildren(ontology, childTermId, childNode, comparator, excludedNodes);
+                augmentWithChildren(conceptResource, hierarchyService, childTermId, childNode, comparator, excludedNodes);
                 childNodes.add(childNode);
             }
         }

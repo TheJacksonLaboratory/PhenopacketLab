@@ -25,7 +25,7 @@ class IdentifiedConceptResourceDefault implements IdentifiedConceptResource {
     }
 
     @Override
-    public Resource getResource() {
+    public Resource resource() {
         return resource;
     }
 

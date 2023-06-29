@@ -1,307 +1,91 @@
-<div class="row">
-  <div class="col-md-5">
-    <div class="row">
-      <div class="col-md-12">
-        <b>Created:</b>
-        <br />
-        {{ created }}
-      </div>
-    </div>
+<div class="grid p-fluid">
+  <div class="field col-12 md:col-4">
+    <b>Created:</b>
     <br />
-    <div class="row">
-      <div class="col-md-12">
-        <b>Created by:</b>
-        <br />
-        {{ createdBy }}
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-md-12">
-        <b>Submitted by:</b>
-        <br />
-        {{ submittedBy }}
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-md-12">
-        <b>Phenopacket schema version:</b> {{ phenopacketSchemaVersion }}
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-md-12">
-        <b>Updates:</b>
-        <br />
-        <table
-          mat-table
-          *ngIf="updatesDataSource.isDataPresent() | async"
-          class="table-hover mat-elevation-z2"
-          [dataSource]="updatesDataSource"
-          multiTemplateDataRows
-        >
-          <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-            <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="updatedby">
-            <th mat-header-cell *matHeaderCellDef>Updated by</th>
-            <td mat-cell *matCellDef="let element">{{ element.updatedBy }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef>Comment</th>
-            <td mat-cell *matCellDef="let element">{{ element.comment }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="updatesExpandedDetail">
-            <td
-              mat-cell
-              *matCellDef="let element"
-              [attr.colspan]="updatesDisplayedColumns.length"
-            >
-              <div
-                class="example-element-detail"
-                [@detailExpand]="
-                  element == updatesExpandedElement ? 'expanded' : 'collapsed'
-                "
-              >
-                <div style="width: 100%">
-                  <div class="card">
-                    <div class="card-body margin">
-                      <div class="row">
-                        <div class="wrap col-md-6">
-                          <b>Timestamp:</b>
-                          <br />
-                          {{ element.timestamp }}
-                          <br />
-                        </div>
-                        <div class="wrap col-md-6">
-                          <b>Updated by:</b>
-                          <br />
-                          {{ element.updatedBy }}
-                          <br />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="wrap col-md-12">
-                          <b>Comment:</b>
-                          <br />
-                          {{ element.comment }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="updatesDisplayedColumns"></tr>
-          <tr
-            mat-row
-            *matRowDef="let element; columns: updatesDisplayedColumns"
-            class="example-element-row"
-            [class.example-expanded-row]="updatesExpandedElement === element"
-            (click)="
-              updatesExpandedElement =
-                updatesExpandedElement === element ? null : element
-            "
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: ['updatesExpandedDetail']"
-            class="example-detail-row"
-          ></tr>
-
-          <!-- <tr mat-row *matRowDef="let element; columns: updatesDisplayedColumns;"
-                                [class.example-expanded-row]="updatesExpandedElement === element"
-                                (click)="updatesExpandCollapse(element)">
-                            </tr>
-
-                            <tr mat-row *matRowDef="let row; columns: ['updatesExpandedDetail']">
-                            </tr>
-                            <tr mat-header-row *matHeaderRowDef="updatesDisplayedColumns; sticky: true"></tr> -->
-        </table>
-      </div>
-    </div>
+    {{ created }}
   </div>
-  <div class="col-md-7">
-    <div class="row">
-      <div class="col-md-12">
-        <b>Resources:</b>
-        <br />
-        <table
-          mat-table
-          *ngIf="resourcesDataSource.isDataPresent() | async"
-          class="table-hover mat-elevation-z2"
-          [dataSource]="resourcesDataSource"
-          multiTemplateDataRows
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="version">
-            <th mat-header-cell *matHeaderCellDef>Version</th>
-            <td mat-cell *matCellDef="let element">{{ element.version }}</td>
-          </ng-container>
-
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-          <ng-container matColumnDef="resourcesExpandedDetail">
-            <td
-              mat-cell
-              *matCellDef="let element"
-              [attr.colspan]="resourcesDisplayedColumns.length"
-            >
-              <div
-                class="example-element-detail"
-                [@detailExpand]="
-                  element == resourcesExpandedElement ? 'expanded' : 'collapsed'
-                "
-              >
-                <div style="width: 100%">
-                  <app-resource-detail
-                    [resource]="element"
-                  ></app-resource-detail>
-                </div>
-              </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="resourcesDisplayedColumns"></tr>
-          <tr
-            mat-row
-            *matRowDef="let element; columns: resourcesDisplayedColumns"
-            class="example-element-row"
-            [class.example-expanded-row]="resourcesExpandedElement === element"
-            (click)="
-              resourcesExpandedElement =
-                resourcesExpandedElement === element ? null : element
-            "
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: ['resourcesExpandedDetail']"
-            class="example-detail-row"
-          ></tr>
-        </table>
-        <br />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <b>External references:</b>
-        <br />
-        <table
-          mat-table
-          *ngIf="externalRefDataSource.isDataPresent() | async"
-          class="table-hover mat-elevation-z2"
-          [dataSource]="externalRefDataSource"
-          multiTemplateDataRows
-        >
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="reference">
-            <th mat-header-cell *matHeaderCellDef>Reference</th>
-            <td mat-cell *matCellDef="let element">{{ element.reference }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef>Description</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.description }}
-            </td>
-          </ng-container>
-
-          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-          <ng-container matColumnDef="externalRefExpandedDetail">
-            <td
-              mat-cell
-              *matCellDef="let element"
-              [attr.colspan]="externalRefDisplayedColumns.length"
-            >
-              <div
-                class="example-element-detail"
-                [@detailExpand]="
-                  element == externalRefExpandedElement
-                    ? 'expanded'
-                    : 'collapsed'
-                "
-              >
-                <div style="width: 100%">
-                  <div class="card">
-                    <div class="card-body margin">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <div class="row">
-                            <div class="wrap col-md-12">
-                              <b>Id:</b>
-                              <br />
-                              {{ element.id }}
-                              <br />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-8">
-                          <div class="row">
-                            <div class="wrap col-md-12">
-                              <b>Reference:</b>
-                              <br />
-                              {{ element.reference }}
-                              <br />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="wrap col-md-12">
-                          <b>Description:</b>
-                          <br />
-                          {{ element.description }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </ng-container>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="externalRefDisplayedColumns"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let element; columns: externalRefDisplayedColumns"
-            class="example-element-row"
-            [class.example-expanded-row]="
-              externalRefExpandedElement === element
-            "
-            (click)="
-              externalRefExpandedElement =
-                externalRefExpandedElement === element ? null : element
-            "
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: ['externalRefExpandedDetail']"
-            class="example-detail-row"
-          ></tr>
-        </table>
-      </div>
-    </div>
+  <div class="field col-12 md:col-4">
+    <b>Created by:</b>
+    <br />
+    {{ createdBy }}
+  </div>
+  <div class="field col-12 md:col-4">
+    <b>Submitted by:</b>
+    <br />
+    {{ submittedBy }}
+  </div>
+  <div class="field col-12">
+    <b>Phenopacket schema version:</b> {{ phenopacketSchemaVersion }}
+  </div>
+  <div *ngIf="updates && updates.length > 0" class="field col-12">
+    <ng-template pTemplate="caption"> Updates </ng-template>
+    <p-table
+      [value]="updates"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Timestamp</th>
+          <th>Updated by</th>
+          <th>Comment</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-update>
+        <tr>
+          <td>{{ update.timestamp }}</td>
+          <td>{{ update.updatedBy }}</td>
+          <td>{{ update.comment }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="resources && resources.length > 0" class="field col-12">
+    <p-table 
+      [value]="resources"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption"> Resources </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Version</th>
+          <th>URL</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-resource>
+        <tr>
+          <td>{{ resource.id }}</td>
+          <td>{{ resource.name }}</td>
+          <td>{{ resource.version }}</td>
+          <td>{{ resource.url }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="externalReferences && externalReferences.length > 0" class="field col-12">
+    <p-table 
+      [value]="externalReferences"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption"> External references </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Reference</th>
+          <th>Description</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-externalreference>
+        <tr>
+          <td>{{ externalreference.id }}</td>
+          <td>{{ externalreference.reference }}</td>
+          <td>{{ externalreference.description }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

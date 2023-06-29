@@ -16,6 +16,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final List<IdentifiedConcept> lateralityConstants;
     private final List<IdentifiedConcept> modifierConstants;
     private final SubtreeNode modifierTreeConstants;
+    private final List<IdentifiedConcept> evidenceConstants;
+    private final SubtreeNode evidenceTreeConstants;
     private final List<IdentifiedConcept> severityConstants;
     private final List<IdentifiedConcept> onsetConstants;
     private final SubtreeNode onsetTreeConstants;
@@ -34,6 +36,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 List<IdentifiedConcept> lateralityConstants,
                                 List<IdentifiedConcept> modifierConstants,
                                 SubtreeNode modifierTreeConstants,
+                                List<IdentifiedConcept> evidenceConstants,
+                                SubtreeNode evidenceTreeConstants,
                                 List<IdentifiedConcept> severityConstants,
                                 List<IdentifiedConcept> onsetConstants,
                                 SubtreeNode onsetTreeConstants,
@@ -51,6 +55,8 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.lateralityConstants = lateralityConstants;
         this.modifierConstants = modifierConstants;
         this.modifierTreeConstants = modifierTreeConstants;
+        this.evidenceConstants = evidenceConstants;
+        this.evidenceTreeConstants = evidenceTreeConstants;
         this.severityConstants = severityConstants;
         this.onsetConstants = onsetConstants;
         this.onsetTreeConstants = onsetTreeConstants;
@@ -92,6 +98,16 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     @Override
     public Optional<SubtreeNode> modifierTreeConstants() {
         return Optional.ofNullable(modifierTreeConstants);
+    }
+
+    @Override
+    public List<IdentifiedConcept> evidenceConstants() {
+        return evidenceConstants;
+    }
+
+    @Override
+    public Optional<SubtreeNode> evidenceTreeConstants() {
+        return Optional.ofNullable(evidenceTreeConstants);
     }
 
     @Override

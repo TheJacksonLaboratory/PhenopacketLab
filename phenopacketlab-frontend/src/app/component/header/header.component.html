@@ -6,6 +6,9 @@
         <a [routerLink]="['/']">
             <div class="text">Phenopacket Lab</div>
         </a>
+        <a [routerLink]="['/']">
+            <div class="smalltext"> v{{version}}</div>
+        </a>
     </div>
     <div class="actions">
         <a class="action" [routerLink]="['about']">
@@ -24,7 +27,7 @@
                 <a class="action" (click)="authService.loginWithRedirect()">Login</a>
             </ng-container>
         </ng-template>
-         <span class="action" (click)="menu.toggle($event)" *ngIf="authService.user$ | async as user">
+         <span class="action" (click)="menu.toggle($event)" *ngIf="user">
             {{user.name != "" ? user.name : idFromSub(user?.sub)}}<i class="pi pi-fw pi-angle-down"></i>
          </span>
          <p-menu #menu [model]="userActions" [popup]="true" appendTo="body"></p-menu>

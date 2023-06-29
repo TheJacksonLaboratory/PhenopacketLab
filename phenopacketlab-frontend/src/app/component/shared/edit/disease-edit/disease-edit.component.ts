@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subscription } from 'rxjs';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
+import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
@@ -49,39 +50,52 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     onsetsSubscription: Subscription;
 
     // laterality
-    lateralities: OntologyClass[];
+    lateralities: ConstantObject[];
+    lateralitySelected: ConstantObject;
     lateralitySubscription: Subscription;
 
-    constructor(public phenopacketService: PhenopacketService, private diseaseService: DiseaseSearchService) {
+    constructor(public phenopacketService: PhenopacketService,
+        private diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {
         // get onsets
         this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
             // we get the children from the root node sent in response
-            this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         // stages
         this.stages = this.getStages();
 
         // laterality
-        this.lateralitySubscription = this.phenopacketService.getLaterality().subscribe(lateralities => {
-            lateralities.forEach(laterality => {
-                if (this.lateralities === undefined) {
-                    this.lateralities = [];
-                }
-                this.lateralities.push(new OntologyClass(laterality.id.value, laterality.name));
-            });
+        this.lateralitySubscription = this.phenopacketService.getLateralities().subscribe(lateralities => {
+            if (lateralities) {
+                lateralities.forEach(laterality => {
+                    if (this.lateralities === undefined) {
+                        this.lateralities = [];
+                    }
+                    this.lateralities.push(new ConstantObject(laterality.lbl, laterality.def, laterality.id, laterality.syn));
+                });
+            }
         });
+        this.initializeLateralitySelected(this.disease?.laterality);
         // TNM findings
         this.tumorSubscription = this.phenopacketService.getTnmTumorFindings().subscribe(nodes => {
-            this.tumorNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.tumorNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.nodeSubscription = this.phenopacketService.getTnmNodeFindings().subscribe(nodes => {
-            this.nodeNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.nodeNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.metastasisSubscription = this.phenopacketService.getTnmMetastasisFindings().subscribe(nodes => {
-            this.metastasisNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.metastasisNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.tnmFindingsSubscription = this.diseaseService.getTnmFindings().subscribe(findings => {
             // reset
@@ -95,13 +109,17 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
 
         // Disease Stages
         this.diseaseStagesSubscription = this.phenopacketService.getDiseaseStages().subscribe(nodes => {
-            this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
+            if (nodes) {
+                this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
+            }
         });
         this.diseaseStageSelectedSubscription = this.diseaseService.getStages().subscribe(stages => {
-            // reset
-            this.stageSelected = undefined;
-            // update when a disease is selected
-            this.initializeDiseaseStageSelected(stages[0]);
+            if (stages) {
+                // reset
+                this.stageSelected = undefined;
+                // update when a disease is selected
+                this.initializeDiseaseStageSelected(stages[0]);
+            }
         });
         this.initializeDiseaseStageSelected(this.disease?.diseaseStage[0]);
 
@@ -135,6 +153,18 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
         }
     }
 
+    initializeLateralitySelected(laterality: OntologyClass) {
+        if (laterality === undefined || this.lateralities === undefined) {
+            return;
+        }
+        for (const lateral of this.lateralities) {
+            if (lateral.id === laterality.id) {
+                this.lateralitySelected = lateral;
+                return;
+            }
+        }
+
+    }
     initializeTnmFindingSelected(findings: OntologyClass[]) {
         // update when a disease is selected
         if (findings === undefined) {
@@ -209,7 +239,7 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
                 // reset previous selection
                 this.disease.diseaseStage = [];
                 const diseaseStage = new OntologyClass(event.node.key, event.node.label);
-                diseaseStage.url = Disease.getDiseaseURL(event.node.key);
+                diseaseStage.termUrl = Disease.getDiseaseURL(event.node.key);
                 this.disease.diseaseStage.push(diseaseStage);
             } else {
                 this.disease.diseaseStage = undefined;
@@ -219,9 +249,12 @@ export class DiseaseEditComponent implements OnInit, OnDestroy {
     }
     updateLaterality(event) {
         if (this.disease) {
-            if (event) {
-                this.disease.laterality = event.value;
-                this.disease.laterality.url = `https://hpo.jax.org/app/browse/term/${this.disease.laterality.id}`;
+            if (event.value) {
+                this.disease.laterality = new OntologyClass(
+                    event.value.id,
+                    event.value.lbl,
+                    event.value.key,
+                    `https://hpo.jax.org/app/browse/term/${event.value.id}`);
             } else {
                 this.disease.laterality = undefined;
             }

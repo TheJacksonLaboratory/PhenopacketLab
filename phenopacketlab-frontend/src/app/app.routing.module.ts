@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '@auth0/auth0-angular';
 import { AboutComponent } from './component/about/about.component';
 import { HelpComponent } from './component/help/help.component';
 import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
@@ -10,7 +9,7 @@ const routes: Routes = [
   { path: '', component: PhenopacketListComponent},
   { path: 'pheno-creator', loadChildren: () =>
         import('./component/pheno-creator/pheno-creator.module')
-            .then(m => m.PhenoCreatorModule), canActivate: [AuthGuard] },
+            .then(m => m.PhenoCreatorModule) },
   // { path: 'families', component: FamilyListComponent },
   // { path: 'cohorts', component: CohortListComponent },
   { path: 'about', component: AboutComponent },

@@ -1,20 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OntologyClass, TimeElement } from '../models/base';
-import { BaseSearchService } from './base-search.service';
 
-const phenopacketDiseasesUrl = environment.PHENOPACKETLAB_DISEASE_URL;
-const hpoDiseasesUrl = environment.HPO_DISEASE_URL;
+const phenopacketDiseasesUrl = environment.DISEASE_URL;
+const diseasesSearchUrl = environment.DISEASE_SEARCH_URL;
 
 @Injectable({
     providedIn: 'root'
 })
-export class DiseaseSearchService extends BaseSearchService {
+export class DiseaseSearchService {
 
-    selectedSearchItems: any;
-    selectedSearchItemSubject: BehaviorSubject<any>;
+    diseases = new BehaviorSubject<any>(undefined);
 
     onset = new Subject<TimeElement>();
     resolution = new Subject<TimeElement>();
@@ -22,51 +20,37 @@ export class DiseaseSearchService extends BaseSearchService {
     diseaseStages = new Subject<OntologyClass[]>();
 
     constructor(private http: HttpClient) {
-        super(http);
-        this.selectedSearchItems = {};
-        this.selectedSearchItemSubject = new BehaviorSubject(this.selectedSearchItems);
-    }
-    getAll(): Observable<any> {
-        return this.getAllHpoDiseases();
     }
 
-    getSelectedSearchItems() {
-        return this.selectedSearchItems;
-    }
-
-    setSelectedSearchItems(searchItems: any) {
-        this.selectedSearchItems = searchItems;
-        this.selectedSearchItemSubject.next(searchItems);
-    }
-
-    public getAllHpoDiseases(): Observable<any> {
-        return this.http.get(phenopacketDiseasesUrl);
-    }
-
-    public queryDiseases(paramsIn: any): Observable<any> {
-        return this.sendDiseaseQueryRequest(paramsIn, phenopacketDiseasesUrl);
-    }
-
-    public queryDiseasesById(id: string): Observable<any> {
-        return this.http.get(`${hpoDiseasesUrl}/${id}`);
-    }
-
-    private sendDiseaseQueryRequest(paramsIn: any, url: string): Observable<any> {
-        const nameList: string[] = [];
-        if (paramsIn.selectedItems) {
-            paramsIn.selectedItems.forEach(item => {
-                nameList.push(item.selectedValue.name);
-            });
+    // return diseases as an Observable
+    getDiseases(): Observable<any> {
+        // only if undefined, load from server
+        if (this.diseases.getValue() === undefined) {
+            console.log('Loading diseases...');
+            this.loadDiseases();
         }
+        // return diseases for subscription even if the value is yet undefined.
+        return this.diseases.asObservable();
+    }
 
-        const options = {
-            name: nameList,
-            max: paramsIn.max ? paramsIn.max : '',
-            offset: paramsIn.offset ? paramsIn.offset : '',
-            sortBy: paramsIn.sortBy ? paramsIn.sortBy : '',
-            sortDirection: paramsIn.sortDirection ? paramsIn.sortDirection : ''
-        };
-        return this.http.get(url, { params: options });
+    private loadDiseases(): void {
+        this.http.get(phenopacketDiseasesUrl).subscribe(res => {
+            this.diseases.next(res);
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    searchDiseases(query: string): Observable<any> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        const params = new HttpParams().set('query', query).set('max', 10); // Create new HttpParams
+        const httpOptions: Object = { headers, params };
+        return this.http.get(diseasesSearchUrl, httpOptions);
+    }
+
+    public getDiseaseById(id: string): Observable<any> {
+        return this.http.get(`${phenopacketDiseasesUrl}/${id}`);
     }
 
     getDiseaseOnset(): Observable<TimeElement> {

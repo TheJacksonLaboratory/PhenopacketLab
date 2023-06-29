@@ -6,9 +6,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.core.ontology.HpoService;
+import org.monarchinitiative.phenopacketlab.core.PhenotypicFeatureService;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -29,7 +31,7 @@ public class PhenotypicFeatureControllerTest {
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
     @Mock
-    public HpoService phenotypicFeatureService;
+    public PhenotypicFeatureService phenotypicFeatureService;
     @InjectMocks
     public PhenotypicFeatureController controller;
     private MockMvc mockMvc;
@@ -44,25 +46,26 @@ public class PhenotypicFeatureControllerTest {
 
     @Test
     public void phenotypicFeatureById() throws Exception {
-        TermId phenotypicFeatureId = TermId.of("OMIM:123456");
-        when(phenotypicFeatureService.phenotypicFeatureById(phenotypicFeatureId))
+        TermId phenotypicFeatureId = TermId.of("HP:123456");
+        when(phenotypicFeatureService.phenotypeConceptById(phenotypicFeatureId))
                 .thenReturn(Optional.of(createPhenotypicFeature(phenotypicFeatureId.getValue(), "First")));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/OMIM:123456"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/HP:123456"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
-        assertThat(response.getContentAsString(), equalTo("{\"id\":\"OMIM:123456\",\"label\":\"First\"}"));
+        assertThat(response.getContentAsString(), equalTo("""
+                {"id":"HP:123456","lbl":"First","def":null,"syn":[]}"""));
     }
 
     @Test
     public void phenotypicFeatureById_missingPhenotypicFeature() throws Exception {
-        TermId diseaseId = TermId.of("OMIM:123456");
-        when(phenotypicFeatureService.phenotypicFeatureById(diseaseId))
+        TermId diseaseId = TermId.of("HP:123456");
+        when(phenotypicFeatureService.phenotypeConceptById(diseaseId))
                 .thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/OMIM:123456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/HP:123456"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -74,21 +77,39 @@ public class PhenotypicFeatureControllerTest {
 
     @Test
     public void getAllPhenotypicFeatures() throws Exception {
-        when(phenotypicFeatureService.phenotypicFeatures())
+        when(phenotypicFeatureService.allPhenotypeConcepts())
                 .thenReturn(Stream.of(
-                        createPhenotypicFeature("OMIM:123456", "First"),
-                        createPhenotypicFeature("OMIM:987654", "Second")
+                        createPhenotypicFeature("HP:123456", "First"),
+                        createPhenotypicFeature("HP:987654", "Second")
                 ));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/all"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(), equalTo("[{\"id\":\"OMIM:123456\",\"label\":\"First\"},{\"id\":\"OMIM:987654\",\"label\":\"Second\"}]"));
+        assertThat(response.getContentAsString(), equalTo("""
+                [{"id":"HP:123456","lbl":"First","def":null,"syn":[]},""" + """
+                {"id":"HP:987654","lbl":"Second","def":null,"syn":[]}]"""));
     }
 
-    private static Term createPhenotypicFeature(String phenotypicFeatureId, String phenotypicFeatureName) {
-        return Term.of(TermId.of(phenotypicFeatureId),
-                phenotypicFeatureName);
+    @Test
+    public void getSearchPhenotypicFeatures() throws Exception {
+        when(phenotypicFeatureService.searchPhenotypeConcepts("first", 10))
+                .thenReturn(new SearchIdentifiedConcept(1, Stream.of(
+                        createPhenotypicFeature("HP:123456", "First")
+                ).toList()));
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/search?query=first"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        MockHttpServletResponse response = result.getResponse();
+        assertThat(response.getContentAsString(), equalTo("""
+                {"numberOfTerms":1,"foundConcepts":[{"id":"HP:123456","lbl":"First","def":null,"syn":[]}]}"""));
+    }
+
+    private static IdentifiedConcept createPhenotypicFeature(String curie, String label) {
+        return IdentifiedConcept.of(
+                TermId.of(curie),
+                label, null, List.of());
     }
 }

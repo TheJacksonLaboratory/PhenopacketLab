@@ -100,22 +100,22 @@
               id="laterality"
               appendTo="body"
               [options]="lateralities"
-              [ngModel]="disease?.laterality"
+              [(ngModel)]="lateralitySelected"
               (onChange)="updateLaterality($event)"
-              optionLabel="label"
+              optionLabel="lbl"
               [filter]="true"
-              filterBy="label,id"
+              filterBy="lbl,id"
               [showClear]="true"
               placeholder="Select a laterality"
             >
               <ng-template let-laterality pTemplate="item">
                 <div
-                  [pTooltip]="laterality.label"
+                  [pTooltip]="laterality.lbl"
                   showDelay="2000"
                   tooltipPosition="bottom"
                   escape="false"
                 >
-                  [{{ laterality.id }}] {{ laterality.label }}
+                  [{{ laterality.id }}] {{ laterality.lbl }}
                 </div>
               </ng-template>
             </p-dropdown>

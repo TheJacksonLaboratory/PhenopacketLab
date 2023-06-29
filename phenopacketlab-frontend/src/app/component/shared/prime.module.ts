@@ -32,6 +32,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
 import { DialogModule } from 'primeng/dialog';
+import { InputMaskModule } from 'primeng/inputmask';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SpinnerModule } from 'primeng/spinner';
 
 
@@ -69,7 +71,10 @@ import { SpinnerModule } from 'primeng/spinner';
     FieldsetModule,
     SplitterModule,
     DialogModule,
-    SpinnerModule
+    SpinnerModule,
+    DialogModule,
+    InputMaskModule,
+    AutoCompleteModule
   ],
   exports: [
     ButtonModule,
@@ -102,7 +107,10 @@ import { SpinnerModule } from 'primeng/spinner';
     FieldsetModule,
     SplitterModule,
     DialogModule,
-    SpinnerModule
+    SpinnerModule,
+    DialogModule,
+    InputMaskModule,
+    AutoCompleteModule
   ],
   providers: [MessageService, ConfirmationService]
 })

@@ -18,7 +18,7 @@ export class PhenotypicFeature extends Convert {
     modifiers: OntologyClass[];
     onset: TimeElement;
     resolution: TimeElement;
-    evidences: Evidence[];
+    evidence: Evidence[];
     children: PhenotypicFeature[];
     parent: PhenotypicFeature;
 
@@ -45,13 +45,13 @@ export class PhenotypicFeature extends Convert {
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
-            phenotypicFeature.severity.url = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
+            phenotypicFeature.severity.termUrl = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
             phenotypicFeature.modifierNodes = [];
             for (const modifier of phenotypicFeature.modifiers) {
-                modifier.url = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
+                modifier.termUrl = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
                 const node = new OntologyTreeNode();
                 node.label = modifier.label;
                 node.key = modifier.id;
@@ -65,9 +65,9 @@ export class PhenotypicFeature extends Convert {
             phenotypicFeature.resolution = TimeElement.convert(obj['resolution']);
         }
         if (obj['evidence']) {
-            phenotypicFeature.evidences = Evidence.convert(obj['evidence']);
+            phenotypicFeature.evidence = Evidence.convert(obj['evidence']);
             phenotypicFeature.evidenceNodes = [];
-            for (const evidence of phenotypicFeature.evidences) {
+            for (const evidence of phenotypicFeature.evidence) {
                 const node = new OntologyTreeNode();
                 node.label = evidence.evidenceCode.label;
                 node.key = evidence.evidenceCode.id;

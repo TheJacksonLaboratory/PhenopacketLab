@@ -30,6 +30,5 @@ module phenopacketlab.restapi {
 
     opens org.monarchinitiative.phenopacketlab.restapi;
     opens org.monarchinitiative.phenopacketlab.restapi.controller;
-    opens org.monarchinitiative.phenopacketlab.restapi.controller.dto;
     opens org.monarchinitiative.phenopacketlab.restapi.controller.test;
 }
