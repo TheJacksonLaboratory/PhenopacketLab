@@ -7,7 +7,7 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
 
 const routes: Routes = [
   { path: '', component: PhenopacketListComponent},
-  { path: 'pheno-creator', loadChildren: () =>
+  { path: 'creator', loadChildren: () =>
         import('./component/pheno-creator/pheno-creator.module')
             .then(m => m.PhenoCreatorModule) },
   // { path: 'families', component: FamilyListComponent },
