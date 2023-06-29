@@ -12,9 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GridModule } from '@angular/flex-layout/grid';
 
-import { ROUTING } from './app.routing';
+import { AppRoutingModule } from './app.routing.module';
 import { HelpComponent } from './component/help/help.component';
-import { LoginComponent } from "./component/login/login.component";
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
@@ -31,14 +30,14 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
 import { environment } from '../environments/environment';
 const config: AuthConfig = {
     ...environment.AUTH
-}
+};
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        ROUTING,
+        AppRoutingModule,
         RouterModule,
         CommonModule,
         HttpClientModule,
@@ -61,8 +60,7 @@ const config: AuthConfig = {
         HelpComponent,
         PhenopacketListComponent,
         CohortListComponent,
-        FamilyListComponent,
-        LoginComponent
+        FamilyListComponent
 
     ],
     exports: [RouterModule],

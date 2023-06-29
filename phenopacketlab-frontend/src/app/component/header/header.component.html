@@ -14,5 +14,19 @@
         <a class="action" [routerLink]="['help']">
             Help
         </a>
+        <span class="vertical-divide"></span>
+        <ng-container *ngIf="(authService.isLoading$ | async ) else notLoading">
+            <p-progressSpinner class="loader-spinner" styleClass="w-1rem h-1rem" strokeWidth="6"
+                               animationDuration=".5s" aria-label="Loading"></p-progressSpinner>
+        </ng-container>
+        <ng-template #notLoading>
+            <ng-container *ngIf="(authService.isAuthenticated$ | async) === false">
+                <a class="action" (click)="authService.loginWithRedirect()">Login</a>
+            </ng-container>
+        </ng-template>
+         <span class="action" (click)="menu.toggle($event)" *ngIf="authService.user$ | async as user">
+            {{user.name != "" ? user.name : idFromSub(user?.sub)}}<i class="pi pi-fw pi-angle-down"></i>
+         </span>
+         <p-menu #menu [model]="userActions" [popup]="true" appendTo="body"></p-menu>
     </div>
 </div>

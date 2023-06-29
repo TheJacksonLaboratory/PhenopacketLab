@@ -1,4 +1,4 @@
-const API_URL = 'https://phenopacketlab-dev.jax.org/api/v1';
+const API_URL = 'http://localhost:8080/api';
 
 export const environment = {
   production: false,
@@ -28,23 +28,20 @@ export const environment = {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
     authorizationParams: {
-      redirect_uri: window.location.origin
+      redirect_uri: window.location.origin,
+      audience: `https://phenopacketlab.jax.org`
     },
-
     httpInterceptor: {
       allowedList: [
         {
-          // Match any request that starts 'https://{yourDomain}/api/v2/' (note the asterisk)
-          uri: `${API_URL}/api/`,
+          uri: `${API_URL}/*`,
           tokenOptions: {
             authorizationParams: {
-              // The attached token should target this audience
-              audience: `${API_URL}/api/`
+              audience: `https://phenopacketlab.jax.org`
             }
           }
         }
       ]
     }
-
   }
 };

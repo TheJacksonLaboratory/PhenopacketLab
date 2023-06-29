@@ -1,4 +1,4 @@
-const API_URL = 'https://phenopacketlab.jax.org/api/v1';
+const API_URL = 'https://phenopacketlab.jax.org/api/';
 
 export const environment = {
   production: true,

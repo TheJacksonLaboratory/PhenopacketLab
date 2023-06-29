@@ -1,7 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-const API_URL = 'http://localhost:8080';
+const API_URL = 'http://localhost:8080/api';
 
 export const environment = {
   production: false,
@@ -37,12 +37,11 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          // Match any request that starts 'https://{yourDomain}/api/v2/' (note the asterisk)
-          uri: `${API_URL}/api/v1/`,
+          uri: `${API_URL}/*`,
           tokenOptions: {
             authorizationParams: {
               // The attached token should target this audience
-              audience: `${API_URL}/api/v1/`
+              audience: `https://phenopacketlab.jax.org`
             }
           }
         }

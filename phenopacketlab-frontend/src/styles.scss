@@ -246,3 +246,22 @@ legend.plot-control-panel-border {
     font-style: italic;
   }
 }
+.loader-spinner .p-progress-spinner-circle {
+  animation: spin-animate 3s ease-in-out infinite;
+}
+@keyframes spin-animate {
+  100%,
+  0% {
+    stroke: #cccc00;
+  }
+  40% {
+    stroke: #cccc00;
+  }
+  66% {
+    stroke: #cccc00;
+  }
+  80%,
+  90% {
+    stroke: #cccc00;
+  }
+}

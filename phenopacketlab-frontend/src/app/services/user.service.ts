@@ -1,7 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -13,11 +14,14 @@ export class UserService {
     }
 
     /**
-     * This method tries to get the current logged in user from the database. If they don't
-     * exist yet they will be inserted.
-     * @returns a user object
+     * This method tries to get the current logged-in user from the database. If they don't
+     * exist, they will be inserted.
+     * @returns true if the user persists in our store
      */
-    public check(): void {
-        this.client.get<any>(environment.USER_URL).subscribe();
+    public check(authId: string): Observable<boolean> {
+        return this.client.get<any>(environment.USER_URL).pipe(
+            map((user) => {
+                return user != null && user.authId === authId;
+            }));
     }
 }

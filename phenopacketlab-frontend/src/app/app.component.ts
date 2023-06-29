@@ -1,20 +1,15 @@
 import { Location } from '@angular/common';
-<<<<<<< HEAD:phenopacketlab-frontend/src/app/app.component.ts
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import { HeaderComponent } from './component/header/header.component';
-import { SidebarComponent } from './component/sidebar/sidebar.component';
-=======
-import 'rxjs/add/operator/filter';
-import { Router } from '@angular/router';
 import { AuthService } from "@auth0/auth0-angular";
-import { SidebarComponent } from './component/sidebar/sidebar.component';
-import { HeaderComponent } from './component/header/header.component';
-import { HttpClient } from '@angular/common/http';
+import { MessageService } from "primeng/api";
+import { timer } from "rxjs";
+import { distinctUntilChanged, first, take } from "rxjs/operators";
+import { HeaderComponent } from "./component/header/header.component";
+import { SidebarComponent } from "./component/sidebar/sidebar.component";
 import { UserService } from "./services/user.service";
->>>>>>> 1046986 (preliminary auth0 integration, logout and login):frontend/src/app/app.component.ts
 
 
 @Component({
@@ -31,30 +26,33 @@ export class AppComponent implements OnInit {
   // header child component
   @ViewChild(HeaderComponent) header!: HeaderComponent;
 
-  // status of whether the sidebar is open or closed
-  sideNavOpen = false;
 
-<<<<<<< HEAD:phenopacketlab-frontend/src/app/app.component.ts
   activeSidenav = true;
-
-  constructor(public location: Location, public http: HttpClient, public router: Router) {}
+  constructor(public location: Location, public http: HttpClient, public router: Router,
+              public authService: AuthService, public userService: UserService, private messageService: MessageService) { }
 
   ngOnInit() {
     const hideNavUrls = ['/about', '/help'];
     this.router.events.forEach((event) => {
-      if (event instanceof NavigationStart) {
-        this.activeSidenav = !(hideNavUrls.includes(event.url));
-      }
-=======
-  constructor(public location: Location, public http: HttpClient, public router: Router,
-              public authService: AuthService, public userService: UserService) { }
-
-  ngOnInit() {
-    this.sideNavOpen = this.header?.sideNavOpen || true;
-    this.authService.user$.subscribe(user => {
-     this.userService.check();
->>>>>>> 1046986 (preliminary auth0 integration, logout and login):frontend/src/app/app.component.ts
+        if (event instanceof NavigationStart) {
+          this.activeSidenav = !(hideNavUrls.includes(event.url));
+        }
     });
-  }
 
+    this.authService.user$.pipe(
+          distinctUntilChanged((prev, curr) => prev === curr)
+      ).subscribe((user) => {
+          if (user != null) {
+              this.userService.check(user.sub).pipe(first()).subscribe();
+          } else {
+              // We will warn someone if they are not logged in and they have been on the site for at least 15secs
+              // about data not being saved.
+              timer(15000).pipe(take(1)).subscribe(() => {
+                  const message = 'Your data will not be saved.';
+                  // TODO: Show alert that their phenopackets would not be saved.
+                  this.messageService.add({ severity: 'warn', summary: 'No Login Found', detail: message, sticky: true });
+              });
+          }
+      });
+  }
 }

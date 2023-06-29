@@ -32,6 +32,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FieldsetModule } from 'primeng/fieldset';
 import { SplitterModule } from 'primeng/splitter';
 import { DialogModule } from 'primeng/dialog';
+import { SpinnerModule } from 'primeng/spinner';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { DialogModule } from 'primeng/dialog';
     InputTextareaModule,
     FieldsetModule,
     SplitterModule,
-    DialogModule
+    DialogModule,
+    SpinnerModule
   ],
   exports: [
     ButtonModule,
@@ -99,7 +101,8 @@ import { DialogModule } from 'primeng/dialog';
     InputTextareaModule,
     FieldsetModule,
     SplitterModule,
-    DialogModule
+    DialogModule,
+    SpinnerModule
   ],
   providers: [MessageService, ConfirmationService]
 })

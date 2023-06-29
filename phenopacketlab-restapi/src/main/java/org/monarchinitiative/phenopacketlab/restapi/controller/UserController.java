@@ -1,7 +1,5 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
-
-import org.monarchinitiative.phenopacketlab.model.MinedText;
 import org.monarchinitiative.phenopacketlab.restapi.domain.User;
 import org.monarchinitiative.phenopacketlab.restapi.service.UserService;
 import org.springframework.http.HttpStatus;

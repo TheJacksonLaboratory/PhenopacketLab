@@ -12,11 +12,18 @@ phenopacketlab:
     provider: 'FENOMINAL'
 
 api:
-  version: /api/v1
+  version: /api
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://thejacksonlaboratory.auth0.com/
   data:
     mongodb:
       host: localhost
       port: 27017
       database: phenopacketlab
+auth0:
+  audience: "https://phenopacketlab.jax.org"
