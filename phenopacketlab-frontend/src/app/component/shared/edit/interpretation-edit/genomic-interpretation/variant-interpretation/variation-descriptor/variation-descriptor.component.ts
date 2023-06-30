@@ -28,15 +28,13 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     @Output()
     variationDescriptorChange = new EventEmitter<VariationDescriptor>();
 
-    // id: string;
-    label: string;
-    description: string;
-
     moleculeContexts = Object.keys(MoleculeContext).filter((item) => isNaN(Number(item)));
     // allelic states
     allelicStatesNodes: OntologyTreeNode[];
     allelicStateSubscription: Subscription;
     selectedAllelicState: OntologyClass;
+    shortListAllelicStateSubscription: Subscription;
+    shortListAllelicStates: OntologyClass[];
 
     // structural types
     structuralTypesNodes: OntologyTreeNode[];
@@ -56,11 +54,23 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // generate new id
+        this.generateNewID();
         // Get allelic states
         this.allelicStateSubscription = this.interpretationService.getAllelicStates(this.dialogService).subscribe(nodes => {
             // we get the children from the root node sent in response
             if (nodes) {
                 this.allelicStatesNodes = <OntologyTreeNode[]>nodes.children;
+            }
+        });
+        // get short list of allelic states
+        this.shortListAllelicStateSubscription = this.interpretationService.getShortListOfAllelicStates(
+            this.dialogService).subscribe(data => {
+            if (data) {
+                this.shortListAllelicStates = [];
+                for (const item of data) {
+                    this.shortListAllelicStates.push(new OntologyClass(item.id, item.lbl));
+                }
             }
         });
         // structural types
@@ -97,6 +107,13 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     onLabelChange(label: string) {
         if (this.variationDescriptor) {
             this.variationDescriptor.label = label;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
+    }
+
+    onDescriptionChange(description: string) {
+        if (this.variationDescriptor) {
+            this.variationDescriptor.description = description;
             this.variationDescriptorChange.emit(this.variationDescriptor);
         }
     }
@@ -168,14 +185,14 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         this.structuralTypeSelected = treeNode;
     }
 
-    onDescriptionChange(description: string) {
-        this.description = description;
-    }
-
     updateAllelicState(event) {
         if (this.variationDescriptor) {
             if (event) {
-                this.selectedAllelicState = new OntologyClass(event.node.key, event.node.label);
+                if (event.node) {
+                    this.selectedAllelicState = new OntologyClass(event.node.key, event.node.label);
+                } else {
+                    this.selectedAllelicState = event.value;
+                }
             } else {
                 this.selectedAllelicState = undefined;
             }

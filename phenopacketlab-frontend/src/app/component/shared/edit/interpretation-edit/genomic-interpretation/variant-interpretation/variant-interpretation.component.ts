@@ -3,6 +3,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AcmgPathogenicityClassification, GeneDescriptor, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
 import { ProfileSelection } from 'src/app/models/profile';
+import { VariantMetadata } from 'src/app/models/variant-metadata';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -21,9 +22,8 @@ export class VariantInterpretationComponent implements OnInit {
     @Output()
     variantInterpretationChange = new EventEmitter<VariantInterpretation>();
 
-    visible = false;
     hgvs: string;
-    assembly: string;
+    assembly = 'GRCh38';
     transcript: string;
     genotype: string;
     acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
@@ -31,29 +31,49 @@ export class VariantInterpretationComponent implements OnInit {
 
     expanded = false;
 
-    splitterLeftWidth = 60;
-    splitterRightWidth = 40;
-    viewLeftPane = true;
+    variantValidated: VariantMetadata;
+    leftSplitVisible = true;
+    centerSplitVisible = false;
+    rightSplitVisible = false;
+    leftSplitWidth = 100;
+    centerSplitWidth = 0;
+    rightSplitWidth = 0;
 
     constructor() {
     }
 
     ngOnInit() {
         if (this.variantInterpretation) {
-            this.collapseSplitter();
+            this.showRightSplit();
         }
+        console.log(this.profile);
     }
 
-    collapseSplitter() {
-        this.viewLeftPane = false;
-        this.splitterLeftWidth = 0;
-        this.splitterRightWidth = 100;
+    showLeftSplit() {
+        this.leftSplitVisible = true;
+        this.centerSplitVisible = false;
+        this.rightSplitVisible = false;
+        this.leftSplitWidth = 100;
+        this.centerSplitWidth = 0;
+        this.rightSplitWidth = 0;
     }
-    expandSplitter() {
-        this.viewLeftPane = true;
-        this.splitterLeftWidth = 60;
-        this.splitterRightWidth = 40;
+    showCenterSplit() {
+        this.leftSplitVisible = false;
+        this.centerSplitVisible = true;
+        this.rightSplitVisible = false;
+        this.leftSplitWidth = 0;
+        this.centerSplitWidth = 100;
+        this.rightSplitWidth = 0;
     }
+    showRightSplit() {
+        this.leftSplitVisible = false;
+        this.centerSplitVisible = false;
+        this.rightSplitVisible = true;
+        this.leftSplitWidth = 0;
+        this.centerSplitWidth = 0;
+        this.rightSplitWidth = 100;
+    }
+
     updateAcmgPathogenicity(event) {
         if (this.variantInterpretation) {
             this.variantInterpretation.acmgPathogenicityClassification = event.value;
@@ -77,10 +97,45 @@ export class VariantInterpretationComponent implements OnInit {
     updateVariantInterpretation(variantInterpretation: VariantInterpretation) {
         this.variantInterpretation = variantInterpretation;
         if (this.variantInterpretation) {
-            this.splitterLeftWidth = 0;
-            this.splitterRightWidth = 100;
+            this.showRightSplit();
+        } else {
+            this.showLeftSplit();
         }
         this.variantInterpretationChange.emit(this.variantInterpretation);
+    }
+    resetVariantValidated() {
+        this.variantValidated = undefined;
+        this.showLeftSplit();
+    }
+    /**
+     * Converts the Variant validated (VariantMetadata) to a variant interpretation
+     * and emits the change to the parent component
+     * @returns
+     */
+    addVariantInterpretation() {
+        if (this.variantValidated) {
+            this.showRightSplit();
+        } else {
+            this.showLeftSplit();
+            return;
+        }
+        this.variantInterpretation = this.variantValidated.toVariantInterpretation(this.assembly, undefined);
+        this.variantInterpretationChange.emit(this.variantInterpretation);
+    }
+
+    /**
+     * method called from VariationSearchComponent
+     * @param variant
+     * @returns
+     */
+    updateVariantValidated(variant: VariantMetadata) {
+        if (variant) {
+            this.showCenterSplit();
+        } else {
+            this.showLeftSplit();
+            return;
+        }
+        this.variantValidated = variant;
     }
     updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
         if (this.variantInterpretation) {

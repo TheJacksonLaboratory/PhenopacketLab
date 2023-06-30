@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SpinnerDialogComponent } from 'src/app/component/shared/spinner-dialog/spinner-dialog.component';
-import { Utils } from 'src/app/component/shared/utils';
-import { AcmgPathogenicityClassification, TherapeuticActionability, VariantInterpretation, VariationDescriptor } from 'src/app/models/interpretation';
+import { VariantInterpretation } from 'src/app/models/interpretation';
+import { ProfileSelection } from 'src/app/models/profile';
 import { VariantMetadata } from 'src/app/models/variant-metadata';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { environment } from 'src/environments/environment';
@@ -16,8 +16,12 @@ import { environment } from 'src/environments/environment';
 })
 export class VariationSearchComponent implements OnInit, OnDestroy {
 
+    @Input()
+    profile: ProfileSelection;
     @Output()
     variantInterpretationChange = new EventEmitter<VariantInterpretation>();
+    @Output()
+    variantValidated = new EventEmitter<VariantMetadata>();
 
     spinnerDialogRef: DynamicDialogRef;
 
@@ -25,20 +29,16 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
     interpretations: VariantInterpretation[];
     visible = false;
     hgvs: string;
-    showHGVSHelp: boolean;
     // We just support grch38 for now
     assembly = 'GRCh38/hg38';
     selectedTranscript: string;
-    transcriptDescription: string;
     transcript: string;
-    selectedAcmgPathogenicity = AcmgPathogenicityClassification.NOT_PROVIDED;
     genotype: string;
     genotypes = ['heterozygous', 'homozygous', 'hemizygous'];
     builds = ['GRCh37/hg19', 'GRCh38/hg38'];
-    transcripts = ['all', 'prefered'];
-    acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
-    selectedTherapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
-    therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
+    // acmgClassifications = Object.keys(AcmgPathogenicityClassification).filter((item) => isNaN(Number(item)));
+    // selectedTherapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
+    // therapeuticActionabilities = Object.keys(TherapeuticActionability).filter((item) => isNaN(Number(item)));
 
     expanded = false;
 
@@ -61,14 +61,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
         this.hgvs = hgvs;
     }
 
-    updateAssembly(event: any) {
-        this.assembly = event.value;
-    }
-
-    openHGVSHelp() {
-        this.showHGVSHelp = true;
-    }
-
     public searchVariantByHGVS() {
         // For now we just allow the mane select option
         this.selectedTranscript = 'prefered';
@@ -79,32 +71,31 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
             });
             let build = '';
             if (this.assembly === 'GRCh37/hg19') {
-                build = 'grch37';
+                build = 'hg19';
             }
             if (this.assembly === 'GRCh38/hg38') {
-                build = 'grch38';
+                build = 'hg38';
             }
             this.searchService.queryFunctionalAnnotationByHGVS(this.hgvs, build, this.selectedTranscript).subscribe(data => {
-                // reset variants table
-                this.interpretations = [];
+                let variant;
                 for (const item of data) {
-                    const variant = new VariantMetadata(item);
-                    const vInterpretation = variant.toVariantInterpretation(build, this.selectedAcmgPathogenicity, this.genotype);
-                    vInterpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
-                    vInterpretation.acmgPathogenicityClassification = this.selectedAcmgPathogenicity;
-                    vInterpretation.therapeuticActionability = this.selectedTherapeuticActionability;
-                    this.interpretations.push(vInterpretation);
+                    variant = new VariantMetadata(item);
+                    variant.genotype = this.genotype;
                 }
-
-                this.visible = true;
+                if (variant === undefined) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `No variant corresponds to the description \'${this.hgvs}\'` });
+                    this.hgvs = '';
+                }
+                this.variantValidated.emit(variant);
                 this.spinnerDialogRef.close();
             },
                 (error) => {
                     console.log(error);
+                    this.hgvs = '';
                     this.spinnerDialogRef.close();
                 });
         } else {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Make sure HGVS, genome build and transcript are selected before making a search.' });
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Make sure Variant description, genome build and transcript are selected before making a search.' });
 
         }
 
@@ -125,10 +116,6 @@ export class VariationSearchComponent implements OnInit, OnDestroy {
                 }
             }
         }
-    }
-
-    updateVariationDescriptor(variationDescriptor: VariationDescriptor) {
-        // TODO
     }
 
 }

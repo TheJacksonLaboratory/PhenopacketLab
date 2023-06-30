@@ -53,7 +53,6 @@ import { MeasurementDetailDialogComponent } from './measurement/measurement-deta
 import { MetadataComponent } from './metadata/metadata.component';
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
-import { InterpretationDetailDialogComponent } from './interpretation/interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { GenoInterpretationDetailComponent } from './interpretation/interpretation-detail/geno-interpretation/geno-interpretation-detail.component';
 import { VariantInterpretationComponent } from './interpretation/interpretation-detail/geno-interpretation/variant-interpretation/variant-interpretation.component';
 import { GeneDescriptorComponent } from './interpretation/interpretation-detail/geno-interpretation/gene-descriptor/gene-descriptor.component';
@@ -130,7 +129,6 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     InterpretationComponent,
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,
-    InterpretationDetailDialogComponent,
     VariantInterpretationComponent,
     GeneDescriptorComponent,
     GeneContextDialogComponent,
@@ -158,7 +156,6 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     InterpretationComponent,
     InterpretationDetailComponent,
     GenoInterpretationDetailComponent,
-    InterpretationDetailDialogComponent,
     VariantInterpretationComponent,
     GeneDescriptorComponent,
     GeneContextDialogComponent,

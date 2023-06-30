@@ -30,8 +30,6 @@ export class MeasurementComponent implements OnInit {
     phenopacket: Phenopacket;
     @Output() onMeasurementsChanged = new EventEmitter<Measurement[]>();
 
-    showTable = false;
-
     ref: DynamicDialogRef;
 
     constructor(public dialogService: DialogService,
@@ -40,9 +38,6 @@ export class MeasurementComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.measurements && this.measurements.length > 0) {
-            this.showTable = true;
-        }
     }
 
     /**
@@ -73,7 +68,6 @@ export class MeasurementComponent implements OnInit {
                     this.measurements[indexToUpdate] = measure;
                     this.measurements = Object.assign([], this.measurements);
                 }
-                this.showTable = true;
                 // emit change
                 this.onMeasurementsChanged.emit(this.measurements);
             }
@@ -87,9 +81,6 @@ export class MeasurementComponent implements OnInit {
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
             this.measurements = this.measurements.filter(val => val.key !== measurement.key);
-            if (this.measurements.length === 0) {
-              this.showTable = false;
-            }
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Measurement Deleted', life: 3000 });
           },
           reject: () => {

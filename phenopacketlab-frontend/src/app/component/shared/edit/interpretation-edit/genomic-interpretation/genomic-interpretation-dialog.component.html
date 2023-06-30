@@ -1,20 +1,12 @@
 <p-toast position="center" key="cen"></p-toast>
+<p-confirmDialog
+  position="center"
+  [style]="{ width: '50vw' }"
+></p-confirmDialog>
 <div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
-    <label for="subjectid">Subject ID</label>
-    <input
-      id="subjectid"
-      type="text"
-      [disabled]="true"
-      aria-describedby="Subject ID"
-      pInputText
-      [ngModel]="genomicInterpretation?.subjectOrBiosampleId"
-      pTooltip="Set in Individual Page as the Individual ID"
-      tooltipPosition="bottom"
-    />
-  </div>
-  <div class="field col-12 md:col-6">
-    <label for="interpretationstatus">Interpretation Status</label>
+
+  <div *ngIf="genomicInterpretation.variantInterpretation" class="field col-12 md:col-6">
+    <label for="interpretationstatus">Interpretation Status *</label>
     <p-dropdown
       id="interpretationstatus"
       appendTo="body"
@@ -22,10 +14,11 @@
       [ngModel]="genomicInterpretation?.interpretationStatus"
       [options]="interpretationStatuses"
       required
-      (onChange)="updateInterpretationStatus($event)"
+      (onChange)="updateInterpretationStatus($event.value)"
       pTooltip="Interpretation status"
       tooltipPosition="bottom"
       showDelay="2000"
+      scrollHeight="20rem"
       class="w-full"
       showClear="true"
       [ngClass]="{
@@ -45,4 +38,21 @@
     [submitted]="submitted"
     (variantInterpretationChange)="addVariantInterpretation($event)"
   ></app-variant-search-interpretation>
+</div>
+<br>
+<div *ngIf="genomicInterpretation?.variantInterpretation" class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="OK"
+    (click)="onOkClick()"
+  ></button>
 </div>

@@ -9,7 +9,7 @@
     (selectedItemChange)="diseaseItemSelected($event)"
   ></app-search-box>
   </div>
-  <div *ngIf="showTable" class="field col-12">
+  <div class="field col-12">
     <p-table
       [value]="phenopacketDiseases"
       dataKey="key"
@@ -82,6 +82,13 @@
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="7">
+            No disease to display.
+          </td>
+        <tr>
+     </ng-template>
     </p-table>
   </div>
 </div>

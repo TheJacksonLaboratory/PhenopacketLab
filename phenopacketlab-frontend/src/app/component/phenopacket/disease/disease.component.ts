@@ -40,8 +40,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   // search box params
   localStorageKey = 'hpo_diseases';
 
-  showTable = false;
-
   diseaseCount: number;
 
   ref: DynamicDialogRef;
@@ -56,9 +54,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.phenopacketDiseases && this.phenopacketDiseases.length > 0) {
-      this.showTable = true;
-    }
   }
 
   ngOnDestroy(): void {
@@ -82,10 +77,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
     this.phenopacketDiseases.push(disease);
     // we copy the array after each update so the ngChange method is triggered on the child component
     this.phenopacketDiseases = this.phenopacketDiseases.slice();
-    setTimeout(() => this.showTable = true, 0);
-
-    // make table visible
-    this.showTable = true;
   }
 
   deleteDisease(disease: Disease) {
@@ -95,9 +86,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.phenopacketDiseases = this.phenopacketDiseases.filter(val => val.key !== disease.key);
-        if (this.phenopacketDiseases.length === 0) {
-          this.showTable = false;
-        }
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Disease Deleted', life: 3000 });
       },
       reject: () => {
@@ -126,7 +114,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
           this.phenopacketDiseases[indexToUpdate] = editedDisease;
           this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
         }
-        this.showTable = true;
         // emit change
         this.onDiseasesChanged.emit(this.phenopacketDiseases);
       }

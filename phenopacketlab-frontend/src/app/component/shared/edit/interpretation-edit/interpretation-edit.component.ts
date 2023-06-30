@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subject } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+
 import { OntologyClass } from 'src/app/models/base';
 import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -10,6 +12,8 @@ import { Utils } from 'src/app/component/shared/utils';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { GenomicInterpretationDialogComponent } from './genomic-interpretation/genomic-interpretation-dialog.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -25,15 +29,14 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
     interpretation: Interpretation;
     @Input()
     profile: ProfileSelection;
+
     @Output()
     interpretationChange = new EventEmitter<Interpretation>();
 
     submitted = false;
-
     isPrivateInfoWarnSelected: boolean;
 
     visible = false;
-    genomicInterpretationVisible = false;
     id: string;
 
     // progress status
@@ -51,11 +54,13 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
     genomicInterpretations: GenomicInterpretation[];
 
+    ref: DynamicDialogRef;
+
     constructor(public phenopacketService: PhenopacketService,
         public searchService: InterpretationService,
         public diseaseService: DiseaseSearchService,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService,
+        public dialogService: DialogService,
         private primengConfig: PrimeNGConfig) {
     }
 
@@ -90,20 +95,15 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
 
         // statuses
         this.progressStatuses = this.getProgressStatuses();
-        // if edit dialog then we assume that the isPrivateInfoWarnSelected has already been selected
-        if (this.profile === undefined) {
-            this.isPrivateInfoWarnSelected = true;
-        }
+
         // initialize
         if (this.interpretation) {
             this.id = this.interpretation.id;
+            this.isPrivateInfoWarnSelected = this.interpretation.isPrivateInfoWarnSelected;
             this.selectedProgressStatus = this.interpretation.progressStatus;
             this.selectedDisease = this.interpretation.diagnosis?.disease;
             this.diseaseItems = [this.selectedDisease];
             this.genomicInterpretations = this.interpretation.diagnosis?.genomicInterpretations;
-            if (this.genomicInterpretations && this.genomicInterpretations.length > 0) {
-                this.genomicInterpretationVisible = true;
-            }
         }
     }
 
@@ -119,26 +119,51 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
             this.genomicInterpretations = [];
         }
         const genomicInterpretation = new GenomicInterpretation();
-        genomicInterpretation.subjectOrBiosampleId = this.phenopacket.subject.id;
+        // check that subject id has been created beforehand
+        if (this.phenopacket.subject.id) {
+            genomicInterpretation.subjectOrBiosampleId = this.phenopacket.subject.id;
+        } else {
+            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `A subject ID needs to be added to the Individual before creating a Genomic Interpretation.` });
+            return;
+        }
         // default to UNKNOWN
         genomicInterpretation.interpretationStatus = InterpretationStatus.UNKNOWN_STATUS;
         genomicInterpretation.key = Utils.getBiggestKey(this.genomicInterpretations) + 1;
-        this.genomicInterpretations.push(genomicInterpretation);
-        this.genomicInterpretationVisible = true;
+        // open edit dialog
+        this.editGenomicInterpretation(genomicInterpretation);
     }
     deleteGenomicInterpretation(genomicInterpretation: GenomicInterpretation) {
         this.genomicInterpretations = this.genomicInterpretations.filter(val => val.key !== genomicInterpretation.key);
-        if (this.genomicInterpretations.length === 0) {
-            this.genomicInterpretationVisible = false;
-        }
     }
-    updateGenomicInterpretation(updatedGenomicInterpretation: GenomicInterpretation, genomicInterpretation: GenomicInterpretation) {
-        for (let genoInterpret of this.genomicInterpretations) {
-            if (genoInterpret.key === genomicInterpretation.key) {
-                genoInterpret = updatedGenomicInterpretation;
+    editGenomicInterpretation(genomicInterpretation: GenomicInterpretation) {
+        // open genomic interpretation dialog
+        this.ref = this.dialogService.open(GenomicInterpretationDialogComponent, {
+            header: 'Enter Genomic Interpretation',
+            width: '70%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { genomicInterpretation: genomicInterpretation,
+                    profile: this.profile,
+                    submitted: this.submitted }
+        });
+
+        this.ref.onClose.subscribe((genomicInterpret: GenomicInterpretation) => {
+            if (genomicInterpret) {
+                const indexToUpdate = this.genomicInterpretations.findIndex(item => item.key === genomicInterpret.key);
+                if (indexToUpdate === -1) {
+                    this.genomicInterpretations.push(genomicInterpret);
+                } else {
+                    this.genomicInterpretations[indexToUpdate] = genomicInterpret;
+                    this.genomicInterpretations = Object.assign([], this.genomicInterpretations);
+                }
+                // emit change
+                // this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
             }
-        }
+        });
     }
+
     updateProgressStatus(event) {
         this.selectedProgressStatus = event.value;
     }
@@ -153,21 +178,20 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         this.selectedDisease = diseaseItem;
     }
 
+    updateIsPrivateInfoWarn(isPrivateInfoWarnSelected: boolean) {
+        if (this.interpretation) {
+            console.log('updated isPrivateInfoWarnSelected: ');
+            this.interpretation.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
+        }
+    }
+    generateNewID() {
+        this.id = uuidv4();
+    }
     updateInterpretation() {
         this.submitted = true;
         if (this.id === undefined) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please fill in the interpretation ID.' });
             return;
-        }
-        // check if id already exist
-        const phenopacket = this.phenopacketService.phenopacket;
-        if (phenopacket) {
-            for (const interpret of phenopacket.interpretations) {
-                if (interpret.id === this.id) {
-                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Interpretation with ID '${this.id}' already exists. Please create a new ID.` });
-                    return;
-                }
-            }
         }
         // check if personal info has been checked
         if (!this.isPrivateInfoWarnSelected) {
@@ -182,49 +206,17 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select a disease term for the disease diagnosis.' });
             return;
         }
-        if (this.genomicInterpretations) {
-            for (const genomicInterpretation of this.genomicInterpretations) {
-                if (genomicInterpretation.interpretationStatus === undefined) {
-                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select interpretation status for genomic interpretation.' });
+        // check if an interpretation was already added for a selected diagnosis
+        const phenopacket = this.phenopacketService.phenopacket;
+        if (phenopacket?.interpretations) {
+            for (const interpret of phenopacket.interpretations) {
+                if (interpret.diagnosis.disease.id === this.selectedDisease.id) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `An interpretation with the selected diagnosis \'${this.selectedDisease.toString()}\' already exists. Please selected another disease to be able to add this interpretation.` });
                     return;
-                }
-                if (genomicInterpretation.variantInterpretation) {
-                    if (genomicInterpretation.variantInterpretation.acmgPathogenicityClassification === undefined) {
-                        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select acmgPathogenicityClassification in genomic interpretation.' });
-                        return;
-                    }
-                    if (genomicInterpretation.variantInterpretation.therapeuticActionability === undefined) {
-                        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select therapeuticActionability in genomic interpretation.' });
-                        return;
-                    }
-                    if (genomicInterpretation.variantInterpretation.variationDescriptor === undefined) {
-                        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please add a variationDescriptor to the genomic interpretation.' });
-                        return;
-                    }
-                } else {
-                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please add a variant interpretation to the genomic interpretation.' });
-                    return;
-                }
-                if (genomicInterpretation.interpretationStatus === InterpretationStatus.UNKNOWN_STATUS) {
-                    this.confirmationService.confirm({
-                        message: `The \'Interpretation Status\' of the genomic interpretation with the variation id \'${genomicInterpretation.variantInterpretation.variationDescriptor.id}\' is set to \'UNKNOWN_STATUS\'. Click on \'Yes\' to keep the status value to \'UNKNOWN_STATUS\'. Click on \'No\' to keep editing the interpretation and change the status value.`,
-                        header: 'Confirmation',
-                        icon: 'pi pi-exclamation-triangle',
-                        accept: () => {
-                            // continue saving
-                            this.saveInterpretation();
-                        },
-                        reject: () => {
-                            return;
-                        }
-                    });
-                } else {
-                    this.saveInterpretation();
                 }
             }
-        } else {
-            this.saveInterpretation();
         }
+        this.saveInterpretation();
     }
 
     saveInterpretation() {

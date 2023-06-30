@@ -6,23 +6,33 @@
   <ng-template pTemplate="content">
     <div class="grid p-fluid">
       <div class="field col-12">
-        <label for="phenoId"><b>Phenopacket ID</b></label>
-        <input
-          id="phenoId"
-          #id="ngModel"
-          type="text"
-          required
-          pInputText
-          [(ngModel)]="phenopacket.id"
-          [ngClass]="{
-            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
-          }"
-        />
+        <label for="phenoId"><b>Phenopacket ID *</b></label>
+        <div class="p-inputgroup">
+          <input
+            id="phenoId"
+            #id="ngModel"
+            type="text"
+            required
+            pInputText
+            [(ngModel)]="phenopacket.id"
+            [ngClass]="{
+              'ng-dirty':
+                (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+            }"
+          />
+          <button
+            pButton
+            icon="pi pi-replay"
+            label="Generate ID"
+            (click)="generateNewID()"
+          ></button>
+          
+        </div>
         <small
-          *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
-          class="p-error"
-          >Phenopacket ID is required.</small
-        >
+            *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+            class="p-error"
+            >Phenopacket ID is required.</small
+          >
       </div>
       <div class="field col-12">
         <app-individual-edit
@@ -32,7 +42,6 @@
           (subjectChange)="updateSubject($event)"
         ></app-individual-edit>
       </div>
-      
     </div>
   </ng-template>
   <ng-template pTemplate="footer">

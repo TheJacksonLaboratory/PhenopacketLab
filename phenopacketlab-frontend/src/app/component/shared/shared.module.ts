@@ -23,7 +23,7 @@ import { GestationalAgeComponent } from './time-element/gestational-age/gestatio
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
 import { VariantInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variant-interpretation.component';
 import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
-import { GenomicInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation.component';
+import { GenomicInterpretationDialogComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation-dialog.component';
 import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
 import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
 import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
@@ -31,6 +31,7 @@ import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-
 import { TextPipe } from './text.pipe';
 import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
+import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
 
 
 @NgModule({
@@ -59,8 +60,9 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
+    InterpretationDialogComponent,
     VariantInterpretationComponent,
-    GenomicInterpretationComponent,
+    GenomicInterpretationDialogComponent,
     VariationDescriptorComponent,
     VariationSearchComponent,
     GeneDescriptorComponent,
@@ -86,8 +88,9 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
+    InterpretationDialogComponent,
     VariantInterpretationComponent,
-    GenomicInterpretationComponent,
+    GenomicInterpretationDialogComponent,
     VariationDescriptorComponent,
     GeneDescriptorComponent,
     VariationSearchComponent,

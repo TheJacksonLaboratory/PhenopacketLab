@@ -1,30 +1,105 @@
 <p-toast position="center" key="cen"></p-toast>
-<p-button
-  *ngIf="!viewLeftPane"
-  icon="pi pi-angle-double-right"
-  styleClass="p-button-text p-button-rounded"
-  (onClick)="expandSplitter()"
-  pTooltip="Expand"
-  tooltipPosition="bottom"
-></p-button>
-<p-button
-  *ngIf="viewLeftPane"
-  icon="pi pi-angle-double-left"
-  styleClass="p-button-text p-button-rounded"
-  (onClick)="collapseSplitter()"
-  pTooltip="Collapse"
-  tooltipPosition="bottom"
-></p-button>
 
-<as-split direction="horizontal">
-  <as-split-area [size]="splitterLeftWidth">
+<as-split direction="horizontal" disabled="true" [useTransition]="true">
+  <as-split-area [visible]="leftSplitVisible" [size]="leftSplitWidth">
     <div class="col flex justify-content-center">
+      <!-- (variantInterpretationChange)="updateVariantInterpretation($event)" -->
       <app-variation-search
-        (variantInterpretationChange)="updateVariantInterpretation($event)"
+        (variantValidated)="updateVariantValidated($event)"
       ></app-variation-search>
     </div>
   </as-split-area>
-  <as-split-area [size]="splitterRightWidth">
+  <as-split-area [visible]="centerSplitVisible" [size]="centerSplitWidth">
+    <!-- Result from variant validation -->
+    <div class="col flex justify-content-center">
+      <div class="grid p-fluid">
+        <div class="field col-12">
+          <b>We found the following variant information:</b>
+        </div>
+        <div class="field col-12">
+          <label for="coordinates">
+            <b>Variant coordinates</b>
+          </label>
+          <div id="coordinates" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Chromosome</b>: {{ variantValidated?.chr }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Position</b>: {{ variantValidated?.position }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Reference Allele</b>: {{ variantValidated?.ref }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Alternate Allele</b>: {{ variantValidated?.alt }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field col-12">
+          <label for="gene">
+            <b>Gene</b>
+          </label>
+          <div id="gene" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Gene symbol</b>: {{ variantValidated?.geneSymbol }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Gene ID</b>: {{ variantValidated?.hgncId }}
+            </div>
+            <div class="field col-12 md:col-6"></div>
+          </div>
+        </div>
+
+        <div class="field col-12">
+          <label for="annotation">
+            <b>Functional annotations</b>
+          </label>
+          <div id="annotation" class="grid p-fluid">
+            <div class="field col-12 md:col-4">
+              <b>Genomic</b>: {{ variantValidated?.ghgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Coding</b>: {{ variantValidated?.chgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Protein</b>: {{ variantValidated?.phgvs }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-replay"
+            label="Try again"
+            pTooltip="Validate another variant"
+            tooltipPosition="bottom"
+            class="p-button-primary"
+            style="width: 150px"
+            (click)="resetVariantValidated()"
+          ></button>
+        </div>
+        <div class="field col-12 md:col-6"></div>
+        <div class="field col-12 md:col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-check"
+            label="OK"
+            pTooltip="Add variant to genomic interpretation"
+            tooltipPosition="bottom"
+            class="p-button-primary"
+            style="width: 150px"
+            (click)="addVariantInterpretation()"
+          ></button>
+        </div>
+        
+      </div>
+    </div>
+  </as-split-area>
+  <as-split-area [visible]="rightSplitVisible" [size]="rightSplitWidth">
     <div class="col flex justify-content-center">
       <div class="grid fluid">
         <div class="field col-12">
@@ -35,7 +110,7 @@
           guidelines.
         </div>
         <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
-          <label for="acmg">Acmg pathogenicity classification</label>
+          <label for="acmg">Acmg pathogenicity classification *</label>
           <p-dropdown
             id="acmg"
             appendTo="body"
@@ -43,6 +118,7 @@
             [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
             [options]="acmgClassifications"
             required
+            scrollHeight="18rem"
             (onChange)="updateAcmgPathogenicity($event)"
             class="w-full"
             [ngClass]="{
@@ -61,7 +137,7 @@
           >
         </div>
         <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
-          <label for="therapeutic">Therapeutic actionability</label>
+          <label for="therapeutic">Therapeutic actionability *</label>
           <p-dropdown
             id="therapeutic"
             appendTo="body"
@@ -73,14 +149,12 @@
             class="w-full"
             [ngClass]="{
               'ng-dirty':
-                !variantInterpretation?.therapeuticActionability &&
-                submitted
+                !variantInterpretation?.therapeuticActionability && submitted
             }"
           ></p-dropdown>
           <small
             *ngIf="
-              !variantInterpretation?.therapeuticActionability &&
-              submitted
+              !variantInterpretation?.therapeuticActionability && submitted
             "
             class="p-error"
             >Therapeutic actionability is required.</small
@@ -109,16 +183,6 @@
               ></app-gene-descriptor>
             </p-accordionTab>
           </p-accordion>
-        </div>
-        <div *ngIf="variantInterpretation" class="field col-12 md:col-4">
-          <button
-            pButton
-            type="button"
-            label="Delete interpretation"
-            (click)="updateVariantInterpretation(undefined)"
-            icon="pi pi-trash"
-            class="p-button-warning"
-          ></button>
         </div>
       </div>
     </div>

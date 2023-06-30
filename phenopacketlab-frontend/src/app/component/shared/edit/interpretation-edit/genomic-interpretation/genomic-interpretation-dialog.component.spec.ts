@@ -7,15 +7,17 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedModule } from 'src/app/component/shared/shared.module';
-import { GenomicInterpretationComponent } from './genomic-interpretation.component';
+import { GenomicInterpretationDialogComponent } from './genomic-interpretation-dialog.component';
+import { GenomicInterpretation } from 'src/app/models/interpretation';
 
-describe('GenomicInterpretationComponent', () => {
-  let component: GenomicInterpretationComponent;
-  let fixture: ComponentFixture<GenomicInterpretationComponent>;
+describe('GenomicInterpretationDialogComponent', () => {
+  let component: GenomicInterpretationDialogComponent;
+  let fixture: ComponentFixture<GenomicInterpretationDialogComponent>;
+  let genomicInterpretation: GenomicInterpretation;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenomicInterpretationComponent ],
+      declarations: [ GenomicInterpretationDialogComponent ],
       imports: [
         ReactiveFormsModule,
         NoopAnimationsModule,
@@ -36,8 +38,10 @@ describe('GenomicInterpretationComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenomicInterpretationComponent);
+    fixture = TestBed.createComponent(GenomicInterpretationDialogComponent);
     component = fixture.componentInstance;
+    genomicInterpretation = new GenomicInterpretation();
+    component.genomicInterpretation = genomicInterpretation;
     fixture.detectChanges();
   });
 

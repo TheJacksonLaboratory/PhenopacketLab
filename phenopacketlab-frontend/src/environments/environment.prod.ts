@@ -27,6 +27,7 @@ export const environment = {
   DISEASE_STAGES_URL: `${API_URL}/constants/tree-disease-stages`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
+  ALLELIC_STATE_SHORT_URL: `${API_URL}/constants/allelic-states`,
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
   STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
   MEDICAL_ACTION_TREATMENT_INTENTS_URL: `${API_URL}/medical-actions/treatment-intents`,

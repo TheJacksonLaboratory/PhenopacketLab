@@ -6,32 +6,45 @@
 
 <div class="grid p-fluid">
   <div class="field col-12 md:col-6">
-    <label for="interpretationid">Interpretation ID</label>
-    <input
-      id="interpretationid"
-      type="text"
-      aria-describedby="Interpretation ID"
-      required
-      pInputText
-      [(ngModel)]="id"
-      [ngClass]="{
-        'ng-dirty': !id && submitted
-      }"
-    />
+    <label for="interpretationid">Interpretation ID *</label>
+    <div class="p-inputgroup">
+      <input
+        id="interpretationid"
+        type="text"
+        aria-describedby="Interpretation ID"
+        required
+        pInputText
+        [(ngModel)]="id"
+        [ngClass]="{
+          'ng-dirty': !id && submitted
+        }"
+      />
+      <button
+        pButton
+        icon="pi pi-replay"
+        label="Generate ID"
+        (click)="generateNewID()"
+      ></button>
+    </div>
     <!-- (ngModelChange)="onIdChange($event)" -->
     <small *ngIf="!id && submitted" class="p-error"
       >Interpretation ID is required.</small
     >
-    <p-checkbox
-      label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
-      [binary]="true"
-      [(ngModel)]="isPrivateInfoWarnSelected"
-      labelStyleClass="label-active text-sm"
-      [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
-    ></p-checkbox>
+    <div class="grid p-fluid mt-2">
+      <div class="field col-12">
+        <p-checkbox
+          label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
+          [binary]="true"
+          [(ngModel)]="isPrivateInfoWarnSelected"
+          (onChange)="updateIsPrivateInfoWarn($event.checked)"
+          labelStyleClass="label-active text-sm"
+          [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
+        ></p-checkbox>
+      </div>
+    </div>
   </div>
   <div class="field col-12 md:col-6">
-    <label for="progressstatus">Progress status</label>
+    <label for="progressstatus">Progress status *</label>
     <p-dropdown
       id="progressstatus"
       appendTo="body"
@@ -41,6 +54,7 @@
       (onChange)="updateProgressStatus($event)"
       pTooltip="Progress status"
       tooltipPosition="bottom"
+      scrollHeight="15rem"
       showDelay="2000"
       required
       class="w-full"
@@ -72,7 +86,7 @@
     >
       <div class="grid p-fluid">
         <div class="field col-12 md:col-6">
-          <label for="disease">Disease</label>
+          <label for="disease">Disease *</label>
           <p-dropdown
             id="disease"
             placeholder="Search for a disease"
@@ -91,12 +105,12 @@
           >
             <ng-template let-cause pTemplate="item">
               <div
-                [pTooltip]="cause.label"
+                [pTooltip]="cause?.label"
                 showDelay="1000"
                 tooltipPosition="left"
                 escape="false"
               >
-                [{{ cause.id }}] {{ cause.label }}
+                [{{ cause?.id }}] {{ cause?.label }}
               </div>
             </ng-template>
           </p-dropdown>
@@ -111,23 +125,24 @@
           <p-table
             [value]="genomicInterpretations"
             dataKey="key"
-            [tableStyle]="{ 'min-width': '60rem' }"
+            styleClass="p-datatable-sm"
           >
             <ng-template pTemplate="caption">
               <div class="flex align-items-center justify-content-between">
                 Genomic Interpretation(s)
-                <p-button
+                <button
+                  pButton
                   icon="pi pi-plus"
-                  pTooltip="Add Genomic Interpretation"
-                  tooltipPosition="bottom"
-                  (onClick)="addGenomicInterpretation()"
-                ></p-button>
+                  class="p-button-text"
+                  label="Add genomic interpretation"
+                  style="width: 300px"
+                  (click)="addGenomicInterpretation()"
+                ></button>
               </div>
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th style="width: 5rem"></th>
-                <th pResizableColumn style="min-width: 2rem">Subject ID</th>
+                <!-- <th pResizableColumn style="min-width: 2rem">Subject ID</th> -->
                 <th pResizableColumn>Status</th>
                 <th pResizableColumn>Call</th>
                 <th pResizableColumn></th>
@@ -139,51 +154,76 @@
               let-expanded="expanded"
             >
               <tr>
+                <!-- <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td> -->
+                <td>{{ genomicinterpretation.interpretationStatus }}</td>
+                <td>
+                  <span
+                    *ngIf="
+                      getCall(genomicinterpretation) === 'VariantInterpretation'
+                    "
+                  >
+                    <!-- If VariantInterpretation -->
+                    <div class="grid p-fluid">
+                      <div class="field col-12 md:col-6">
+                        <i>Annotations:</i>
+                        <ul>
+                          <li
+                            *ngFor="
+                              let annotation of genomicinterpretation
+                                ?.variantInterpretation?.variationDescriptor
+                                ?.expressions
+                            "
+                          >
+                            {{ annotation.value }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="field col-12 md:col-6">
+                        <i>Allelic state:</i>
+                        <ul>
+                          <li>
+                            {{
+                              genomicinterpretation?.variantInterpretation
+                                ?.variationDescriptor?.allelicState?.label
+                            }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </span>
+                  <span
+                    *ngIf="getCall(genomicinterpretation) === 'GeneDescriptor'"
+                  >
+                    <!-- TODO -->
+                  </span>
+                </td>
                 <td>
                   <button
-                    type="button"
                     pButton
                     pRipple
-                    [pRowToggler]="genomicinterpretation"
-                    class="p-button-text p-button-rounded p-button-plain"
-                    [icon]="
-                      expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
-                    "
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-text"
+                    (click)="editGenomicInterpretation(genomicinterpretation)"
                   ></button>
-                </td>
-                <td>{{ genomicinterpretation.subjectOrBiosampleId }}</td>
-                <td>{{ genomicinterpretation.interpretationStatus }}</td>
-                <td>{{ getCall(genomicinterpretation) }}</td>
-                <td>
                   <button
                     pButton
                     pRipple
                     icon="pi pi-trash"
-                    class="p-button-rounded p-button-warning"
+                    class="p-button-rounded p-button-text p-button-warning"
                     (click)="deleteGenomicInterpretation(genomicinterpretation)"
                   ></button>
                 </td>
               </tr>
             </ng-template>
-            <ng-template pTemplate="rowexpansion" let-genomicinterpretation>
+            <ng-template pTemplate="emptymessage">
               <tr>
-                <td colspan="5">
-                  <div class="p-3">
-                    <app-genomic-interpretation
-                      [genomicInterpretation]="genomicinterpretation"
-                      [profile]="profile"
-                      (genomicInterpretationChange)="
-                        updateGenomicInterpretation(
-                          $event,
-                          genomicinterpretation
-                        )
-                      "
-                      [submitted]="submitted"
-                    ></app-genomic-interpretation>
-                  </div>
+                <td [attr.colspan]="4">
+                  No genomic interpretation to display.
                 </td>
               </tr>
-            </ng-template>
+
+              <tr></tr
+            ></ng-template>
           </p-table>
         </div>
       </div>
@@ -192,9 +232,8 @@
   <div class="field col-12 right">
     <button
       pButton
-      label="Save Interpretation"
+      label="Add Interpretation"
       (click)="updateInterpretation()"
-      icon="pi pi-save"
       style="width: 300px"
     ></button>
   </div>

@@ -4,8 +4,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Interpretation } from 'src/app/models/interpretation';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InterpretationDetailDialogComponent } from './interpretation-detail/interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 
 @Component({
     selector: 'app-interpretation',
@@ -32,16 +32,12 @@ export class InterpretationComponent implements OnInit {
     ref: DynamicDialogRef;
 
     spinnerDialogRef: any;
-    showTable = false;
 
     constructor(public dialogService: DialogService, public messageService: MessageService,
         public confirmationService: ConfirmationService) {
     }
 
     ngOnInit() {
-        if (this.interpretations && this.interpretations.length > 0) {
-            this.showTable = true;
-        }
     }
 
     /**
@@ -51,8 +47,8 @@ export class InterpretationComponent implements OnInit {
         if (interpretation === undefined || interpretation === null) {
             interpretation = new Interpretation();
         }
-        this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
-            header: 'Edit Interpretation',
+        this.ref = this.dialogService.open(InterpretationDialogComponent, {
+            header: 'Enter Interpretation',
             width: '70%',
             contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
@@ -71,7 +67,6 @@ export class InterpretationComponent implements OnInit {
                     this.interpretations[indexToUpdate] = interpret;
                     this.interpretations = Object.assign([], this.interpretations);
                 }
-                this.showTable = true;
                 // emit change
                 this.onInterpretationsChange.emit(this.interpretations);
             }
@@ -85,9 +80,6 @@ export class InterpretationComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.interpretations = this.interpretations.filter(val => val.id !== interpretation.id);
-                if (this.interpretations.length === 0) {
-                    this.showTable = false;
-                }
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Interpretation Deleted', life: 3000 });
             },
             reject: () => {
