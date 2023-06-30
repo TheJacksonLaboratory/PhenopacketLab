@@ -1,12 +1,3 @@
-.add-button-container {
-    padding-bottom: 8px;
-    padding-top: 10px;
-}
-
-.add-button + .add-button {
-    margin-left: 8px;
-}
-
 .example-full-width {
     width: 100%;
 }
@@ -28,16 +19,6 @@
 tr.example-detail-row {
     height: 0;
 }
-
-::ng-deep .mat-tooltip {
-    /* your own custom styles here */
-    /* e.g. */
-
-    background: #616161e6;
-    font-size: small;
-    color: white !important;
-}
-
 .cardSearchBox {
     background: #fafafa;
 }

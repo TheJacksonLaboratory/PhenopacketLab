@@ -1,16 +1,4 @@
 <div class="grid p-fluid">
-  <div *ngIf="showAddButton" class="field col-12">
-    <div class="add-button-container">
-      <button
-        mat-raised-button
-        (click)="addPhenotypicFeature()"
-        class="add-button mat-elevation-z2"
-      >
-        Add Phenotypic Feature
-      </button>
-    </div>
-  </div>
-
   <div class="field col-12">
     <app-search-box
       [showHint]="false"
