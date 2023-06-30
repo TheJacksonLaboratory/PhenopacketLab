@@ -205,9 +205,18 @@ export class InterpretationEditComponent implements OnInit, OnDestroy {
         if (this.selectedDisease === undefined || this.selectedDisease === null) {
             this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select a disease term for the disease diagnosis.' });
             return;
-        } else {
-            this.saveInterpretation();
         }
+        // check if an interpretation was already added for a selected diagnosis
+        const phenopacket = this.phenopacketService.phenopacket;
+        if (phenopacket?.interpretations) {
+            for (const interpret of phenopacket.interpretations) {
+                if (interpret.diagnosis.disease.id === this.selectedDisease.id) {
+                    this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `An interpretation with the selected diagnosis \'${this.selectedDisease.toString()}\' already exists. Please selected another disease to be able to add this interpretation.` });
+                    return;
+                }
+            }
+        }
+        this.saveInterpretation();
     }
 
     saveInterpretation() {

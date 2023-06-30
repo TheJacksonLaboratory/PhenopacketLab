@@ -28,10 +28,6 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
     @Output()
     variationDescriptorChange = new EventEmitter<VariationDescriptor>();
 
-    // id: string;
-    label: string;
-    description: string;
-
     moleculeContexts = Object.keys(MoleculeContext).filter((item) => isNaN(Number(item)));
     // allelic states
     allelicStatesNodes: OntologyTreeNode[];
@@ -115,6 +111,13 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         }
     }
 
+    onDescriptionChange(description: string) {
+        if (this.variationDescriptor) {
+            this.variationDescriptor.description = description;
+            this.variationDescriptorChange.emit(this.variationDescriptor);
+        }
+    }
+
     onVrsRefAlleleSeqChange(refAlleleSeq: string) {
         if (this.variationDescriptor) {
             this.variationDescriptor.vrsRefAlleleSeq = refAlleleSeq;
@@ -180,10 +183,6 @@ export class VariationDescriptorComponent implements OnInit, OnDestroy {
         treeNode.key = type.id;
         treeNode.label = type.label;
         this.structuralTypeSelected = treeNode;
-    }
-
-    onDescriptionChange(description: string) {
-        this.description = description;
     }
 
     updateAllelicState(event) {
