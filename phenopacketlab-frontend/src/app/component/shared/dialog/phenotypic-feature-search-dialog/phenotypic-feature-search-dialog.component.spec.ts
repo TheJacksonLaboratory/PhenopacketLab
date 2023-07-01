@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicFeatureSearchDialogComponent } from './phenotypic-feature-search-dialog.component';
+import { ConfirmationService } from 'primeng/api';
 
 describe('PhenotypicFeatureSearchDialogComponent', () => {
   let component: PhenotypicFeatureSearchDialogComponent;
@@ -15,6 +16,7 @@ describe('PhenotypicFeatureSearchDialogComponent', () => {
       ],
       providers: [
         DialogService,
+        ConfirmationService,
         { provide: DynamicDialogConfig, useValue: {} },
         { provide: DynamicDialogRef, useValue: {} }
       ]
