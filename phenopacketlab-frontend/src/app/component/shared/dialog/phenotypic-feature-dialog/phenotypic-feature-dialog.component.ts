@@ -3,12 +3,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 @Component({
-  selector: 'app-phenotypic-detail-dialog',
-  templateUrl: './phenotypic-detail-dialog.component.html',
-  styleUrls: ['./phenotypic-detail-dialog.component.scss']
+  selector: 'app-phenotypic-feature-dialog',
+  templateUrl: './phenotypic-feature-dialog.component.html',
+  styleUrls: ['./phenotypic-feature-dialog.component.scss']
 })
-
-export class PhenotypicDetailDialogComponent {
+export class PhenotypicFeatureDialogComponent {
 
   phenotypicFeature: PhenotypicFeature;
 

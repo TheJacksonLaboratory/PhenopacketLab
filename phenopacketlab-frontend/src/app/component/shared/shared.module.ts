@@ -32,6 +32,9 @@ import { TextPipe } from './text.pipe';
 import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
+import { PhenotypicFeatureSearchDialogComponent } from './dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
+import { TextMiningComponent } from './text-mining/text-mining.component';
+import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 
 
 @NgModule({
@@ -57,6 +60,8 @@ import { InterpretationDialogComponent } from './dialog/interpretation-dialog/in
     OntologyClassComponent,
     TreeSearchComponent,
     DiseaseEditComponent,
+    PhenotypicFeatureDialogComponent,
+    PhenotypicFeatureSearchDialogComponent,
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
@@ -69,7 +74,8 @@ import { InterpretationDialogComponent } from './dialog/interpretation-dialog/in
     LabelCreatorDialogComponent,
     TextPipe,
     MedicalActionEditComponent,
-    ValidationResultsDialogComponent
+    ValidationResultsDialogComponent,
+    TextMiningComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -85,6 +91,8 @@ import { InterpretationDialogComponent } from './dialog/interpretation-dialog/in
     OntologyClassComponent,
     TreeSearchComponent,
     DiseaseEditComponent,
+    PhenotypicFeatureDialogComponent,
+    PhenotypicFeatureSearchDialogComponent,
     PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
@@ -100,7 +108,8 @@ import { InterpretationDialogComponent } from './dialog/interpretation-dialog/in
     AngularSplitModule,
     TextPipe,
     MedicalActionEditComponent,
-    ValidationResultsDialogComponent
+    ValidationResultsDialogComponent,
+    TextMiningComponent
   ]
 })
 export class SharedModule { }

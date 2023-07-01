@@ -86,8 +86,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         if (interpretation === undefined || interpretation === null) {
             interpretation = new Interpretation();
         }
-        console.log('interpretation step');
-        console.log(this.profileSelection);
         this.ref = this.dialogService.open(InterpretationDialogComponent, {
             header: 'Enter Interpretation',
             width: '70%',

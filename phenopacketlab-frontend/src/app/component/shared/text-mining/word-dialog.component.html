@@ -1,6 +1,6 @@
 <div class="grid p-fluid word">
-  <div class="field col-12"><b>Id:</b> {{ phenotypicFeature?.type?.id }}</div>
-  <div class="field col-12">
+  <div class="field col-12 md:col-6"><b>Id:</b> {{ phenotypicFeature?.type?.id }}</div>
+  <div class="field col-12 md:col-6">
     <b>Name:</b>
     {{ phenotypicFeature?.type?.label }}
   </div>
@@ -19,10 +19,20 @@
       }}</label>
     </div>
   </div>
-  <div class="field col-6">
-    <button type="text" pButton label="Approve" (click)="approve()"></button>
-  </div>
-  <div class="field col-6">
-    <button type="text" pButton label="Reject" (click)="reject()"></button>
-  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Reject"
+    (click)="reject()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Approve"
+    (click)="approve()"
+  ></button>
 </div>

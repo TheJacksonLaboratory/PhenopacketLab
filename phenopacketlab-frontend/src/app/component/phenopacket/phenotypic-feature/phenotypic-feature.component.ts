@@ -6,8 +6,8 @@ import { PhenotypeSearchService } from 'src/app/services/phenotype-search.servic
 import { OntologyClass } from 'src/app/models/base';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PhenotypicDetailDialogComponent } from './phenotypic-detail/phenotypic-detail-dialog/phenotypic-detail-dialog.component';
 import { Utils } from '../../shared/utils';
+import { PhenotypicFeatureDialogComponent } from '../../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -88,7 +88,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     }
 
     editPhenotypicFeature(feature?: PhenotypicFeature) {
-        this.ref = this.dialogService.open(PhenotypicDetailDialogComponent, {
+        this.ref = this.dialogService.open(PhenotypicFeatureDialogComponent, {
             header: 'Edit Phenotypic feature',
             width: '70%',
             contentStyle: { 'overflow': 'auto' },

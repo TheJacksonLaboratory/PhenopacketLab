@@ -1,0 +1,104 @@
+<!-- <app-phenotypic-feature-edit
+  [interpretation]="interpretation"
+  [phenopacket]="phenopacket"
+  (interpretationChange)="updateInterpretation($event)"
+  [profile]="profile"
+></app-phenotypic-feature-edit> -->
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <p-tabView>
+      <p-tabPanel header="Term search">
+        <app-search-box
+          [showHint]="false"
+          [itemName]="'Phenotypic feature'"
+          [searchLabel]="'Phenotypic feature'"
+          [placeHolderTxt]="'Enter a phenotypic feature name'"
+          [searchType]="'feature'"
+          (selectedItemChange)="featureItemSelected($event)"
+        ></app-search-box>
+      </p-tabPanel>
+      <p-tabPanel header="Text mining search">
+        <app-text-mining
+          (phenotypicFeaturesChange)="addTextMinedFeatures($event)"
+        ></app-text-mining>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+  <div class="field col-12">
+    <p-table
+      [value]="features"
+      styleClass="p-datatable-sm"
+      [(selection)]="selectedFeature"
+      scrollDirection="horizontal"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      dataKey="key"
+      selectionMode="single"
+    >
+      <ng-template pTemplate="caption">Features to add </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn>Label</th>
+          <th pResizableColumn>Status</th>
+          <th pResizableColumn>Onset</th>
+          <th pResizableColumn></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-feature>
+        <tr [pSelectableRow]="feature">
+          <td>{{ feature.type?.label }}</td>
+          <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
+          <td>
+            <span *ngIf="feature.onset?.ontologyClass"
+              ><a [href]="feature.onset.ontologyClass.termUrl" target="_blank"
+                >[{{ feature.onset.ontologyClass.id }}]</a
+              >
+              {{ feature.onset?.ontologyClass?.label }}</span
+            ><span *ngIf="!feature.onset?.ontologyClass">{{
+              feature.onset?.toString()
+            }}</span>
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editPhenotypicFeature(feature)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteFeature(feature)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="4">No phenotypic feature to display.</td>
+        </tr>
+
+        <tr></tr
+      ></ng-template>
+    </p-table>
+  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Add feature(s)"
+    (click)="onOkClick()"
+  ></button>
+</div>

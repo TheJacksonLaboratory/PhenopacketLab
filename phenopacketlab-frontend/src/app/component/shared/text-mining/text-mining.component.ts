@@ -8,7 +8,7 @@ import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
-import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
+import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
 
 const unknownColor = '#ff7800';
@@ -213,9 +213,9 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
    * @param idx
    */
   openDialog(idx) {
-    // this.dialogService.closeAll();
-
     const dialogRef = this.dialogService.open(WordDialogComponent, {
+      width: '25rem',
+      height: '18rem',
       data: {
         feature: this.phenotypicFeatures[idx]
       }
@@ -284,13 +284,6 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
   stateRejected() {
     return MiningState.REJECTED;
-  }
-  /**
-   * Called when a row is selected on the left side table
-   * @param event
-   */
-  onRowSelect(event) {
-    // this.selectedFeature = event.data;
   }
 
   // Onset
