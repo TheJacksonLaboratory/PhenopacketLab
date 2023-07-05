@@ -77,6 +77,60 @@ export class PhenotypicFeature extends Convert {
 
         return phenotypicFeature;
     }
+
+    /**
+     * deep copy/clone of the object
+     */
+    copy(): PhenotypicFeature {
+        const phenoCopy = new PhenotypicFeature();
+        phenoCopy.key = this.key;
+        if (this.type) {
+            phenoCopy.type = this.type.copy();
+        }
+        if (this.children) {
+            phenoCopy.children = [];
+            for (const child of this.children) {
+                phenoCopy.children.push(child.copy());
+            }
+        }
+        phenoCopy.description = this.description;
+        if (this.evidence) {
+            phenoCopy.evidence = [];
+            for (const evid of this.evidence) {
+                phenoCopy.evidence.push(evid.copy());
+            }
+        }
+        if (this.evidenceNodes) {
+            phenoCopy.evidenceNodes = [];
+            for (const evid of this.evidenceNodes) {
+                phenoCopy.evidenceNodes.push(evid.copy());
+            }
+        }
+        phenoCopy.excluded = this.excluded;
+        if (this.modifiers) {
+            phenoCopy.modifiers = [];
+            for (const mod of this.modifiers) {
+                phenoCopy.modifiers.push(mod.copy());
+            }
+        }
+        if (this.modifierNodes) {
+            phenoCopy.modifierNodes = [];
+            for (const modNode of this.modifierNodes) {
+                phenoCopy.modifierNodes.push(modNode.copy());
+            }
+        }
+        if (this.onset) {
+            phenoCopy.onset = this.onset.copy();
+        }
+        if (this.parent) {
+            phenoCopy.parent = this.parent.copy();
+        }
+        if (this.resolution) {
+            phenoCopy.resolution = this.resolution.copy();
+        }
+        phenoCopy.textMiningState = this.textMiningState;
+        return phenoCopy;
+    }
 }
 
 export enum MiningState {

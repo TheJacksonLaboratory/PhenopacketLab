@@ -60,4 +60,44 @@ export class OntologyTreeNode<T = any> implements TreeNode {
     }
     return ontologyList;
   }
+
+  /**
+   * Copy of an OntologyTreeNode
+   */
+  copy(): OntologyTreeNode {
+    const ontologyTreeNodeCopy = new OntologyTreeNode();
+    ontologyTreeNodeCopy.label = this.label;
+    ontologyTreeNodeCopy.data = this.data;
+    ontologyTreeNodeCopy.description = this.description;
+    ontologyTreeNodeCopy.icon = this.icon;
+    ontologyTreeNodeCopy.expandedIcon = this.expandedIcon;
+    ontologyTreeNodeCopy.collapsedIcon = this.collapsedIcon;
+    if (this.children) {
+      ontologyTreeNodeCopy.children = [];
+      for (const child of this.children) {
+        ontologyTreeNodeCopy.children.push(child.copy());
+      }
+    }
+    ontologyTreeNodeCopy.leaf = this.leaf;
+    ontologyTreeNodeCopy.expanded = this.expanded;
+    ontologyTreeNodeCopy.type = this.type;
+    if (this.parent) {
+      ontologyTreeNodeCopy.parent = this.parent.copy();
+    }
+    ontologyTreeNodeCopy.partialSelected = this.partialSelected;
+    ontologyTreeNodeCopy.style = this.style;
+    ontologyTreeNodeCopy.styleClass = this.styleClass;
+    ontologyTreeNodeCopy.draggable = this.draggable;
+    ontologyTreeNodeCopy.droppable = this.droppable;
+    ontologyTreeNodeCopy.selectable = this.selectable;
+    ontologyTreeNodeCopy.key = this.key;
+    if (this.parents) {
+      ontologyTreeNodeCopy.parents = [];
+      for (const par of this.parents) {
+        ontologyTreeNodeCopy.parents.push(par.copy());
+      }
+    }
+    ontologyTreeNodeCopy.state = this.state;
+    return ontologyTreeNodeCopy;
+  }
 }

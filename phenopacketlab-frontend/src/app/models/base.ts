@@ -69,6 +69,11 @@ export class OntologyClass extends Convert {
         return this.toString().toLowerCase();
     }
 
+    /** Cloning of object */
+    copy(): OntologyClass {
+        return new OntologyClass(this.id, this.label, this.key, this.termUrl);
+    }
+
 }
 export class ExternalReference extends Convert {
     id: string;
@@ -99,6 +104,14 @@ export class ExternalReference extends Convert {
         }
         return '';
     }
+
+    copy(): ExternalReference {
+        const externalRefCopy = new ExternalReference();
+        externalRefCopy.id = this.id;
+        externalRefCopy.reference = this.reference;
+        externalRefCopy.description = this.description;
+        return externalRefCopy;
+    }
 }
 export class Evidence extends Convert {
 
@@ -127,6 +140,18 @@ export class Evidence extends Convert {
 
     public static getEvidenceUrl(id: string) {
         return `http://purl.obolibrary.org/obo/ECO_${id.split(':')[1]}`;
+    }
+
+    /** copy of object */
+    copy(): Evidence {
+        const evidenceCopy = new Evidence();
+        if (this.evidenceCode) {
+            evidenceCopy.evidenceCode = this.evidenceCode.copy();
+        }
+        if (this.reference) {
+            evidenceCopy.reference = this.reference.copy();
+        }
+        return evidenceCopy;
     }
 }
 export class Procedure {
