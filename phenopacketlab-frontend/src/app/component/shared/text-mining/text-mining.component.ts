@@ -10,6 +10,7 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
+import { Utils } from '../utils';
 
 const unknownColor = '#ff7800';
 const approvedColor = '#4BB543';
@@ -264,6 +265,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     const approvedFeatures = [];
     for (const feature of this.phenotypicFeatures) {
       if (feature.textMiningState === MiningState.APPROVED) {
+        feature.type.termUrl = Utils.getUrlForId(feature.type.id);
         approvedFeatures.push(feature);
       }
     }

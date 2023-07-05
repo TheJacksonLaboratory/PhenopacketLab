@@ -16,7 +16,6 @@ import { OntologyClassComponent } from './ontology-class/ontology-class.componen
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
 import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
-import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
@@ -62,7 +61,6 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
     DiseaseEditComponent,
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
-    PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
     InterpretationDialogComponent,
@@ -93,7 +91,6 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
     DiseaseEditComponent,
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
-    PhenotypicFeatureEditComponent,
     IndividualEditComponent,
     InterpretationEditComponent,
     InterpretationDialogComponent,

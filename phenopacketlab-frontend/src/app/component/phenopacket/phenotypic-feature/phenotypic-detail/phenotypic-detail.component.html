@@ -5,9 +5,7 @@
     </h2>
     <h3>
       <a
-        href="https://hpo.jax.org/app/browse/term/{{
-          phenotypicFeature.type?.id
-        }}"
+        href="{{phenotypicFeature.type?.termUrl}}"
         target="_blank"
         >{{ phenotypicFeature.type?.id }}</a
       >
@@ -97,6 +95,13 @@
           <td>{{ evidence.reference?.description }}</td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="5">No evidence to display.</td>
+        </tr>
+
+        <tr></tr
+      ></ng-template>
     </p-table>
   </div>
 </div>

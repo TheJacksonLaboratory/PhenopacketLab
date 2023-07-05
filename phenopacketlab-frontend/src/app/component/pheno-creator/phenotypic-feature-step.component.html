@@ -1,11 +1,7 @@
 <p-toast position="center" key="cen"></p-toast>
 <div class="grid p-fluid m-5">
   <div class="field col-12">
-    <h1 class="header-step"><b>Phenotypic Features search</b></h1>
-    <h3 class="header-step">
-      Search for a phenotypic feature using the search field below or the
-      text-mining tool.
-    </h3>
+    <h1 class="header-step"><b>Phenotypic Feature(s)</b></h1>
   </div>
   <div class="field col-12">
     <p-table
@@ -17,7 +13,6 @@
       dataKey="key"
       selectionMode="single"
     >
-    <!-- (onRowSelect)="onRowSelect($event)" -->
       <ng-template pTemplate="caption">
         <div class="flex align-items-center justify-content-between">
           Added phenotypic features
@@ -81,137 +76,6 @@
     </p-table>
   </div>
 
-  <!-- <div class="field col-12">
-    <as-split direction="horizontal">
-      <as-split-area [size]="50">
-        <div class="grid p-fluid m-5">
-          <div class="field col-12">
-            <h1 class="header-step"><b>Phenotypic Features search</b></h1>
-            <h3 class="header-step">
-              Search for a phenotypic feature using the search field below or
-              the text-mining tool.
-            </h3>
-          </div>
-          <div class="field col-12">
-            <app-search-box
-              [showHint]="false"
-              [itemName]="'Phenotypic feature'"
-              [searchLabel]="'Phenotypic feature'"
-              [placeHolderTxt]="'Enter a phenotypic feature name'"
-              [searchType]="'feature'"
-              (selectedItemChange)="featureItemSelected($event)"
-            ></app-search-box>
-          </div>
-          <div class="field col-12">
-            <p-accordion>
-              <p-accordionTab
-                header="Text mining search"
-                [(selected)]="expandedTextMining"
-              >
-                <app-text-mining
-                  (phenotypicFeaturesChange)="addTextMinedFeatures($event)"
-                ></app-text-mining>
-              </p-accordionTab>
-            </p-accordion>
-          </div>
-          <div class="field col-12">
-            <p-table
-              *ngIf="visible"
-              [value]="phenotypicFeatures"
-              [(selection)]="selectedFeature"
-              styleClass="p-datatable-gridlines"
-              scrollDirection="horizontal"
-              responsiveLayout="scroll"
-              [resizableColumns]="true"
-              [tableStyle]="{ width: 'max-content' }"
-              dataKey="key"
-              selectionMode="single"
-              (onRowSelect)="onRowSelect($event)"
-            >
-              <ng-template pTemplate="caption">
-                <div class="table-header">Added phenotypic features</div>
-              </ng-template>
-              <ng-template pTemplate="header">
-                <tr>
-                  <th pResizableColumn>Label</th>
-                  <th pResizableColumn>Status</th>
-                  <th pResizableColumn>Onset</th>
-                  <th pResizableColumn></th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-feature>
-                <tr [pSelectableRow]="feature">
-                  <td>{{ feature.type?.label }}</td>
-                  <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-                  <td>
-                    <span *ngIf="feature.onset?.ontologyClass"
-                      ><a
-                        [href]="feature.onset.ontologyClass.termUrl"
-                        target="_blank"
-                        >[{{ feature.onset.ontologyClass.id }}]</a
-                      >
-                      {{ feature.onset?.ontologyClass?.label }}</span
-                    ><span *ngIf="!feature.onset?.ontologyClass">{{
-                      feature.onset?.toString()
-                    }}</span>
-                  </td>
-                  <td>
-                    <button
-                      pButton
-                      pRipple
-                      icon="pi pi-trash"
-                      class="p-button-rounded p-button-warning"
-                      (click)="deleteFeature(feature)"
-                    ></button>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-        </div>
-      </as-split-area>
-      <as-split-area [size]="50">
-      -->
-        <!-- Phenotypic feature form -->
-  <!--      <div class="grid p-fluid m-5">
-          <div class="field col-12">
-            <h1 class="header-step"><b>Phenotypic Feature details</b></h1>
-            <h3 class="header-step">
-              Select the phenotypic feature on the left-side table and then edit
-              its details.
-            </h3>
-          </div>
-          <div class="field col-12">
-            <app-phenotypic-feature-edit
-              [phenotypicFeature]="selectedFeature"
-              (phenotypicFeatureChange)="updatePhenotypicFeature($event)"
-            ></app-phenotypic-feature-edit>
-          </div>
-          <div class="field col-12"></div>
-        </div>
-      </as-split-area>
-    </as-split>
-  </div>
-  <div class="field col-12">
-    <div class="flex justify-content-between flex-wrap">
-      <div class="flex align-items-center justify-content-center ml-5">
-        <p-button
-          label="Back"
-          (onClick)="prevPage()"
-          icon="pi pi-angle-left"
-          iconPos="left"
-        ></p-button>
-      </div>
-      <div class="flex align-items-center justify-content-center mr-5">
-        <p-button
-          label="Next"
-          (onClick)="nextPage()"
-          icon="pi pi-angle-right"
-          iconPos="right"
-        ></p-button>
-      </div>
-    </div>
-  </div> -->
 </div>
 <div class="field col-12">
   <div class="flex justify-content-between flex-wrap">

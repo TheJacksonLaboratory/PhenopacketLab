@@ -3,7 +3,6 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { ConfirmationService } from 'primeng/api';
 
 import { OntologyClass } from 'src/app/models/base';
-import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Utils } from '../../utils';
@@ -19,7 +18,6 @@ export class PhenotypicFeatureSearchDialogComponent {
 
   selectedFeature: PhenotypicFeature;
   features: PhenotypicFeature[];
-  phenopacket: Phenopacket;
   profile: ProfileSelection;
 
   refEdit: DynamicDialogRef;
@@ -28,7 +26,9 @@ export class PhenotypicFeatureSearchDialogComponent {
               private dialogService: DialogService,
               private confirmationService: ConfirmationService) {
     this.features = config.data?.features;
-    this.phenopacket = config.data?.phenopacket;
+    if (this.features === undefined) {
+      this.features = [];
+    }
     this.profile = config.data?.profile;
   }
 
@@ -55,11 +55,10 @@ export class PhenotypicFeatureSearchDialogComponent {
     }
     // set unique key for feature table
     phenotypicFeature.key = Utils.getBiggestKey(this.features) + 1;
+    phenotypicFeature.type.termUrl = Utils.getUrlForId(phenotypicFeature.type.id);
     this.features.push(phenotypicFeature);
     // we copy the array after each update so the ngChange method is triggered on the child component
     this.features = this.features.slice();
-
-    // this.submitted = true;
   }
 
   editPhenotypicFeature(feature?: PhenotypicFeature) {
@@ -94,7 +93,6 @@ export class PhenotypicFeatureSearchDialogComponent {
       accept: () => {
         this.features = this.features.filter(val => val.key !== feature.key);
         this.selectedFeature = null;
-        this.phenopacket.phenotypicFeatures = this.features;
       },
       reject: () => {
         this.confirmationService.close();
@@ -106,10 +104,6 @@ export class PhenotypicFeatureSearchDialogComponent {
     this.ref.close();
   }
   onOkClick() {
-    this.ref.close(this.features);
-  }
-  updateFeatures(features) {
-    this.features = features;
     this.ref.close(this.features);
   }
 

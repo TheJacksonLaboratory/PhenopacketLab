@@ -51,6 +51,7 @@ export class OntologyClass extends Convert {
         const ontologyClass = new OntologyClass();
         if (obj['id']) {
             ontologyClass.id = obj['id'];
+            ontologyClass.termUrl = Utils.getUrlForId(obj['id']);
         }
         if (obj['label']) {
             ontologyClass.label = obj['label'];
