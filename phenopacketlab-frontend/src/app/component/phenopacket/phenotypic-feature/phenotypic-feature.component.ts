@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicFeatureDialogComponent } from '../../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
@@ -23,12 +22,6 @@ import { PhenotypicFeatureSearchDialogComponent } from '../../shared/dialog/phen
 })
 export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
-    /**
-     * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
-     * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
-     */
-    @Input()
-    showAddButton = true;
     @Input()
     phenotypicFeatures: PhenotypicFeature[];
     @Output()
@@ -36,7 +29,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     ref: DynamicDialogRef;
 
-    constructor(public searchService: PhenotypeSearchService, public dialogService: DialogService,
+    constructor(public dialogService: DialogService,
         private messageService: MessageService, private confirmationService: ConfirmationService) {
     }
     ngOnChanges(changes: SimpleChanges): void {
@@ -49,7 +42,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     addPhenotypicFeature() {
         this.ref = this.dialogService.open(PhenotypicFeatureSearchDialogComponent, {
             header: 'Add Phenotypic feature',
-            width: '70%',
+            width: '50%',
             contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
             resizable: true,

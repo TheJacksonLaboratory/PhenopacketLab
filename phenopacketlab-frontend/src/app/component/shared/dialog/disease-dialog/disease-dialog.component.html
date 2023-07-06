@@ -1,27 +1,11 @@
 <div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
-    <label for="label">Label</label>
-    <input
-      ngDefaultControl
-      id="label"
-      type="text"
-      required
-      pInputText
-      [disabled]="true"
-      [(ngModel)]="disease?.term.label"
-    />
-  </div>
-  <div class="field col-12 md:col-6">
-    <label for="id">ID</label>
-    <input
-      ngDefaultControl
-      id="id"
-      type="text"
-      required
-      pInputText
-      [disabled]="true"
-      [(ngModel)]="disease?.term.id"
-    />
+  <div class="field col-12">
+    <h2>
+      <b>{{ disease?.term?.label }} </b>
+    </h2>
+    <h3>
+      {{ disease?.term?.id }}
+    </h3>
   </div>
   <div class="fiewl col-12">
     <div class="field-checkbox">
@@ -203,4 +187,20 @@
       </p-accordionTab>
     </p-accordion>
   </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Ok"
+    (click)="onOkClick()"
+  ></button>
 </div>

@@ -15,7 +15,6 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
-import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
@@ -34,6 +33,8 @@ import { InterpretationDialogComponent } from './dialog/interpretation-dialog/in
 import { PhenotypicFeatureSearchDialogComponent } from './dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
 import { TextMiningComponent } from './text-mining/text-mining.component';
 import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
+import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.component';
+import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent,
+    DiseaseDialogComponent,
+    DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,
@@ -88,7 +90,8 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent,
+    DiseaseDialogComponent,
+    DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,

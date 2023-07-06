@@ -7,15 +7,15 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SharedModule } from 'src/app/component/shared/shared.module';
-import { DiseaseDetailDialogComponent } from './disease-detail-dialog.component';
+import { DiseaseDialogComponent } from './disease-dialog.component';
 
-describe('DiseaseDetailDialogComponent', () => {
-  let component: DiseaseDetailDialogComponent;
-  let fixture: ComponentFixture<DiseaseDetailDialogComponent>;
+describe('DiseaseDialogComponent', () => {
+  let component: DiseaseDialogComponent;
+  let fixture: ComponentFixture<DiseaseDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiseaseDetailDialogComponent ],
+      declarations: [ DiseaseDialogComponent ],
       imports: [
         ReactiveFormsModule,
         FormsModule,
@@ -36,7 +36,7 @@ describe('DiseaseDetailDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DiseaseDetailDialogComponent);
+    fixture = TestBed.createComponent(DiseaseDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,10 +5,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Disease } from 'src/app/models/disease';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { DiseaseDetailDialogComponent } from './disease-detail/disease-detail-dialog/disease-detail-dialog.component';
-import { Utils } from '../../shared/utils';
-import { OntologyClass } from 'src/app/models/base';
+import { DiseaseDialogComponent } from '../../shared/dialog/disease-dialog/disease-dialog.component';
+import { DiseaseSearchDialogComponent } from '../../shared/dialog/disease-search-dialog/disease-search-dialog.component';
 
 @Component({
   selector: 'app-disease',
@@ -25,27 +23,14 @@ import { OntologyClass } from 'src/app/models/base';
 })
 export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
 
-  /**
-  * If this variable is true, we show the add button and also add the selected phenotypic feature to the datasource.
-  * If false, we do not show the add button and just return a single phenotypic feature with the corresponding type OntologyClass
-  */
-  @Input()
-  showAddButton = true;
-
   @Input()
   phenopacketDiseases: Disease[] = [];
 
   @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
-  // search box params
-  localStorageKey = 'hpo_diseases';
-
-  diseaseCount: number;
-
   ref: DynamicDialogRef;
 
-  constructor(public searchService: DiseaseSearchService,
-    private dialogService: DialogService,
+  constructor(private dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
 
@@ -58,30 +43,38 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
   }
-  diseaseItemSelected(item: any) {
-    if (item) {
-      const disease = new Disease();
-      disease.term = new OntologyClass(item.id, item.lbl);
-      this.addDisease(disease);
-    }
-  }
+
   /**
-       * Adds a new disease.
-       **/
-  addDisease(disease?: Disease) {
-    if (disease === undefined) {
-      return;
-    }
-    // set unique key for feature table
-    disease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
-    this.phenopacketDiseases.push(disease);
-    // we copy the array after each update so the ngChange method is triggered on the child component
-    this.phenopacketDiseases = this.phenopacketDiseases.slice();
-  }
+   * Adds a new disease.
+   */
+  addDisease() {
+    this.ref = this.dialogService.open(DiseaseSearchDialogComponent, {
+        header: 'Add Disease',
+        width: '50%',
+        contentStyle: { 'overflow': 'auto' },
+        baseZIndex: 10000,
+        resizable: true,
+        draggable: true,
+    });
+
+    this.ref.onClose.subscribe((addedDiseases: Disease[]) => {
+        for (const addedDisease of addedDiseases) {
+            const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.key === addedDisease.key);
+            if (indexToUpdate === -1) {
+                this.phenopacketDiseases.push(addedDisease);
+            } else {
+                this.phenopacketDiseases[indexToUpdate] = addedDisease;
+                this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
+            }
+            // emit change
+            this.onDiseasesChanged.emit(this.phenopacketDiseases);
+        }
+    });
+}
 
   deleteDisease(disease: Disease) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete \'' + disease.term?.id + '\'?',
+      message: 'Are you sure you want to delete \'' + disease.term?.label + '\'?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -95,9 +88,9 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   editDisease(disease?: Disease) {
-    this.ref = this.dialogService.open(DiseaseDetailDialogComponent, {
+    this.ref = this.dialogService.open(DiseaseDialogComponent, {
       header: 'Edit Disease',
-      width: '70%',
+      width: '50%',
       contentStyle: { 'overflow': 'auto' },
       baseZIndex: 10000,
       resizable: true,

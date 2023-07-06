@@ -75,19 +75,11 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         }
     }
 
-    // featureItemSelected(item: any) {
-    //     if (item) {
-    //         const feature = new PhenotypicFeature();
-    //         feature.type = new OntologyClass(item.id, item.lbl);
-    //         this.addPhenotypicFeature(feature);
-    //     }
-    // }
-
     addFeatures() {
         const features = [];
         this.ref = this.dialogService.open(PhenotypicFeatureSearchDialogComponent, {
             header: 'Search for feature term(s)',
-            width: '70%',
+            width: '50%',
             contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
             resizable: true,
@@ -118,22 +110,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             }
         });
     }
-    // /**
-    //  * Adds a new phenotypic feature.
-    //  **/
-    // addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
-    //     if (phenotypicFeature === undefined) {
-    //         return;
-    //     }
-    //     // set unique key for feature table
-    //     phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
-    //     this.phenotypicFeatures.push(phenotypicFeature);
-    //     // we copy the array after each update so the ngChange method is triggered on the child component
-    //     this.phenotypicFeatures = this.phenotypicFeatures.slice();
-
-    //     this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
-    //     this.submitted = true;
-    // }
 
     deleteFeature(feature: PhenotypicFeature) {
         this.confirmationService.confirm({
@@ -159,7 +135,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     editPhenotypicFeature(feature?: PhenotypicFeature) {
         this.ref = this.dialogService.open(PhenotypicFeatureDialogComponent, {
             header: 'Edit Phenotypic feature',
-            width: '70%',
+            width: '50%',
             contentStyle: { 'overflow': 'auto' },
             baseZIndex: 10000,
             resizable: true,
@@ -179,16 +155,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             }
         });
     }
-
-    // /**
-    //  * Called when a row is selected in the left side table
-    //  * @param event
-    //  */
-    // onRowSelect(event) {
-    //     this.selectedFeature = event.data;
-    //     this.searchService.setPhenotypicOnset(this.selectedFeature.onset);
-    //     this.searchService.setPhenotypicResolution(this.selectedFeature.resolution);
-    // }
 
     nextPage() {
         this.phenopacketService.setPhenopacket(this.phenopacket);

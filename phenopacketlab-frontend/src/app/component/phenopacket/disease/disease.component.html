@@ -1,20 +1,23 @@
 <div class="grid p-fluid">
   <div class="field col-12">
-    <app-search-box
-    [showHint]="false"
-    [itemName]="'Disease'"
-    [searchLabel]="'Disease term'"
-    [placeHolderTxt]="'Enter a disease term'"
-    [searchType]="'disease'"
-    (selectedItemChange)="diseaseItemSelected($event)"
-  ></app-search-box>
-  </div>
-  <div class="field col-12">
     <p-table
       [value]="phenopacketDiseases"
       dataKey="key"
       styleClass="phenopacket-list-tabs"
     >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        Added diseases
+        <button
+          pButton
+          icon="pi pi-plus"
+          label="Add disease"
+          class="p-button-text"
+          style="width: 250px"
+          (click)="addDisease()"
+        ></button>
+      </div>
+    </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>

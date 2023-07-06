@@ -3,13 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { OntologyClass } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../shared/utils';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DiseaseSearchDialogComponent } from '../shared/dialog/disease-search-dialog/disease-search-dialog.component';
+import { DiseaseDialogComponent } from '../shared/dialog/disease-dialog/disease-dialog.component';
 
 @Component({
     providers: [ConfirmationService],
@@ -19,9 +20,6 @@ import { Utils } from '../shared/utils';
 })
 export class DiseaseStepComponent implements OnInit, OnDestroy {
 
-    visible = false;
-
-    // disease: Disease;
     diseases: Disease[];
     phenopacket: Phenopacket;
     phenopacketSubscription: Subscription;
@@ -32,11 +30,13 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
+    ref: DynamicDialogRef;
+
     submitted = false;
 
-    constructor(public searchService: DiseaseSearchService,
-        public phenopacketService: PhenopacketService,
+    constructor(public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
+        private dialogService: DialogService,
         private messageService: MessageService,
         private router: Router, private primengConfig: PrimeNGConfig,
         public dialog: MatDialog) {
@@ -50,11 +50,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
             this.router.navigate(['creator/individual']);
         } else {
             this.diseases = this.phenopacket.diseases;
-            if (this.diseases) {
-                if (this.diseases.length > 0) {
-                    this.visible = true;
-                }
-            }
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
@@ -69,31 +64,43 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         }
     }
 
-    diseaseItemSelected(item: any) {
-        if (item) {
-            const disease = new Disease();
-            disease.term = new OntologyClass(item.id, item.lbl);
-            this.addDisease(disease);
-        }
-    }
     /**
      * Adds a new disease.
      **/
     addDisease(disease?: Disease) {
-        if (disease === undefined) {
-            return;
-        }
-        // set unique key for feature table
-        disease.key = Utils.getBiggestKey(this.diseases) + 1;
-        this.diseases.push(disease);
-        // we copy the array after each update so the ngChange method is triggered on the child component
-        this.diseases = this.diseases.slice();
-        setTimeout(() => this.visible = true, 0);
+        const diseases = [];
+        this.ref = this.dialogService.open(DiseaseSearchDialogComponent, {
+            header: 'Search for disease(s)',
+            width: '50%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            modal: true,
+            data: {
+                diseases: diseases,
+                phenopacket: this.phenopacket,
+                profile: this.profileSelection
+            }
+        });
 
-        this.phenopacket.diseases = this.diseases;
-        this.submitted = true;
-        // make table visible
-        this.visible = true;
+        this.ref.onClose.subscribe((diseasesResult: Disease[]) => {
+            if (diseasesResult) {
+                for (const dis of diseasesResult) {
+                    const indexToUpdate = this.diseases.findIndex(item => item.term.id === dis.term.id);
+                    dis.key = Utils.getBiggestKey(this.diseases) + 1;
+                    if (indexToUpdate === -1) {
+                        this.diseases.push(dis);
+                    } else {
+                        this.diseases[indexToUpdate] = dis;
+                        this.diseases = Object.assign([], this.diseases);
+                    }
+                }
+                // emit change
+                this.phenopacket.diseases = this.diseases;
+                this.submitted = true;
+            }
+        });
     }
 
     deleteDisease(disease: Disease) {
@@ -105,9 +112,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
                 this.diseases = this.diseases.filter(val => val.term.id !== disease.term.id);
                 this.selectedDisease = null;
                 this.phenopacket.diseases = this.diseases;
-                if (this.diseases.length === 0) {
-                    this.visible = false;
-                }
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Disease Deleted', life: 3000 });
             },
             reject: () => {
@@ -120,16 +124,29 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
         this.selectedDisease = disease;
     }
 
-    /**
-     * Called when a row is selected on the left side table
-     * @param event
-     */
-    onRowSelect(event) {
-        this.selectedDisease = event.data;
-        this.searchService.setDiseaseOnset(this.selectedDisease.onset);
-        this.searchService.setDiseaseResolution(this.selectedDisease.resolution);
-        this.searchService.setTnmFindings(this.selectedDisease.clinicalTnmFinding);
-        this.searchService.setStages(this.selectedDisease.diseaseStage);
+    editDisease(disease?: Disease) {
+        this.ref = this.dialogService.open(DiseaseDialogComponent, {
+            header: 'Edit disease',
+            width: '50%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { disease: disease,
+                profile: this.profileSelection }
+        });
+
+        this.ref.onClose.subscribe((diseaseEdited: Disease) => {
+            if (diseaseEdited) {
+                const indexToUpdate = this.diseases.findIndex(item => item.key === diseaseEdited.key);
+                if (indexToUpdate === -1) {
+                    this.diseases.push(diseaseEdited);
+                } else {
+                    this.diseases[indexToUpdate] = diseaseEdited;
+                    this.diseases = Object.assign([], this.diseases);
+                }
+            }
+        });
     }
 
     nextPage() {
