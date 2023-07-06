@@ -7,6 +7,7 @@
   [addOnBlur]="true"
   [disabled]="false"
   [showClear]="true"
+  (onRemove)="nodeUnselect()"
 
   ><ng-template let-item pTemplate="item">
     {{ item?.label }}
@@ -22,8 +23,8 @@
   [selectionMode]="selectionMode"
   [propagateSelectionDown]="false"
   [propagateSelectionUp]="false"
-  (onNodeSelect)="nodeSelect($event)"
-  (onNodeUnselect)="nodeUnselect($event)"
+  (onNodeSelect)="nodeSelect()"
+  (onNodeUnselect)="nodeUnselect()"
 >
   <div *ngIf="selectionMode === 'tricheckbox'">
     <ng-template let-node pTemplate="default">

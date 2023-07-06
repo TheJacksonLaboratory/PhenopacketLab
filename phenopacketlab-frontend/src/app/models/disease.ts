@@ -73,6 +73,42 @@ export class Disease extends Convert {
         }
         return id;
     }
+
+    clone(): Disease {
+        const disease = new Disease();
+        disease.key = this.key;
+        if (this.term) {
+            disease.term = this.term.clone();
+        }
+        disease.excluded = this.excluded;
+        if (this.onset) {
+            disease.onset = this.onset.clone();
+        }
+        if (this.resolution) {
+            disease.resolution = this.resolution.clone();
+        }
+        if (this.diseaseStage) {
+            disease.diseaseStage = [];
+            for (const stage of this.diseaseStage) {
+                disease.diseaseStage.push(stage.clone());
+            }
+        }
+        if (this.clinicalTnmFinding) {
+            disease.clinicalTnmFinding = [];
+            for (const clinic of this.clinicalTnmFinding) {
+                disease.clinicalTnmFinding.push(clinic.clone());
+            }
+        }
+        if (this.primarySite) {
+            disease.primarySite = this.primarySite.clone();
+        }
+        if (this.laterality) {
+            disease.laterality = this.laterality.clone();
+        }
+        disease.description = this.description;
+        disease.isA = this.isA;
+        return disease;
+    }
 }
 
 export class Laterality {

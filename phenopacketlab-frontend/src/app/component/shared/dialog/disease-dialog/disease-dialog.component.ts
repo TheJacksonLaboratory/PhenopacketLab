@@ -54,11 +54,12 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
   constructor(public phenopacketService: PhenopacketService,
     private diseaseService: DiseaseSearchService,
     public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
-    this.disease = config.data?.disease;
-    this.profile = config.data?.profile;
   }
 
   ngOnInit() {
+    this.disease = this.config.data?.disease.clone();
+    this.profile = this.config.data?.profile;
+
     // get onsets
     this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response

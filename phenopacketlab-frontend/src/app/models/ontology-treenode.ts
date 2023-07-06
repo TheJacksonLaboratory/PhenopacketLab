@@ -1,5 +1,6 @@
 import { TreeNode } from 'primeng/api';
 import { OntologyClass } from './base';
+import { Utils } from '../component/shared/utils';
 
 export class OntologyTreeNode<T = any> implements TreeNode {
   label?: string;
@@ -48,14 +49,13 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   /**
    * Convert to OntologyClass
    * @param ontologyNodes
-   * @param urlPrefix
    * @returns
    */
-  public static toOntologyClass(ontologyNodes: OntologyTreeNode[], urlPrefix: string) {
+  public static toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
     const ontologyList = [];
     for (const node of ontologyNodes) {
       const obj = new OntologyClass(node['key'], node['label']);
-      obj.termUrl = `${urlPrefix}/${obj.id}`;
+      obj.termUrl = Utils.getUrlForId(obj.id);
       ontologyList.push(new OntologyClass(node['key'], node['label']));
     }
     return ontologyList;
@@ -64,7 +64,7 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   /**
    * Copy of an OntologyTreeNode
    */
-  copy(): OntologyTreeNode {
+  clone(): OntologyTreeNode {
     const ontologyTreeNodeCopy = new OntologyTreeNode();
     ontologyTreeNodeCopy.label = this.label;
     ontologyTreeNodeCopy.data = this.data;
@@ -75,14 +75,14 @@ export class OntologyTreeNode<T = any> implements TreeNode {
     if (this.children) {
       ontologyTreeNodeCopy.children = [];
       for (const child of this.children) {
-        ontologyTreeNodeCopy.children.push(child.copy());
+        ontologyTreeNodeCopy.children.push((child as OntologyTreeNode).clone());
       }
     }
     ontologyTreeNodeCopy.leaf = this.leaf;
     ontologyTreeNodeCopy.expanded = this.expanded;
     ontologyTreeNodeCopy.type = this.type;
     if (this.parent) {
-      ontologyTreeNodeCopy.parent = this.parent.copy();
+      ontologyTreeNodeCopy.parent = (this.parent as OntologyTreeNode).clone();
     }
     ontologyTreeNodeCopy.partialSelected = this.partialSelected;
     ontologyTreeNodeCopy.style = this.style;
@@ -94,7 +94,7 @@ export class OntologyTreeNode<T = any> implements TreeNode {
     if (this.parents) {
       ontologyTreeNodeCopy.parents = [];
       for (const par of this.parents) {
-        ontologyTreeNodeCopy.parents.push(par.copy());
+        ontologyTreeNodeCopy.parents.push((par as OntologyTreeNode).clone());
       }
     }
     ontologyTreeNodeCopy.state = this.state;

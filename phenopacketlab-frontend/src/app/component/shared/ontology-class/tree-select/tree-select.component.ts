@@ -30,11 +30,11 @@ export class TreeSelectComponent {
 
     constructor() {}
 
-    nodeSelect(event) {
+    nodeSelect() {
         this.selectedNodesChange.emit(this.selectedNodes);
     }
 
-    nodeUnselect(event) {
+    nodeUnselect() {
         this.selectedNodesChange.emit(this.selectedNodes);
     }
 

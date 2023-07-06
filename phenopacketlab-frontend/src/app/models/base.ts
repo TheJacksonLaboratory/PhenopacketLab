@@ -71,7 +71,7 @@ export class OntologyClass extends Convert {
     }
 
     /** Cloning of object */
-    copy(): OntologyClass {
+    clone(): OntologyClass {
         return new OntologyClass(this.id, this.label, this.key, this.termUrl);
     }
 
@@ -106,7 +106,7 @@ export class ExternalReference extends Convert {
         return '';
     }
 
-    copy(): ExternalReference {
+    clone(): ExternalReference {
         const externalRefCopy = new ExternalReference();
         externalRefCopy.id = this.id;
         externalRefCopy.reference = this.reference;
@@ -144,13 +144,13 @@ export class Evidence extends Convert {
     }
 
     /** copy of object */
-    copy(): Evidence {
+    clone(): Evidence {
         const evidenceCopy = new Evidence();
         if (this.evidenceCode) {
-            evidenceCopy.evidenceCode = this.evidenceCode.copy();
+            evidenceCopy.evidenceCode = this.evidenceCode.clone();
         }
         if (this.reference) {
-            evidenceCopy.reference = this.reference.copy();
+            evidenceCopy.reference = this.reference.clone();
         }
         return evidenceCopy;
     }
@@ -379,7 +379,7 @@ export class TimeElement extends Convert {
      *
      * @returns Copy the object into a new one
      */
-    public copy(): TimeElement {
+    public clone(): TimeElement {
         if (this.age) {
             return new TimeElement(new Age(this.age.iso8601duration));
         } else if (this.ageRange) {

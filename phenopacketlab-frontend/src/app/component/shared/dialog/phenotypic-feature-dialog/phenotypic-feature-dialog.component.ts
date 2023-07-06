@@ -17,7 +17,6 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
 
   phenotypicFeature: PhenotypicFeature;
 
-
   severity: OntologyClass;
   // modifiers
   modifiersNodes: OntologyTreeNode[];
@@ -36,10 +35,11 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   selectedSeverity: ConstantObject;
   severitySubscription: Subscription;
   constructor(public phenopacketService: PhenopacketService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
-    this.phenotypicFeature = config.data?.phenotypicFeature?.copy();
   }
 
   ngOnInit() {
+    this.phenotypicFeature = this.config.data?.phenotypicFeature.clone();
+
     // Get modifiers
     this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
       // we get the children from the root node sent in response
@@ -74,9 +74,17 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
           }
           this.severities.push(new ConstantObject(severity.lbl, severity.def, severity.id, severity.syn));
         });
+        // initialize selected severity
+        if (this.phenotypicFeature?.severity) {
+          for (const sever of this.severities) {
+            if (sever.id === this.phenotypicFeature.severity.id) {
+              this.selectedSeverity = sever;
+              return;
+            }
+          }
+        }
       }
     });
-    this.initializeSeveritySelected(this.phenotypicFeature?.severity);
 
   }
 
@@ -106,17 +114,6 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
     return Severities.VALUES;
   }
 
-  initializeSeveritySelected(severity: OntologyClass) {
-    if (severity === undefined || this.severities === undefined) {
-      return;
-    }
-    for (const sever of this.severities) {
-      if (sever.id === severity.id) {
-        this.selectedSeverity = sever;
-        return;
-      }
-    }
-  }
   updateExcluded(event) {
     if (this.phenotypicFeature) {
       this.phenotypicFeature.excluded = !event.checked;
@@ -125,8 +122,11 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
 
   updateModifiers(nodeModifiers: OntologyTreeNode[]) {
     if (this.phenotypicFeature) {
-      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers, 'https://hpo.jax.org/app/browse/term');
-      this.phenotypicFeature.modifierNodes = nodeModifiers;
+      this.phenotypicFeature.modifiers = OntologyTreeNode.toOntologyClass(nodeModifiers);
+      this.phenotypicFeature.modifierNodes = [];
+      for (const nodModif of nodeModifiers) {
+        this.phenotypicFeature.modifierNodes.push(nodModif);
+      }
     }
   }
   updateSeverity(event) {

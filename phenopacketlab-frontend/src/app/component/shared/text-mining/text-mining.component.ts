@@ -296,7 +296,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   applyOnset() {
     this.onsetApplied = true;
     this.phenotypicFeatures.forEach(feature => {
-      feature.onset = this.onset.copy();
+      feature.onset = this.onset.clone();
     });
   }
 
