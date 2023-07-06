@@ -1,0 +1,15 @@
+.label-active:checked {
+    color: black;
+}
+.label-active {
+    color: red;
+}
+ul {
+    display: block;
+    list-style-type: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1rem;
+}

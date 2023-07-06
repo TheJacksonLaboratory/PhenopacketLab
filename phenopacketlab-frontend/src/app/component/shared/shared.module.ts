@@ -19,13 +19,12 @@ import { IndividualEditComponent } from './edit/individual-edit/individual-edit.
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
-import { VariantInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variant-interpretation.component';
-import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
-import { GenomicInterpretationDialogComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation-dialog.component';
-import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
-import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
-import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
-import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
+import { VariantInterpretationComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variant-interpretation.component';
+import { GenomicInterpretationDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/genomic-interpretation-dialog.component';
+import { VariationDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
+import { GeneDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/gene-descriptor.component';
+import { VariationSearchComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
+import { LabelCreatorDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
 import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
@@ -64,7 +63,6 @@ import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/dis
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,
-    InterpretationEditComponent,
     InterpretationDialogComponent,
     VariantInterpretationComponent,
     GenomicInterpretationDialogComponent,
@@ -95,7 +93,6 @@ import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/dis
     PhenotypicFeatureDialogComponent,
     PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,
-    InterpretationEditComponent,
     InterpretationDialogComponent,
     VariantInterpretationComponent,
     GenomicInterpretationDialogComponent,

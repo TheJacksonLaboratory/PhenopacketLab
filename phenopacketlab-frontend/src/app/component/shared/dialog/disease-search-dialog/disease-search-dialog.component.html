@@ -32,7 +32,7 @@
       <ng-template pTemplate="body" let-disease>
         <tr [pSelectableRow]="disease">
           <td>{{ disease.term?.label }}</td>
-          <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
+          <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
           <td>
             <span *ngIf="disease.onset?.ontologyClass"
               ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"

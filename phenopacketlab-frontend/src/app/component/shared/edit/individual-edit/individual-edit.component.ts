@@ -99,8 +99,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             // cause of death
             if (this.subject.vitalStatus?.causeOfDeath) {
                 this.selectedCauseOfDeath = this.subject.vitalStatus.causeOfDeath;
-                this.causeOfDeathItems = [];
-                this.causeOfDeathItems.push(this.selectedCauseOfDeath);
+                this.causeOfDeathItems = [this.selectedCauseOfDeath];
             }
             // set isPrivateInfoWarnSelected
             this.isPrivateInfoWarnSelected = this.subject.isPrivateInfoWarnSelected;

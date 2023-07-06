@@ -43,7 +43,7 @@
           </td>
           <td><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></td>
           <td>{{ disease.term?.label }}</td>
-          <td>{{ disease.excluded ? "Excluded" : "Observed" }}</td>
+          <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
           <td>
             <span *ngIf="disease.onset?.ontologyClass"
               ><a
