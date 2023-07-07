@@ -1,47 +1,61 @@
-<div class="grid p-fluid">
-  <div class="field col-12">
-    <h2>
-      <b>{{ disease.term?.label }} </b>
-    </h2>
-    <h3><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></h3>
-  </div>
-  <div class="field col-12">
-    <p>
-      {{ disease.description }}
-    </p>
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Onset:</b>
-    <span *ngIf="disease.onset?.ontologyClass"
-      ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
-        >[{{ disease.onset.ontologyClass.id }}]</a
-      >
-      {{ disease.onset.ontologyClass.label }}</span
+<p-panel>
+  <ng-template pTemplate="header">
+    <span class="font-medium text-xl">{{ disease.term?.label }}</span>
+    &nbsp;
+    <span>
+      <a
+        *ngIf="disease.term"
+        href="{{ getDiseaseURL(disease.term?.id) }}"
+        target="_blank"
+        >{{ disease.term?.id }}</a
+      ></span
     >
-    <span *ngIf="!disease.onset?.ontologyClass">{{
-      disease.onset?.toString()
-    }}</span>
+  </ng-template>
+  <div class="grid">
+    <div class="field col-12">
+      <p>
+        {{ disease.description }}
+      </p>
+    </div>
+    <div class="field col-6">
+      <b>Status:</b> {{ disease.excluded ? "Excluded" : "Observed" }}
+    </div>
+    <div class="field col-6">
+      <b>Onset:</b>
+      <span *ngIf="disease.onset?.ontologyClass"
+        ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
+          >[{{ disease.onset.ontologyClass.id }}]</a
+        >
+        {{ disease.onset.ontologyClass.label }}</span
+      >
+      <span *ngIf="!disease.onset?.ontologyClass">{{
+        disease.onset?.toString()
+      }}</span>
+    </div>
+    <div class="field col-6">
+      <b>Resolution:</b> {{ disease.resolution?.toString() }}
+    </div>
+    <div class="field col-6">
+      <b>Disease stage: </b> {{ disease.diseaseStage }}
+    </div>
+    <div class="field col-6">
+      <b>Clinical TNM finding:</b><br />
+      <ul>
+        <li *ngFor="let finding of disease.clinicalTnmFinding">
+          [{{ finding.id }}] {{ finding.label }}
+        </li>
+      </ul>
+    </div>
+    <div class="field col-6">
+      <b>Laterality: </b>
+      <a
+        *ngIf="disease.laterality"
+        [href]="disease.laterality?.termUrl"
+        target="_blank"
+        >[{{ disease.laterality?.id }}]</a
+      >
+      {{ disease.laterality?.label }}
+    </div>
+    <div class="field col-6"></div>
   </div>
-  <div class="field col-12 md:col-6">
-    <b>Resolution:</b> {{ disease.resolution?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Disease stage: </b> {{ disease.diseaseStage }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Clinical TNM finding:</b><br />
-    <ul>
-      <li *ngFor="let finding of disease.clinicalTnmFinding">
-        [{{ finding.id }}] {{ finding.label }}
-      </li>
-    </ul>
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Laterality: </b> <a *ngIf="disease.laterality" [href]="disease.laterality?.termUrl" target="_blank">[{{disease.laterality?.id}}]</a> {{disease.laterality?.label}}
-  </div>
-  <div class="field col-12 md:col-6">
-  </div>
-</div>
+</p-panel>

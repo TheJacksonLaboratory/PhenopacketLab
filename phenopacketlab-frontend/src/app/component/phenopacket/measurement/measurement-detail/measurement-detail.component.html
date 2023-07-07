@@ -1,28 +1,35 @@
-<div class="grid p-fluid">
-  <div class="field col-12"><b>Assay:</b> {{ measurement.assay?.toString() }}</div>
-  <div class="field col-12 md:col-6">
-    <b>Measurement value:</b> {{ getMeasurementValue() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Time of measurement:</b> {{ measurement.timeObserved?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Procedure:</b>
-    <div class="grid p-fluid">
-      <div class="field col-12">
-        Code: {{ measurement.procedure?.code?.toString() }}
-      </div>
-      <div class="field col-12">
-        Body site: {{ measurement.procedure?.bodySite?.toString() }}
-      </div>
-      <div class="field col-12">
-        Performed on: {{ measurement.procedure?.performed?.toString() }}
+<p-panel>
+  <ng-template pTemplate="header">
+    <span class="font-medium text-xl">{{ measurement.assay?.toString() }}</span>
+  </ng-template>
+  <div class="grid">
+    <div class="field col-12">
+      <b>Assay:</b> {{ measurement.assay?.toString() }}
+    </div>
+    <div class="field col-6">
+      <b>Measurement value:</b> {{ getMeasurementValue() }}
+    </div>
+    <div class="field col-6">
+      <b>Time of measurement:</b> {{ measurement.timeObserved?.toString() }}
+    </div>
+    <div class="field col-6">
+      <b>Procedure:</b>
+      <div class="grid p-fluid">
+        <div class="field col-12">
+          Code: {{ measurement.procedure?.code?.toString() }}
+        </div>
+        <div class="field col-12">
+          Body site: {{ measurement.procedure?.bodySite?.toString() }}
+        </div>
+        <div class="field col-12">
+          Performed on: {{ measurement.procedure?.performed?.toString() }}
+        </div>
       </div>
     </div>
+    <div class="field col-12">
+      <b>Description:</b>
+      <br />
+      {{ measurement.description }}
+    </div>
   </div>
-  <div class="field col-12">
-    <b>Description:</b> 
-    <br>
-    {{ measurement.description }}
-  </div>
-</div>
+</p-panel>

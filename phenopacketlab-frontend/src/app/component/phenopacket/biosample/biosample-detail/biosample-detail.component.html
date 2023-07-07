@@ -1,39 +1,43 @@
-<div class="grid p-fluid">
-  <div class="field col-12 md:col-6"><b>ID: </b> {{ biosample?.id }}</div>
-  <div class="field col-12 md:col-6">
-    <b>Individual ID: </b> {{ biosample?.individualId }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Sample type:</b> {{ biosample?.sampleType }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Taxonomy:</b> {{ biosample?.taxonomy }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Derived from biosample:</b> {{ biosample?.derivedFromId }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Sampled tissue:</b> {{ biosample?.sampledTissue }}
-  </div>
-  <div class="field col-12 md:col-12">
-    <b>Description:</b> {{ biosample?.description }}
-  </div>
+<p-panel>
+  <ng-template pTemplate="header">
+    <span class="font-medium text-xl">{{ biosample?.id }}</span>
+  </ng-template>
+  <div class="grid">
+    <div class="field col-12 md:col-6"><b>ID: </b> {{ biosample?.id }}</div>
+    <div class="field col-12 md:col-6">
+      <b>Individual ID: </b> {{ biosample?.individualId }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Sample type:</b> {{ biosample?.sampleType }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Taxonomy:</b> {{ biosample?.taxonomy }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Derived from biosample:</b> {{ biosample?.derivedFromId }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Sampled tissue:</b> {{ biosample?.sampledTissue }}
+    </div>
+    <div class="field col-12 md:col-12">
+      <b>Description:</b> {{ biosample?.description }}
+    </div>
 
-  <div class="field col-12">
-    <p-divider></p-divider>
-  </div>
+    <div class="field col-12">
+      <p-divider></p-divider>
+    </div>
 
-  <div class="field col-12 md:col-6">
-    <b>Sample material:</b> {{ biosample?.materialSample?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Sample processing:</b> {{ biosample?.sampleProcessing?.toString() }}
-  </div>
-  <div class="field col-12">
-    <b>Sample storage:</b> {{ biosample?.sampleStorage?.toString() }}
-  </div>
-  <!-- TODO -->
-  <!-- <div class="field col-12">
+    <div class="field col-12 md:col-6">
+      <b>Sample material:</b> {{ biosample?.materialSample?.toString() }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Sample processing:</b> {{ biosample?.sampleProcessing?.toString() }}
+    </div>
+    <div class="field col-12">
+      <b>Sample storage:</b> {{ biosample?.sampleStorage?.toString() }}
+    </div>
+    <!-- TODO -->
+    <!-- <div class="field col-12">
     <b>Procedure</b>
     <app-procedure></app-procedure>
   </div>
@@ -41,66 +45,67 @@
     <b>Time of collection:</b>
   </div>
    -->
-  <div class="field col-12">
-    <p-divider></p-divider>
-  </div>
+    <div class="field col-12">
+      <p-divider></p-divider>
+    </div>
 
-  <div class="field col-12 md:col-6">
-    <b>Histological:</b> {{ biosample?.histologicalDiagnosis?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Tumor grade:</b> {{ biosample?.tumorGrade?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Tumor progression:</b> {{ biosample?.tumorProgression?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Pathological stage:</b> {{ biosample?.pathologicalStage?.toString() }}
-  </div>
-  <div class="field col-12">
-    <b>Pathological TNM findings:</b>
-    <ul *ngFor="let finding of biosample?.pathologicalTnmFinding">
-      <li>{{ finding.toString() }}></li>
-    </ul>
-  </div>
-  <div class="field col-12">
-    <b>Diagnostic markers:</b>
-    <ul *ngFor="let marker of biosample?.diagnosticMarkers">
-      <li>{{ marker.toString() }}></li>
-    </ul>
-  </div>
+    <div class="field col-12 md:col-6">
+      <b>Histological:</b> {{ biosample?.histologicalDiagnosis?.toString() }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Tumor grade:</b> {{ biosample?.tumorGrade?.toString() }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Tumor progression:</b> {{ biosample?.tumorProgression?.toString() }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Pathological stage:</b> {{ biosample?.pathologicalStage?.toString() }}
+    </div>
+    <div class="field col-12">
+      <b>Pathological TNM findings:</b>
+      <ul *ngFor="let finding of biosample?.pathologicalTnmFinding">
+        <li>{{ finding.toString() }}></li>
+      </ul>
+    </div>
+    <div class="field col-12">
+      <b>Diagnostic markers:</b>
+      <ul *ngFor="let marker of biosample?.diagnosticMarkers">
+        <li>{{ marker.toString() }}></li>
+      </ul>
+    </div>
 
-  <div class="field col-12">
-    <p-divider></p-divider>
-  </div>
+    <div class="field col-12">
+      <p-divider></p-divider>
+    </div>
 
-  <div class="field col-12">
-    <app-phenotypic-feature
-      [phenotypicFeatures]="getPhenotypicFeatures()"
-      (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
-    ></app-phenotypic-feature>
-  </div>
+    <div class="field col-12">
+      <app-phenotypic-feature
+        [phenotypicFeatures]="getPhenotypicFeatures()"
+        (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
+      ></app-phenotypic-feature>
+    </div>
 
-  <div class="field col-12">
-    <p-divider></p-divider>
-  </div>
+    <div class="field col-12">
+      <p-divider></p-divider>
+    </div>
 
-  <div class="field col-12">
-    <app-measurement
-      [measurements]="getPhenopacketMeasurements()"
-      (onMeasurementsChanged)="changeMeasurements($event)"
-    ></app-measurement>
-  </div>
+    <div class="field col-12">
+      <app-measurement
+        [measurements]="getPhenopacketMeasurements()"
+        (onMeasurementsChanged)="changeMeasurements($event)"
+      ></app-measurement>
+    </div>
 
-  <div class="field col-12">
-    <p-divider></p-divider>
-  </div>
+    <div class="field col-12">
+      <p-divider></p-divider>
+    </div>
 
-  <div class="field col-12">
-    <app-file
-      [phenopacketFiles]="getPhenopacketFiles()"
-      (onFilesChanged)="changeFiles($event)"
-    >
-    </app-file>
+    <div class="field col-12">
+      <app-file
+        [phenopacketFiles]="getPhenopacketFiles()"
+        (onFilesChanged)="changeFiles($event)"
+      >
+      </app-file>
+    </div>
   </div>
-</div>
+</p-panel>
