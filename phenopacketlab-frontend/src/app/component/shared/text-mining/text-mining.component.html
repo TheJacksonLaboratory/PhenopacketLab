@@ -1,18 +1,20 @@
 <div class="grid p-fluid">
   <div *ngIf="textSearchVisible" class="field col-12">
     <br />
-      <label for="textmine">Submit text</label>
-      <textarea
-        id="textmine"
-        rows="5"
-        cols="30"
-        pInputTextarea
-        [placeholder]="exampleText"
-        [(ngModel)]="textSearch"
-      ></textarea>
+    <label for="textmine">Submit text</label>
+    <textarea
+      id="textmine"
+      rows="5"
+      cols="30"
+      pInputTextarea
+      [placeholder]="exampleText"
+      [(ngModel)]="textSearch"
+    ></textarea>
   </div>
-  <div *ngIf="textSearchVisible" class="field col-12">
-    <button pButton type="button" label="Submit" style="width: 20rem" (click)="submit()"></button>
+  <div *ngIf="textSearchVisible" class="field col-12 flex align-content-start flex-wrap">
+    <div class="flex align-items-center justify-content-center">
+      <button pButton type="button" label="Submit" (click)="submit()"></button>
+    </div>
   </div>
   <div *ngIf="!textSearchVisible" class="field col-12">
     <h2>Review text mining results</h2>
@@ -65,8 +67,8 @@
 
   <div *ngIf="!textSearchVisible" class="field col-12">
     <label for="onset"><b>Age of onset: </b></label>
-    <div id="onset" class="grid p-fluid">
-      <div *ngIf="!onsetApplied" class="field col-12 md:col-4">
+    <div id="onset" class="grid">
+      <div *ngIf="!onsetApplied" class="field col-6">
         <app-time-element
           [timeElement]="onset"
           [ontologyNodes]="onsetsNodes"
@@ -75,15 +77,16 @@
           aria-labelledby="onset-label"
         ></app-time-element>
       </div>
-      <div *ngIf="!onsetApplied" class="field col-12 md:col-8">
-        <button
-          pButton
-          [disabled]="onset === undefined || onset === null"
-          type="button"
-          style="width: 20rem"
-          label="Apply onset to all features"
-          (click)="applyOnset()"
-        ></button>
+      <div *ngIf="!onsetApplied" class="field col-6 flex align-content-start flex-wrap">
+        <div class="flex align-items-center justify-content-center">
+          <button
+            pButton
+            [disabled]="onset === undefined || onset === null"
+            type="button"
+            label="Apply onset to all features"
+            (click)="applyOnset()"
+          ></button>
+        </div>
       </div>
       <div
         *ngIf="onsetApplied"
@@ -111,14 +114,15 @@
 
   <div
     *ngIf="!textSearchVisible"
-    class="field col-12 flex justify-content-center"
+    class="field col-12 flex align-content-start flex-wrap"
   >
-    <div class="flex align-items-center">
+  <div class="flex align-items-center justify-content-center">
       <button
         pButton
         type="button"
-        style="width: 20rem"
         label="Add approved terms"
+        pTooltip="Add the approved terms to the list of features below."
+        tooltipPosition="bottom"
         (click)="addApprovedTerms()"
       ></button>
     </div>

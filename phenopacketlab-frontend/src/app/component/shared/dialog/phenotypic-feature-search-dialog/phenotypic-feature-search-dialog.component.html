@@ -25,17 +25,15 @@
       [(selection)]="selectedFeature"
       scrollDirection="horizontal"
       responsiveLayout="scroll"
-      [tableStyle]="{ 'min-width': '50rem' }"
       dataKey="key"
-      selectionMode="single"
     >
       <ng-template pTemplate="caption">Features to add </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pResizableColumn>Label</th>
-          <th pResizableColumn>Status</th>
-          <th pResizableColumn>Onset</th>
-          <th pResizableColumn></th>
+          <th>Label</th>
+          <th>Status</th>
+          <th>Onset</th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-feature>
@@ -74,9 +72,7 @@
         <tr>
           <td [attr.colspan]="4">No phenotypic feature to display.</td>
         </tr>
-
-        <tr></tr
-      ></ng-template>
+      </ng-template>
     </p-table>
   </div>
 </div>

@@ -13,7 +13,6 @@ import { PhenotypicFeatureDialogComponent } from 'src/app/component/shared/dialo
   templateUrl: './phenotypic-feature-search-dialog.component.html',
   styleUrls: ['./phenotypic-feature-search-dialog.component.scss']
 })
-
 export class PhenotypicFeatureSearchDialogComponent {
 
   selectedFeature: PhenotypicFeature;
