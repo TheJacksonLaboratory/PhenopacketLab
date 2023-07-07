@@ -1,16 +1,16 @@
-<div class="grid p-fluid">
+<div class="grid">
   <div class="field col-12"><b>Phenopacket ID: </b>{{ phenopacket?.id }}</div>
 
   <div class="field col-12">
     <p-card>
-      <div class="grid p-fluid">
-        <div class="field col-12 md:col-5">
+      <div class="grid">
+        <div class="field col-5">
           <b>Individual ID: </b> {{ individual?.id }}
         </div>
-        <div class="field col-12 md:col-6">
+        <div class="field col-6">
           <b> Alternate IDs: </b> {{ individual?.alternateIds?.join(", ") }}
         </div>
-        <div class="field cold-12 md:col-1">
+        <div class="field cold-1">
           <button
             pButton
             pRipple
@@ -25,24 +25,24 @@
           <b>Time of last encounter: </b> {{ lastEncounterDate }}
         </div>
 
-        <div class="field col-12 md:col-4"><b>Sex: </b> {{ sex }}</div>
+        <div class="field col-4"><b>Sex: </b> {{ sex }}</div>
 
-        <div class="field col-12 md:col-4">
+        <div class="field col-4">
           <b>Karyotypic Sex: </b> {{ karyotypicSex }}
         </div>
-        <div class="field col-12 md:col-4"><b>Gender: </b> {{ gender }}</div>
+        <div class="field col-4"><b>Gender: </b> {{ gender }}</div>
 
         <br />
         <div class="field col-12">
           <p-fieldset legend="Vital Status">
-            <div class="grid p-fluid">
-              <div class="field col-12 md:col-6">
+            <div class="grid">
+              <div class="field col-6">
                 <b>Status: </b> {{ status }}
               </div>
-              <div class="field col-12 md:col-6">
+              <div class="field col-6">
                 <b>Time of death: </b> {{ timeOfDeath }}
               </div>
-              <div class="field col-12 md:col-6">
+              <div class="field col-6">
                 <b>Cause of death: </b>
                 <a
                   *ngIf="causeOfDeath"
@@ -52,7 +52,7 @@
                 >
                 {{ causeOfDeath?.label }}
               </div>
-              <div class="field col-12 md:col-6">
+              <div class="field col-6">
                 <b>Survival time (days): </b> {{ survivalTime }}
               </div>
             </div>
@@ -83,7 +83,6 @@
         <ng-template pTemplate="content">
           <app-phenotypic-feature
             [phenotypicFeatures]="getPhenotypicFeatures()"
-            [showAddButton]="false"
             (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
           ></app-phenotypic-feature>
         </ng-template>
