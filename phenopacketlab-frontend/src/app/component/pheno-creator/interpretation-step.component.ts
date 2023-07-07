@@ -163,21 +163,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         });
     }
 
-    // updateInterpretation(interpretation) {
-    //     if (this.interpretations === undefined) {
-    //         this.interpretations = [];
-    //     }
-    //     this.interpretations.push(interpretation);
-    // }
-
-    /**
-     * Called when a row is selected in the left side table
-     * @param event
-     */
-    onRowSelect(event) {
-        this.selectedInterpretation = event.data;
-    }
-
     nextPage() {
         this.phenopacketService.phenopacket.interpretations = this.interpretations;
         // check profile and navigate to the corresponding step
