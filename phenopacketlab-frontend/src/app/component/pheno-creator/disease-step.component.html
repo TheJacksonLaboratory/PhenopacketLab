@@ -1,16 +1,14 @@
 <p-toast position="center" key="cen"></p-toast>
 <div class="m-5">
   <h1 class="header-step"><b>Disease(s)</b></h1>
-  <div class="flex">
-    <div class="flex-initial flex align-items-center justify-content-center">
-      <button
-        pButton
-        icon="pi pi-plus"
-        label="Add disease"
-        class="p-button-text mb-2"
-        (click)="addDisease()"
-      ></button>
-    </div>
+  <div class="flex justify-content-start flex-wrap">
+    <button
+      pButton
+      icon="pi pi-plus"
+      label="Add disease"
+      class="p-button-text mb-2"
+      (click)="addDisease()"
+    ></button>
   </div>
   <p-table
     [value]="diseases"
