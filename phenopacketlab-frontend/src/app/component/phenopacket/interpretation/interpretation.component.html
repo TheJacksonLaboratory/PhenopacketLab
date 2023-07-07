@@ -1,23 +1,18 @@
 <div class="grid p-fluid">
+  <button
+    pButton
+    icon="pi pi-plus"
+    label="Add interpretation"
+    class="p-button-text ml-2"
+    style="width: 20rem"
+    (click)="addInterpretation()"
+  ></button>
   <div class="field col-12">
     <p-table
       [value]="interpretations"
       dataKey="key"
       styleClass="phenopacket-list-tabs"
     >
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-          Added interpretation(s)
-          <button
-            pButton
-            icon="pi pi-plus"
-            label="Add interpretation"
-            class="p-button-text"
-            style="width: 250px"
-            (click)="addInterpretation()"
-          ></button>
-        </div>
-      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>

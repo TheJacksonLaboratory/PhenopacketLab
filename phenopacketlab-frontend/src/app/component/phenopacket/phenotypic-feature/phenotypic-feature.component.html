@@ -1,23 +1,18 @@
 <div class="grid p-fluid">
+  <button
+    pButton
+    icon="pi pi-plus"
+    label="Add phenotypic feature"
+    class="p-button-text ml-2"
+    style="width: 20rem"
+    (click)="addPhenotypicFeature()"
+  ></button>
   <div class="field col-12">
     <p-table
       [value]="phenotypicFeatures"
       dataKey="key"
       styleClass="p-datatable-sm"
     >
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        Added phenotypic features
-        <button
-          pButton
-          icon="pi pi-plus"
-          label="Add phenotypic feature"
-          class="p-button-text"
-          style="width: 250px"
-          (click)="addPhenotypicFeature()"
-        ></button>
-      </div>
-    </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>
@@ -129,8 +124,8 @@
           <td [attr.colspan]="9">
             No phenotypic feature to display.
           </td>
-        <tr>
-     </ng-template>
+        </tr>
+      </ng-template>
     </p-table>
   </div>
 </div>

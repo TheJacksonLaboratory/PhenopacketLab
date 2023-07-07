@@ -1,23 +1,18 @@
 <div class="grid p-fluid">
+  <button
+    pButton
+    icon="pi pi-plus"
+    label="Add disease"
+    class="p-button-text ml-2"
+    style="width: 15rem"
+    (click)="addDisease()"
+  ></button>
   <div class="field col-12">
     <p-table
       [value]="phenopacketDiseases"
       dataKey="key"
       styleClass="phenopacket-list-tabs"
     >
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        Added diseases
-        <button
-          pButton
-          icon="pi pi-plus"
-          label="Add disease"
-          class="p-button-text"
-          style="width: 250px"
-          (click)="addDisease()"
-        ></button>
-      </div>
-    </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>
@@ -41,14 +36,19 @@
               [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
             ></button>
           </td>
-          <td><a *ngIf="disease.term" href="{{ getDiseaseURL(disease.term?.id) }}" target="_blank">{{ disease.term?.id }}</a></td>
+          <td>
+            <a
+              *ngIf="disease.term"
+              href="{{ getDiseaseURL(disease.term?.id) }}"
+              target="_blank"
+              >{{ disease.term?.id }}</a
+            >
+          </td>
           <td>{{ disease.term?.label }}</td>
           <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
           <td>
             <span *ngIf="disease.onset?.ontologyClass"
-              ><a
-                [href]="disease.onset.ontologyClass.termUrl"
-                target="_blank"
+              ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
                 >[{{ disease.onset.ontologyClass.id }}]</a
               >
               {{ disease.onset.ontologyClass.label }}
@@ -87,11 +87,11 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td [attr.colspan]="7">
-            No disease to display.
-          </td>
-        <tr>
-     </ng-template>
+          <td [attr.colspan]="7">No disease to display.</td>
+        </tr>
+
+        <tr></tr
+      ></ng-template>
     </p-table>
   </div>
 </div>
