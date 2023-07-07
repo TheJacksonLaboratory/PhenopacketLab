@@ -24,8 +24,8 @@ const rejectedColor = '#F32013';
 })
 export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  textSearch = 'Here we present a 13-year-old girl with inherited myopathy associated with collagenopathy.\n\nDuring the neonatal period weak sucking, decreased muscle tone, joint laxity and hyperextension of elbows, knees and wrists were observed.\n\nNo joint dislocations or sprains occurred. Mental development, including speech, was normal.';
-
+  exampleText = 'e.g. Here we present a 13-year-old girl with inherited myopathy associated with collagenopathy. During the neonatal period weak sucking, decreased muscle tone, joint laxity and hyperextension of elbows, knees and wrists were observed.';
+  textSearch: string;
   @Output()
   phenotypicFeaturesChange = new EventEmitter<PhenotypicFeature[]>();
 
@@ -247,6 +247,7 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
     });
     this.formatText();
     this.setChips();
+    this.textSearch = '';
   }
   rejectAll() {
     this.phenotypicFeatures.forEach(feature => {

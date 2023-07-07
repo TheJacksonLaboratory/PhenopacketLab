@@ -9,3 +9,6 @@ pre {
 textarea {
   min-height: 250px;
 }
+::placeholder {
+  color: lightgray;
+}

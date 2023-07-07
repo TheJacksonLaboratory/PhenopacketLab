@@ -1,16 +1,15 @@
 <div class="grid p-fluid">
   <div *ngIf="textSearchVisible" class="field col-12">
     <br />
-    <span class="p-float-label">
+      <label for="textmine">Submit text</label>
       <textarea
-        id="float-input"
+        id="textmine"
         rows="5"
         cols="30"
         pInputTextarea
+        [placeholder]="exampleText"
         [(ngModel)]="textSearch"
       ></textarea>
-      <label for="float-input">Submit text</label>
-    </span>
   </div>
   <div *ngIf="textSearchVisible" class="field col-12">
     <button pButton type="button" label="Submit" style="width: 20rem" (click)="submit()"></button>
