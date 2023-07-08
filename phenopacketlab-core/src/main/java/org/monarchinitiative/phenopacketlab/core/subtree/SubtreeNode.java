@@ -15,6 +15,7 @@ import java.util.*;
 public class SubtreeNode {
 
     private final String key, label, description;
+    private boolean leaf, selectable;
     private final List<SubtreeNode> children = new ArrayList<>();
 
     public SubtreeNode(String key, String label, String description) {
@@ -35,6 +36,13 @@ public class SubtreeNode {
 
     public List<SubtreeNode> getChildren() {
         return children;
+    }
+
+    public boolean isLeaf() { return leaf; }
+    public boolean isSelectable() { return selectable; }
+    public void setLeaf(boolean leaf) {
+        this.leaf = leaf;
+        this.selectable = leaf;
     }
 
     @Override
