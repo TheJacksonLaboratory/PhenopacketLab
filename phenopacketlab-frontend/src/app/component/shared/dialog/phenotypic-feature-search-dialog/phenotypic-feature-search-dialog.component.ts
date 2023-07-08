@@ -63,7 +63,7 @@ export class PhenotypicFeatureSearchDialogComponent {
   editPhenotypicFeature(feature?: PhenotypicFeature) {
     this.refEdit = this.dialogService.open(PhenotypicFeatureDialogComponent, {
       header: 'Edit Phenotypic feature',
-      width: '70%',
+      width: '50%',
       contentStyle: { 'overflow': 'auto' },
       baseZIndex: 10000,
       resizable: true,

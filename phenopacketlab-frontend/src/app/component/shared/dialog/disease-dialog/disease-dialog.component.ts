@@ -57,7 +57,8 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.disease = this.config.data?.disease.clone();
+    const dis = this.config.data?.disease;
+    this.disease = Utils.clone(dis);
     this.profile = this.config.data?.profile;
 
     // get onsets

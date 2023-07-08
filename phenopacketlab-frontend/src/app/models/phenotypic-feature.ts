@@ -77,63 +77,6 @@ export class PhenotypicFeature extends Convert {
 
         return phenotypicFeature;
     }
-
-    /**
-     * deep copy/clone of the object
-     */
-    clone(): PhenotypicFeature {
-        const phenoCopy = new PhenotypicFeature();
-        phenoCopy.key = this.key;
-        if (this.type) {
-            phenoCopy.type = this.type.clone();
-        }
-        if (this.severity) {
-            phenoCopy.severity = this.severity.clone();
-        }
-        if (this.children) {
-            phenoCopy.children = [];
-            for (const child of this.children) {
-                phenoCopy.children.push((child as PhenotypicFeature).clone());
-            }
-        }
-        phenoCopy.description = this.description;
-        if (this.evidence) {
-            phenoCopy.evidence = [];
-            for (const evid of this.evidence) {
-                phenoCopy.evidence.push((evid as Evidence).clone());
-            }
-        }
-        if (this.evidenceNodes) {
-            phenoCopy.evidenceNodes = [];
-            for (const evidNode of this.evidenceNodes) {
-                phenoCopy.evidenceNodes.push(evidNode);
-            }
-        }
-        phenoCopy.excluded = this.excluded;
-        if (this.modifiers) {
-            phenoCopy.modifiers = [];
-            for (const mod of this.modifiers) {
-                phenoCopy.modifiers.push((mod as OntologyClass).clone());
-            }
-        }
-        if (this.modifierNodes) {
-            phenoCopy.modifierNodes = [];
-            for (const modNode of this.modifierNodes) {
-                phenoCopy.modifierNodes.push((modNode as OntologyTreeNode).clone());
-            }
-        }
-        if (this.onset) {
-            phenoCopy.onset = this.onset.clone();
-        }
-        if (this.parent) {
-            phenoCopy.parent = this.parent.clone();
-        }
-        if (this.resolution) {
-            phenoCopy.resolution = this.resolution.clone();
-        }
-        phenoCopy.textMiningState = this.textMiningState;
-        return phenoCopy;
-    }
 }
 
 export enum MiningState {

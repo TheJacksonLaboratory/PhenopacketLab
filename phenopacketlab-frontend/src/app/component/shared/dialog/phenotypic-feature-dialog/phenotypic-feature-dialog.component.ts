@@ -7,6 +7,7 @@ import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { Utils } from '../../utils';
 
 @Component({
   selector: 'app-phenotypic-feature-dialog',
@@ -38,13 +39,14 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.phenotypicFeature = this.config.data?.phenotypicFeature.clone();
+    const feat = this.config.data?.phenotypicFeature;
+    this.phenotypicFeature = Utils.clone(feat);
 
     // Get modifiers
     this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
-        this.modifiersNodes = <OntologyTreeNode[]>nodes.children;
+        this.modifiersNodes = nodes.children;
       }
     }
     );

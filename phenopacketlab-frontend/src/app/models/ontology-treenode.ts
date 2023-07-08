@@ -22,6 +22,7 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   selectable?: boolean;
   key?: string;
 
+  isSelected?: boolean;
   parents?: OntologyTreeNode<T>[];
   state?: any;
 
@@ -59,45 +60,5 @@ export class OntologyTreeNode<T = any> implements TreeNode {
       ontologyList.push(new OntologyClass(node['key'], node['label']));
     }
     return ontologyList;
-  }
-
-  /**
-   * Copy of an OntologyTreeNode
-   */
-  clone(): OntologyTreeNode {
-    const ontologyTreeNodeCopy = new OntologyTreeNode();
-    ontologyTreeNodeCopy.label = this.label;
-    ontologyTreeNodeCopy.data = this.data;
-    ontologyTreeNodeCopy.description = this.description;
-    ontologyTreeNodeCopy.icon = this.icon;
-    ontologyTreeNodeCopy.expandedIcon = this.expandedIcon;
-    ontologyTreeNodeCopy.collapsedIcon = this.collapsedIcon;
-    if (this.children) {
-      ontologyTreeNodeCopy.children = [];
-      for (const child of this.children) {
-        ontologyTreeNodeCopy.children.push((child as OntologyTreeNode).clone());
-      }
-    }
-    ontologyTreeNodeCopy.leaf = this.leaf;
-    ontologyTreeNodeCopy.expanded = this.expanded;
-    ontologyTreeNodeCopy.type = this.type;
-    if (this.parent) {
-      ontologyTreeNodeCopy.parent = (this.parent as OntologyTreeNode).clone();
-    }
-    ontologyTreeNodeCopy.partialSelected = this.partialSelected;
-    ontologyTreeNodeCopy.style = this.style;
-    ontologyTreeNodeCopy.styleClass = this.styleClass;
-    ontologyTreeNodeCopy.draggable = this.draggable;
-    ontologyTreeNodeCopy.droppable = this.droppable;
-    ontologyTreeNodeCopy.selectable = this.selectable;
-    ontologyTreeNodeCopy.key = this.key;
-    if (this.parents) {
-      ontologyTreeNodeCopy.parents = [];
-      for (const par of this.parents) {
-        ontologyTreeNodeCopy.parents.push((par as OntologyTreeNode).clone());
-      }
-    }
-    ontologyTreeNodeCopy.state = this.state;
-    return ontologyTreeNodeCopy;
   }
 }
