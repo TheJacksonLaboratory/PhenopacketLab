@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PhenopacketModule } from '../../phenopacket.module';
 import { BiosampleDetailComponent } from './biosample-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('BiosampleDetailComponent', () => {
@@ -12,6 +13,7 @@ describe('BiosampleDetailComponent', () => {
       declarations: [ BiosampleDetailComponent ],
       imports: [
         PhenopacketModule,
+        BrowserAnimationsModule
       ]
     })
     .compileComponents();
