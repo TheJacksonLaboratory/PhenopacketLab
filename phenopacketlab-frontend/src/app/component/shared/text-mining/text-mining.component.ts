@@ -265,9 +265,18 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   addApprovedTerms() {
     const approvedFeatures = [];
     for (const feature of this.phenotypicFeatures) {
+      let featureIsPresent = false;
       if (feature.textMiningState === MiningState.APPROVED) {
-        feature.type.termUrl = Utils.getUrlForId(feature.type.id);
-        approvedFeatures.push(feature);
+        // check if feature has already been added
+        approvedFeatures.forEach(f => {
+          if (f.type.id === feature.type.id) {
+            featureIsPresent = true;
+          }
+        });
+        if (featureIsPresent === false) {
+          feature.type.termUrl = Utils.getUrlForId(feature.type.id);
+          approvedFeatures.push(feature);
+        }
       }
     }
     // reset table
