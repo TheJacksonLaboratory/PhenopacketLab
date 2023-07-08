@@ -33,6 +33,7 @@ export class SearchBoxComponent implements OnInit {
 
     items: ConstantObject[];
     groupedItems: any[];
+    selectedItem: any;
     itemsCount: number;
 
     searchstate = 'inactive';
@@ -115,6 +116,8 @@ export class SearchBoxComponent implements OnInit {
                 this.selectedItemChange.emit(res);
             });
         }
+        // clear field
+        this.selectedItem = undefined;
     }
 }
 
