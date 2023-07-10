@@ -122,24 +122,24 @@
         <div class="field col-12 md:col-6"></div>
 
         <div class="field col-12">
+          <div class="flex">
+            <div
+              class="flex-initial flex align-items-center justify-content-center"
+            >
+              <button
+                pButton
+                icon="pi pi-plus"
+                label="Add genomic interpretation"
+                class="p-button-outlined mb-2"
+                (click)="addGenomicInterpretation()"
+              ></button>
+            </div>
+          </div>
           <p-table
             [value]="genomicInterpretations"
             dataKey="key"
             styleClass="p-datatable-sm"
           >
-            <ng-template pTemplate="caption">
-              <div class="flex align-items-center justify-content-between">
-                Genomic Interpretation(s)
-                <button
-                  pButton
-                  icon="pi pi-plus"
-                  class="p-button-text"
-                  label="Add genomic interpretation"
-                  style="width: 300px"
-                  (click)="addGenomicInterpretation()"
-                ></button>
-              </div>
-            </ng-template>
             <ng-template pTemplate="header">
               <tr>
                 <!-- <th pResizableColumn style="min-width: 2rem">Subject ID</th> -->
@@ -256,5 +256,3 @@
     (click)="onOkClick()"
   ></button>
 </div>
-
-
