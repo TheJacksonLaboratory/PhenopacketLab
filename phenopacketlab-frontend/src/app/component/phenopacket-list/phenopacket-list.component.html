@@ -21,6 +21,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Identifier</th>
+            <th>Individual ID</th>
             <th>Last Encounter</th>
             <th>Sex</th>
             <th style="width: 8rem"></th>
@@ -29,6 +30,7 @@
         <ng-template pTemplate="body" let-phenopacket>
           <tr [pSelectableRow]="phenopacket">
             <td>{{phenopacket.id}}</td>
+            <td>{{phenopacket.subject?.id}}</td>
             <td>{{phenopacket.subject?.timeAtLastEncounter != null ? phenopacket.subject?.timeAtLastEncounter : '-'}}</td>
             <td>
               {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
@@ -42,7 +44,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td [attr.colspan]="4">
+            <td [attr.colspan]="5">
               No phenopackets to display.
             </td>
           <tr>
