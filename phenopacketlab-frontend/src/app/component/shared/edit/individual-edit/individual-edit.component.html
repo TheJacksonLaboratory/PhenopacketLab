@@ -9,11 +9,11 @@
       pInputText
       [(ngModel)]="subject.id"
       [ngClass]="{
-        'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+        'ng-dirty': (id?.invalid) || (id?.dirty && id?.invalid)
       }"
     />
     <small
-      *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+      *ngIf="(id?.invalid) || (id?.dirty && id?.invalid)"
       class="p-error"
       >Individual ID is required.</small
     >

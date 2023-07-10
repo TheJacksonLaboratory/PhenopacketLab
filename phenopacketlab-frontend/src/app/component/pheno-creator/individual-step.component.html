@@ -13,7 +13,7 @@
           pInputText
           [(ngModel)]="phenopacket.id"
           [ngClass]="{
-            'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+            'ng-dirty': (id?.invalid) || (id?.dirty && id?.invalid)
           }"
         />
         <button
@@ -24,7 +24,7 @@
         ></button>
       </div>
       <small
-        *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+        *ngIf="(id?.invalid) || (id?.dirty && id?.invalid)"
         class="p-error"
         >Phenopacket ID is required.</small
       >

@@ -16,8 +16,10 @@
         <p-inplace
           id="createdBy"
           closable="closable"
-          [style]="{ 'min-height': '33px' }"
-          [active]="active"
+          [disabled]="true"
+          pTooltip="The editing of this field is not yet supported"
+          tooltipPosition="bottom"
+          [active]="false"
         >
           <ng-template pTemplate="display">
             {{ createdByPrefix }}{{ createdBySuffix }}
@@ -49,8 +51,10 @@
         <p-inplace
           id="submittedBy"
           closable="closable"
-          [style]="{ 'min-height': '33px' }"
-          [active]="active"
+          [disabled]="true"
+          pTooltip="The editing of this field is not yet supported"
+          tooltipPosition="bottom"
+          [active]="false"
         >
           <ng-template pTemplate="display">
             {{ submittedByPrefix }}{{ submittedBySuffix }}
@@ -166,7 +170,7 @@
         </ng-template>
       </p-table>
     </div>
-    <div class="field col-12">
+    <!-- <div class="field col-12">
       <div class="flex justify-content-start flex-wrap">
         <p-button
           (onClick)="validate()"
@@ -174,7 +178,7 @@
           styleClass="p-button"
         ></p-button>
       </div>
-    </div>
+    </div> -->
 
     <div class="field col-12">
       <div class="flex justify-content-between flex-wrap">
@@ -189,7 +193,6 @@
         <div class="flex align-items-center justify-content-center">
           <p-button
             label="Complete"
-            [disabled]="disabled"
             (onClick)="complete()"
             icon="pi pi-angle-right"
             iconPos="right"

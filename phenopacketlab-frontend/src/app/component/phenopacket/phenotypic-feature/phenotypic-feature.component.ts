@@ -58,9 +58,10 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
                     this.phenotypicFeatures[indexToUpdate] = phenoFeature;
                     this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
                 }
-                // emit change
-                this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
             }
+            // emit change
+            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+
         });
     }
 
@@ -84,6 +85,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
                     this.phenotypicFeatures[indexToUpdate] = phenoFeature;
                     this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
                 }
+                this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+
             }
         });
     }

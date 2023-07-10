@@ -29,7 +29,11 @@ export class ValidationResultsDialogComponent {
 
   closeDialog() {
     if (this.ref) {
-      this.ref.close(this.phenopacket);
+      if (this.validationResults.validationResults.length === 0) {
+        this.ref.close(true);
+      } else {
+        this.ref.close(false);
+      }
     }
   }
 

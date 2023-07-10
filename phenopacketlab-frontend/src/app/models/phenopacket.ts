@@ -9,16 +9,16 @@ import { File } from './base';
 import { PhenotypicFeature } from './phenotypic-feature';
 
 export class Phenopacket {
-    id = '';
+    id;
     subject: Individual = new Individual();
-    phenotypicFeatures: PhenotypicFeature[] = [];
-    measurements: Measurement[] = [];
-    biosamples: BioSample[] = [];
-    interpretations: Interpretation[] = [];
-    diseases: Disease[] = [];
-    medicalActions: MedicalAction[] = [];
+    phenotypicFeatures: PhenotypicFeature[];
+    measurements: Measurement[];
+    biosamples: BioSample[];
+    interpretations: Interpretation[];
+    diseases: Disease[];
+    medicalActions: MedicalAction[];
     metaData: MetaData;
-    files: File[] = [];
+    files: File[];
 
     // for Family Phenopacket
     isProband = false;
