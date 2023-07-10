@@ -93,6 +93,9 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         });
 
         this.ref.onClose.subscribe((featuresResult: PhenotypicFeature[]) => {
+            if (this.phenotypicFeatures === undefined) {
+                this.phenotypicFeatures = [];
+            }
             if (featuresResult) {
                 for (const feat of featuresResult) {
                     const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.type.id === feat.type.id);

@@ -86,6 +86,9 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
 
         this.ref.onClose.subscribe((diseasesResult: Disease[]) => {
             if (diseasesResult) {
+                if (this.diseases === undefined) {
+                    this.diseases = [];
+                }
                 for (const dis of diseasesResult) {
                     const indexToUpdate = this.diseases.findIndex(item => item.term.id === dis.term.id);
                     dis.key = Utils.getBiggestKey(this.diseases) + 1;

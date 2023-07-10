@@ -127,6 +127,9 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
 
     updateInterpretation(interpretation: Interpretation) {
         if (interpretation) {
+            if (this.interpretations === undefined) {
+                this.interpretations = [];
+            }
             const indexToUpdate = this.interpretations.findIndex(item => item.id === interpretation.id);
             interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
             if (indexToUpdate === -1) {
