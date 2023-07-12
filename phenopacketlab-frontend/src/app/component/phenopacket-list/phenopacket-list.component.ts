@@ -172,17 +172,20 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
           phenopacket: phenopacket
         }
       });
-      this.ref.onClose.subscribe(validatedPheno => {
-        if (validatedPheno) {
-          this.cohortService.getCohort().subscribe(cohort => {
-            // remove old pheno
-            const index = cohort.members.indexOf(phenopacket, 0);
-            if (index > -1) {
-              cohort.members.splice(index, 1);
-            }
-            // add updated pheno
-            cohort.members.push(validatedPheno);
-          });
+      this.ref.onClose.subscribe(validationResult => {
+        if (validationResult) {
+          const isValid = validationResult.isValid;
+          if (isValid) {
+            this.cohortService.getCohort().subscribe(cohort => {
+              // remove old pheno
+              const index = cohort.members.indexOf(phenopacket, 0);
+              if (index > -1) {
+                cohort.members.splice(index, 1);
+              }
+              // add updated pheno
+              cohort.members.push(validationResult.validatedPhenopacket);
+            });
+          }
         }
       });
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -12,8 +12,7 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
   templateUrl: './validation-results-dialog.component.html',
   styleUrls: ['./validation-results-dialog.component.scss']
 })
-
-export class ValidationResultsDialogComponent {
+export class ValidationResultsDialogComponent implements OnInit {
 
   validationResults: ValidationResults;
   phenopacket: Phenopacket;
@@ -21,18 +20,24 @@ export class ValidationResultsDialogComponent {
   loading: boolean;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-              private metadataService: MetadataService, private downloadService: DownloadService,
-              private phenopacketService: PhenopacketService) {
-    this.validationResults = config.data?.validationResults;
-    this.phenopacket = config.data?.phenopacket;
+    private metadataService: MetadataService, private downloadService: DownloadService,
+    private phenopacketService: PhenopacketService) {
+
+  }
+  ngOnInit(): void {
+    this.validationResults = this.config.data?.validationResults;
+    this.phenopacket = this.config.data?.phenopacket;
   }
 
+  /**
+   * Closes the dialog with an object with a boolean and the result phenopacket
+   */
   closeDialog() {
     if (this.ref) {
       if (this.validationResults.validationResults.length === 0) {
-        this.ref.close(true);
+        this.ref.close({ isValid: true, validatedPhenopacket: this.phenopacket });
       } else {
-        this.ref.close(false);
+        this.ref.close({ isValid: false });
       }
     }
   }
@@ -58,29 +63,29 @@ export class ValidationResultsDialogComponent {
     // Fix metadata resources
     this.loading = false;
     this.metadataService.getPrefixResourcesForPhenopacket(
-        this.downloadService.saveAsJson(this.phenopacket, false)).subscribe(prefixResources => {
-      let resources;
-      this.loading = true;
-      if (prefixResources?.length > 0) {
-        resources = [];
-      }
-      for (const item of prefixResources) {
-        resources.push(item.resource);
-      }
-      if (this.phenopacket && this.phenopacket.metaData) {
-        this.phenopacket.metaData.resources = resources;
-      }
-      // re-run validation
-      this.phenopacketService.validatePhenopacket(
+      this.downloadService.saveAsJson(this.phenopacket, false)).subscribe(prefixResources => {
+        let resources;
+        this.loading = true;
+        if (prefixResources?.length > 0) {
+          resources = [];
+        }
+        for (const item of prefixResources) {
+          resources.push(item.resource);
+        }
+        if (this.phenopacket && this.phenopacket.metaData) {
+          this.phenopacket.metaData.resources = resources;
+        }
+        // re-run validation
+        this.phenopacketService.validatePhenopacket(
           this.downloadService.saveAsJson(this.phenopacket, false)).subscribe(validationResults => {
-        this.validationResults = validationResults;
-        this.loading = false;
+            this.validationResults = validationResults;
+            this.loading = false;
+          }, error => {
+            this.loading = false;
+          });
       }, error => {
         this.loading = false;
       });
-    }, error => {
-      this.loading = false;
-    });
 
   }
 

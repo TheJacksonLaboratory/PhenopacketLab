@@ -112,7 +112,8 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.phenopacket.metaData.created = this.created;
     this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
   }
-  validate() {
+
+  complete() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
       this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
         header: 'Validation results',
@@ -125,52 +126,47 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
           phenopacket: this.phenopacket
         }
       });
-      this.ref.onClose.subscribe(isValid => {
-        if (isValid) {
-          // create the timestamp created date
-          this.created = new Date().toISOString();
+      this.ref.onClose.subscribe(validationResult => {
+        if (validationResult) {
+          const isValid = validationResult.isValid;
+          if (isValid) {
+            // create the timestamp created date
+            this.created = new Date().toISOString();
 
-          // set metadata
-          if (this.createdBySuffix !== undefined) {
-            this.createdByPrefix = 'ORCiD:';
-          } else {
-            this.createdByPrefix = 'Anonymous';
+            // set metadata
+            if (this.createdBySuffix !== undefined) {
+              this.createdByPrefix = 'ORCiD:';
+            } else {
+              this.createdByPrefix = 'Anonymous';
+            }
+            if (this.submittedBySuffix !== undefined) {
+              this.submittedByPrefix = 'ORCiD:';
+            } else {
+              this.submittedByPrefix = 'Anonymous';
+            }
+            this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+            this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
+            this.phenopacket.metaData.created = this.created;
+            this.phenopacket.metaData.externalReferences = [];
+            this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+
+            this.active = false;
+            // add to cohort
+            if (this.cohort) {
+              this.cohort.members.push(this.phenopacket);
+            }
+            this.cohortService.setCohort(this.cohort);
+            // reset phenopacket
+            this.phenopacketService.phenopacket = undefined;
+
+            // this.cohortService.addPhenopacket(this.phenopacket);
+            // this.phenopacketService.phenopacket = this.phenopacket;
+
+            this.router.navigate(['phenopackets']);
           }
-          if (this.submittedBySuffix !== undefined) {
-            this.submittedByPrefix = 'ORCiD:';
-          } else {
-            this.submittedByPrefix = 'Anonymous';
-          }
-          this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
-          this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
-          this.phenopacket.metaData.created = this.created;
-          this.phenopacket.metaData.externalReferences = [];
-          this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
-
-          this.active = false;
-
-          // add to cohort
-          if (this.cohort) {
-            this.cohort.members.push(this.phenopacket);
-          }
-          this.cohortService.setCohort(this.cohort);
-          // reset phenopacket
-          this.phenopacketService.phenopacket = undefined;
-
-          // this.cohortService.addPhenopacket(this.phenopacket);
-          // this.phenopacketService.phenopacket = this.phenopacket;
-
-          this.router.navigate(['phenopackets']);
         }
       });
     });
-
-  }
-
-  complete() {
-    // validate
-    this.validate();
-
 
   }
 
