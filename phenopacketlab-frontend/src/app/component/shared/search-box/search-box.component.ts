@@ -102,7 +102,6 @@ export class SearchBoxComponent implements OnInit {
 
     // Submit query to search results page
     submitQuery(input: any) {
-        console.log(input);
         if (this.searchstate === 'active') {
             this.searchstate = 'inactive';
         }

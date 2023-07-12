@@ -34,7 +34,6 @@ export class TreeSelectComponent implements OnInit {
         if (this.selectedNodes === undefined) {
             this.selectedNodes = [];
         }
-        console.log(this.nodes);
         this.setNodeSelection(this.nodes, this.selectedNodes);
     }
 

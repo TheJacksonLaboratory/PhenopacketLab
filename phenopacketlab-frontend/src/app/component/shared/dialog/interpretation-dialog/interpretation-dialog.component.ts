@@ -194,7 +194,6 @@ export class InterpretationDialogComponent implements OnInit {
 
   updateIsPrivateInfoWarn(isPrivateInfoWarnSelected: boolean) {
     if (this.interpretation) {
-      console.log('updated isPrivateInfoWarnSelected: ');
       this.interpretation.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
     }
   }
