@@ -11,6 +11,7 @@
     ></button>
   </div>
   <p-table
+    *ngIf="interpretations?.length > 0"
     [value]="interpretations"
     [(selection)]="selectedInterpretation"
     scrollDirection="horizontal"

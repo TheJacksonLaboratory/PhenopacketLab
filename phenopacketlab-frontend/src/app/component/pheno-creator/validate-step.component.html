@@ -90,6 +90,7 @@
     >
       <ng-template pTemplate="caption"> Updates </ng-template>
       <p-table
+        *ngIf="phenopacket.metaData?.updates?.length > 0"
         [value]="phenopacket.metaData.updates"
         [tableStyle]="{ 'min-width': '50rem' }"
         styleClass="p-datatable-sm"
@@ -118,6 +119,7 @@
       class="field col-12"
     >
       <p-table
+        *ngIf="phenopacket.metaData?.resources?.length > 0"
         [value]="phenopacket.metaData.resources"
         [tableStyle]="{ 'min-width': '50rem' }"
         styleClass="p-datatable-sm"
@@ -149,6 +151,7 @@
       class="field col-12"
     >
       <p-table
+        *ngIf="phenopacket.metaData?.externalReferences?.length > 0"
         [value]="phenopacket.metaData.externalReferences"
         [tableStyle]="{ 'min-width': '50rem' }"
         styleClass="p-datatable-sm"

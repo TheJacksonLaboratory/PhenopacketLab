@@ -11,6 +11,7 @@
     ></button>
   </div>
   <p-table
+    *ngIf="diseases?.length > 0"
     [value]="diseases"
     [(selection)]="selectedDisease"
     scrollDirection="horizontal"

@@ -20,6 +20,7 @@
   </div>
   <div class="field col-12">
     <p-table
+      *ngIf="features?.length > 0"
       [value]="features"
       styleClass="p-datatable-sm"
       [(selection)]="selectedFeature"

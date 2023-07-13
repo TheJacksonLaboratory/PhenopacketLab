@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<p-table [value]="phenotypicFeatures" dataKey="key" styleClass="p-datatable-sm">
+<p-table *ngIf="phenotypicFeatures?.length > 0" [value]="phenotypicFeatures" dataKey="key" styleClass="p-datatable-sm">
   <ng-template pTemplate="header">
     <tr>
       <th></th>

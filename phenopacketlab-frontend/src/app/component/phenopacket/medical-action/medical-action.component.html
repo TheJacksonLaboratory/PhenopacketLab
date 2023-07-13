@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<p-table [value]="medicalActions" dataKey="key" styleClass="p-datatable-sm">
+<p-table *ngIf="medicalActions?.length > 0" [value]="medicalActions" dataKey="key" styleClass="p-datatable-sm">
   <ng-template pTemplate="header">
     <tr>
       <th></th>

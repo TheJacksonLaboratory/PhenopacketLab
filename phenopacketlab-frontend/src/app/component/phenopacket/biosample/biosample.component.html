@@ -1,4 +1,5 @@
-<p-table [value]="biosamples" dataKey="key" styleClass="p-datatable-sm">
+<span *ngIf="biosamples?.length === 0 || !biosamples">No biosample to display</span>
+<p-table *ngIf="biosamples?.length > 0" [value]="biosamples" dataKey="key" styleClass="p-datatable-sm">
   <ng-template pTemplate="header">
     <tr>
       <th></th>

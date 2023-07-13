@@ -136,6 +136,7 @@
             </div>
           </div>
           <p-table
+            *ngIf="genomicInterpretations?.length > 0"
             [value]="genomicInterpretations"
             dataKey="key"
             styleClass="p-datatable-sm"

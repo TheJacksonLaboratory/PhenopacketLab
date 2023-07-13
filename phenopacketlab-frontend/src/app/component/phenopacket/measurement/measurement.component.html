@@ -14,8 +14,8 @@
   </div
   </div>
 -->
-
-<p-table [value]="measurements" styleClass="p-datatable-sm" dataKey="key">
+<span *ngIf="measurements?.length === 0 || !measurements">No measurement to display</span>
+<p-table *ngIf="measurements?.length > 0" [value]="measurements" styleClass="p-datatable-sm" dataKey="key">
   <ng-template pTemplate="header">
     <tr>
       <th></th>

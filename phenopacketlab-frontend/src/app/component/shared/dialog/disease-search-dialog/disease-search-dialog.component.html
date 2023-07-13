@@ -11,6 +11,7 @@
   </div>
   <div class="field col-12">
     <p-table
+      *ngIf="diseases?.length > 0"
       [value]="diseases"
       styleClass="p-datatable-sm"
       [(selection)]="selectedDisease"

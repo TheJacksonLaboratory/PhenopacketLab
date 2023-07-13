@@ -12,6 +12,7 @@
   </div>
 
   <p-table
+    *ngIf="phenotypicFeatures?.length > 0"
     [value]="phenotypicFeatures"
     [(selection)]="selectedFeature"
     scrollDirection="horizontal"

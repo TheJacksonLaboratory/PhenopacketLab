@@ -11,6 +11,7 @@
 </div>
 
 <p-table
+  *ngIf="phenopacketDiseases?.length > 0"
   [value]="phenopacketDiseases"
   dataKey="key"
   styleClass="p-datatable-sm"
