@@ -152,15 +152,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
             this.active = false;
             // add to cohort
-            if (this.cohort) {
-              this.cohort.members.push(this.phenopacket);
-            }
-            this.cohortService.setCohort(this.cohort);
+            this.cohortService.addCohortMember(this.phenopacket);
             // reset phenopacket
             this.phenopacketService.phenopacket = undefined;
-
-            // this.cohortService.addPhenopacket(this.phenopacket);
-            // this.phenopacketService.phenopacket = this.phenopacket;
 
             this.router.navigate(['phenopackets']);
           }
