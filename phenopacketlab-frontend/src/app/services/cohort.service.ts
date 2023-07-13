@@ -25,10 +25,12 @@ export class CohortService {
 
     removeCohortMember(phenopacket: Phenopacket) {
         const cohort = this.cohortSubject.getValue();
-        const index = cohort.members.indexOf(phenopacket);
-        if (index > -1) {
-            cohort.members.splice(index, 1);
+        for (let i = cohort.members.length - 1; i >= 0; --i) {
+            if (cohort.members[i].id === phenopacket.id) {
+                cohort.members.splice(i, 1);
+            }
         }
+
         this.cohortSubject.next(cohort);
     }
 }
