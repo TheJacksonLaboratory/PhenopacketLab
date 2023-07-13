@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
@@ -14,7 +13,6 @@ import { UploadService } from '../../services/upload-service';
 import { Table } from 'primeng/table';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Router } from '@angular/router';
-import { MetadataService } from 'src/app/services/metadata.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
@@ -46,13 +44,11 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   constructor(public phenopacketService: PhenopacketService,
     private cohortService: CohortService,
     private uploadService: UploadService,
-    public dialog: MatDialog,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe,
     private downloadService: DownloadService,
     private dialogService: DialogService,
-    private metadataService: MetadataService,
     private router: Router) {
   }
 
@@ -176,19 +172,11 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         if (validationResult) {
           const isValid = validationResult.isValid;
           if (isValid) {
-            this.cohortService.getCohort().subscribe(cohort => {
-              // remove old pheno
-              const index = cohort.members.indexOf(phenopacket, 0);
-              if (index > -1) {
-                cohort.members.splice(index, 1);
-              }
-              // add updated pheno
-              cohort.members.push(validationResult.validatedPhenopacket);
-            });
+            this.cohortService.removeCohortMember(phenopacket);
+            this.cohortService.addCohortMember(validationResult.validatedPhenopacket);
           }
         }
       });
-
     });
   }
 
