@@ -10,8 +10,9 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { InterpretationDialogComponent, InterpretationDialogMode } from '../shared/dialog/interpretation-dialog/interpretation-dialog.component';
+import { InterpretationDialogComponent } from '../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { Utils } from '../shared/utils';
+import { DialogMode } from 'src/app/models/base';
 
 @Component({
     providers: [ConfirmationService],
@@ -96,7 +97,7 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
                 interpretation: interpretation,
                 phenopacket: this.phenopacket,
                 profile: this.profileSelection,
-                mode: InterpretationDialogMode.ADD
+                mode: DialogMode.ADD
             }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
@@ -117,7 +118,7 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
                 interpretation: interpretation,
                 phenopacket: this.phenopacket,
                 profile: this.profileSelection,
-                mode: InterpretationDialogMode.EDIT
+                mode: DialogMode.EDIT
             }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {

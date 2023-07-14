@@ -5,7 +5,8 @@ import { Interpretation } from 'src/app/models/interpretation';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { InterpretationDialogComponent, InterpretationDialogMode } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
+import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
+import { DialogMode } from 'src/app/models/base';
 
 @Component({
     selector: 'app-interpretation',
@@ -51,7 +52,7 @@ export class InterpretationComponent implements OnInit {
             draggable: true,
             data: { interpretation: interpretation,
                     phenopacket: this.phenopacket,
-                    mode: InterpretationDialogMode.ADD }
+                    mode: DialogMode.ADD }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);
@@ -69,7 +70,7 @@ export class InterpretationComponent implements OnInit {
             draggable: true,
             data: { interpretation: interpretation,
                     phenopacket: this.phenopacket,
-                    mode: InterpretationDialogMode.EDIT }
+                    mode: DialogMode.EDIT }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);

@@ -3,7 +3,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { Subject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
-import { OntologyClass } from 'src/app/models/base';
+import { DialogMode, OntologyClass } from 'src/app/models/base';
 import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus, ProgressStatus } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
@@ -46,7 +46,7 @@ export class InterpretationDialogComponent implements OnInit {
   loadingDiseaseItemsSearchResults = false;
 
   // Can be 'edit' or 'add'
-  mode: InterpretationDialogMode = InterpretationDialogMode.ADD;
+  mode: DialogMode = DialogMode.ADD;
   okButtonLabel = 'Add interpretation';
 
   genomicInterpretations: GenomicInterpretation[];
@@ -64,9 +64,9 @@ export class InterpretationDialogComponent implements OnInit {
     this.phenopacket = config.data?.phenopacket;
     this.profile = config.data?.profile;
     this.mode = config.data?.mode;
-    if (this.mode === InterpretationDialogMode.ADD) {
+    if (this.mode === DialogMode.ADD) {
       this.okButtonLabel = 'Add Interpretation';
-    } else if (this.mode === InterpretationDialogMode.EDIT) {
+    } else if (this.mode === DialogMode.EDIT) {
       this.okButtonLabel = 'Save Interpretation';
     }
   }
@@ -224,7 +224,7 @@ export class InterpretationDialogComponent implements OnInit {
       return false;
     }
     // check if an interpretation was already added for a selected diagnosis
-    if (this.phenopacket?.interpretations && this.mode === InterpretationDialogMode.ADD) {
+    if (this.phenopacket?.interpretations && this.mode === DialogMode.ADD) {
       for (const interpret of this.phenopacket.interpretations) {
         if (interpret.diagnosis.disease.id === this.selectedDisease.id) {
           this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `An interpretation with the selected diagnosis \'${this.selectedDisease.toString()}\' already exists. Please selected another disease to be able to add this interpretation.` });
@@ -278,9 +278,4 @@ export class InterpretationDialogComponent implements OnInit {
     }
   }
 
-}
-
-export enum InterpretationDialogMode {
-  EDIT,
-  ADD
 }

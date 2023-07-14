@@ -212,7 +212,7 @@ export class Age {
      * @returns an ISO8601 duration
      */
     public static convertToIso8601(years: number, months: number, days: number): string {
-        return serialize({years: years, months: months, days: days, hours: 0, minutes: 0, seconds: 0 });
+        return serialize({ years: years, months: months, days: days, hours: 0, minutes: 0, seconds: 0 });
     }
 
     public getYears() {
@@ -415,13 +415,13 @@ export class File extends Convert {
     key?: number; // not part of the phenopacket model (used only to distinguish between files)
     id?: string; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
-    individualToFileIdentifier = new Map<string, string>();
-    fileAttribute = new Map<string, string>();
+    individualToFileIdentifier: any;
+    fileAttribute: any;
 
-    constructor(uri?: string, description?: string) {
+    constructor(uri?: string) {
         super();
         this.uri = uri;
-        this.fileAttribute.set('description', description);
+        // this.fileAttribute.push({'description': description});
 
     }
     static create(obj: any): File {
@@ -440,5 +440,10 @@ export class File extends Convert {
 
         return file;
     }
+}
+
+export enum DialogMode {
+    EDIT,
+    ADD
 }
 
