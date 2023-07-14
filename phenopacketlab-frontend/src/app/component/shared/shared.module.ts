@@ -34,6 +34,7 @@ import { TextMiningComponent } from './text-mining/text-mining.component';
 import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.component';
 import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
+import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/dis
     TextPipe,
     MedicalActionEditComponent,
     ValidationResultsDialogComponent,
-    TextMiningComponent
+    TextMiningComponent,
+    FileDialogComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -106,7 +108,8 @@ import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/dis
     TextPipe,
     MedicalActionEditComponent,
     ValidationResultsDialogComponent,
-    TextMiningComponent
+    TextMiningComponent,
+    FileDialogComponent
   ]
 })
 export class SharedModule { }

@@ -1,39 +1,34 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { FileDetailDialogComponent } from './file-detail-dialog.component';
+import { FileDialogComponent } from './file-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'src/app/component/shared/shared.module';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-describe('FileDetailDialogComponent', () => {
-  let component: FileDetailDialogComponent;
-  let fixture: ComponentFixture<FileDetailDialogComponent>;
+describe('FileDialogComponent', () => {
+  let component: FileDialogComponent;
+  let fixture: ComponentFixture<FileDialogComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        MatDialogModule,
         NoopAnimationsModule,
         SharedModule,
-        MatInputModule,
-        MatFormFieldModule,
         ReactiveFormsModule
       ],
-      declarations: [ FileDetailDialogComponent ],
+      declarations: [ FileDialogComponent ],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        DynamicDialogRef,
+        DynamicDialogConfig
     ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FileDetailDialogComponent);
+    fixture = TestBed.createComponent(FileDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

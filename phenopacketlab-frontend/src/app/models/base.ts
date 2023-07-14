@@ -413,10 +413,9 @@ export enum TimeElementId {
 }
 export class File extends Convert {
     key?: number; // not part of the phenopacket model (used only to distinguish between files)
-    id?: string; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
-    individualToFileIdentifier: any;
-    fileAttribute: any;
+    individualToFileIdentifiers: any;
+    fileAttributes: any;
 
     constructor(uri?: string) {
         super();
@@ -431,11 +430,11 @@ export class File extends Convert {
         } else {
             throw new Error(`Phenopacket file is missing 'uri' field in 'file' object.`);
         }
-        if (obj['individualToFileIdentifier']) {
-            file.individualToFileIdentifier = obj['individualToFileIdentifier'];
+        if (obj['individualToFileIdentifiers']) {
+            file.individualToFileIdentifiers = obj['individualToFileIdentifiers'];
         }
-        if (obj['fileAttribute']) {
-            file.fileAttribute = obj['fileAttribute'];
+        if (obj['fileAttributes']) {
+            file.fileAttributes = obj['fileAttributes'];
         }
 
         return file;
@@ -447,3 +446,92 @@ export enum DialogMode {
     ADD
 }
 
+export class Attribute {
+    // used for idexation in primeng table
+    key?: number;
+    label: string;
+    value: string;
+
+    constructor(label?: string, value?: string) {
+        this.label = label;
+        this.value = value;
+    }
+
+    /**
+     * Convert an Attribute obj to a key value obj
+     * @param attributes
+     * @returns
+     */
+    public static toKeyValue(attributes: Attribute[]): any {
+        const keyValueObj = {};
+        if (attributes) {
+            for (const attrib of attributes) {
+                keyValueObj[attrib.label] = attrib.value;
+            }
+            return keyValueObj;
+        }
+    }
+
+    /**
+     * Convert a key value obj to an Attribute obj
+     * @param keyValueObj
+     * @returns
+     */
+    public static toAttributes(keyValueObj: any): Attribute[] {
+        if (keyValueObj) {
+            const attributes = [];
+            let idx = 0;
+            Object.keys(keyValueObj).forEach(key => {
+                const attrib = new Attribute(key, keyValueObj[key]);
+                attrib.key = idx++;
+                attributes.push(attrib);
+            });
+            return attributes;
+        }
+    }
+}
+
+export class IndividualToFileID {
+    // used for idexation in primeng table
+    key?: number;
+    subjectId: string;
+    fileId: string;
+
+    constructor(subjectId: string, fileId: string) {
+        this.subjectId = subjectId;
+        this.fileId = fileId;
+    }
+
+    /**
+     * Convert am IndividualToIdentifier obj to a key value obj
+     * @param mappings
+     * @returns
+     */
+    public static toKeyValue(mappings: IndividualToFileID[]) {
+        const keyValueObj = {};
+        if (mappings) {
+            for (const mapping of mappings) {
+                keyValueObj[mapping.subjectId] = mapping.fileId;
+            }
+            return keyValueObj;
+        }
+    }
+
+    /**
+     * Convert the keyValueObj to a IndividualToFileId obj
+     * @param keyValueObj
+     * @returns
+     */
+    public static toIndividualToFileId(keyValueObj: any): IndividualToFileID[] {
+        if (keyValueObj) {
+            const individualToFileId = [];
+            let idx = 0;
+            Object.keys(keyValueObj).forEach(key => {
+                const indiv = new IndividualToFileID(key, keyValueObj[key]);
+                indiv.key = idx++;
+                individualToFileId.push(indiv);
+            });
+            return individualToFileId;
+        }
+    }
+}

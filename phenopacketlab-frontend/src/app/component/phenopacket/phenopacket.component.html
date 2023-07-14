@@ -194,7 +194,8 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-file
-            [phenopacketFiles]="getPhenopacketFiles()"
+            [phenopacket]="phenopacket"
+            [files]="getPhenopacketFiles()"
             (onFilesChanged)="changeFiles($event)"
           >
           </app-file>
