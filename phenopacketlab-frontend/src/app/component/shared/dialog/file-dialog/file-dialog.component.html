@@ -90,7 +90,6 @@
               <button
                 *ngIf="!editing"
                 pButton
-                pRipple
                 type="button"
                 pInitEditableRow
                 icon="pi pi-pencil"
@@ -100,7 +99,6 @@
               <button
                 *ngIf="editing"
                 pButton
-                pRipple
                 type="button"
                 pSaveEditableRow
                 icon="pi pi-check"
@@ -110,7 +108,6 @@
               <button
                 *ngIf="editing"
                 pButton
-                pRipple
                 type="button"
                 pCancelEditableRow
                 icon="pi pi-times"
@@ -123,7 +120,6 @@
           <td>
             <button
               pButton
-              pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-text p-button-warning"
               (click)="deleteIndividualToIdentifier(indiv)"
@@ -226,7 +222,6 @@
               <button
                 *ngIf="!editing"
                 pButton
-                pRipple
                 type="button"
                 pInitEditableRow
                 icon="pi pi-pencil"
@@ -236,7 +231,6 @@
               <button
                 *ngIf="editing"
                 pButton
-                pRipple
                 type="button"
                 pSaveEditableRow
                 icon="pi pi-check"
@@ -246,7 +240,6 @@
               <button
                 *ngIf="editing"
                 pButton
-                pRipple
                 type="button"
                 pCancelEditableRow
                 icon="pi pi-times"
@@ -259,7 +252,6 @@
           <td>
             <button
               pButton
-              pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-text p-button-warning"
               (click)="deleteAttribute(attrib)"
@@ -270,21 +262,18 @@
     </p-table>
     <!-- </div> -->
   </div>
-
-  <div class="p-dialog-footer">
-    <button
-      pButton
-      pRipple
-      type="button"
-      label="Cancel"
-      (click)="onCancelClick()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      type="button"
-      [label]="okLabel"
-      (click)="onOkClick()"
-    ></button>
-  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    type="button"
+    [label]="okLabel"
+    (click)="onOkClick()"
+  ></button>
 </div>
