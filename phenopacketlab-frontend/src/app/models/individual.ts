@@ -5,7 +5,7 @@ export class Individual {
     // not part of phenopacket schema
     isPrivateInfoWarnSelected?: boolean;
 
-    id = '';
+    id;
     alternateIds: string[];
     dateOfBirth: string; // timestamp
     timeAtLastEncounter: TimeElement;

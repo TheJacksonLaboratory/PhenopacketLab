@@ -1,102 +1,110 @@
-<div class="grid p-fluid">
-  <div class="field col-12">
-    <h2>
-      <b>{{ phenotypicFeature.type?.label }} </b>
-    </h2>
-    <h3>
-      <a
-        href="https://hpo.jax.org/app/browse/term/{{
-          phenotypicFeature.type?.id
-        }}"
-        target="_blank"
-        >{{ phenotypicFeature.type?.id }}</a
-      >
-    </h3>
-  </div>
-
-  <div class="field col-12">
-    <p>
-      {{ phenotypicFeature.description }}
-    </p>
-  </div>
-  <div class="field col-12">
-    <b>Status:</b> {{ phenotypicFeature.excluded ? "Excluded" : "Observed" }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Onset: </b>
-    <span *ngIf="phenotypicFeature.onset?.ontologyClass">
-      <a [href]="phenotypicFeature.onset.ontologyClass.termUrl" target="_blank"
-        >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
-      >
-      {{ phenotypicFeature.onset.ontologyClass.label }}
-    </span>
-    <span *ngIf="!phenotypicFeature.onset?.ontologyClass">{{
-      phenotypicFeature.onset?.toString()
+<p-panel>
+  <ng-template pTemplate="header">
+    <span class="font-medium text-xl">{{
+      phenotypicFeature.type?.label
     }}</span>
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Severity: </b>
-    <a
-      *ngIf="phenotypicFeature.severity"
-      [href]="phenotypicFeature.severity?.termUrl"
-      target="_blank"
-      >[{{ phenotypicFeature.severity?.id }}]</a
+    &nbsp;
+    <span>
+      <a href="{{ phenotypicFeature.type?.termUrl }}" target="_blank">{{
+        phenotypicFeature.type?.id
+      }}</a></span
     >
-    {{ phenotypicFeature.severity?.label }}
-  </div>
-  <div class="field col-12 md:col-6">
-    <b>Modifiers:</b>
-    <span
-      *ngFor="
-        let modifier of phenotypicFeature.modifiers;
-        let indexOfelement = index
-      "
-    >
-      <a [href]="modifier.termUrl" target="_blank">[{{ modifier.id }}]</a>
-      {{ modifier.label
-      }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1"
-        >,
+  </ng-template>
+
+  <div class="grid">
+    <div class="field col-12">
+      <p>
+        {{ phenotypicFeature.description }}
+      </p>
+    </div>
+    <div class="field col-12">
+      <b>Status:</b> {{ phenotypicFeature.excluded ? "Excluded" : "Observed" }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Onset: </b>
+      <span *ngIf="phenotypicFeature.onset?.ontologyClass">
+        <a
+          [href]="phenotypicFeature.onset.ontologyClass.termUrl"
+          target="_blank"
+          >[{{ phenotypicFeature.onset.ontologyClass.id }}]</a
+        >
+        {{ phenotypicFeature.onset.ontologyClass.label }}
       </span>
-    </span>
+      <span *ngIf="!phenotypicFeature.onset?.ontologyClass">{{
+        phenotypicFeature.onset?.toString()
+      }}</span>
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Resolution:</b> {{ phenotypicFeature.resolution?.toString() }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Severity: </b>
+      <a
+        *ngIf="phenotypicFeature.severity"
+        [href]="phenotypicFeature.severity?.termUrl"
+        target="_blank"
+        >[{{ phenotypicFeature.severity?.id }}]</a
+      >
+      {{ phenotypicFeature.severity?.label }}
+    </div>
+    <div class="field col-12 md:col-6">
+      <b>Modifiers:</b>
+      <span
+        *ngFor="
+          let modifier of phenotypicFeature.modifiers;
+          let indexOfelement = index
+        "
+      >
+        <a [href]="modifier.termUrl" target="_blank">[{{ modifier.id }}]</a>
+        {{ modifier.label
+        }}<span *ngIf="indexOfelement < phenotypicFeature.modifiers?.length - 1"
+          >,
+        </span>
+      </span>
+    </div>
+    <div class="field col-12">
+      <p-table
+        [value]="phenotypicFeature?.evidence"
+        dataKey="key"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header">Evidences</div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn style="min-width: 2rem">ID</th>
+            <th pResizableColumn>Name</th>
+            <th pResizableColumn>Reference ID</th>
+            <th pResizableColumn>Reference Name</th>
+            <th pResizableColumn>Description</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-evidence>
+          <tr>
+            <td>
+              <a
+                *ngIf="evidence.evidenceCode"
+                [href]="evidence.evidenceCode?.termUrl"
+                target="_blank"
+                >[{{ evidence.evidenceCode?.id }}]</a
+              >
+              {{ evidence.evidenceCode?.label }}
+            </td>
+            <td>{{ evidence.evidenceCode?.label }}</td>
+            <td>{{ evidence.reference?.id }}</td>
+            <td>{{ evidence.reference?.reference }}</td>
+            <td>{{ evidence.reference?.description }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="5">No evidence to display.</td>
+          </tr>
+
+          <tr></tr
+        ></ng-template>
+      </p-table>
+    </div>
   </div>
-  <div class="field col-12">
-    <p-table
-      [value]="phenotypicFeature?.evidence"
-      dataKey="key"
-      styleClass="phenopacket-list-tabs"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-header">Evidences</div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th pResizableColumn style="min-width: 2rem">ID</th>
-          <th pResizableColumn>Name</th>
-          <th pResizableColumn>Reference ID</th>
-          <th pResizableColumn>Reference Name</th>
-          <th pResizableColumn>Description</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-evidence>
-        <tr>
-          <td>
-            <a
-              *ngIf="evidence.evidenceCode"
-              [href]="evidence.evidenceCode?.termUrl"
-              target="_blank"
-              >[{{ evidence.evidenceCode?.id }}]</a
-            >
-            {{ evidence.evidenceCode?.label }}
-          </td>
-          <td>{{ evidence.evidenceCode?.label }}</td>
-          <td>{{ evidence.reference?.id }}</td>
-          <td>{{ evidence.reference?.reference }}</td>
-          <td>{{ evidence.reference?.description }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
+</p-panel>

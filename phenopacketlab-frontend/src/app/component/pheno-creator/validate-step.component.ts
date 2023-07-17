@@ -26,10 +26,10 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   submitted = false;
   disabled = true;
 
-  createdByPrefix: string;
+  createdByPrefix = 'Anonymous';
   createdBySuffix: string;
   created: string;
-  submittedByPrefix: string;
+  submittedByPrefix = 'Anonymous';
   submittedBySuffix: string;
   schemaVersion = '2.0';
   // whether the inplace createBy and SubmittedBy are active
@@ -66,19 +66,19 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.initializeMetadata();
     // Retrieve all missing resource prefixes in phenopacket metadata
     this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
-        this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
-      let resources;
-      if (prefixResources?.length > 0) {
-        resources = [];
-      }
-      for (const item of prefixResources) {
-        resources.push(item.resource);
-      }
-      this.initializeMetadata();
-      if (this.phenopacket && this.phenopacket.metaData) {
-        this.phenopacket.metaData.resources = resources;
-      }
-    });
+      this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
+        let resources;
+        if (prefixResources?.length > 0) {
+          resources = [];
+        }
+        for (const item of prefixResources) {
+          resources.push(item.resource);
+        }
+        this.initializeMetadata();
+        if (this.phenopacket && this.phenopacket.metaData) {
+          this.phenopacket.metaData.resources = resources;
+        }
+      });
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
@@ -112,7 +112,8 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.phenopacket.metaData.created = this.created;
     this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
   }
-  validate() {
+
+  complete() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
       this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
         header: 'Validation results',
@@ -120,47 +121,46 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
         contentStyle: { overflow: 'auto' },
         baseZIndex: 10000,
         resizable: true,
-        data: { validationResults: validationResults,
-          phenopacket: this.phenopacket }
+        data: {
+          validationResults: validationResults,
+          phenopacket: this.phenopacket
+        }
+      });
+      this.ref.onClose.subscribe(validationResult => {
+        if (validationResult) {
+          const isValid = validationResult.isValid;
+          if (isValid) {
+            // create the timestamp created date
+            this.created = new Date().toISOString();
+
+            // set metadata
+            if (this.createdBySuffix !== undefined) {
+              this.createdByPrefix = 'ORCiD:';
+            } else {
+              this.createdByPrefix = 'Anonymous';
+            }
+            if (this.submittedBySuffix !== undefined) {
+              this.submittedByPrefix = 'ORCiD:';
+            } else {
+              this.submittedByPrefix = 'Anonymous';
+            }
+            this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+            this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
+            this.phenopacket.metaData.created = this.created;
+            this.phenopacket.metaData.externalReferences = [];
+            this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+
+            this.active = false;
+            // add to cohort
+            this.cohortService.addCohortMember(this.phenopacket);
+            // reset phenopacket
+            this.phenopacketService.phenopacket = undefined;
+
+            this.router.navigate(['phenopackets']);
+          }
+        }
       });
     });
-    this.disabled = false;
-    // create the timestamp created date
-    this.created = new Date().toISOString();
-
-    // set metadata
-    if (this.createdBySuffix !== undefined) {
-      this.createdByPrefix = 'ORCiD:';
-    } else {
-      this.createdByPrefix = 'Anonymous';
-    }
-    if (this.submittedBySuffix !== undefined) {
-      this.submittedByPrefix = 'ORCiD:';
-    } else {
-      this.submittedByPrefix = 'Anonymous';
-    }
-    this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
-    this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
-    this.phenopacket.metaData.created = this.created;
-    this.phenopacket.metaData.externalReferences = [];
-    this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
-
-    this.active = false;
-  }
-
-  complete() {
-    // add to cohort
-    if (this.cohort) {
-      this.cohort.members.push(this.phenopacket);
-    }
-    this.cohortService.setCohort(this.cohort);
-    // reset phenopacket
-    this.phenopacketService.phenopacket = undefined;
-
-    // this.cohortService.addPhenopacket(this.phenopacket);
-    // this.phenopacketService.phenopacket = this.phenopacket;
-
-    this.router.navigate(['phenopackets']);
 
   }
 

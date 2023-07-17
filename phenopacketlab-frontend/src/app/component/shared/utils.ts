@@ -1,3 +1,5 @@
+import * as cloneDeep from 'lodash/cloneDeep';
+
 export class Utils {
 
 /**
@@ -23,5 +25,14 @@ export class Utils {
             const suffix = splittedId[1];
             return `http://purl.obolibrary.org/obo/${prefix}_${suffix}`;
         }
+    }
+
+    /**
+     * Uses cloneDeep from lodash
+     * @param obj object to be copied
+     * @returns
+     */
+    public static clone(obj): any {
+        return cloneDeep(obj);
     }
 }

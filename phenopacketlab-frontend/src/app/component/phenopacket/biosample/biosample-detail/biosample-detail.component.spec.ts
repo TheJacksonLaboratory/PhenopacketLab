@@ -1,15 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
 import { PhenopacketModule } from '../../phenopacket.module';
 import { BiosampleDetailComponent } from './biosample-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('BiosampleDetailComponent', () => {
@@ -20,16 +12,8 @@ describe('BiosampleDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BiosampleDetailComponent ],
       imports: [
-        MatDialogModule,
-        NoopAnimationsModule,
-        MatIconModule,
-        MatDividerModule,
-        MatListModule,
         PhenopacketModule,
-        MatButtonModule,
-        MatTooltipModule,
-        RouterTestingModule,
-        HttpClientTestingModule
+        BrowserAnimationsModule
       ]
     })
     .compileComponents();

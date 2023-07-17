@@ -34,6 +34,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ChipModule } from 'primeng/chip';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     SplitterModule,
     DialogModule,
     InputMaskModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChipModule
   ],
   exports: [
     ButtonModule,
@@ -105,7 +107,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     SplitterModule,
     DialogModule,
     InputMaskModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChipModule
   ],
   providers: [MessageService, ConfirmationService]
 })

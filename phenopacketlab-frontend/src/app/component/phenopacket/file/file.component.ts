@@ -1,14 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-import { FileService } from 'src/app/services/file.service';
-import { File } from 'src/app/models/base';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
-import { SpinnerDialogComponent } from '../../shared/spinner-dialog/spinner-dialog.component';
-import { Attribute } from './file-detail/file-detail.component';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
+import { DialogMode, File } from 'src/app/models/base';
+import { FileDialogComponent } from '../../shared/dialog/file-dialog/file-dialog.component';
+import { Phenopacket } from 'src/app/models/phenopacket';
 
 @Component({
   selector: 'app-file',
@@ -26,118 +24,105 @@ import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableD
 export class FileComponent implements OnInit {
 
   @Input()
-  phenopacketFiles: File[] = [];
+  files: File[] = [];
+  @Input()
+  phenopacket: Phenopacket;
   @Output()
   onFilesChanged = new EventEmitter<File[]>();
 
-  // Table items
-  displayedColumns = ['uri', 'description', 'mapping', 'attribute', 'remove'];
-
-  expandedElement: File | null;
-
-  filesMap = new Map<string, File>();
-  datasource = new DataPresentMatTableDataSource<File>();
-
-  diseaseCount: number;
-  // searchparams
-  currSearchParams: any = {};
-
-  dialogRef: any;
-  spinnerDialogRef: any;
+  ref: DynamicDialogRef;
 
 
-  constructor(public searchService: FileService, public dialog: MatDialog) { }
+  constructor(public dialogService: DialogService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    if (this.phenopacketFiles) {
-      this.phenopacketFiles.forEach((element, index) => {
-        const id = `file-${index}`;
-        element.id = id;
-        this.filesMap.set(id, element);
-      });
-    }
-    this.datasource.data = Array.from(this.filesMap.values());
+
   }
 
   addFile() {
-    const newFile = new File('new/file/uri', 'new file description');
-    const id = `file-${this.filesMap.size + 1}`;
-    newFile.id = id;
-    this.filesMap.set(id, newFile);
-    this.updateFiles();
-  }
-
-  removeFile(element: File) {
-    const msgData = { 'title': 'Remove File' };
-    msgData['description'] = 'Remove file from list" ?';
-    msgData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: msgData
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.filesMap.delete(element.id);
-        this.updateFiles();
+    this.ref = this.dialogService.open(FileDialogComponent, {
+      header: 'Add File',
+      width: '50%',
+      contentStyle: { 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      data: {
+        phenopacket: this.phenopacket,
+        mode: DialogMode.ADD
       }
     });
-    return dialogRef;
-  }
 
-  changeFile(file: File, element: File) {
-    this.filesMap.set(element.id, file);
-    // update files
-    this.updateFiles();
-  }
-
-  openSpinnerDialog() {
-    this.spinnerDialogRef = this.dialog.open(SpinnerDialogComponent, {
-      panelClass: 'transparent',
-      disableClose: true
+    this.ref.onClose.subscribe((file: File) => {
+      this.updateFile(file);
     });
   }
 
-  expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element;
-
-  }
-
-  updateFiles() {
-    const filesArray = Array.from(this.filesMap.values());
-    this.datasource.data = filesArray;
-    this.onFilesChanged.emit(filesArray);
-  }
-
-  getMappingKeys(file: File) {
-    return file.individualToFileIdentifier.keys();
-  }
-  getMapping(file: File, key: string) {
-    const value = file.individualToFileIdentifier.get(key);
-    return `${key} -> ${value}`;
-  }
-  getAttributeKeys(file: File) {
-    const resultKeys = [];
-    // remove description key
-    file.fileAttribute.forEach((value: string, key: string) => {
-      if (key !== 'description') {
-        resultKeys.push(key);
+  removeFile(file: File) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete file with URI \'' + file.uri + '\'?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.files = this.files.filter(val => val.key !== file.key);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'File Deleted', life: 3000 });
+      },
+      reject: () => {
+        this.confirmationService.close();
       }
     });
-    return resultKeys;
-  }
-  getColor(key: string) {
-    if (key === Attribute.Keys.FileFormat) {
-      return 'primary';
-    }
-    if (key === Attribute.Keys.GenomeAssembly) {
-      return 'accent';
-    }
-    return 'gray';
-  }
-  getAttribute(file: File, key: string) {
-    return file.fileAttribute.get(key);
   }
 
+  editFile(file?: File) {
+    this.ref = this.dialogService.open(FileDialogComponent, {
+      header: 'Edit File',
+      width: '50%',
+      contentStyle: { 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      data: {
+        file: file,
+        mode: DialogMode.EDIT,
+        phenopacket: this.phenopacket
+      }
+    });
+
+    this.ref.onClose.subscribe((resultFile: File) => {
+      this.updateFile(resultFile);
+    });
+  }
+
+  updateFile(file: File) {
+    if (file) {
+      if (this.files === undefined) {
+        this.files = [];
+      }
+      // remove old file if exist
+      this.files = this.files.filter(val => val.key !== file.key);
+      // add file
+      this.files.push(file);
+
+      this.onFilesChanged.emit(this.files);
+    }
+  }
+
+  getColor(attribute) {
+    console.log(attribute.key);
+    if (attribute.key === 'fileFormat') {
+      return 'primary-chip';
+    }
+    if (attribute.key === 'genomeAssembly') {
+      return 'accent-chip';
+    }
+    return 'gray-chip';
+  }
+
+  getKeyValueLabel(item) {
+    if (item) {
+      return `${item.key} -> ${item.value}`;
+    }
+  }
 }
-
-

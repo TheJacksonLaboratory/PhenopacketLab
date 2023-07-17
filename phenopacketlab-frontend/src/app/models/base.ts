@@ -51,6 +51,7 @@ export class OntologyClass extends Convert {
         const ontologyClass = new OntologyClass();
         if (obj['id']) {
             ontologyClass.id = obj['id'];
+            ontologyClass.termUrl = Utils.getUrlForId(obj['id']);
         }
         if (obj['label']) {
             ontologyClass.label = obj['label'];
@@ -67,6 +68,11 @@ export class OntologyClass extends Convert {
     }
     toLowerCase() {
         return this.toString().toLowerCase();
+    }
+
+    /** Cloning of object */
+    clone(): OntologyClass {
+        return new OntologyClass(this.id, this.label, this.key, this.termUrl);
     }
 
 }
@@ -99,6 +105,14 @@ export class ExternalReference extends Convert {
         }
         return '';
     }
+
+    clone(): ExternalReference {
+        const externalRefCopy = new ExternalReference();
+        externalRefCopy.id = this.id;
+        externalRefCopy.reference = this.reference;
+        externalRefCopy.description = this.description;
+        return externalRefCopy;
+    }
 }
 export class Evidence extends Convert {
 
@@ -127,6 +141,18 @@ export class Evidence extends Convert {
 
     public static getEvidenceUrl(id: string) {
         return `http://purl.obolibrary.org/obo/ECO_${id.split(':')[1]}`;
+    }
+
+    /** copy of object */
+    clone(): Evidence {
+        const evidenceCopy = new Evidence();
+        if (this.evidenceCode) {
+            evidenceCopy.evidenceCode = this.evidenceCode.clone();
+        }
+        if (this.reference) {
+            evidenceCopy.reference = this.reference.clone();
+        }
+        return evidenceCopy;
     }
 }
 export class Procedure {
@@ -186,7 +212,7 @@ export class Age {
      * @returns an ISO8601 duration
      */
     public static convertToIso8601(years: number, months: number, days: number): string {
-        return serialize({years: years, months: months, days: days, hours: 0, minutes: 0, seconds: 0 });
+        return serialize({ years: years, months: months, days: days, hours: 0, minutes: 0, seconds: 0 });
     }
 
     public getYears() {
@@ -353,7 +379,7 @@ export class TimeElement extends Convert {
      *
      * @returns Copy the object into a new one
      */
-    public copy(): TimeElement {
+    public clone(): TimeElement {
         if (this.age) {
             return new TimeElement(new Age(this.age.iso8601duration));
         } else if (this.ageRange) {
@@ -386,15 +412,15 @@ export enum TimeElementId {
     DISEASE_RESOLUTION
 }
 export class File extends Convert {
-    id: string; // not part of the phenopacket model (used only to distinguish between files)
+    key?: number; // not part of the phenopacket model (used only to distinguish between files)
     uri: string;
-    individualToFileIdentifier = new Map<string, string>();
-    fileAttribute = new Map<string, string>();
+    individualToFileIdentifiers: any;
+    fileAttributes: any;
 
-    constructor(uri?: string, description?: string) {
+    constructor(uri?: string) {
         super();
         this.uri = uri;
-        this.fileAttribute.set('description', description);
+        // this.fileAttribute.push({'description': description});
 
     }
     static create(obj: any): File {
@@ -404,14 +430,108 @@ export class File extends Convert {
         } else {
             throw new Error(`Phenopacket file is missing 'uri' field in 'file' object.`);
         }
-        if (obj['individualToFileIdentifier']) {
-            file.individualToFileIdentifier = obj['individualToFileIdentifier'];
+        if (obj['individualToFileIdentifiers']) {
+            file.individualToFileIdentifiers = obj['individualToFileIdentifiers'];
         }
-        if (obj['fileAttribute']) {
-            file.fileAttribute = obj['fileAttribute'];
+        if (obj['fileAttributes']) {
+            file.fileAttributes = obj['fileAttributes'];
         }
 
         return file;
     }
 }
 
+export enum DialogMode {
+    EDIT,
+    ADD
+}
+
+export class Attribute {
+    // used for idexation in primeng table
+    key?: number;
+    label: string;
+    value: string;
+
+    constructor(label?: string, value?: string) {
+        this.label = label;
+        this.value = value;
+    }
+
+    /**
+     * Convert an Attribute obj to a key value obj
+     * @param attributes
+     * @returns
+     */
+    public static toKeyValue(attributes: Attribute[]): any {
+        const keyValueObj = {};
+        if (attributes) {
+            for (const attrib of attributes) {
+                keyValueObj[attrib.label] = attrib.value;
+            }
+            return keyValueObj;
+        }
+    }
+
+    /**
+     * Convert a key value obj to an Attribute obj
+     * @param keyValueObj
+     * @returns
+     */
+    public static toAttributes(keyValueObj: any): Attribute[] {
+        if (keyValueObj) {
+            const attributes = [];
+            let idx = 0;
+            Object.keys(keyValueObj).forEach(key => {
+                const attrib = new Attribute(key, keyValueObj[key]);
+                attrib.key = idx++;
+                attributes.push(attrib);
+            });
+            return attributes;
+        }
+    }
+}
+
+export class IndividualToFileID {
+    // used for idexation in primeng table
+    key?: number;
+    subjectId: string;
+    fileId: string;
+
+    constructor(subjectId: string, fileId: string) {
+        this.subjectId = subjectId;
+        this.fileId = fileId;
+    }
+
+    /**
+     * Convert am IndividualToIdentifier obj to a key value obj
+     * @param mappings
+     * @returns
+     */
+    public static toKeyValue(mappings: IndividualToFileID[]) {
+        const keyValueObj = {};
+        if (mappings) {
+            for (const mapping of mappings) {
+                keyValueObj[mapping.subjectId] = mapping.fileId;
+            }
+            return keyValueObj;
+        }
+    }
+
+    /**
+     * Convert the keyValueObj to a IndividualToFileId obj
+     * @param keyValueObj
+     * @returns
+     */
+    public static toIndividualToFileId(keyValueObj: any): IndividualToFileID[] {
+        if (keyValueObj) {
+            const individualToFileId = [];
+            let idx = 0;
+            Object.keys(keyValueObj).forEach(key => {
+                const indiv = new IndividualToFileID(key, keyValueObj[key]);
+                indiv.key = idx++;
+                individualToFileId.push(indiv);
+            });
+            return individualToFileId;
+        }
+    }
+}

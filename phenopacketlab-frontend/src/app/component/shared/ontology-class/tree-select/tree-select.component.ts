@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 
 @Component({
@@ -7,7 +7,7 @@ import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
     templateUrl: './tree-select.component.html',
     styleUrls: ['./tree-select.component.scss'],
 })
-export class TreeSelectComponent {
+export class TreeSelectComponent implements OnInit {
 
     /**
      * Ontology nodes
@@ -19,25 +19,73 @@ export class TreeSelectComponent {
      * Preselected nodes
      */
     @Input()
-    selectedNodes = [];
+    selectedNodes;
     @Output()
     selectedNodesChange = new EventEmitter<OntologyTreeNode[]>();
     /**
      * Selection mode: can be single, checkbox, multiple or tricheckbox
      */
     @Input()
-    selectionMode = 'checkbox';
+    selectionMode = 'multiple';
 
-    constructor() {}
+    constructor() { }
 
-    nodeSelect(event) {
+    ngOnInit() {
+        if (this.selectedNodes === undefined) {
+            this.selectedNodes = [];
+        }
+        this.setNodeSelection(this.nodes, this.selectedNodes);
+    }
+
+    setNodeSelection(treeNodes: OntologyTreeNode[], nodesSelected: OntologyTreeNode[]) {
+        if (Array.isArray(treeNodes)) {
+            for (const treeNode of treeNodes) {
+                // Set selection
+                if (Array.isArray(nodesSelected)) {
+                    for (const selectedNode of nodesSelected) {
+                        if (selectedNode.key === treeNode.key) {
+                            treeNode.isSelected = true;
+                        }
+                    }
+                }
+
+                if (treeNode.children) {
+                    this.setNodeSelection(treeNode.children, nodesSelected);
+                }
+            }
+        }
+    }
+
+    nodeSelect() {
         this.selectedNodesChange.emit(this.selectedNodes);
     }
 
-    nodeUnselect(event) {
+    /**
+     * Not used
+     * @param node
+     */
+    chipRemoved(node: OntologyTreeNode) {
+        // remove from selectedNodes
+        const index = this.selectedNodes.indexOf(node, 0);
+        if (index > -1) {
+            this.selectedNodes.splice(index, 1);
+        }
         this.selectedNodesChange.emit(this.selectedNodes);
     }
-
+    selectionChange(checked: boolean, node: OntologyTreeNode) {
+        // update selectedNodes
+        if (checked === false) {
+            // remove from selectedNodes
+            const index = this.selectedNodes.indexOf(node, 0);
+            if (index > -1) {
+                this.selectedNodes.splice(index, 1);
+            }
+        } else {
+            this.selectedNodes.push(node);
+        }
+        this.setNodeSelection(this.nodes, this.selectedNodes);
+        this.selectedNodesChange.emit(this.selectedNodes);
+    }
     /**
      * Used if selectionMode equals 'tricheckbox'
      * @param node

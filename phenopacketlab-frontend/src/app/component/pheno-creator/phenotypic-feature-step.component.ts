@@ -1,15 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import { OntologyClass } from 'src/app/models/base';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { Utils } from '../shared/utils';
+import { PhenotypicFeatureSearchDialogComponent } from '../shared/dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
+import { PhenotypicFeatureDialogComponent } from '../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 
 @Component({
     providers: [ConfirmationService, DialogService],
@@ -19,7 +20,6 @@ import { Utils } from '../shared/utils';
 })
 export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
 
-    visible = false;
     phenopacket: Phenopacket;
     submitted = false;
     phenopacketSubscription: Subscription;
@@ -33,9 +33,13 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
 
+    ref: DynamicDialogRef;
+
+
     constructor(public searchService: PhenotypeSearchService,
         public phenopacketService: PhenopacketService,
         private confirmationService: ConfirmationService,
+        private dialogService: DialogService,
         private messageService: MessageService,
         private router: Router,
         private primengConfig: PrimeNGConfig) {
@@ -51,11 +55,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         } else {
             this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
             console.log(this.phenotypicFeatures);
-            if (this.phenotypicFeatures) {
-                if (this.phenotypicFeatures.length > 0) {
-                    this.visible = true;
-                }
-            }
         }
         this.phenopacketSubscription = this.phenopacketService.getPhenopacket().subscribe(phenopacket => {
             this.phenopacket = phenopacket;
@@ -76,32 +75,43 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         }
     }
 
-    featureItemSelected(item: any) {
-        if (item) {
-            const feature = new PhenotypicFeature();
-            feature.type = new OntologyClass(item.id, item.lbl);
-            this.addPhenotypicFeature(feature);
-        }
-    }
+    addFeatures() {
+        const features = [];
+        this.ref = this.dialogService.open(PhenotypicFeatureSearchDialogComponent, {
+            header: 'Search for feature term(s)',
+            width: '50%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            modal: true,
+            data: {
+                features: features,
+                phenopacket: this.phenopacket,
+                profile: this.profileSelection
+            }
+        });
 
-    /**
-     * Adds a new phenotypic feature.
-     **/
-    addPhenotypicFeature(phenotypicFeature?: PhenotypicFeature) {
-        if (phenotypicFeature === undefined) {
-            return;
-        }
-        // set unique key for feature table
-        phenotypicFeature.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
-        this.phenotypicFeatures.push(phenotypicFeature);
-        // we copy the array after each update so the ngChange method is triggered on the child component
-        this.phenotypicFeatures = this.phenotypicFeatures.slice();
-        setTimeout(() => this.visible = true, 0);
-
-        this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
-        this.submitted = true;
-        // make table visible
-        this.visible = true;
+        this.ref.onClose.subscribe((featuresResult: PhenotypicFeature[]) => {
+            if (this.phenotypicFeatures === undefined) {
+                this.phenotypicFeatures = [];
+            }
+            if (featuresResult) {
+                for (const feat of featuresResult) {
+                    const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.type.id === feat.type.id);
+                    feat.key = Utils.getBiggestKey(this.phenotypicFeatures) + 1;
+                    if (indexToUpdate === -1) {
+                        this.phenotypicFeatures.push(feat);
+                    } else {
+                        this.phenotypicFeatures[indexToUpdate] = feat;
+                        this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
+                    }
+                }
+                // emit change
+                this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
+                this.submitted = true;
+            }
+        });
     }
 
     deleteFeature(feature: PhenotypicFeature) {
@@ -113,9 +123,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.key !== feature.key);
                 this.selectedFeature = null;
                 this.phenopacket.phenotypicFeatures = this.phenotypicFeatures;
-                if (this.phenotypicFeatures.length === 0) {
-                    this.visible = false;
-                }
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Feature Deleted', life: 3000 });
             },
             reject: () => {
@@ -128,22 +135,28 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         this.selectedFeature = phenotypicFeature;
     }
 
-    addTextMinedFeatures(phenotypicFeatures: PhenotypicFeature[]) {
-        phenotypicFeatures.forEach(feature => {
-            this.addPhenotypicFeature(feature);
+    editPhenotypicFeature(feature?: PhenotypicFeature) {
+        this.ref = this.dialogService.open(PhenotypicFeatureDialogComponent, {
+            header: 'Edit Phenotypic feature',
+            width: '50%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: { phenotypicFeature: feature }
         });
-        // collapse accordion
-        this.expandedTextMining = false;
-    }
 
-    /**
-     * Called when a row is selected in the left side table
-     * @param event
-     */
-    onRowSelect(event) {
-        this.selectedFeature = event.data;
-        this.searchService.setPhenotypicOnset(this.selectedFeature.onset);
-        this.searchService.setPhenotypicResolution(this.selectedFeature.resolution);
+        this.ref.onClose.subscribe((phenoFeature: PhenotypicFeature) => {
+            if (phenoFeature) {
+                const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.key === phenoFeature.key);
+                if (indexToUpdate === -1) {
+                    this.phenotypicFeatures.push(phenoFeature);
+                } else {
+                    this.phenotypicFeatures[indexToUpdate] = phenoFeature;
+                    this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
+                }
+            }
+        });
     }
 
     nextPage() {

@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 
 import { FileComponent } from './file.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 describe('FileComponent', () => {
   let component: FileComponent;
@@ -11,7 +12,11 @@ describe('FileComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ FileComponent ],
       imports: [
-        MatDialogModule
+      ],
+      providers: [
+        DialogService,
+        MessageService,
+        ConfirmationService
       ]
     })
     .compileComponents();

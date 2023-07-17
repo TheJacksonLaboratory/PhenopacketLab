@@ -1,57 +1,55 @@
-<p-card>
-  <ng-template pTemplate="title"> Individual </ng-template>
-  <ng-template pTemplate="subtitle">
-    Add subject information and vital status
-  </ng-template>
-  <ng-template pTemplate="content">
-    <div class="grid p-fluid">
-      <div class="field col-12">
-        <label for="phenoId"><b>Phenopacket ID *</b></label>
-        <div class="p-inputgroup">
-          <input
-            id="phenoId"
-            #id="ngModel"
-            type="text"
-            required
-            pInputText
-            [(ngModel)]="phenopacket.id"
-            [ngClass]="{
-              'ng-dirty':
-                (id?.invalid && submitted) || (id?.dirty && id?.invalid)
-            }"
-          />
-          <button
-            pButton
-            icon="pi pi-replay"
-            label="Generate ID"
-            (click)="generateNewID()"
-          ></button>
-          
+<div class="m-5">
+  <h1 class="header-step"><b>Individual</b></h1>
+  <h3 class="header-step">Add subject information and vital status</h3>
+  <div class="grid">
+    <div class="field col-12">
+      <label for="phenoId"><b>Phenopacket ID *</b></label>
+      <div class="p-inputgroup">
+        <input
+          id="phenoId"
+          #id="ngModel"
+          type="text"
+          required
+          pInputText
+          [(ngModel)]="phenopacket.id"
+          [ngClass]="{
+            'ng-dirty': (id?.invalid) || (id?.dirty && id?.invalid)
+          }"
+        />
+        <button
+          pButton
+          icon="pi pi-replay"
+          label="Generate ID"
+          (click)="generateNewID()"
+        ></button>
+      </div>
+      <small
+        *ngIf="(id?.invalid) || (id?.dirty && id?.invalid)"
+        class="p-error"
+        >Phenopacket ID is required.</small
+      >
+    </div>
+    <div class="field col-12">
+      <app-individual-edit
+        [subject]="phenopacket?.subject"
+        [profile]="profileSelection"
+        [submitted]="submitted"
+        (subjectChange)="updateSubject($event)"
+      ></app-individual-edit>
+    </div>
+
+    <div class="field col-12">
+      <div class="flex justify-content-between flex-wrap">
+        <div class="flex align-items-center justify-content-center"></div>
+        <div class="flex align-items-center justify-content-center">
+          <p-button
+            label="Next"
+            (onClick)="nextPage()"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
         </div>
-        <small
-            *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
-            class="p-error"
-            >Phenopacket ID is required.</small
-          >
-      </div>
-      <div class="field col-12">
-        <app-individual-edit
-          [subject]="phenopacket?.subject"
-          [profile]="profileSelection"
-          [submitted]="submitted"
-          (subjectChange)="updateSubject($event)"
-        ></app-individual-edit>
       </div>
     </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <div class="grid grid-nogutter justify-content-end">
-      <p-button
-        label="Next"
-        (onClick)="nextPage()"
-        icon="pi pi-angle-right"
-        iconPos="right"
-      ></p-button>
-    </div>
-  </ng-template>
-</p-card>
+  </div>
+</div>

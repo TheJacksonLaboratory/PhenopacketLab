@@ -1,180 +1,207 @@
-<p-card>
-  <ng-template pTemplate="title"> Validate phenopacket </ng-template>
-  <ng-template pTemplate="subtitle">
+<div class="m-5">
+  <h1 class="header-step"><b>Validate phenopacket</b></h1>
+  <h3 class="header-step">
     Before the phenopacket is created, it has to be validated and its
     corresponding metadata created.
-  </ng-template>
-  <ng-template pTemplate="content">
-    <div class="grid p-fluid">
-      <div class="field col-12"><b>Created:</b> {{ created }}</div>
-      <div class="field col-12">
-        <b>Phenopacket schema version:</b> {{ schemaVersion }}
-      </div>
-      <div class="field col-6">
-        <label for="createdBy"><b>Created by:</b></label>
-        <span>
-          <p-inplace
-            id="createdBy"
-            closable="closable"
-            [style]="{ 'min-height': '33px' }"
-            [active]="active"
-          >
-            <ng-template pTemplate="display">
-              {{ createdByPrefix }}{{ createdBySuffix }} <i class="pi pi-user-edit"></i>
-            </ng-template>
-            <ng-template pTemplate="content">
-              <!-- <input
+  </h3>
+
+  <div class="grid">
+    <div class="field col-12"><b>Created:</b> {{ created }}</div>
+    <div class="field col-12">
+      <b>Phenopacket schema version:</b> {{ schemaVersion }}
+    </div>
+    <div class="field col-6">
+      <label for="createdBy"><b>Created by:</b></label>
+      <span>
+        <p-inplace
+          id="createdBy"
+          closable="closable"
+          [disabled]="true"
+          pTooltip="The editing of this field is not yet supported"
+          tooltipPosition="bottom"
+          [active]="false"
+        >
+          <ng-template pTemplate="display">
+            {{ createdByPrefix }}{{ createdBySuffix }}
+            <i class="pi pi-user-edit"></i>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <!-- <input
                 type="text"
                 [(ngModel)]="createdByPrefix"
                 pInputText
                 pTooltip="Name of person who created the phenopacket"
                 tooltipPosition="bottom"
               /> -->
-              <!-- <div style="text-align: center;">{{ createdByPrefix }}</div> -->
-              <p-inputMask
-                mask="9999-9999-9999-999*"
-                [(ngModel)]="createdBySuffix"
-                placeholder="999-9999-9999-999*"
-                pTooltip="ORCiD"
-                tooltipPosition="bottom"
-              ></p-inputMask>
-            </ng-template>
-          </p-inplace>
-        </span>
-      </div>
-      <div class="field col-6">
-        <label for="submittedBy"><b>Submitted by:</b></label>
-        <span>
-          <p-inplace
-            id="submittedBy"
-            closable="closable"
-            [style]="{ 'min-height': '33px' }"
-            [active]="active"
-          >
-            <ng-template pTemplate="display">
-              {{ submittedByPrefix }}{{ submittedBySuffix }} <i class="pi pi-user-edit"></i>
-            </ng-template>
-            <ng-template pTemplate="content">
-              <!-- <input
+            <!-- <div style="text-align: center;">{{ createdByPrefix }}</div> -->
+            <p-inputMask
+              mask="9999-9999-9999-999*"
+              [(ngModel)]="createdBySuffix"
+              placeholder="999-9999-9999-999*"
+              pTooltip="ORCiD"
+              tooltipPosition="bottom"
+            ></p-inputMask>
+          </ng-template>
+        </p-inplace>
+      </span>
+    </div>
+    <div class="field col-6">
+      <label for="submittedBy"><b>Submitted by:</b></label>
+      <span>
+        <p-inplace
+          id="submittedBy"
+          closable="closable"
+          [disabled]="true"
+          pTooltip="The editing of this field is not yet supported"
+          tooltipPosition="bottom"
+          [active]="false"
+        >
+          <ng-template pTemplate="display">
+            {{ submittedByPrefix }}{{ submittedBySuffix }}
+            <i class="pi pi-user-edit"></i>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <!-- <input
                 type="text"
                 [(ngModel)]="submittedByPrefix"
                 pInputText
                 pTooltip="Name of person who submitted the phenopacket"
                 tooltipPosition="bottom"
               /> -->
-              <!-- {{ submittedByPrefix }} -->
-              <p-inputMask
-                mask="9999-9999-9999-999*"
-                [(ngModel)]="submittedBySuffix"
-                placeholder="999-9999-9999-999*"
-                pTooltip="ORCiD"
-                tooltipPosition="bottom"
-              ></p-inputMask>
-            </ng-template>
-          </p-inplace>
-        </span>
-      </div>
+            <!-- {{ submittedByPrefix }} -->
+            <p-inputMask
+              mask="9999-9999-9999-999*"
+              [(ngModel)]="submittedBySuffix"
+              placeholder="999-9999-9999-999*"
+              pTooltip="ORCiD"
+              tooltipPosition="bottom"
+            ></p-inputMask>
+          </ng-template>
+        </p-inplace>
+      </span>
+    </div>
 
-      <div *ngIf="phenopacket?.metaData?.updates && phenopacket?.metaData?.updates.length > 0" class="field col-12">
-        <ng-template pTemplate="caption"> Updates </ng-template>
-        <p-table
-          [value]="phenopacket.metaData.updates"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          styleClass="p-datatable-sm"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Timestamp</th>
-              <th>Updated by</th>
-              <th>Comment</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-update>
-            <tr>
-              <td>{{ update.timestamp }}</td>
-              <td>{{ update.updatedBy }}</td>
-              <td>{{ update.comment }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <div *ngIf="phenopacket?.metaData?.resources && phenopacket?.metaData?.resources.length > 0" class="field col-12">
-        <p-table 
-          [value]="phenopacket.metaData.resources"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          styleClass="p-datatable-sm"
-        >
-          <ng-template pTemplate="caption"> Resources </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Version</th>
-              <th>URL</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-resource>
-            <tr>
-              <td>{{ resource.id }}</td>
-              <td>{{ resource.name }}</td>
-              <td>{{ resource.version }}</td>
-              <td>{{ resource.url }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <div *ngIf="phenopacket?.metaData?.externalReferences && phenopacket.metaData?.externalReferences.length > 0" class="field col-12">
-        <p-table 
-          [value]="phenopacket.metaData.externalReferences"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          styleClass="p-datatable-sm"
-        >
-          <ng-template pTemplate="caption"> External references </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th>ID</th>
-              <th>Reference</th>
-              <th>Description</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-externalreference>
-            <tr>
-              <td>{{ externalreference.id }}</td>
-              <td>{{ externalreference.reference }}</td>
-              <td>{{ externalreference.description }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+    <div
+      *ngIf="
+        phenopacket?.metaData?.updates &&
+        phenopacket?.metaData?.updates.length > 0
+      "
+      class="field col-12"
+    >
+      <ng-template pTemplate="caption"> Updates </ng-template>
+      <p-table
+        *ngIf="phenopacket.metaData?.updates?.length > 0"
+        [value]="phenopacket.metaData.updates"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Timestamp</th>
+            <th>Updated by</th>
+            <th>Comment</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-update>
+          <tr>
+            <td>{{ update.timestamp }}</td>
+            <td>{{ update.updatedBy }}</td>
+            <td>{{ update.comment }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
-    <div class="flex justify-content-start flex-wrap">
-      <p-button
-        (onClick)="validate()"
-        label="Validate"
-        styleClass="p-button"
-      ></p-button>
+    <div
+      *ngIf="
+        phenopacket?.metaData?.resources &&
+        phenopacket?.metaData?.resources.length > 0
+      "
+      class="field col-12"
+    >
+      <p-table
+        *ngIf="phenopacket.metaData?.resources?.length > 0"
+        [value]="phenopacket.metaData.resources"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="caption"> Resources </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Version</th>
+            <th>URL</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-resource>
+          <tr>
+            <td>{{ resource.id }}</td>
+            <td>{{ resource.name }}</td>
+            <td>{{ resource.version }}</td>
+            <td>{{ resource.url }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <div class="flex justify-content-between flex-wrap">
-      <div class="flex align-items-center justify-content-center">
+    <div
+      *ngIf="
+        phenopacket?.metaData?.externalReferences &&
+        phenopacket.metaData?.externalReferences.length > 0
+      "
+      class="field col-12"
+    >
+      <p-table
+        *ngIf="phenopacket.metaData?.externalReferences?.length > 0"
+        [value]="phenopacket.metaData.externalReferences"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="caption"> External references </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Reference</th>
+            <th>Description</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-externalreference>
+          <tr>
+            <td>{{ externalreference.id }}</td>
+            <td>{{ externalreference.reference }}</td>
+            <td>{{ externalreference.description }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <!-- <div class="field col-12">
+      <div class="flex justify-content-start flex-wrap">
         <p-button
-          label="Back"
-          (onClick)="prevPage()"
-          icon="pi pi-angle-left"
-          iconPos="left"
+          (onClick)="validate()"
+          label="Validate"
+          styleClass="p-button"
         ></p-button>
       </div>
-      <div class="flex align-items-center justify-content-center">
-        <p-button
-          label="Complete"
-          [disabled]="disabled"
-          (onClick)="complete()"
-          icon="pi pi-angle-right"
-          iconPos="right"
-        ></p-button>
+    </div> -->
+
+    <div class="field col-12">
+      <div class="flex justify-content-between flex-wrap">
+        <div class="flex align-items-center justify-content-center">
+          <p-button
+            label="Back"
+            (onClick)="prevPage()"
+            icon="pi pi-angle-left"
+            iconPos="left"
+          ></p-button>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <p-button
+            label="Complete"
+            (onClick)="complete()"
+            icon="pi pi-angle-right"
+            iconPos="right"
+          ></p-button>
+        </div>
       </div>
     </div>
-  </ng-template>
-</p-card>
-
+  </div>
+</div>

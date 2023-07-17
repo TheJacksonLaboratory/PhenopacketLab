@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InterpretationDialogComponent } from './interpretation-dialog.component';
+import { MessageService } from 'primeng/api';
 
 describe('InterpretationDialogComponent', () => {
   let component: InterpretationDialogComponent;
@@ -14,6 +15,8 @@ describe('InterpretationDialogComponent', () => {
         HttpClientModule
       ],
       providers: [
+        MessageService,
+        DialogService,
         { provide: DynamicDialogConfig, useValue: {} },
         { provide: DynamicDialogRef, useValue: {} }
       ]

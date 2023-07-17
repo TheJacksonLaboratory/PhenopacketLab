@@ -3,6 +3,9 @@ import { Measurement } from './measurement';
 import { PhenotypicFeature } from './phenotypic-feature';
 
 export class BioSample extends Convert {
+    // not part of phenopacket schema
+    key?: number;
+
     id: string;
     individualId: string;
     derivedFromId: string;
@@ -28,6 +31,7 @@ export class BioSample extends Convert {
         const bioSample = new BioSample();
         if (obj['id']) {
             bioSample.id = obj['id'];
+            bioSample.key = obj['id'];
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'bioSample' object.`);
         }

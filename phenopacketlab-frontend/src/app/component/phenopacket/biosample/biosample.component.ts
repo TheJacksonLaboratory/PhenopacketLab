@@ -1,10 +1,8 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { OntologyClass } from 'src/app/models/base';
 import { BioSample } from 'src/app/models/biosample';
-import { DataPresentMatTableDataSource } from '../../shared/DataPresentMatTableDataSource';
-import { MessageDialogComponent } from '../../shared/message-dialog/message-dialog.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @Component({
@@ -28,14 +26,8 @@ export class BiosampleComponent implements OnInit {
   @Output()
   onBiosampleChanged = new EventEmitter<BioSample[]>();
 
-  // Table items
-  displayedColumns = ['id', 'individualid', 'tissue', 'type', 'description', 'remove'];
-
-  expandedElement: BioSample | null;
-
-  biosampleDataSource = new DataPresentMatTableDataSource<BioSample>();
-
-  constructor(public dialog: MatDialog) {
+  constructor(private messageService: MessageService,
+              private confirmationService: ConfirmationService) {
 
   }
 
@@ -43,8 +35,6 @@ export class BiosampleComponent implements OnInit {
     if (this.biosamples === undefined) {
       this.biosamples = [];
     }
-    this.biosampleDataSource.data = this.biosamples;
-
   }
 
   /**
@@ -71,31 +61,28 @@ export class BiosampleComponent implements OnInit {
     } else {
       this.biosamples.push(biosample);
     }
-    this.biosampleDataSource.data = this.biosamples;
     this.onBiosampleChanged.emit(this.biosamples);
-    // TODO push changes to api
   }
 
   /**
-   * Removes the chosen element, if ok is pressed on the popup window.
-   * @param element
+   * Removes the chosen sample, if ok is pressed on the popup window.
+   * @param sample
    * @returns
    */
-  deleteBiosample(element: BioSample) {
-    const msgData = { 'title': 'Delete Biosample' };
-    msgData['description'] = `Delete the Biosample with the ID "${element.id}" ?`;
-    msgData['displayCancelButton'] = true;
-    const dialogRef = this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: msgData
+  deleteSample(sample: BioSample) {
+    this.confirmationService.confirm({
+        message: 'Are you sure you want to delete \'' + sample.id + '\'?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.biosamples = this.biosamples.filter(val => val.key !== sample.key);
+            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Biosample Deleted', life: 3000 });
+        },
+        reject: () => {
+            this.confirmationService.close();
+        }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.removeFromDatasource(element);
-      }
-    });
-    return dialogRef;
-  }
+}
 
   changeBiosample(biosample: BioSample) {
     for (let i = 0; i < this.biosamples.length; i ++) {
@@ -103,21 +90,6 @@ export class BiosampleComponent implements OnInit {
         this.biosamples[i] = biosample;
       }
     }
-  }
-
-  removeFromDatasource(biosample: BioSample) {
-    this.biosamples.forEach((element, index) => {
-      if (element === biosample) {
-        this.biosamples.splice(index, 1);
-      }
-    });
-    this.biosampleDataSource.data = this.biosamples;
-    this.onBiosampleChanged.emit(this.biosamples);
-  }
-
-  expandCollapse(element: any) {
-    this.expandedElement = this.expandedElement === element ? null : element;
-
   }
 
 }

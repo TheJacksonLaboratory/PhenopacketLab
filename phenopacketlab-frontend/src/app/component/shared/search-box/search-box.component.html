@@ -1,10 +1,12 @@
 <p-autoComplete
   appendTo="body"
+  [(ngModel)]="selectedItem"
   [suggestions]="groupedItems"
   (completeMethod)="contentChanging($event.query)"
   (onSelect)="submitQuery($event)"
   field="name"
   [group]="true"
+  [showClear]="true"
   placeholder="{{ placeHolderTxt }}"
 >
   <ng-template let-group pTemplate="group">

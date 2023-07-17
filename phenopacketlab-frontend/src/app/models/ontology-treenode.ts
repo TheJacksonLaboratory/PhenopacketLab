@@ -1,5 +1,6 @@
 import { TreeNode } from 'primeng/api';
 import { OntologyClass } from './base';
+import { Utils } from '../component/shared/utils';
 
 export class OntologyTreeNode<T = any> implements TreeNode {
   label?: string;
@@ -21,6 +22,7 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   selectable?: boolean;
   key?: string;
 
+  isSelected?: boolean;
   parents?: OntologyTreeNode<T>[];
   state?: any;
 
@@ -48,14 +50,13 @@ export class OntologyTreeNode<T = any> implements TreeNode {
   /**
    * Convert to OntologyClass
    * @param ontologyNodes
-   * @param urlPrefix
    * @returns
    */
-  public static toOntologyClass(ontologyNodes: OntologyTreeNode[], urlPrefix: string) {
+  public static toOntologyClass(ontologyNodes: OntologyTreeNode[]) {
     const ontologyList = [];
     for (const node of ontologyNodes) {
       const obj = new OntologyClass(node['key'], node['label']);
-      obj.termUrl = `${urlPrefix}/${obj.id}`;
+      obj.termUrl = Utils.getUrlForId(obj.id);
       ontologyList.push(new OntologyClass(node['key'], node['label']));
     }
     return ontologyList;
