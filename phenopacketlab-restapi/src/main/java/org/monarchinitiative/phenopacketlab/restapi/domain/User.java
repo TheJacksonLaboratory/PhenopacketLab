@@ -1,15 +1,16 @@
 package org.monarchinitiative.phenopacketlab.restapi.domain;
 
+import com.google.cloud.spring.data.datastore.core.mapping.Entity;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.util.Assert;
 
-@Document(collection = "User")
+@Entity
 public class User {
-	@Id private int id;
+	@Id
+	private Long id;
 
 	private String authId;
 
@@ -31,7 +32,7 @@ public class User {
 				}
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 

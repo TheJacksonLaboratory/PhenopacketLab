@@ -1,13 +1,15 @@
 package org.monarchinitiative.phenopacketlab.restapi.config.security;
 
+import com.google.cloud.spring.data.datastore.repository.config.EnableDatastoreRepositories;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  *
@@ -16,18 +18,9 @@ import org.springframework.security.oauth2.jwt.*;
  * @author Michael Gargano
  * @since 0.5.0
  */
+@Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors();
-		http.authorizeRequests().antMatchers("/api/v1/h2-console/**")
-				.permitAll().mvcMatchers("/api/v1/user/**").authenticated()
-				.and().oauth2ResourceServer().jwt();
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-	}
+public class SecurityConfig {
 
 	@Value("${auth0.audience}")
 	private String audience;
@@ -47,5 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		jwtDecoder.setJwtValidator(withAudience);
 
 		return jwtDecoder;
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.cors();
+		http.authorizeRequests().antMatchers("/api/v1/h2-console/**")
+				.permitAll().mvcMatchers("/api/v1/user/**").authenticated()
+				.and().oauth2ResourceServer().jwt();
+		http.csrf().disable();
+		http.headers().frameOptions().disable();
+		return http.build();
 	}
 }

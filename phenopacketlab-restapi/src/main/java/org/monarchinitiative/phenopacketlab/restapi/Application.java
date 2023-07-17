@@ -1,11 +1,11 @@
 package org.monarchinitiative.phenopacketlab.restapi;
 
+import com.google.cloud.spring.data.datastore.repository.config.EnableDatastoreRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.http.converter.protobuf.ProtobufJsonFormatHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "org.monarchinitiative.phenopacketlab.restapi.repository")
 public class Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);

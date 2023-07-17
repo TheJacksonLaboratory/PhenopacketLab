@@ -1,9 +1,11 @@
 package org.monarchinitiative.phenopacketlab.restapi.repository;
 
 import org.monarchinitiative.phenopacketlab.restapi.domain.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.google.cloud.spring.data.datastore.repository.DatastoreRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends MongoRepository<User, Long> {
+@Repository
+public interface UserRepository extends DatastoreRepository<User, Long> {
 	boolean existsUserByAuthId(String authId);
 
 	User findUserByAuthId(String authId);

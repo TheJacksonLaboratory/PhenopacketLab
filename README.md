@@ -72,6 +72,13 @@ The and download the data files into the folder.
 
 ## Run *PhenopacketLab* backend
 
+If using any environment besides local (datastore-emulator) and not on a cloud service you need to set
+google application credentials for svc-jax-phenopacket for datastore:
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS="/path/to/private/key"
+```
+
 Spool up the backend by running:
 
 ```bash
