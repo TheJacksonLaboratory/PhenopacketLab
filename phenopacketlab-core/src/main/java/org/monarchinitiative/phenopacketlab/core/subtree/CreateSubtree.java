@@ -1,8 +1,5 @@
 package org.monarchinitiative.phenopacketlab.core.subtree;
 
-import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenol.ontology.data.Term;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.OntologyHierarchyService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
@@ -18,9 +15,10 @@ public class CreateSubtree {
     /**
      * Create a subtree with given {@code root} from an {@code ontology}, with a {@code comparator} used to sort
      * the children of the tree branches.
-     *
+     * @param root TermId
+     * @param conceptResource IdentifiedConceptResource
+     * @param hierarchyService OntologyHierarchyService
      * @param comparator a comparator for sorting children of a node or {@code null} if no sorting is expected
-     * @param ontology source ontology
      * @param excludedNodes nodes to be excluded from the resulting tree
      * @return a node of the root node of the subtree
      * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
@@ -62,7 +60,12 @@ public class CreateSubtree {
 
         if (comparator != null)
             childNodes.sort(comparator);
-
+        // Set leaf and selectable boolean
+        if (childNodes.isEmpty()) {
+            node.setLeaf(true);
+        } else {
+            node.setLeaf(false);
+        }
         node.getChildren().addAll(childNodes);
 
         return node;

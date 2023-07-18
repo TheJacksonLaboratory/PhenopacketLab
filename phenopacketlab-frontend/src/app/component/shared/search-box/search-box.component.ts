@@ -9,7 +9,7 @@ import { ConstantObject } from 'src/app/models/individual';
 @Component({
     selector: 'app-search-box',
     templateUrl: './search-box.component.html',
-    styleUrls: ['./search-box.component.css']
+    styleUrls: ['./search-box.component.scss']
 })
 export class SearchBoxComponent implements OnInit {
 
@@ -33,6 +33,7 @@ export class SearchBoxComponent implements OnInit {
 
     items: ConstantObject[];
     groupedItems: any[];
+    selectedItem: any;
     itemsCount: number;
 
     searchstate = 'inactive';
@@ -101,7 +102,6 @@ export class SearchBoxComponent implements OnInit {
 
     // Submit query to search results page
     submitQuery(input: any) {
-        console.log(input);
         if (this.searchstate === 'active') {
             this.searchstate = 'inactive';
         }
@@ -115,6 +115,8 @@ export class SearchBoxComponent implements OnInit {
                 this.selectedItemChange.emit(res);
             });
         }
+        // clear field
+        this.selectedItem = undefined;
     }
 }
 

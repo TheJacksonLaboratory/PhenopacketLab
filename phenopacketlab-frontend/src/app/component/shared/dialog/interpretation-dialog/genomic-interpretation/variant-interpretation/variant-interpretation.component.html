@@ -1,0 +1,190 @@
+<p-toast position="center" key="cen"></p-toast>
+
+<as-split direction="horizontal" disabled="true" [useTransition]="true">
+  <as-split-area [visible]="leftSplitVisible" [size]="leftSplitWidth">
+    <div class="col flex justify-content-center">
+      <!-- (variantInterpretationChange)="updateVariantInterpretation($event)" -->
+      <app-variation-search
+        (variantValidated)="updateVariantValidated($event)"
+      ></app-variation-search>
+    </div>
+  </as-split-area>
+  <as-split-area [visible]="centerSplitVisible" [size]="centerSplitWidth">
+    <!-- Result from variant validation -->
+    <div class="col flex justify-content-center">
+      <div class="grid p-fluid">
+        <div class="field col-12">
+          <b>We found the following variant information:</b>
+        </div>
+        <div class="field col-12">
+          <label for="coordinates">
+            <b>Variant coordinates</b>
+          </label>
+          <div id="coordinates" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Chromosome</b>: {{ variantValidated?.chr }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Position</b>: {{ variantValidated?.position }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Reference Allele</b>: {{ variantValidated?.ref }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Alternate Allele</b>: {{ variantValidated?.alt }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field col-12">
+          <label for="gene">
+            <b>Gene</b>
+          </label>
+          <div id="gene" class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <b>Gene symbol</b>: {{ variantValidated?.geneSymbol }}
+            </div>
+            <div class="field col-12 md:col-3">
+              <b>Gene ID</b>: {{ variantValidated?.hgncId }}
+            </div>
+            <div class="field col-12 md:col-6"></div>
+          </div>
+        </div>
+
+        <div class="field col-12">
+          <label for="annotation">
+            <b>Functional annotations</b>
+          </label>
+          <div id="annotation" class="grid p-fluid">
+            <div class="field col-12 md:col-4">
+              <b>Genomic</b>: {{ variantValidated?.ghgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Coding</b>: {{ variantValidated?.chgvs }}
+            </div>
+            <div class="field col-12 md:col-4">
+              <b>Protein</b>: {{ variantValidated?.phgvs }}
+            </div>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-replay"
+            label="Try again"
+            pTooltip="Validate another variant"
+            tooltipPosition="bottom"
+            class="p-button-primary"
+            style="width: 150px"
+            (click)="resetVariantValidated()"
+          ></button>
+        </div>
+        <div class="field col-12 md:col-6"></div>
+        <div class="field col-12 md:col-3">
+          <button
+            pButton
+            pRipple
+            icon="pi pi-check"
+            label="OK"
+            pTooltip="Add variant to genomic interpretation"
+            tooltipPosition="bottom"
+            class="p-button-primary"
+            style="width: 150px"
+            (click)="addVariantInterpretation()"
+          ></button>
+        </div>
+        
+      </div>
+    </div>
+  </as-split-area>
+  <as-split-area [visible]="rightSplitVisible" [size]="rightSplitWidth">
+    <div class="col flex justify-content-center">
+      <div class="grid fluid">
+        <div class="field col-12">
+          <b>Variant Interpretation</b>
+          <br />
+          This element represents the interpretation of a variant according to
+          the American College of Medical Genetics (ACMG) variant interpretation
+          guidelines.
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="acmg">Acmg pathogenicity classification *</label>
+          <p-dropdown
+            id="acmg"
+            appendTo="body"
+            placeholder="Select Acmg pathogenicity"
+            [ngModel]="variantInterpretation?.acmgPathogenicityClassification"
+            [options]="acmgClassifications"
+            required
+            scrollHeight="18rem"
+            (onChange)="updateAcmgPathogenicity($event)"
+            class="w-full"
+            [ngClass]="{
+              'ng-dirty':
+                !variantInterpretation?.acmgPathogenicityClassification &&
+                submitted
+            }"
+          ></p-dropdown>
+          <small
+            *ngIf="
+              !variantInterpretation?.acmgPathogenicityClassification &&
+              submitted
+            "
+            class="p-error"
+            >Acmg pathogenicity is required.</small
+          >
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12 md:col-6">
+          <label for="therapeutic">Therapeutic actionability *</label>
+          <p-dropdown
+            id="therapeutic"
+            appendTo="body"
+            placeholder="Select Therapeutic actionability"
+            [ngModel]="variantInterpretation?.therapeuticActionability"
+            [options]="therapeuticActionabilities"
+            required
+            (onChange)="updateTherapeuticActionability($event)"
+            class="w-full"
+            [ngClass]="{
+              'ng-dirty':
+                !variantInterpretation?.therapeuticActionability && submitted
+            }"
+          ></p-dropdown>
+          <small
+            *ngIf="
+              !variantInterpretation?.therapeuticActionability && submitted
+            "
+            class="p-error"
+            >Therapeutic actionability is required.</small
+          >
+        </div>
+        <div *ngIf="variantInterpretation" class="field col-12">
+          <app-variation-descriptor
+            [variationDescriptor]="variantInterpretation?.variationDescriptor"
+            [profile]="profile"
+            [submitted]="submitted"
+            (variationDescriptorChange)="updateVariationDescriptor($event)"
+          ></app-variation-descriptor>
+        </div>
+        <!-- We display the gene descriptor only in edit mode, not in the stepper process -->
+        <div
+          *ngIf="variantInterpretation && profile === undefined"
+          class="field col-12"
+        >
+          <p-accordion>
+            <p-accordionTab header="Gene descriptor">
+              <app-gene-descriptor
+                [geneDescriptor]="
+                  variantInterpretation?.variationDescriptor?.geneContext
+                "
+                (geneDescriptorChange)="updateGeneDescriptor($event)"
+              ></app-gene-descriptor>
+            </p-accordionTab>
+          </p-accordion>
+        </div>
+      </div>
+    </div>
+  </as-split-area>
+</as-split>

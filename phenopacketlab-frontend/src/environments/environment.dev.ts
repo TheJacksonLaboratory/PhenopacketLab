@@ -28,6 +28,7 @@ export const environment = {
   HPO_DISEASE_URL: `${API_URL}/diseases`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
+  ALLELIC_STATE_SHORT_URL: `${API_URL}/constants/allelic-states`,
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
   STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
   USER_URL: `${API_URL}/user`,

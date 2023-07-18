@@ -1,0 +1,219 @@
+<p-toast position="center" key="cen"></p-toast>
+<p-card>
+  <div class="grid p-fluid">
+    <div class="field col-12">
+      This element represents an identifier for a gene, using the Gene
+      Descriptor from the VRSATILE Framework. Gene Descriptors can be used to
+      transmit the information that the gene is thought to play a causative role
+      in the disease phenotypes being described in cases where the exact variant
+      cannot be transmitted, either for privacy reasons or because it is
+      unknown.
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="valueid">Value ID</label>
+      <input
+        id="valueid"
+        type="text"
+        aria-describedby="Value ID"
+        pInputText
+        pTooltip="Official identifier of the gene. REQUIRED."
+        tooltipPosition="bottom"
+        [ngModel]="geneDescriptor?.valueId"
+        (ngModelChange)="onValueIdChange($event)"
+      />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="symbol">Symbol</label>
+      <input
+        id="symbol"
+        type="text"
+        aria-describedby="Symbol"
+        pInputText
+        pTooltip="Official gene symbol. REQUIRED."
+        tooltipPosition="bottom"
+        [ngModel]="geneDescriptor?.symbol"
+        (ngModelChange)="onSymbolChange($event)"
+      />
+    </div>
+    <div class="col-12">
+      <label for="description">Description</label>
+      <textarea
+        pInputTextarea
+        id="description"
+        pTooltip="A free-text description of the gene"
+        tooltipPosition="bottom"
+        rows="1"
+        cols="20"
+        [ngModel]="geneDescriptor?.description"
+        (ngModelChange)="onDescriptionChange($event)"
+        [autoResize]="true"
+      ></textarea>
+    </div>
+
+    <div class="field col-12 md:col-4">
+      <p-table
+        [value]="alternateIds"
+        [autoLayout]="true"
+        [resizableColumns]="true"
+        dataKey="key"
+        pTooltip="Alternative identifier(s) of the gene"
+        tooltipPosition="bottom"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            Alternate IDs
+            <p-button
+              icon="pi pi-plus"
+              pTooltip="Add new alternate ID"
+              tooltipPosition="bottom"
+              (onClick)="openNewAlternateId()"
+            ></p-button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-id let-editing="editing">
+          <tr>
+            <td
+              pTooltip="Click on cell to edit"
+              [pEditableColumn]="id?.value"
+              pEditableColumnField="value"
+            >
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="id.value" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ id.value }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-text p-button-warning"
+                (click)="deleteAlternateId(id)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="field col-12 md:col-4">
+      <p-table
+        [value]="xrefs"
+        [autoLayout]="true"
+        [resizableColumns]="true"
+        dataKey="key"
+        pTooltip="Related concept IDs (e.g. gene ortholog IDs) may be placed in xrefs"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            XRefs
+            <p-button
+              icon="pi pi-plus"
+              pTooltip="Add new XRef"
+              tooltipPosition="bottom"
+              (onClick)="openNewXRef()"
+            ></p-button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-xref let-editing="editing">
+          <tr>
+            <td
+              pTooltip="Click on cell to edit"
+              [pEditableColumn]="xref?.value"
+              pEditableColumnField="value"
+            >
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="xref.value" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ xref.value }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-text p-button-warning"
+                (click)="deleteXref(xref)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="field col-12 md:col-4">
+      <p-table
+        [value]="alternateSymbols"
+        [autoLayout]="true"
+        [resizableColumns]="true"
+        dataKey="key"
+        pTooltip="Alternative symbol(s) of the gene"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            Alternate symbols
+            <p-button
+              icon="pi pi-plus"
+              pTooltip="Add new alternate symbol"
+              tooltipPosition="bottom"
+              (onClick)="openNewAlternateSymbol()"
+            ></p-button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Value</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-symbol let-editing="editing">
+          <tr>
+            <td
+              pTooltip="Click on cell to edit"
+              [pEditableColumn]="symbol?.value"
+              pEditableColumnField="value"
+            >
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="symbol.value" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ symbol.value }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <button
+                pButton
+                pRipple
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-text p-button-warning"
+                (click)="deleteAlternateSymbol(symbol)"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</p-card>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

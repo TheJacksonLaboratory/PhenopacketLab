@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { GenomicInterpretation, Interpretation } from 'src/app/models/interpretation';
-import { InterpretationDetailDialogComponent } from './interpretation-detail-dialog/interpretation-detail-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 
@@ -52,26 +51,26 @@ export class InterpretationDetailComponent implements OnInit {
         }
     }
 
-    openEditDialog() {
-        this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
-            header: 'Edit Interpretation',
-            width: '70%',
-            contentStyle: { 'overflow': 'auto' },
-            baseZIndex: 10000,
-            resizable: true,
-            draggable: true,
-            data: { interpretation: this.interpretation }
-        });
+    // openEditDialog() {
+    //     this.ref = this.dialogService.open(InterpretationDetailDialogComponent, {
+    //         header: 'Enter Interpretation',
+    //         width: '70%',
+    //         contentStyle: { 'overflow': 'auto' },
+    //         baseZIndex: 10000,
+    //         resizable: true,
+    //         draggable: true,
+    //         data: { interpretation: this.interpretation }
+    //     });
 
-        this.ref.onClose.subscribe((interpretation: Interpretation) => {
-            if (interpretation) {
-                this.interpretation = interpretation;
-                this.updateInterpretation();
-                // emit change
-                this.onInterpretationChanged.emit(this.interpretation);
-            }
-        });
-    }
+    //     this.ref.onClose.subscribe((interpretation: Interpretation) => {
+    //         if (interpretation) {
+    //             this.interpretation = interpretation;
+    //             this.updateInterpretation();
+    //             // emit change
+    //             this.onInterpretationChanged.emit(this.interpretation);
+    //         }
+    //     });
+    // }
 
     /**
      * Add a new interpretation(genomic) with default values or no values

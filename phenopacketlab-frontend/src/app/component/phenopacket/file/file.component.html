@@ -1,86 +1,95 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="add-button-container">
-            <button mat-raised-button (click)="addFile()" class="add-button mat-elevation-z2">
-                Add File
-            </button>
+<div class="flex">
+  <div class="flex-initial flex align-items-center justify-content-center">
+    <button
+      pButton
+      icon="pi pi-plus"
+      label="Add file"
+      class="p-button-outlined mb-2"
+      (click)="addFile()"
+    ></button>
+  </div>
+</div>
+
+<p-table *ngIf="files?.length > 0" [value]="files" dataKey="key" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th></th>
+      <th>URI</th>
+      <th>Description</th>
+      <th>ID mappings</th>
+      <th>Attributes</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-file let-expanded="expanded">
+    <tr>
+      <td>
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="file"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td>{{ file.uri }}</td>
+      <td><span *ngIf="file.fileAttributes">{{ file.fileAttributes["description"] }}</span></td>
+      <td>
+        <div class="card flex align-items-center gap-2 flex-wrap">
+          <span *ngFor="let item of file.individualToFileIdentifiers | keyvalue">
+            <p-chip [label]="getKeyValueLabel(item)"></p-chip>
+          </span>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <!-- Table summary of individuals -->
-        <table mat-table *ngIf="datasource.isDataPresent() | async" class="table-hover mat-elevation-z2" [dataSource]="datasource"
-            multiTemplateDataRows>
-            <ng-container matColumnDef="uri">
-                <th mat-header-cell *matHeaderCellDef> URI </th>
-                <td mat-cell *matCellDef="let element"> {{element.uri}} </td>
-            </ng-container>
+      </td>
+      <td>
+        <div class="card flex align-items-center gap-2 flex-wrap">
+          <span *ngFor="let attribute of file.fileAttributes | keyvalue">
+            <span *ngIf="attribute.key !== 'description'">
+              <p-chip
+              [label]="getKeyValueLabel(attribute)"
+              [styleClass]="getColor(attribute)"
+            ></p-chip>
+            </span>
+            
+          </span>
+        </div>
+      </td>
 
-            <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Description </th>
-                <td mat-cell *matCellDef="let element"> {{element.fileAttribute.get('description')}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="mapping">
-                <th mat-header-cell *matHeaderCellDef> ID mappings </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-chip-list>
-                        <span *ngFor="let key of getMappingKeys(element)">
-                            <mat-chip>{{getMapping(element, key)}}</mat-chip>
-                        </span>
-                    </mat-chip-list>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="attribute">
-                <th mat-header-cell *matHeaderCellDef> Attributes </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-chip-list>
-                        <span *ngFor="let key of getAttributeKeys(element)">
-                            <mat-chip selected [color]="getColor(key)">{{getAttribute(element, key)}}</mat-chip>
-                        </span>
-                    </mat-chip-list>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="remove">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <button (click)="$event.stopPropagation()" mat-icon-button type="submit" class="pull-right"
-                        matTooltip="Remove file" [matTooltipShowDelay]="2000" (click)="removeFile(element)">
-                        <mat-icon matSuffix>delete</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <!-- <tr mat-row (click)="openTab(element)" *matRowDef="let element; columns: displayedColumns;"
-                                class="example-element-row" matTooltip="Click to open in new tab">
-                            </tr> -->
-
-            <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
-            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr> -->
-
-            <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                    <div *ngIf="element === expandedElement" class="example-element-detail"
-                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                        <div style="width: 100%">
-                            <br>
-                            <app-file-detail [file]="element" (onFileChanged)="changeFile($event, element)">
-                            </app-file-detail>
-                        </div>
-                    </div>
-                </td>
-            </ng-container>
-
-            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
-                [class.example-expanded-row]="expandedElement === element" (click)="expandCollapse(element)">
-            </tr>
-
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        </table>
-
-    </div>
-</div>
+      <td>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-text"
+          (click)="editFile(file)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-text p-button-warning"
+          (click)="removeFile(file)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-file>
+    <tr>
+      <td colspan="6">
+        <div class="p-3">
+          <app-file-detail
+            [file]="file"
+          >
+          </app-file-detail>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="6">No file to display.</td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-confirmDialog header="Confirmation"></p-confirmDialog>

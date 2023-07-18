@@ -1,31 +1,24 @@
-<p-chips
+<p-chips *ngIf="selectedNodes?.length > 0"
   ngDefaultControl
   [max]="selectedNodes?.length || 0"
   [(ngModel)]="selectedNodes"
   [allowDuplicate]="false"
   [addOnTab]="true"
   [addOnBlur]="true"
-  [disabled]="false"
-  [showClear]="true"
-
+  [disabled]="true"
   ><ng-template let-item pTemplate="item">
     {{ item?.label }}
   </ng-template>
 </p-chips>
 <p-tree
   ngDefaultControl
-  [(selection)]="selectedNodes"
   [value]="nodes"
   placeholder="Select Item"
   [filter]="true"
   filterBy="label,key"
-  [selectionMode]="selectionMode"
-  [propagateSelectionDown]="false"
-  [propagateSelectionUp]="false"
-  (onNodeSelect)="nodeSelect($event)"
-  (onNodeUnselect)="nodeUnselect($event)"
+  [(selection)]="selectedNodes"
 >
-  <div *ngIf="selectionMode === 'tricheckbox'">
+  <!-- <div *ngIf="selectionMode === 'tricheckbox'">
     <ng-template let-node pTemplate="default">
       <p-triStateCheckbox
         (onChange)="nodeSelectionChange(node)"
@@ -34,8 +27,10 @@
 
       [{{ node.key }}] {{ node.label }}
     </ng-template>
-  </div>
+  </div> -->
   <ng-template let-node pTemplate="default">
+    <p-checkbox *ngIf="node.leaf === true" [(ngModel)]="node.isSelected" (onChange)="selectionChange($event.checked, node)" [binary]="true">
+          </p-checkbox>
     <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom">[{{ node.key }}] {{ node.label }}</span>
   </ng-template>
 </p-tree>

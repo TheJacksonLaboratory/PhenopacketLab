@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Utils } from '../component/shared/utils';
 import { OntologyClass } from './base';
-import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeContext, VariantInterpretation,
+import { AcmgPathogenicityClassification, Expression, GeneDescriptor, MoleculeContext, TherapeuticActionability, VariantInterpretation,
     VariationDescriptor, VcfRecord } from './interpretation';
 
 export class VariantMetadata {
@@ -34,10 +34,9 @@ export class VariantMetadata {
      * Transform this Variant object into a "variantInterpretation" message of the GA4GH Phenopacket schema
      * @param assembly build assembly used to make the variant search
      * @param acmg can be 'benign', 'likely benign', 'uncertain significance', 'likely pathogenic', 'pathogenic'
-     * @param genotype can be 'heterozygous', 'homozygous' or 'hemizygous'
      * @return
      */
-    public toVariantInterpretation(assembly: string, acmg: string, genotype: string): VariantInterpretation {
+    public toVariantInterpretation(assembly: string, acmg: string): VariantInterpretation {
         const vDescriptor = new VariationDescriptor();
         const geneDescriptor = new GeneDescriptor();
         if (this.hgncId !== undefined && this.geneSymbol !== undefined) {
@@ -70,7 +69,6 @@ export class VariantMetadata {
             vDescriptor.expressions.push(gHgvsExpression);
         }
         vDescriptor.moleculeContext = MoleculeContext.genomic;
-        this.genotype = genotype;
         if (this.genotype != null) {
             if (this.genotype === 'heterozygous') {
                 vDescriptor.allelicState = new OntologyClass('GENO:0000135', 'heterozygous');
@@ -83,7 +81,7 @@ export class VariantMetadata {
             }
         }
         const vInterpretation = new VariantInterpretation();
-        if (acmg != null) {
+        if (acmg !== undefined) {
             if (acmg.toLowerCase() === 'benign') {
                 vInterpretation.acmgPathogenicityClassification = AcmgPathogenicityClassification.BENIGN;
             } else if (acmg.toLowerCase() === 'likely benign') {
@@ -95,7 +93,10 @@ export class VariantMetadata {
             } else if (acmg.toLowerCase() === 'pathogenic') {
                 vInterpretation.acmgPathogenicityClassification = AcmgPathogenicityClassification.PATHOGENIC;
             }
+        } else {
+            vInterpretation.acmgPathogenicityClassification = AcmgPathogenicityClassification.NOT_PROVIDED;
         }
+        vInterpretation.therapeuticActionability = TherapeuticActionability.UNKNOWN_ACTIONABILITY;
         const vcfRecord = new VcfRecord();
         vcfRecord.genomeAssembly = assembly;
         vcfRecord.chrom = this.chr;

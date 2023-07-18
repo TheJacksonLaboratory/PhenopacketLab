@@ -1,0 +1,279 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <div class="field col-6">
+    <form
+      [formGroup]="fileFormGroup"
+      (ngSubmit)="onOkClick(fileFormGroup.value)"
+    >
+      <label for="uri"><b>URI *</b></label>
+      <input
+        id="uri"
+        type="text"
+        formControlName="uriForm"
+        placeholder="e.g. file://some/path/file.txt or http://somesite.com/somefile"
+        required
+        pInputText
+        [(ngModel)]="uri"
+      />
+      <p-message
+        severity="error"
+        text="A well-formed URI is required"
+        *ngIf="
+          !fileFormGroup.controls['uriForm'].valid &&
+          fileFormGroup.controls['uriForm'].dirty
+        "
+      ></p-message>
+    </form>
+  </div>
+
+  <!-- IndividualToIdentifier table -->
+  <div class="field col-12">
+    <div class="flex">
+      <div class="flex-initial flex align-items-center justify-content-center">
+        <button
+          pButton
+          icon="pi pi-plus"
+          label="Add Individual to File ID entry"
+          class="p-button-outlined mb-2"
+          (click)="addIndividualToFileMapping()"
+        ></button>
+      </div>
+    </div>
+
+    <p-table
+      *ngIf="mappings?.length > 0"
+      [value]="mappings"
+      dataKey="key"
+      editMode="row"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption">
+        <!-- Display add button if not in stepper or if no expression is present -->
+        <div class="flex align-items-center justify-content-between">
+          Individual to file identifier
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Individual ID</th>
+          <th>File Identifier</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-indiv
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="indiv">
+          <td>{{ indiv.subjectId }}
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="indiv.fileId"
+                  required
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ indiv.fileId }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing"
+                pButton
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onIndividualToIdentifierEditInit(indiv)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onIndividualToIdentifierEditSave(indiv)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onIndividualToIdentifierEditCancel(indiv, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+
+          <td>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteIndividualToIdentifier(indiv)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Attributes table -->
+  <div class="field col-12">
+    <div class="grid">
+      <div class="field col-12">
+        <div class="flex">
+          <div
+            class="flex-initial flex align-items-center justify-content-center mr-2"
+          >
+            <button
+              pButton
+              icon="pi pi-plus"
+              label="Add file attributes"
+              pTooltip="Add 'fileFormat', 'description' and 'genomeAssembly' attributes"
+              tooltipPosition="bottom"
+              class="p-button-outlined mb-2"
+              (click)="addFileAttributes()"
+            ></button>
+          </div>
+          <div
+            class="flex-initial flex align-items-center justify-content-center mr-2"
+          >
+            <button
+              pButton
+              icon="pi pi-plus"
+              pTooltip="Add a new attribute"
+              tooltipPosition="bottom"
+              label="Add attribute"
+              class="p-button-outlined mb-2"
+              (click)="addAttribute()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-table
+      *ngIf="attributes?.length > 0"
+      [value]="attributes"
+      dataKey="key"
+      editMode="row"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption">
+        <!-- Display add button if not in stepper or if no expression is present -->
+        <div class="flex align-items-center justify-content-between">
+          File attributes
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-attrib
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="attrib">
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="attrib.label" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ attrib.label }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="attrib.value"
+                  required
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ attrib.value }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing"
+                pButton
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onAttributeEditInit(attrib)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onAttributeEditSave(attrib)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onAttributeEditCancel(attrib, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+
+          <td>
+            <button
+              pButton
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteAttribute(attrib)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!-- </div> -->
+  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    type="button"
+    [label]="okLabel"
+    (click)="onOkClick()"
+  ></button>
+</div>

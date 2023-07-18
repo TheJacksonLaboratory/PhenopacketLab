@@ -3,6 +3,7 @@ import { SharedModule } from 'src/app/component/shared/shared.module';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 
 import { PhenotypicDetailComponent } from './phenotypic-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('PhenotypicDetailComponent', () => {
@@ -12,7 +13,10 @@ describe('PhenotypicDetailComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PhenotypicDetailComponent ],
-      imports: [ SharedModule ]
+      imports: [
+        SharedModule,
+        BrowserAnimationsModule
+       ]
     })
     .compileComponents();
   }));

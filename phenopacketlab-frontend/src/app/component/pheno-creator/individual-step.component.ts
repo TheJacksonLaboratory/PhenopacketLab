@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+
 import { Individual } from 'src/app/models/individual';
 import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
@@ -49,6 +51,9 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
             this.isPrivateInfoWarnSelected = this.phenopacket.subject.isPrivateInfoWarnSelected;
         }
 
+        // Initialize the phenopacket
+        this.phenopacketService.phenopacket = this.phenopacket;
+
     }
 
     ngOnDestroy() {
@@ -57,6 +62,12 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
+        }
+    }
+
+    generateNewID() {
+        if (this.phenopacket) {
+            this.phenopacket.id = uuidv4();
         }
     }
 

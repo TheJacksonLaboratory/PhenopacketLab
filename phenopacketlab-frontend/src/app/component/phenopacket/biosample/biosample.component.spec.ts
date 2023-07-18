@@ -1,8 +1,9 @@
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BiosampleComponent } from './biosample.component';
+import { DialogService } from 'primeng/dynamicdialog';
+import { SharedModule } from '../../shared/shared.module';
 
 
 describe('BiosampleComponent', () => {
@@ -15,10 +16,10 @@ describe('BiosampleComponent', () => {
       imports: [
         BrowserModule,
         HttpClientModule,
-        MatDialogModule
+        SharedModule
       ],
       providers: [
-        HttpClient
+        DialogService
       ]
     })
     .compileComponents();

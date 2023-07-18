@@ -31,30 +31,27 @@
   ></app-gestational-age>
 </div>
 
-<div
-  *ngIf="useOntologyClass && selectedAgeType === ontologyClassType"
->
+<div *ngIf="useOntologyClass && selectedAgeType === ontologyClassType">
   <app-ontology-time
     (ontologyClassChange)="updateTimeElement($event)"
     [ontologyClass]="ontologyClass"
     [timeElementId]="timeElementId"
     [ontologyNodes]="ontologyNodes"
-
   ></app-ontology-time>
-  <!-- <p-treeSelect
-    id="ontologyClass"
-    appendTo="body"
-    [(ngModel)]="selectedOntologyClass"
-    [options]="ontologyNodes"
-    (onNodeSelect)="updateOntologyClass($event)"
-    [metaKeySelection]="false"
-    placeholder="Select item"
-    [filter]="true"
-    [filterInputAutoFocus]="true"
-  ></p-treeSelect> -->
 </div>
 <div *ngIf="selectedAgeType === timestampType">
-  <label for="timestamp">Timestamp</label>
-  <input pInputText id="timestamp" type="text" placeholder="YYYY-MM-DDTHH:mm:ss. sssZ" [ngModel]="timestamp" (ngModelChange)="updateTimeElement($event)"/>
-  <!-- <p-inputMask id="timestamp" mask="YYYY-MM-DDTHH:mm:ss. sssZ" [(ngModel)]="timestamp" placeholder="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (onInput)="updateTimeElement($event)"></p-inputMask> -->
+  <div class="grid p-fluid mt-2">
+    <div class="field col-12">
+      <label for="timestamp">Timestamp</label>
+      <input
+        pInputText
+        id="timestamp"
+        type="text"
+        placeholder="YYYY-MM-DDTHH:mm:ss. sssZ"
+        [ngModel]="timestamp"
+        (ngModelChange)="updateTimeElement($event)"
+      />
+      <!-- <p-inputMask id="timestamp" mask="YYYY-MM-DDTHH:mm:ss. sssZ" [(ngModel)]="timestamp" placeholder="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" (onInput)="updateTimeElement($event)"></p-inputMask> -->
+    </div>
+  </div>
 </div>

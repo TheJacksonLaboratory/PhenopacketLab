@@ -6,7 +6,6 @@ import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
   templateUrl: './phenotypic-detail.component.html',
   styleUrls: ['./phenotypic-detail.component.scss']
 })
-
 export class PhenotypicDetailComponent implements OnInit {
 
   @Input()

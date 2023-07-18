@@ -15,22 +15,26 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
 import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
-import { DiseaseEditComponent } from './edit/disease-edit/disease-edit.component';
-import { PhenotypicFeatureEditComponent } from './edit/phenotypic-feature-edit/phenotypic-feature-edit.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
 import { OntologyTimeComponent } from './time-element/ontology-time/ontology-time.component';
-import { VariantInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variant-interpretation.component';
-import { InterpretationEditComponent } from './edit/interpretation-edit/interpretation-edit.component';
-import { GenomicInterpretationComponent } from './edit/interpretation-edit/genomic-interpretation/genomic-interpretation.component';
-import { VariationDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
-import { GeneDescriptorComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/gene-descriptor.component';
-import { VariationSearchComponent } from './edit/interpretation-edit/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
-import { LabelCreatorDialogComponent } from './edit/interpretation-edit/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
+import { VariantInterpretationComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variant-interpretation.component';
+import { GenomicInterpretationDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/genomic-interpretation-dialog.component';
+import { VariationDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
+import { GeneDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/gene-descriptor.component';
+import { VariationSearchComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
+import { LabelCreatorDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
 import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
+import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
+import { PhenotypicFeatureSearchDialogComponent } from './dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
+import { TextMiningComponent } from './text-mining/text-mining.component';
+import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
+import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.component';
+import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
+import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
 
 
 @NgModule({
@@ -55,19 +59,23 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent,
-    PhenotypicFeatureEditComponent,
+    DiseaseDialogComponent,
+    DiseaseSearchDialogComponent,
+    PhenotypicFeatureDialogComponent,
+    PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,
-    InterpretationEditComponent,
+    InterpretationDialogComponent,
     VariantInterpretationComponent,
-    GenomicInterpretationComponent,
+    GenomicInterpretationDialogComponent,
     VariationDescriptorComponent,
     VariationSearchComponent,
     GeneDescriptorComponent,
     LabelCreatorDialogComponent,
     TextPipe,
     MedicalActionEditComponent,
-    ValidationResultsDialogComponent
+    ValidationResultsDialogComponent,
+    TextMiningComponent,
+    FileDialogComponent
   ],
   exports: [
     MessageDialogComponent,
@@ -82,12 +90,14 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
     TreeSelectComponent,
     OntologyClassComponent,
     TreeSearchComponent,
-    DiseaseEditComponent,
-    PhenotypicFeatureEditComponent,
+    DiseaseDialogComponent,
+    DiseaseSearchDialogComponent,
+    PhenotypicFeatureDialogComponent,
+    PhenotypicFeatureSearchDialogComponent,
     IndividualEditComponent,
-    InterpretationEditComponent,
+    InterpretationDialogComponent,
     VariantInterpretationComponent,
-    GenomicInterpretationComponent,
+    GenomicInterpretationDialogComponent,
     VariationDescriptorComponent,
     GeneDescriptorComponent,
     VariationSearchComponent,
@@ -97,7 +107,9 @@ import { ValidationResultsDialogComponent } from './validation-results-dialog/va
     AngularSplitModule,
     TextPipe,
     MedicalActionEditComponent,
-    ValidationResultsDialogComponent
+    ValidationResultsDialogComponent,
+    TextMiningComponent,
+    FileDialogComponent
   ]
 })
 export class SharedModule { }

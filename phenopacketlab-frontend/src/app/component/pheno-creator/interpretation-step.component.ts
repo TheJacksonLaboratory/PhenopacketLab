@@ -7,10 +7,12 @@ import { Subscription } from 'rxjs';
 import { Interpretation } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { InterpretationService } from 'src/app/services/interpretation.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InterpretationDialogComponent } from '../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { Utils } from '../shared/utils';
+import { DialogMode } from 'src/app/models/base';
 
 @Component({
     providers: [ConfirmationService],
@@ -34,10 +36,13 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
 
+    ref: DynamicDialogRef;
+
+
     constructor(public searchService: InterpretationService,
         public phenopacketService: PhenopacketService,
-        public diseaseService: DiseaseSearchService,
         private confirmationService: ConfirmationService,
+        private dialogService: DialogService,
         private messageService: MessageService,
         private router: Router, public dialog: MatDialog,
         private primengConfig: PrimeNGConfig) {
@@ -78,26 +83,68 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         }
     }
 
-    /**
-     * Adds a new Interpretation.
-     **/
-    addInterpretation(interpretation?: Interpretation) {
-        if (interpretation === undefined) {
-            return;
-        }
-        // set unique key for feature table
-        interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
-        this.interpretations.push(interpretation);
-        // we copy the array after each update so the ngChange method is triggered on the child component
-        this.interpretations = this.interpretations.slice();
-        setTimeout(() => this.visible = true, 0);
-
-        this.phenopacket.interpretations = this.interpretations;
-        this.submitted = true;
-        // make table visible
-        this.visible = true;
+    addInterpretation() {
+        const interpretation = new Interpretation();
+        this.ref = this.dialogService.open(InterpretationDialogComponent, {
+            header: 'Add Interpretation',
+            width: '70%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            modal: true,
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                profile: this.profileSelection,
+                mode: DialogMode.ADD
+            }
+        });
+        this.ref.onClose.subscribe((interpret: Interpretation) => {
+            this.updateInterpretation(interpret);
+        });
     }
 
+    editInterpretation(interpretation: Interpretation) {
+        this.ref = this.dialogService.open(InterpretationDialogComponent, {
+            header: 'Edit Interpretation',
+            width: '70%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            modal: true,
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                profile: this.profileSelection,
+                mode: DialogMode.EDIT
+            }
+        });
+        this.ref.onClose.subscribe((interpret: Interpretation) => {
+            this.updateInterpretation(interpret);
+        });
+    }
+
+    updateInterpretation(interpretation: Interpretation) {
+        if (interpretation) {
+            if (this.interpretations === undefined) {
+                this.interpretations = [];
+            }
+            const indexToUpdate = this.interpretations.findIndex(item => item.id === interpretation.id);
+            interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
+            if (indexToUpdate === -1) {
+                this.interpretations.push(interpretation);
+            } else {
+                this.interpretations[indexToUpdate] = interpretation;
+                this.interpretations = Object.assign([], this.interpretations);
+            }
+            // this.showTable = true;
+            // emit change
+            this.phenopacket.interpretations = this.interpretations;
+            this.submitted = true;
+        }
+    }
     deleteInterpretation(interpretation: Interpretation) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete \'' + interpretation.id + '\'?',
@@ -116,21 +163,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
                 this.confirmationService.close();
             }
         });
-    }
-
-    updateInterpretation(interpretation) {
-        if (this.interpretations === undefined) {
-            this.interpretations = [];
-        }
-        this.interpretations.push(interpretation);
-    }
-
-    /**
-     * Called when a row is selected in the left side table
-     * @param event
-     */
-    onRowSelect(event) {
-        this.selectedInterpretation = event.data;
     }
 
     nextPage() {

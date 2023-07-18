@@ -4,6 +4,7 @@ import { Disease } from 'src/app/models/disease';
 
 import { DiseaseDetailComponent } from './disease-detail.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DiseaseDetailComponent', () => {
   let component: DiseaseDetailComponent;
@@ -12,7 +13,10 @@ describe('DiseaseDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseDetailComponent ],
-      imports: [ SharedModule ],
+      imports: [
+        SharedModule,
+        BrowserAnimationsModule
+       ],
       providers: [
         DialogService
       ]

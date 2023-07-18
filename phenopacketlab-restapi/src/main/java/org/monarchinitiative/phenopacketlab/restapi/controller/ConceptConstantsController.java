@@ -40,7 +40,7 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
-    @GetMapping(value = "allelic_state", headers = "Accept=application/json")
+    @GetMapping(value = "allelic-states", headers = "Accept=application/json")
     public ResponseEntity<List<IdentifiedConcept>> getAllelicStateValues() {
         return ResponseEntity.ok(conceptConstantsService.allelicStateConstants());
     }

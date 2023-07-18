@@ -58,8 +58,7 @@ import { ValidateStepComponent } from './validate-step.component';
 import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
-import { TextMiningComponent } from './text-mining/text-mining.component';
-import { WordDialogComponent } from './text-mining/word-dialog.component';
+import { WordDialogComponent } from '../shared/text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
 
@@ -132,7 +131,6 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         MedicalActionStepComponent,
         FileStepComponent,
         ValidateStepComponent,
-        TextMiningComponent,
         WordDialogComponent,
         ProfileSelectionComponent
     ],

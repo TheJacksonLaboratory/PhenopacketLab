@@ -1,0 +1,90 @@
+<div class="grid p-fluid">
+  <div class="field col-12">
+    <app-search-box
+    [showHint]="false"
+    [itemName]="'Disease'"
+    [searchLabel]="'Disease'"
+    [placeHolderTxt]="'Enter a disease name'"
+    [searchType]="'disease'"
+    (selectedItemChange)="diseaseItemSelected($event)"
+  ></app-search-box>
+  </div>
+  <div class="field col-12">
+    <p-table
+      *ngIf="diseases?.length > 0"
+      [value]="diseases"
+      styleClass="p-datatable-sm"
+      [(selection)]="selectedDisease"
+      scrollDirection="horizontal"
+      responsiveLayout="scroll"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      dataKey="key"
+      selectionMode="single"
+    >
+      <ng-template pTemplate="caption">Diseases to add </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn>Label</th>
+          <th pResizableColumn>Status</th>
+          <th pResizableColumn>Onset</th>
+          <th pResizableColumn></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-disease>
+        <tr [pSelectableRow]="disease">
+          <td>{{ disease.term?.label }}</td>
+          <td>{{ disease.excluded ? "Excluded" : "Diagnosed" }}</td>
+          <td>
+            <span *ngIf="disease.onset?.ontologyClass"
+              ><a [href]="disease.onset.ontologyClass.termUrl" target="_blank"
+                >[{{ disease.onset.ontologyClass.id }}]</a
+              >
+              {{ disease.onset?.ontologyClass?.label }}</span
+            ><span *ngIf="!disease.onset?.ontologyClass">{{
+              disease.onset?.toString()
+            }}</span>
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editDisease(disease)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteDisease(disease)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="4">No disease to display.</td>
+        </tr>
+
+        <tr></tr
+      ></ng-template>
+    </p-table>
+  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Add disease(s)"
+    (click)="onOkClick()"
+  ></button>
+</div>

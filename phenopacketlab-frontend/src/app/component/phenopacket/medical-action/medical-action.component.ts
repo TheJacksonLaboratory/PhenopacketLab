@@ -37,7 +37,6 @@ export class MedicalActionComponent implements OnInit {
     ref: DynamicDialogRef;
 
     spinnerDialogRef: any;
-    showTable = false;
 
     constructor(public dialogService: DialogService, public messageService: MessageService,
         public confirmationService: ConfirmationService) {
@@ -50,7 +49,6 @@ export class MedicalActionComponent implements OnInit {
                 medicalAction.key = idx;
                 idx++;
             }
-            this.showTable = true;
         }
     }
 
@@ -80,7 +78,6 @@ export class MedicalActionComponent implements OnInit {
                     this.medicalActions[indexToUpdate] = medicAction;
                     this.medicalActions = Object.assign([], this.medicalActions);
                 }
-                this.showTable = true;
                 // emit change
                 this.onMedicalActionChanged.emit(this.medicalActions);
             }
@@ -99,9 +96,6 @@ export class MedicalActionComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.medicalActions = this.medicalActions.filter(val => val.key !== medicalAction.key);
-                if (this.medicalActions.length === 0) {
-                    this.showTable = false;
-                }
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medical action Deleted', life: 3000 });
             },
             reject: () => {

@@ -1,0 +1,130 @@
+<div class="grid p-fluid">
+  <div *ngIf="textSearchVisible" class="field col-12">
+    <br />
+    <label for="textmine">Submit text</label>
+    <textarea
+      id="textmine"
+      rows="5"
+      cols="30"
+      pInputTextarea
+      [placeholder]="exampleText"
+      [(ngModel)]="textSearch"
+    ></textarea>
+  </div>
+  <div *ngIf="textSearchVisible" class="field col-12 flex align-content-start flex-wrap">
+    <div class="flex align-items-center justify-content-center">
+      <button pButton type="button" label="Submit" (click)="submit()"></button>
+    </div>
+  </div>
+  <div *ngIf="!textSearchVisible" class="field col-12">
+    <h2>Review text mining results</h2>
+    <div [innerHTML]="formattedText | safeText"></div>
+  </div>
+
+  <div *ngIf="!textSearchVisible" class="field col-12">
+    <p-chips
+      [max]="textMinedFeatures?.length || 0"
+      [(ngModel)]="textMinedFeatures"
+      (onRemove)="onChipRemove($event)"
+    >
+      <ng-template let-featureName pTemplate="featureName">
+        <li class="p-chips-token" [style]="getStyleClass(featureName)">
+          {{ featureName }}
+        </li>
+      </ng-template>
+    </p-chips>
+  </div>
+
+  <div
+    *ngIf="!textSearchVisible"
+    class="field col-12 flex align-content-start flex-wrap"
+  >
+    <div class="flex align-items-center justify-content-center mr-2">
+      <button
+        pButton
+        type="button"
+        label="Start over"
+        (click)="startOver()"
+      ></button>
+    </div>
+    <div class="flex align-items-center justify-content-center mr-2">
+      <button
+        pButton
+        type="button"
+        label="Approve all"
+        (click)="approveAll()"
+      ></button>
+    </div>
+    <div class="flex align-items-center justify-content-center">
+      <button
+        pButton
+        type="button"
+        label="Reject all"
+        (click)="rejectAll()"
+      ></button>
+    </div>
+  </div>
+
+  <div *ngIf="!textSearchVisible" class="field col-12">
+    <label for="onset"><b>Age of onset: </b></label>
+    <div id="onset" class="grid">
+      <div *ngIf="!onsetApplied" class="field col-6">
+        <app-time-element
+          [timeElement]="onset"
+          [ontologyNodes]="onsetsNodes"
+          [useOntologyClass]="true"
+          (timeElementEvent)="updateAgeOnset($event)"
+          aria-labelledby="onset-label"
+        ></app-time-element>
+      </div>
+      <div *ngIf="!onsetApplied" class="field col-6 flex align-content-start flex-wrap">
+        <div class="flex align-items-center justify-content-center">
+          <button
+            pButton
+            [disabled]="onset === undefined || onset === null"
+            type="button"
+            label="Apply onset to all features"
+            (click)="applyOnset()"
+          ></button>
+        </div>
+      </div>
+      <div
+        *ngIf="onsetApplied"
+        class="field col-12 flex align-content-start flex-wrap"
+      >
+        <div class="flex align-items-center justify-content-center">
+          {{ onset?.toString() }}
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <button
+            *ngIf="onsetApplied"
+            pTooltip="Edit onset"
+            tooltipPosition="bottom"
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text"
+            (click)="editOnset()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!textSearchVisible"
+    class="field col-12 flex align-content-start flex-wrap"
+  >
+  <div class="flex align-items-center justify-content-center">
+      <button
+        pButton
+        type="button"
+        label="Add approved terms"
+        pTooltip="Add the approved terms to the list of features below."
+        tooltipPosition="bottom"
+        (click)="addApprovedTerms()"
+      ></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,504 @@
+<p-toast position="center" key="cen"></p-toast>
+<div class="grid p-fluid">
+  <!-- <div class="field col-12 md:col-6">
+    <label for="variationid">Variation ID</label>
+    <div class="p-inputgroup">
+      <input
+        id="variationid"
+        type="text"
+        aria-describedby="Variation ID"
+        pInputText
+        required
+        pTooltip="Descriptor ID; MUST be unique within document. REQUIRED."
+        tooltipPosition="bottom"
+        [ngModel]="variationDescriptor?.id"
+        (ngModelChange)="onIdChange($event)"
+        [ngClass]="{
+          'ng-dirty': !variationDescriptor?.id && submitted
+        }"
+      />
+
+      <button
+        pButton
+        icon="pi pi-replay"
+        label="Generate ID"
+        (click)="generateNewID()"
+      ></button>
+    </div>
+    <small *ngIf="!variationDescriptor?.id && submitted" class="p-error"
+      >Variation ID is required.</small
+    >
+  </div> -->
+  <div class="field col-12 md:col-6">
+    <label for="allelic">Allelic State</label>
+    <p-dropdown
+      *ngIf="profile"
+      id="allelic"
+      appendTo="body"
+      placeholder="Select genotype"
+      [ngModel]="variationDescriptor?.allelicState"
+      [options]="shortListAllelicStates"
+      (onChange)="updateAllelicState($event)"
+      pTooltip="The zygosity of the variant as determined in all of the samples represented in this Phenopacket is represented using a list of terms taken from the Genotype Ontology (GENO)."
+      tooltipPosition="bottom"
+      showDelay="2000"
+      [showClear]="true"
+      class="w-full"
+      ><ng-template let-item pTemplate="default">
+        <span>[{{ item.id }}] {{ item.label }}</span>
+      </ng-template>
+    </p-dropdown>
+    <p-treeSelect
+      *ngIf="profile === undefined"
+      ngDefaultControl
+      id="allelic"
+      appendTo="body"
+      pTooltip="The zygosity of the variant as determined in all of the samples represented in this Phenopacket is represented using a list of terms taken from the Genotype Ontology (GENO)."
+      tooltipPosition="bottom"
+      [ngModel]="variationDescriptor?.allelicState"
+      [options]="allelicStatesNodes"
+      (onNodeSelect)="updateAllelicState($event)"
+      [metaKeySelection]="false"
+      placeholder="Select term"
+      [filter]="true"
+      [filterInputAutoFocus]="true"
+      [showClear]="true"
+      (onClear)="updateAllelicState($event)"
+    >
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.key">[{{ node.key }}] {{ node.label }}</span>
+      </ng-template>
+    </p-treeSelect>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="label">Label</label>
+    <input
+      id="label"
+      type="text"
+      aria-describedby="Label"
+      pInputText
+      pTooltip="A primary label for the variation"
+      tooltipPosition="bottom"
+      [ngModel]="variationDescriptor?.label"
+      (ngModelChange)="onLabelChange($event)"
+    />
+  </div>
+  <div class="field col-12">
+    <label for="description">Description</label>
+    <input
+      id="description"
+      type="text"
+      pTooltip="A free-text description of the variation"
+      tooltipPosition="bottom"
+      pInputText
+      [ngModel]="variationDescriptor?.description"
+      (ngModelChange)="onDescriptionChange($event)"
+    />
+  </div>
+  <div class="field col-12">
+    <p-table
+      [value]="variationDescriptor?.expressions"
+      dataKey="key"
+      editMode="row"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="caption">
+        <!-- Display add button if not in stepper or if no expression is present -->
+        <div class="flex align-items-center justify-content-between">
+          Expressions
+          <p-button
+            *ngIf="
+              profile === undefined ||
+              variationDescriptor?.expressions?.length === 0
+            "
+            icon="pi pi-plus"
+            pTooltip="Add new expression"
+            tooltipPosition="bottom"
+            (onClick)="addExpression()"
+          ></p-button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            pTooltip="A name for the expression syntax. REQUIRED."
+            tooltipPosition="bottom"
+            style="width: 20%"
+          >
+            Syntax
+          </th>
+          <th
+            pTooltip="The concept expression as a string. REQUIRED."
+            tooltipPosition="bottom"
+            style="width: 40%"
+          >
+            Value
+          </th>
+          <!-- <th
+            pTooltip="An optional version of the expression syntax."
+            tooltipPosition="bottom"
+            style="width: 20%"
+          >
+            Version
+          </th> -->
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-expression
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="expression">
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text" [(ngModel)]="expression.syntax" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ expression.syntax }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="expression.value"
+                  required
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ expression.value }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <!-- <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="expression.version" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ expression.version }}
+              </ng-template>
+            </p-cellEditor>
+          </td> -->
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onExpressionEditInit(expression)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onExpressionEditSave(expression)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onExpressionEditCancel(expression, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+
+          <td>
+            <button
+              *ngIf="profile === undefined"
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-warning"
+              (click)="deleteExpression(expression)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="field col-12">
+    <p-table
+      [resizableColumns]="true"
+      [autoLayout]="true"
+      editMode="row"
+      styleClass="p-datatable-sm"
+      [value]="[variationDescriptor?.vcfRecord]"
+      dataKey="key"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          VCF Record
+          <p-button
+            *ngIf="!variationDescriptor?.vcfRecord"
+            icon="pi pi-plus"
+            pTooltip="Add new expression"
+            (onClick)="addVCFRecord()"
+          ></p-button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            pTooltip="Identifier for the genome assembly used to call the allele. REQUIRED."
+            tooltipPosition="bottom"
+          >
+            Assembly
+          </th>
+          <th
+            pTooltip="Chromosome or contig identifier. REQUIRED."
+            tooltipPosition="bottom"
+          >
+            Chr
+          </th>
+          <th
+            pTooltip="The reference position, with the 1st base having position 1. REQUIRED."
+            tooltipPosition="bottom"
+          >
+            Position
+          </th>
+          <th
+            pTooltip="Identifier: Semicolon-separated list of unique identifiers where available. If this is a dbSNP variant thers number(s) should be used."
+            tooltipPosition="bottom"
+          >
+            ID
+          </th>
+          <th pTooltip="Reference base. REQUIRED." tooltipPosition="bottom">
+            Ref
+          </th>
+          <th pTooltip="Alternate base. REQUIRED." tooltipPosition="bottom">
+            Alt
+          </th>
+          <th
+            pTooltip="Quality: Phred-scaled quality score for the assertion made in ALT."
+            tooltipPosition="bottom"
+          >
+            Qual
+          </th>
+          <th
+            pTooltip="Filter status: PASS if this position has passed all filters."
+            tooltipPosition="bottom"
+          >
+            Filter
+          </th>
+          <th
+            pTooltip="Additional information: Semicolon-separated series of additional information fields"
+            tooltipPosition="bottom"
+            style="width: 20%"
+          >
+            Info
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-vcfrecord let-editing="editing">
+        <tr [pEditableRow]="vcfrecord">
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="vcfrecord.genomeAssembly"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.genomeAssembly }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  type="text"
+                  [(ngModel)]="vcfrecord.chrom"
+                  required
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.chrom }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.pos" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.pos }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.id" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord?.id }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.ref" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.ref }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.alt" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.alt }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.qual" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.qual }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.filter" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.filter }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="vcfrecord.info" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ vcfrecord.info }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onVcfRecordEditInit(vcfrecord)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onVcfRecordEditSave()"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing && profile === undefined"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onVcfRecordEditCancel()"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="profile === undefined" class="field col-12 md:col-6">
+    <label for="molecular">Molecular Context</label>
+    <p-dropdown
+      id="molecular"
+      appendTo="body"
+      placeholder="Select Molecular context"
+      [ngModel]="variationDescriptor?.moleculeContext"
+      [options]="moleculeContexts"
+      (onChange)="updateMoleculeContext($event)"
+      [showClear]="true"
+    ></p-dropdown>
+  </div>
+
+  <!-- Display only if in edit mode and not in the stepper -->
+  <div *ngIf="profile === undefined" class="field col-12 md:col-6">
+    <label for="structural">Structural type</label>
+    <p-treeSelect
+      ngDefaultControl
+      id="structural"
+      appendTo="body"
+      [(ngModel)]="structuralTypeSelected"
+      [options]="structuralTypesNodes"
+      (onNodeSelect)="updateStructuralType($event)"
+      [metaKeySelection]="false"
+      placeholder="Select Structural type"
+      pTooltip="The structural variant type associated with this variant, such as a substitution, deletion, or fusion."
+      tooltipPosition="bottom"
+      [filter]="true"
+      [filterInputAutoFocus]="true"
+      [showClear]="true"
+      (onClear)="updateStructuralType($event)"
+    >
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.description"
+          >{{ node.label }} [{{ node.key }}]</span
+        >
+      </ng-template>
+    </p-treeSelect>
+  </div>
+  <div *ngIf="profile === undefined" class="field col-12 md:col-6">
+    <label for="refalseq">Ref Allele Sequence</label>
+    <input
+      id="refalseq"
+      type="text"
+      aria-describedby="Ref Allele Sequence"
+      pInputText
+      pTooltip="A Sequence corresponding to a “ref allele”, describing the sequence expected at a SequenceLocation reference."
+      tooltipPosition="bottom"
+      [ngModel]="variationDescriptor?.vrsRefAlleleSeq"
+      (ngModelChange)="onVrsRefAlleleSeqChange($event)"
+    />
+  </div>
+</div>

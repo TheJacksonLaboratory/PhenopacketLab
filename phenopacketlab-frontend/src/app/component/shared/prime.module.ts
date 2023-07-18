@@ -35,6 +35,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SpinnerModule } from 'primeng/spinner';
+import { ChipModule } from 'primeng/chip';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { SpinnerModule } from 'primeng/spinner';
     SpinnerModule,
     DialogModule,
     InputMaskModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChipModule
   ],
   exports: [
     ButtonModule,
@@ -110,7 +112,8 @@ import { SpinnerModule } from 'primeng/spinner';
     SpinnerModule,
     DialogModule,
     InputMaskModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChipModule
   ],
   providers: [MessageService, ConfirmationService]
 })

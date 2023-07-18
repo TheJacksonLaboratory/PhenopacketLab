@@ -1,39 +1,50 @@
-<div class="grid p-fluid">
-  <div *ngIf="showTable" class="field col-12">
-    <p-table
-      [value]="measurements"
-      styleClass="p-datatable-sm"
-      dataKey="key"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 5rem"></th>
-          <th pResizableColumn style="min-width: 2rem">Assay</th>
-          <th pResizableColumn>Value</th>
-          <th pResizableColumn>Procedure</th>
-          <th pResizableColumn>Time of measurement</th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-measurement let-expanded="expanded">
-        <tr>
-          <td>
-            <button
-              type="button"
-              pButton
-              pRipple
-              [pRowToggler]="measurement"
-              class="p-button-text p-button-rounded p-button-plain"
-              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-            ></button>
-          </td>
-          <td>{{ measurement.assay?.toString() }}</td>
-          <td>{{ getValue(measurement) }}</td>
-          <td>{{ measurement.procedure?.toString() }}</td>
-          <td>{{ measurement.timeObserved?.toString() }}</td>
-          <td>
-            <!-- TODO implement measurement edit dialog -->
-            <!-- <button
+<!-- TODO implement measurement edit dialog -->
+<!-- 
+  <div class="flex">
+  <div class="flex-initial flex align-items-center justify-content-center">
+  <button
+  pButton
+  label="Add measurement"
+  (click)="addMeasurement()"
+  pTooltip="Not implemented yet"
+  tooltipPosition="bottom"
+  icon="pi pi-plus"
+  class="p-button-outlined mb-2"
+></button> 
+  </div
+  </div>
+-->
+<span *ngIf="measurements?.length === 0 || !measurements">No measurement to display</span>
+<p-table *ngIf="measurements?.length > 0" [value]="measurements" styleClass="p-datatable-sm" dataKey="key">
+  <ng-template pTemplate="header">
+    <tr>
+      <th></th>
+      <th>Assay</th>
+      <th>Value</th>
+      <th>Procedure</th>
+      <th>Time of measurement</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-measurement let-expanded="expanded">
+    <tr>
+      <td>
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="measurement"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td>{{ measurement.assay?.toString() }}</td>
+      <td>{{ getValue(measurement) }}</td>
+      <td>{{ measurement.procedure?.toString() }}</td>
+      <td>{{ measurement.timeObserved?.toString() }}</td>
+      <td>
+        <!-- TODO implement measurement edit dialog -->
+        <!-- <button
               pButton
               pRipple
               icon="pi pi-pencil"
@@ -41,39 +52,31 @@
               class="p-button-rounded p-button-text"
               (click)="editMeasurement(measurement)"
             ></button> -->
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-text p-button-warning"
-              (click)="deleteMeasurement(measurement)"
-            ></button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="rowexpansion" let-measurement>
-        <tr>
-          <td colspan="6">
-            <div class="p-3">
-              <app-measurement-detail
-                [measurement]="measurement"
-              ></app-measurement-detail>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
-<!-- TODO implement measurement edit dialog -->
-<!-- <button
-  pButton
-  label="Add measurement"
-  (click)="addMeasurement()"
-  pTooltip="Not implemented yet"
-  tooltipPosition="bottom"
-  icon="pi pi-plus"
-  class="p-button-text"
-  style="width: 250px"
-></button> -->
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-text p-button-warning"
+          (click)="deleteMeasurement(measurement)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-measurement>
+    <tr>
+      <td colspan="6">
+        <div class="p-3">
+          <app-measurement-detail
+            [measurement]="measurement"
+          ></app-measurement-detail>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="6">No measurement to display.</td>
+    </tr>
+  </ng-template>
+</p-table>
 <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>

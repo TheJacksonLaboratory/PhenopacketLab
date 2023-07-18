@@ -1,6 +1,6 @@
 <div class="grid p-fluid">
   <div class="field col-12">
-    <label for="individualId"><b>Individual ID</b></label>
+    <label for="individualId"><b>Individual ID *</b></label>
     <input
       id="individualId"
       #id="ngModel"
@@ -9,33 +9,34 @@
       pInputText
       [(ngModel)]="subject.id"
       [ngClass]="{
-        'ng-dirty': (id?.invalid && submitted) || (id?.dirty && id?.invalid)
+        'ng-dirty': (id?.invalid) || (id?.dirty && id?.invalid)
       }"
     />
     <small
-      *ngIf="(id?.invalid && submitted) || (id?.dirty && id?.invalid)"
+      *ngIf="(id?.invalid) || (id?.dirty && id?.invalid)"
       class="p-error"
       >Individual ID is required.</small
     >
+    <div class="grid p-fluid mt-2">
+      <div class="field col-12">
+        <p-checkbox
+          label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
+          [binary]="true"
+          [(ngModel)]="isPrivateInfoWarnSelected"
+          labelStyleClass="label-active text-sm"
+          (onChange)="updateIsPrivateInfoWarnSelected()"
+          [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
+        ></p-checkbox>
+      </div>
+    </div>
   </div>
-  <div class="field col-12">
-    <p-checkbox
-      label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
-      [binary]="true"
-      [(ngModel)]="isPrivateInfoWarnSelected"
-      labelStyleClass="label-active text-sm"
-      (onChange)="updateIsPrivateInfoWarnSelected()"
-      [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
-    ></p-checkbox>
-  </div>
-  <br />
-
+  
   <!-- <div class="field col-12 md:col-6">
     <label for="alternateIds">Alternate IDs</label>
     <p-chips id="alternateIds" [(ngModel)]="subject.alternateIds"></p-chips>
   </div> -->
-  <div class="field col-12">
-    <label for="lastEncounterDate"><b>Age at last clinical encounter</b></label>
+  <div class="field col-12 md:col-4">
+    <label for="lastEncounterDate">Age at last clinical encounter</label>
     <app-time-element
       id="lastEncounterDate"
       [timeElement]="timeOfLastEncounter"
@@ -91,7 +92,6 @@
   </div>
   <div class="field col-12 md:col-4"></div>
 </div>
-<br />
 <h3><b>Vital Status</b></h3>
 <div class="grid p-fluid">
   <div class="field col-12 md:col-4">
@@ -113,45 +113,55 @@
   <div class="field col-12 md:col-4"></div>
   <div class="field col-12 md:col-4"></div>
 
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
-    <label for="survivalTime">Survival time (days)</label>
-    <div class="flex align-items-center gap-1">
-      <p-checkbox
-        id="useCalendar"
-        [(ngModel)]="useCalendar"
-        [binary]="true"
-      ></p-checkbox>
-      <label for="useCalendar">Use calendar range</label>
-    </div>
-
-    <div *ngIf="useCalendar" class="margintop">
-      <p-calendar
-        #rangecalendar
-        [(ngModel)]="rangeDates"
-        (onSelect)="updateSurvivalTime($event)"
-        selectionMode="range"
-        [readonlyInput]="true"
-        pTooltip="Select a range of days with the first day being the date of diagnosis and the second the day of death. The number of survival days will be automatically set given this range."
-        tooltipPosition="bottom"
-      ></p-calendar>
-    </div>
-    <div class="margintop">
-      <p-inputNumber
-        id="survivalTime"
-        [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
-        (onInput)="updateSurvivalTime($event)"
-        pTooltip="Number of days the patient was alive after their primary diagnosis"
-        tooltipPosition="bottom"
-      ></p-inputNumber>
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
+    <label for="survivalTime"
+      >Survival time (days)
+    </label>
+    <div id="survivalTime" class="grid p-fluid">
+      <div *ngIf="profile === undefined" class="field col-12 md:col-6">
+        <p-inputNumber
+          [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
+          (onInput)="updateSurvivalTime($event)"
+          pTooltip="Number of days the patient was alive after their primary diagnosis"
+          tooltipPosition="bottom"
+        ></p-inputNumber>
+      </div>
+      <div *ngIf="profile" class="field col-12">
+        <p-inputNumber
+          [ngModel]="subject?.vitalStatus?.survivalTimeInDays"
+          (onInput)="updateSurvivalTime($event)"
+          pTooltip="Number of days the patient was alive after their primary diagnosis"
+          tooltipPosition="bottom"
+        ></p-inputNumber>
+      </div>
+      <div *ngIf="profile === undefined" class="field col-12 md:col-6">
+        <div  class="flex align-items-center gap-1">
+          <p-checkbox
+            id="useCalendar"
+            [(ngModel)]="useCalendar"
+            [binary]="true"
+          ></p-checkbox>
+          <label for="useCalendar">Use calendar range</label>
+        </div>
+      </div>
+      <div
+        *ngIf="useCalendar && profile === undefined"
+        class="field col-12"
+      >
+        <p-calendar
+          #rangecalendar
+          [(ngModel)]="rangeDates"
+          (onSelect)="updateSurvivalTime($event)"
+          selectionMode="range"
+          [readonlyInput]="true"
+          pTooltip="Select a range of days with the first day being the date of diagnosis and the second the day of death. The number of survival days will be automatically set given this range."
+          tooltipPosition="bottom"
+          [showIcon]="true"
+        ></p-calendar>
+      </div>
     </div>
   </div>
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
     <label for="timeOfDeath">Time of death</label>
     <app-time-element
       id="timeOfDeath"
@@ -159,10 +169,7 @@
       (timeElementEvent)="updateTimeOfDeath($event)"
     ></app-time-element>
   </div>
-  <div
-    class="field col-12 md:col-4"
-    *ngIf="status === getDeceasedStatus()"
-  >
+  <div class="field col-12 md:col-4" *ngIf="status === getDeceasedStatus()">
     <label for="causeOfDeath">Cause of death</label>
     <p-dropdown
       id="causeOfDeath"
