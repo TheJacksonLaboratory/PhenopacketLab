@@ -86,10 +86,18 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
 
     private SearchIdentifiedConcept searchConcepts(String query, int max, List<String> prefixes) {
         List<IdentifiedConcept> allTerms = new ArrayList<>(findAllConceptsFromSelectedPrefixes(prefixes).toList());
-        // sort terms by id
-        allTerms.sort(Comparator.comparing(IdentifiedConcept::id));
+
+        // sort terms by length and name
+        allTerms.sort(Comparator.comparing(IdentifiedConcept::getName, this::termLengthComparator));
         // search for first 10 terms with given query
         List<IdentifiedConcept> foundTerms = allTerms.stream().filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(max).toList();
         return new SearchIdentifiedConcept(allTerms.size(), foundTerms);
+    }
+
+    private int termLengthComparator(String term1, String term2) {
+        if (term1.length() != term2.length()) {
+            return term1.length() - term2.length();
+        }
+        return term1.compareTo(term2);
     }
 }
