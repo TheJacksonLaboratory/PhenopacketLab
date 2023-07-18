@@ -7,8 +7,8 @@
   <div class="grid">
     <div class="field col-12"><b>URI:</b> {{ file?.uri }}</div>
     <div class="field col-12"><b>Description:</b> {{ description }}</div>
-    <div class="field col-6">
-      <p-table *ngIf="mappings?.length > 0" [value]="mappings" dataKey="key" styleClass="p-datatable-sm">
+    <div *ngIf="mappings?.length > 0" class="field col-6">
+      <p-table [value]="mappings" dataKey="key" styleClass="p-datatable-sm">
         <ng-template pTemplate="caption">
           <div class="table-header">Individual ID to File Identifier mapping</div>
         </ng-template>
@@ -32,8 +32,8 @@
       </p-table>
     </div>
 
-    <div class="field col-6">
-      <p-table *ngIf="attributes?.length > 0" [value]="attributes" dataKey="key" styleClass="p-datatable-sm">
+    <div *ngIf="attributes?.length > 0" class="field col-6">
+      <p-table [value]="attributes" dataKey="key" styleClass="p-datatable-sm">
         <ng-template pTemplate="caption">
           <div class="table-header">Attributes</div>
         </ng-template>
@@ -45,7 +45,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-attribute>
           <tr>
-            <td>{{ attribute.id }}</td>
+            <td>{{ attribute.label }}</td>
             <td>{{ attribute.value }}</td>
           </tr>
         </ng-template>
