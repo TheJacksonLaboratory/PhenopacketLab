@@ -95,11 +95,11 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
     private SearchIdentifiedConcept searchConcepts(String query, int max, List<String> prefixes) {
         AtomicInteger counter = new AtomicInteger();
         List<IdentifiedConcept> concepts = findAllConceptsFromSelectedPrefixes(prefixes)
-                .peek(unused -> counter.incrementAndGet()) // Keep track of all concepts.
+                .peek(unused -> counter.incrementAndGet()) // Keep track of the concept count.
                 .map(concept -> matchQueryToConcept(query, concept))
-                .flatMap(Optional::stream)
-                .sorted(Comparator.comparing(SearchResult::score).reversed())
-                .limit(max)
+                .flatMap(Optional::stream) // Filter out non-matches.
+                .sorted(Comparator.comparing(SearchResult::score).reversed()) // Put the best match on top
+                .limit(max) // Show top n matches
                 .map(SearchResult::concept)
                 .toList();
 
