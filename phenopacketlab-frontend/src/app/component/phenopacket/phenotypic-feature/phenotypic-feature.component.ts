@@ -47,21 +47,26 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
+            modal: true
         });
 
-        this.ref.onClose.subscribe((phenoFeatures: PhenotypicFeature[]) => {
-            for (const phenoFeature of phenoFeatures) {
-                const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.key === phenoFeature.key);
-                if (indexToUpdate === -1) {
-                    this.phenotypicFeatures.push(phenoFeature);
-                } else {
-                    this.phenotypicFeatures[indexToUpdate] = phenoFeature;
-                    this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
-                }
+        this.ref.onClose.subscribe((addedFeatures: PhenotypicFeature[]) => {
+            if (this.phenotypicFeatures === undefined) {
+                this.phenotypicFeatures = [];
             }
-            // emit change
-            this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
-
+            if (addedFeatures) {
+                for (const phenoFeature of addedFeatures) {
+                    const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.type.id === phenoFeature.type.id);
+                    if (indexToUpdate === -1) {
+                        this.phenotypicFeatures.push(phenoFeature);
+                    } else {
+                        this.phenotypicFeatures[indexToUpdate] = phenoFeature;
+                        this.phenotypicFeatures = Object.assign([], this.phenotypicFeatures);
+                    }
+                }
+                // emit change
+                this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
+            }
         });
     }
 
