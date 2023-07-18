@@ -7,8 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.util.Assert;
 
+import java.util.Objects;
+
 @Entity
 public class User {
+
 	@Id
 	private Long id;
 
@@ -17,19 +20,8 @@ public class User {
 	public User(){}
 
 	public User(String authId){
-		Assert.notNull(authId, "Required field authId not found.");
+		Objects.requireNonNull(authId, "Required field authId not found.");
 		this.authId = authId;
-	}
-
-	public User(Authentication authentication){
-			Assert.notNull(authentication, "Error some seriously with wrong no authentication object.");
-				final Jwt credentials = (Jwt) authentication.getCredentials();
-				String authId = authentication.getName();
-				if(authId != null && !authId.isBlank()){
-					this.authId = authId;
-				} else {
-					throw new AuthenticationCredentialsNotFoundException("Credentials could not be parsed from authentication object");
-				}
 	}
 
 	public Long getId() {
@@ -38,5 +30,26 @@ public class User {
 
 	public String getAuthId() {
 		return authId;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", authId='" + authId + '\'' +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return Objects.equals(id, user.id) && Objects.equals(authId, user.authId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, authId);
 	}
 }

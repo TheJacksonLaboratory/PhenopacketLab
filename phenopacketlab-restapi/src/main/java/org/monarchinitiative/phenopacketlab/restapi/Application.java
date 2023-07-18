@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacketlab.restapi;
 
-import com.google.cloud.spring.data.datastore.repository.config.EnableDatastoreRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

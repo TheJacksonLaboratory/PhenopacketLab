@@ -22,6 +22,6 @@ public class UserController {
 		if (authentication == null) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
-		return ResponseEntity.ok(userService.get(authentication));
+		return ResponseEntity.ok(userService.getOrCreate(authentication));
 	}
 }
