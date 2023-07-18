@@ -67,8 +67,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     /**
      * Adds a new disease.
      **/
-    addDisease(disease?: Disease) {
-        const diseases = [];
+    addDisease() {
         this.ref = this.dialogService.open(DiseaseSearchDialogComponent, {
             header: 'Search for disease(s)',
             width: '50%',
@@ -78,8 +77,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
             draggable: true,
             modal: true,
             data: {
-                diseases: diseases,
-                phenopacket: this.phenopacket,
                 profile: this.profileSelection
             }
         });

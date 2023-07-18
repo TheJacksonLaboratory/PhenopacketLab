@@ -76,7 +76,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     }
 
     addFeatures() {
-        const features = [];
         this.ref = this.dialogService.open(PhenotypicFeatureSearchDialogComponent, {
             header: 'Search for feature term(s)',
             width: '50%',
@@ -86,8 +85,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
             draggable: true,
             modal: true,
             data: {
-                features: features,
-                phenopacket: this.phenopacket,
                 profile: this.profileSelection
             }
         });

@@ -125,6 +125,6 @@ export class Sex {
     public static VALUES = [new ConstantObject('UNKNOWN_SEX', 'Not assessed or not available. Maps to NCIT:C17998'),
         new ConstantObject('FEMALE', 'Female sex. Maps to NCIT:C46113'),
         new ConstantObject('MALE', 'Male sex. Maps to NCIT:C46112'),
-        new ConstantObject('OTHER', 'It is not possible to accurately assess the applicability of MALE/FEMALE. Maps to NCIT:C45908')];
+        new ConstantObject('OTHER_SEX', 'It is not possible to accurately assess the applicability of MALE/FEMALE. Maps to NCIT:C45908')];
 }
 

@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Disease } from 'src/app/models/disease';
 import { DiseaseDialogComponent } from '../../shared/dialog/disease-dialog/disease-dialog.component';
 import { DiseaseSearchDialogComponent } from '../../shared/dialog/disease-search-dialog/disease-search-dialog.component';
+import { Utils } from '../../shared/utils';
 
 @Component({
   selector: 'app-disease',
@@ -49,28 +50,35 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
    */
   addDisease() {
     this.ref = this.dialogService.open(DiseaseSearchDialogComponent, {
-        header: 'Add Disease',
-        width: '50%',
-        contentStyle: { 'overflow': 'auto' },
-        baseZIndex: 10000,
-        resizable: true,
-        draggable: true,
+      header: 'Add Disease',
+      width: '50%',
+      contentStyle: { 'overflow': 'auto' },
+      baseZIndex: 10000,
+      resizable: true,
+      draggable: true,
+      modal: true
     });
 
     this.ref.onClose.subscribe((addedDiseases: Disease[]) => {
-        for (const addedDisease of addedDiseases) {
-            const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.key === addedDisease.key);
-            if (indexToUpdate === -1) {
-                this.phenopacketDiseases.push(addedDisease);
-            } else {
-                this.phenopacketDiseases[indexToUpdate] = addedDisease;
-                this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
-            }
-            // emit change
-            this.onDiseasesChanged.emit(this.phenopacketDiseases);
+      if (addedDiseases) {
+        if (this.phenopacketDiseases === undefined) {
+          this.phenopacketDiseases = [];
         }
+        for (const addedDisease of addedDiseases) {
+          const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.term.id === addedDisease.term.id);
+          addedDisease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
+          if (indexToUpdate === -1) {
+            this.phenopacketDiseases.push(addedDisease);
+          } else {
+            this.phenopacketDiseases[indexToUpdate] = addedDisease;
+            this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
+          }
+          // emit change
+          this.onDiseasesChanged.emit(this.phenopacketDiseases);
+        }
+      }
     });
-}
+  }
 
   deleteDisease(disease: Disease) {
     this.confirmationService.confirm({

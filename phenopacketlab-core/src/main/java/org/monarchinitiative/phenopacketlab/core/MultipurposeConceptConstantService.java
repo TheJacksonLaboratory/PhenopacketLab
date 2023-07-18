@@ -6,6 +6,7 @@ import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource
 import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
@@ -84,12 +85,36 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
         return Optional.empty();
     }
 
-    private SearchIdentifiedConcept searchConcepts(String query, int max, List<String> prefixes) {
-        List<IdentifiedConcept> allTerms = new ArrayList<>(findAllConceptsFromSelectedPrefixes(prefixes).toList());
-        // sort terms by id
-        allTerms.sort(Comparator.comparing(IdentifiedConcept::id));
-        // search for first 10 terms with given query
-        List<IdentifiedConcept> foundTerms = allTerms.stream().filter(ic -> (ic.id().getValue().toLowerCase() + ic.getName().toLowerCase()).contains(query.toLowerCase())).limit(max).toList();
-        return new SearchIdentifiedConcept(allTerms.size(), foundTerms);
+    private int termLengthComparator(String term1, String term2) {
+        if (term1.length() != term2.length()) {
+            return term1.length() - term2.length();
+        }
+        return term1.compareTo(term2);
     }
+
+    private SearchIdentifiedConcept searchConcepts(String query, int max, List<String> prefixes) {
+        AtomicInteger counter = new AtomicInteger();
+        List<IdentifiedConcept> concepts = findAllConceptsFromSelectedPrefixes(prefixes)
+                .peek(unused -> counter.incrementAndGet()) // Keep track of the concept count.
+                .map(concept -> matchQueryToConcept(query, concept))
+                .flatMap(Optional::stream) // Filter out non-matches.
+                .sorted(Comparator.comparing(SearchResult::score).reversed()) // Put the best match on top
+                .limit(max) // Show top n matches
+                .map(SearchResult::concept)
+                .toList();
+
+        return new SearchIdentifiedConcept(counter.get(), concepts);
+    }
+
+    private static Optional<SearchResult> matchQueryToConcept(String query, IdentifiedConcept ic) {
+        String concat = ic.id().getValue().toLowerCase() + ic.getName().toLowerCase();
+        if (concat.contains(query)) {
+            float matchScore = (float) query.length() / concat.length();
+            return Optional.of(new SearchResult(ic, matchScore));
+        }
+        return Optional.empty();
+    }
+
+    private record SearchResult(IdentifiedConcept concept, float score) {}
+
 }
