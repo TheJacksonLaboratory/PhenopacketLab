@@ -71,7 +71,7 @@ jobs:
 
       # Build docker image
       - name: Image_build
-        run: docker build --build-arg VERSION_ARG=$PROJECT_VERSION --build-arg SPRING_ACTIVE_PROFILES_ARG=development "-t us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend .
+        run: docker build --build-arg VERSION_ARG=$PROJECT_VERSION --build-arg SPRING_ACTIVE_PROFILES_ARG=development -t us-docker.pkg.dev/jax-cs-registry/docker/${{ secrets.GCP_PROJECT }}/phenopacketlab-backend .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: gcloud auth configure-docker us-docker.pkg.dev
