@@ -150,10 +150,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-
-        this.phenopacketService.setPhenopacket(this.phenopacket);
-
-        // this.phenopacketService.phenopacket.diseases = this.diseases;
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
@@ -165,7 +161,6 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
             }
         }
         this.submitted = true;
-
     }
     prevPage() {
         // check profile and navigate to the corresponding step

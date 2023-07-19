@@ -165,7 +165,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        this.phenopacketService.phenopacket.interpretations = this.interpretations;
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
             if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
