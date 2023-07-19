@@ -1,25 +1,52 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import packageInfo from '../../../../package.json';
+import { Component, OnInit } from '@angular/core';
+import { AuthService, User } from '@auth0/auth0-angular';
+import { MenuItem } from 'primeng/api';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-  // emits when the navigation should be opened or closed with status of sideNavOpen
-  @Output() toggleNav: EventEmitter<boolean> = new EventEmitter<boolean>();
+export class HeaderComponent implements OnInit {
 
-  // tracks whether the navigation sidebar is open
-  sideNavOpen = true;
+  constructor(public authService: AuthService) {
+  }
+
+  user: User;
+
+  userActions: MenuItem[];
 
   version: string = packageInfo.version;
 
+  ngOnInit() {
+    this.authService.user$.pipe(filter((user) => user != null)).subscribe((user) => {
+      this.user = user;
+      this.userActions = [
+        {label: 'ORCID Profile',  icon: 'pi pi-fw pi-external-link', url: `https://orcid.org/${this.idFromSub(user.sub)}`},
+        {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: e => this.logout()}
+      ];
+    });
+  }
+
   /**
-   * Trigger the sidenav to be opened or closed based on its current state
+   *  Transforms the authId sub to just the orcId.
+   *
+   *  @param sub the auth0 id with leading information
+   *  @returns only the orcid.
    */
-  toggleSideNav(): void {
-    this.sideNavOpen = !this.sideNavOpen;
-    this.toggleNav.emit(this.sideNavOpen);
+  idFromSub(sub: string) {
+    return sub.split('|')[2];
+  }
+
+  /**
+   * Logout but override the redirect.
+   */
+  logout() {
+    this.authService.logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      }});
   }
 }

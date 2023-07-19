@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const URL = 'http://localhost:8080';
-const API_URL = `${URL}/api/v1`;
+const API_URL = `${URL}/api`;
 
 export const environment = {
   production: false,
@@ -39,7 +39,30 @@ export const environment = {
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
   MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
   METADATA_URL: `${API_URL}/metadata`,
-  RESOURCE_URL: `${API_URL}/resource`
+  RESOURCE_URL: `${API_URL}/resource`,
+  USER_URL: `${API_URL}/user`,
+  AUTH: {
+    domain: 'thejacksonlaboratory.auth0.com',
+    clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
+    authorizationParams: {
+      redirect_uri: window.location.origin
+    },
+
+    httpInterceptor: {
+      allowedList: [
+        {
+          uri: `${API_URL}/*`,
+          tokenOptions: {
+            authorizationParams: {
+              // The attached token should target this audience
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        }
+      ]
+    }
+
+  }
 };
 
 /*

@@ -1,5 +1,5 @@
 const URL = 'https://phenopacketlab-sqa.jax.org';
-const API_URL = `${URL}/api/v1`;
+const API_URL = `${URL}/api`;
 
 export const environment = {
   production: false,
