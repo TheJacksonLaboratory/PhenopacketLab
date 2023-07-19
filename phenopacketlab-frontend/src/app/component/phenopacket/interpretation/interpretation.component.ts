@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { DialogMode } from 'src/app/models/base';
+import { Utils } from '../../shared/utils';
 
 @Component({
     selector: 'app-interpretation',
@@ -50,6 +51,7 @@ export class InterpretationComponent implements OnInit {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
+            modal: true,
             data: { interpretation: interpretation,
                     phenopacket: this.phenopacket,
                     mode: DialogMode.ADD }
@@ -68,6 +70,7 @@ export class InterpretationComponent implements OnInit {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
+            modal: true,
             data: { interpretation: interpretation,
                     phenopacket: this.phenopacket,
                     mode: DialogMode.EDIT }
@@ -80,6 +83,7 @@ export class InterpretationComponent implements OnInit {
     updateInterpretation(interpretation: Interpretation) {
         if (interpretation) {
             const indexToUpdate = this.interpretations.findIndex(item => item.id === interpretation.id);
+            interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
             if (indexToUpdate === -1) {
                 this.interpretations.push(interpretation);
             } else {
@@ -97,6 +101,8 @@ export class InterpretationComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.interpretations = this.interpretations.filter(val => val.id !== interpretation.id);
+                // emit change
+                this.onInterpretationsChange.emit(this.interpretations);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Interpretation Deleted', life: 3000 });
             },
             reject: () => {

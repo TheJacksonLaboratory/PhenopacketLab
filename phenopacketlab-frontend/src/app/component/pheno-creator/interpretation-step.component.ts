@@ -139,7 +139,6 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
                 this.interpretations[indexToUpdate] = interpretation;
                 this.interpretations = Object.assign([], this.interpretations);
             }
-            // this.showTable = true;
             // emit change
             this.phenopacket.interpretations = this.interpretations;
             this.submitted = true;

@@ -67,6 +67,7 @@ export class FileComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.files = this.files.filter(val => val.key !== file.key);
+        this.onFilesChanged.emit(this.files);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'File Deleted', life: 3000 });
       },
       reject: () => {

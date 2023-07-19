@@ -141,6 +141,7 @@
           <app-interpretation
             [interpretations]="getInterpretations()"
             [phenopacket]="phenopacket"
+            (onInterpretationsChange)="changeInterpretations($event)"
           ></app-interpretation>
         </ng-template>
       </p-accordionTab>
@@ -219,3 +220,4 @@
     </p-accordion>
   </div>
 </div>
+<p-confirmDialog header="Confirmation"></p-confirmDialog>

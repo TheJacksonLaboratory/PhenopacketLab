@@ -12,6 +12,7 @@ import { BioSample } from 'src/app/models/biosample';
 import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { Interpretation } from 'src/app/models/interpretation';
 
 @Component({
   selector: 'app-phenopacket',
@@ -171,6 +172,11 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   changeBiosamples(biosamples: BioSample[]) {
     if (this.phenopacket) {
       this.phenopacket.biosamples = biosamples;
+    }
+  }
+  changeInterpretations(interpretations: Interpretation[]) {
+    if (this.phenopacket) {
+      this.phenopacket.interpretations = interpretations;
     }
   }
   changeMeasurements(measurements: Measurement[]) {

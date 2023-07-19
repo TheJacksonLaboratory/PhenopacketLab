@@ -108,6 +108,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.key !== feature.key);
+                // emit change
+                this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Phenotypic feature Deleted', life: 3000 });
             },
             reject: () => {

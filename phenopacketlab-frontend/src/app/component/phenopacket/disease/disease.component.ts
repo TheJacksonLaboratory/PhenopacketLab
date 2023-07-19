@@ -87,6 +87,8 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.phenopacketDiseases = this.phenopacketDiseases.filter(val => val.key !== disease.key);
+        // emit change
+        this.onDiseasesChanged.emit(this.phenopacketDiseases);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Disease Deleted', life: 3000 });
       },
       reject: () => {
