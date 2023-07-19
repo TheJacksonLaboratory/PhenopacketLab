@@ -24,6 +24,7 @@ const severityUrl = environment.SEVERITY_URL;
 })
 export class PhenopacketService {
 
+    // TODO rename phenopacket to phenopacketStepper (indicate it is used in the stepper)
     phenopacket: Phenopacket;
     phenopacketSubject = new Subject<Phenopacket>();
 

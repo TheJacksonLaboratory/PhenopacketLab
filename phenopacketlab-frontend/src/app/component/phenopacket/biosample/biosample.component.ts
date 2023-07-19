@@ -76,6 +76,7 @@ export class BiosampleComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.biosamples = this.biosamples.filter(val => val.key !== sample.key);
+            this.onBiosampleChanged.emit(this.biosamples);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Biosample Deleted', life: 3000 });
         },
         reject: () => {

@@ -157,11 +157,6 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     }
 
     nextPage() {
-        this.phenopacketService.setPhenopacket(this.phenopacket);
-        this.phenopacketService.phenopacket = this.phenopacket;
-        // this.router.navigate(['creator/measurements']);
-        // TODO temp while measuremtn is not done
-
         // check profile and navigate to the corresponding step
         for (const profile of Profile.profileSelectionOptions) {
 

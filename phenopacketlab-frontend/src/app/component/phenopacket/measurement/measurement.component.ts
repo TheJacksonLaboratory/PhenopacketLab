@@ -81,6 +81,8 @@ export class MeasurementComponent implements OnInit {
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
             this.measurements = this.measurements.filter(val => val.key !== measurement.key);
+            // emit change
+            this.onMeasurementsChanged.emit(this.measurements);
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Measurement Deleted', life: 3000 });
           },
           reject: () => {

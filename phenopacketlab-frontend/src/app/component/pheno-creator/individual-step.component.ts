@@ -81,7 +81,6 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket.id && this.phenopacket.subject.id
             && this.phenopacket.subject.isPrivateInfoWarnSelected) {
             // TODO Check if id already exists
-            this.phenopacketService.phenopacket = this.phenopacket;
             for (const profile of Profile.profileSelectionOptions) {
                 if (this.profileSelection === profile.value) {
                     this.router.navigate([`creator/${profile.path}/phenotypic-features`]);

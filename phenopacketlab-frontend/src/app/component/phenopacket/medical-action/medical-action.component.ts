@@ -96,6 +96,8 @@ export class MedicalActionComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.medicalActions = this.medicalActions.filter(val => val.key !== medicalAction.key);
+                // emit change
+                this.onMedicalActionChanged.emit(this.medicalActions);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medical action Deleted', life: 3000 });
             },
             reject: () => {
