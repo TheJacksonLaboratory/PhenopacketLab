@@ -34,6 +34,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { SpinnerModule } from 'primeng/spinner';
 import { ChipModule } from 'primeng/chip';
 
 
@@ -71,6 +72,8 @@ import { ChipModule } from 'primeng/chip';
     FieldsetModule,
     SplitterModule,
     DialogModule,
+    SpinnerModule,
+    DialogModule,
     InputMaskModule,
     AutoCompleteModule,
     ChipModule
@@ -105,6 +108,8 @@ import { ChipModule } from 'primeng/chip';
     InputTextareaModule,
     FieldsetModule,
     SplitterModule,
+    DialogModule,
+    SpinnerModule,
     DialogModule,
     InputMaskModule,
     AutoCompleteModule,

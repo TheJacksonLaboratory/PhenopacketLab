@@ -6,17 +6,14 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthConfig, AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GridModule } from '@angular/flex-layout/grid';
 
-import { ROUTING } from './app.routing';
+import { AppRoutingModule } from './app.routing.module';
 import { HelpComponent } from './component/help/help.component';
-import { ErrorInterceptor } from './helpers/error.interceptor';
-import { JwtInterceptor } from './helpers/jwt.interceptor';
-import { fakeBackendProvider } from './helpers/fake-backend';
-
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
 import { CohortListComponent } from './component/cohort-list/cohort-list.component';
@@ -29,13 +26,17 @@ import { HeaderComponent } from './component/header/header.component';
 import { SharedModule } from './component/shared/shared.module';
 import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.module';
 import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
+import { environment } from '../environments/environment';
+const config: AuthConfig = {
+    ...environment.AUTH
+};
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        ROUTING,
+        AppRoutingModule,
         RouterModule,
         CommonModule,
         HttpClientModule,
@@ -45,7 +46,8 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
         GridModule,
         PhenoCreatorModule,
         PhenopacketModule,
-        SharedModule
+        SharedModule,
+        AuthModule.forRoot(config)
     ],
     declarations: [
         AppComponent,
@@ -62,10 +64,7 @@ import { PhenopacketListComponent } from './component/phenopacket-list/phenopack
     ],
     exports: [RouterModule],
     providers: [{ provide: MatDialogRef, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        // provider used to create a fake backend
-        // fakeBackendProvider
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

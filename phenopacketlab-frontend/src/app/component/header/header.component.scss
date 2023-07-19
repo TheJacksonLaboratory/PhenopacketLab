@@ -49,12 +49,26 @@
       text-decoration: none;
       text-align: center;
       text-transform: uppercase;
+      cursor: pointer;
+
+      & .pi {
+        vertical-align: text-top;
+      }
 
       &:hover {
         opacity: .75;
-        scale: 1.25;
       }
     }
+  }
+
+  .vertical-divide {
+    border-left: solid 1px;
+    height: 14px;
+    margin-top: 12px;
+  }
+
+  .loader-spinner {
+    align-self: center;
   }
 }
 

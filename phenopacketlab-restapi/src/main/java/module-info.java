@@ -16,12 +16,25 @@ module phenopacketlab.restapi {
     requires spring.beans;
 
     // TODO(ielis) - consider removing after dropping `controller/test/*` and `util/Examples`
-    requires com.google.protobuf;
-    requires com.google.protobuf.util;
-
+	requires spring.security.oauth2.core;
+    requires spring.security.oauth2.jose;
+    requires spring.security.config;
+    requires spring.security.core;
+    requires spring.security.web;
+    requires spring.core;
+    requires spring.data.commons;
+    requires spring.cloud.gcp.data.datastore;
+    requires spring.cloud.gcp.core;
     requires io.swagger.v3.oas.annotations;
+    requires com.google.protobuf;
+
 
     opens org.monarchinitiative.phenopacketlab.restapi;
     opens org.monarchinitiative.phenopacketlab.restapi.controller;
+    opens org.monarchinitiative.phenopacketlab.restapi.domain;
+    opens org.monarchinitiative.phenopacketlab.restapi.repository;
+    opens org.monarchinitiative.phenopacketlab.restapi.service;
+    opens org.monarchinitiative.phenopacketlab.restapi.config.security;
     opens org.monarchinitiative.phenopacketlab.restapi.controller.test;
+
 }

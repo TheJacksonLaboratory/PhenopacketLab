@@ -1,5 +1,5 @@
 const URL = 'https://phenopacketlab-dev.jax.org';
-const API_URL = `${URL}/api/v1`;
+const API_URL = `${URL}/api`;
 
 export const environment = {
   production: false,
@@ -25,11 +25,33 @@ export const environment = {
   TNM_NODE_URL: `${API_URL}/constants/tree-tnm-node`,
   TNM_METASTASIS_URL: `${API_URL}/constants/tree-tnm-metastasis`,
   DISEASE_STAGES_URL: `${API_URL}/constants/tree-disease-stages`,
+  HPO_DISEASE_URL: `${API_URL}/diseases`,
   TEXT_MINING_URL: `${API_URL}/textminer`,
   FUNCTIONAL_ANNOTATION_URL: `${API_URL}/functional-annotation`,
   ALLELIC_STATE_SHORT_URL: `${API_URL}/constants/allelic-states`,
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
   STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
+  USER_URL: `${API_URL}/user`,
+  AUTH: {
+    domain: 'thejacksonlaboratory.auth0.com',
+    clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
+    authorizationParams: {
+      redirect_uri: window.location.origin,
+      audience: `https://phenopacketlab.jax.org`
+    },
+    httpInterceptor: {
+      allowedList: [
+        {
+          uri: `${API_URL}/*`,
+          tokenOptions: {
+            authorizationParams: {
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        }
+      ]
+    }
+  },
   MEDICAL_ACTION_TREATMENT_INTENTS_URL: `${API_URL}/medical-actions/treatment-intents`,
   MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
