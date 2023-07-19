@@ -34,6 +34,27 @@ export const environment = {
   MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
   MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
+  USER_URL: `${API_URL}/user`,
+  AUTH: {
+    domain: 'thejacksonlaboratory.auth0.com',
+    clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
+    authorizationParams: {
+      redirect_uri: window.location.origin,
+      audience: `https://phenopacketlab.jax.org`
+    },
+    httpInterceptor: {
+      allowedList: [
+        {
+          uri: `${API_URL}/*`,
+          tokenOptions: {
+            authorizationParams: {
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        }
+      ]
+    }
+  },
   METADATA_URL: `${API_URL}/metadata`,
   RESOURCE_URL: `${API_URL}/resource`
 };
