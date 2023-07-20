@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -8,20 +9,21 @@ import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
-  selector: 'app-pheno-creator-rare',
+  selector: 'app-pheno-creator',
   templateUrl: './pheno-creator.component.html',
   styleUrls: ['./pheno-creator.component.scss'],
   providers: [MessageService]
 })
-export class PhenoCreatorRareComponent implements OnInit, OnDestroy {
+export class PhenoCreatorComponent implements OnInit, OnDestroy {
 
   phenopacket: Phenopacket;
 
   // primeng stepper
   items: MenuItem[];
   subscription: Subscription;
+  activeIndex = 0;
 
-  constructor(private messageService: MessageService, public phenopacketService: PhenopacketService) {
+  constructor(private router: Router, private messageService: MessageService, public phenopacketService: PhenopacketService) {
   }
 
   ngOnInit() {
@@ -38,6 +40,31 @@ export class PhenoCreatorRareComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+  }
+
+  onActiveIndexChange(event: number) {
+    this.activeIndex = event;
+  }
+
+  nextPage() {
+    // check profile and navigate to the corresponding step
+    for (const profile of Profile.profileSelectionOptions) {
+      if (profile.value === ProfileSelection.RARE_DISEASE) {
+        this.activeIndex++;
+        this.router.navigate([`creator/rare/${profile.steps[this.activeIndex].routerLink}`]);
+        return;
+      }
+    }
+  }
+
+  prevPage() {
+    for (const profile of Profile.profileSelectionOptions) {
+      if (profile.value === ProfileSelection.RARE_DISEASE) {
+        this.activeIndex--;
+        this.router.navigate([`creator/rare/${profile.steps[this.activeIndex].routerLink}`]);
+        return;
+      }
     }
   }
 

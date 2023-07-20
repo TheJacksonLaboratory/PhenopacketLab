@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api'
 import { Subscription } from 'rxjs';
 import { Disease } from 'src/app/models/disease';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { Profile, ProfileSelection } from 'src/app/models/profile';
+import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../shared/utils';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -147,32 +147,5 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
                 }
             }
         });
-    }
-
-    nextPage() {
-        // check profile and navigate to the corresponding step
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/interpretations`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`creator/${profile.path}/interpretations`]);
-                return;
-            }
-        }
-        this.submitted = true;
-    }
-    prevPage() {
-        // check profile and navigate to the corresponding step
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/biosamples`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`creator/${profile.path}/phenotypic-features`]);
-                return;
-            }
-        }
-        this.router.navigate(['creator/phenotypic-features']);
     }
 }

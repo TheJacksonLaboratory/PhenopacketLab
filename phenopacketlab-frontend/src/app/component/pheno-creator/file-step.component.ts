@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { File } from 'src/app/models/base';
-import { Profile, ProfileSelection } from 'src/app/models/profile';
+import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class FileStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    constructor (public phenopacketService: PhenopacketService, private router: Router) {
+    constructor (public phenopacketService: PhenopacketService) {
 
     }
 
@@ -31,25 +30,6 @@ export class FileStepComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
-        }
-    }
-
-    nextPage() {
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/validate`]);
-                return;
-            }
-            // Possible other profiles to come
-        }
-    }
-    prevPage() {
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/medical-actions`]);
-                return;
-            }
-            // Possible other profiles to come
         }
     }
 }

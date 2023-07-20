@@ -46,7 +46,6 @@ import { AngularSplitModule } from 'angular-split';
 
 import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
 
-import { PhenoCreatorAllComponent } from './pheno-creator-all.component';
 import { IndividualStepComponent } from './individual-step.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
 import { MeasurementStepComponent } from './measurement-step.component';
@@ -60,7 +59,7 @@ import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { WordDialogComponent } from '../shared/text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
-import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
+import { PhenoCreatorComponent } from './pheno-creator.component';
 
 @NgModule({
     imports: [
@@ -120,8 +119,6 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         PhenoCreatorRoutingModule,
     ],
     declarations: [
-        PhenoCreatorAllComponent,
-        PhenoCreatorRareComponent,
         IndividualStepComponent,
         PhenotypicFeatureStepComponent,
         MeasurementStepComponent,
@@ -132,7 +129,8 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         FileStepComponent,
         ValidateStepComponent,
         WordDialogComponent,
-        ProfileSelectionComponent
+        ProfileSelectionComponent,
+        PhenoCreatorComponent
     ],
     providers: [
         MessageService

@@ -5,7 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
-import { Profile, ProfileSelection } from 'src/app/models/profile';
+import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { Utils } from '../shared/utils';
@@ -154,32 +154,5 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
                 }
             }
         });
-    }
-
-    nextPage() {
-        // check profile and navigate to the corresponding step
-        for (const profile of Profile.profileSelectionOptions) {
-
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/measurements`]);
-                return;
-            } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-                this.router.navigate([`creator/${profile.path}/diseases`]);
-                return;
-            }
-        }
-
-        this.submitted = true;
-
-    }
-    prevPage() {
-        this.phenopacketService.phenopacket = this.phenopacket;
-        // check profile and navigate to the corresponding step
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === profile.value) {
-                this.router.navigate([`creator/${profile.path}/individual`]);
-                return;
-            }
-        }
     }
 }

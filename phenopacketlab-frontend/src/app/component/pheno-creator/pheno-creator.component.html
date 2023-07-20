@@ -1,7 +1,32 @@
 <div class="grid p-fluid m-5">
   <div class="field col-12">
     <h1 class="header-step"><b>Phenopacket Creator for Rare Disease</b></h1>
-    <p-steps [model]="items" [readonly]="false" ></p-steps>
+    <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
   </div>
 </div>
 <router-outlet></router-outlet>
+<div class="flex justify-content-between flex-wrap m-5">
+  <div class="flex align-items-center justify-content-center">
+    <span *ngIf="activeIndex > 0">
+      <p-button
+        label="Back"
+        (onClick)="prevPage()"
+        icon="pi pi-angle-left"
+        iconPos="left"
+      ></p-button>
+    </span>
+  </div>
+  <div
+    class="flex align-items-center justify-content-center"
+  >
+    <span *ngIf="activeIndex < items.length - 1">
+      <p-button
+        label="Next"
+        (onClick)="nextPage()"
+        icon="pi pi-angle-right"
+        iconPos="right"
+      ></p-button>
+    </span>
+  </div>
+</div>
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
