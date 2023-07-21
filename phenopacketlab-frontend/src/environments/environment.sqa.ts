@@ -45,7 +45,7 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: `${API_URL}/*`,
+          uri: `${API_URL}/user/*`,
           tokenOptions: {
             authorizationParams: {
               audience: `https://phenopacketlab.jax.org`
