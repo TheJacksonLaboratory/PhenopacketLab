@@ -52,9 +52,11 @@ export class InterpretationComponent implements OnInit {
             resizable: true,
             draggable: true,
             modal: true,
-            data: { interpretation: interpretation,
-                    phenopacket: this.phenopacket,
-                    mode: DialogMode.ADD }
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                mode: DialogMode.ADD
+            }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);
@@ -71,9 +73,11 @@ export class InterpretationComponent implements OnInit {
             resizable: true,
             draggable: true,
             modal: true,
-            data: { interpretation: interpretation,
-                    phenopacket: this.phenopacket,
-                    mode: DialogMode.EDIT }
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                mode: DialogMode.EDIT
+            }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);
@@ -82,6 +86,9 @@ export class InterpretationComponent implements OnInit {
 
     updateInterpretation(interpretation: Interpretation) {
         if (interpretation) {
+            if (this.interpretations === undefined) {
+                this.interpretations = [];
+            }
             const indexToUpdate = this.interpretations.findIndex(item => item.id === interpretation.id);
             interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
             if (indexToUpdate === -1) {
