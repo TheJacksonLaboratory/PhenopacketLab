@@ -51,7 +51,7 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: `${API_URL}/*`,
+          uri: `${API_URL}/user/*`,
           tokenOptions: {
             authorizationParams: {
               // The attached token should target this audience
