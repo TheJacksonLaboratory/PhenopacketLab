@@ -20,6 +20,8 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
 
   // primeng stepper
   items: MenuItem[];
+  profileSelected: ProfileSelection;
+  rareProfileSelected = true;
   subscription: Subscription;
   activeIndex = 0;
 
@@ -27,6 +29,16 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.phenopacketService.getProfileSelection().subscribe(profile => {
+      this.profileSelected = profile;
+      if (this.profileSelected === ProfileSelection.RARE_DISEASE) {
+        this.rareProfileSelected = true;
+        this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
+      } else {
+        this.rareProfileSelected = false;
+        this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
+      }
+    });
     this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
     this.subscription = this.phenopacketService.validated$.subscribe((phenopacket) => {
       this.messageService.add({
@@ -47,24 +59,34 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
     this.activeIndex = event;
   }
 
+  updateProfile(rareDiseaseProfileSelected: boolean) {
+    this.rareProfileSelected = rareDiseaseProfileSelected;
+    if (this.rareProfileSelected) {
+      this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+      this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
+    } else {
+      this.phenopacketService.setProfileSelection(ProfileSelection.ALL_AVAILABLE);
+      this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
+    }
+  }
+
   nextPage() {
-    // check profile and navigate to the corresponding step
-    for (const profile of Profile.profileSelectionOptions) {
-      if (profile.value === ProfileSelection.RARE_DISEASE) {
-        this.activeIndex++;
-        this.router.navigate([`creator/rare/${profile.steps[this.activeIndex].routerLink}`]);
-        return;
-      }
+    this.activeIndex++;
+    if (this.rareProfileSelected) {
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndex].routerLink}`]);
+
+    } else {
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndex].routerLink}`]);
+
     }
   }
 
   prevPage() {
-    for (const profile of Profile.profileSelectionOptions) {
-      if (profile.value === ProfileSelection.RARE_DISEASE) {
-        this.activeIndex--;
-        this.router.navigate([`creator/rare/${profile.steps[this.activeIndex].routerLink}`]);
-        return;
-      }
+    this.activeIndex--;
+    if (this.rareProfileSelected) {
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndex].routerLink}`]);
+    } else {
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndex].routerLink}`]);
     }
   }
 

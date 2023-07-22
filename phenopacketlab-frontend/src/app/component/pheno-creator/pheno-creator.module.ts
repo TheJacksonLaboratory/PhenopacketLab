@@ -44,8 +44,6 @@ import { ChipModule } from 'primeng/chip';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
-
 import { IndividualStepComponent } from './individual-step.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
 import { MeasurementStepComponent } from './measurement-step.component';
@@ -65,7 +63,6 @@ import { PhenoCreatorComponent } from './pheno-creator.component';
     imports: [
         CommonModule,
         RouterModule,
-        PhenoCreatorRoutingModule,
         TabViewModule,
         ButtonModule,
         CardModule,
@@ -115,8 +112,7 @@ import { PhenoCreatorComponent } from './pheno-creator.component';
     ],
     exports: [
         StepsModule,
-        ToastModule,
-        PhenoCreatorRoutingModule,
+        ToastModule
     ],
     declarations: [
         IndividualStepComponent,

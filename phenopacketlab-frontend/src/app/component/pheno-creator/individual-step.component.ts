@@ -33,8 +33,6 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // We only manage rare disease profile for now
-        this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
