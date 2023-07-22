@@ -2,9 +2,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CardModule } from 'primeng/card';
 import { StepsModule } from 'primeng/steps';
 import { PhenoCreatorComponent } from './pheno-creator.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 describe('PhenoCreatorComponent', () => {
@@ -19,8 +19,8 @@ describe('PhenoCreatorComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        CardModule,
-        StepsModule
+        StepsModule,
+        SharedModule
       ],
       providers: [
       ]
