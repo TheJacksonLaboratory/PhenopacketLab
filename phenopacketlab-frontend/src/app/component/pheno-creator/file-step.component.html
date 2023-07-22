@@ -1,5 +1,9 @@
+<p-toast position="center" key="cen"></p-toast>
 <div class="m-5">
-  <div class="grid p-fluid">
-    <div class="field col-12">This step is not yet implemented.</div>
-  </div>
+  <h1 class="header-step"><b>File(s)</b></h1>
+  <app-file
+    [phenopacket]="phenopacket"
+    [files]="files"
+    (onFilesChanged)="updateFiles($event)"
+  ></app-file>
 </div>
