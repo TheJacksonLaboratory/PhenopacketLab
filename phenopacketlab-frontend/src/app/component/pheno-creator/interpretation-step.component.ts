@@ -55,6 +55,7 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
             this.router.navigate(['pheno-creator/individual']);
+            this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
         } else {
             this.interpretations = this.phenopacket.interpretations;
             if (this.interpretations) {

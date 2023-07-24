@@ -30,6 +30,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             // navigate to first page of creator as phenopacket is not created
             this.router.navigate(['creator/individual']);
+            this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
         } else {
             this.phenotypicFeatures = this.phenopacket.phenotypicFeatures;
         }

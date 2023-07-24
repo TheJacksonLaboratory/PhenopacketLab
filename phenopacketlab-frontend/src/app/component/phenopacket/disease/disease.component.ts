@@ -8,6 +8,7 @@ import { Disease } from 'src/app/models/disease';
 import { DiseaseDialogComponent } from '../../shared/dialog/disease-dialog/disease-dialog.component';
 import { DiseaseSearchDialogComponent } from '../../shared/dialog/disease-search-dialog/disease-search-dialog.component';
 import { Utils } from '../../shared/utils';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
   selector: 'app-disease',
@@ -25,7 +26,9 @@ import { Utils } from '../../shared/utils';
 export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input()
-  phenopacketDiseases: Disease[] = [];
+  diseases: Disease[] = [];
+  @Input()
+  profile: ProfileSelection;
 
   @Output() onDiseasesChanged = new EventEmitter<Disease[]>();
 
@@ -36,7 +39,7 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
     private confirmationService: ConfirmationService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.onDiseasesChanged.emit(this.phenopacketDiseases);
+    this.onDiseasesChanged.emit(this.diseases);
   }
 
   ngOnInit(): void {
@@ -56,25 +59,26 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
       baseZIndex: 10000,
       resizable: true,
       draggable: true,
-      modal: true
+      modal: true,
+      data: { profile: this.profile }
     });
 
     this.ref.onClose.subscribe((addedDiseases: Disease[]) => {
       if (addedDiseases) {
-        if (this.phenopacketDiseases === undefined) {
-          this.phenopacketDiseases = [];
+        if (this.diseases === undefined) {
+          this.diseases = [];
         }
         for (const addedDisease of addedDiseases) {
-          const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.term.id === addedDisease.term.id);
-          addedDisease.key = Utils.getBiggestKey(this.phenopacketDiseases) + 1;
+          const indexToUpdate = this.diseases.findIndex(item => item.term.id === addedDisease.term.id);
+          addedDisease.key = Utils.getBiggestKey(this.diseases) + 1;
           if (indexToUpdate === -1) {
-            this.phenopacketDiseases.push(addedDisease);
+            this.diseases.push(addedDisease);
           } else {
-            this.phenopacketDiseases[indexToUpdate] = addedDisease;
-            this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
+            this.diseases[indexToUpdate] = addedDisease;
+            this.diseases = Object.assign([], this.diseases);
           }
           // emit change
-          this.onDiseasesChanged.emit(this.phenopacketDiseases);
+          this.onDiseasesChanged.emit(this.diseases);
         }
       }
     });
@@ -86,9 +90,9 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.phenopacketDiseases = this.phenopacketDiseases.filter(val => val.key !== disease.key);
+        this.diseases = this.diseases.filter(val => val.term.id !== disease.term.id);
         // emit change
-        this.onDiseasesChanged.emit(this.phenopacketDiseases);
+        this.onDiseasesChanged.emit(this.diseases);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Disease Deleted', life: 3000 });
       },
       reject: () => {
@@ -105,20 +109,20 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
       baseZIndex: 10000,
       resizable: true,
       draggable: true,
-      data: { disease: disease }
+      data: { disease: disease, profile: this.profile }
     });
 
     this.ref.onClose.subscribe((editedDisease: Disease) => {
       if (editedDisease) {
-        const indexToUpdate = this.phenopacketDiseases.findIndex(item => item.key === editedDisease.key);
+        const indexToUpdate = this.diseases.findIndex(item => item.term.id === editedDisease.term.id);
         if (indexToUpdate === -1) {
-          this.phenopacketDiseases.push(editedDisease);
+          this.diseases.push(editedDisease);
         } else {
-          this.phenopacketDiseases[indexToUpdate] = editedDisease;
-          this.phenopacketDiseases = Object.assign([], this.phenopacketDiseases);
+          this.diseases[indexToUpdate] = editedDisease;
+          this.diseases = Object.assign([], this.diseases);
         }
         // emit change
-        this.onDiseasesChanged.emit(this.phenopacketDiseases);
+        this.onDiseasesChanged.emit(this.diseases);
       }
     });
 
