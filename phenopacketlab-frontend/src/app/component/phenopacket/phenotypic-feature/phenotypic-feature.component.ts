@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicFeatureDialogComponent } from '../../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 import { PhenotypicFeatureSearchDialogComponent } from '../../shared/dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -24,6 +25,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     @Input()
     phenotypicFeatures: PhenotypicFeature[];
+    @Input()
+    profile: ProfileSelection;
     @Output()
     onPhenotypicFeaturesChanged = new EventEmitter<PhenotypicFeature[]>();
 
@@ -47,7 +50,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
-            modal: true
+            modal: true,
+            data: { profile: this.profile }
         });
 
         this.ref.onClose.subscribe((addedFeatures: PhenotypicFeature[]) => {
@@ -78,12 +82,13 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
-            data: { phenotypicFeature: feature }
+            data: { phenotypicFeature: feature,
+                profile: this.profile }
         });
 
         this.ref.onClose.subscribe((phenoFeature: PhenotypicFeature) => {
             if (phenoFeature) {
-                const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.key === phenoFeature.key);
+                const indexToUpdate = this.phenotypicFeatures.findIndex(item => item.type.id === phenoFeature.type.id);
                 if (indexToUpdate === -1) {
                     this.phenotypicFeatures.push(phenoFeature);
                 } else {
@@ -107,7 +112,7 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.key !== feature.key);
+                this.phenotypicFeatures = this.phenotypicFeatures.filter(val => val.type.id !== feature.type.id);
                 // emit change
                 this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Phenotypic feature Deleted', life: 3000 });

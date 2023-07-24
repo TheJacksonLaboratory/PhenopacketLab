@@ -1,71 +1,9 @@
 <p-toast position="center" key="cen"></p-toast>
 <div class="m-5">
   <h1 class="header-step"><b>Phenotypic Feature(s)</b></h1>
-  <div class="flex justify-content-start flex-wrap">
-      <button
-        pButton
-        icon="pi pi-plus"
-        label="Add phenotypic feature"
-        class="p-button-outlined mb-2"
-        (click)="addFeatures()"
-      ></button>
-  </div>
-
-  <p-table
-    *ngIf="phenotypicFeatures?.length > 0"
-    [value]="phenotypicFeatures"
-    [(selection)]="selectedFeature"
-    scrollDirection="horizontal"
-    responsiveLayout="scroll"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    dataKey="key"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th pResizableColumn>Label</th>
-        <th pResizableColumn>Status</th>
-        <th pResizableColumn>Onset</th>
-        <th pResizableColumn></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-feature>
-      <tr [pSelectableRow]="feature">
-        <td>{{ feature.type?.label }}</td>
-        <td>{{ feature.excluded ? "Excluded" : "Observed" }}</td>
-        <td>
-          <span *ngIf="feature.onset?.ontologyClass"
-            ><a [href]="feature.onset.ontologyClass.termUrl" target="_blank"
-              >[{{ feature.onset.ontologyClass.id }}]</a
-            >
-            {{ feature.onset?.ontologyClass?.label }}</span
-          ><span *ngIf="!feature.onset?.ontologyClass">{{
-            feature.onset?.toString()
-          }}</span>
-        </td>
-        <td>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded p-button-text"
-            (click)="editPhenotypicFeature(feature)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-text p-button-warning"
-            (click)="deleteFeature(feature)"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td [attr.colspan]="4">No phenotypic feature to display.</td>
-      </tr>
-
-      <tr></tr
-    ></ng-template>
-  </p-table>
+  <app-phenotypic-feature
+    [phenotypicFeatures]="phenotypicFeatures"
+    [profile]="profileSelection"
+    (onPhenotypicFeaturesChanged)="updatePhenotypicFeatures($event)"
+  ></app-phenotypic-feature>
 </div>
