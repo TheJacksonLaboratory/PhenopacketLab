@@ -8,6 +8,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { DialogMode } from 'src/app/models/base';
 import { Utils } from '../../shared/utils';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
     selector: 'app-interpretation',
@@ -26,6 +27,8 @@ export class InterpretationComponent implements OnInit {
 
     @Input()
     interpretations: Interpretation[];
+    @Input()
+    profile: ProfileSelection;
     @Input()
     phenopacket: Phenopacket;
     @Output()
@@ -55,6 +58,7 @@ export class InterpretationComponent implements OnInit {
             data: {
                 interpretation: interpretation,
                 phenopacket: this.phenopacket,
+                profile: this.profile,
                 mode: DialogMode.ADD
             }
         });
@@ -76,6 +80,7 @@ export class InterpretationComponent implements OnInit {
             data: {
                 interpretation: interpretation,
                 phenopacket: this.phenopacket,
+                profile: this.profile,
                 mode: DialogMode.EDIT
             }
         });
