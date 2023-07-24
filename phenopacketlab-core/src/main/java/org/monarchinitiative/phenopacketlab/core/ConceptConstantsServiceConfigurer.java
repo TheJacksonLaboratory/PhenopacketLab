@@ -219,7 +219,8 @@ public class ConceptConstantsServiceConfigurer {
                                                                 OntologyHierarchyServiceRegistry hierarchyServiceRegistry,
                                                                 TermId rootTerm,
                                                                 String prefix,
-                                                                List<TermId> excludedNodes) {
+                                                                List<TermId> excludedNodes,
+                                                                boolean selectable) {
         Optional<IdentifiedConceptResource> optional = resourceService.forPrefix(prefix);
         if (optional.isEmpty()) {
             LOGGER.warn("Cannot configure onset tree constants due to missing " + prefix + " concept resource!");
@@ -236,12 +237,13 @@ public class ConceptConstantsServiceConfigurer {
                 optional.get(),
                 hierarchyService.get(),
                 Comparator.comparing(SubtreeNode::getLabel),
-                excludedNodes);
+                excludedNodes,
+                selectable);
     }
 
     private static Optional<SubtreeNode> configureStructuralTypeTreeConstants(ConceptResourceService resourceService,
                                                                               OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("SO:0001537"), "SO", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("SO:0001537"), "SO", null, true);
     }
 
     private static Optional<SubtreeNode> configureModifierTreeConstants(ConceptResourceService resourceService,
@@ -251,42 +253,42 @@ public class ConceptConstantsServiceConfigurer {
         // laterality is present in modifier as shown in example in paper : https://onlinelibrary.wiley.com/doi/10.1002/ggn2.202200016#ggn2202200016-bib-0008
 //        excludedNodes.add(TermId.of("HP:0012831")); // Laterality
         excludedNodes.add(TermId.of("HP:0012824")); // Severity
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("HP:0012823"), "HP", excludedNodes);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("HP:0012823"), "HP", excludedNodes, false);
     }
 
     private static Optional<SubtreeNode> configureEvidenceTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("ECO:0000000"), "ECO", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("ECO:0000000"), "ECO", null, false);
     }
 
     private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService,
                                                                      OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, HpoOnsetTermIds.ONSET, "HP", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, HpoOnsetTermIds.ONSET, "HP", null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmTumorTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48885"), "NCIT", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48885"), "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmNodeTreeConstants(ConceptResourceService resourceService,
                                                                        OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48884"), "NCIT", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48884"), "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmMetastasisTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48883"), "NCIT", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48883"), "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureDiseaseStagesTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C28108"), "NCIT", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C28108"), "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("GENO:0000875"), "GENO", null);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("GENO:0000875"), "GENO", null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {
