@@ -21,7 +21,7 @@
     </h1>
     
     <p-steps
-      [model]="items"
+      [model]="steps"
       [readonly]="false"
       [(activeIndex)]="activeIndex"
       (activeIndexChange)="onActiveIndexChange($event)"
@@ -41,7 +41,7 @@
     </span>
   </div>
   <div class="flex align-items-center justify-content-center">
-    <span *ngIf="activeIndex < items.length - 1">
+    <span *ngIf="activeIndex < steps.length - 1">
       <p-button
         label="Next"
         (onClick)="nextPage()"

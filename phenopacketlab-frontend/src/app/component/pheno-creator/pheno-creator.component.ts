@@ -19,7 +19,7 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   phenopacket: Phenopacket;
 
   // primeng stepper
-  items: MenuItem[];
+  steps: MenuItem[];
   profileSelected: ProfileSelection;
   rareProfileSelected = true;
   subscription: Subscription;
@@ -33,13 +33,13 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
       this.profileSelected = profile;
       if (this.profileSelected === ProfileSelection.RARE_DISEASE) {
         this.rareProfileSelected = true;
-        this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
+        this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
       } else {
         this.rareProfileSelected = false;
-        this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
+        this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
       }
     });
-    this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
+    this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
     this.subscription = this.phenopacketService.validated$.subscribe((phenopacket) => {
       this.messageService.add({
         severity: 'success', summary: 'Phenopacket created',
@@ -63,10 +63,10 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
     this.rareProfileSelected = rareDiseaseProfileSelected;
     if (this.rareProfileSelected) {
       this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
-      this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
+      this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
     } else {
       this.phenopacketService.setProfileSelection(ProfileSelection.ALL_AVAILABLE);
-      this.items = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
+      this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
     }
   }
 
