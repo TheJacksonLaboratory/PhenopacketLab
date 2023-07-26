@@ -1,9 +1,9 @@
 <app-header></app-header>
 <p-toast baseZIndex="11" position="bottom-right" showTransitionOption="100ms ease-out" hideTransitionOptions="100ms ease-in"></p-toast>
 <div class="main flex-row">
-  <p-sidebar *ngIf="activeSidenav" [visible]="activeSidenav" styleClass="p-sidebar-sm" class="sidebar flex-1" [showCloseIcon]="false" [closeOnEscape]="false" transitionOptions="0ms">
+  <!--<p-sidebar *ngIf="activeSidenav" [visible]="activeSidenav" styleClass="p-sidebar-sm" class="sidebar flex-1" [showCloseIcon]="false" [closeOnEscape]="false" transitionOptions="0ms">
     <app-sidebar></app-sidebar>
-  </p-sidebar>
+  </p-sidebar>-->
   <div class="content-wrapper flex flex-column" [ngClass]="{'full': activeSidenav === false, 'pl-short': activeSidenav === true}">
     <div class="content">
       <router-outlet></router-outlet>

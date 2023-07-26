@@ -6,7 +6,7 @@ import 'rxjs/add/operator/filter';
 import { AuthService } from '@auth0/auth0-angular';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
-import { filter, first, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first, take } from 'rxjs/operators';
 import { UserService } from './services/user.service';
 
 
@@ -31,7 +31,8 @@ export class AppComponent implements OnInit {
     });
 
     this.authService.user$.pipe(
-        filter(user => Boolean(user))
+        filter(user => Boolean(user)),
+        distinctUntilChanged((p, q) => p.sub === q.sub)
       ).subscribe((user) => {
           if (user != null) {
               this.userService.check().pipe(first()).subscribe();

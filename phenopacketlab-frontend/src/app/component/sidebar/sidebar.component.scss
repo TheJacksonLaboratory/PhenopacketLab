@@ -1,3 +1,37 @@
+.sidebar {
+  margin: .5rem 0 0 0;
+  .sidebar-title {
+    .p-menuitem {
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      overflow: hidden;
+      position: relative;
+      padding: 0.75rem 1.25rem;
+      color: #495057;
+      border-radius: 0;
+      transition: box-shadow .2s;
+      -webkit-user-select: none;
+      user-select: none;
+
+      a {
+        text-decoration: none;
+        color: #495057;
+        display: inherit;
+
+        &:hover {
+          opacity: .65;
+        }
+      }
+
+      .p-menuitem-text {
+        flex-grow: 1;
+      }
+    }
+  }
+}
 .menu-list {
   .submenu {
     padding-left: 1.5rem;

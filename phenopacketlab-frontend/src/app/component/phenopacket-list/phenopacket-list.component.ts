@@ -16,7 +16,6 @@ import { Table } from 'primeng/table';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { UserService } from '../../services/user.service';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
@@ -43,6 +42,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   cohortPhenopacketSubscription: Subscription;
   ref: DynamicDialogRef;
   user: User;
+  isLoading = false;
 
   constructor(public phenopacketService: PhenopacketService,
     private cohortService: CohortService,
@@ -53,21 +53,25 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     private downloadService: DownloadService,
     private dialogService: DialogService,
     private router: Router,
-    private authService: AuthService, private userService: UserService) {
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authService.user$.pipe(distinctUntilChanged((p, q) => p.sub === q.sub)).subscribe((user) => {
         if (user) {
           this.user = user;
           this.phenopacketService.fetchAllPhenopackets().subscribe((phenopackets: Phenopacket []) => {
             this.cohort = new Cohort();
             this.cohort.members = phenopackets;
+            this.isLoading = false;
           });
         }
     });
     this.cohortService.getCohort().subscribe(cohort => {
-      this.cohort = cohort;
+      if (cohort) {
+        this.cohort = cohort;
+      }
     });
   }
 
