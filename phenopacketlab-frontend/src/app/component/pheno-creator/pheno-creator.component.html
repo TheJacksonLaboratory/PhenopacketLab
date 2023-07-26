@@ -28,8 +28,12 @@
     ></p-steps>
   </div>
 </div>
-<router-outlet></router-outlet>
-<div class="flex justify-content-between flex-wrap m-5">
+<div style="height: 40rem"><router-outlet></router-outlet></div>
+
+<div
+  id="next-back-buttons"
+  class="flex align-content-end justify-content-between flex-wrap m-5 position-bottom"
+>
   <div class="flex align-items-center justify-content-center">
     <span *ngIf="activeIndex > 0">
       <p-button
