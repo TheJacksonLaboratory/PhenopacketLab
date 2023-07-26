@@ -44,9 +44,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors();
-		http.authorizeRequests().antMatchers("/**")
-				.permitAll().mvcMatchers("/api/user/**").authenticated()
+		http.authorizeRequests().mvcMatchers("/api/user/**").authenticated()
+				.mvcMatchers("/api/phenopacket/**").authenticated()
 				.and().oauth2ResourceServer().jwt();
+		http.authorizeRequests().mvcMatchers("/**").permitAll();
 		http.csrf().disable();
 		http.headers().frameOptions().disable();
 		return http.build();

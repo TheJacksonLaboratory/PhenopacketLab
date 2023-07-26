@@ -18,10 +18,10 @@ export class UserService {
      * exist, they will be inserted.
      * @returns true if the user persists in our store
      */
-    public check(authId: string): Observable<boolean> {
+    public check(): Observable<boolean> {
         return this.client.get<any>(environment.USER_URL).pipe(
             map((user) => {
-                return user != null && user.authId === authId;
+                return user != null;
             }));
     }
 }

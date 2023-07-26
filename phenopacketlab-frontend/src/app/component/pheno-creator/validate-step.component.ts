@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { AuthService, User } from '@auth0/auth0-angular';
+import { forkJoin, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
@@ -44,11 +46,14 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
+  user: User;
+
   constructor(public phenopacketService: PhenopacketService, private downloadService: DownloadService,
     private cohortService: CohortService,
     private metadataService: MetadataService,
     private dialogService: DialogService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService) {
 
   }
 
@@ -58,27 +63,20 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     if (this.phenopacket === undefined) {
       // navigate to first page of creator as phenopacket is not created
       this.router.navigate(['creator/individual']);
+      return;
     }
     this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
     });
-    // initialize metadata
-    this.initializeMetadata();
-    // Retrieve all missing resource prefixes in phenopacket metadata
-    this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
-      this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
-        let resources;
-        if (prefixResources?.length > 0) {
-          resources = [];
-        }
-        for (const item of prefixResources) {
-          resources.push(item.resource);
-        }
-        this.initializeMetadata();
-        if (this.phenopacket && this.phenopacket.metaData) {
-          this.phenopacket.metaData.resources = resources;
-        }
-      });
+
+    forkJoin({
+      user: this.authService.user$.pipe(first()),
+      resources: this.metadataService.getPrefixResourcesForPhenopacket(this.getPhenopacketJSON(this.phenopacket))
+    }).subscribe((results) => {
+      this.user = results.user;
+      this.initializeMetadata(results.user, results.resources);
+    });
+
     this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
@@ -99,14 +97,15 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
   }
 
-  initializeMetadata() {
+  initializeMetadata(user, prefixResources) {
     if (this.phenopacket.metaData === undefined) {
       this.phenopacket.metaData = new MetaData();
     }
+    const orcId = this.orcidFromSub(user);
     // initialize metadata
-    this.phenopacket.metaData.createdBy = '';
-    this.phenopacket.metaData.submittedBy = '';
-    this.phenopacket.metaData.resources = undefined;
+    this.phenopacket.metaData.createdBy = orcId;
+    this.phenopacket.metaData.submittedBy = orcId;
+    this.phenopacket.metaData.resources = prefixResources.map((item) => item.resource);;
     // create the timestamp created date
     this.created = new Date().toISOString();
     this.phenopacket.metaData.created = this.created;
@@ -115,53 +114,54 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   complete() {
     this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
-      this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
-        header: 'Validation results',
-        width: '50%',
-        contentStyle: { overflow: 'auto' },
-        baseZIndex: 10000,
-        resizable: true,
-        data: {
-          validationResults: validationResults,
-          phenopacket: this.phenopacket
+      // If not valid show dialog.
+      // Otherwise save object and move to phenopacket list
+      if (validationResults.validationResults.length === 0) {
+        // create the timestamp created date
+        this.created = new Date().toISOString();
+
+        // set metadata
+        if (this.createdBySuffix !== undefined) {
+          this.createdByPrefix = 'ORCiD:';
+        } else {
+          this.createdByPrefix = 'Anonymous';
         }
-      });
-      this.ref.onClose.subscribe(validationResult => {
-        if (validationResult) {
-          const isValid = validationResult.isValid;
-          if (isValid) {
-            // create the timestamp created date
-            this.created = new Date().toISOString();
+        if (this.submittedBySuffix !== undefined) {
+          this.submittedByPrefix = 'ORCiD:';
+        } else {
+          this.submittedByPrefix = 'Anonymous';
+        }
+        this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
+        this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
+        this.phenopacket.metaData.created = this.created;
+        this.phenopacket.metaData.externalReferences = [];
+        this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
 
-            // set metadata
-            if (this.createdBySuffix !== undefined) {
-              this.createdByPrefix = 'ORCiD:';
-            } else {
-              this.createdByPrefix = 'Anonymous';
-            }
-            if (this.submittedBySuffix !== undefined) {
-              this.submittedByPrefix = 'ORCiD:';
-            } else {
-              this.submittedByPrefix = 'Anonymous';
-            }
-            this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
-            this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
-            this.phenopacket.metaData.created = this.created;
-            this.phenopacket.metaData.externalReferences = [];
-            this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
+        this.active = false;
 
-            this.active = false;
-            // add to cohort
-            this.cohortService.addCohortMember(this.phenopacket);
-            // reset phenopacket
-            this.phenopacketService.phenopacket = undefined;
-
+        if (this.user) {
+          this.phenopacketService.savePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(() => {
             this.router.navigate(['phenopackets']);
-          }
+          });
+        } else {
+          this.cohortService.addCohortMember(this.phenopacket);
+          this.router.navigate(['phenopackets']);
         }
-      });
+        this.phenopacketService.phenopacket = undefined;
+      } else {
+        this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
+          header: 'Validation results',
+          width: '50%',
+          contentStyle: { overflow: 'auto' },
+          baseZIndex: 10000,
+          resizable: true,
+          data: {
+            validationResults: validationResults,
+            phenopacket: this.phenopacket
+          }
+        });
+      }
     });
-
   }
 
   prevPage() {
@@ -186,5 +186,14 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
    */
   getPhenopacketJSON(phenopacket: Phenopacket): string {
     return this.downloadService.saveAsJson(phenopacket, false);
+  }
+
+  orcidFromSub(user) {
+    const userPieces = user.sub.split('|');
+    if (userPieces.length > 2) {
+      return `${userPieces[1]}:${userPieces[2]}`;
+    } else {
+      return '';
+    }
   }
 }

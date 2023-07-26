@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AuthService, User } from '@auth0/auth0-angular';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { CohortService } from 'src/app/services/cohort.service';
@@ -14,6 +16,7 @@ import { Table } from 'primeng/table';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UserService } from '../../services/user.service';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 
 @Component({
@@ -38,8 +41,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
 
   phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
-  phenopackets: Phenopacket[];
   ref: DynamicDialogRef;
+  user: User;
 
   constructor(public phenopacketService: PhenopacketService,
     private cohortService: CohortService,
@@ -49,13 +52,22 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private downloadService: DownloadService,
     private dialogService: DialogService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService, private userService: UserService) {
   }
 
   ngOnInit(): void {
+    this.authService.user$.pipe(distinctUntilChanged((p, q) => p.sub === q.sub)).subscribe((user) => {
+        if (user) {
+          this.user = user;
+          this.phenopacketService.fetchAllPhenopackets().subscribe((phenopackets: Phenopacket []) => {
+            this.cohort = new Cohort();
+            this.cohort.members = phenopackets;
+          });
+        }
+    });
     this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
-      this.phenopackets = cohort.members;
     });
   }
 
@@ -83,9 +95,21 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         if (removeIdx > -1) {
           this.tabs.splice(removeIdx, 1);
         }
-        // Remove them from the cohort.
-        this.cohortService.removeCohortMember(individual);
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
+        // if user exist call the remove service.
+        if (this.user) {
+          this.phenopacketService.deletePhenopacket(individual.dbId).subscribe(() => {
+            this.cohortService.removeCohortMember(individual);
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
+          }, () => {
+            this.messageService.add({ severity: 'error', summary: 'Failed.',
+              detail: `Phenopacket ${individual.id} failed to be removed.` });
+          });
+        } else {
+          // Remove them from the cohort.
+          this.cohortService.removeCohortMember(individual);
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
+        }
+
       },
       reject: () => { }, key: 'positionDialog'
     });

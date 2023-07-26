@@ -31,20 +31,20 @@ export class AppComponent implements OnInit {
     });
 
     this.authService.user$.pipe(
-        filter(user => Boolean(user)),
-        take(1),
+        filter(user => Boolean(user))
       ).subscribe((user) => {
           if (user != null) {
-              this.userService.check(user.sub).pipe(first()).subscribe();
-          } else {
-              // We will warn someone if they are not logged in and they have been on the site for at least 15secs
-              // about data not being saved.
-              timer(15000).pipe(take(1)).subscribe(() => {
-                  const message = 'Your data will not be saved.';
-                  // TODO: Show alert that their phenopackets would not be saved.
-                  this.messageService.add({ severity: 'warn', summary: 'No Login Found', detail: message, sticky: true });
-              });
+              this.userService.check().pipe(first()).subscribe();
           }
       });
+
+    this.authService.isAuthenticated$.pipe().subscribe((isAuthenticated) => {
+        if (!isAuthenticated) {
+            timer(15000).pipe(take(1)).subscribe(() => {
+                const message = 'Your data will not be saved.';
+                this.messageService.add({ severity: 'warn', summary: 'No Login Found', detail: message, sticky: true });
+            });
+        }
+    });
   }
 }

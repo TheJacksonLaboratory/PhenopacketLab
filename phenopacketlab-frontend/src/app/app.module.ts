@@ -64,7 +64,7 @@ const config: AuthConfig = {
     ],
     exports: [RouterModule],
     providers: [{ provide: MatDialogRef, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

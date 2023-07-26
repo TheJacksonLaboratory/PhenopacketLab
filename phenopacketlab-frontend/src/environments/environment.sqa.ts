@@ -35,6 +35,7 @@ export const environment = {
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
   MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
   USER_URL: `${API_URL}/user`,
+  PHENOPACKET_URL: `${API_URL}/phenopacket`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
@@ -45,7 +46,15 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: `${API_URL}/user/*`,
+          uri: `${API_URL}/user`,
+          tokenOptions: {
+            authorizationParams: {
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        },
+        {
+          uri: `${API_URL}/phenopacket`,
           tokenOptions: {
             authorizationParams: {
               audience: `https://phenopacketlab.jax.org`

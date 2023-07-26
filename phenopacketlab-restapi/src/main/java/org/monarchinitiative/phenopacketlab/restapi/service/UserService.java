@@ -28,7 +28,7 @@ public class UserService {
 		return this.userRepository.existsUserByAuthId(userAuthentication.getAuthId());
 	}
 
-	private User fromAuthentication(Authentication authentication){
+	public static User fromAuthentication(Authentication authentication){
 		String authId = authentication.getName();
 		if(authId != null && !authId.isBlank()){
 			return new User(authId);

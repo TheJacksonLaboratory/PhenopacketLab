@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Phenopacket } from '../models/phenopacket';
 import { ProfileSelection } from '../models/profile';
+import { DownloadService } from './download-service';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 const modifiersUrl = environment.MODIFIERS_URL;
@@ -47,7 +49,7 @@ export class PhenopacketService {
     private validated = new Subject<any>();
     validated$ = this.validated.asObservable();
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private downloadService: DownloadService) {
     }
     setPhenopacket(phenopacket: Phenopacket) {
         this.phenopacket = phenopacket;
@@ -60,6 +62,30 @@ export class PhenopacketService {
     validatePhenopacket(phenopacket: string): Observable<any> {
         const headers = { 'content-type': 'text/plain' };
         return this.http.post(phenopacketValidateUrl, phenopacket, { headers });
+    }
+
+    savePhenopacket(phenopacket: string): Observable<any> {
+        const headers = { 'content-type': 'text/plain' };
+        return this.http.post(environment.PHENOPACKET_URL, phenopacket, { headers });
+    }
+
+    updatePhenopacket(phenopacket: string) {
+        const headers = { 'content-type': 'text/plain' };
+        return this.http.put(environment.PHENOPACKET_URL, phenopacket, { headers });
+    }
+
+    fetchAllPhenopackets(): Observable<Phenopacket[]> {
+        return this.http.get<Phenopacket[]>(environment.PHENOPACKET_URL).pipe(map((phenopacketList: any[]) => {
+            return phenopacketList.map((result) => {
+                result.phenopacket.dbId = result.id;
+                return result.phenopacket;
+            });
+        }));
+    }
+
+    deletePhenopacket(id): Observable<any> {
+        const params = new HttpParams().append('id', id);
+        return this.http.delete(environment.PHENOPACKET_URL, {params});
     }
 
     /**

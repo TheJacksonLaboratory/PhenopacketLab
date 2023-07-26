@@ -20,7 +20,7 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<User> check(Authentication authentication) {
 		if (authentication == null) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 		return ResponseEntity.ok(userService.getOrCreate(authentication));
 	}
