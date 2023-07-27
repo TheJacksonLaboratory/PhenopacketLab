@@ -7,7 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
-import { MedicalActionDetailDialogComponent } from './medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
+import { MedicalActionDialogComponent } from '../../shared/dialog/medical-action-dialog/medical-action-dialog.component';
 
 @Component({
     selector: 'app-medical-action',
@@ -59,7 +59,7 @@ export class MedicalActionComponent implements OnInit {
         if (medicalAction === undefined || medicalAction === null) {
             medicalAction = new MedicalAction();
         }
-        this.ref = this.dialogService.open(MedicalActionDetailDialogComponent, {
+        this.ref = this.dialogService.open(MedicalActionDialogComponent, {
             header: 'Edit Medical action',
             width: '70%',
             contentStyle: { 'overflow': 'auto' },

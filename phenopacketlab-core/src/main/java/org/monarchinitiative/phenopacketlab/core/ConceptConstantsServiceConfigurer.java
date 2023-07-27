@@ -54,6 +54,7 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> structuralTypeConstants = configureStructuralTypeConstants(resourceService);
         Optional<SubtreeNode> structuralTypeTreeConstants = configureStructuralTypeTreeConstants(resourceService, hierarchyServiceRegistry);
         Map<String, List<Concept>> contigConstants = configureContigConstants();
+        Optional<SubtreeNode> routeOfAdministrationTreeConstants = configureRouteOfAdministrationTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -73,6 +74,7 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateTreeConstants.orElse(null),
                 structuralTypeConstants,
                 structuralTypeTreeConstants.orElse(null),
+                routeOfAdministrationTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -289,6 +291,11 @@ public class ConceptConstantsServiceConfigurer {
     private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("GENO:0000875"), "GENO", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureRouteOfAdministrationTreeConstants(ConceptResourceService resourceService,
+                                                                     OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C38114"), "NCIT", null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

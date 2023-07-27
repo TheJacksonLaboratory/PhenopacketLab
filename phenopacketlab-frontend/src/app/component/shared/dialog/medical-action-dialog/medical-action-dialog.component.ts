@@ -1,28 +1,24 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
+import { Utils } from 'src/app/component/shared/utils';
 import { OntologyClass, Procedure, TimeElement, TimeInterval } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
-import { MedicalActionService } from 'src/app/services/medical-action.search.service';
-import { Utils } from '../../utils';
+import { MedicalActionService } from 'src/app/services/medical-action.service';
 
 @Component({
-  selector: 'app-medical-action-edit',
-  templateUrl: './medical-action-edit.component.html',
-  styleUrls: ['./medical-action-edit.component.scss']
+  selector: 'app-medical-action-dialog',
+  templateUrl: './medical-action-dialog.component.html',
+  styleUrls: ['./medical-action-dialog.component.scss']
 })
+export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
-export class MedicalActionEditComponent implements OnInit, OnDestroy {
-
-  @Input()
   medicalAction: MedicalAction;
-  @Input()
   diseases: Disease[];
-  @Output()
-  medicalActionChange = new EventEmitter<MedicalAction>();
 
   // action: any;
   treatmentTarget: OntologyClass;
@@ -78,7 +74,12 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
 
   valid: any = {};
 
-  constructor(public medicalActionService: MedicalActionService, private messageService: MessageService) {
+  constructor(public medicalActionService: MedicalActionService,
+              private messageService: MessageService,
+              public ref: DynamicDialogRef,
+              public config: DynamicDialogConfig) {
+    this.medicalAction = config.data?.medicalAction;
+    this.diseases = config.data?.diseases;
   }
 
   ngOnInit() {
@@ -190,7 +191,6 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     if (this.medicalAction) {
       // retrieve disease term from event obj
       this.medicalAction.treatmentTarget = eventObj.value?.term;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -198,21 +198,18 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     if (this.medicalAction) {
       // retrieve intent from object
       this.medicalAction.treatmentIntent = eventObj.value;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
   updateTreatmentResponse(eventObj: any) {
     if (this.medicalAction) {
       this.medicalAction.responseToTreatment = eventObj.value;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
   updateTreatmentTerminationReason(eventObj: any) {
     if (this.medicalAction) {
       this.medicalAction.treatmentTerminationReason = eventObj.value;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -220,19 +217,11 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
 
   }
 
-  onCancelClick(): void {
-  }
-
-  onOkClick() {
-    return { 'medical_action': this.medicalAction };
-  }
-
   changeProcedureCode(eventObj: OntologyClass) {
     this.procedureCode = eventObj;
     // update medicalAction
     if (this.medicalAction && this.medicalAction.procedure) {
       this.medicalAction.procedure.code = this.procedureCode;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   changeAgent(eventObj: OntologyClass) {
@@ -240,7 +229,6 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.treatment) {
       this.medicalAction.treatment.agent = this.agent;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   changeRouteOfAdministration(eventObj: OntologyClass) {
@@ -248,7 +236,6 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.treatment) {
       this.medicalAction.treatment.routeOfAdministration = this.routeOfAdministration;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -261,10 +248,8 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     // push changes to medicalAction
     if (this.medicalAction && this.medicalAction.procedure) {
       this.medicalAction.procedure.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     } else if (this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -272,10 +257,8 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     this.bodySite = undefined;
     if (this.medicalAction && this.medicalAction.procedure) {
       this.medicalAction.procedure.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     } else if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -285,7 +268,6 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.treatment) {
       this.medicalAction.treatment.drugType = this.drugType;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -302,23 +284,22 @@ export class MedicalActionEditComponent implements OnInit, OnDestroy {
   deleteDoseInterval(doseInterval: DoseInterval) {
     this.doseIntervals = this.doseIntervals.filter(val => val.key !== doseInterval.key);
     if (this.doseIntervals.length === 0) {
-        this.doseIntervalVisible = false;
+      this.doseIntervalVisible = false;
     }
   }
   onDoseIntervalEditInit(doseInterval: DoseInterval) {
     this.clonedDoseIntervals[doseInterval.key] = { ...doseInterval };
-}
+  }
 
-onDoseIntervalEditSave(doseInterval: DoseInterval) {
+  onDoseIntervalEditSave(doseInterval: DoseInterval) {
     delete this.clonedDoseIntervals[doseInterval.key];
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Dose Interval is updated' });
-}
+  }
 
-onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
+  onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     this.medicalAction.treatment.doseIntervals[index] = this.clonedDoseIntervals[doseInterval.key];
     delete this.clonedDoseIntervals[doseInterval.key];
-    this.medicalActionChange.emit(this.medicalAction);
-}
+  }
 
   inputHandler(e: any, id: number, key: string) {
     if (!this.valid[id]) {
@@ -340,7 +321,6 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.modality = this.modality;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   changeBodySite(eventObj: any) {
@@ -348,10 +328,8 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.procedure) {
       this.medicalAction.procedure.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     } else if (this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.bodySite = this.bodySite;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   getBodySiteDisplay(bodySite: any) {
@@ -374,7 +352,6 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.dosage = this.dosage;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   changeFractions(eventObj: number) {
@@ -382,7 +359,6 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.fractions = this.fractions;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
 
@@ -392,7 +368,6 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
       this.medicalAction.therapeuticRegimen.identifier = this.identifier;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
   onRegimenStatusChange(eventObj: any) {
@@ -400,8 +375,14 @@ onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
       this.medicalAction.therapeuticRegimen.regimenStatus = this.regimenStatus;
-      this.medicalActionChange.emit(this.medicalAction);
     }
   }
-}
 
+  onCancelClick(): void {
+    this.ref.close();
+  }
+
+  onOkClick() {
+    this.ref.close(this.medicalAction);
+  }
+}

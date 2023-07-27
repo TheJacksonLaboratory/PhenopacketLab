@@ -23,7 +23,6 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { PhenopacketComponent } from './phenopacket.component';
 import { MedicalActionComponent } from './medical-action/medical-action.component';
 import { MedicalActionDetailComponent } from './medical-action/medical-action-detail/medical-action-detail.component';
-import { MedicalActionDetailDialogComponent } from './medical-action/medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
 import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
@@ -66,7 +65,6 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     DiseaseDetailComponent,
     MedicalActionComponent,
     MedicalActionDetailComponent,
-    MedicalActionDetailDialogComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
     FileComponent,
