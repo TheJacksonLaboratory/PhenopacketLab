@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BiosampleDetailDialogComponent } from './biosample-detail-dialog.component';
 
 
@@ -11,12 +10,9 @@ describe('BiosampleDetailDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BiosampleDetailDialogComponent ],
       imports: [
-        MatDialogModule
       ],
       providers: [
-        { provide: MatDialog, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+
       ]
     })
     .compileComponents();

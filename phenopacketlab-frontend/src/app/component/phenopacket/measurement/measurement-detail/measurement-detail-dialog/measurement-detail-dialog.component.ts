@@ -1,5 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
 import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { ComplexValue, Measurement, Quantity, TypedQuantity, Value } from 'src/app/models/measurement';
 import { MeasurementService } from 'src/app/services/measurement.search.service';
@@ -30,10 +29,7 @@ export class MeasurementDetailDialogComponent implements OnInit {
 
   measurement: Measurement;
 
-  constructor(public dialogRef: MatDialogRef<MeasurementDetailDialogComponent>,
-    public searchService: MeasurementService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.measurement = data['measurement'];
+  constructor(public searchService: MeasurementService) {
   }
 
   ngOnInit() {
@@ -92,7 +88,7 @@ export class MeasurementDetailDialogComponent implements OnInit {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close(false);
+    // this.dialogRef.close(false);
   }
 
   onOkClick() {

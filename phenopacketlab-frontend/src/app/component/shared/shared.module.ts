@@ -5,10 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
 
 import { MaterialModule } from './material.module';
-import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { PrimeModule } from './prime.module';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
-import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
 import { TimeElementComponent } from './time-element/time-element.component';
 import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -47,10 +45,8 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     AngularSplitModule
   ],
   declarations: [
-    MessageDialogComponent,
     SpinnerDialogComponent,
     TimeElementComponent,
-    SearchFilterComponent,
     AgeComponent,
     AgeRangeComponent,
     GestationalAgeComponent,
@@ -78,10 +74,8 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     FileDialogComponent
   ],
   exports: [
-    MessageDialogComponent,
     SpinnerDialogComponent,
     TimeElementComponent,
-    SearchFilterComponent,
     AgeComponent,
     AgeRangeComponent,
     GestationalAgeComponent,

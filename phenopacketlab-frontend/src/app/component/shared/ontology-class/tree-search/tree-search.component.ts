@@ -174,6 +174,7 @@ export class ChecklistDatabase {
 }
 
 /**
+ * Not used
  * @title Tree with checkboxes
  */
 @Component({

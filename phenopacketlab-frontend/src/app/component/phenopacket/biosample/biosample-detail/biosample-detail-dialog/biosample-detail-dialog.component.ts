@@ -1,5 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { BioSample } from 'src/app/models/biosample';
 
 @Component({
@@ -12,10 +11,9 @@ export class BiosampleDetailDialogComponent implements OnInit {
 
   biosample: BioSample;
 
-  constructor(public dialogRef: MatDialogRef<BiosampleDetailDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.biosample = data['biosample'];
-     }
+  constructor() {
+
+  }
 
   ngOnInit() {
     if (this.biosample) {
@@ -25,7 +23,6 @@ export class BiosampleDetailDialogComponent implements OnInit {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close(false);
   }
 
   onOkClick() {
