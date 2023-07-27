@@ -34,6 +34,7 @@ export class TreeSelectComponent implements OnInit {
         if (this.selectedNodes === undefined) {
             this.selectedNodes = [];
         }
+        console.log(this.selectedNodes);
         this.setNodeSelection(this.nodes, this.selectedNodes);
     }
 
@@ -76,7 +77,7 @@ export class TreeSelectComponent implements OnInit {
         // update selectedNodes
         if (checked === false) {
             // remove from selectedNodes
-            const index = this.selectedNodes.indexOf(node, 0);
+            const index =  this.selectedNodes.findIndex(x => x.key === node.key);
             if (index > -1) {
                 this.selectedNodes.splice(index, 1);
             }
@@ -84,6 +85,7 @@ export class TreeSelectComponent implements OnInit {
             this.selectedNodes.push(node);
         }
         this.setNodeSelection(this.nodes, this.selectedNodes);
+        console.log(this.selectedNodes);
         this.selectedNodesChange.emit(this.selectedNodes);
     }
     /**

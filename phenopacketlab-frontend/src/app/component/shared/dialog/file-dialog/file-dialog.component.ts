@@ -25,6 +25,8 @@ export class FileDialogComponent implements OnInit {
 
   mode: DialogMode;
   okLabel = 'Add file';
+  assemblies = ['GRCh38', 'GRCh37'];
+  formats = ['VCF', 'BED', ' CRAM', 'BAM', 'SAM'];
 
   constructor(private fb: FormBuilder,
               public messageService: MessageService,

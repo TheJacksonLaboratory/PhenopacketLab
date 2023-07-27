@@ -8,6 +8,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
 import { DialogMode } from 'src/app/models/base';
 import { Utils } from '../../shared/utils';
+import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({
     selector: 'app-interpretation',
@@ -26,6 +27,8 @@ export class InterpretationComponent implements OnInit {
 
     @Input()
     interpretations: Interpretation[];
+    @Input()
+    profile: ProfileSelection;
     @Input()
     phenopacket: Phenopacket;
     @Output()
@@ -52,9 +55,12 @@ export class InterpretationComponent implements OnInit {
             resizable: true,
             draggable: true,
             modal: true,
-            data: { interpretation: interpretation,
-                    phenopacket: this.phenopacket,
-                    mode: DialogMode.ADD }
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                profile: this.profile,
+                mode: DialogMode.ADD
+            }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);
@@ -71,9 +77,12 @@ export class InterpretationComponent implements OnInit {
             resizable: true,
             draggable: true,
             modal: true,
-            data: { interpretation: interpretation,
-                    phenopacket: this.phenopacket,
-                    mode: DialogMode.EDIT }
+            data: {
+                interpretation: interpretation,
+                phenopacket: this.phenopacket,
+                profile: this.profile,
+                mode: DialogMode.EDIT
+            }
         });
         this.ref.onClose.subscribe((interpret: Interpretation) => {
             this.updateInterpretation(interpret);
@@ -82,6 +91,9 @@ export class InterpretationComponent implements OnInit {
 
     updateInterpretation(interpretation: Interpretation) {
         if (interpretation) {
+            if (this.interpretations === undefined) {
+                this.interpretations = [];
+            }
             const indexToUpdate = this.interpretations.findIndex(item => item.id === interpretation.id);
             interpretation.key = Utils.getBiggestKey(this.interpretations) + 1;
             if (indexToUpdate === -1) {

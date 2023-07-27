@@ -34,6 +34,21 @@ public class PhenopacketController {
 	}
 
 	@PostMapping
+	ResponseEntity<Phenopacket> update(Authentication authentication, @RequestParam Long id, @RequestBody String phenopacket){
+		User user = userService.getOrCreate(authentication);
+		if (phenopacket.isBlank()){
+			return ResponseEntity.badRequest().build();
+		} else {
+			final boolean updated = this.phenopacketService.update(user, id, phenopacket);
+			if (updated){
+				return ResponseEntity.ok().build();
+			} else {
+				return ResponseEntity.internalServerError().build();
+			}
+		}
+	}
+
+	@PutMapping
 	ResponseEntity<Phenopacket> save(Authentication authentication, @RequestBody String phenopacket){
 		User user = userService.getOrCreate(authentication);
 		if (phenopacket.isBlank()){
@@ -46,11 +61,6 @@ public class PhenopacketController {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
-
-//	@PutMapping
-//	ResponseEntity<Phenopacket> update(Authentication authentication, @RequestParam Long id, @RequestBody String phenopacket){
-//		return false;
-//	}
 
 	@DeleteMapping
 	ResponseEntity<Phenopacket> delete(Authentication authentication, @RequestParam Long id){

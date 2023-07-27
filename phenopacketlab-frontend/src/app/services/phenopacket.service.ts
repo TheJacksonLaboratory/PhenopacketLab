@@ -66,12 +66,13 @@ export class PhenopacketService {
 
     savePhenopacket(phenopacket: string): Observable<any> {
         const headers = { 'content-type': 'text/plain' };
-        return this.http.post(environment.PHENOPACKET_URL, phenopacket, { headers });
+        return this.http.put(environment.PHENOPACKET_URL, phenopacket, { headers });
     }
 
-    updatePhenopacket(phenopacket: string) {
+    updatePhenopacket(id: number, phenopacket: string) {
         const headers = { 'content-type': 'text/plain' };
-        return this.http.put(environment.PHENOPACKET_URL, phenopacket, { headers });
+        return this.http.post(environment.PHENOPACKET_URL, phenopacket,
+            { headers, params: new HttpParams().set('id', id) });
     }
 
     fetchAllPhenopackets(): Observable<Phenopacket[]> {

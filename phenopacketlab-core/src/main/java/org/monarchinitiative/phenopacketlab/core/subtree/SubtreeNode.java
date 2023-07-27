@@ -42,7 +42,9 @@ public class SubtreeNode {
     public boolean isSelectable() { return selectable; }
     public void setLeaf(boolean leaf) {
         this.leaf = leaf;
-        this.selectable = leaf;
+    }
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
     }
 
     @Override

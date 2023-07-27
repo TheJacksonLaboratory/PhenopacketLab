@@ -2,54 +2,50 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { File } from 'src/app/models/base';
-import { Profile, ProfileSelection } from 'src/app/models/profile';
+import { Phenopacket } from 'src/app/models/phenopacket';
+import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
     selector: 'app-file-step',
     templateUrl: './file-step.component.html',
     styleUrls: ['./pheno-creator.component.scss']
-  })
+})
 export class FileStepComponent implements OnInit, OnDestroy {
 
     files: File[];
+    phenopacket: Phenopacket;
 
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    constructor (public phenopacketService: PhenopacketService, private router: Router) {
-
+    constructor(public phenopacketService: PhenopacketService,
+        private router: Router) {
     }
 
     ngOnInit() {
-        // this.files = this.phenopacketService.getPhenopackt().files;
+        this.phenopacket = this.phenopacketService.phenopacket;
+        if (this.phenopacket === undefined) {
+            // navigate to first page of creator as phenopacket is not created
+            this.router.navigate(['creator/individual']);
+            this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+        } else {
+            this.files = this.phenopacket.files;
+        }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
     }
-
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
     }
 
-    nextPage() {
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/validate`]);
-                return;
-            }
-            // Possible other profiles to come
-        }
-    }
-    prevPage() {
-        for (const profile of Profile.profileSelectionOptions) {
-            if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-                this.router.navigate([`creator/${profile.path}/medical-actions`]);
-                return;
-            }
-            // Possible other profiles to come
+    updateFiles(files: File[]) {
+        if (this.phenopacket) {
+            this.files = files;
+            this.phenopacket.files = files;
         }
     }
 }

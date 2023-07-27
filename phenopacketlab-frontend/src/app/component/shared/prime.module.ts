@@ -37,6 +37,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SpinnerModule } from 'primeng/spinner';
 import { ChipModule } from 'primeng/chip';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     InputMaskModule,
     AutoCompleteModule,
     ChipModule,
+    ToggleButtonModule,
     SkeletonModule
   ],
   exports: [
@@ -116,6 +118,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     InputMaskModule,
     AutoCompleteModule,
     ChipModule,
+    ToggleButtonModule,
     SkeletonModule
   ],
   providers: [MessageService, ConfirmationService]

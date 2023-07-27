@@ -68,7 +68,6 @@ export class Profile {
     }
     ];
     static profileSelectionOptions = [
-        // tslint:disable-next-line:max-line-length
         {
             label: 'Rare disease', value: ProfileSelection.RARE_DISEASE, path: 'rare', steps: Profile.rareMenuItems
         },

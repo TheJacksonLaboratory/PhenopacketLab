@@ -37,6 +37,11 @@ public class Phenopacket {
 		return userId;
 	}
 
+
+	public void setPhenopacket(String phenopacket) {
+		this.phenopacket = new JSONObject(phenopacket);
+	}
+
 	@Override
 	public String toString() {
 		return "Phenopacket{" +

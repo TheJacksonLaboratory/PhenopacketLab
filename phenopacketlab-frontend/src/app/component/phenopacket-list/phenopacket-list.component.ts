@@ -121,7 +121,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
 
   startRareDisease() {
     this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
-    this.router.navigate(['creator/rare']);
+    this.router.navigate(['creator']);
   }
 
   downloadPhenopacket(phenopacket: Phenopacket) {

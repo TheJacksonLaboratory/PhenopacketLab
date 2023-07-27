@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacketlab.restapi.domain.User;
 import org.monarchinitiative.phenopacketlab.restapi.repository.PhenopacketRepository;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PhenopacketService {
@@ -29,6 +30,20 @@ public class PhenopacketService {
 		} catch (Exception e){
 			return false;
 		}
+	}
+
+	public boolean update(User user, Long id, String phenopacket){
+		Optional<Phenopacket> existing =this.phenopacketRepository.findByIdAndUserId(user.getId(), id);
+		if (existing.isPresent()) {
+			existing.get().setPhenopacket(phenopacket);
+			try {
+				this.phenopacketRepository.save(existing.get());
+				return true;
+			} catch(Exception e){
+				return false;
+			}
+		}
+		return false;
 	}
 
 	public void delete(User user, Long id){

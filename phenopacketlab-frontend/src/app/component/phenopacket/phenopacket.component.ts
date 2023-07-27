@@ -196,16 +196,4 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
       this.phenopacket.files = files;
     }
   }
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
 }
