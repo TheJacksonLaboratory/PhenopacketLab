@@ -19,6 +19,9 @@ phenopacketlab:
   # Set vocabularies for using as phenotype features.
   phenotype-prefixes:
     - 'HP'
+  # Set vocabularies for using as chemical entity concepts.
+  chemical-entity-prefixes:
+    - 'CHEBI'
 
 api:
   version: /api

@@ -13,18 +13,22 @@ import java.util.stream.Stream;
  * {@linkplain MultipurposeConceptConstantService} uses {@link ConceptResourceService} to fetch concepts to be used
  * in various parts of the application.
  */
-public class MultipurposeConceptConstantService implements DiseaseService, PhenotypicFeatureService {
+public class MultipurposeConceptConstantService implements DiseaseService, PhenotypicFeatureService, ChemicalEntityService {
 
     private final ConceptResourceService conceptResourceService;
     private final List<String> diseasePrefixes;
     private final List<String> phenotypePrefixes;
 
+    private final List<String> chemicalEntityPrefixes;
+
     public MultipurposeConceptConstantService(ConceptResourceService conceptResourceService,
                                               Collection<String> diseasePrefixes,
-                                              List<String> phenotypePrefixes) {
+                                              List<String> phenotypePrefixes,
+                                              List<String> chemicalEntityPrefixes) {
         this.conceptResourceService = Objects.requireNonNull(conceptResourceService);
         this.diseasePrefixes = List.copyOf(Objects.requireNonNull(diseasePrefixes));
         this.phenotypePrefixes = List.copyOf(Objects.requireNonNull(phenotypePrefixes));
+        this.chemicalEntityPrefixes = List.copyOf(Objects.requireNonNull(chemicalEntityPrefixes));
     }
 
     @Override
@@ -65,6 +69,26 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
     @Override
     public SearchIdentifiedConcept searchPhenotypeConcepts(String query, int limit) {
         return searchConcepts(query, limit, phenotypePrefixes);
+    }
+
+    @Override
+    public Collection<String> chemicalEntityNamespacePrefixes() {
+        return chemicalEntityPrefixes;
+    }
+
+    @Override
+    public Optional<IdentifiedConcept> chemicalEntityConceptById(TermId id) {
+        return findConceptFromSelectedPrefixes(id, chemicalEntityPrefixes);
+    }
+
+    @Override
+    public SearchIdentifiedConcept searchChemicalEntityConcepts(String query, int limit) {
+        return searchConcepts(query, limit, chemicalEntityPrefixes);
+    }
+
+    @Override
+    public Stream<IdentifiedConcept> allChemicalEntityConcepts() {
+        return findAllConceptsFromSelectedPrefixes(chemicalEntityPrefixes);
     }
 
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {

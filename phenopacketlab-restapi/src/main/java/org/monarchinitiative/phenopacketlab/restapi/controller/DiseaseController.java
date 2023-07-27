@@ -27,7 +27,7 @@ public class DiseaseController {
     }
 
     @RequestMapping(value = {"${api.version}/diseases/search"}, method = RequestMethod.GET)
-    public ResponseEntity<SearchIdentifiedConcept> searchFeature(@RequestParam("query") String query,
+    public ResponseEntity<SearchIdentifiedConcept> searchDisease(@RequestParam("query") String query,
                                                                  @RequestParam("max") Optional<Integer> max) {
         if (query == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

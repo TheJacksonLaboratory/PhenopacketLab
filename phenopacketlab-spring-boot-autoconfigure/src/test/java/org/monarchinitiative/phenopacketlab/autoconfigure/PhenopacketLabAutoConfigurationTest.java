@@ -35,6 +35,10 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
         PhenotypicFeatureService phenotypicFeatureService = context.getBean(PhenotypicFeatureService.class);
         assertThat(phenotypicFeatureService, is(notNullValue()));
         assertThat(phenotypicFeatureService.phenotypeNamespacePrefixes(), equalTo(List.of()));
+
+        ChemicalEntityService chemicalEntityService = context.getBean(ChemicalEntityService.class);
+        assertThat(chemicalEntityService, is(notNullValue()));
+        assertThat(chemicalEntityService.chemicalEntityNamespacePrefixes(), equalTo(List.of()));
     }
 
     @Test
