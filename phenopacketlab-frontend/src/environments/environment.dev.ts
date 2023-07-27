@@ -32,6 +32,7 @@ export const environment = {
   ALLELIC_STATE_URL: `${API_URL}/constants/tree-allelic-states`,
   STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
   ROUTE_OF_ADMINISTRATION_URL: `${API_URL}/constants/tree-route-administration`,
+  SCHEDULE_FREQUENCY_URL: `${API_URL}/constants/tree-schedule-frequency`,
   USER_URL: `${API_URL}/user`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',

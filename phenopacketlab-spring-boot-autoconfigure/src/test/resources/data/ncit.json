@@ -1249,6 +1249,35 @@
           "val" : "Route of administration is primarily determined by the properties of the substance and the therapeutic objectives. The pharmacokinetic parameters of the drug are critically influenced by the route of administration. The major distinction between routes of administration is based on whether the drug takes effect merely in the local area where it is applied, or whether it reaches targeted destination through the systemic circulation. In the latter case, the substance is subject to the possible first-pass metabolism in the lungs, liver, and other organs."
         } ]
       }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C64493",
+      "lbl" : "Schedule Frequency",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A regimen for an intervention which consists of a specified number of instances within a specific time period."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Schedule Frequency"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C64493"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Quantitative Concept"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Schedule Frequency"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1882978"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Schedule_Frequency"
+        } ]
+      }
     }],
     "edges" : [ {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C12810",

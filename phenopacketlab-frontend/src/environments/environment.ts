@@ -39,6 +39,7 @@ export const environment = {
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
   MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
   ROUTE_OF_ADMINISTRATION_URL: `${API_URL}/constants/tree-route-administration`,
+  SCHEDULE_FREQUENCY_URL: `${API_URL}/constants/tree-schedule-frequency`,
   METADATA_URL: `${API_URL}/metadata`,
   RESOURCE_URL: `${API_URL}/resource`,
   USER_URL: `${API_URL}/user`,

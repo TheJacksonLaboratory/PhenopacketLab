@@ -134,6 +134,12 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-schedule-frequency", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getScheduleFrequencyTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.scheduleFrequencyTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")
     public ResponseEntity<List<Concept>> getContigs(@PathVariable("genomeAssembly") String genomeAssembly) {
         List<Concept> concepts = conceptConstantsService.contigConstants(genomeAssembly);

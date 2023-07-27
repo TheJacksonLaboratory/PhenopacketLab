@@ -10,12 +10,14 @@ const treatmentResponsesUrl = environment.MEDICAL_ACTION_TREATMENT_RESPONSES_URL
 const treatmentTerminationReasonsUrl = environment.MEDICAL_ACTION_TERMINATION_REASONS_URL;
 const adverseEventsUrl = environment.MEDICAL_ACTION_ADVERSE_EVENTS_URL;
 const routeOfAdministrationUrl = environment.ROUTE_OF_ADMINISTRATION_URL;
+const scheduleFrequencyUrl = environment.SCHEDULE_FREQUENCY_URL;
 
 
 @Injectable({ providedIn: 'root' })
 export class MedicalActionService {
 
     routesOfAdministration = new BehaviorSubject<any>(undefined);
+    scheduleFrequencies = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -57,6 +59,24 @@ export class MedicalActionService {
     private loadRoutesOfAdminsitration(): void {
         this.http.get(routeOfAdministrationUrl).subscribe(res => {
             this.routesOfAdministration.next(res);
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+    public getScheduleFrequencies(): Observable<OntologyTreeNode> {
+        // only if undefined, load from server
+        if (this.scheduleFrequencies.getValue() === undefined) {
+            console.log('Loading schedule frequencies...');
+            this.loadScheduleFrequencies();
+        }
+        // return routes for subscription even if the value is yet undefined.
+        return this.routesOfAdministration.asObservable();
+    }
+
+    private loadScheduleFrequencies(): void {
+        this.http.get(scheduleFrequencyUrl).subscribe(res => {
+            this.scheduleFrequencies.next(res);
         }, (error) => {
             console.log(error);
         });

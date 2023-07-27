@@ -55,6 +55,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> structuralTypeTreeConstants = configureStructuralTypeTreeConstants(resourceService, hierarchyServiceRegistry);
         Map<String, List<Concept>> contigConstants = configureContigConstants();
         Optional<SubtreeNode> routeOfAdministrationTreeConstants = configureRouteOfAdministrationTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -75,6 +76,7 @@ public class ConceptConstantsServiceConfigurer {
                 structuralTypeConstants,
                 structuralTypeTreeConstants.orElse(null),
                 routeOfAdministrationTreeConstants.orElse(null),
+                scheduleFrequencyTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -296,6 +298,11 @@ public class ConceptConstantsServiceConfigurer {
     private static Optional<SubtreeNode> configureRouteOfAdministrationTreeConstants(ConceptResourceService resourceService,
                                                                      OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C38114"), "NCIT", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureScheduleFrequencyTreeConstants(ConceptResourceService resourceService,
+                                                                                 OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C64493"), "NCIT", null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

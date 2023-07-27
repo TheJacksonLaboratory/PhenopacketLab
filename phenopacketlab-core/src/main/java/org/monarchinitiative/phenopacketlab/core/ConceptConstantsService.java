@@ -51,4 +51,6 @@ public interface ConceptConstantsService {
     Optional<SubtreeNode> allelicStateTreeConstants();
 
     Optional<SubtreeNode> routeOfAdministrationTreeConstants();
+
+    Optional<SubtreeNode> scheduleFrequencyTreeConstants();
 }
