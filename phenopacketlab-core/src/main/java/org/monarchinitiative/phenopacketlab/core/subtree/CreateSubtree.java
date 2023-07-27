@@ -20,6 +20,7 @@ public class CreateSubtree {
      * @param hierarchyService OntologyHierarchyService
      * @param comparator a comparator for sorting children of a node or {@code null} if no sorting is expected
      * @param excludedNodes nodes to be excluded from the resulting tree
+     * @param selectable if set to true, parent nodes will be selectable, if false they won't
      * @return a node of the root node of the subtree
      * @throws IllegalArgumentException if the root node was not found in the {@code ontology}
      */
@@ -27,14 +28,15 @@ public class CreateSubtree {
                                                       IdentifiedConceptResource conceptResource,
                                                       OntologyHierarchyService hierarchyService,
                                                       Comparator<SubtreeNode> comparator,
-                                                      Collection<TermId> excludedNodes) {
+                                                      Collection<TermId> excludedNodes,
+                                                      boolean selectable) {
         Optional<IdentifiedConcept> rico = conceptResource.conceptForTermId(root);
         if (rico.isEmpty())
             throw new IllegalArgumentException("Root %s not found in ontology".formatted(root.getValue()));
 
         IdentifiedConcept ric = rico.get();
         SubtreeNode node = new SubtreeNode(root.getValue(), ric.getName(), ric.getDefinition());
-        return Optional.of(augmentWithChildren(conceptResource, hierarchyService, root, node, comparator, excludedNodes));
+        return Optional.of(augmentWithChildren(conceptResource, hierarchyService, root, node, comparator, excludedNodes, selectable));
     }
 
     private static SubtreeNode augmentWithChildren(IdentifiedConceptResource conceptResource,
@@ -42,7 +44,8 @@ public class CreateSubtree {
                                                    TermId termId,
                                                    SubtreeNode node,
                                                    Comparator<SubtreeNode> comparator,
-                                                   Collection<TermId> excludedNodes) {
+                                                   Collection<TermId> excludedNodes,
+                                                   boolean selectable) {
         Collection<TermId> children = hierarchyService.children(termId).toList();
 
         List<SubtreeNode> childNodes = new ArrayList<>(children.size());
@@ -53,7 +56,7 @@ public class CreateSubtree {
                 //noinspection OptionalGetWithoutIsPresent
                 IdentifiedConcept term = conceptResource.conceptForTermId(childTermId).get();
                 SubtreeNode childNode = new SubtreeNode(childTermId.getValue(), term.getName(), term.getDefinition());
-                augmentWithChildren(conceptResource, hierarchyService, childTermId, childNode, comparator, excludedNodes);
+                augmentWithChildren(conceptResource, hierarchyService, childTermId, childNode, comparator, excludedNodes, selectable);
                 childNodes.add(childNode);
             }
         }
@@ -63,8 +66,11 @@ public class CreateSubtree {
         // Set leaf and selectable boolean
         if (childNodes.isEmpty()) {
             node.setLeaf(true);
+            node.setSelectable(true);
         } else {
+            // For parent nodes
             node.setLeaf(false);
+            node.setSelectable(selectable);
         }
         node.getChildren().addAll(childNodes);
 

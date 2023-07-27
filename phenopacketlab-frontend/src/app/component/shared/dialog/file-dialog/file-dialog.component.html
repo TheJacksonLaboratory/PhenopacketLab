@@ -68,8 +68,7 @@
         let-ri="rowIndex"
       >
         <tr [pEditableRow]="indiv">
-          <td>{{ indiv.subjectId }}
-          </td>
+          <td>{{ indiv.subjectId }}</td>
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
@@ -195,7 +194,23 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="attrib.label" />
+                <span
+                  *ngIf="
+                    attrib.label !== 'genomeAssembly' &&
+                    attrib.label !== 'fileFormat' &&
+                    attrib.label !== 'description'
+                  "
+                >
+                  <input pInputText type="text" [(ngModel)]="attrib.label" />
+                </span>
+                <span
+                  *ngIf="
+                    attrib.label === 'genomeAssembly' ||
+                    attrib.label === 'fileFormat' ||
+                    attrib.label === 'description'
+                  "
+                  >{{ attrib.label }}</span
+                >
               </ng-template>
               <ng-template pTemplate="output">
                 {{ attrib.label }}
@@ -205,12 +220,39 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input
-                  pInputText
-                  type="text"
-                  [(ngModel)]="attrib.value"
-                  required
-                />
+                <span *ngIf="attrib.label === 'genomeAssembly'">
+                  <p-dropdown
+                    [options]="assemblies"
+                    appendTo="body"
+                    [(ngModel)]="attrib.value"
+                    placeholder="Select a genome assembly"
+                    required
+                    [editable]="true"
+                  ></p-dropdown>
+                </span>
+                <span *ngIf="attrib.label === 'fileFormat'">
+                  <p-dropdown
+                    [options]="formats"
+                    appendTo="body"
+                    [(ngModel)]="attrib.value"
+                    placeholder="Select a file format or enter one if not available"
+                    required
+                    [editable]="true"
+                  ></p-dropdown>
+                </span>
+                <span
+                  *ngIf="
+                    attrib.label !== 'fileFormat' &&
+                    attrib.label !== 'genomeAssembly'
+                  "
+                >
+                  <input
+                    pInputText
+                    type="text"
+                    [(ngModel)]="attrib.value"
+                    required
+                  />
+                </span>
               </ng-template>
               <ng-template pTemplate="output">
                 {{ attrib.value }}

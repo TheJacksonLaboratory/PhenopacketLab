@@ -2,25 +2,25 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CardModule } from 'primeng/card';
 import { StepsModule } from 'primeng/steps';
-import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
+import { PhenoCreatorComponent } from './pheno-creator.component';
+import { SharedModule } from '../shared/shared.module';
 
 
-describe('PhenoCreatorRareComponent', () => {
-  let component: PhenoCreatorRareComponent;
-  let fixture: ComponentFixture<PhenoCreatorRareComponent>;
+describe('PhenoCreatorComponent', () => {
+  let component: PhenoCreatorComponent;
+  let fixture: ComponentFixture<PhenoCreatorComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhenoCreatorRareComponent ],
+      declarations: [ PhenoCreatorComponent ],
       imports: [
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        CardModule,
-        StepsModule
+        StepsModule,
+        SharedModule
       ],
       providers: [
       ]
@@ -29,7 +29,7 @@ describe('PhenoCreatorRareComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PhenoCreatorRareComponent);
+    fixture = TestBed.createComponent(PhenoCreatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

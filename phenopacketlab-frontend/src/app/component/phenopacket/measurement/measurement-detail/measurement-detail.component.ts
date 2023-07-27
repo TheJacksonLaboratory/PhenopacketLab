@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Measurement } from 'src/app/models/measurement';
 
 @Component({
@@ -12,7 +11,7 @@ export class MeasurementDetailComponent implements OnInit {
   @Input()
   measurement: Measurement;
 
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit() {
   }

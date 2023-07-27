@@ -1,16 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StepsModule } from 'primeng/steps';
@@ -44,9 +34,6 @@ import { ChipModule } from 'primeng/chip';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { PhenoCreatorRoutingModule } from './pheno-creator-routing.module';
-
-import { PhenoCreatorAllComponent } from './pheno-creator-all.component';
 import { IndividualStepComponent } from './individual-step.component';
 import { PhenotypicFeatureStepComponent } from './phenotypic-feature-step.component';
 import { MeasurementStepComponent } from './measurement-step.component';
@@ -60,13 +47,12 @@ import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { WordDialogComponent } from '../shared/text-mining/word-dialog.component';
 import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
-import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
+import { PhenoCreatorComponent } from './pheno-creator.component';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        PhenoCreatorRoutingModule,
         TabViewModule,
         ButtonModule,
         CardModule,
@@ -78,17 +64,6 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         ToastModule,
         FormsModule,
         ReactiveFormsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatTooltipModule,
-        MatIconModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatAutocompleteModule,
-        MatRippleModule,
-        MatSelectModule,
         CalendarModule,
         InputNumberModule,
         AccordionModule,
@@ -116,12 +91,9 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
     ],
     exports: [
         StepsModule,
-        ToastModule,
-        PhenoCreatorRoutingModule,
+        ToastModule
     ],
     declarations: [
-        PhenoCreatorAllComponent,
-        PhenoCreatorRareComponent,
         IndividualStepComponent,
         PhenotypicFeatureStepComponent,
         MeasurementStepComponent,
@@ -132,7 +104,8 @@ import { PhenoCreatorRareComponent } from './pheno-creator-rare.component';
         FileStepComponent,
         ValidateStepComponent,
         WordDialogComponent,
-        ProfileSelectionComponent
+        ProfileSelectionComponent,
+        PhenoCreatorComponent
     ],
     providers: [
         MessageService

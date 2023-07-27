@@ -27,9 +27,6 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
-        console.log('ngInit Ontology time element');
-        console.log(this.ontologyClass);
-
         this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
             if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
                 this.setOntologyClass(onset);
