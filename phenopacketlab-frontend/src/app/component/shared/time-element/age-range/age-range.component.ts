@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Age, AgeRange, TimeElement, TimeElementId } from 'src/app/models/base';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
     selector: 'app-age-range',
@@ -31,7 +29,7 @@ export class AgeRangeComponent implements OnInit, OnDestroy {
     diseaseOnsetSubscription: Subscription;
     diseaseResolutionSubscription: Subscription;
 
-    constructor(private phenotypeSearchService: PhenotypeSearchService, private diseaseSearchService: DiseaseSearchService) {
+    constructor() {
     }
 
     ngOnInit(): void {
@@ -43,27 +41,6 @@ export class AgeRangeComponent implements OnInit, OnDestroy {
             this.monthsEnd = this.ageRange.end.getMonths();
             this.daysEnd = this.ageRange.end.getDays();
         }
-
-        this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
-                this.setAgeRange(onset);
-            }
-        });
-        this.phenotypicResolutionSubscription = this.phenotypeSearchService.getPhenotypicResolution().subscribe(resolution => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_RESOLUTION) {
-                this.setAgeRange(resolution);
-            }
-        });
-        this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
-                this.setAgeRange(onset);
-            }
-        });
-        this.diseaseResolutionSubscription = this.diseaseSearchService.getDiseaseResolution().subscribe(resolution => {
-            if (this.timeElementId === TimeElementId.DISEASE_RESOLUTION) {
-                this.setAgeRange(resolution);
-            }
-        });
     }
 
     ngOnDestroy(): void {

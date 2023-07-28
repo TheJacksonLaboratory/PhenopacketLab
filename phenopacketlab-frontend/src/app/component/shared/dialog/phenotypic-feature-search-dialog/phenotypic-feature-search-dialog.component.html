@@ -13,6 +13,7 @@
       </p-tabPanel>
       <p-tabPanel header="Text mining search">
         <app-text-mining
+          [lastEncounterTime]="lastEncounterTime"
           (phenotypicFeaturesChange)="addTextMinedFeatures($event)"
         ></app-text-mining>
       </p-tabPanel>

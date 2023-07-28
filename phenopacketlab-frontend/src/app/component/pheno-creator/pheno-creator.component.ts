@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
   selector: 'app-pheno-creator',
@@ -25,7 +25,7 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   activeIndex = 0;
 
-  constructor(private router: Router, private messageService: MessageService, public phenopacketService: PhenopacketService) {
+  constructor(private router: Router, private messageService: MessageService, public phenopacketService: PhenopacketStepperService) {
   }
 
   ngOnInit() {

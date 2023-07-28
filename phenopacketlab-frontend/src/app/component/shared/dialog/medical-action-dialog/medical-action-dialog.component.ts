@@ -8,6 +8,7 @@ import { Disease } from 'src/app/models/disease';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { ConstantsService } from 'src/app/services/constants.service';
 import { MedicalActionService } from 'src/app/services/medical-action.service';
 
 @Component({
@@ -74,7 +75,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   valid: any = {};
 
-  constructor(public medicalActionService: MedicalActionService,
+  constructor(private medicalActionService: MedicalActionService,
+              private constantsService: ConstantsService,
               private messageService: MessageService,
               public ref: DynamicDialogRef,
               public config: DynamicDialogConfig) {
@@ -92,7 +94,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     this.terminationReasonsSubscription = this.medicalActionService.getTerminationReasons().subscribe(reasons => {
       this.terminationReasons = reasons;
     });
-    this.adverseEventsSubscription = this.medicalActionService.getAdverseEvents().subscribe(nodes => {
+    this.adverseEventsSubscription = this.constantsService.getAdverseEvents().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;

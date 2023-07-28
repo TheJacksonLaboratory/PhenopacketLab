@@ -1,24 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { OntologyTreeNode } from '../models/ontology-treenode';
 
 const bodySitesUrl = environment.BODY_SITE_URL;
 const treatmentIntentsUrl = environment.MEDICAL_ACTION_TREATMENT_INTENTS_URL;
 const treatmentResponsesUrl = environment.MEDICAL_ACTION_TREATMENT_RESPONSES_URL;
 const treatmentTerminationReasonsUrl = environment.MEDICAL_ACTION_TERMINATION_REASONS_URL;
-const routeOfAdministrationUrl = environment.ROUTE_OF_ADMINISTRATION_URL;
-const scheduleFrequencyUrl = environment.SCHEDULE_FREQUENCY_URL;
-const adverseEventUrl = environment.ADVERSE_EVENT_URL;
 
 
 @Injectable({ providedIn: 'root' })
 export class MedicalActionService {
-
-    routesOfAdministration = new BehaviorSubject<any>(undefined);
-    scheduleFrequencies = new BehaviorSubject<any>(undefined);
-    adverseEvent = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -42,58 +34,5 @@ export class MedicalActionService {
     }
     public getTerminationReasons(): Observable<any> {
         return this.http.get(treatmentTerminationReasonsUrl);
-    }
-    public getAdverseEvents(): Observable<any> {
-          // only if undefined, load from server
-          if (this.adverseEvent.getValue() === undefined) {
-            console.log('Loading adverse events...');
-            this.loadAdverseEvents();
-        }
-        // return routes for subscription even if the value is yet undefined.
-        return this.adverseEvent.asObservable();
-    }
-
-    private loadAdverseEvents(): void {
-        this.http.get(adverseEventUrl).subscribe(res => {
-            this.adverseEvent.next(res);
-        }, (error) => {
-            console.log(error);
-        });
-    }
-
-    public getRoutesOfAdministration(): Observable<OntologyTreeNode> {
-        // only if undefined, load from server
-        if (this.routesOfAdministration.getValue() === undefined) {
-            console.log('Loading routes of administration...');
-            this.loadRoutesOfAdministration();
-        }
-        // return routes for subscription even if the value is yet undefined.
-        return this.routesOfAdministration.asObservable();
-    }
-
-    private loadRoutesOfAdministration(): void {
-        this.http.get(routeOfAdministrationUrl).subscribe(res => {
-            this.routesOfAdministration.next(res);
-        }, (error) => {
-            console.log(error);
-        });
-    }
-
-    public getScheduleFrequencies(): Observable<OntologyTreeNode> {
-        // only if undefined, load from server
-        if (this.scheduleFrequencies.getValue() === undefined) {
-            console.log('Loading schedule frequencies...');
-            this.loadScheduleFrequencies();
-        }
-        // return routes for subscription even if the value is yet undefined.
-        return this.routesOfAdministration.asObservable();
-    }
-
-    private loadScheduleFrequencies(): void {
-        this.http.get(scheduleFrequencyUrl).subscribe(res => {
-            this.scheduleFrequencies.next(res);
-        }, (error) => {
-            console.log(error);
-        });
     }
 }

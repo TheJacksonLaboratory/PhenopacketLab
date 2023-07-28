@@ -6,17 +6,17 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
 import { CohortService } from 'src/app/services/cohort.service';
 import { DownloadService } from 'src/app/services/download-service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { MetaData } from '../../models/metadata';
 import { MetadataService } from 'src/app/services/metadata.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
   selector: 'app-validate-step',
   templateUrl: './validate-step.component.html',
   styleUrls: ['./pheno-creator.component.scss'],
-  providers: [ DialogService ]
+  providers: [DialogService]
 })
 export class ValidateStepComponent implements OnInit, OnDestroy {
 
@@ -44,7 +44,8 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
-  constructor(public phenopacketService: PhenopacketService, private downloadService: DownloadService,
+  constructor(public phenopacketService: PhenopacketStepperService,
+    private downloadService: DownloadService,
     private cohortService: CohortService,
     private metadataService: MetadataService,
     private dialogService: DialogService,

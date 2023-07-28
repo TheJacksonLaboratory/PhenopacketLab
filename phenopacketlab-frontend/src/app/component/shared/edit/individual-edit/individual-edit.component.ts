@@ -6,7 +6,6 @@ import { OntologyClass, TimeElement } from 'src/app/models/base';
 import { ConstantObject, Individual, KaryotypicSex, Sex, Status, VitalStatus } from 'src/app/models/individual';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../../utils';
 
 @Component({
@@ -50,8 +49,7 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     @ViewChild('rangecalendar') private calendar: any;
     useCalendar: boolean;
 
-    constructor(public phenopacketService: PhenopacketService,
-        public diseaseService: DiseaseSearchService) {
+    constructor(public diseaseService: DiseaseSearchService) {
     }
 
     ngOnInit() {

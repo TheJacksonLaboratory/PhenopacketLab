@@ -15,6 +15,7 @@ import { ProfileSelection } from 'src/app/models/profile';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
   selector: 'app-phenopacket-list',
@@ -41,7 +42,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   phenopackets: Phenopacket[];
   ref: DynamicDialogRef;
 
-  constructor(public phenopacketService: PhenopacketService,
+  constructor(private phenopacketService: PhenopacketService,
+    private phenopacketStepperService: PhenopacketStepperService,
     private cohortService: CohortService,
     private uploadService: UploadService,
     private messageService: MessageService,
@@ -92,7 +94,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   }
 
   startRareDisease() {
-    this.phenopacketService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+    this.phenopacketStepperService.setProfileSelection(ProfileSelection.RARE_DISEASE);
     this.router.navigate(['creator']);
   }
 
