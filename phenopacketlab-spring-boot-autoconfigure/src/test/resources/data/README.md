@@ -13,3 +13,24 @@ The files in this folder are subsets of the real data files.
 - `uberon.json` - UBERON module containing ancestors of `UBERON:0000468` *multicellular organism*.
 - `uo.json` - complete UO ontology.
 - `drugcentral.csv` - 10 lines of the postprocessed DrugCentral CSV file.
+- `ncit.json` - NCIT module containing ancestors of:
+  - `NCIT:C48885` Generic Primary Tumor TNM Finding
+  - `NCIT:C48884` Generic Regional Lymph Nodes TNM Finding
+  - `NCIT:C48883` Generic Distant Metastasis TNM Finding
+  - `NCIT:C28108` Disease Stage Qualifier
+  ```shell
+  robot extract --input ncit.owl --method BOT --term NCIT:C48885 \
+    convert --output primary-tnm.ncit.obo
+  robot extract --input ncit.owl --method BOT --term NCIT:C48884 \
+    convert --output regional-tnm.ncit.obo
+  robot extract --input ncit.owl --method BOT --term NCIT:C48883 \
+    convert --output distant-tnm.ncit.obo
+  robot extract --input ncit.owl --method BOT --term NCIT:C28108 \
+    convert --output stages-tnm.ncit.obo
+
+  robot merge --input primary-tnm.ncit.obo \
+  --input regional-tnm.ncit.obo \
+  --input distant-tnm.ncit.obo \
+  --input stages-tnm.ncit.obo \
+  --output ncit.json
+  ```

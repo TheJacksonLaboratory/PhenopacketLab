@@ -2,10 +2,6 @@ package org.monarchinitiative.phenopacketlab.restapi.domain;
 
 import com.google.cloud.spring.data.datastore.core.mapping.Entity;
 import org.springframework.data.annotation.Id;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.util.Assert;
 
 import java.util.Objects;
 

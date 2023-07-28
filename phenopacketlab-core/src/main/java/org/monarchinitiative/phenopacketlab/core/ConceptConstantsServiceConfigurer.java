@@ -2,8 +2,6 @@ package org.monarchinitiative.phenopacketlab.core;
 
 import org.monarchinitiative.phenol.annotations.constants.hpo.HpoOnsetTermIds;
 import org.monarchinitiative.phenol.annotations.constants.hpo.HpoSubOntologyRootTermIds;
-import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.subtree.CreateSubtree;
@@ -28,6 +26,10 @@ import java.util.stream.Collectors;
 public class ConceptConstantsServiceConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConceptConstantsServiceConfigurer.class);
+    private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");
+    private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
+    private static final TermId GENERIC_DISTANT_METASTASIS_TNM_FINDING = TermId.of("NCIT:C48883");
+    private static final TermId DISEASE_STAGE_QUALIFIER = TermId.of("NCIT:C28108");
 
     private ConceptConstantsServiceConfigurer() {
     }
@@ -172,11 +174,8 @@ public class ConceptConstantsServiceConfigurer {
             return List.of();
         }
         IdentifiedConceptResource resource = optional.get();
-        if (resource instanceof OntologyConceptResource) {
-            Ontology onto = ((OntologyConceptResource) resource).ontology();
-            Set<TermId> modifierIds = OntologyAlgorithm.getChildTerms(onto, term, false);
-
-            return modifierIds.stream()
+        if (resource instanceof OntologyConceptResource ocr) {
+            return ocr.ontology().graph().getChildrenStream(term, false)
                     .map(resource::conceptForTermId)
                     .flatMap(Optional::stream)
                     .collect(Collectors.toList());
@@ -268,22 +267,26 @@ public class ConceptConstantsServiceConfigurer {
 
     private static Optional<SubtreeNode> configureTnmTumorTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48885"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ConceptConstantsServiceConfigurer.GENERIC_PRIMARY_TUMOR_TNM_FINDING, "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmNodeTreeConstants(ConceptResourceService resourceService,
                                                                        OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48884"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ConceptConstantsServiceConfigurer.GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING, "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmMetastasisTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C48883"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ConceptConstantsServiceConfigurer.GENERIC_DISTANT_METASTASIS_TNM_FINDING, "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureDiseaseStagesTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C28108"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ConceptConstantsServiceConfigurer.DISEASE_STAGE_QUALIFIER, "NCIT", null, true);
     }
 
     private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService,

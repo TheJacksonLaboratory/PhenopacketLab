@@ -1,10 +1,7 @@
 package org.monarchinitiative.phenopacketlab.io;
 
 import org.junit.jupiter.api.Test;
-import org.monarchinitiative.phenol.ontology.data.Dbxref;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenol.ontology.data.Term;
-import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenol.ontology.data.*;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
@@ -35,11 +32,11 @@ public class OntologyConceptResourceTest {
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
         // Test the `Ontology`.
-        Ontology ontology = ((OntologyConceptResource) cr).ontology();
-        assertThat(ontology.countAllTerms(), equalTo(7));
+        MinimalOntology ontology = ((OntologyConceptResource) cr).ontology();
+        assertThat(ontology.allTermIdCount(), equalTo(7));
         TermId achooSyndromeId = TermId.of("MONDO:0007038");
-        assertThat(ontology.containsTerm(achooSyndromeId), equalTo(true));
-        Term term = ontology.getTermMap().get(achooSyndromeId);
+        assertThat(ontology.termForTermId(achooSyndromeId).isPresent(), equalTo(true));
+        Term term = ontology.termForTermId(achooSyndromeId).get();
         assertThat(term.id(), equalTo(achooSyndromeId));
         assertThat(term.getName(), equalTo("Achoo syndrome"));
         assertThat(term.getXrefs(), hasSize(5));
@@ -49,8 +46,8 @@ public class OntologyConceptResourceTest {
         // Test the `Resource`.
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("mondo"));
-        assertThat(resource.getName(), equalTo("MONDO Disease Ontology"));
-        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/mondo.json"));
+        assertThat(resource.getName(), equalTo("Mondo Disease Ontology"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/mondo.obo"));
         assertThat(resource.getVersion(), equalTo("2022-05-02"));
         assertThat(resource.getNamespacePrefix(), equalTo("MONDO"));
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/MONDO_"));
@@ -63,12 +60,12 @@ public class OntologyConceptResourceTest {
 
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("hp"));
-        assertThat(resource.getName(), equalTo("Human Phenotype Ontology"));
-        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/hp.json"));
+        assertThat(resource.getName(), equalTo("human phenotype ontology"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/hp.owl"));
         assertThat(resource.getVersion(), equalTo("2021-06-08"));
         assertThat(resource.getNamespacePrefix(), equalTo("HP"));
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/HP_"));
@@ -81,12 +78,12 @@ public class OntologyConceptResourceTest {
 
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("geno"));
         assertThat(resource.getName(), equalTo("Genotype Ontology"));
-        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/geno.json"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/geno.owl"));
         assertThat(resource.getVersion(), equalTo("2022-03-05"));
         assertThat(resource.getNamespacePrefix(), equalTo("GENO"));
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/GENO_"));
@@ -98,12 +95,12 @@ public class OntologyConceptResourceTest {
         IdentifiedConceptResource cr = crhs.conceptResource();
         assertThat(cr, is(instanceOf(OntologyConceptResource.class)));
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("uberon"));
         assertThat(resource.getName(), equalTo("Uber-anatomy ontology"));
-        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/uberon.json"));
+        assertThat(resource.getUrl(), equalTo("http://purl.obolibrary.org/obo/uberon.owl"));
         assertThat(resource.getVersion(), equalTo("2022-04-18"));
         assertThat(resource.getNamespacePrefix(), equalTo("UBERON"));
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/UBERON_"));
@@ -114,7 +111,7 @@ public class OntologyConceptResourceTest {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("uo.json"), ConceptResourceLoaders::uo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("uo"));
@@ -130,7 +127,7 @@ public class OntologyConceptResourceTest {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("efo"));
@@ -138,7 +135,7 @@ public class OntologyConceptResourceTest {
         assertThat(resource.getUrl(), equalTo("http://www.ebi.ac.uk/efo/efo.owl"));
         assertThat(resource.getVersion(), equalTo("3.42.0"));
         assertThat(resource.getNamespacePrefix(), equalTo("EFO"));
-        assertThat(resource.getIriPrefix(), equalTo("http://www.ebi.ac.uk/efo/EFO_"));
+        assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/EFO_"));
     }
 
     @Test
@@ -146,7 +143,7 @@ public class OntologyConceptResourceTest {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("so.module.json"), ConceptResourceLoaders::so);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("so"));
@@ -162,7 +159,7 @@ public class OntologyConceptResourceTest {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("ncit.module.json"), ConceptResourceLoaders::ncit);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("ncit"));
@@ -178,7 +175,7 @@ public class OntologyConceptResourceTest {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
         IdentifiedConceptResource cr = crhs.conceptResource();
 
-        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(Ontology.class)));
+        assertThat(((OntologyConceptResource) cr).ontology(), is(notNullValue(MinimalOntology.class)));
 
         Resource resource = cr.resource();
         assertThat(resource.getId(), equalTo("gsso"));
