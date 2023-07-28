@@ -31,10 +31,7 @@ public class DiseaseController {
         if (query == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        int maxResults = 10;
-        if (max.isPresent()) {
-            maxResults = max.get();
-        }
+        int maxResults = max.orElse(10);
         return ResponseEntity.ok(diseaseService.searchDiseaseConcepts(query, maxResults));
     }
 

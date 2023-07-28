@@ -61,13 +61,17 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
     }
 
     @Test
-    public void testDefaultDiseaseDatabasePrefixes() {
+    public void prefixesCanBeSet() {
         load(PhenopacketLabAutoConfiguration.class,
                 "phenopacketlab.data-directory=" + DATA_DIR,
-                "phenopacketlab.disease-database-prefixes=MONDO, OMIM");
+                "phenopacketlab.disease-database-prefixes=MONDO, OMIM",
+                "phenopacketlab.phenotype-prefixes=HP",
+                "phenopacketlab.chemical-entity-prefixes=CHEBI");
 
         PhenopacketLabProperties properties = context.getBean(PhenopacketLabProperties.class);
 
         assertThat(properties.getDiseaseDatabasePrefixes(), equalTo(List.of("MONDO", "OMIM")));
+        assertThat(properties.getPhenotypePrefixes(), equalTo(List.of("HP")));
+        assertThat(properties.getChemicalEntityPrefixes(), equalTo(List.of("CHEBI")));
     }
 }
