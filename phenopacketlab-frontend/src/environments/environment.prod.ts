@@ -33,6 +33,7 @@ export const environment = {
   STRUCTURAL_TYPE_URL: `${API_URL}/constants/tree-structural`,
   ROUTE_OF_ADMINISTRATION_URL: `${API_URL}/constants/tree-route-administration`,
   SCHEDULE_FREQUENCY_URL: `${API_URL}/constants/tree-schedule-frequency`,
+  ADVERSE_EVENT_URL: `${API_URL}/constants/tree-adverse-event`,
   USER_URL: `${API_URL}/user`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
@@ -57,7 +58,6 @@ export const environment = {
   MEDICAL_ACTION_TREATMENT_INTENTS_URL: `${API_URL}/medical-actions/treatment-intents`,
   MEDICAL_ACTION_TREATMENT_RESPONSES_URL: `${API_URL}/medical-actions/treatment-responses`,
   MEDICAL_ACTION_TERMINATION_REASONS_URL: `${API_URL}/medical-actions/termination-reasons`,
-  MEDICAL_ACTION_ADVERSE_EVENTS_URL: `${API_URL}/medical-actions/adverse-events`,
   METADATA_URL: `${API_URL}/metadata`,
   RESOURCE_URL: `${API_URL}/resource`
 };

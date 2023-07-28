@@ -1,5 +1,5 @@
-<div class="grid p-fluid">
-  <div class="field col-12 md:col-6">
+<div class="grid">
+  <div class="field col-6">
     <label for="treatmenttarget"><b>Treatment target:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -26,7 +26,7 @@
       </ng-template>
     </p-dropdown>
   </div>
-  <div class="field col-12 md:col-6">
+  <div class="field col-6">
     <label for="treatmentintent"><b>Treatment intent:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -54,7 +54,7 @@
     </p-dropdown>
   </div>
 
-  <div class="field col-12 md:col-6">
+  <div class="field col-6">
     <label for="treatmentresponse"><b>Response to treatment:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -82,7 +82,7 @@
     </p-dropdown>
   </div>
 
-  <div class="field col-12 md:col-6">
+  <div class="field col-6">
     <label for="treatmenttermination"
       ><b>Treatment termination reason:</b></label
     >
@@ -111,7 +111,7 @@
       </ng-template>
     </p-dropdown>
   </div>
-  <div class="field col-12 md:col-6">
+  <div class="field col-12">
     <label for="events"><b>Adverse event(s)</b></label>
     <ontology-tree-select
       id="events"
@@ -124,9 +124,8 @@
       [nodes]="adverseEventNodes"
     ></ontology-tree-select>
   </div>
-  <div class="field col-12 md:col-6"></div>
 
-  <div class="field col-12 md:col-3">
+  <div class="field col-3">
     <label for="actiontype"><b>Select an action type:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -140,11 +139,11 @@
     >
     </p-dropdown>
   </div>
-  <div class="field col-12 md:col-9"></div>
+  <div class="field col-9"></div>
   <!-- Procedure medical action -->
   <div *ngIf="actionType === 'Procedure'" class="field col-12">
-    <div class="grid p-fluid">
-      <div class="field col-12 md:col-6">
+    <div class="grid">
+      <div class="field col-6">
         <label for="code"><b>Code:</b></label>
         <ontology-class-input
           id="code"
@@ -152,7 +151,7 @@
           (ontologyObjectEvent)="changeProcedureCode($event)"
         ></ontology-class-input>
       </div>
-      <div class="field col-12 md:col-6">
+      <div class="field col-6">
         <label for="bodysite"><b>Body site:</b></label>
         <p-dropdown
           ngDefaultControl
@@ -174,7 +173,7 @@
   </div>
   <!-- Treatement medical action -->
   <div *ngIf="actionType === 'Treatment'" class="field col-12">
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="agent"><b>Agent:</b></label>
       <ontology-class-input
         id="agent"
@@ -182,7 +181,7 @@
         (ontologyObjectEvent)="changeAgent($event)"
       ></ontology-class-input>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="routeOfAdministration"><b>Route of administration:</b></label>
       <ontology-class-input
         id="routeOfAdministration"
@@ -190,7 +189,7 @@
         (ontologyObjectEvent)="changeRouteOfAdministration($event)"
       ></ontology-class-input>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="drugtype"><b>Drug type:</b></label>
       <p-dropdown
         ngDefaultControl
@@ -204,7 +203,7 @@
       >
       </p-dropdown>
     </div>
-    <div class="field col-12 md:col-6"></div>
+    <div class="field col-6"></div>
 
     <div *ngIf="doseIntervalVisible" class="field col-12">
       <!-- <p-table
@@ -390,7 +389,7 @@
   </div>
   <!-- RadiationTherapy medical action -->
   <div *ngIf="actionType === 'Radiation therapy'" class="field col-12">
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="modality"><b>Modality:</b></label>
       <ontology-class-input
         id="modality"
@@ -398,7 +397,7 @@
         (ontologyObjectEvent)="changeModality($event)"
       ></ontology-class-input>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="bodysite1"><b>Body site:</b></label>
       <p-dropdown
         ngDefaultControl
@@ -413,12 +412,12 @@
       >
       </p-dropdown>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="dosage"><b>Dosage:</b></label>
       <p-inputNumber id="dosage" onInput="changeDosage($event)" placeholder="Dosage in Gy">
       </p-inputNumber>
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-6">
       <label for="fractions"><b>Fractions:</b></label>
       <p-inputNumber id="fractions" onInput="changeFractions($event)" placeholder="Fractions">
       </p-inputNumber>
@@ -428,7 +427,7 @@
   <!-- TherapeuticRegimen medical action -->
   <div *ngIf="actionType === 'Therapeutic regimen'" class="field col-12">
     <div class="grid p-fluid">
-      <div class="field col-12 md:col-6">
+      <div class="field col-6">
         <label for="identifier"><b>Identifier:</b></label>
         <ontology-class-input
           id="identifier"
@@ -436,7 +435,7 @@
           (ontologyObjectEvent)="changeIdentifier($event)"
         ></ontology-class-input>
       </div>
-      <div class="field col-12 md:col-6">
+      <div class="field col-6">
         <label for="regimenstatus"><b>Regimen status:</b></label>
         <p-dropdown
           ngDefaultControl
@@ -451,11 +450,11 @@
         >
         </p-dropdown>
       </div>
-      <div class="field col-12 md:col-6">
+      <div class="field col-6">
         <label for="starttime"><b>Start time:</b></label>
         <app-time-element id="starttime"></app-time-element>
       </div>
-      <div class="field col-12 md:col-6">
+      <div class="field col-6">
         <label for="endtime"><b>End time:</b></label>
         <app-time-element id="endtime"></app-time-element>
       </div>

@@ -30,6 +30,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final SubtreeNode structuralTypeTreeConstants;
     private final SubtreeNode routeOfAdministrationTreeConstants;
     private final SubtreeNode scheduleFrequencyTreeConstants;
+    private final SubtreeNode adverseEventTreeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
     ConceptConstantsServiceImpl(List<IdentifiedConcept> sexConstants,
@@ -52,6 +53,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 SubtreeNode structuralTypeTreeConstants,
                                 SubtreeNode routeOfAdministrationTreeConstants,
                                 SubtreeNode scheduleFrequencyTreeConstants,
+                                SubtreeNode adverseEventTreeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
         this.genderConstants = genderConstants;
@@ -73,6 +75,7 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.structuralTypeTreeConstants = structuralTypeTreeConstants;
         this.routeOfAdministrationTreeConstants = routeOfAdministrationTreeConstants;
         this.scheduleFrequencyTreeConstants = scheduleFrequencyTreeConstants;
+        this.adverseEventTreeConstants = adverseEventTreeConstants;
         this.contigConstants = contigConstants;
     }
 
@@ -157,6 +160,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     @Override
     public Optional<SubtreeNode> scheduleFrequencyTreeConstants() { return Optional.ofNullable(scheduleFrequencyTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> adverseEventTreeConstants() { return Optional.ofNullable(adverseEventTreeConstants); }
 
     @Override
     public List<Concept> contigConstants(String genomeAssembly) {
