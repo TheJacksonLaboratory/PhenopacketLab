@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Individual } from 'src/app/models/individual';
+import { Utils } from '../../shared/utils';
 
 @Component({
   selector: 'app-individual-dialog',
@@ -12,7 +13,9 @@ export class IndividualDialogComponent {
   subject: Individual;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
-    this.subject = config.data?.subject;
+    if (config.data?.subject) {
+      this.subject = Utils.clone(config.data?.subject);
+    }
   }
 
   updateSubject(subject) {
