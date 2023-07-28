@@ -37,9 +37,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   /** Array used to hold the list of individuals present in the summary tab **/
   tabIndex = 0;
 
-  phenopacketSubscription: Subscription;
   cohortPhenopacketSubscription: Subscription;
-  phenopackets: Phenopacket[];
   ref: DynamicDialogRef;
 
   constructor(private phenopacketService: PhenopacketService,
@@ -55,16 +53,12 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cohortService.getCohort().subscribe(cohort => {
+    this.cohortPhenopacketSubscription = this.cohortService.getCohort().subscribe(cohort => {
       this.cohort = cohort;
-      this.phenopackets = cohort.members;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.phenopacketSubscription) {
-      this.phenopacketSubscription.unsubscribe();
-    }
     if (this.cohortPhenopacketSubscription) {
       this.cohortPhenopacketSubscription.unsubscribe();
     }
@@ -100,19 +94,6 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
 
   downloadPhenopacket(phenopacket: Phenopacket) {
     this.downloadService.saveAsJson(phenopacket, true);
-  }
-
-  changeId(id: string, index: number) {
-    const selectedIndividual = this.tabs[index];
-    selectedIndividual.id = id;
-  }
-  changeSex(sex: string, index: number) {
-    const selectedIndividual = this.tabs[index];
-    selectedIndividual.subject.sex = sex;
-  }
-  changeDob(dob: Date, index: number) {
-    const selectedIndividual = this.tabs[index];
-    selectedIndividual.subject.dateOfBirth = dob.toISOString();
   }
 
   openTab(phenopacket) {

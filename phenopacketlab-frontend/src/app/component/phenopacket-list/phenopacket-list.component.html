@@ -58,13 +58,7 @@
     >
       <div class="grid p-fluid">
         <div class="field col-12">
-          <app-phenopacket
-                  [phenopacket]="phenopacket"
-                  (onIdChanged)="changeId($event, tabIndex)"
-                  (onSexChanged)="changeSex($event, tabIndex)"
-                  (onDobChanged)="changeDob($event, tabIndex)"
-          >
-          </app-phenopacket>
+          <app-phenopacket [phenopacket]="phenopacket"></app-phenopacket>
         </div>
       </div>
     </p-tabPanel>

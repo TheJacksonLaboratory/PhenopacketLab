@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Phenopacket } from '../models/phenopacket';
 
@@ -11,16 +11,14 @@ const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 })
 export class PhenopacketService {
 
-    // TODO rename phenopacket to phenopacketStepper (indicate it is used in the stepper)
-    phenopacket: Phenopacket;
-    phenopacketSubject = new Subject<Phenopacket>();
+    phenopacketSubject = new BehaviorSubject<Phenopacket>(undefined);
 
     constructor(private http: HttpClient) {
     }
     setPhenopacket(phenopacket: Phenopacket) {
-        this.phenopacket = phenopacket;
         this.phenopacketSubject.next(phenopacket);
     }
+
     getPhenopacket(): Observable<Phenopacket> {
         return this.phenopacketSubject.asObservable();
     }

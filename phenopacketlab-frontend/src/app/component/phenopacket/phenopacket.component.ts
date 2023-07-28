@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Disease } from 'src/app/models/disease';
 import { Individual } from 'src/app/models/individual';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { File, OntologyClass } from 'src/app/models/base';
+import { File } from 'src/app/models/base';
 import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
@@ -32,24 +32,6 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   @Input()
   phenopacket: Phenopacket;
 
-  @Output() onIdChanged = new EventEmitter<any>();
-  @Output() onSexChanged = new EventEmitter<any>();
-  @Output() onDobChanged = new EventEmitter<any>();
-  @Output() onIndividualChange = new EventEmitter<Individual>();
-
-  summary = '';
-  sex = 'UNKNOWN_SEX';
-  karyotypicSex = 'UNKNOWN_KARYOTYPE';
-  gender: any;
-  // dob: Date;
-  individual: Individual;
-  lastEncounterDate = '';
-
-  status = '';
-  timeOfDeath = '';
-  causeOfDeath: OntologyClass;
-  survivalTime: number;
-
   active = 'top';
   viewMode;
   // accordion
@@ -61,18 +43,6 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.viewMode = 'tab1';
-    if (this.phenopacket) {
-      this.individual = this.phenopacket.subject;
-      this.lastEncounterDate = this.individual.timeAtLastEncounter ? this.individual.timeAtLastEncounter.toString() : '';
-      this.sex = this.individual.sex;
-      this.karyotypicSex = this.individual.karyotypicSex;
-      this.gender = this.individual.gender;
-      // status
-      this.status = this.individual?.vitalStatus?.status?.toString();
-      this.causeOfDeath = this.individual?.vitalStatus?.causeOfDeath;
-      this.timeOfDeath = this.individual?.vitalStatus?.timeOfDeath?.toString();
-      this.survivalTime = this.individual?.vitalStatus?.survivalTimeInDays;
-    }
   }
 
   ngOnDestroy() {
@@ -135,27 +105,14 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
       baseZIndex: 10000,
       resizable: true,
       draggable: true,
-      data: { subject: this.individual }
+      data: { subject: this.phenopacket?.subject }
     });
 
     this.ref.onClose.subscribe((subject: Individual) => {
-      if (subject) {
-        this.individual = subject;
-        this.updateIndividual();
-        // emit change
-        this.onIndividualChange.emit(this.individual);
+      if (subject && this.phenopacket) {
+        this.phenopacket.subject = subject;
       }
     });
-  }
-  updateIndividual() {
-    this.sex = this.individual.sex;
-    this.karyotypicSex = this.individual.karyotypicSex;
-    this.causeOfDeath = this.individual.vitalStatus?.causeOfDeath;
-    this.gender = this.individual.gender?.toString();
-    this.lastEncounterDate = this.individual.timeAtLastEncounter?.toString();
-    this.status = this.individual.vitalStatus?.status;
-    this.survivalTime = this.individual.vitalStatus?.survivalTimeInDays;
-    this.timeOfDeath = this.individual.vitalStatus?.timeOfDeath?.toString();
   }
 
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
