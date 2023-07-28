@@ -76,26 +76,6 @@ public class DiseaseControllerTest {
     }
 
     @Test
-    public void getAllDiseases() throws Exception {
-        when(diseaseService.allDiseaseConcepts())
-                .thenReturn(Stream.of(
-                        createDisease("OMIM:123456", "First", "Something should be here", List.of("A", "B")),
-                        createDisease("OMIM:987654", "Second", "Something else", List.of("C", "D"))
-                ));
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(),
-                equalTo("""
-                        [{"id":"OMIM:123456","lbl":"First","def":"Something should be here",""" + """
-                        "syn":["A","B"]},""" + """
-                        {"id":"OMIM:987654","lbl":"Second","def":"Something else",""" + """
-                        "syn":["C","D"]}]"""));
-    }
-
-    @Test
     public void getSearchDiseases() throws Exception {
         when(diseaseService.searchDiseaseConcepts("first", 10))
                 .thenReturn(new SearchIdentifiedConcept(1, Stream.of(

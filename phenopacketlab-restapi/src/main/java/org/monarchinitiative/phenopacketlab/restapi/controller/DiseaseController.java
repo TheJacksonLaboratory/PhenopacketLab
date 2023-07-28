@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,12 +36,6 @@ public class DiseaseController {
             maxResults = max.get();
         }
         return ResponseEntity.ok(diseaseService.searchDiseaseConcepts(query, maxResults));
-    }
-
-    @RequestMapping(value = {"${api.version}/diseases/all"}, method = RequestMethod.GET)
-    public ResponseEntity<List<IdentifiedConcept>> allDiseases() {
-        return ResponseEntity.ok(diseaseService.allDiseaseConcepts()
-                .toList());
     }
 
 }

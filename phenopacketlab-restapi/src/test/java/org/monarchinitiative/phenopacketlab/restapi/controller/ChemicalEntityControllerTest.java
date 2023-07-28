@@ -76,26 +76,6 @@ public class ChemicalEntityControllerTest {
     }
 
     @Test
-    public void getAllchemicalEntities() throws Exception {
-        when(chemicalEntityService.allChemicalEntityConcepts())
-                .thenReturn(Stream.of(
-                        createChemicalEntity("CHEBI:123456", "First", "Something should be here", List.of("A", "B")),
-                        createChemicalEntity("CHEBI:987654", "Second", "Something else", List.of("C", "D"))
-                ));
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chemical-entities/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(),
-                equalTo("""
-                        [{"id":"CHEBI:123456","lbl":"First","def":"Something should be here",""" + """
-                        "syn":["A","B"]},""" + """
-                        {"id":"CHEBI:987654","lbl":"Second","def":"Something else",""" + """
-                        "syn":["C","D"]}]"""));
-    }
-
-    @Test
     public void getSearchChemicalEntities() throws Exception {
         when(chemicalEntityService.searchChemicalEntityConcepts("first", 10))
                 .thenReturn(new SearchIdentifiedConcept(1, Stream.of(
