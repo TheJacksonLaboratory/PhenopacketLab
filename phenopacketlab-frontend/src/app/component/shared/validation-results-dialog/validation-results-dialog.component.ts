@@ -6,6 +6,7 @@ import { ValidationResults } from 'src/app/models/validation-results';
 import { DownloadService } from 'src/app/services/download-service';
 import { MetadataService } from 'src/app/services/metadata.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-validation-result-dialog',
@@ -26,7 +27,7 @@ export class ValidationResultsDialogComponent implements OnInit {
   }
   ngOnInit(): void {
     this.validationResults = this.config.data?.validationResults;
-    this.phenopacket = this.config.data?.phenopacket;
+    this.phenopacket = Utils.clone(this.config.data?.phenopacket);
   }
 
   /**
@@ -37,7 +38,7 @@ export class ValidationResultsDialogComponent implements OnInit {
       if (this.validationResults.validationResults.length === 0) {
         this.ref.close({ isValid: true, validatedPhenopacket: this.phenopacket });
       } else {
-        this.ref.close({ isValid: false });
+        this.ref.close({ isValid: false, validatedPhenopacket: this.phenopacket });
       }
     }
   }
