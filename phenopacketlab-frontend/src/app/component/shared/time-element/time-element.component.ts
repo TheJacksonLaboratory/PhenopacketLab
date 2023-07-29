@@ -58,7 +58,6 @@ export class TimeElementComponent implements OnInit {
   }
 
   private initialize() {
-    console.log(this.timeElement);
     if (this.timeElement === undefined) {
       this.timeElement = new TimeElement();
     }

@@ -186,7 +186,6 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   }
 
   onOkClick() {
-    console.log('ok click');
     this.ref.close(this.phenotypicFeature);
   }
 

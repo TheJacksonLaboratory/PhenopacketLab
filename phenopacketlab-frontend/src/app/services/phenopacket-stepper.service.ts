@@ -23,7 +23,6 @@ const severityUrl = environment.SEVERITY_URL;
 export class PhenopacketStepperService {
 
     phenopacket: Phenopacket;
-    // phenopacketSubject = new Subject<Phenopacket>();
 
     // BehaviorSubject used to store data
     modifiers = new BehaviorSubject<any>(undefined);
@@ -46,13 +45,6 @@ export class PhenopacketStepperService {
 
     constructor(private http: HttpClient) {
     }
-    // setPhenopacket(phenopacket: Phenopacket) {
-    //     this.phenopacket = phenopacket;
-    //     this.phenopacketSubject.next(phenopacket);
-    // }
-    // getPhenopacket(): Observable<Phenopacket> {
-    //     return this.phenopacketSubject.asObservable();
-    // }
 
     validatePhenopacket(phenopacket: string): Observable<any> {
         const headers = { 'content-type': 'text/plain' };
@@ -229,14 +221,6 @@ export class PhenopacketStepperService {
         // return severities for subscription even if the value is yet undefined.
         return this.diseaseStages.asObservable();
     }
-
-    // getMondoDiseases(): Observable<any> {
-    //     return this.http.get(mondoDiseasesUrl);
-    // }
-
-    // getGender(): Observable<any> {
-    //     return this.http.get(genderUrl);
-    // }
 
     setProfileSelection(profile: ProfileSelection) {
         this.profileSelection.next(profile);
