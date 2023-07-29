@@ -67,7 +67,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeIndividual(individual: Phenopacket) {
+  removeIndividual(phenopacket: Phenopacket) {
     // we remove the tab and the individual
     this.confirmationService.confirm({
       message: 'Do you want to delete this record?',
@@ -75,13 +75,13 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         // Remove tab if open since we are not default opening them
-        const removeIdx = this.tabs.indexOf(individual);
+        const removeIdx = this.tabs.findIndex(pheno => pheno.id === phenopacket.id);
         if (removeIdx > -1) {
           this.tabs.splice(removeIdx, 1);
         }
         // Remove them from the cohort.
-        this.cohortService.removeCohortMember(individual);
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${individual.id} removed.` });
+        this.cohortService.removeCohortMember(phenopacket);
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
       },
       reject: () => { }, key: 'positionDialog'
     });
@@ -104,7 +104,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       this.tabView.tabs[0].selected = false;
       this.tabs.push(phenopacket);
     }
-    this.tabIndex = this.tabs.indexOf(phenopacket) + 1;
+    this.tabIndex = this.tabs.findIndex(pheno => pheno.id === phenopacket.id) + 1;
   }
   closeTab(index: number) {
     this.tabs.splice(index - 1, 1);
@@ -153,11 +153,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       });
       this.ref.onClose.subscribe(validationResult => {
         if (validationResult) {
-          const isValid = validationResult.isValid;
-          if (isValid) {
-            this.cohortService.removeCohortMember(phenopacket);
-            this.cohortService.addCohortMember(validationResult.validatedPhenopacket);
-          }
+          this.cohortService.removeCohortMember(phenopacket);
+          this.cohortService.addCohortMember(validationResult.validatedPhenopacket);
         }
       });
     });
