@@ -125,7 +125,7 @@
     ></ontology-tree-select>
   </div>
 
-  <div class="field col-3">
+  <div class="field col-4">
     <label for="actiontype"><b>Select an action type:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -139,7 +139,7 @@
     >
     </p-dropdown>
   </div>
-  <div class="field col-9"></div>
+  <div class="field col-8"></div>
   <!-- Procedure medical action -->
   <div *ngIf="actionType === 'Procedure'" class="field col-12">
     <div class="grid">
@@ -173,40 +173,61 @@
   </div>
   <!-- Treatement medical action -->
   <div *ngIf="actionType === 'Treatment'" class="field col-12">
-    <div class="field col-6">
-      <label for="agent"><b>Agent:</b></label>
-      <ontology-class-input
-        id="agent"
-        [ontologyObject]="agent"
-        (ontologyObjectEvent)="changeAgent($event)"
-      ></ontology-class-input>
-    </div>
-    <div class="field col-6">
-      <label for="routeOfAdministration"><b>Route of administration:</b></label>
-      <ontology-class-input
-        id="routeOfAdministration"
-        [ontologyObject]="routeOfAdministration"
-        (ontologyObjectEvent)="changeRouteOfAdministration($event)"
-      ></ontology-class-input>
-    </div>
-    <div class="field col-6">
-      <label for="drugtype"><b>Drug type:</b></label>
-      <p-dropdown
-        ngDefaultControl
-        id="drugtype"
-        appendTo="body"
-        [options]="drugTypes"
-        [ngModel]="drugType"
-        (onChange)="onDrugTypeChange($event)"
-        [showClear]="true"
-        placeholder="Select an drug type"
-      >
-      </p-dropdown>
-    </div>
-    <div class="field col-6"></div>
+    <div class="grid">
+      <div class="field col-6">
+        <label for="chemi"><b>Agent:</b></label>
+        <p-dropdown
+          id="chemi"
+          placeholder="Search for a chemical entity"
+          appendTo="body"
+          [options]="chemicalEntityItems"
+          [(ngModel)]="selectedChemicalEntity"
+          filter="true"
+          filterBy="id,label"
+          (onFilter)="chemicalEntityContentChanging($event.filter)"
+          (onChange)="updateChemicalEntity($event.value)"
+          showClear="true"
+        >
+          <ng-template let-chem pTemplate="item">
+            <div
+              [pTooltip]="chem.label"
+              showDelay="1000"
+              tooltipPosition="left"
+              escape="false"
+            >
+              [{{ chem.id }}] {{ chem.label }}
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="field col-6">
+        <label for="routeOfAdministration"
+          ><b>Route of administration:</b></label
+        >
+        <ontology-class-input
+          id="routeOfAdministration"
+          [ontologyObject]="routeOfAdministration"
+          (ontologyObjectEvent)="changeRouteOfAdministration($event)"
+        ></ontology-class-input>
+      </div>
+      <div class="field col-6">
+        <label for="drugtype"><b>Drug type:</b></label>
+        <p-dropdown
+          ngDefaultControl
+          id="drugtype"
+          appendTo="body"
+          [options]="drugTypes"
+          [ngModel]="drugType"
+          (onChange)="onDrugTypeChange($event)"
+          [showClear]="true"
+          placeholder="Select an drug type"
+        >
+        </p-dropdown>
+      </div>
+      <div class="field col-6"></div>
 
-    <div *ngIf="doseIntervalVisible" class="field col-12">
-      <!-- <p-table
+      <div *ngIf="doseIntervalVisible" class="field col-12">
+        <!-- <p-table
         [value]="doseIntervals"
         dataKey="key"
         [tableStyle]="{ 'min-width': '60rem' }"
@@ -241,150 +262,153 @@
           </tr>
         </ng-template>
       </p-table> -->
-      <p-table
-        [value]="doseIntervals"
-        dataKey="key"
-        editMode="row"
-        styleClass="p-datatable-sm"
-      >
-        <ng-template pTemplate="caption">
-          <!-- Display add button if not in stepper or if no expression is present -->
-          <div class="flex align-items-center justify-content-between">
-            Dose interval(s)
-            <p-button
-              icon="pi pi-plus"
-              pTooltip="Add dose interval"
-              tooltipPosition="bottom"
-              (onClick)="addDoseInterval()"
-            ></p-button>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Unit</th>
-            <th>Value</th>
-            <th>Schedule frequency</th>
-            <th>Interval</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </ng-template>
-        <ng-template
-          pTemplate="body"
-          let-doseinterval
-          let-editing="editing"
-          let-ri="rowIndex"
+        <p-table
+          [value]="doseIntervals"
+          dataKey="key"
+          editMode="row"
+          styleClass="p-datatable-sm"
         >
-          <tr [pEditableRow]="doseinterval">
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input
-                    pInputText
-                    type="text"
-                    [(ngModel)]="doseinterval.unit"
-                    required
-                  />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ doseinterval?.unit }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input
-                    pInputText
-                    type="text"
-                    [(ngModel)]="doseinterval.value"
-                    required
-                  />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ doseinterval?.value }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input
-                    pInputText
-                    [(ngModel)]="doseinterval.scheduleFrequency"
-                  />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ doseinterval.scheduleFrequency?.toString() }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText [(ngModel)]="doseinterval.interval" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ doseinterval.interval?.toString() }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <div class="flex align-items-center justify-content-center gap-2">
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  pInitEditableRow
-                  icon="pi pi-pencil"
-                  (click)="onDoseIntervalEditInit(doseinterval)"
-                  class="p-button-rounded p-button-text"
-                ></button>
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  pSaveEditableRow
-                  icon="pi pi-check"
-                  (click)="onDoseIntervalEditSave(doseinterval)"
-                  class="p-button-rounded p-button-text p-button-success mr-2"
-                ></button>
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  pCancelEditableRow
-                  icon="pi pi-times"
-                  (click)="onDoseIntervalEditCancel(doseinterval, ri)"
-                  class="p-button-rounded p-button-text p-button-danger"
-                ></button>
-              </div>
-            </td>
+          <ng-template pTemplate="caption">
+            <!-- Display add button if not in stepper or if no expression is present -->
+            <div class="flex align-items-center justify-content-between">
+              Dose interval(s)
+              <p-button
+                icon="pi pi-plus"
+                pTooltip="Add dose interval"
+                tooltipPosition="bottom"
+                (onClick)="addDoseInterval()"
+              ></p-button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Unit</th>
+              <th>Value</th>
+              <th>Schedule frequency</th>
+              <th>Interval</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template
+            pTemplate="body"
+            let-doseinterval
+            let-editing="editing"
+            let-ri="rowIndex"
+          >
+            <tr [pEditableRow]="doseinterval">
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="doseinterval.unit"
+                      required
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ doseinterval?.unit }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="doseinterval.value"
+                      required
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ doseinterval?.value }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      [(ngModel)]="doseinterval.scheduleFrequency"
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ doseinterval.scheduleFrequency?.toString() }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input pInputText [(ngModel)]="doseinterval.interval" />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ doseinterval.interval?.toString() }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <div
+                  class="flex align-items-center justify-content-center gap-2"
+                >
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    pInitEditableRow
+                    icon="pi pi-pencil"
+                    (click)="onDoseIntervalEditInit(doseinterval)"
+                    class="p-button-rounded p-button-text"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    pSaveEditableRow
+                    icon="pi pi-check"
+                    (click)="onDoseIntervalEditSave(doseinterval)"
+                    class="p-button-rounded p-button-text p-button-success mr-2"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    pCancelEditableRow
+                    icon="pi pi-times"
+                    (click)="onDoseIntervalEditCancel(doseinterval, ri)"
+                    class="p-button-rounded p-button-text p-button-danger"
+                  ></button>
+                </div>
+              </td>
 
-            <td>
-              <button
-                pButton
-                pRipple
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-warning"
-                (click)="deleteDoseInterval(doseinterval)"
-              ></button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
+              <td>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteDoseInterval(doseinterval)"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
 
-    <div class="field col-12">
-      <b>Cumulative dose: </b>
-      {{
-        cumulativeDose?.value +
-          " " +
-          cumulativeDose?.unit.label +
-          " [" +
-          cumulativeDose?.unit.id +
-          "]"
-      }}
+      <div class="field col-12">
+        <b>Cumulative dose: </b>
+        {{
+          cumulativeDose?.value +
+            " " +
+            cumulativeDose?.unit.label +
+            " [" +
+            cumulativeDose?.unit.id +
+            "]"
+        }}
+      </div>
     </div>
   </div>
   <!-- RadiationTherapy medical action -->
@@ -414,12 +438,20 @@
     </div>
     <div class="field col-6">
       <label for="dosage"><b>Dosage:</b></label>
-      <p-inputNumber id="dosage" onInput="changeDosage($event)" placeholder="Dosage in Gy">
+      <p-inputNumber
+        id="dosage"
+        onInput="changeDosage($event)"
+        placeholder="Dosage in Gy"
+      >
       </p-inputNumber>
     </div>
     <div class="field col-6">
       <label for="fractions"><b>Fractions:</b></label>
-      <p-inputNumber id="fractions" onInput="changeFractions($event)" placeholder="Fractions">
+      <p-inputNumber
+        id="fractions"
+        onInput="changeFractions($event)"
+        placeholder="Fractions"
+      >
       </p-inputNumber>
     </div>
   </div>

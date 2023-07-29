@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Utils } from 'src/app/component/shared/utils';
 import { OntologyClass, Procedure, TimeElement, TimeInterval } from 'src/app/models/base';
 import { Disease } from 'src/app/models/disease';
@@ -27,25 +28,33 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   responseToTreatment: OntologyClass;
   responseToTreatmentVal: string;
   terminationReason: OntologyClass;
-  // procedure
+  // * procedure *
   procedureCode: OntologyClass;
   performed: TimeElement;
   bodySite: OntologyClass;
   bodySitesStorageKey = 'body_sites';
   currSearchParams: any = {};
-  // Treatment
-  agent: OntologyClass;
+  // * Treatment *
+  // Agent = chemical entity
+  chemicalEntityItems: OntologyClass[];
+  chemicalEntityItemsCount: number;
+  chemicalEntitySearchstate = 'inactive';
+  chemicalEntityQuery = new Subject();
+  chemicalEntityQueryText: string;
+  chemicalEntityNotFoundFlag = false;
+  loadingChemicalEntitySearchResults = false;
+  selectedChemicalEntity: OntologyClass;
   routeOfAdministration: OntologyClass;
   doseIntervals: DoseInterval[];
   drugType: DrugType;
   drugTypes = Object.values(DrugType);
   cumulativeDose: Quantity;
-  // radiationtherapy
+  // * radiationtherapy *
   modality: OntologyClass;
   radiationTherapyBodySites: OntologyClass[];
   dosage: number;
   fractions: number;
-  // therapeutic regimen
+  // * therapeutic regimen *
   identifier: any;
   startTime: TimeElement;
   endTime: TimeElement;
@@ -76,10 +85,10 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   valid: any = {};
 
   constructor(private medicalActionService: MedicalActionService,
-              private constantsService: ConstantsService,
-              private messageService: MessageService,
-              public ref: DynamicDialogRef,
-              public config: DynamicDialogConfig) {
+    private constantsService: ConstantsService,
+    private messageService: MessageService,
+    public ref: DynamicDialogRef,
+    public config: DynamicDialogConfig) {
     this.medicalAction = config.data?.medicalAction;
     this.diseases = config.data?.diseases;
   }
@@ -100,6 +109,31 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
+    // get chemical entities
+    this.chemicalEntityQuery.pipe(debounceTime(425),
+      distinctUntilChanged()).subscribe((val: string) => {
+        if (this.hasValidChemicalEntityInput(val)) {
+          this.loadingChemicalEntitySearchResults = true;
+          this.chemicalEntityQueryText = val;
+          this.medicalActionService.searchChemicalEntities(val).subscribe((data) => {
+            this.chemicalEntityItems = [];
+            for (const concept of data.foundConcepts) {
+              this.chemicalEntityItems.push(new OntologyClass(concept.id, concept.lbl, concept.id));
+            }
+            this.chemicalEntityItemsCount = data.numberOfTerms;
+            this.chemicalEntityNotFoundFlag = (this.chemicalEntityItemsCount === 0);
+            this.chemicalEntitySearchstate = 'active';
+          }, (error) => {
+            console.log(error);
+            this.loadingChemicalEntitySearchResults = false;
+          }, () => {
+            this.loadingChemicalEntitySearchResults = false;
+          });
+
+        } else {
+          this.chemicalEntitySearchstate = 'inactive';
+        }
+      });
 
     this.updateMedicalAction();
 
@@ -137,7 +171,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.performed = this.medicalAction.procedure.performed;
         this.actionType = Procedure.actionName;
       } else if (this.medicalAction.treatment) {
-        this.agent = this.medicalAction.treatment.agent;
+        this.selectedChemicalEntity = this.medicalAction.treatment.agent;
+        this.chemicalEntityItems = [this.selectedChemicalEntity];
         this.routeOfAdministration = this.medicalAction.treatment.routeOfAdministration;
         this.doseIntervals = this.medicalAction.treatment.doseIntervals;
         this.drugType = this.medicalAction.treatment.drugType;
@@ -226,13 +261,35 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       this.medicalAction.procedure.code = this.procedureCode;
     }
   }
-  changeAgent(eventObj: OntologyClass) {
-    this.agent = eventObj;
-    // update medicalAction
-    if (this.medicalAction && this.medicalAction.treatment) {
-      this.medicalAction.treatment.agent = this.agent;
+  // chemical entity
+  updateChemicalEntity(chemicalEntity: any) {
+    if (this.medicalAction?.treatment?.agent) {
+      if (chemicalEntity) {
+        if (this.chemicalEntitySearchstate === 'active') {
+          this.chemicalEntitySearchstate = 'inactive';
+        }
+        this.selectedChemicalEntity = chemicalEntity;
+        chemicalEntity.termUrl = Utils.getUrlForId(chemicalEntity.id);
+        this.medicalAction.treatment.agent = chemicalEntity;
+      } else {
+        this.medicalAction.treatment.agent = undefined;
+      }
     }
   }
+  chemicalEntityContentChanging(input: string) {
+    this.chemicalEntityQuery.next(input);
+  }
+  chemicalEntityItemSelected(item: any) {
+    if (item) {
+      if (this.medicalAction && this.medicalAction.treatment) {
+        this.medicalAction.treatment.agent = new OntologyClass(item.id, item.lbl);
+      }
+    }
+  }
+  hasValidChemicalEntityInput(qString: string) {
+    return (qString && qString.length >= 3);
+  }
+
   changeRouteOfAdministration(eventObj: OntologyClass) {
     this.routeOfAdministration = eventObj;
     // update medicalAction
