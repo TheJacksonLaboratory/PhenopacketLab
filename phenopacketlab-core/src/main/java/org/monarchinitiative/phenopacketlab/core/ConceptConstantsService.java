@@ -55,4 +55,6 @@ public interface ConceptConstantsService {
     Optional<SubtreeNode> scheduleFrequencyTreeConstants();
 
     Optional<SubtreeNode> adverseEventTreeConstants();
+
+    Optional<SubtreeNode> bodySiteTreeConstants();
 }

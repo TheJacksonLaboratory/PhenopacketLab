@@ -57,6 +57,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> routeOfAdministrationTreeConstants = configureRouteOfAdministrationTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> adverseEventTreeConstants = configureAdverseEventTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> bodySiteTreeConstants = configureBodySiteTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -79,6 +80,7 @@ public class ConceptConstantsServiceConfigurer {
                 routeOfAdministrationTreeConstants.orElse(null),
                 scheduleFrequencyTreeConstants.orElse(null),
                 adverseEventTreeConstants.orElse(null),
+                bodySiteTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -310,6 +312,11 @@ public class ConceptConstantsServiceConfigurer {
     private static Optional<SubtreeNode> configureAdverseEventTreeConstants(ConceptResourceService resourceService,
                                                                                  OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C41331"), "NCIT", null, false);
+    }
+
+    private static Optional<SubtreeNode> configureBodySiteTreeConstants(ConceptResourceService resourceService,
+                                                                            OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C12680"), "NCIT", null, false);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

@@ -3909,6 +3909,41 @@
           "val" : "Adverse Event"
         } ]
       }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C12680",
+      "lbl" : "Body Region",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Named areas of the body."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Anatomic Region"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Body Region"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C12680"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Body Location or Region"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Body Region"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Body Region"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0005898"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Body_Region"
+        } ]
+      }
     }],
     "edges" : [ {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C12810",
