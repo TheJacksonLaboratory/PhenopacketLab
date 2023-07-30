@@ -1,4 +1,4 @@
-<div class="grid">
+<div class="grid p-fluid">
   <div class="field col-6">
     <label for="treatmenttarget"><b>Treatment target:</b></label>
     <p-dropdown
@@ -125,7 +125,7 @@
     ></ontology-tree-select>
   </div>
 
-  <div class="field col-4">
+  <div class="field col-6">
     <label for="actiontype"><b>Select an action type:</b></label>
     <p-dropdown
       ngDefaultControl
@@ -139,7 +139,7 @@
     >
     </p-dropdown>
   </div>
-  <div class="field col-8"></div>
+  <div class="field col-6"></div>
   <!-- Procedure medical action -->
   <div *ngIf="actionType === 'Procedure'" class="field col-12">
     <div class="grid">
@@ -152,19 +152,31 @@
         ></ontology-class-input>
       </div>
       <div class="field col-6">
-        <label for="bodysite"><b>Body site:</b></label>
-        <p-dropdown
+        <label for="procedureBodySite"><b>Body site:</b></label>
+        <p-treeSelect
           ngDefaultControl
-          id="bodysite"
+          id="procedureBodySite"
           appendTo="body"
-          [options]="radiationTherapyBodySites"
-          [ngModel]="bodySite"
-          (onChange)="changeBodySite($event)"
-          [showClear]="true"
+          [(ngModel)]="procedureBodySite"
+          [options]="bodySiteNodes"
+          (onNodeSelect)="updateProcedureBodySite($event)"
+          [metaKeySelection]="false"
+          placeholder="Select body site"
           [filter]="true"
-          placeholder="Select an body site"
+          filterBy="label"
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateProcedureBodySite($event)"
         >
-        </p-dropdown>
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
       </div>
       <div class="field col-12">
         <b>Performed on: </b> {{ performed?.toString() }}
@@ -204,11 +216,30 @@
         <label for="routeOfAdministration"
           ><b>Route of administration:</b></label
         >
-        <ontology-class-input
+        <p-treeSelect
+          ngDefaultControl
           id="routeOfAdministration"
-          [ontologyObject]="routeOfAdministration"
-          (ontologyObjectEvent)="changeRouteOfAdministration($event)"
-        ></ontology-class-input>
+          appendTo="body"
+          [(ngModel)]="routeOfAdministrationSelected"
+          [options]="routeOfAdministrationNodes"
+          (onNodeSelect)="updateRouteOfAdministration($event)"
+          [metaKeySelection]="false"
+          placeholder="Select route of administration"
+          [filter]="true"
+          filterBy="label"
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateRouteOfAdministration($event)"
+        >
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
       </div>
       <div class="field col-6">
         <label for="drugtype"><b>Drug type:</b></label>
@@ -330,10 +361,32 @@
               <td>
                 <p-cellEditor>
                   <ng-template pTemplate="input">
-                    <input
-                      pInputText
+                    <p-treeSelect
+                      ngDefaultControl
+                      id="scheduleFrequency"
+                      appendTo="body"
                       [(ngModel)]="doseinterval.scheduleFrequency"
-                    />
+                      [options]="scheduleFrequencyNodes"
+                      (onNodeSelect)="
+                        updateScheduleFrequency($event, doseinterval)
+                      "
+                      [metaKeySelection]="false"
+                      placeholder="Select schedule frequency"
+                      [filter]="true"
+                      filterBy="label"
+                      [filterInputAutoFocus]="true"
+                      [showClear]="true"
+                      (onClear)="updateScheduleFrequency($event, doseinterval)"
+                    >
+                      <ng-template let-node pTemplate="default">
+                        <span
+                          [pTooltip]="node.label"
+                          showDelay="2000"
+                          tooltipPosition="bottom"
+                          >[{{ node.key }}] {{ node.label }}</span
+                        >
+                      </ng-template>
+                    </p-treeSelect>
                   </ng-template>
                   <ng-template pTemplate="output">
                     {{ doseinterval.scheduleFrequency?.toString() }}
@@ -413,52 +466,66 @@
   </div>
   <!-- RadiationTherapy medical action -->
   <div *ngIf="actionType === 'Radiation therapy'" class="field col-12">
-    <div class="field col-6">
-      <label for="modality"><b>Modality:</b></label>
-      <ontology-class-input
-        id="modality"
-        [ontologyObject]="modality"
-        (ontologyObjectEvent)="changeModality($event)"
-      ></ontology-class-input>
-    </div>
-    <div class="field col-6">
-      <label for="bodysite1"><b>Body site:</b></label>
-      <p-dropdown
-        ngDefaultControl
-        id="bodysite1"
-        appendTo="body"
-        [options]="radiationTherapyBodySites"
-        [ngModel]="bodySite"
-        (onChange)="changeBodySite($event)"
-        [showClear]="true"
-        [filter]="true"
-        placeholder="Select an body site"
-      >
-      </p-dropdown>
-    </div>
-    <div class="field col-6">
-      <label for="dosage"><b>Dosage:</b></label>
-      <p-inputNumber
-        id="dosage"
-        onInput="changeDosage($event)"
-        placeholder="Dosage in Gy"
-      >
-      </p-inputNumber>
-    </div>
-    <div class="field col-6">
-      <label for="fractions"><b>Fractions:</b></label>
-      <p-inputNumber
-        id="fractions"
-        onInput="changeFractions($event)"
-        placeholder="Fractions"
-      >
-      </p-inputNumber>
+    <div class="grid">
+      <div class="field col-6">
+        <label for="modality"><b>Modality:</b></label>
+        <ontology-class-input
+          id="modality"
+          [ontologyObject]="modality"
+          (ontologyObjectEvent)="changeModality($event)"
+        ></ontology-class-input>
+      </div>
+      <div class="field col-6">
+        <label for="radiationBodySite"><b>Body site:</b></label>
+        <p-treeSelect
+          ngDefaultControl
+          id="radiationBodySite"
+          appendTo="body"
+          [(ngModel)]="radiationTherapyBodySite"
+          [options]="bodySiteNodes"
+          (onNodeSelect)="updateRadiationTherapyBodySite($event)"
+          [metaKeySelection]="false"
+          placeholder="Select body site"
+          [filter]="true"
+          filterBy="label"
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateRadiationTherapyBodySite($event)"
+        >
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
+      </div>
+      <div class="field col-6">
+        <label for="dosage"><b>Dosage:</b></label>
+        <p-inputNumber
+          id="dosage"
+          onInput="changeDosage($event)"
+          placeholder="Dosage in Gy"
+        >
+        </p-inputNumber>
+      </div>
+      <div class="field col-6">
+        <label for="fractions"><b>Fractions:</b></label>
+        <p-inputNumber
+          id="fractions"
+          onInput="changeFractions($event)"
+          placeholder="Fractions"
+        >
+        </p-inputNumber>
+      </div>
     </div>
   </div>
 
   <!-- TherapeuticRegimen medical action -->
   <div *ngIf="actionType === 'Therapeutic regimen'" class="field col-12">
-    <div class="grid p-fluid">
+    <div class="grid">
       <div class="field col-6">
         <label for="identifier"><b>Identifier:</b></label>
         <ontology-class-input
