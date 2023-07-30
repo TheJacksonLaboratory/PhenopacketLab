@@ -13,7 +13,7 @@ export const environment = {
   PHENOTYPIC_FEATURE_SEARCH_URL: `${API_URL}/phenotypic-features/search`,
   DISEASE_URL: `${API_URL}/diseases`,
   DISEASE_SEARCH_URL: `${API_URL}/diseases/search`,
-  BODY_SITE_URL: `${API_URL}/medical-actions/bodysites`,
+  BODY_SITE_URL: `${API_URL}/constants/tree-body-site`,
   PHENO_VALIDATE_URL: `${API_URL}/validate`,
   SEX_URL: `${API_URL}/constants/sex`,
   GENDER_URL: `${API_URL}/constants/gender`,
