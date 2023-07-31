@@ -56,6 +56,7 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
+                new ResourceTuple<>(dataResolver.uoJsonPath(), ConceptResourceLoaders::uo, result::setUo),
                 new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco),
                 new ResourceTuple<>(dataResolver.chebiJsonPath(), ConceptResourceLoaders::chebi, result::setChebi)
@@ -114,6 +115,7 @@ class BigBadMultipurposeLoader {
                 result.uberon.conceptResource(),
                 result.hgnc,
                 result.ncit.conceptResource(),
+                result.uo.conceptResource(),
                 result.gsso.conceptResource(),
                 result.eco.conceptResource(),
                 result.chebi.conceptResource()};
@@ -130,6 +132,7 @@ class BigBadMultipurposeLoader {
                 result.so.hierarchyService(),
                 result.uberon.hierarchyService(),
                 result.ncit.hierarchyService(),
+                result.uo.hierarchyService(),
                 result.gsso.hierarchyService(),
                 result.eco.hierarchyService(),
                 result.chebi.hierarchyService()
@@ -160,6 +163,7 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices uberon;
         private IdentifiedConceptResource hgnc;
         private ConceptResourceAndHierarchyServices ncit;
+        private ConceptResourceAndHierarchyServices uo;
         private ConceptResourceAndHierarchyServices gsso;
         private ConceptResourceAndHierarchyServices eco;
         private ConceptResourceAndHierarchyServices chebi;
@@ -197,6 +201,8 @@ class BigBadMultipurposeLoader {
         public void setNcit(ConceptResourceAndHierarchyServices ncit) {
             this.ncit = ncit;
         }
+
+        public void setUo(ConceptResourceAndHierarchyServices uo) { this.uo = uo; }
 
         public void setGsso(ConceptResourceAndHierarchyServices gsso) {
             this.gsso = gsso;

@@ -152,6 +152,12 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-unit", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> geUnitTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.unitTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")
     public ResponseEntity<List<Concept>> getContigs(@PathVariable("genomeAssembly") String genomeAssembly) {
         List<Concept> concepts = conceptConstantsService.contigConstants(genomeAssembly);

@@ -58,6 +58,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> adverseEventTreeConstants = configureAdverseEventTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> bodySiteTreeConstants = configureBodySiteTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> unitTreeConstants = configureUnitTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -81,6 +82,7 @@ public class ConceptConstantsServiceConfigurer {
                 scheduleFrequencyTreeConstants.orElse(null),
                 adverseEventTreeConstants.orElse(null),
                 bodySiteTreeConstants.orElse(null),
+                unitTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -316,7 +318,12 @@ public class ConceptConstantsServiceConfigurer {
 
     private static Optional<SubtreeNode> configureBodySiteTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C12680"), "NCIT", null, false);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C12680"), "NCIT", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
+                                                                        OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("UO:0000000"), "UO", null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

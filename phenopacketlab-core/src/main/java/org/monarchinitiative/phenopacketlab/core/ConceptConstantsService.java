@@ -57,4 +57,6 @@ public interface ConceptConstantsService {
     Optional<SubtreeNode> adverseEventTreeConstants();
 
     Optional<SubtreeNode> bodySiteTreeConstants();
+
+    Optional<SubtreeNode> unitTreeConstants();
 }
