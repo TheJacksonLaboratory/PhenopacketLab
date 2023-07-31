@@ -8,6 +8,7 @@ const lateralitiesData = require('../../assets/data/laterality.json');
 const modifiersData = require('../../assets/data/modifiers.json');
 const severitiesData = require('../../assets/data/severity.json');
 const sexesData = require('../../assets/data/sex.json');
+const unitsData = require('../../assets/data/uo.json');
 // const gendersData = require('../../assets/data/gender.json');
 // const evidences = require('../../assets/data/evidences.json');
 // const tnmTumorFindings = require('../../assets/data/tnmTumorFindings.json');
@@ -87,6 +88,18 @@ describe('ConstantsService', () => {
         const req = httpMock.expectOne(environment.SEX_URL);
         expect(req.request.method).toEqual('GET');
         req.flush(sexesData);
+        httpMock.verify();
+    });
+
+    it('getUnit() should http GET units', () => {
+        constantsService.getUnits().subscribe((units) => {
+            if (units) {
+                expect(units).toBe(unitsData);
+            }
+        });
+        const req = httpMock.expectOne(environment.UNIT_URL);
+        expect(req.request.method).toEqual('GET');
+        req.flush(unitsData);
         httpMock.verify();
     });
 

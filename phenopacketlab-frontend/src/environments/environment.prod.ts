@@ -12,6 +12,7 @@ export const environment = {
   DISEASE_ALL_URL: `${API_URL}/diseases/all`,
   DISEASE_SEARCH_URL: `${API_URL}/diseases/search`,
   BODY_SITE_URL: `${API_URL}/constants/tree-body-site`,
+  UNIT_URL: `${API_URL}/constants/tree-unit`,
   PHENO_VALIDATE_URL: `${API_URL}/validate`,
   SEX_URL: `${API_URL}/constants/sex`,
   GENDER_URL: `${API_URL}/constants/gender`,

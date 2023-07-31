@@ -17,6 +17,7 @@ const routeOfAdministrationUrl = environment.ROUTE_OF_ADMINISTRATION_URL;
 const scheduleFrequencyUrl = environment.SCHEDULE_FREQUENCY_URL;
 const adverseEventUrl = environment.ADVERSE_EVENT_URL;
 const bodySiteUrl = environment.BODY_SITE_URL;
+const unitUrl = environment.UNIT_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,7 @@ export class ConstantsService {
     scheduleFrequencies = new BehaviorSubject<any>(undefined);
     adverseEvent = new BehaviorSubject<any>(undefined);
     bodySites = new BehaviorSubject<any>(undefined);
+    units = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -275,6 +277,19 @@ export class ConstantsService {
         }
         // return body sites even if the value is yet undefined.
         return this.bodySites.asObservable();
+    }
+    public getUnits(): Observable<any> {
+        // only if undefined, load from server
+        if (this.units.getValue() === undefined) {
+            console.log('Loading units...');
+            this.http.get(unitUrl).subscribe(res => {
+                this.units.next(res);
+            }, (error) => {
+                console.log(error);
+            });
+        }
+        // return units even if the value is yet undefined.
+        return this.units.asObservable();
     }
 }
 
