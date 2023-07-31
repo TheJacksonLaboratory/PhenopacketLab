@@ -85,6 +85,9 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
 
+  unitSubscription: Subscription;
+  unitNodes: OntologyTreeNode[];
+
   // Dose Intervals table
   doseIntervalVisible = false;
   clonedDoseIntervals: { [s: string]: DoseInterval } = {};
@@ -151,6 +154,11 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.scheduleFrequencyNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
+    this.unitSubscription = this.constantsService.getUnits().subscribe(nodes => {
+      if (nodes) {
+        this.unitNodes = <OntologyTreeNode[]>nodes.children;
+      }
+    });
     this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
       if (nodes) {
         this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
@@ -186,6 +194,9 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
     if (this.bodySiteSubscription) {
       this.bodySiteSubscription.unsubscribe();
+    }
+    if (this.unitSubscription) {
+      this.unitSubscription.unsubscribe();
     }
   }
 
@@ -399,41 +410,41 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   updateScheduleFrequency(eventObj, doseInterval: DoseInterval) {
     if (this.medicalAction?.treatment) {
       if (eventObj) {
-        const schedule = new OntologyClass(eventObj.node.key, eventObj.node.label);
         const id = eventObj.node.key.split(':')[1];
-        schedule.termUrl = `http://purl.obolibrary.org/obo/NCIT_${id}`;
+        const schedule = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
         doseInterval.scheduleFrequency = schedule;
       } else {
         doseInterval.scheduleFrequency = undefined;
       }
     }
   }
-  onDoseIntervalEditInit(doseInterval: DoseInterval) {
-    this.clonedDoseIntervals[doseInterval.key] = { ...doseInterval };
-  }
 
-  onDoseIntervalEditSave(doseInterval: DoseInterval) {
-    delete this.clonedDoseIntervals[doseInterval.key];
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Dose Interval is updated' });
-  }
-
-  onDoseIntervalEditCancel(doseInterval: DoseInterval, index: number) {
-    this.medicalAction.treatment.doseIntervals[index] = this.clonedDoseIntervals[doseInterval.key];
-    delete this.clonedDoseIntervals[doseInterval.key];
-  }
-
-  inputHandler(e: any, id: number, key: string) {
-    if (!this.valid[id]) {
-      this.valid[id] = {};
+  updateUnit(eventObj, doseInterval: DoseInterval) {
+    if (this.medicalAction?.treatment) {
+      if (eventObj) {
+        const id = eventObj.node.key.split(':')[1];
+        const unit = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
+        if (doseInterval.quantity === undefined) {
+          doseInterval.quantity = new Quantity();
+        }
+        doseInterval.quantity.unit = unit;
+      } else {
+        doseInterval.quantity.unit = undefined;
+      }
     }
-    this.valid[id][key] = e.target.validity.valid;
   }
 
-  disableSubmit(id: number) {
-    if (this.valid[id]) {
-      return Object.values(this.valid[id]).some((item) => item === false);
+  updateValue(value, doseInterval: DoseInterval) {
+    if (this.medicalAction?.treatment) {
+      if (value) {
+        if (doseInterval.quantity === undefined) {
+          doseInterval.quantity = new Quantity();
+        }
+        doseInterval.quantity.value = value;
+      } else {
+        doseInterval.quantity.value = undefined;
+      }
     }
-    return false;
   }
 
   // RadiationTherapy
