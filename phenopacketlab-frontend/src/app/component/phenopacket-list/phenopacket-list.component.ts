@@ -4,9 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { Subscription } from 'rxjs';
-import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { CohortService } from 'src/app/services/cohort.service';
 import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { UploadService } from '../../services/upload-service';
@@ -31,18 +29,17 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   @ViewChild(FileUpload) fupload: FileUpload;
 
   @ViewChild(TabView) tabView: TabView;
-  cohort: Cohort;
+  phenopacketList: Phenopacket[];
   /** Array used to hold opened tabs **/
   tabs: Phenopacket[] = [];
   /** Array used to hold the list of individuals present in the summary tab **/
   tabIndex = 0;
 
-  cohortPhenopacketSubscription: Subscription;
+  phenopaketListSubscription: Subscription;
   ref: DynamicDialogRef;
 
   constructor(private phenopacketService: PhenopacketService,
     private phenopacketStepperService: PhenopacketStepperService,
-    private cohortService: CohortService,
     private uploadService: UploadService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -53,14 +50,14 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cohortPhenopacketSubscription = this.cohortService.getCohort().subscribe(cohort => {
-      this.cohort = cohort;
+    this.phenopaketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
+      this.phenopacketList = list;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.cohortPhenopacketSubscription) {
-      this.cohortPhenopacketSubscription.unsubscribe();
+    if (this.phenopaketListSubscription) {
+      this.phenopaketListSubscription.unsubscribe();
     }
     if (this.ref) {
       this.ref.close();
@@ -79,8 +76,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         if (removeIdx > -1) {
           this.tabs.splice(removeIdx, 1);
         }
-        // Remove them from the cohort.
-        this.cohortService.removeCohortMember(phenopacket);
+        // Remove them from the list.
+        this.phenopacketService.removePhenopacket(phenopacket);
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
       },
       reject: () => { }, key: 'positionDialog'
@@ -118,14 +115,14 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     console.log('---Uploading one or more files---');
     const files: File[] = event.files;
     files.map(file => this.uploadService.importFromFile(file).subscribe((newPhenopacket: Phenopacket) => {
-      const phenopacketListIds = this.cohort.members?.map(phenopacket => phenopacket?.id);
+      const phenopacketListIds = this.phenopacketList?.map(phenopacket => phenopacket?.id);
       if (phenopacketListIds.includes(newPhenopacket.id)) {
         const errorMessage = `'${newPhenopacket.id}' already exists.`;
         this.messageService.add({ severity: 'error', summary: 'Duplicate Phenopacket ID Error', detail: errorMessage });
         this.clearFileUpload();
         return;
       }
-      this.cohortService.addCohortMember(newPhenopacket);
+      this.phenopacketService.addPhenopacket(newPhenopacket);
       this.clearFileUpload();
       this.messageService.add({ severity: 'success', summary: 'Phenopacket Upload Success!' });
     }, (error) => {
@@ -153,8 +150,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       });
       this.ref.onClose.subscribe(validationResult => {
         if (validationResult) {
-          this.cohortService.removeCohortMember(phenopacket);
-          this.cohortService.addCohortMember(validationResult.validatedPhenopacket);
+          this.phenopacketService.removePhenopacket(phenopacket);
+          this.phenopacketService.addPhenopacket(validationResult.validatedPhenopacket);
         }
       });
     });

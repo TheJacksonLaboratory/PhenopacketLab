@@ -24,7 +24,6 @@ export class BiosampleStepComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.phenopacket = this.phenopacketService.phenopacket;
-        // this.biosamples = this.phenopacketService.getPhenopacket().biosamples;
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });

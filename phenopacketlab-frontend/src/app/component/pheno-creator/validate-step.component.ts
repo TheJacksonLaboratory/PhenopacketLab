@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Cohort } from 'src/app/models/cohort';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { Profile, ProfileSelection } from 'src/app/models/profile';
-import { CohortService } from 'src/app/services/cohort.service';
 import { DownloadService } from 'src/app/services/download-service';
 import { MetaData } from '../../models/metadata';
 import { MetadataService } from 'src/app/services/metadata.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
   selector: 'app-validate-step',
@@ -21,7 +20,6 @@ import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.
 export class ValidateStepComponent implements OnInit, OnDestroy {
 
   phenopacket: Phenopacket;
-  cohort: Cohort;
 
   submitted = false;
   disabled = true;
@@ -35,7 +33,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   // whether the inplace createBy and SubmittedBy are active
   active = true;
 
-  cohortSubscription: Subscription;
+  phenopacketListSubscription: Subscription;
 
   profileSelectionSubscription: Subscription;
   profileSelection: ProfileSelection;
@@ -44,9 +42,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef;
 
-  constructor(public phenopacketService: PhenopacketStepperService,
+  constructor(public phenopacketStepperService: PhenopacketStepperService,
+    private phenopacketService: PhenopacketService,
     private downloadService: DownloadService,
-    private cohortService: CohortService,
     private metadataService: MetadataService,
     private dialogService: DialogService,
     private router: Router) {
@@ -54,15 +52,12 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.phenopacket = this.phenopacketService.phenopacket;
+    this.phenopacket = this.phenopacketStepperService.phenopacket;
 
     if (this.phenopacket === undefined) {
       // navigate to first page of creator as phenopacket is not created
       this.router.navigate(['creator/individual']);
     }
-    this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
-      this.cohort = cohort;
-    });
     // initialize metadata
     this.initializeMetadata();
     // Retrieve all missing resource prefixes in phenopacket metadata
@@ -80,15 +75,12 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
           this.phenopacket.metaData.resources = resources;
         }
       });
-    this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
+    this.profileSelectionSubscription = this.phenopacketStepperService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.cohortSubscription) {
-      this.cohortSubscription.unsubscribe();
-    }
     if (this.profileSelectionSubscription) {
       this.profileSelectionSubscription.unsubscribe();
     }
@@ -115,7 +107,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   }
 
   complete() {
-    this.phenopacketService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
+    this.phenopacketStepperService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
       this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
         header: 'Validation results',
         width: '50%',
@@ -152,10 +144,10 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
             this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
 
             this.active = false;
-            // add to cohort
-            this.cohortService.addCohortMember(this.phenopacket);
+            // add to phenopacketlist
+            this.phenopacketService.addPhenopacket(this.phenopacket);
             // reset phenopacket
-            this.phenopacketService.phenopacket = undefined;
+            this.phenopacketStepperService.phenopacket = undefined;
 
             this.router.navigate(['phenopackets']);
           }
@@ -166,7 +158,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   }
 
   prevPage() {
-    this.phenopacketService.phenopacket = this.phenopacket;
+    this.phenopacketStepperService.phenopacket = this.phenopacket;
     // check profile and navigate to the corresponding step
     for (const profile of Profile.profileSelectionOptions) {
       if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {

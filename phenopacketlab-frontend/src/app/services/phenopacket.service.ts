@@ -11,16 +11,44 @@ const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 })
 export class PhenopacketService {
 
-    phenopacketSubject = new BehaviorSubject<Phenopacket>(undefined);
+    private phenopacketListSubject = new BehaviorSubject<Phenopacket[]>([]);
 
     constructor(private http: HttpClient) {
     }
-    setPhenopacket(phenopacket: Phenopacket) {
-        this.phenopacketSubject.next(phenopacket);
+
+    setPhenopaketList(phenopacketList: Phenopacket[]) {
+        this.phenopacketListSubject.next(phenopacketList);
+    }
+    getPhenopacketList(): Observable<Phenopacket[]> {
+        return this.phenopacketListSubject.asObservable();
     }
 
-    getPhenopacket(): Observable<Phenopacket> {
-        return this.phenopacketSubject.asObservable();
+    addPhenopacket(phenopacket: Phenopacket) {
+        const list = this.phenopacketListSubject.getValue();
+        list.push(phenopacket);
+        this.phenopacketListSubject.next(list);
+    }
+
+    removePhenopacket(phenopacket: Phenopacket) {
+        const list = this.phenopacketListSubject.getValue();
+        for (let i = list.length - 1; i >= 0; --i) {
+            if (list[i].id === phenopacket.id) {
+                list.splice(i, 1);
+            }
+        }
+        this.phenopacketListSubject.next(list);
+    }
+
+    updatePhenopacket(phenopacket: Phenopacket) {
+        // this.removePhenopacket(phenopacket);
+        // this.addPhenopacket(phenopacket);
+        const list = this.phenopacketListSubject.getValue();
+        for (let i = list.length - 1; i >= 0; --i) {
+            if (list[i].id === phenopacket.id) {
+                list[i] = phenopacket;
+            }
+        }
+        this.phenopacketListSubject.next(list);
     }
 
     validatePhenopacket(phenopacket: string): Observable<any> {

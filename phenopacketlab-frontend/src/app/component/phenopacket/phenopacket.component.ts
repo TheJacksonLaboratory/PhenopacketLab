@@ -13,9 +13,9 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { Interpretation } from 'src/app/models/interpretation';
-import { CohortService } from 'src/app/services/cohort.service';
 import { Subscription } from 'rxjs';
 import { Utils } from '../shared/utils';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
   selector: 'app-phenopacket',
@@ -38,17 +38,17 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   phenopacket: Phenopacket;
 
   ref: DynamicDialogRef;
-  cohortSubscription: Subscription;
+  phenopacketListSubscription: Subscription;
 
-  constructor(private cohortService: CohortService,
+  constructor(private phenopacketService: PhenopacketService,
     private dialogService: DialogService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
     // retrieve phenopacket to edit
-    this.cohortSubscription = this.cohortService.getCohort().subscribe(cohort => {
-      if (cohort?.members) {
-        for (const pheno of cohort.members) {
+    this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
+      if (list) {
+        for (const pheno of list) {
           if (pheno.id === this.phenopacketId) {
             // deep copy of object so we do not modify by reference
             this.phenopacket = Utils.clone(pheno);
@@ -62,8 +62,8 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     if (this.ref) {
       this.ref.close();
     }
-    if (this.cohortSubscription) {
-      this.cohortSubscription.unsubscribe();
+    if (this.phenopacketListSubscription) {
+      this.phenopacketListSubscription.unsubscribe();
     }
   }
 
@@ -131,57 +131,49 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * This is where we update the cohort whenever there is a phenopacket change
-   * If logged in, then phenopacket is modified/updated in the DB
-   */
-  updateCohort() {
-    this.cohortService.removeCohortMember(this.phenopacket);
-    this.cohortService.addCohortMember(this.phenopacket);
-  }
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
     if (this.phenopacket) {
       this.phenopacket.phenotypicFeatures = phenotypicFeatures;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
   changeDiseases(diseases: Disease[]) {
     if (this.phenopacket) {
       this.phenopacket.diseases = diseases;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
     if (this.phenopacket) {
       this.phenopacket.biosamples = biosamples;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
   changeInterpretations(interpretations: Interpretation[]) {
     if (this.phenopacket) {
       this.phenopacket.interpretations = interpretations;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
   changeMeasurements(measurements: Measurement[]) {
     if (this.phenopacket) {
       this.phenopacket.measurements = measurements;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
     if (this.phenopacket) {
       this.phenopacket.medicalActions = medicalActions;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeFiles(files: File[]) {
     if (this.phenopacket) {
       this.phenopacket.files = files;
-      this.updateCohort();
+      this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }
 

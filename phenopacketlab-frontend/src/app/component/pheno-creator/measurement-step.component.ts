@@ -24,7 +24,6 @@ export class MeasurementStepComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.phenopacket = this.phenopacketService.phenopacket;
-        // this.measurements = this.phenopacketService.getPhenopacket().measurements;
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
