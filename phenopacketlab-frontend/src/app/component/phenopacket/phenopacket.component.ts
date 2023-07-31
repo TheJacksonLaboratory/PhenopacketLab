@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { map } from 'rxjs/operators';
 
 import { Disease } from 'src/app/models/disease';
 import { Individual } from 'src/app/models/individual';
@@ -46,16 +47,13 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // retrieve phenopacket to edit
-    this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
-      if (list) {
-        for (const pheno of list) {
-          if (pheno.id === this.phenopacketId) {
-            // deep copy of object so we do not modify by reference
-            this.phenopacket = Utils.clone(pheno);
-          }
-        }
-      }
-    });
+    this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList()
+      .pipe(
+        map(phenopackets => phenopackets.find(pheno => pheno.id === this.phenopacketId)))
+      .subscribe(phenopacket => {
+        // deep copy of object so we do not modify by reference
+        this.phenopacket = Utils.clone(phenopacket);
+      });
   }
 
   ngOnDestroy() {
@@ -127,6 +125,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     this.ref.onClose.subscribe((subject: Individual) => {
       if (subject && this.phenopacket) {
         this.phenopacket.subject = subject;
+        this.phenopacketService.updatePhenopacket(this.phenopacket);
       }
     });
   }
