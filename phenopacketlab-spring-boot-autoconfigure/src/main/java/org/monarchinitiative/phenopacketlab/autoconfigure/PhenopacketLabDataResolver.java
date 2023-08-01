@@ -84,6 +84,8 @@ public class PhenopacketLabDataResolver {
         return phenopacketLabDataDirectory.resolve("chebi.json");
     }
 
+    public Path oaeJsonPath() { return phenopacketLabDataDirectory.resolve("oae.json"); }
+
     public Path drugCentralPath() {
         return phenopacketLabDataDirectory.resolve("drugcentral.csv");
     }

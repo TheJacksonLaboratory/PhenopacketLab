@@ -313,7 +313,7 @@ public class ConceptConstantsServiceConfigurer {
 
     private static Optional<SubtreeNode> configureAdverseEventTreeConstants(ConceptResourceService resourceService,
                                                                                  OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C41331"), "NCIT", null, false);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("OAE:0000001"), "OAE", null, true);
     }
 
     private static Optional<SubtreeNode> configureBodySiteTreeConstants(ConceptResourceService resourceService,
