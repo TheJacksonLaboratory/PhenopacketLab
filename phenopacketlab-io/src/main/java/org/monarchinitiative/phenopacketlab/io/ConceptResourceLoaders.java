@@ -175,4 +175,29 @@ public class ConceptResourceLoaders {
                 .build();
         return new PhenopacketResource(resource);
     }
+
+    public static ConceptResourceAndHierarchyServices oae(InputStream is) {
+        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("OAE", "http://purl.obolibrary.org/obo/OAE_"));
+        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "OAE");
+        Resource resource = oaeResource(getOntologyVersion(ontology));
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
+    }
+
+    private static Resource oaeResource(String version) {
+        org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
+                .setId("oae")
+                .setName("Ontology of Adverse Events (OAE)")
+                .setUrl("http://purl.obolibrary.org/obo/oae.owl")
+                .setVersion(version)
+                .setNamespacePrefix("OAE")
+                .setIriPrefix("http://purl.obolibrary.org/obo/OAE_")
+                .build();
+        return new PhenopacketResource(resource);
+    }
+
+    private static String getOntologyVersion(Ontology ontology) {
+        return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
+    }
+
 }

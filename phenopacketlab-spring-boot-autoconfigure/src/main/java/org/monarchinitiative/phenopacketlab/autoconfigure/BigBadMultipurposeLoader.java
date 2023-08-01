@@ -56,7 +56,8 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
                 new ResourceTuple<>(dataResolver.uoJsonPath(), ConceptResourceLoaders::uo, result::setUo),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco),
-                new ResourceTuple<>(dataResolver.chebiJsonPath(), ConceptResourceLoaders::chebi, result::setChebi)
+                new ResourceTuple<>(dataResolver.chebiJsonPath(), ConceptResourceLoaders::chebi, result::setChebi),
+                new ResourceTuple<>(dataResolver.oaeJsonPath(), ConceptResourceLoaders::oae, result::setOae)
         );
 
         CountDownLatch latch = new CountDownLatch(resources.size());
@@ -114,7 +115,8 @@ class BigBadMultipurposeLoader {
                 result.ncit.conceptResource(),
                 result.uo.conceptResource(),
                 result.eco.conceptResource(),
-                result.chebi.conceptResource()};
+                result.chebi.conceptResource(),
+                result.oae.conceptResource()};
 
         IdentifiedConceptResource[] all = Stream.concat(Arrays.stream(spelledOut), result.others.stream())
                 .toArray(IdentifiedConceptResource[]::new);
@@ -129,7 +131,8 @@ class BigBadMultipurposeLoader {
                 result.ncit.hierarchyService(),
                 result.uo.hierarchyService(),
                 result.eco.hierarchyService(),
-                result.chebi.hierarchyService()
+                result.chebi.hierarchyService(),
+                result.oae.hierarchyService()
         );
         return new BigBadDataBlob(conceptResourceService, hierarchyServiceRegistry);
     }
@@ -159,6 +162,7 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices uo;
         private ConceptResourceAndHierarchyServices eco;
         private ConceptResourceAndHierarchyServices chebi;
+        private ConceptResourceAndHierarchyServices oae;
         private final List<IdentifiedConceptResource> others = new ArrayList<>();
 
         public void setGeno(ConceptResourceAndHierarchyServices geno) {
@@ -200,6 +204,8 @@ class BigBadMultipurposeLoader {
         public void setChebi(ConceptResourceAndHierarchyServices chebi) {
             this.chebi = chebi;
         }
+
+        public void setOae(ConceptResourceAndHierarchyServices oae) { this.oae = oae; }
 
         public synchronized void addAllOthers(List<IdentifiedConceptResource> resources) {
             others.addAll(resources);

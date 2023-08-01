@@ -29,7 +29,7 @@ public class ConceptConstantsServiceConfigurer {
     private static final TermId BODY_REGION = TermId.of("NCIT:C12680");
     private static final TermId DISEASE_STAGE_QUALIFIER = TermId.of("NCIT:C28108");
     private static final TermId ROUTE_OF_ADMINISTRATION = TermId.of("NCIT:C38114");
-    private static final TermId ADVERSE_EVENT = TermId.of("NCIT:C41331");
+    private static final TermId ADVERSE_EVENT = TermId.of("OAE:0000001");
     private static final TermId GENERIC_DISTANT_METASTASIS_TNM_FINDING = TermId.of("NCIT:C48883");
     private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
     private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");

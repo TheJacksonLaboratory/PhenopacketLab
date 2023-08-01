@@ -20,6 +20,7 @@ NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
 UO_PURL=http://purl.obolibrary.org/obo/uo.owl
 ECO_PURL=http://purl.obolibrary.org/obo/eco.owl
 CHEBI_PURL=https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.owl
+OAE_PURL=http://purl.obolibrary.org/obo/oae.owl
 
 ONTOLOGIES=(
     "${GENO_PURL}"
@@ -31,6 +32,7 @@ ONTOLOGIES=(
     "${UO_PURL}"
     "${ECO_PURL}"
     "${CHEBI_PURL}"
+    "${OAE_PURL}"
   )
 
 check () {
