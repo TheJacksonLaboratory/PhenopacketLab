@@ -46,7 +46,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { WordDialogComponent } from '../shared/text-mining/word-dialog.component';
-import { ProfileSelectionComponent } from './profile-selection/profile-selection.component';
 import { PhenoCreatorComponent } from './pheno-creator.component';
 
 @NgModule({
@@ -104,7 +103,6 @@ import { PhenoCreatorComponent } from './pheno-creator.component';
         FileStepComponent,
         ValidateStepComponent,
         WordDialogComponent,
-        ProfileSelectionComponent,
         PhenoCreatorComponent
     ],
     providers: [

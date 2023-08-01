@@ -1,15 +1,12 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Age, TimeElement, TimeElementId } from 'src/app/models/base';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
     selector: 'app-age',
     templateUrl: './age.component.html',
     styleUrls: ['./age.component.scss']
 })
-export class AgeComponent implements OnInit, OnDestroy {
+export class AgeComponent implements OnInit {
 
     @Output() ageEvent = new EventEmitter<Age>();
 
@@ -23,12 +20,7 @@ export class AgeComponent implements OnInit, OnDestroy {
     months: number;
     days: number;
 
-    phenotypicOnsetSubscription: Subscription;
-    phenotypicResolutionSubscription: Subscription;
-    diseaseOnsetSubscription: Subscription;
-    diseaseResolutionSubscription: Subscription;
-
-    constructor(private phenotypeSearchService: PhenotypeSearchService, private diseaseSearchService: DiseaseSearchService) {
+    constructor() {
 
     }
     ngOnInit(): void {
@@ -36,41 +28,6 @@ export class AgeComponent implements OnInit, OnDestroy {
             this.years = this.age.getYears();
             this.months = this.age.getMonths();
             this.days = this.age.getDays();
-        }
-        this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
-                this.setAge(onset);
-            }
-        });
-        this.phenotypicResolutionSubscription = this.phenotypeSearchService.getPhenotypicResolution().subscribe(resolution => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_RESOLUTION) {
-                this.setAge(resolution);
-            }
-        });
-        this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
-                this.setAge(onset);
-            }
-        });
-        this.diseaseResolutionSubscription = this.diseaseSearchService.getDiseaseResolution().subscribe(resolution => {
-            if (this.timeElementId === TimeElementId.DISEASE_RESOLUTION) {
-                this.setAge(resolution);
-            }
-        });
-    }
-
-    ngOnDestroy(): void {
-        if (this.phenotypicOnsetSubscription) {
-            this.phenotypicOnsetSubscription.unsubscribe();
-        }
-        if (this.phenotypicResolutionSubscription) {
-            this.phenotypicResolutionSubscription.unsubscribe();
-        }
-        if (this.diseaseOnsetSubscription) {
-            this.diseaseOnsetSubscription.unsubscribe();
-        }
-        if (this.diseaseResolutionSubscription) {
-            this.diseaseResolutionSubscription.unsubscribe();
         }
     }
 

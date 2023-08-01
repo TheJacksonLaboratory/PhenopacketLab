@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -6,11 +6,11 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TimeElement } from 'src/app/models/base';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { MiningState, PhenotypicFeature } from 'src/app/models/phenotypic-feature';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { SpinnerDialogComponent } from '../spinner-dialog/spinner-dialog.component';
 import { WordDialogComponent } from './word-dialog.component';
 import { Utils } from '../utils';
+import { ConstantsService } from 'src/app/services/constants.service';
 
 const unknownColor = '#ff7800';
 const approvedColor = '#4BB543';
@@ -24,6 +24,9 @@ const rejectedColor = '#F32013';
 })
 export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  // onset previously set if any
+  @Input()
+  lastEncounterTime: TimeElement;
   exampleText = 'e.g. Here we present a 13-year-old girl with inherited myopathy associated with collagenopathy. During the neonatal period weak sucking, decreased muscle tone, joint laxity and hyperextension of elbows, knees and wrists were observed.';
   textSearch: string;
   @Output()
@@ -42,24 +45,19 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
   onsetsNodes: OntologyTreeNode[];
   onsetsSubscription: Subscription;
   onsetApplied = false;
-  onset: TimeElement;
 
   textMinedFeatures: string[];
 
   constructor(private phenotypeSearchService: PhenotypeSearchService,
-    public phenopacketService: PhenopacketService,
+    private constantsService: ConstantsService,
     private elementRef: ElementRef,
     private dialogService: DialogService) {
 
   }
 
   ngOnInit(): void {
-    // get Onset from individual
-    const phenopacket = this.phenopacketService.phenopacket;
-    this.onset = phenopacket?.subject?.timeAtLastEncounter;
-
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+    this.onsetsSubscription = this.constantsService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
@@ -300,13 +298,13 @@ export class TextMiningComponent implements OnInit, OnDestroy, AfterViewChecked 
 
   // Onset
   updateAgeOnset(timeElement: any) {
-    this.onset = timeElement;
+    this.lastEncounterTime = timeElement;
   }
 
   applyOnset() {
     this.onsetApplied = true;
     this.phenotypicFeatures.forEach(feature => {
-      feature.onset = this.onset.clone();
+      feature.onset = this.lastEncounterTime.clone();
     });
   }
 

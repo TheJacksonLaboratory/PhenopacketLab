@@ -8,7 +8,6 @@ import { Diagnosis, GenomicInterpretation, Interpretation, InterpretationStatus,
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { Utils } from '../../utils';
@@ -53,8 +52,7 @@ export class InterpretationDialogComponent implements OnInit {
 
   refGenomicDialog: DynamicDialogRef;
 
-  constructor(public phenopacketService: PhenopacketService,
-    public diseaseService: DiseaseSearchService,
+  constructor(public diseaseService: DiseaseSearchService,
     private messageService: MessageService,
     private dialogService: DialogService,
     public ref: DynamicDialogRef,

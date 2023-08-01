@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Interpretation } from 'src/app/models/interpretation';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
     selector: 'app-interpretation-step',
@@ -21,7 +21,7 @@ export class InterpretationStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
 
 
-    constructor(public phenopacketService: PhenopacketService,
+    constructor(public phenopacketService: PhenopacketStepperService,
         private router: Router) {
     }
 

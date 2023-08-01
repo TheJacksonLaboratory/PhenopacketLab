@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
+import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
     selector: 'app-measurement-step',
@@ -11,17 +12,18 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
   })
 export class MeasurementStepComponent implements OnInit, OnDestroy {
 
+    phenopacket: Phenopacket;
     measurements: Measurement[];
 
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    constructor (public phenopacketService: PhenopacketService) {
+    constructor (public phenopacketService: PhenopacketStepperService) {
 
     }
 
     ngOnInit() {
-        // this.measurements = this.phenopacketService.getPhenopacket().measurements;
+        this.phenopacket = this.phenopacketService.phenopacket;
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });

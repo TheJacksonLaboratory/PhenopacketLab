@@ -24,7 +24,6 @@ import { GeneDescriptorComponent } from './dialog/interpretation-dialog/genomic-
 import { VariationSearchComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
 import { LabelCreatorDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
-import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
 import { PhenotypicFeatureSearchDialogComponent } from './dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
@@ -33,6 +32,7 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
 import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.component';
 import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
 import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
+import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/medical-action-dialog.component';
 
 
 @NgModule({
@@ -68,7 +68,7 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     GeneDescriptorComponent,
     LabelCreatorDialogComponent,
     TextPipe,
-    MedicalActionEditComponent,
+    MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
     FileDialogComponent
@@ -100,7 +100,7 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     MaterialModule,
     AngularSplitModule,
     TextPipe,
-    MedicalActionEditComponent,
+    MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
     FileDialogComponent

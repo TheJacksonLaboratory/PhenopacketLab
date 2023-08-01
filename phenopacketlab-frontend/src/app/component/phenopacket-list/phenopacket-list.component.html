@@ -17,7 +17,7 @@
   </div>
   <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
     <p-tabPanel header="Phenopackets" class="first-panel">
-      <p-table [value]="cohort?.members" selectionMode="single" (onRowSelect)="openTab($event.data)">
+      <p-table [value]="phenopacketList" selectionMode="single" (onRowSelect)="openTab($event.data)">
         <ng-template pTemplate="header">
           <tr>
             <th>Identifier</th>
@@ -58,13 +58,7 @@
     >
       <div class="grid p-fluid">
         <div class="field col-12">
-          <app-phenopacket
-                  [phenopacket]="phenopacket"
-                  (onIdChanged)="changeId($event, tabIndex)"
-                  (onSexChanged)="changeSex($event, tabIndex)"
-                  (onDobChanged)="changeDob($event, tabIndex)"
-          >
-          </app-phenopacket>
+          <app-phenopacket [phenopacketId]="phenopacket?.id"></app-phenopacket>
         </div>
       </div>
     </p-tabPanel>

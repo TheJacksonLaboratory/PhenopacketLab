@@ -1,21 +1,23 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MedicalActionDetailDialogComponent } from './medical-action-detail-dialog.component';
+import { MedicalActionDialogComponent } from './medical-action-dialog.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 
-describe('MedicalActionDetailDialogComponent', () => {
-  let component: MedicalActionDetailDialogComponent;
-  let fixture: ComponentFixture<MedicalActionDetailDialogComponent>;
+describe('MedicalActionDialogComponent', () => {
+  let component: MedicalActionDialogComponent;
+  let fixture: ComponentFixture<MedicalActionDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MedicalActionDetailDialogComponent ],
+      declarations: [ MedicalActionDialogComponent ],
       imports: [
         NoopAnimationsModule,
         HttpClientModule,
       ],
       providers: [
+        MessageService,
         { provide: DynamicDialogConfig, useValue: {} },
         { provide: DynamicDialogRef, useValue: {} }
       ]
@@ -24,7 +26,7 @@ describe('MedicalActionDetailDialogComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MedicalActionDetailDialogComponent);
+    fixture = TestBed.createComponent(MedicalActionDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

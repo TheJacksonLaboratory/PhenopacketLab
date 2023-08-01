@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { ConstantObject } from 'src/app/models/individual';
+import { MedicalActionService } from 'src/app/services/medical-action.service';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class SearchBoxComponent implements OnInit {
     loadingSearchResults = false;
 
     constructor(private phenotypicSearchService: PhenotypeSearchService,
-        private diseaseSearchService: DiseaseSearchService) { }
+        private diseaseSearchService: DiseaseSearchService,
+        private medicalActionService: MedicalActionService) { }
 
     ngOnInit() {
         this.query.pipe(debounceTime(425),
@@ -65,6 +67,16 @@ export class SearchBoxComponent implements OnInit {
                     }
                     if (this.searchType === 'disease') {
                         this.diseaseSearchService.searchDiseases(val).subscribe((data) => {
+                            this.setItems(data);
+                        }, (error) => {
+                            console.log(error);
+                            this.loadingSearchResults = false;
+                        }, () => {
+                            this.loadingSearchResults = false;
+                        });
+                    }
+                    if (this.searchType === 'chebi') {
+                        this.medicalActionService.searchChemicalEntities(val).subscribe((data) => {
                             this.setItems(data);
                         }, (error) => {
                             console.log(error);
@@ -112,6 +124,11 @@ export class SearchBoxComponent implements OnInit {
         }
         if (this.searchType === 'disease') {
             this.diseaseSearchService.getDiseaseById(input.id).subscribe(res => {
+                this.selectedItemChange.emit(res);
+            });
+        }
+        if (this.searchType === 'chebi') {
+            this.medicalActionService.getChemicalEntityById(input.id).subscribe(res => {
                 this.selectedItemChange.emit(res);
             });
         }

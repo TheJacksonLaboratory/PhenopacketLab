@@ -70,7 +70,7 @@
     <div id="onset" class="grid">
       <div *ngIf="!onsetApplied" class="field col-6">
         <app-time-element
-          [timeElement]="onset"
+          [timeElement]="lastEncounterTime"
           [ontologyNodes]="onsetsNodes"
           [useOntologyClass]="true"
           (timeElementEvent)="updateAgeOnset($event)"
@@ -81,9 +81,9 @@
         <div class="flex align-items-center justify-content-center">
           <button
             pButton
-            [disabled]="onset === undefined || onset === null"
+            [disabled]="lastEncounterTime === undefined || lastEncounterTime === null"
             type="button"
-            label="Apply onset to all features"
+            label="Apply onset to all approved features"
             (click)="applyOnset()"
           ></button>
         </div>
@@ -93,7 +93,7 @@
         class="field col-12 flex align-content-start flex-wrap"
       >
         <div class="flex align-items-center justify-content-center">
-          {{ onset?.toString() }}
+          {{ lastEncounterTime?.toString() }}
         </div>
         <div class="flex align-items-center justify-content-center">
           <button

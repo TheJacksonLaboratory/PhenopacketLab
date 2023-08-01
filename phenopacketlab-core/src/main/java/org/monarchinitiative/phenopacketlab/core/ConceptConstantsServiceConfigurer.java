@@ -56,6 +56,11 @@ public class ConceptConstantsServiceConfigurer {
         List<IdentifiedConcept> structuralTypeConstants = configureStructuralTypeConstants(resourceService);
         Optional<SubtreeNode> structuralTypeTreeConstants = configureStructuralTypeTreeConstants(resourceService, hierarchyServiceRegistry);
         Map<String, List<Concept>> contigConstants = configureContigConstants();
+        Optional<SubtreeNode> routeOfAdministrationTreeConstants = configureRouteOfAdministrationTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> adverseEventTreeConstants = configureAdverseEventTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> bodySiteTreeConstants = configureBodySiteTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> unitTreeConstants = configureUnitTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -75,6 +80,11 @@ public class ConceptConstantsServiceConfigurer {
                 allelicStateTreeConstants.orElse(null),
                 structuralTypeConstants,
                 structuralTypeTreeConstants.orElse(null),
+                routeOfAdministrationTreeConstants.orElse(null),
+                scheduleFrequencyTreeConstants.orElse(null),
+                adverseEventTreeConstants.orElse(null),
+                bodySiteTreeConstants.orElse(null),
+                unitTreeConstants.orElse(null),
                 contigConstants);
     }
 
@@ -292,6 +302,31 @@ public class ConceptConstantsServiceConfigurer {
     private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("GENO:0000875"), "GENO", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureRouteOfAdministrationTreeConstants(ConceptResourceService resourceService,
+                                                                     OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C38114"), "NCIT", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureScheduleFrequencyTreeConstants(ConceptResourceService resourceService,
+                                                                                 OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C64493"), "NCIT", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureAdverseEventTreeConstants(ConceptResourceService resourceService,
+                                                                                 OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C41331"), "NCIT", null, false);
+    }
+
+    private static Optional<SubtreeNode> configureBodySiteTreeConstants(ConceptResourceService resourceService,
+                                                                            OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C12680"), "NCIT", null, true);
+    }
+
+    private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
+                                                                        OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("UO:0000000"), "UO", null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {

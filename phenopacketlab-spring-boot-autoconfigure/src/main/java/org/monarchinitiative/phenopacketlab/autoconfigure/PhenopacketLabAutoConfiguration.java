@@ -114,7 +114,9 @@ public class PhenopacketLabAutoConfiguration {
         LOGGER.debug("Using disease prefixes: {}", diseasePrefixes);
         List<String> phenotypePrefixes = properties.getPhenotypePrefixes();
         LOGGER.debug("Using phenotype prefixes: {}", phenotypePrefixes);
-        return new MultipurposeConceptConstantService(conceptResourceService, diseasePrefixes, phenotypePrefixes);
+        List<String> chemicalEntityPrefixes = properties.getChemicalEntityPrefixes();
+        LOGGER.debug("Using chemical entities prefixes: {}", chemicalEntityPrefixes);
+        return new MultipurposeConceptConstantService(conceptResourceService, diseasePrefixes, phenotypePrefixes, chemicalEntityPrefixes);
     }
 
 
