@@ -141,7 +141,7 @@ public class ConceptResourceLoaders {
     }
 
     public static ConceptResourceAndHierarchyServices chebi(InputStream is) {
-        MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, STRICT_OPTIONS, "CHEBI");
+        MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, LENIENT_OPTIONS, "CHEBI");
         Resource resource = chebiResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
         return addHierarchyService(conceptResource);

@@ -13,23 +13,43 @@ The files in this folder are subsets of the real data files.
 - `uo.json` - complete UO ontology.
 - `drugcentral.csv` - 10 lines of the postprocessed DrugCentral CSV file.
 - `ncit.json` - NCIT module containing ancestors of:
-  - `NCIT:C48885` Generic Primary Tumor TNM Finding
-  - `NCIT:C48884` Generic Regional Lymph Nodes TNM Finding
-  - `NCIT:C48883` Generic Distant Metastasis TNM Finding
+  - `NCIT:C12680` Body region
   - `NCIT:C28108` Disease Stage Qualifier
+  - `NCIT:C38114` Route of administration
+  - `NCIT:C41331` Adverse event
+  - `NCIT:C48883` Generic Distant Metastasis TNM Finding
+  - `NCIT:C48884` Generic Regional Lymph Nodes TNM Finding
+  - `NCIT:C48885` Generic Primary Tumor TNM Finding
+  - `NCIT:C64493` Schedule frequency
   ```shell
-  robot extract --input ncit.owl --method BOT --term NCIT:C48885 \
-    convert --output primary-tnm.ncit.obo
-  robot extract --input ncit.owl --method BOT --term NCIT:C48884 \
-    convert --output regional-tnm.ncit.obo
-  robot extract --input ncit.owl --method BOT --term NCIT:C48883 \
-    convert --output distant-tnm.ncit.obo
-  robot extract --input ncit.owl --method BOT --term NCIT:C28108 \
-    convert --output stages-tnm.ncit.obo
+  module load robot
+  # Download NCIT OWL
+  NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
+  curl -o ncit.owl $NCIT_PURL
+  
+  # Extract modules
+  terms=(
+    "NCIT:C12680"  
+    "NCIT:C28108"  
+    "NCIT:C38114"
+    "NCIT:C41331"
+    "NCIT:C48883"
+    "NCIT:C48884"
+    "NCIT:C48885"
+    "NCIT:C64493"
+  )
+  for term in ${terms[@]}; do
+    printf "Processing ${term}\n"
+    robot extract --input ncit.owl --method BOT --term ${term} convert --output ${term}.partial.obo
+  done
+  
+  # Build CLI
+  inputs=""
+  for obo in $(ls *partial.obo); do 
+    printf "Adding $obo\n"
+    inputs="${inputs}--input ${obo} ";
+  done
 
-  robot merge --input primary-tnm.ncit.obo \
-  --input regional-tnm.ncit.obo \
-  --input distant-tnm.ncit.obo \
-  --input stages-tnm.ncit.obo \
-  --output ncit.json
+  # Merge the ontology
+  robot merge ${inputs} --output ncit.json
   ```

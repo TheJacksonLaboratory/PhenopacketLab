@@ -26,10 +26,16 @@ import java.util.stream.Collectors;
 public class ConceptConstantsServiceConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConceptConstantsServiceConfigurer.class);
-    private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");
-    private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
-    private static final TermId GENERIC_DISTANT_METASTASIS_TNM_FINDING = TermId.of("NCIT:C48883");
+    private static final TermId BODY_REGION = TermId.of("NCIT:C12680");
     private static final TermId DISEASE_STAGE_QUALIFIER = TermId.of("NCIT:C28108");
+    private static final TermId ROUTE_OF_ADMINISTRATION = TermId.of("NCIT:C38114");
+    private static final TermId ADVERSE_EVENT = TermId.of("NCIT:C41331");
+    private static final TermId GENERIC_DISTANT_METASTASIS_TNM_FINDING = TermId.of("NCIT:C48883");
+    private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
+    private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");
+    private static final TermId SCHEDULE_FREQUENCY = TermId.of("NCIT:C64493");
+    private static final TermId ALLELIC_STATE = TermId.of("GENO:0000875");
+    private static final TermId UNIT = TermId.of("UO:0000000");
 
     private ConceptConstantsServiceConfigurer() {
     }
@@ -127,7 +133,7 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(gsso, "GSSO:000096", concepts, "Missing transgender GSSO:000096");
         retrieveIdentifiedConcept(gsso, "GSSO:009472", concepts, "Missing ultergender GSSO:009472");
 
-        return Collections.unmodifiableList(concepts);
+        return List.copyOf(concepts);
     }
 
     private static List<Concept> configureGenderConstants() {
@@ -156,7 +162,7 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(geno, "GENO:0000135", concepts, "Missing heterozygous allelic state GENO:0000135");
         retrieveIdentifiedConcept(geno, "GENO:0000134", concepts, "Missing hemizygous allelic state GENO:0000134");
 
-        return Collections.unmodifiableList(concepts);
+        return List.copyOf(concepts);
     }
 
     private static List<IdentifiedConcept> configureLateralityConstants(ConceptResourceService resourceService) {
@@ -174,7 +180,7 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(hp, "HP:0012835", concepts, "Missing Left HP:0012835");
         retrieveIdentifiedConcept(hp, "HP:0012833", concepts, "Missing Unilateral HP:0012833");
 
-        return Collections.unmodifiableList(concepts);
+        return List.copyOf(concepts);
     }
 
     private static List<IdentifiedConcept> configureConstants(ConceptResourceService resourceService, String prefix, TermId term) {
@@ -217,7 +223,7 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(eco, "ECO:0000033", concepts, "Missing ECO:0000033");
         retrieveIdentifiedConcept(eco, "ECO:0006154", concepts, "Missing ECO:0006154");
 
-        return Collections.unmodifiableList(concepts);
+        return List.copyOf(concepts);
     }
 
     private static List<IdentifiedConcept> configureOnsetConstants(ConceptResourceService resourceService) {
@@ -272,61 +278,67 @@ public class ConceptConstantsServiceConfigurer {
 
     private static Optional<SubtreeNode> configureOnsetTreeConstants(ConceptResourceService resourceService,
                                                                      OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, HpoOnsetTermIds.ONSET, "HP", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                HpoOnsetTermIds.ONSET, HpoOnsetTermIds.ONSET.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmTumorTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry,
-                ConceptConstantsServiceConfigurer.GENERIC_PRIMARY_TUMOR_TNM_FINDING, "NCIT", null, true);
+                GENERIC_PRIMARY_TUMOR_TNM_FINDING, GENERIC_PRIMARY_TUMOR_TNM_FINDING.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmNodeTreeConstants(ConceptResourceService resourceService,
                                                                        OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry,
-                ConceptConstantsServiceConfigurer.GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING, "NCIT", null, true);
+                GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING, GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureTnmMetastasisTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry,
-                ConceptConstantsServiceConfigurer.GENERIC_DISTANT_METASTASIS_TNM_FINDING, "NCIT", null, true);
+                GENERIC_DISTANT_METASTASIS_TNM_FINDING, GENERIC_DISTANT_METASTASIS_TNM_FINDING.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureDiseaseStagesTreeConstants(ConceptResourceService resourceService,
                                                                              OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry,
-                ConceptConstantsServiceConfigurer.DISEASE_STAGE_QUALIFIER, "NCIT", null, true);
+                DISEASE_STAGE_QUALIFIER, DISEASE_STAGE_QUALIFIER.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureAllelicStateTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("GENO:0000875"), "GENO", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ALLELIC_STATE, ALLELIC_STATE.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureRouteOfAdministrationTreeConstants(ConceptResourceService resourceService,
                                                                      OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C38114"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ROUTE_OF_ADMINISTRATION, ROUTE_OF_ADMINISTRATION.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureScheduleFrequencyTreeConstants(ConceptResourceService resourceService,
                                                                                  OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C64493"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                SCHEDULE_FREQUENCY, SCHEDULE_FREQUENCY.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureAdverseEventTreeConstants(ConceptResourceService resourceService,
                                                                                  OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C41331"), "NCIT", null, false);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                ADVERSE_EVENT, ADVERSE_EVENT.getPrefix(), null, false);
     }
 
     private static Optional<SubtreeNode> configureBodySiteTreeConstants(ConceptResourceService resourceService,
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("NCIT:C12680"), "NCIT", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                BODY_REGION, BODY_REGION.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, TermId.of("UO:0000000"), "UO", null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, UNIT, UNIT.getPrefix(), null, true);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {
@@ -345,7 +357,7 @@ public class ConceptConstantsServiceConfigurer {
         retrieveIdentifiedConcept(hp, "HP:0012825", concepts, "Missing Mild HP:0012825");
         retrieveIdentifiedConcept(hp, "HP:0012827", concepts, "Missing Borderline HP:0012827");
 
-        return Collections.unmodifiableList(concepts);
+        return List.copyOf(concepts);
     }
 
     private static List<Concept> configureStructuralTypes() {
