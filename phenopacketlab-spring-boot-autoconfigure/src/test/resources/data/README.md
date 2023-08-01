@@ -53,3 +53,4 @@ The files in this folder are subsets of the real data files.
   # Merge the ontology
   robot merge ${inputs} --output ncit.json
   ```
+- `oae.json` - OAE module with 2 nodes and one edge crafted by hand, since `robot` cannot process `oae.owl` due to formatting errors.

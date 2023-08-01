@@ -17,8 +17,7 @@ import java.util.Map;
 public class ConceptResourceLoaders {
 
     private static final CurieUtil CURIE_UTIL = CurieUtilBuilder.withDefaultsAnd(
-            Map.of("HGNC", "http://identifiers.org/hgnc/",
-                    "GSSO", "http://purl.obolibrary.org/obo/GSSO_") // REMOVE
+            Map.of("HGNC", "http://identifiers.org/hgnc/")
     );
     private static final OntologyLoaderOptions STRICT_OPTIONS = OntologyLoaderOptions.builder()
             .discardNonPropagatingRelationships(true)
@@ -151,11 +150,6 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(Resources.chebiVersion(version));
     }
 
-    private static String getOntologyVersion(MinimalOntology ontology) {
-        return ontology.version()
-                .orElse("UNKNOWN");
-    }
-
     @Deprecated(forRemoval = true)
     public static ConceptResourceAndHierarchyServices gsso(InputStream is) {
         MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, STRICT_OPTIONS, "GSSO");
@@ -164,6 +158,7 @@ public class ConceptResourceLoaders {
         return addHierarchyService(conceptResource);
     }
 
+    @Deprecated(forRemoval = true)
     private static Resource gssoResource(String version) {
         org.phenopackets.schema.v2.core.Resource resource = org.phenopackets.schema.v2.core.Resource.newBuilder()
                 .setId("gsso")
@@ -177,8 +172,7 @@ public class ConceptResourceLoaders {
     }
 
     public static ConceptResourceAndHierarchyServices oae(InputStream is) {
-        CurieUtil curieUtil = CurieUtilBuilder.withDefaultsAnd(Map.of("OAE", "http://purl.obolibrary.org/obo/OAE_"));
-        Ontology ontology = OntologyLoader.loadOntology(is, curieUtil, "OAE");
+        MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, LENIENT_OPTIONS, "OAE");
         Resource resource = oaeResource(getOntologyVersion(ontology));
         OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
         return addHierarchyService(conceptResource);
@@ -196,8 +190,9 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(resource);
     }
 
-    private static String getOntologyVersion(Ontology ontology) {
-        return ontology.getMetaInfo().getOrDefault("release", "UNKNOWN");
+    private static String getOntologyVersion(MinimalOntology ontology) {
+        return ontology.version()
+                .orElse("UNKNOWN");
     }
 
 }

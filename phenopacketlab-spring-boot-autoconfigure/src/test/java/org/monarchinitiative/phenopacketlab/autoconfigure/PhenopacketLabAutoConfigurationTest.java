@@ -57,7 +57,7 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
     @Test
     public void testMissingResourceFile() {
         BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + DATA_DIR.getParent()));
-        assertThat(exception.getMessage(), containsString("The following files are missing in the data directory: 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'drugcentral.csv', 'eco.json', 'chebi.json'."));
+        assertThat(exception.getMessage(), containsString("The following files are missing in the data directory: 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'drugcentral.csv', 'eco.json', 'chebi.json', 'oae.json'."));
     }
 
     @Test

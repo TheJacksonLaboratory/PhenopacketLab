@@ -18,7 +18,7 @@ public class PhenopacketLabDataResolver {
         List<String> errors = new LinkedList<>();
         List<Path> paths = List.of(genoJsonPath(), hgncCompleteSetPath(), hpJsonPath(), mondoJsonPath(),
                 hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), uoJsonPath(), ncitJsonPath(),
-                drugCentralPath(), ecoJsonPath(), chebiJsonPath());
+                drugCentralPath(), ecoJsonPath(), chebiJsonPath(), oaeJsonPath());
         for (Path path : paths) {
             if (!(Files.isRegularFile(path) && Files.isReadable(path))) {
                 errors.add(path.toFile().getName());
