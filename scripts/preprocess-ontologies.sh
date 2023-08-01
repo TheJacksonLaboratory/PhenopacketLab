@@ -11,27 +11,23 @@ VERSION="v0.0.1"
 
 ###
 # Ontology permanent URLs.
-EFO_PURL=http://www.ebi.ac.uk/efo/efo.owl
 GENO_PURL=http://purl.obolibrary.org/obo/geno.owl
 HP_PURL=http://purl.obolibrary.org/obo/hp.owl
 MONDO_PURL=http://purl.obolibrary.org/obo/mondo.owl
 SO_PURL=http://purl.obolibrary.org/obo/so.owl
 UBERON_PURL=http://purl.obolibrary.org/obo/uberon.owl
 NCIT_PURL=http://purl.obolibrary.org/obo/ncit.owl
-GSSO_PURL=http://purl.obolibrary.org/obo/gsso.owl
 UO_PURL=http://purl.obolibrary.org/obo/uo.owl
 ECO_PURL=http://purl.obolibrary.org/obo/eco.owl
 CHEBI_PURL=https://ftp.ebi.ac.uk/pub/databases/chebi/ontology/chebi.owl
 
 ONTOLOGIES=(
-    "${EFO_PURL}"
     "${GENO_PURL}"
     "${HP_PURL}"
     "${MONDO_PURL}"
     "${SO_PURL}"
     "${UBERON_PURL}"
     "${NCIT_PURL}"
-    "${GSSO_PURL}"
     "${UO_PURL}"
     "${ECO_PURL}"
     "${CHEBI_PURL}"
@@ -89,16 +85,7 @@ download () {
   DESTINATION=$2
   if [ ! -f "${DESTINATION}" ] || [ "$OVERWRITE" = true ]; then
     printf "\nDownloading %s to '%s'.\n" "${PURL}" "${DESTINATION}"
-    if [ "${PURL}" == "${GSSO_PURL}" ]; then
-      # GSSO requires a special gentle touch, we use a module using `GSSO_009468` as the top anchor.
-      ${JAVA} -jar ${ROBOT_JAR} extract --input-iri "${PURL}" \
-        --term http://purl.obolibrary.org/obo/GSSO_009468 \
-        --output "${DESTINATION}" \
-        --method TOP \
-        --copy-ontology-annotations true
-    else
-      curl --location --output "${DESTINATION}" "${PURL}"
-    fi
+    curl --location --output "${DESTINATION}" "${PURL}"
   else
     printf "\nSkipping download of existing '%s'" "${DESTINATION}"
   fi

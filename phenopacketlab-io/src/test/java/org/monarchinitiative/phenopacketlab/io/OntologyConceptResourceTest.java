@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacketlab.io;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.phenol.ontology.data.*;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
@@ -122,7 +123,9 @@ public class OntologyConceptResourceTest {
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/UO_"));
     }
 
+    // REMOVE - as soon as practical.
     @Test
+    @Disabled("EFO won't be used")
     public void loadEfo() throws IOException {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("efo.module.json"), ConceptResourceLoaders::efo);
         IdentifiedConceptResource cr = crhs.conceptResource();
@@ -170,7 +173,9 @@ public class OntologyConceptResourceTest {
         assertThat(resource.getIriPrefix(), equalTo("http://purl.obolibrary.org/obo/NCIT_"));
     }
 
+    // REMOVE - as soon as practical.
     @Test
+    @Disabled("GSSO won't be used")
     public void loadGsso() throws IOException {
         ConceptResourceAndHierarchyServices crhs = loadOntologyResource(TestBase.TEST_BASE.resolve("gsso.module.json"), ConceptResourceLoaders::gsso);
         IdentifiedConceptResource cr = crhs.conceptResource();

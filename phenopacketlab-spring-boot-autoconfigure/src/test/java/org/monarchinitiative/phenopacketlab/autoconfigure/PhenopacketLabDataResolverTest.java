@@ -16,7 +16,6 @@ public class PhenopacketLabDataResolverTest {
     public void test() throws Exception {
         PhenopacketLabDataResolver resolver = new PhenopacketLabDataResolver(AbstractAutoConfigurationTest.DATA_DIR);
 
-        assertThat(Files.isRegularFile(resolver.efoJsonPath()), equalTo(true));
         assertThat(Files.isRegularFile(resolver.genoJsonPath()), equalTo(true));
         assertThat(Files.isRegularFile(resolver.hgncCompleteSetPath()), equalTo(true));
         assertThat(Files.isRegularFile(resolver.hpJsonPath()), equalTo(true));
@@ -32,6 +31,6 @@ public class PhenopacketLabDataResolverTest {
     @Test
     public void error() {
         MissingPhenopacketLabResourceException e = assertThrows(MissingPhenopacketLabResourceException.class, () -> new PhenopacketLabDataResolver(Path.of("")));
-        assertThat(e.getMessage(), equalTo("The following files are missing in the data directory: 'efo.json', 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'gsso.json', 'drugcentral.csv', 'eco.json', 'chebi.json'."));
+        assertThat(e.getMessage(), equalTo("The following files are missing in the data directory: 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'drugcentral.csv', 'eco.json', 'chebi.json'."));
     }
 }

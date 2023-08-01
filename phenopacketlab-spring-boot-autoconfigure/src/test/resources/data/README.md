@@ -2,7 +2,6 @@
 
 The files in this folder are subsets of the real data files. 
 
-- `efo.json` - EFO module containing ancestors of `http://www.ebi.ac.uk/efo/EFO_0009370` *genomic DNA*.
 - `geno.json` - complete GENO ontology.
 - `hgnc_complete_set.txt` - test file with a few lines
 - `hp.json` - Subset of HPO containing all complete HPO sub-hierarchies except for the `Phenotypic abnormality` sub-hierarchy,

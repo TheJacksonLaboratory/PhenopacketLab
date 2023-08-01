@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +46,6 @@ class BigBadMultipurposeLoader {
         Resources result = new Resources();
         List<String> errors = Collections.synchronizedList(new LinkedList<>());
         List<ResourceTuple<?>> resources = List.of(
-                new ResourceTuple<>(dataResolver.efoJsonPath(), ConceptResourceLoaders::efo, result::setEfo),
                 new ResourceTuple<>(dataResolver.genoJsonPath(), ConceptResourceLoaders::geno, result::setGeno),
                 new ResourceTuple<>(dataResolver.hgncCompleteSetPath(), is -> HgncConceptLoader.load(is, "HGNC_VERSION"), result::setHgnc),
                 new ResourceTuple<>(dataResolver.hpJsonPath(), ConceptResourceLoaders::hpo, result::setHp),
@@ -56,7 +54,6 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
-                new ResourceTuple<>(dataResolver.gssoJsonPath(), ConceptResourceLoaders::gsso, result::setGsso),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco)
                 // TODO(ielis) - load CHEBI and ECO
         );
@@ -106,7 +103,7 @@ class BigBadMultipurposeLoader {
     private static BigBadDataBlob mapToBigBadDataBlob(Resources result) {
         // It is just a coincidence that most of the identified concept resources and ontology hierarchy services
         // are backed by Phenol Ontology. That will change in near future though.
-        IdentifiedConceptResource[] spelledOut = {result.efo.conceptResource(),
+        IdentifiedConceptResource[] spelledOut = {
                 result.geno.conceptResource(),
                 result.hp.conceptResource(),
                 result.mondo.conceptResource(),
@@ -114,22 +111,20 @@ class BigBadMultipurposeLoader {
                 result.uberon.conceptResource(),
                 result.hgnc,
                 result.ncit.conceptResource(),
-                result.gsso.conceptResource(),
-                result.eco.conceptResource()};
+                result.eco.conceptResource()
+        };
 
         IdentifiedConceptResource[] all = Stream.concat(Arrays.stream(spelledOut), result.others.stream())
                 .toArray(IdentifiedConceptResource[]::new);
         ConceptResourceServiceImpl conceptResourceService = new ConceptResourceServiceImpl(all);
 
         OntologyHierarchyServiceRegistry hierarchyServiceRegistry = new OntologyServiceHierarchyRegistryImpl(
-                result.efo.hierarchyService(),
                 result.geno.hierarchyService(),
                 result.hp.hierarchyService(),
                 result.mondo.hierarchyService(),
                 result.so.hierarchyService(),
                 result.uberon.hierarchyService(),
                 result.ncit.hierarchyService(),
-                result.gsso.hierarchyService(),
                 result.eco.hierarchyService()
         );
         return new BigBadDataBlob(conceptResourceService, hierarchyServiceRegistry);
@@ -139,7 +134,7 @@ class BigBadMultipurposeLoader {
         return () -> {
             try (InputStream is = new BufferedInputStream(Files.newInputStream(resource.resource))) {
                 resource.consumer.accept(resource.loader.apply(is));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 String message = String.format("Error parsing resource at %s: %s", resource.resource.toAbsolutePath(), e.getMessage());
                 errorConsumer.accept(message);
             } finally {
@@ -150,7 +145,6 @@ class BigBadMultipurposeLoader {
     }
 
     private static class Resources {
-        private ConceptResourceAndHierarchyServices efo;
         private ConceptResourceAndHierarchyServices geno;
         private ConceptResourceAndHierarchyServices hp;
         private ConceptResourceAndHierarchyServices mondo;
@@ -158,14 +152,8 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices uberon;
         private IdentifiedConceptResource hgnc;
         private ConceptResourceAndHierarchyServices ncit;
-        private ConceptResourceAndHierarchyServices gsso;
         private ConceptResourceAndHierarchyServices eco;
         private final List<IdentifiedConceptResource> others = new ArrayList<>();
-
-
-        public void setEfo(ConceptResourceAndHierarchyServices efo) {
-            this.efo = efo;
-        }
 
         public void setGeno(ConceptResourceAndHierarchyServices geno) {
             this.geno = geno;
@@ -193,10 +181,6 @@ class BigBadMultipurposeLoader {
 
         public void setNcit(ConceptResourceAndHierarchyServices ncit) {
             this.ncit = ncit;
-        }
-
-        public void setGsso(ConceptResourceAndHierarchyServices gsso) {
-            this.gsso = gsso;
         }
 
         public void setEco(ConceptResourceAndHierarchyServices eco) {
