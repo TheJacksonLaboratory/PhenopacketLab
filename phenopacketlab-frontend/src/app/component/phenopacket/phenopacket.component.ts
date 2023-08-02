@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Disease } from 'src/app/models/disease';
 import { Individual } from 'src/app/models/individual';
@@ -14,7 +14,7 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { Interpretation } from 'src/app/models/interpretation';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { Utils } from '../shared/utils';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -49,7 +49,11 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     // retrieve phenopacket to edit
     this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList()
       .pipe(
-        map(phenopackets => phenopackets.find(pheno => pheno.id === this.phenopacketId)))
+        map(phenopackets => phenopackets.find(pheno => pheno.id === this.phenopacketId)),
+        catchError((error, caught) => { 
+          console.log(`${error}`);
+          return EMPTY; 
+        }))
       .subscribe(phenopacket => {
         // deep copy of object so we do not modify by reference
         this.phenopacket = Utils.clone(phenopacket);
