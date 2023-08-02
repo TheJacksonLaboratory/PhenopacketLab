@@ -16,9 +16,9 @@ public class PhenopacketLabDataResolver {
         this.phenopacketLabDataDirectory = phenopacketLabDataDirectory;
 
         List<String> errors = new LinkedList<>();
-        List<Path> paths = List.of(efoJsonPath(), genoJsonPath(), hgncCompleteSetPath(), hpJsonPath(), mondoJsonPath(),
-                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), uoJsonPath(), ncitJsonPath(), gssoJsonPath(),
-                drugCentralPath(), ecoJsonPath(), chebiJsonPath());
+        List<Path> paths = List.of(genoJsonPath(), hgncCompleteSetPath(), hpJsonPath(), mondoJsonPath(),
+                hpoAnnotationPath(), soJsonPath(), uberonJsonPath(), uoJsonPath(), ncitJsonPath(),
+                drugCentralPath(), ecoJsonPath(), chebiJsonPath(), oaeJsonPath());
         for (Path path : paths) {
             if (!(Files.isRegularFile(path) && Files.isReadable(path))) {
                 errors.add(path.toFile().getName());
@@ -44,10 +44,6 @@ public class PhenopacketLabDataResolver {
         return phenopacketLabDataDirectory.resolve("hgnc_complete_set.txt");
     }
 
-    public Path efoJsonPath() {
-        return phenopacketLabDataDirectory.resolve("efo.json");
-    }
-
     public Path genoJsonPath() {
         return phenopacketLabDataDirectory.resolve("geno.json");
     }
@@ -70,10 +66,6 @@ public class PhenopacketLabDataResolver {
 
     public Path ncitJsonPath() {
         return phenopacketLabDataDirectory.resolve("ncit.json");
-    }
-
-    public Path gssoJsonPath() {
-        return phenopacketLabDataDirectory.resolve("gsso.json");
     }
 
     public Path ecoJsonPath() {

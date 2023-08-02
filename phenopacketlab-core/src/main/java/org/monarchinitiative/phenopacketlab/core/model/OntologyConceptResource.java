@@ -1,9 +1,6 @@
 package org.monarchinitiative.phenopacketlab.core.model;
 
-import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenol.ontology.data.Term;
-import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenol.ontology.data.TermSynonym;
+import org.monarchinitiative.phenol.ontology.data.*;
 import org.monarchinitiative.phenopacketlab.core.util.MappingIterator;
 
 import java.util.Iterator;
@@ -16,25 +13,25 @@ import java.util.function.Function;
  */
 public interface OntologyConceptResource extends IdentifiedConceptResource {
 
-    static OntologyConceptResource of(Ontology ontology, Resource resource) {
+    static OntologyConceptResource of(MinimalOntology ontology, Resource resource) {
         return new OntologyConceptResourceDefault(ontology, resource);
     }
 
-    Ontology ontology();
+    MinimalOntology ontology();
 
     @Override
     default Iterator<IdentifiedConcept> iterator() {
-        return MappingIterator.of(ontology().getNonObsoleteTermIds().iterator(), this::conceptForTermId);
+        return MappingIterator.of(ontology().nonObsoleteTermIds().iterator(), this::conceptForTermId);
     }
 
     @Override
     default int size() {
-        return ontology().countNonObsoleteTerms();
+        return ontology().nonObsoleteTermIdCount();
     }
 
     @Override
     default Optional<IdentifiedConcept> conceptForTermId(TermId termId) {
-        return Optional.ofNullable(ontology().getTermMap().get(termId))
+        return ontology().termForTermId(termId)
                 .flatMap(termToConcept());
     }
 
