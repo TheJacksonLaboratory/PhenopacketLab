@@ -51,7 +51,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
       .pipe(
         map(phenopackets => phenopackets.find(pheno => pheno.id === this.phenopacketId)),
         catchError((error, caught) => { 
-          console.log(`${error}`);
+          console.error(`Error caught: ${error}`);
           return EMPTY; 
         }))
       .subscribe(phenopacket => {
