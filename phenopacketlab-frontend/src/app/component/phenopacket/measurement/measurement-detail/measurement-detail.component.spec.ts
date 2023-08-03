@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MedicalActionDetailComponent } from '../../medical-action/medical-action-detail/medical-action-detail.component';
 
 
@@ -11,7 +10,6 @@ describe('MedicalActionDetailComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ MedicalActionDetailComponent ],
       imports: [
-        MatDialogModule
       ]
     })
     .compileComponents();

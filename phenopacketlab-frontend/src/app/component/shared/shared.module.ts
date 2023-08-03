@@ -5,10 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
 
 import { MaterialModule } from './material.module';
-import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { PrimeModule } from './prime.module';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
-import { SearchFilterComponent } from './time-element/search-filter/search-filter.component';
 import { TimeElementComponent } from './time-element/time-element.component';
 import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -26,7 +24,6 @@ import { GeneDescriptorComponent } from './dialog/interpretation-dialog/genomic-
 import { VariationSearchComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
 import { LabelCreatorDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
-import { MedicalActionEditComponent } from './edit/medical-action-edit/medical-action-edit.component';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
 import { PhenotypicFeatureSearchDialogComponent } from './dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
@@ -35,6 +32,7 @@ import { PhenotypicFeatureDialogComponent } from './dialog/phenotypic-feature-di
 import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.component';
 import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
 import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
+import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/medical-action-dialog.component';
 
 
 @NgModule({
@@ -47,10 +45,8 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     AngularSplitModule
   ],
   declarations: [
-    MessageDialogComponent,
     SpinnerDialogComponent,
     TimeElementComponent,
-    SearchFilterComponent,
     AgeComponent,
     AgeRangeComponent,
     GestationalAgeComponent,
@@ -72,16 +68,14 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     GeneDescriptorComponent,
     LabelCreatorDialogComponent,
     TextPipe,
-    MedicalActionEditComponent,
+    MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
     FileDialogComponent
   ],
   exports: [
-    MessageDialogComponent,
     SpinnerDialogComponent,
     TimeElementComponent,
-    SearchFilterComponent,
     AgeComponent,
     AgeRangeComponent,
     GestationalAgeComponent,
@@ -106,7 +100,7 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
     MaterialModule,
     AngularSplitModule,
     TextPipe,
-    MedicalActionEditComponent,
+    MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
     FileDialogComponent

@@ -180,8 +180,6 @@ export class FileDialogComponent implements OnInit {
   }
 
   onOkClick(value?: string) {
-    console.log(value);
-    console.log(this.uri);
     if (this.uri && !this.fileFormGroup.invalid) {
       let key;
       // set key

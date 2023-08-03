@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhenotypicFeatureDialogComponent } from '../../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
 import { PhenotypicFeatureSearchDialogComponent } from '../../shared/dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
 import { ProfileSelection } from 'src/app/models/profile';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
     selector: 'app-phenotypic-feature',
@@ -32,7 +33,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
 
     ref: DynamicDialogRef;
 
-    constructor(public dialogService: DialogService,
+    constructor(private phenopacketService: PhenopacketStepperService,
+        public dialogService: DialogService,
         private messageService: MessageService, private confirmationService: ConfirmationService) {
     }
     ngOnChanges(changes: SimpleChanges): void {
@@ -43,6 +45,10 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     }
 
     addPhenotypicFeature() {
+        let onset;
+        if (this.profile && this.phenopacketService) {
+            onset = this.phenopacketService.phenopacket?.subject?.timeAtLastEncounter;
+        }
         this.ref = this.dialogService.open(PhenotypicFeatureSearchDialogComponent, {
             header: 'Add Phenotypic feature',
             width: '50%',
@@ -51,7 +57,8 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
             resizable: true,
             draggable: true,
             modal: true,
-            data: { profile: this.profile }
+            data: { profile: this.profile,
+                onset: onset }
         });
 
         this.ref.onClose.subscribe((addedFeatures: PhenotypicFeature[]) => {

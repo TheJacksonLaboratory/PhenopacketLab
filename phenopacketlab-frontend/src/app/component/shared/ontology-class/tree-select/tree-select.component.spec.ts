@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 import { TreeSelectComponent } from './tree-select.component';
 
@@ -19,7 +18,6 @@ describe('TreeSelectComponent', () => {
       ],
       declarations: [ TreeSelectComponent ],
       providers: [
-        PhenopacketService
       ]
     })
     .compileComponents();

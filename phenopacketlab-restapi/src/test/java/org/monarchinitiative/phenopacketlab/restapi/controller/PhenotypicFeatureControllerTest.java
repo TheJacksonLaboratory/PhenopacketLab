@@ -76,23 +76,6 @@ public class PhenotypicFeatureControllerTest {
     }
 
     @Test
-    public void getAllPhenotypicFeatures() throws Exception {
-        when(phenotypicFeatureService.allPhenotypeConcepts())
-                .thenReturn(Stream.of(
-                        createPhenotypicFeature("HP:123456", "First"),
-                        createPhenotypicFeature("HP:987654", "Second")
-                ));
-
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/phenotypic-features/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        MockHttpServletResponse response = result.getResponse();
-        assertThat(response.getContentAsString(), equalTo("""
-                [{"id":"HP:123456","lbl":"First","def":null,"syn":[]},""" + """
-                {"id":"HP:987654","lbl":"Second","def":null,"syn":[]}]"""));
-    }
-
-    @Test
     public void getSearchPhenotypicFeatures() throws Exception {
         when(phenotypicFeatureService.searchPhenotypeConcepts("first", 10))
                 .thenReturn(new SearchIdentifiedConcept(1, Stream.of(

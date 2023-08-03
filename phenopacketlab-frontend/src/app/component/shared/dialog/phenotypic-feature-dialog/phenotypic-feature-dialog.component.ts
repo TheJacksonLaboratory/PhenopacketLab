@@ -6,8 +6,8 @@ import { Severities } from 'src/app/models/disease';
 import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../../utils';
+import { ConstantsService } from 'src/app/services/constants.service';
 
 @Component({
   selector: 'app-phenotypic-feature-dialog',
@@ -35,7 +35,7 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   severities: ConstantObject[];
   selectedSeverity: ConstantObject;
   severitySubscription: Subscription;
-  constructor(public phenopacketService: PhenopacketService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+  constructor(public constantsService: ConstantsService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
   }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
     this.phenotypicFeature = Utils.clone(feat);
 
     // Get modifiers
-    this.modifiersSubscription = this.phenopacketService.getModifiers().subscribe(nodes => {
+    this.modifiersSubscription = this.constantsService.getModifiers().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.modifiersNodes = nodes.children;
@@ -51,7 +51,7 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
     }
     );
     // get Evidences
-    this.evidencesSubscription = this.phenopacketService.getEvidences().subscribe(evidences => {
+    this.evidencesSubscription = this.constantsService.getEvidences().subscribe(evidences => {
       if (evidences) {
         const nodes = [];
         for (const evidence of evidences) {
@@ -61,14 +61,14 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
       }
     });
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+    this.onsetsSubscription = this.constantsService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
     // severity
-    this.severitySubscription = this.phenopacketService.getSeverities().subscribe(severities => {
+    this.severitySubscription = this.constantsService.getSeverities().subscribe(severities => {
       if (severities) {
         severities.forEach(severity => {
           if (this.severities === undefined) {
@@ -186,7 +186,6 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   }
 
   onOkClick() {
-    console.log('ok click');
     this.ref.close(this.phenotypicFeature);
   }
 

@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacketlab.core.DiseaseService;
+import org.monarchinitiative.phenopacketlab.core.ChemicalEntityService;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
 import org.monarchinitiative.phenopacketlab.core.model.SearchIdentifiedConcept;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -22,18 +22,18 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class DiseaseControllerTest {
+public class ChemicalEntityControllerTest {
 
     private static final RestResponseEntityExceptionHandler HANDLER = new RestResponseEntityExceptionHandler();
 
     @Mock
-    public DiseaseService diseaseService;
+    public ChemicalEntityService chemicalEntityService;
     @InjectMocks
-    public DiseaseController controller;
+    public ChemicalEntityController controller;
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -45,55 +45,55 @@ public class DiseaseControllerTest {
     }
 
     @Test
-    public void diseaseById() throws Exception {
-        TermId diseaseId = TermId.of("OMIM:123456");
-        when(diseaseService.diseaseConceptById(diseaseId))
-                .thenReturn(Optional.of(createDisease(diseaseId.getValue(), "First", "Blaaaaah", List.of("A", "B"))));
+    public void chemicalEntityById() throws Exception {
+        TermId diseaseId = TermId.of("CHEBI:123456");
+        when(chemicalEntityService.chemicalEntityConceptById(diseaseId))
+                .thenReturn(Optional.of(createChemicalEntity(diseaseId.getValue(), "First", "Blaaaaah", List.of("A", "B"))));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/OMIM:123456"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chemical-entities/CHEBI:123456"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertThat(response.getContentAsString(), equalTo("""
-                {"id":"OMIM:123456","lbl":"First","def":"Blaaaaah","syn":["A","B"]}"""));
+                {"id":"CHEBI:123456","lbl":"First","def":"Blaaaaah","syn":["A","B"]}"""));
     }
 
     @Test
-    public void diseaseById_missingDisease() throws Exception {
-        TermId diseaseId = TermId.of("OMIM:123456");
-        when(diseaseService.diseaseConceptById(diseaseId))
+    public void chemicalEntityById_missingChemicalEntity() throws Exception {
+        TermId diseaseId = TermId.of("CHEBI:123456");
+        when(chemicalEntityService.chemicalEntityConceptById(diseaseId))
                 .thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/OMIM:123456"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chemical-entities/CHEBI:123456"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
-    public void diseaseById_InvalidId() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/INVALID"))
+    public void chemicalEntityById_InvalidId() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chemical-entities/INVALID"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
-    public void getSearchDiseases() throws Exception {
-        when(diseaseService.searchDiseaseConcepts("first", 10))
+    public void getSearchChemicalEntities() throws Exception {
+        when(chemicalEntityService.searchChemicalEntityConcepts("first", 10))
                 .thenReturn(new SearchIdentifiedConcept(1, Stream.of(
-                        createDisease("OMIM:123456", "First", "Something should be here", List.of("A", "B"))
+                        createChemicalEntity("CHEBI:123456", "First", "Something should be here", List.of("A", "B"))
                 ).toList()));
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/diseases/search?query=first"))
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chemical-entities/search?query=first"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertThat(response.getContentAsString(), equalTo("""
-                        {"numberOfTerms":1,"foundConcepts":[{"id":"OMIM:123456","lbl":"First","def":"Something should be here","syn":["A","B"]}]}"""));
+                        {"numberOfTerms":1,"foundConcepts":[{"id":"CHEBI:123456","lbl":"First","def":"Something should be here","syn":["A","B"]}]}"""));
     }
 
-    private static IdentifiedConcept createDisease(String diseaseId, String diseaseName,
+    private static IdentifiedConcept createChemicalEntity(String chemicalEntityId, String chemicalEntityName,
                                                    String definition, List<String> synonyms) {
-        return IdentifiedConcept.of(TermId.of(diseaseId),
-                diseaseName,
+        return IdentifiedConcept.of(TermId.of(chemicalEntityId),
+                chemicalEntityName,
                 definition,
                 synonyms);
     }

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 
-import { OntologyClass } from 'src/app/models/base';
+import { OntologyClass, TimeElement } from 'src/app/models/base';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Utils } from '../../utils';
@@ -13,22 +13,26 @@ import { PhenotypicFeatureDialogComponent } from 'src/app/component/shared/dialo
   templateUrl: './phenotypic-feature-search-dialog.component.html',
   styleUrls: ['./phenotypic-feature-search-dialog.component.scss']
 })
-export class PhenotypicFeatureSearchDialogComponent {
+export class PhenotypicFeatureSearchDialogComponent implements OnInit {
 
   selectedFeature: PhenotypicFeature;
   features: PhenotypicFeature[];
   profile: ProfileSelection;
+  lastEncounterTime: TimeElement;
 
   refEdit: DynamicDialogRef;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig,
               private dialogService: DialogService,
               private confirmationService: ConfirmationService) {
-    this.features = config.data?.features;
+  }
+  ngOnInit(): void {
+    this.features = this.config.data?.features;
     if (this.features === undefined) {
       this.features = [];
     }
-    this.profile = config.data?.profile;
+    this.profile = this.config.data?.profile;
+    this.lastEncounterTime = this.config.data?.onset;
   }
 
   featureItemSelected(item: any) {

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Disease } from 'src/app/models/disease';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class DiseaseStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    constructor(public phenopacketService: PhenopacketService,
+    constructor(public phenopacketService: PhenopacketStepperService,
         private router: Router) {
     }
 

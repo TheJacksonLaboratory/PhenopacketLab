@@ -35,6 +35,10 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
         PhenotypicFeatureService phenotypicFeatureService = context.getBean(PhenotypicFeatureService.class);
         assertThat(phenotypicFeatureService, is(notNullValue()));
         assertThat(phenotypicFeatureService.phenotypeNamespacePrefixes(), equalTo(List.of()));
+
+        ChemicalEntityService chemicalEntityService = context.getBean(ChemicalEntityService.class);
+        assertThat(chemicalEntityService, is(notNullValue()));
+        assertThat(chemicalEntityService.chemicalEntityNamespacePrefixes(), equalTo(List.of()));
     }
 
     @Test
@@ -53,17 +57,21 @@ public class PhenopacketLabAutoConfigurationTest extends AbstractAutoConfigurati
     @Test
     public void testMissingResourceFile() {
         BeanCreationException exception = assertThrows(BeanCreationException.class, () -> load(PhenopacketLabAutoConfiguration.class, "phenopacketlab.data-directory=" + DATA_DIR.getParent()));
-        assertThat(exception.getMessage(), containsString("The following files are missing in the data directory: 'efo.json', 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'gsso.json', 'drugcentral.csv', 'eco.json', 'chebi.json'."));
+        assertThat(exception.getMessage(), containsString("The following files are missing in the data directory: 'geno.json', 'hgnc_complete_set.txt', 'hp.json', 'mondo.json', 'phenotype.hpoa', 'so.json', 'uberon.json', 'uo.json', 'ncit.json', 'drugcentral.csv', 'eco.json', 'chebi.json', 'oae.json'."));
     }
 
     @Test
-    public void testDefaultDiseaseDatabasePrefixes() {
+    public void prefixesCanBeSet() {
         load(PhenopacketLabAutoConfiguration.class,
                 "phenopacketlab.data-directory=" + DATA_DIR,
-                "phenopacketlab.disease-database-prefixes=MONDO, OMIM");
+                "phenopacketlab.disease-database-prefixes=MONDO, OMIM",
+                "phenopacketlab.phenotype-prefixes=HP",
+                "phenopacketlab.chemical-entity-prefixes=CHEBI");
 
         PhenopacketLabProperties properties = context.getBean(PhenopacketLabProperties.class);
 
         assertThat(properties.getDiseaseDatabasePrefixes(), equalTo(List.of("MONDO", "OMIM")));
+        assertThat(properties.getPhenotypePrefixes(), equalTo(List.of("HP")));
+        assertThat(properties.getChemicalEntityPrefixes(), equalTo(List.of("CHEBI")));
     }
 }

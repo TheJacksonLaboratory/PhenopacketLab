@@ -1,5 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -16,8 +15,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { HelpComponent } from './component/help/help.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
-import { CohortListComponent } from './component/cohort-list/cohort-list.component';
-import { FamilyListComponent } from './component/family-list/family-list.component';
 import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { AboutComponent } from './component/about/about.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
@@ -57,14 +54,11 @@ const config: AuthConfig = {
         FooterComponent,
         AboutComponent,
         HelpComponent,
-        PhenopacketListComponent,
-        CohortListComponent,
-        FamilyListComponent
+        PhenopacketListComponent
 
     ],
     exports: [RouterModule],
-    providers: [{ provide: MatDialogRef, useValue: {} },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true }
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
