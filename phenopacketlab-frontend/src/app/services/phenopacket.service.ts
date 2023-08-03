@@ -18,7 +18,7 @@ export class PhenopacketService {
     constructor(private http: HttpClient) {
     }
 
-    setPhenopaketList(phenopacketList: Phenopacket[]) {
+    setPhenopacketList(phenopacketList: Phenopacket[]) {
         this.phenopacketListSubject.next(phenopacketList);
     }
     getPhenopacketList(): Observable<Phenopacket[]> {
@@ -61,7 +61,7 @@ export class PhenopacketService {
         return this.http.put(environment.PHENOPACKET_URL, phenopacket, { headers });
     }
 
-    updatePhenopacketRemote(id: number, phenopacket: string) {
+    updatePhenopacketRemote(id: string, phenopacket: string) {
         const headers = { 'content-type': 'text/plain' };
         return this.http.post(environment.PHENOPACKET_URL, phenopacket,
             { headers, params: new HttpParams().set('id', id) });

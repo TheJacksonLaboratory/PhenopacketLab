@@ -33,7 +33,7 @@ public class PhenopacketService {
 	}
 
 	public boolean update(User user, Long id, String phenopacket){
-		Optional<Phenopacket> existing =this.phenopacketRepository.findByIdAndUserId(user.getId(), id);
+		Optional<Phenopacket> existing = this.phenopacketRepository.findByIdAndUserId(id, user.getId());
 		if (existing.isPresent()) {
 			existing.get().setPhenopacket(phenopacket);
 			try {

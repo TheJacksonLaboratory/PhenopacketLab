@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { User } from '@auth0/auth0-angular';
 import { catchError, map } from 'rxjs/operators';
 
 import { Disease } from 'src/app/models/disease';
@@ -10,6 +11,7 @@ import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { BioSample } from 'src/app/models/biosample';
+import { DownloadService } from '../../services/download-service';
 import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -36,6 +38,9 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   @Input()
   phenopacketId: string;
 
+  @Input()
+  user: User;
+
   phenopacket: Phenopacket;
 
   ref: DynamicDialogRef;
@@ -43,7 +48,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
 
   constructor(private phenopacketService: PhenopacketService,
     private dialogService: DialogService,
-    private messageService: MessageService) { }
+    private messageService: MessageService, private downloadService: DownloadService) { }
 
   ngOnInit(): void {
     // retrieve phenopacket to edit
@@ -129,7 +134,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     this.ref.onClose.subscribe((subject: Individual) => {
       if (subject && this.phenopacket) {
         this.phenopacket.subject = subject;
-        this.phenopacketService.updatePhenopacket(this.phenopacket);
+        this.updatePhenopacket(this.phenopacket);
       }
     });
   }
@@ -137,45 +142,59 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
     if (this.phenopacket) {
       this.phenopacket.phenotypicFeatures = phenotypicFeatures;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
   changeDiseases(diseases: Disease[]) {
     if (this.phenopacket) {
       this.phenopacket.diseases = diseases;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
     if (this.phenopacket) {
       this.phenopacket.biosamples = biosamples;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
   changeInterpretations(interpretations: Interpretation[]) {
     if (this.phenopacket) {
       this.phenopacket.interpretations = interpretations;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
   changeMeasurements(measurements: Measurement[]) {
     if (this.phenopacket) {
       this.phenopacket.measurements = measurements;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
     if (this.phenopacket) {
       this.phenopacket.medicalActions = medicalActions;
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.updatePhenopacket(this.phenopacket);
     }
   }
 
   changeFiles(files: File[]) {
     if (this.phenopacket) {
       this.phenopacket.files = files;
+      this.updatePhenopacket(this.phenopacket);
+    }
+  }
+
+  updatePhenopacket(phenopacket: Phenopacket) {
+    if (this.user) {
+      this.phenopacketService.updatePhenopacketRemote(phenopacket.dbId,
+          this.downloadService.saveAsJson(phenopacket, false)).subscribe(() => {
+          this.messageService.add({ severity: 'info', summary: 'Updated!', detail: `Phenopacket ${phenopacket.id} updated.`});
+          this.phenopacketService.fetchAllPhenopacketsRemote().subscribe();
+      }, () => {
+            this.messageService.add({ severity: 'error', summary: 'Error Updating!', detail: `Server could not update Phenopacket ${phenopacket.id}.`});
+      });
+    } else {
       this.phenopacketService.updatePhenopacket(this.phenopacket);
     }
   }

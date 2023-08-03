@@ -60,13 +60,14 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         if (user) {
           this.user = user;
           this.phenopacketService.fetchAllPhenopacketsRemote().subscribe((phenopackets: Phenopacket []) => {
-            this.phenopacketService.setPhenopaketList(phenopackets);
+            this.phenopacketService.setPhenopacketList(phenopackets);
             this.isLoading = false;
           });
         }
     });
     this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
       this.phenopacketList = list;
+      this.isLoading = false;
     });
   }
 
@@ -86,14 +87,6 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       header: 'Delete Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // Remove tab if open since we are not default opening them
-        const removeIdx = this.tabs.findIndex(pheno => pheno.id === phenopacket.id);
-        if (removeIdx > -1) {
-          this.tabs.splice(removeIdx, 1);
-        }
-        // Remove them from the list.
-
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
         // if user exist call the remove service.
         if (this.user) {
           this.phenopacketService.deletePhenopacketRemote(phenopacket.dbId).subscribe(() => {
@@ -108,7 +101,11 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
           this.phenopacketService.removePhenopacket(phenopacket);
           this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
         }
-
+        // Remove tab if open since we are not default opening them
+        const removeIdx = this.tabs.findIndex(pheno => pheno.id === phenopacket.id);
+        if (removeIdx > -1) {
+          this.tabs.splice(removeIdx, 1);
+        }
       },
       reject: () => { }, key: 'positionDialog'
     });

@@ -1,9 +1,7 @@
-:host ::ng-deep b {
-    display: block
-}
-
-:host ::ng-deep .p-card-body {
-    padding: 2rem;
+:host {
+    flex-direction: column;
+    display: flex;
+    flex: 1 1 auto;
 }
 
 .p-table {
@@ -13,10 +11,4 @@
 
 .header-step {
     color: #495057;
-}
-
-#next-back-buttons {
-    z-index: 100;
-    position: sticky;
-    bottom: 1rem;
 }
