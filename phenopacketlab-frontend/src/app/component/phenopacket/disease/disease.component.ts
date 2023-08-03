@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -13,17 +12,9 @@ import { ProfileSelection } from 'src/app/models/profile';
 @Component({
   selector: 'app-disease',
   templateUrl: './disease.component.html',
-  styleUrls: ['./disease.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  styleUrls: ['./disease.component.scss']
 })
-export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
+export class DiseaseComponent implements OnInit, OnDestroy {
 
   @Input()
   diseases: Disease[] = [];
@@ -37,10 +28,6 @@ export class DiseaseComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private dialogService: DialogService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) { }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.onDiseasesChanged.emit(this.diseases);
-  }
 
   ngOnInit(): void {
   }

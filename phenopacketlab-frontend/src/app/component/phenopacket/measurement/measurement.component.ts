@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -11,15 +10,7 @@ import { Phenopacket } from 'src/app/models/phenopacket';
 @Component({
     selector: 'app-measurement',
     templateUrl: './measurement.component.html',
-    styleUrls: ['./measurement.component.scss'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-            transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
+    styleUrls: ['./measurement.component.scss']
 })
 export class MeasurementComponent implements OnInit {
 
