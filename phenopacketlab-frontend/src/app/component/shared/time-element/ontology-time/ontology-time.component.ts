@@ -1,15 +1,12 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { OntologyClass, TimeElementId } from 'src/app/models/base';
-import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 
 @Component({
     selector: 'app-ontology-time',
     templateUrl: './ontology-time.component.html',
     styleUrls: ['./ontology-time.component.scss']
 })
-export class OntologyTimeComponent implements OnInit, OnDestroy {
+export class OntologyTimeComponent implements OnInit {
 
     @Output() ontologyClassChange = new EventEmitter<any>();
 
@@ -20,32 +17,10 @@ export class OntologyTimeComponent implements OnInit, OnDestroy {
     @Input()
     timeElementId: TimeElementId;
 
-    phenotypicOnsetSubscription: Subscription;
-    diseaseOnsetSubscription: Subscription;
-
-    constructor(private phenotypeSearchService: PhenotypeSearchService, private diseaseSearchService: DiseaseSearchService) {
+    constructor() {
 
     }
     ngOnInit(): void {
-        this.phenotypicOnsetSubscription = this.phenotypeSearchService.getPhenotypicOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.PHENOTYPIC_ONSET) {
-                this.setOntologyClass(onset);
-            }
-        });
-        this.diseaseOnsetSubscription = this.diseaseSearchService.getDiseaseOnset().subscribe(onset => {
-            if (this.timeElementId === TimeElementId.DISEASE_ONSET) {
-                this.setOntologyClass(onset);
-            }
-        });
-    }
-
-    ngOnDestroy(): void {
-        if (this.phenotypicOnsetSubscription) {
-            this.phenotypicOnsetSubscription.unsubscribe();
-        }
-        if (this.diseaseOnsetSubscription) {
-            this.diseaseOnsetSubscription.unsubscribe();
-        }
     }
 
     setOntologyClass(timeElement: any) {

@@ -5,9 +5,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Measurement } from 'src/app/models/measurement';
-import { MeasurementDetailDialogComponent } from './measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { Utils } from '../../shared/utils';
+// import { Utils } from '../../shared/utils';
 
 @Component({
     selector: 'app-measurement',
@@ -41,54 +40,58 @@ export class MeasurementComponent implements OnInit {
     }
 
     /**
-     * Add a new measurement with default values or no values
+     * TODO: Add a new measurement with default values or no values
      */
     addMeasurement(measurement?: Measurement) {
-        if (measurement === undefined || measurement === null) {
-            measurement = new Measurement();
-        }
-        this.ref = this.dialogService.open(MeasurementDetailDialogComponent, {
-            header: 'Edit Measurement',
-            width: '70%',
-            contentStyle: { 'overflow': 'auto' },
-            baseZIndex: 10000,
-            resizable: true,
-            draggable: true,
-            data: { measurement: measurement,
-                    phenopacket: this.phenopacket }
-        });
+        // if (measurement === undefined || measurement === null) {
+        //     measurement = new Measurement();
+        // }
+        // this.ref = this.dialogService.open(MeasurementDetailDialogComponent, {
+        //     header: 'Edit Measurement',
+        //     width: '70%',
+        //     contentStyle: { 'overflow': 'auto' },
+        //     baseZIndex: 10000,
+        //     resizable: true,
+        //     draggable: true,
+        //     data: { measurement: measurement,
+        //             phenopacket: this.phenopacket }
+        // });
 
-        this.ref.onClose.subscribe((measure: Measurement) => {
-            if (measure) {
-                const indexToUpdate = this.measurements.findIndex(item => item.assay.id === measure.assay.id);
-                if (indexToUpdate === -1) {
-                    measure.key = Utils.getBiggestKey(this.measurements) + 1;
-                    this.measurements.push(measure);
-                } else {
-                    this.measurements[indexToUpdate] = measure;
-                    this.measurements = Object.assign([], this.measurements);
-                }
-                // emit change
-                this.onMeasurementsChanged.emit(this.measurements);
-            }
-        });
+        // this.ref.onClose.subscribe((measure: Measurement) => {
+        //     if (measure) {
+        //         const indexToUpdate = this.measurements.findIndex(item => item.assay.id === measure.assay.id);
+        //         if (indexToUpdate === -1) {
+        //             measure.key = Utils.getBiggestKey(this.measurements) + 1;
+        //             this.measurements.push(measure);
+        //         } else {
+        //             this.measurements[indexToUpdate] = measure;
+        //             this.measurements = Object.assign([], this.measurements);
+        //         }
+        //         // emit change
+        //         this.onMeasurementsChanged.emit(this.measurements);
+        //     }
+        // });
     }
 
+    /**
+     * TODO
+     * @param measurement
+     */
     deleteMeasurement(measurement: Measurement) {
-        this.confirmationService.confirm({
-          message: 'Are you sure you want to delete \'' + measurement.assay?.id + '\'?',
-          header: 'Confirm',
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
-            this.measurements = this.measurements.filter(val => val.key !== measurement.key);
-            // emit change
-            this.onMeasurementsChanged.emit(this.measurements);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Measurement Deleted', life: 3000 });
-          },
-          reject: () => {
-            this.confirmationService.close();
-          }
-        });
+        // this.confirmationService.confirm({
+        //   message: 'Are you sure you want to delete \'' + measurement.assay?.id + '\'?',
+        //   header: 'Confirm',
+        //   icon: 'pi pi-exclamation-triangle',
+        //   accept: () => {
+        //     this.measurements = this.measurements.filter(val => val.key !== measurement.key);
+        //     // emit change
+        //     this.onMeasurementsChanged.emit(this.measurements);
+        //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Measurement Deleted', life: 3000 });
+        //   },
+        //   reject: () => {
+        //     this.confirmationService.close();
+        //   }
+        // });
       }
 
     getValue(measurement: Measurement) {

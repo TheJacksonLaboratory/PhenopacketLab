@@ -49,4 +49,14 @@ public interface ConceptConstantsService {
     Optional<SubtreeNode> diseaseStagesTreeConstants();
 
     Optional<SubtreeNode> allelicStateTreeConstants();
+
+    Optional<SubtreeNode> routeOfAdministrationTreeConstants();
+
+    Optional<SubtreeNode> scheduleFrequencyTreeConstants();
+
+    Optional<SubtreeNode> adverseEventTreeConstants();
+
+    Optional<SubtreeNode> bodySiteTreeConstants();
+
+    Optional<SubtreeNode> unitTreeConstants();
 }

@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,17 +31,8 @@ public class PhenotypicFeatureController {
         if (query == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        int maxResults = 10;
-        if (max.isPresent()) {
-            maxResults = max.get();
-        }
+        int maxResults = max.orElse(10);
         return ResponseEntity.ok(phenotypicFeatureService.searchPhenotypeConcepts(query, maxResults));
-    }
-
-    @RequestMapping(value = {"${api.version}/phenotypic-features/all"}, method = RequestMethod.GET)
-    public ResponseEntity<List<IdentifiedConcept>> allPhenotypicFeatures() {
-        return ResponseEntity.ok(phenotypicFeatureService.allPhenotypeConcepts()
-                .toList());
     }
 
 }

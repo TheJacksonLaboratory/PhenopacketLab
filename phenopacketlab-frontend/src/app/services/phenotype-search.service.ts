@@ -21,31 +21,12 @@ export class PhenotypeSearchService {
     constructor(private http: HttpClient) {
     }
 
-    // return diseases as an Observable
-    getPhenotypicFeatures(): Observable<any> {
-        // only if undefined, load from server
-        if (this.phenotypicFeatures.getValue() === undefined) {
-            console.log('Loading features...');
-            this.loadPhenotypicFeatures();
-        }
-        // return features for subscription even if the value is yet undefined.
-        return this.phenotypicFeatures.asObservable();
-    }
-
-    searchPhenotypicFeatures(query: string): Observable<any> {
+    public searchPhenotypicFeatures(query: string): Observable<any> {
         const headers = new Headers();
         headers.append('Content-Type', 'application/json');
         const params = new HttpParams().set('query', query).set('max', 10); // Create new HttpParams
         const httpOptions: Object = { headers, params };
         return this.http.get(phenotypicFeaturesSearchUrl, httpOptions);
-    }
-
-    private loadPhenotypicFeatures(): void {
-        this.http.get(phenotypicFeaturesUrl).subscribe(res => {
-            this.phenotypicFeatures.next(res);
-        }, (error) => {
-            console.log(error);
-        });
     }
 
     public getPhenotypicFeatureById(id: string): Observable<any> {
@@ -60,21 +41,6 @@ export class PhenotypeSearchService {
     public queryTextMiner(textSearch: string): Observable<any> {
         const headers = { 'content-type': 'text/plain'};
         return this.http.post(textMinerUrl, textSearch, {headers});
-    }
-
-    getPhenotypicOnset(): Observable<TimeElement> {
-        return this.onset.asObservable();
-    }
-
-    setPhenotypicOnset(onset: TimeElement) {
-        this.onset.next(onset);
-    }
-    getPhenotypicResolution(): Observable<TimeElement> {
-        return this.resolution.asObservable();
-    }
-
-    setPhenotypicResolution(resolution: TimeElement) {
-        this.resolution.next(resolution);
     }
 
 }

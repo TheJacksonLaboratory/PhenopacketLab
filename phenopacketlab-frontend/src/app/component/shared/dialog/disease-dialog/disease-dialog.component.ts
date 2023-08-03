@@ -7,8 +7,8 @@ import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 import { Utils } from '../../utils';
+import { ConstantsService } from 'src/app/services/constants.service';
 
 @Component({
   selector: 'app-disease-dialog',
@@ -51,7 +51,7 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
   lateralitySelected: ConstantObject;
   lateralitySubscription: Subscription;
 
-  constructor(public phenopacketService: PhenopacketService,
+  constructor(private constantsService: ConstantsService,
     private diseaseService: DiseaseSearchService,
     public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
   }
@@ -62,7 +62,7 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
     this.profile = this.config.data?.profile;
 
     // get onsets
-    this.onsetsSubscription = this.phenopacketService.getOnsets().subscribe(nodes => {
+    this.onsetsSubscription = this.constantsService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
         this.onsetsNodes = <OntologyTreeNode[]>nodes.children;
@@ -72,7 +72,7 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
     this.stages = this.getStages();
 
     // laterality
-    this.lateralitySubscription = this.phenopacketService.getLateralities().subscribe(lateralities => {
+    this.lateralitySubscription = this.constantsService.getLateralities().subscribe(lateralities => {
       if (lateralities) {
         lateralities.forEach(laterality => {
           if (this.lateralities === undefined) {
@@ -84,17 +84,17 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
     });
     this.initializeLateralitySelected(this.disease?.laterality);
     // TNM findings
-    this.tumorSubscription = this.phenopacketService.getTnmTumorFindings().subscribe(nodes => {
+    this.tumorSubscription = this.constantsService.getTnmTumorFindings().subscribe(nodes => {
       if (nodes) {
         this.tumorNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
-    this.nodeSubscription = this.phenopacketService.getTnmNodeFindings().subscribe(nodes => {
+    this.nodeSubscription = this.constantsService.getTnmNodeFindings().subscribe(nodes => {
       if (nodes) {
         this.nodeNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
-    this.metastasisSubscription = this.phenopacketService.getTnmMetastasisFindings().subscribe(nodes => {
+    this.metastasisSubscription = this.constantsService.getTnmMetastasisFindings().subscribe(nodes => {
       if (nodes) {
         this.metastasisNodes = <OntologyTreeNode[]>nodes.children;
       }
@@ -110,7 +110,7 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
     this.initializeTnmFindingSelected(this.disease?.clinicalTnmFinding);
 
     // Disease Stages
-    this.diseaseStagesSubscription = this.phenopacketService.getDiseaseStages().subscribe(nodes => {
+    this.diseaseStagesSubscription = this.constantsService.getDiseaseStages().subscribe(nodes => {
       if (nodes) {
         this.diseaseStagesNodes = <OntologyTreeNode[]>nodes.children;
       }

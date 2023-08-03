@@ -1,0 +1,198 @@
+{
+  "graphs" : [ {
+    "id" : "http://purl.obolibrary.org/obo/oae.owl",
+    "meta" : {
+      "basicPropertyValues" : [ {
+        "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+        "val" : "Product version"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Darrell R. Abernethy"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Elizabeth Blair"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Izabela Birsanescu"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Keith Burkhart"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Luca Toldo"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Mathias Brochhausen"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/contributor",
+        "val" : "Sydni Joubran"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "\"Asiyah\" Yu Lin"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Abra Guo"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Barry Smith"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Bingjian Yang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "David Ameriguian"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Desikan Jagannathan"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Edison Ong"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Jessica DeGuise"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Jiangan \"Hardy\" Xie"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Jiangan Xie"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Kelly Yang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Kevin Mo"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Ling Wan"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Liwei Wang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Meiu Wong"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Noemi Garg"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Qingping Liu"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Qiuyue Yang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Rebecca Racz"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Shelley Zhang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Sirarat Sarntivijai"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Sydni Joubran"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Yongqun \"Oliver\" He (YH)"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/creator",
+        "val" : "Zuoshuang \"Allen\" Xiang"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/date",
+        "val" : "2022-8-15"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/description",
+        "val" : "The Ontology of Adverse Eventsy (OAE) is a biomedical ontology in the domain of adverse events. OAE aims to standardize adverse event annotation, integrate various adverse event data, and support computer-assisted reasoning.  OAE is a community-based ontology. Its development follows the OBO Foundry principles. Vaccine adverse events have been used as an initial testing use case. OAE also studies adverse events associated with the administration of drug and nutritional products, the operation of surgeries, and the usage of medical devices, etc."
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/format",
+        "val" : "OWL-DL"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/license",
+        "val" : "http://creativecommons.org/licenses/by/3.0/"
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/subject",
+        "val" : "An ontology for the annotation of the adverse event domain."
+      }, {
+        "pred" : "http://purl.org/dc/elements/1.1/title",
+        "val" : "OAE: Ontology of Adverse Events"
+      }, {
+        "pred" : "http://www.w3.org/2002/07/owl#versionInfo",
+        "val" : "1.2.47"
+      } ]
+    },
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/OAE_0000001",
+      "lbl" : "adverse event",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "a pathological bodily process that occurs after a medical intervention. An adverse event is likely caused by the medical intervention; however, such a causal association is not required to be an adverse event."
+        },
+        "comments" : [ "The OAE official website is: http://www.oae-ontology.org/." ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "Melanie Courtot and YH: More work is needed on how to restrict the scope of a term to be an 'adverse event', notably regarding temporal association. When is an appropirate time interval between a medical intervention and an adverse event observed? One week, one month, one year, or a lifetime? For some well-studied medical interventions (e.g., administration of many vaccines or drugs), we probably have a general idea. For many new interventions, we don't know much. In OAE, this issue is associated with defining the 'adverse event incubation time'."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: An adverse event is a process that has specified output of some adverse medical outcome (e.g., symptom, sign or accident) after a medical intervention (or process) (e.g., administration of drug or vaccine). The medical intervention can be an administration of a drug, a vaccine (i.e., vaccination), or a special nutritional product (for example, dietary supplement, infant formula, medical food), surgery, or usage of a medical device."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: An adverse event is possibly induced by the medical intervention. It can be caused by the medical intervention, or may not be caused by the medical intervention. One ultimate goal (or the goal in clinics) of study adverse events is to assess if the adverse event outcome is due to the medical intervention."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: In development of OAE, we initially use vaccine adverse event as our use case. A vaccine adverse event is associated with a vaccination (i.e. a medical intervention), regardless of whether it is considered vaccine-related, and includes any side effect, injury, toxicity, or sensitivity reaction or significant failure of immunization (i.e., a pharmacologic action).\nRef: Baylor NW and Midthum K. Regulation and testing of vaccines. In: Vaccines (Editors: Plotkin S, Orenstein W, and Offit P). 2008.  p1623."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: The current term 'adverse event' is different from the term definition shown in our paper: He Y, Xiang Z, Sarntivijai S, Toldo L, Ceusters W. OAE: a realism-based biomedical ontology for the representation of adverse events. Adverse Event Representation Workshop, International Conference on Biomedical Ontologies (ICBO), University at Buffalo, NY, July 26-30, 2011. Full lenghth conference proceeding paper.  \n\nWe  made the name changing in order to make OAE cover the broader sense of the 'adverse event' which does not assume definite causal effect between an adverse event and a medical intervention. In current definition, the adverse event emphasizes the time association and assumes a likelihood of such a causal association. This term 'adverse event' is stil under the OGMS:pathological bodily process.\n\nThe 'adverse event' defined in the above paper has now been changed to a new term: 'causal adverse event'. See more information in the new publication: Yongqun He Y, Sirarat Sarntivijai, Yu Lin, Zuoshuang Xiang, Abra Guo, Shelley Zhang, Desikan Jagannathan, Luca Toldo, Cui Tao and Barry Smith. OAE: The Ontology of Adverse Events. Journal of Biomedical Semantics. 2014, 5:29  doi:10.1186/2041-1480-5-29. PMID: 25093068.PMCID: PMC4120740."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: The main scope of OAE includes: (1) represent terms and relations in the area of adverse events, (2) assess possible associations between an adverse event and a medical intervention, particularly, identify any causal effect of a medical intervention to an adverse event; and (2) understand the mechanism (including molecular mechanisms) of causal adverse events."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000116",
+          "val" : "YH: There has been discussion regarding whether the term 'side effect' is an alternative term for 'adverse event'. In AERO, the term 'AERO:adverse event' represents a subset of those adverse events for which causality has been established. In OAE, an adverse event for which causality has been established is called 'causal adverse event'."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000117",
+          "val" : "Yongqun He"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000118",
+          "val" : "AE"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000118",
+          "val" : "adverse reaction"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000119",
+          "val" : "WEB: http://en.wikipedia.org/wiki/Adverse_event"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000119",
+          "val" : "WEB: http://www.fda.gov/Safety/MedWatch/HowToReport/ucm053087.htm"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000119",
+          "val" : "WEB: http://www.ncbi.nlm.nih.gov/pubmed/25093068"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/OAE_0000555",
+      "lbl" : "homeostasis AE",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "an AE that occurs in the homeostasis system."
+        },
+        "comments" : [ "anomaly in the processes involved in the maintenance of an internal equilibrium of various functions and chemical or protein composition of the fluids and tissues" ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.w3.org/2000/01/rdf-schema#seeAlso",
+          "val" : "MP: MP_0001764"
+        } ]
+      }
+    }],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/OAE_0000555",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/OAE_0000001"
+    } ],
+    "logicalDefinitionAxioms" : [],
+    "domainRangeAxioms" : [],
+    "propertyChainAxioms" : []
+  } ]
+}

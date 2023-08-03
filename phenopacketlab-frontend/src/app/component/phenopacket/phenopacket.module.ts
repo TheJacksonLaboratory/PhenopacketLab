@@ -23,16 +23,13 @@ import { FileDetailComponent } from './file/file-detail/file-detail.component';
 import { PhenopacketComponent } from './phenopacket.component';
 import { MedicalActionComponent } from './medical-action/medical-action.component';
 import { MedicalActionDetailComponent } from './medical-action/medical-action-detail/medical-action-detail.component';
-import { MedicalActionDetailDialogComponent } from './medical-action/medical-action-detail/medical-action-detail-dialog/medical-action-detail-dialog.component';
 import { MeasurementComponent } from './measurement/measurement.component';
 import { MeasurementDetailComponent } from './measurement/measurement-detail/measurement-detail.component';
-import { MeasurementDetailDialogComponent } from './measurement/measurement-detail/measurement-detail-dialog/measurement-detail-dialog.component';
 import { MetadataComponent } from './metadata/metadata.component';
 import { InterpretationComponent } from './interpretation/interpretation.component';
 import { InterpretationDetailComponent } from './interpretation/interpretation-detail/interpretation-detail.component';
 import { BiosampleComponent } from './biosample/biosample.component';
 import { BiosampleDetailComponent } from './biosample/biosample-detail/biosample-detail.component';
-import { BiosampleDetailDialogComponent } from './biosample/biosample-detail/biosample-detail-dialog/biosample-detail-dialog.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
@@ -61,12 +58,10 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
   declarations: [
     MeasurementComponent,
     MeasurementDetailComponent,
-    MeasurementDetailDialogComponent,
     DiseaseComponent,
     DiseaseDetailComponent,
     MedicalActionComponent,
     MedicalActionDetailComponent,
-    MedicalActionDetailDialogComponent,
     PhenotypicFeatureComponent,
     PhenotypicDetailComponent,
     FileComponent,
@@ -76,14 +71,12 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
     InterpretationDetailComponent,
     BiosampleComponent,
     BiosampleDetailComponent,
-    BiosampleDetailDialogComponent,
     IndividualDialogComponent,
     PhenopacketComponent
   ],
   exports: [
     MeasurementComponent,
     MeasurementDetailComponent,
-    MeasurementDetailDialogComponent,
     DiseaseComponent,
     DiseaseDetailComponent,
     MedicalActionComponent,

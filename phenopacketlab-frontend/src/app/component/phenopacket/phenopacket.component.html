@@ -5,10 +5,10 @@
     <p-card>
       <div class="grid">
         <div class="field col-5">
-          <b>Individual ID: </b> {{ individual?.id }}
+          <b>Individual ID: </b> {{ phenopacket?.subject?.id }}
         </div>
         <div class="field col-6">
-          <b> Alternate IDs: </b> {{ individual?.alternateIds?.join(", ") }}
+          <b> Alternate IDs: </b> {{ phenopacket?.subject?.alternateIds?.join(", ") }}
         </div>
         <div class="field cold-1">
           <button
@@ -22,38 +22,38 @@
           ></button>
         </div>
         <div class="field col-12">
-          <b>Time of last encounter: </b> {{ lastEncounterDate }}
+          <b>Time of last encounter: </b> {{ phenopacket?.subject?.timeAtLastEncounter ? phenopacket?.subject?.timeAtLastEncounter.toString() : '' }}
         </div>
 
-        <div class="field col-4"><b>Sex: </b> {{ sex }}</div>
+        <div class="field col-4"><b>Sex: </b> {{ phenopacket?.subject?.sex }}</div>
 
         <div class="field col-4">
-          <b>Karyotypic Sex: </b> {{ karyotypicSex }}
+          <b>Karyotypic Sex: </b> {{ phenopacket?.subject?.karyotypicSex }}
         </div>
-        <div class="field col-4"><b>Gender: </b> {{ gender }}</div>
+        <div class="field col-4"><b>Gender: </b> {{ phenopacket?.subject?.gender }}</div>
 
         <br />
         <div class="field col-12">
           <p-fieldset legend="Vital Status">
             <div class="grid">
               <div class="field col-6">
-                <b>Status: </b> {{ status }}
+                <b>Status: </b> {{ phenopacket?.subject?.vitalStatus?.status?.toString() }}
               </div>
               <div class="field col-6">
-                <b>Time of death: </b> {{ timeOfDeath }}
+                <b>Time of death: </b> {{ phenopacket?.subject?.vitalStatus?.timeOfDeath?.toString() }}
               </div>
               <div class="field col-6">
                 <b>Cause of death: </b>
                 <a
-                  *ngIf="causeOfDeath"
-                  [href]="causeOfDeath?.termUrl"
+                  *ngIf="phenopacket?.subject?.vitalStatus?.causeOfDeath"
+                  [href]="phenopacket?.subject?.vitalStatus?.causeOfDeath?.termUrl"
                   target="_blank"
-                  >[{{ causeOfDeath?.id }}]</a
+                  >[{{ phenopacket?.subject?.vitalStatus?.causeOfDeath?.id }}]</a
                 >
-                {{ causeOfDeath?.label }}
+                {{ phenopacket?.subject?.vitalStatus?.causeOfDeath?.label }}
               </div>
               <div class="field col-6">
-                <b>Survival time (days): </b> {{ survivalTime }}
+                <b>Survival time (days): </b> {{ phenopacket?.subject?.vitalStatus?.survivalTimeInDays }}
               </div>
             </div>
           </p-fieldset>

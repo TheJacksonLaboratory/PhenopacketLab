@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -7,8 +7,8 @@ const bodySitesUrl = environment.BODY_SITE_URL;
 const treatmentIntentsUrl = environment.MEDICAL_ACTION_TREATMENT_INTENTS_URL;
 const treatmentResponsesUrl = environment.MEDICAL_ACTION_TREATMENT_RESPONSES_URL;
 const treatmentTerminationReasonsUrl = environment.MEDICAL_ACTION_TERMINATION_REASONS_URL;
-const adverseEventsUrl = environment.MEDICAL_ACTION_ADVERSE_EVENTS_URL;
-
+const chemicalEntitiesUrl = environment.CHEMICAL_ENTITY_URL;
+const chemicalEntitiesSearchUrl = environment.CHEMICAL_ENTITY_SEARCH_URL;
 
 @Injectable({ providedIn: 'root' })
 export class MedicalActionService {
@@ -36,8 +36,17 @@ export class MedicalActionService {
     public getTerminationReasons(): Observable<any> {
         return this.http.get(treatmentTerminationReasonsUrl);
     }
-    public getAdverseEvents(): Observable<any> {
-        return this.http.get(adverseEventsUrl);
+
+    public searchChemicalEntities(query: string): Observable<any> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        const params = new HttpParams().set('query', query).set('max', 10); // Create new HttpParams
+        const httpOptions: Object = { headers, params };
+        return this.http.get(chemicalEntitiesSearchUrl, httpOptions);
+    }
+
+    public getChemicalEntityById(id: string): Observable<any> {
+        return this.http.get(`${chemicalEntitiesUrl}/${id}`);
     }
 
 }

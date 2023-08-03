@@ -6,7 +6,7 @@ import { Individual } from 'src/app/models/individual';
 import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
     selector: 'app-individual-step',
@@ -28,7 +28,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
 
     summary: string;
 
-    constructor(public phenopacketService: PhenopacketService) {
+    constructor(public phenopacketService: PhenopacketStepperService) {
 
     }
 

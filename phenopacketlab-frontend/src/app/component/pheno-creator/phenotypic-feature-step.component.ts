@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ProfileSelection } from 'src/app/models/profile';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
+import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 
 @Component({
     selector: 'app-phenotypic-feature-step',
@@ -20,7 +20,7 @@ export class PhenotypicFeatureStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
     profileSelectionSubscription: Subscription;
 
-    constructor(private phenopacketService: PhenopacketService,
+    constructor(private phenopacketService: PhenopacketStepperService,
         private router: Router) {
     }
 

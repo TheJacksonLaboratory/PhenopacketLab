@@ -111,7 +111,6 @@ export class FileComponent implements OnInit {
   }
 
   getColor(attribute) {
-    console.log(attribute.key);
     if (attribute.key === 'fileFormat') {
       return 'primary-chip';
     }
