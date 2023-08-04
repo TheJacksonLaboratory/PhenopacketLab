@@ -110,14 +110,8 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
     const phenopacket = this.phenopacketStepperService.phenopacket;
     this.phenopacketStepperService.validatePhenopacket(this.getPhenopacketJSON(phenopacket)).subscribe(validationResults => {
       if (validationResults.validationResults.length === 0) {
-        if (this.user) {
-          this.phenopacketService.savePhenopacketRemote(this.getPhenopacketJSON(phenopacket)).subscribe(() => {
-            this.router.navigate(['phenopackets']);
-          });
-        } else {
-          this.phenopacketService.addPhenopacket(phenopacket);
-          this.router.navigate(['phenopackets']);
-        }
+        this.phenopacketService.addPhenopacket(phenopacket, this.user);
+        this.router.navigate(['phenopackets']);
         this.phenopacketStepperService.phenopacket = undefined;
       } else {
         this.dialogService.open(ValidationResultsDialogComponent, {

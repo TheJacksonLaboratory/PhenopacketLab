@@ -87,20 +87,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       header: 'Delete Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // if user exist call the remove service.
-        if (this.user) {
-          this.phenopacketService.deletePhenopacketRemote(phenopacket.dbId).subscribe(() => {
-            this.phenopacketService.removePhenopacket(phenopacket);
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
-          }, () => {
-            this.messageService.add({ severity: 'error', summary: 'Failed.',
-              detail: `Phenopacket ${phenopacket.id} failed to be removed.` });
-          });
-        } else {
-          // Remove them from the cohort.
-          this.phenopacketService.removePhenopacket(phenopacket);
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
-        }
+        this.phenopacketService.removePhenopacket(phenopacket, this.user);
+      
         // Remove tab if open since we are not default opening them
         const removeIdx = this.tabs.findIndex(pheno => pheno.id === phenopacket.id);
         if (removeIdx > -1) {
@@ -124,7 +112,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     this.table._selection = null;
     this.table.selectionChange.emit();
     // Avoid random bug in primeng
-    if (!this.tabs.includes(phenopacket)) {
+    if (this.tabs.findIndex(pheno => pheno.id === phenopacket.id) === -1) {
       this.tabView.tabs[0].selected = false;
       this.tabs.push(phenopacket);
     }
@@ -149,20 +137,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         this.clearFileUpload();
         return;
       }
-      if (this.user) {
-        this.phenopacketService.savePhenopacketRemote(this.downloadService.saveAsJson(newPhenopacket, false)).subscribe(() => {
-          this.phenopacketService.addPhenopacket(newPhenopacket);
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${newPhenopacket.id} added.` });
-        }, (error) => {
-          console.log(error);
-          this.messageService.add({ severity: 'error', summary: 'Failed.',
-            detail: `Phenopacket ${newPhenopacket.id} failed to be added due to the following error: ${error.message}` });
-        });
-      } else {
-        // Remove them from the cohort.
-        this.phenopacketService.addPhenopacket(newPhenopacket);
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${newPhenopacket.id} added.` });
-      }
+      this.phenopacketService.addPhenopacket(newPhenopacket, this.user);
       
       this.phenopacketStepperService.phenopacket = undefined;
       this.clearFileUpload();
@@ -189,11 +164,15 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
           validationResults: validationResults,
           phenopacket: phenopacket
         }
-      });
-      this.ref.onClose.subscribe(validationResult => {
-        if (validationResult) {
-          this.phenopacketService.removePhenopacket(phenopacket);
-          this.phenopacketService.addPhenopacket(validationResult.validatedPhenopacket);
+      }); 
+      this.ref.onClose.subscribe(validationResults => {
+        if (validationResults) {
+          const validatedPhenopacket = validationResults.validatedPhenopacket;
+          validatedPhenopacket.dbId = phenopacket.dbId;
+          console.log(validatedPhenopacket);
+          this.phenopacketService.updatePhenopacket(validatedPhenopacket, this.user);
+          // this.phenopacketService.removePhenopacket(phenopacket, this.user);
+          // this.phenopacketService.addPhenopacket(validatedPhenopacket, this.user);
         }
       });
     });

@@ -11,10 +11,8 @@ import { MedicalAction } from 'src/app/models/medical-action';
 import { Measurement } from 'src/app/models/measurement';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { BioSample } from 'src/app/models/biosample';
-import { DownloadService } from '../../services/download-service';
 import { IndividualDialogComponent } from './individual-dialog/individual-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { Interpretation } from 'src/app/models/interpretation';
 import { EMPTY, Subscription } from 'rxjs';
 import { Utils } from '../shared/utils';
@@ -47,8 +45,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   phenopacketListSubscription: Subscription;
 
   constructor(private phenopacketService: PhenopacketService,
-    private dialogService: DialogService,
-    private messageService: MessageService, private downloadService: DownloadService) { }
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
     // retrieve phenopacket to edit
@@ -134,7 +131,7 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     this.ref.onClose.subscribe((subject: Individual) => {
       if (subject && this.phenopacket) {
         this.phenopacket.subject = subject;
-        this.updatePhenopacket(this.phenopacket);
+        this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
       }
     });
   }
@@ -142,60 +139,46 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
   changePhenotypicFeatures(phenotypicFeatures: PhenotypicFeature[]) {
     if (this.phenopacket) {
       this.phenopacket.phenotypicFeatures = phenotypicFeatures;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
   changeDiseases(diseases: Disease[]) {
     if (this.phenopacket) {
       this.phenopacket.diseases = diseases;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
 
   changeBiosamples(biosamples: BioSample[]) {
     if (this.phenopacket) {
       this.phenopacket.biosamples = biosamples;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
   changeInterpretations(interpretations: Interpretation[]) {
     if (this.phenopacket) {
       this.phenopacket.interpretations = interpretations;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
   changeMeasurements(measurements: Measurement[]) {
     if (this.phenopacket) {
       this.phenopacket.measurements = measurements;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
 
   changeMedicalActions(medicalActions: MedicalAction[]) {
     if (this.phenopacket) {
       this.phenopacket.medicalActions = medicalActions;
-      this.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
 
   changeFiles(files: File[]) {
     if (this.phenopacket) {
       this.phenopacket.files = files;
-      this.updatePhenopacket(this.phenopacket);
-    }
-  }
-
-  updatePhenopacket(phenopacket: Phenopacket) {
-    if (this.user) {
-      this.phenopacketService.updatePhenopacketRemote(phenopacket.dbId,
-          this.downloadService.saveAsJson(phenopacket, false)).subscribe(() => {
-          this.messageService.add({ severity: 'info', summary: 'Updated!', detail: `Phenopacket ${phenopacket.id} updated.`});
-          this.phenopacketService.fetchAllPhenopacketsRemote().subscribe();
-      }, () => {
-            this.messageService.add({ severity: 'error', summary: 'Error Updating!', detail: `Server could not update Phenopacket ${phenopacket.id}.`});
-      });
-    } else {
-      this.phenopacketService.updatePhenopacket(this.phenopacket);
+      this.phenopacketService.updatePhenopacket(this.phenopacket, this.user);
     }
   }
 
