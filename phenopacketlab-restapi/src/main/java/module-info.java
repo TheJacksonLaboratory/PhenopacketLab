@@ -28,7 +28,6 @@ module phenopacketlab.restapi {
     requires io.swagger.v3.oas.annotations;
     requires com.google.protobuf;
     requires java.sql;
-    requires org.json;
 
 
     opens org.monarchinitiative.phenopacketlab.restapi;

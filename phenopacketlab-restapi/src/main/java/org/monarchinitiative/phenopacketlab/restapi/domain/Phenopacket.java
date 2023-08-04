@@ -1,10 +1,8 @@
 package org.monarchinitiative.phenopacketlab.restapi.domain;
 
 import com.google.cloud.spring.data.datastore.core.mapping.Entity;
-import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
 
-import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -15,22 +13,22 @@ public class Phenopacket {
 
 	Long userId;
 
-	JSONObject phenopacket;
+	String phenopacket;
 
 	public Phenopacket() {
 	}
 
 	public Phenopacket(Long userId, String phenopacket) {
 		this.userId = userId;
-		this.phenopacket = new JSONObject(phenopacket);
+		this.phenopacket = phenopacket;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public Map<String, Object> getPhenopacket() {
-		return phenopacket.toMap();
+	public String getPhenopacket() {
+		return phenopacket;
 	}
 
 	public Long getUserId() {
@@ -39,13 +37,14 @@ public class Phenopacket {
 
 
 	public void setPhenopacket(String phenopacket) {
-		this.phenopacket = new JSONObject(phenopacket);
+		this.phenopacket = phenopacket;
 	}
 
 	@Override
 	public String toString() {
 		return "Phenopacket{" +
 				"id=" + id +
+				", userId=" + userId +
 				", phenopacket='" + phenopacket + '\'' +
 				'}';
 	}
@@ -55,11 +54,11 @@ public class Phenopacket {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Phenopacket that = (Phenopacket) o;
-		return Objects.equals(id, that.id) && Objects.equals(phenopacket, that.phenopacket);
+		return Objects.equals(id, that.id) && Objects.equals(userId, that.userId) && Objects.equals(phenopacket, that.phenopacket);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, phenopacket);
+		return Objects.hash(id, userId, phenopacket);
 	}
 }
