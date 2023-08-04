@@ -14,8 +14,10 @@ export class Convert {
             const array = [];
             for (const item of obj) {
                 const it = this.create(item);
-                it.key = Utils.getBiggestKey(array) + 1;
-                array.push(it);
+                if (it) {
+                    it.key = Utils.getBiggestKey(array) + 1;
+                    array.push(it);
+                }
             }
             return array;
         } else {
