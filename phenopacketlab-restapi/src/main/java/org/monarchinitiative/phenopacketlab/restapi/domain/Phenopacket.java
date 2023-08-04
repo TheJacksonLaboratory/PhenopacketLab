@@ -1,6 +1,7 @@
 package org.monarchinitiative.phenopacketlab.restapi.domain;
 
 import com.google.cloud.spring.data.datastore.core.mapping.Entity;
+import com.google.cloud.spring.data.datastore.core.mapping.Unindexed;
 import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
@@ -12,7 +13,7 @@ public class Phenopacket {
 	Long id;
 
 	Long userId;
-
+	@Unindexed
 	String phenopacket;
 
 	public Phenopacket() {

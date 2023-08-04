@@ -69,10 +69,10 @@ export class PhenopacketService {
     fetchAllPhenopacketsRemote(): Observable<Phenopacket[]> {
         return this.http.get<Phenopacket[]>(environment.PHENOPACKET_URL).pipe(map((phenopacketList: any[]) => {
             return phenopacketList.map((result) => {
-                result.phenopacket.dbId = result.id;
-                console.log(result);
                 // parse string and convert to Phenopacket
-                return Phenopacket.convert(JSON.parse(result.phenopacket));
+                const pheno = Phenopacket.convert(JSON.parse(result.phenopacket));
+                pheno.dbId = result.id;
+                return pheno;
             });
         }));
     }
