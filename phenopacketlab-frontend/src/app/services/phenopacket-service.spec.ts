@@ -2,6 +2,8 @@ import { TestBed, inject } from '@angular/core/testing';
 import { PhenopacketService } from './phenopacket.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { DialogService } from 'primeng/dynamicdialog';
+import { DownloadService } from './download-service';
+import { MessageService } from 'primeng/api';
 
 
 describe('PhenopacketService', () => {
@@ -16,6 +18,8 @@ describe('PhenopacketService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 PhenopacketService,
+                DownloadService,
+                MessageService,
                 DialogService
             ]
         });
