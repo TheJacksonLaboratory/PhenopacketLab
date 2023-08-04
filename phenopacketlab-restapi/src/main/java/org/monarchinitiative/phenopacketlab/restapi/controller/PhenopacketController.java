@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import org.json.JSONObject;
 import org.monarchinitiative.phenopacketlab.restapi.domain.Phenopacket;
 import org.monarchinitiative.phenopacketlab.restapi.domain.User;
 import org.monarchinitiative.phenopacketlab.restapi.service.PhenopacketService;
@@ -11,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "${api.version}/phenopacket")
