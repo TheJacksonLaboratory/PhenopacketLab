@@ -149,7 +149,22 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         this.clearFileUpload();
         return;
       }
-      this.phenopacketService.addPhenopacket(newPhenopacket);
+      if (this.user) {
+        this.phenopacketService.savePhenopacketRemote(this.downloadService.saveAsJson(newPhenopacket, false)).subscribe(() => {
+          this.phenopacketService.addPhenopacket(newPhenopacket);
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${newPhenopacket.id} added.` });
+        }, (error) => {
+          console.log(error);
+          this.messageService.add({ severity: 'error', summary: 'Failed.',
+            detail: `Phenopacket ${newPhenopacket.id} failed to be added due to the following error: ${error.message}` });
+        });
+      } else {
+        // Remove them from the cohort.
+        this.phenopacketService.addPhenopacket(newPhenopacket);
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${newPhenopacket.id} added.` });
+      }
+      
+      this.phenopacketStepperService.phenopacket = undefined;
       this.clearFileUpload();
       this.messageService.add({ severity: 'success', summary: 'Phenopacket Upload Success!' });
     }, (error) => {
