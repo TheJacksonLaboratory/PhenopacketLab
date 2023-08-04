@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Phenopacket } from '../models/phenopacket';
-import { DownloadService } from './download-service';
 
 const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 
@@ -71,7 +70,9 @@ export class PhenopacketService {
         return this.http.get<Phenopacket[]>(environment.PHENOPACKET_URL).pipe(map((phenopacketList: any[]) => {
             return phenopacketList.map((result) => {
                 result.phenopacket.dbId = result.id;
-                return result.phenopacket;
+                console.log(result);
+                // parse string and convert to Phenopacket
+                return Phenopacket.convert(JSON.parse(result.phenopacket));
             });
         }));
     }
