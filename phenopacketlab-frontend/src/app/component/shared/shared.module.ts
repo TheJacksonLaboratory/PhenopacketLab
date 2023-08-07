@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { MaterialModule } from './material.module';
 import { PrimeModule } from './prime.module';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { TimeElementComponent } from './time-element/time-element.component';
@@ -12,7 +11,6 @@ import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
-import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
@@ -41,7 +39,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     FormsModule,
     ReactiveFormsModule,
     PrimeModule,
-    MaterialModule,
     AngularSplitModule
   ],
   declarations: [
@@ -54,7 +51,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent,
     DiseaseDialogComponent,
     DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
@@ -83,7 +79,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent,
     DiseaseDialogComponent,
     DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
@@ -97,7 +92,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     VariationSearchComponent,
     LabelCreatorDialogComponent,
     PrimeModule,
-    MaterialModule,
     AngularSplitModule,
     TextPipe,
     MedicalActionDialogComponent,
