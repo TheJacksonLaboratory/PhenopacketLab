@@ -36,6 +36,7 @@ export const environment = {
   SCHEDULE_FREQUENCY_URL: `${API_URL}/constants/tree-schedule-frequency`,
   ADVERSE_EVENT_URL: `${API_URL}/constants/tree-adverse-event`,
   USER_URL: `${API_URL}/user`,
+  PHENOPACKET_URL: `${API_URL}/phenopacket`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
@@ -46,7 +47,15 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: `${API_URL}/user/*`,
+          uri: `${API_URL}/user`,
+          tokenOptions: {
+            authorizationParams: {
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        },
+        {
+          uri: `${API_URL}/phenopacket`,
           tokenOptions: {
             authorizationParams: {
               audience: `https://phenopacketlab.jax.org`

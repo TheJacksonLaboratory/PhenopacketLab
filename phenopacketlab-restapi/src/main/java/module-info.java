@@ -27,6 +27,7 @@ module phenopacketlab.restapi {
     requires spring.cloud.gcp.core;
     requires io.swagger.v3.oas.annotations;
     requires com.google.protobuf;
+    requires java.sql;
 
 
     opens org.monarchinitiative.phenopacketlab.restapi;

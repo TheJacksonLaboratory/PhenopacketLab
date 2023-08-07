@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AuthService, User } from '@auth0/auth0-angular';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { TabView } from 'primeng/tabview';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { DownloadService } from 'src/app/services/download-service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
@@ -35,8 +37,10 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   /** Array used to hold the list of individuals present in the summary tab **/
   tabIndex = 0;
 
-  phenopaketListSubscription: Subscription;
+  phenopacketListSubscription: Subscription;
   ref: DynamicDialogRef;
+  user: User;
+  isLoading = false;
 
   constructor(private phenopacketService: PhenopacketService,
     private phenopacketStepperService: PhenopacketStepperService,
@@ -46,18 +50,30 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private downloadService: DownloadService,
     private dialogService: DialogService,
-    private router: Router) {
+    private router: Router,
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.phenopaketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
+    this.isLoading = true;
+    this.authService.user$.pipe(distinctUntilChanged((p, q) => p.sub === q.sub)).subscribe((user) => {
+        if (user) {
+          this.user = user;
+          this.phenopacketService.fetchAllPhenopacketsRemote().subscribe((phenopackets: Phenopacket []) => {
+            this.phenopacketService.setPhenopacketList(phenopackets);
+            this.isLoading = false;
+          });
+        }
+    });
+    this.phenopacketListSubscription = this.phenopacketService.getPhenopacketList().subscribe(list => {
       this.phenopacketList = list;
+      this.isLoading = false;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.phenopaketListSubscription) {
-      this.phenopaketListSubscription.unsubscribe();
+    if (this.phenopacketListSubscription) {
+      this.phenopacketListSubscription.unsubscribe();
     }
     if (this.ref) {
       this.ref.close();
@@ -71,14 +87,13 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
       header: 'Delete Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.phenopacketService.removePhenopacket(phenopacket, this.user);
+      
         // Remove tab if open since we are not default opening them
         const removeIdx = this.tabs.findIndex(pheno => pheno.id === phenopacket.id);
         if (removeIdx > -1) {
           this.tabs.splice(removeIdx, 1);
         }
-        // Remove them from the list.
-        this.phenopacketService.removePhenopacket(phenopacket);
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} removed.` });
       },
       reject: () => { }, key: 'positionDialog'
     });
@@ -97,7 +112,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
     this.table._selection = null;
     this.table.selectionChange.emit();
     // Avoid random bug in primeng
-    if (!this.tabs.includes(phenopacket)) {
+    if (this.tabs.findIndex(pheno => pheno.id === phenopacket.id) === -1) {
       this.tabView.tabs[0].selected = false;
       this.tabs.push(phenopacket);
     }
@@ -122,7 +137,9 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         this.clearFileUpload();
         return;
       }
-      this.phenopacketService.addPhenopacket(newPhenopacket);
+      this.phenopacketService.addPhenopacket(newPhenopacket, this.user);
+      
+      this.phenopacketStepperService.phenopacket = undefined;
       this.clearFileUpload();
       this.messageService.add({ severity: 'success', summary: 'Phenopacket Upload Success!' });
     }, (error) => {
@@ -147,11 +164,15 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
           validationResults: validationResults,
           phenopacket: phenopacket
         }
-      });
-      this.ref.onClose.subscribe(validationResult => {
-        if (validationResult) {
-          this.phenopacketService.removePhenopacket(phenopacket);
-          this.phenopacketService.addPhenopacket(validationResult.validatedPhenopacket);
+      }); 
+      this.ref.onClose.subscribe(validationResults => {
+        if (validationResults) {
+          const validatedPhenopacket = validationResults.validatedPhenopacket;
+          validatedPhenopacket.dbId = phenopacket.dbId;
+          console.log(validatedPhenopacket);
+          this.phenopacketService.updatePhenopacket(validatedPhenopacket, this.user);
+          // this.phenopacketService.removePhenopacket(phenopacket, this.user);
+          // this.phenopacketService.addPhenopacket(validatedPhenopacket, this.user);
         }
       });
     });

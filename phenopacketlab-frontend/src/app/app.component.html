@@ -5,7 +5,7 @@
     <app-sidebar></app-sidebar>
   </p-sidebar> -->
   <div class="content-wrapper flex flex-column" [ngClass]="{'full': activeSidenav === false, 'pl-short': activeSidenav === true}">
-    <div class="content">
+    <div class="flex flex-1 flex-column">
       <router-outlet></router-outlet>
     </div>
     <div class="footer flex flex-row grid">

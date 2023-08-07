@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from './validation-results-dialog.component';
+import { MessageService } from 'primeng/api';
 
 describe('ValidationResultsDialogComponent', () => {
   let component: ValidationResultsDialogComponent;
@@ -14,6 +15,7 @@ describe('ValidationResultsDialogComponent', () => {
         HttpClientModule
       ],
       providers: [
+        MessageService,
         { provide: DynamicDialogConfig, useValue: {} },
         { provide: DynamicDialogRef, useValue: {} }
       ]

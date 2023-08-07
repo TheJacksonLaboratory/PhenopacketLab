@@ -44,27 +44,33 @@ export const environment = {
   METADATA_URL: `${API_URL}/metadata`,
   RESOURCE_URL: `${API_URL}/resource`,
   USER_URL: `${API_URL}/user`,
+  PHENOPACKET_URL: `${API_URL}/phenopacket`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
     authorizationParams: {
       redirect_uri: window.location.origin
     },
-
     httpInterceptor: {
       allowedList: [
         {
-          uri: `${API_URL}/user/*`,
+          uri: `${API_URL}/user`,
           tokenOptions: {
             authorizationParams: {
-              // The attached token should target this audience
+              audience: `https://phenopacketlab.jax.org`
+            }
+          }
+        },
+        {
+          uri: `${API_URL}/phenopacket`,
+          tokenOptions: {
+            authorizationParams: {
               audience: `https://phenopacketlab.jax.org`
             }
           }
         }
       ]
     }
-
   }
 };
 

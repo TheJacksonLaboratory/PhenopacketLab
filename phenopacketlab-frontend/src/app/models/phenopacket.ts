@@ -9,6 +9,7 @@ import { File } from './base';
 import { PhenotypicFeature } from './phenotypic-feature';
 
 export class Phenopacket {
+    dbId?: string;
     id;
     subject: Individual = new Individual();
     phenotypicFeatures: PhenotypicFeature[];

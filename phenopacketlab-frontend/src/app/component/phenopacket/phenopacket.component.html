@@ -1,40 +1,39 @@
-<div class="grid">
-  <div class="field col-12"><b>Phenopacket ID: </b>{{ phenopacket?.id }}</div>
-
+<div class="grid" *ngIf="phenopacket">
+  <div class="field col-12"><b>Phenopacket ID: </b>{{ phenopacket.id }}</div>
   <div class="field col-12">
-    <p-card>
-      <div class="grid">
-        <div class="field col-5">
-          <b>Individual ID: </b> {{ phenopacket?.subject?.id }}
-        </div>
-        <div class="field col-6">
-          <b> Alternate IDs: </b> {{ phenopacket?.subject?.alternateIds?.join(", ") }}
-        </div>
-        <div class="field cold-1">
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            pTooltip="Edit individual properties"
-            tooltipPosition="bottom"
-            class="p-button-rounded p-button-text"
-            (click)="openEditDialog()"
-          ></button>
-        </div>
-        <div class="field col-12">
-          <b>Time of last encounter: </b> {{ phenopacket?.subject?.timeAtLastEncounter ? phenopacket?.subject?.timeAtLastEncounter.toString() : '' }}
-        </div>
+      <p-fieldset legend="General">
+        <div class="grid">
+          <div class="field col-5">
+            <b>Individual ID: </b> {{ phenopacket?.subject?.id }}
+          </div>
+          <div class="field col-6">
+            <b> Alternate IDs: </b> {{ phenopacket?.subject.alternateIds?.join(", ") }}
+          </div>
+          <div class="field cold-1">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              pTooltip="Edit individual properties"
+              tooltipPosition="bottom"
+              class="p-button-rounded p-button-text"
+              (click)="openEditDialog()"
+            ></button>
+          </div>
+          <div class="field col-12">
+            <b>Time of last encounter: </b> {{ phenopacket?.subject?.timeAtLastEncounter ? phenopacket?.subject?.timeAtLastEncounter.toString() : '' }}
+          </div>
 
-        <div class="field col-4"><b>Sex: </b> {{ phenopacket?.subject?.sex }}</div>
+          <div class="field col-4"><b>Sex: </b> {{ phenopacket?.subject?.sex }}</div>
 
-        <div class="field col-4">
-          <b>Karyotypic Sex: </b> {{ phenopacket?.subject?.karyotypicSex }}
+          <div class="field col-4">
+            <b>Karyotypic Sex: </b> {{ phenopacket?.subject?.karyotypicSex }}
+          </div>
+          <div class="field col-4"><b>Gender: </b> {{ phenopacket?.subject?.gender }}</div>
         </div>
-        <div class="field col-4"><b>Gender: </b> {{ phenopacket?.subject?.gender }}</div>
-
+      </p-fieldset>
         <br />
-        <div class="field col-12">
-          <p-fieldset legend="Vital Status">
+      <p-fieldset legend="Vital Status">
             <div class="grid">
               <div class="field col-6">
                 <b>Status: </b> {{ phenopacket?.subject?.vitalStatus?.status?.toString() }}
@@ -45,28 +44,21 @@
               <div class="field col-6">
                 <b>Cause of death: </b>
                 <a
-                  *ngIf="phenopacket?.subject?.vitalStatus?.causeOfDeath"
-                  [href]="phenopacket?.subject?.vitalStatus?.causeOfDeath?.termUrl"
-                  target="_blank"
-                  >[{{ phenopacket?.subject?.vitalStatus?.causeOfDeath?.id }}]</a
+                        *ngIf="phenopacket?.subject?.vitalStatus?.causeOfDeath"
+                        [href]="phenopacket?.subject?.vitalStatus?.causeOfDeath?.termUrl"
+                        target="_blank"
+                >[{{ phenopacket?.subject?.vitalStatus?.causeOfDeath?.id }}]</a
                 >
                 {{ phenopacket?.subject?.vitalStatus?.causeOfDeath?.label }}
               </div>
               <div class="field col-6">
-                <b>Survival time (days): </b> {{ phenopacket?.subject?.vitalStatus?.survivalTimeInDays }}
+                <b>Survival time (days): </b>  {{ phenopacket?.subject?.vitalStatus?.survivalTimeInDays }}
               </div>
             </div>
           </p-fieldset>
-        </div>
-      </div>
-    </p-card>
   </div>
-
   <br />
-  <!-- <br /> -->
-
   <div class="field col-12">
-    <!--  -->
     <p-accordion class="w-full">
       <p-accordionTab>
         <ng-template pTemplate="header">
@@ -87,7 +79,7 @@
           ></app-phenotypic-feature>
         </ng-template>
       </p-accordionTab>
-      <p-accordionTab>
+      <p-accordionTab disabled="true">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <mat-icon class="tab-icon mr-2">square_foot</mat-icon>
@@ -106,7 +98,7 @@
           ></app-measurement>
         </ng-template>
       </p-accordionTab>
-      <p-accordionTab>
+      <p-accordionTab disabled="true">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <mat-icon class="tab-icon mr-2">biotech</mat-icon>

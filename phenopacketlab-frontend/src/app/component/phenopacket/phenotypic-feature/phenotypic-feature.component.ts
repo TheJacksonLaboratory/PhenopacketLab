@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -12,17 +11,9 @@ import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.
 @Component({
     selector: 'app-phenotypic-feature',
     templateUrl: './phenotypic-feature.component.html',
-    styleUrls: ['./phenotypic-feature.component.scss'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-            transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
+    styleUrls: ['./phenotypic-feature.component.scss']
 })
-export class PhenotypicFeatureComponent implements OnInit, OnChanges {
+export class PhenotypicFeatureComponent implements OnInit {
 
     @Input()
     phenotypicFeatures: PhenotypicFeature[];
@@ -36,9 +27,6 @@ export class PhenotypicFeatureComponent implements OnInit, OnChanges {
     constructor(private phenopacketService: PhenopacketStepperService,
         public dialogService: DialogService,
         private messageService: MessageService, private confirmationService: ConfirmationService) {
-    }
-    ngOnChanges(changes: SimpleChanges): void {
-        this.onPhenotypicFeaturesChanged.emit(this.phenotypicFeatures);
     }
 
     ngOnInit() {

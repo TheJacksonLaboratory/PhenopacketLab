@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { AuthService, User } from "@auth0/auth0-angular";
+import { forkJoin, Subscription } from 'rxjs';
+import { first, take } from "rxjs/operators";
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { Profile, ProfileSelection } from 'src/app/models/profile';
+import { ProfileSelection } from 'src/app/models/profile';
 import { DownloadService } from 'src/app/services/download-service';
 import { MetaData } from '../../models/metadata';
 import { MetadataService } from 'src/app/services/metadata.service';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ValidationResultsDialogComponent } from '../shared/validation-results-dialog/validation-results-dialog.component';
+import { DialogService } from 'primeng/dynamicdialog';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
@@ -18,6 +19,8 @@ import { PhenopacketService } from 'src/app/services/phenopacket.service';
   providers: [DialogService]
 })
 export class ValidateStepComponent implements OnInit, OnDestroy {
+
+  user: User;
 
   phenopacket: Phenopacket;
 
@@ -32,22 +35,17 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   schemaVersion = '2.0';
   // whether the inplace createBy and SubmittedBy are active
   active = true;
-
-  phenopacketListSubscription: Subscription;
-
   profileSelectionSubscription: Subscription;
   profileSelection: ProfileSelection;
-
   metadataSubscription: Subscription;
 
-  ref: DynamicDialogRef;
-
   constructor(public phenopacketStepperService: PhenopacketStepperService,
-    private phenopacketService: PhenopacketService,
-    private downloadService: DownloadService,
-    private metadataService: MetadataService,
-    private dialogService: DialogService,
-    private router: Router) {
+              private phenopacketService: PhenopacketService,
+              private downloadService: DownloadService,
+              private metadataService: MetadataService,
+              private dialogService: DialogService,
+              private authService: AuthService,
+              private router: Router) {
 
   }
 
@@ -57,24 +55,17 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     if (this.phenopacket === undefined) {
       // navigate to first page of creator as phenopacket is not created
       this.router.navigate(['creator/individual']);
+      return;
     }
-    // initialize metadata
-    this.initializeMetadata();
-    // Retrieve all missing resource prefixes in phenopacket metadata
-    this.metadataSubscription = this.metadataService.getPrefixResourcesForPhenopacket(
-      this.getPhenopacketJSON(this.phenopacket)).subscribe(prefixResources => {
-        let resources;
-        if (prefixResources?.length > 0) {
-          resources = [];
-        }
-        for (const item of prefixResources) {
-          resources.push(item.resource);
-        }
-        this.initializeMetadata();
-        if (this.phenopacket && this.phenopacket.metaData) {
-          this.phenopacket.metaData.resources = resources;
-        }
-      });
+
+    forkJoin({
+      user: this.authService.user$.pipe(first()),
+      resources: this.metadataService.getPrefixResourcesForPhenopacket(this.downloadService.saveAsJson(this.phenopacket, false))
+    }).subscribe((results) => {
+      this.user = results.user;
+      this.initializeMetadata(results.user, results.resources);
+    });
+
     this.profileSelectionSubscription = this.phenopacketStepperService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
@@ -87,97 +78,33 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     if (this.metadataSubscription) {
       this.metadataSubscription.unsubscribe();
     }
-    if (this.ref) {
-      this.ref.close();
-    }
   }
 
-  initializeMetadata() {
+  initializeMetadata(user, prefixResources) {
     if (this.phenopacket.metaData === undefined) {
       this.phenopacket.metaData = new MetaData();
     }
-    // initialize metadata
-    this.phenopacket.metaData.createdBy = '';
-    this.phenopacket.metaData.submittedBy = '';
-    this.phenopacket.metaData.resources = undefined;
-    // create the timestamp created date
+    let createdBy, submittedBy;
+    if (user) {
+      createdBy = submittedBy = this.orcidFromSub(user);
+    } else {
+      createdBy =  submittedBy =  'Anonymous';
+    }
     this.created = new Date().toISOString();
+    this.phenopacket.metaData.createdBy = createdBy;
+    this.phenopacket.metaData.submittedBy = submittedBy;
     this.phenopacket.metaData.created = this.created;
+    this.phenopacket.metaData.externalReferences = [];
+    this.phenopacket.metaData.resources = prefixResources.map((item) => item.resource);
     this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
   }
 
-  complete() {
-    this.phenopacketStepperService.validatePhenopacket(this.getPhenopacketJSON(this.phenopacket)).subscribe(validationResults => {
-      this.ref = this.dialogService.open(ValidationResultsDialogComponent, {
-        header: 'Validation results',
-        width: '50%',
-        contentStyle: { overflow: 'auto' },
-        baseZIndex: 10000,
-        resizable: true,
-        data: {
-          validationResults: validationResults,
-          phenopacket: this.phenopacket
-        }
-      });
-      this.ref.onClose.subscribe(validationResult => {
-        if (validationResult) {
-          const isValid = validationResult.isValid;
-          if (isValid) {
-            // create the timestamp created date
-            this.created = new Date().toISOString();
-
-            // set metadata
-            if (this.createdBySuffix !== undefined) {
-              this.createdByPrefix = 'ORCiD:';
-            } else {
-              this.createdByPrefix = 'Anonymous';
-            }
-            if (this.submittedBySuffix !== undefined) {
-              this.submittedByPrefix = 'ORCiD:';
-            } else {
-              this.submittedByPrefix = 'Anonymous';
-            }
-            this.phenopacket.metaData.createdBy = `${this.createdByPrefix} ${this.createdBySuffix}`;
-            this.phenopacket.metaData.submittedBy = `${this.submittedByPrefix} ${this.submittedBySuffix}`;
-            this.phenopacket.metaData.created = this.created;
-            this.phenopacket.metaData.externalReferences = [];
-            this.phenopacket.metaData.phenopacketSchemaVersion = this.schemaVersion;
-
-            this.active = false;
-            // add to phenopacketlist
-            this.phenopacketService.addPhenopacket(this.phenopacket);
-            // reset phenopacket
-            this.phenopacketStepperService.phenopacket = undefined;
-
-            this.router.navigate(['phenopackets']);
-          }
-        }
-      });
-    });
-
-  }
-
-  prevPage() {
-    this.phenopacketStepperService.phenopacket = this.phenopacket;
-    // check profile and navigate to the corresponding step
-    for (const profile of Profile.profileSelectionOptions) {
-      if (this.profileSelection === ProfileSelection.ALL_AVAILABLE && profile.value === ProfileSelection.ALL_AVAILABLE) {
-        this.router.navigate([`creator/${profile.path}/files`]);
-        return;
-      } else if (this.profileSelection === ProfileSelection.RARE_DISEASE && profile.value === ProfileSelection.RARE_DISEASE) {
-        this.router.navigate([`creator/${profile.path}/interpretations`]);
-        return;
-      }
-      // Possible other profiles to come
+  orcidFromSub(user) {
+    const userPieces = user.sub.split('|');
+    if (userPieces.length > 2) {
+      return `${userPieces[1]}:${userPieces[2]}`;
+    } else {
+      return '';
     }
-  }
-
-  /**
-   *
-   * @param phenopacket
-   * @returns a phenopacket as String
-   */
-  getPhenopacketJSON(phenopacket: Phenopacket): string {
-    return this.downloadService.saveAsJson(phenopacket, false);
   }
 }

@@ -17,7 +17,7 @@
   </div>
   <p-tabView id="closableTabView" (onClose)="closeTab($event.index)" [(activeIndex)]="tabIndex" styleClass="phenopacket-list-tabs">
     <p-tabPanel header="Phenopackets" class="first-panel">
-      <p-table [value]="phenopacketList" selectionMode="single" (onRowSelect)="openTab($event.data)">
+      <p-table [value]="phenopacketList" selectionMode="single" (onRowSelect)="openTab($event.data)" [loading]="isLoading" [showLoader]="false">
         <ng-template pTemplate="header">
           <tr>
             <th>Identifier</th>
@@ -42,6 +42,26 @@
             </td>
           </tr>
         </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+          </tr>
+          <tr>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+          </tr>
+          <tr>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+            <td><p-skeleton></p-skeleton></td>
+          </tr>
+        </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
             <td [attr.colspan]="5">
@@ -58,7 +78,7 @@
     >
       <div class="grid p-fluid">
         <div class="field col-12">
-          <app-phenopacket [phenopacketId]="phenopacket?.id"></app-phenopacket>
+          <app-phenopacket [phenopacketId]="phenopacket?.id" [user]="user"></app-phenopacket>
         </div>
       </div>
     </p-tabPanel>

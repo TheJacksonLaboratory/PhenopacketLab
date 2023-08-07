@@ -46,26 +46,28 @@ export class Resource extends Convert {
     iriPrefix: string;
 
     static create(obj: any): Resource {
-        const resource = new Resource();
-        if (obj['id']) {
-            resource.id = obj['id'];
+        if(obj) {
+            const resource = new Resource();
+            if (obj['id']) {
+                resource.id = obj['id'];
+            }
+            if (obj['name']) {
+                resource.name = obj['name'];
+            }
+            if (obj['url']) {
+                resource.url = obj['url'];
+            }
+            if (obj['version']) {
+                resource.version = obj['version'];
+            }
+            if (obj['namespacePrefix']) {
+                resource.namespacePrefix = obj['namespacePrefix'];
+            }   
+            if (obj['iriPrefix']) {
+                resource.iriPrefix = obj['iriPrefix'];
+            }
+            return resource;
         }
-        if (obj['name']) {
-            resource.name = obj['name'];
-        }
-        if (obj['url']) {
-            resource.url = obj['url'];
-        }
-        if (obj['version']) {
-            resource.version = obj['version'];
-        }
-        if (obj['namespacePrefix']) {
-            resource.namespacePrefix = obj['namespacePrefix'];
-        }
-        if (obj['iriPrefix']) {
-            resource.iriPrefix = obj['iriPrefix'];
-        }
-        return resource;
     }
 }
 export class Update extends Convert {

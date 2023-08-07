@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "${api.version}/test/phenopacket")
-public class PhenopacketController {
+public class PhenopacketTestController {
 
     @GetMapping(value = "/aml", headers = "Accept=application/json")
     public ResponseEntity<Phenopacket> aml() {

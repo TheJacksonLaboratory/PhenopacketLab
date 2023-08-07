@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Interpretation } from 'src/app/models/interpretation';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -13,15 +12,7 @@ import { ProfileSelection } from 'src/app/models/profile';
 @Component({
     selector: 'app-interpretation',
     templateUrl: './interpretation.component.html',
-    styleUrls: ['./interpretation.component.scss'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-            transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
+    styleUrls: ['./interpretation.component.scss']
 })
 export class InterpretationComponent implements OnInit {
 

@@ -1,4 +1,3 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OntologyClass } from 'src/app/models/base';
 import { BioSample } from 'src/app/models/biosample';
@@ -8,15 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-biosample',
   templateUrl: './biosample.component.html',
-  styleUrls: ['./biosample.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed, void', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-      transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  styleUrls: ['./biosample.component.scss']
 })
 export class BiosampleComponent implements OnInit {
 

@@ -5,7 +5,7 @@
     corresponding metadata created.
   </h3>
 
-  <div class="grid">
+  <div class="grid" *ngIf="phenopacket?.metaData">
     <div class="field col-12"><b>Created:</b> {{ created }}</div>
     <div class="field col-12">
       <b>Phenopacket schema version:</b> {{ schemaVersion }}
@@ -22,7 +22,7 @@
           [active]="false"
         >
           <ng-template pTemplate="display">
-            {{ createdByPrefix }}{{ createdBySuffix }}
+            {{ phenopacket.metaData.createdBy }}
             <i class="pi pi-user-edit"></i>
           </ng-template>
           <ng-template pTemplate="content">
@@ -36,7 +36,7 @@
             <!-- <div style="text-align: center;">{{ createdByPrefix }}</div> -->
             <p-inputMask
               mask="9999-9999-9999-999*"
-              [(ngModel)]="createdBySuffix"
+              [(ngModel)]="phenopacket.metaData.createdBy"
               placeholder="999-9999-9999-999*"
               pTooltip="ORCiD"
               tooltipPosition="bottom"
@@ -57,7 +57,7 @@
           [active]="false"
         >
           <ng-template pTemplate="display">
-            {{ submittedByPrefix }}{{ submittedBySuffix }}
+             {{ phenopacket.metaData.submittedBy }}
             <i class="pi pi-user-edit"></i>
           </ng-template>
           <ng-template pTemplate="content">
@@ -71,7 +71,7 @@
             <!-- {{ submittedByPrefix }} -->
             <p-inputMask
               mask="9999-9999-9999-999*"
-              [(ngModel)]="submittedBySuffix"
+              [(ngModel)]="phenopacket.metaData.submittedBy"
               placeholder="999-9999-9999-999*"
               pTooltip="ORCiD"
               tooltipPosition="bottom"
@@ -172,16 +172,6 @@
           </tr>
         </ng-template>
       </p-table>
-    </div>
-
-    <div class="field col-12">
-      <div class="flex justify-content-start flex-wrap">
-        <p-button
-          label="Complete"
-          (onClick)="complete()"
-          icon="pi pi-check"
-        ></p-button>
-      </div>
     </div>
   </div>
 </div>

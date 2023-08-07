@@ -36,6 +36,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { SpinnerModule } from 'primeng/spinner';
 import { ChipModule } from 'primeng/chip';
+import { SkeletonModule } from 'primeng/skeleton';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 
 
@@ -78,7 +79,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     InputMaskModule,
     AutoCompleteModule,
     ChipModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    SkeletonModule
   ],
   exports: [
     ButtonModule,
@@ -116,7 +118,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     InputMaskModule,
     AutoCompleteModule,
     ChipModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    SkeletonModule
   ],
   providers: [MessageService, ConfirmationService]
 })
