@@ -85,9 +85,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
 
-  unitSubscription: Subscription;
-  unitNodes: OntologyTreeNode[];
-
   // Dose Intervals table
   doseIntervalVisible = false;
   clonedDoseIntervals: { [s: string]: DoseInterval } = {};
@@ -154,11 +151,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.scheduleFrequencyNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
-    this.unitSubscription = this.constantsService.getUnits().subscribe(nodes => {
-      if (nodes) {
-        this.unitNodes = <OntologyTreeNode[]>nodes.children;
-      }
-    });
     this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
       if (nodes) {
         this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
@@ -194,9 +186,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
     if (this.bodySiteSubscription) {
       this.bodySiteSubscription.unsubscribe();
-    }
-    if (this.unitSubscription) {
-      this.unitSubscription.unsubscribe();
     }
   }
 
@@ -411,39 +400,16 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (this.medicalAction?.treatment) {
       if (eventObj) {
         const id = eventObj.node.key.split(':')[1];
-        const schedule = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
-        doseInterval.scheduleFrequency = schedule;
+        doseInterval.scheduleFrequency = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
       } else {
         doseInterval.scheduleFrequency = undefined;
       }
     }
   }
 
-  updateUnit(eventObj, doseInterval: DoseInterval) {
-    if (this.medicalAction?.treatment) {
-      if (eventObj) {
-        const id = eventObj.node.key.split(':')[1];
-        const unit = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
-        if (doseInterval.quantity === undefined) {
-          doseInterval.quantity = new Quantity();
-        }
-        doseInterval.quantity.unit = unit;
-      } else {
-        doseInterval.quantity.unit = undefined;
-      }
-    }
-  }
-
-  updateValue(value, doseInterval: DoseInterval) {
-    if (this.medicalAction?.treatment) {
-      if (value) {
-        if (doseInterval.quantity === undefined) {
-          doseInterval.quantity = new Quantity();
-        }
-        doseInterval.quantity.value = value;
-      } else {
-        doseInterval.quantity.value = undefined;
-      }
+  updateQuantity(quantity: Quantity, doseInterval: DoseInterval) {
+    if (doseInterval) {
+      doseInterval.quantity = quantity;
     }
   }
 
