@@ -4,9 +4,9 @@ import { Interpretation } from 'src/app/models/interpretation';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Phenopacket } from 'src/app/models/phenopacket';
-import { InterpretationDialogComponent } from '../../shared/dialog/interpretation-dialog/interpretation-dialog.component';
+import { InterpretationDialogComponent } from '../../dialog/interpretation-dialog/interpretation-dialog.component';
 import { DialogMode } from 'src/app/models/base';
-import { Utils } from '../../shared/utils';
+import { Utils } from '../../utils';
 import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({

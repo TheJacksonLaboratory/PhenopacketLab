@@ -33,6 +33,20 @@ import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component'
 import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/medical-action-dialog.component';
 import { QuantityComponent } from './quantity/quantity.component';
 import { ReferenceRangeComponent } from './quantity/reference-range/reference-range.component';
+import { MeasurementComponent } from './table/measurement/measurement.component';
+import { MeasurementDetailComponent } from './table/measurement/measurement-detail/measurement-detail.component';
+import { DiseaseComponent } from './table/disease/disease.component';
+import { DiseaseDetailComponent } from './table/disease/disease-detail/disease-detail.component';
+import { MedicalActionComponent } from './table/medical-action/medical-action.component';
+import { MedicalActionDetailComponent } from './table/medical-action/medical-action-detail/medical-action-detail.component';
+import { PhenotypicFeatureComponent } from './table/phenotypic-feature/phenotypic-feature.component';
+import { PhenotypicDetailComponent } from './table/phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
+import { FileComponent } from './table/file/file.component';
+import { FileDetailComponent } from './table/file/file-detail/file-detail.component';
+import { InterpretationComponent } from './table/interpretation/interpretation.component';
+import { InterpretationDetailComponent } from './table/interpretation/interpretation-detail/interpretation-detail.component';
+import { BiosampleComponent } from './table/biosample/biosample.component';
+import { BiosampleDetailComponent } from './table/biosample/biosample-detail/biosample-detail.component';
 
 
 @NgModule({
@@ -71,7 +85,21 @@ import { ReferenceRangeComponent } from './quantity/reference-range/reference-ra
     TextMiningComponent,
     FileDialogComponent,
     QuantityComponent,
-    ReferenceRangeComponent
+    ReferenceRangeComponent,
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    DiseaseComponent,
+    DiseaseDetailComponent,
+    MedicalActionComponent,
+    MedicalActionDetailComponent,
+    PhenotypicFeatureComponent,
+    PhenotypicDetailComponent,
+    FileComponent,
+    FileDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent
   ],
   exports: [
     SpinnerDialogComponent,
@@ -103,7 +131,21 @@ import { ReferenceRangeComponent } from './quantity/reference-range/reference-ra
     TextMiningComponent,
     FileDialogComponent,
     QuantityComponent,
-    ReferenceRangeComponent
+    ReferenceRangeComponent,
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    DiseaseComponent,
+    DiseaseDetailComponent,
+    MedicalActionComponent,
+    MedicalActionDetailComponent,
+    PhenotypicFeatureComponent,
+    PhenotypicDetailComponent,
+    FileComponent,
+    FileDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent
   ]
 })
 export class SharedModule { }

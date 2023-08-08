@@ -4,9 +4,9 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { Disease } from 'src/app/models/disease';
-import { DiseaseDialogComponent } from '../../shared/dialog/disease-dialog/disease-dialog.component';
-import { DiseaseSearchDialogComponent } from '../../shared/dialog/disease-search-dialog/disease-search-dialog.component';
-import { Utils } from '../../shared/utils';
+import { DiseaseDialogComponent } from '../../dialog/disease-dialog/disease-dialog.component';
+import { DiseaseSearchDialogComponent } from '../../dialog/disease-search-dialog/disease-search-dialog.component';
+import { Utils } from '../../utils';
 import { ProfileSelection } from 'src/app/models/profile';
 
 @Component({

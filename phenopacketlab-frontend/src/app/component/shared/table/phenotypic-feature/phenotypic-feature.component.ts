@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PhenotypicFeatureDialogComponent } from '../../shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
-import { PhenotypicFeatureSearchDialogComponent } from '../../shared/dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
+import { PhenotypicFeatureDialogComponent } from '../../dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
+import { PhenotypicFeatureSearchDialogComponent } from '../../dialog/phenotypic-feature-search-dialog/phenotypic-feature-search-dialog.component';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
 

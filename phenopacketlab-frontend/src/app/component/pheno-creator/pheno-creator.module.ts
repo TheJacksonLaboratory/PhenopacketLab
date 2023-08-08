@@ -43,7 +43,6 @@ import { MedicalActionStepComponent } from './medical-action-step.component';
 import { FileStepComponent } from './file-step.component';
 import { ValidateStepComponent } from './validate-step.component';
 import { SharedModule } from '../shared/shared.module';
-import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 import { InterpretationStepComponent } from './interpretation-step.component';
 import { WordDialogComponent } from '../shared/text-mining/word-dialog.component';
 import { PhenoCreatorComponent } from './pheno-creator.component';
@@ -66,7 +65,6 @@ import { PhenoCreatorComponent } from './pheno-creator.component';
         CalendarModule,
         InputNumberModule,
         AccordionModule,
-        PhenopacketModule,
         SharedModule,
         InputTextareaModule,
         RadioButtonModule,

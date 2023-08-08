@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DialogService } from 'primeng/dynamicdialog';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../shared.module';
 import { PhenotypicFeatureComponent } from './phenotypic-feature.component';
 
 

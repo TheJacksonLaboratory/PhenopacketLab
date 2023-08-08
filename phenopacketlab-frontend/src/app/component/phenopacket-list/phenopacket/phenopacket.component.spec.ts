@@ -6,7 +6,7 @@ import { DividerModule } from 'primeng/divider';
 
 import { PhenotypeSearchService } from 'src/app/services/phenotype-search.service';
 import { PhenopacketComponent } from './phenopacket.component';
-import { PhenopacketModule } from './phenopacket.module';
+import { PhenopacketListModule } from '../phenopacket-list.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
@@ -20,7 +20,7 @@ describe('PhenopacketComponent', () => {
       imports: [
         NoopAnimationsModule,
         DividerModule,
-        PhenopacketModule,
+        PhenopacketListModule,
         HttpClientModule,
         RouterTestingModule,
         HttpClientTestingModule

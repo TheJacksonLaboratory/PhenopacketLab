@@ -1,20 +1,20 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
-import { BiosampleComponent } from './biosample.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogService } from 'primeng/dynamicdialog';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../shared.module';
 
+import { DiseaseComponent } from './disease.component';
 
-describe('BiosampleComponent', () => {
-  let component: BiosampleComponent;
-  let fixture: ComponentFixture<BiosampleComponent>;
+describe('DiseaseComponent', () => {
+  let component: DiseaseComponent;
+  let fixture: ComponentFixture<DiseaseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BiosampleComponent ],
+      declarations: [ DiseaseComponent ],
       imports: [
-        BrowserModule,
+        NoopAnimationsModule,
         HttpClientModule,
         SharedModule
       ],
@@ -26,7 +26,7 @@ describe('BiosampleComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BiosampleComponent);
+    fixture = TestBed.createComponent(DiseaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

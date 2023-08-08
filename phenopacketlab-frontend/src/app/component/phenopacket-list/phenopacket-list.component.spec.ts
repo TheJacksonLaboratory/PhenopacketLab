@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthConfig, AuthModule } from "@auth0/auth0-angular";
-import { PhenopacketModule } from '../phenopacket/phenopacket.module';
+import { PhenopacketListModule } from './phenopacket-list.module';
 
 import { PhenopacketListComponent } from './phenopacket-list.component';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -24,7 +24,7 @@ describe('PhenopacketListComponent', () => {
       declarations: [ PhenopacketListComponent ],
       imports: [
         NoopAnimationsModule,
-        PhenopacketModule,
+        PhenopacketListModule,
         FileUploadModule,
         PanelModule,
         HttpClientTestingModule,

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { PhenopacketModule } from '../../phenopacket.module';
+import { PhenopacketModule } from '../../../../phenopacket-list/phenopacket-list.module';
 import { BiosampleDetailComponent } from './biosample-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';

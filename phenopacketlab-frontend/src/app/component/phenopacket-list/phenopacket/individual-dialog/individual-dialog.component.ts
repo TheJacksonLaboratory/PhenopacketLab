@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Individual } from 'src/app/models/individual';
-import { Utils } from '../../shared/utils';
+import { Utils } from '../../../shared/utils';
 
 @Component({
   selector: 'app-individual-dialog',

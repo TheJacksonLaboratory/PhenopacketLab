@@ -4,8 +4,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { DialogMode, File } from 'src/app/models/base';
-import { FileDialogComponent } from '../../shared/dialog/file-dialog/file-dialog.component';
 import { Phenopacket } from 'src/app/models/phenopacket';
+import { FileDialogComponent } from '../../dialog/file-dialog/file-dialog.component';
 
 @Component({
   selector: 'app-file',

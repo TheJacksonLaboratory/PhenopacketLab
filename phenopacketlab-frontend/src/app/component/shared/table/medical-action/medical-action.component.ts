@@ -6,7 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { Disease } from 'src/app/models/disease';
 import { Procedure } from 'src/app/models/base';
-import { MedicalActionDialogComponent } from '../../shared/dialog/medical-action-dialog/medical-action-dialog.component';
+import { MedicalActionDialogComponent } from '../../dialog/medical-action-dialog/medical-action-dialog.component';
 
 @Component({
     selector: 'app-medical-action',

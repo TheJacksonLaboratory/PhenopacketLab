@@ -15,7 +15,7 @@ import { IndividualDialogComponent } from './individual-dialog/individual-dialog
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Interpretation } from 'src/app/models/interpretation';
 import { EMPTY, Subscription } from 'rxjs';
-import { Utils } from '../shared/utils';
+import { Utils } from '../../shared/utils';
 import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
