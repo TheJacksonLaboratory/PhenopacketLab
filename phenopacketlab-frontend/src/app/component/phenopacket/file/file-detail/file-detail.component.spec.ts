@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FileDetailComponent } from './file-detail.component';
+import { PanelModule } from 'primeng/panel';
 
 describe('FileDetailComponent', () => {
   let component: FileDetailComponent;
@@ -12,6 +13,7 @@ describe('FileDetailComponent', () => {
       declarations: [ FileDetailComponent ],
       imports: [
         NoopAnimationsModule,
+        PanelModule
       ]
     })
     .compileComponents();

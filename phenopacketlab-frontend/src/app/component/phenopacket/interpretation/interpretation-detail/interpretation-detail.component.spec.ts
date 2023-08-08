@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InterpretationDetailComponent } from './interpretation-detail.component';
+import { ToastModule } from 'primeng/toast';
+import { PanelModule } from 'primeng/panel';
+import { TableModule } from 'primeng/table';
 
 
 describe('InterpretationDetailComponent', () => {
@@ -14,8 +17,12 @@ describe('InterpretationDetailComponent', () => {
       declarations: [ InterpretationDetailComponent ],
       imports: [
         NoopAnimationsModule,
+        ToastModule,
+        PanelModule,
+        TableModule
       ],
       providers: [
+        ConfirmationService,
         { provide: DialogService, useValue: {} },
         { provide: MessageService, useValue: {} }
       ]

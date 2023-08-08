@@ -4,6 +4,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MedicalActionDialogComponent } from './medical-action-dialog.component';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { DropdownModule } from 'primeng/dropdown';
+import { PanelModule } from 'primeng/panel';
+import { SharedModule } from '../../shared.module';
 
 describe('MedicalActionDialogComponent', () => {
   let component: MedicalActionDialogComponent;
@@ -15,6 +18,9 @@ describe('MedicalActionDialogComponent', () => {
       imports: [
         NoopAnimationsModule,
         HttpClientModule,
+        DropdownModule,
+        PanelModule,
+        SharedModule
       ],
       providers: [
         MessageService,

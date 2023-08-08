@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ValidationResultsDialogComponent } from './validation-results-dialog.component';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 describe('ValidationResultsDialogComponent', () => {
   let component: ValidationResultsDialogComponent;
@@ -12,7 +13,8 @@ describe('ValidationResultsDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ValidationResultsDialogComponent ],
       imports: [
-        HttpClientModule
+        HttpClientModule,
+        ButtonModule
       ],
       providers: [
         MessageService,

@@ -5,6 +5,11 @@ import { AuthConfig, AuthModule } from "@auth0/auth0-angular";
 import { PhenopacketModule } from '../phenopacket/phenopacket.module';
 
 import { PhenopacketListComponent } from './phenopacket-list.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { PanelModule } from 'primeng/panel';
+import { TabViewModule } from 'primeng/tabview';
+import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('PhenopacketListComponent', () => {
   let component: PhenopacketListComponent;
@@ -20,7 +25,12 @@ describe('PhenopacketListComponent', () => {
       imports: [
         NoopAnimationsModule,
         PhenopacketModule,
+        FileUploadModule,
+        PanelModule,
         HttpClientTestingModule,
+        TabViewModule,
+        TableModule,
+        ConfirmDialogModule,
         AuthModule.forRoot(authConfig)
       ]
     })

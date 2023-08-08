@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { InterpretationComponent } from './interpretation.component';
+import { ToastModule } from 'primeng/toast';
 
 describe('InterpretationComponent', () => {
   let component: InterpretationComponent;
@@ -13,7 +14,8 @@ describe('InterpretationComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ InterpretationComponent ],
       imports: [
-        FormsModule
+        FormsModule,
+        ToastModule
       ],
       providers: [
         { provide: DialogService, useValue: {} },
