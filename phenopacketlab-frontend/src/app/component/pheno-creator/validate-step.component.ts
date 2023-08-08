@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, User } from "@auth0/auth0-angular";
 import { forkJoin, Subscription } from 'rxjs';
-import { first, take } from "rxjs/operators";
+import { first } from "rxjs/operators";
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
 import { DownloadService } from 'src/app/services/download-service';
@@ -10,7 +10,6 @@ import { MetaData } from '../../models/metadata';
 import { MetadataService } from 'src/app/services/metadata.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
-import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
   selector: 'app-validate-step',
@@ -39,13 +38,14 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
   profileSelection: ProfileSelection;
   metadataSubscription: Subscription;
 
+  isPrivateInfoWarnSelected: boolean;
+  privateInfoSubscription: Subscription;
+
   constructor(public phenopacketStepperService: PhenopacketStepperService,
-              private phenopacketService: PhenopacketService,
-              private downloadService: DownloadService,
-              private metadataService: MetadataService,
-              private dialogService: DialogService,
-              private authService: AuthService,
-              private router: Router) {
+    private downloadService: DownloadService,
+    private metadataService: MetadataService,
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -69,6 +69,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     this.profileSelectionSubscription = this.phenopacketStepperService.getProfileSelection().subscribe(profile => {
       this.profileSelection = profile;
     });
+    this.privateInfoSubscription = this.phenopacketStepperService.getIsPrivateInfoWarnSelected().subscribe(isPrivateInfoWarnSelected => {
+      this.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
+    });
   }
 
   ngOnDestroy(): void {
@@ -77,6 +80,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     }
     if (this.metadataSubscription) {
       this.metadataSubscription.unsubscribe();
+    }
+    if (this.privateInfoSubscription) {
+      this.privateInfoSubscription.unsubscribe();
     }
   }
 
@@ -88,7 +94,7 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     if (user) {
       createdBy = submittedBy = this.orcidFromSub(user);
     } else {
-      createdBy =  submittedBy =  'Anonymous';
+      createdBy = submittedBy = 'Anonymous';
     }
     this.created = new Date().toISOString();
     this.phenopacket.metaData.createdBy = createdBy;
@@ -106,5 +112,9 @@ export class ValidateStepComponent implements OnInit, OnDestroy {
     } else {
       return '';
     }
+  }
+
+  updateIsPrivateInfoWarnSelected() {
+    this.phenopacketStepperService.setPrivateInfoWarnSelected(this.isPrivateInfoWarnSelected);
   }
 }

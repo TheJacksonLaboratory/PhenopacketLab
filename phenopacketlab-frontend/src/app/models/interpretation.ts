@@ -1,8 +1,6 @@
 import { Convert, OntologyClass } from './base';
 
 export class Interpretation extends Convert {
-    // key and isPrivateInfoWarnSelected parameter not part of the phenopacket schema, used for primeng table
-    isPrivateInfoWarnSelected?: boolean;
     key?: number;
 
     id: string;

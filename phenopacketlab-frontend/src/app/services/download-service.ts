@@ -56,8 +56,7 @@ export class DownloadService {
         if (key === 'validated' || key === 'isProband' || key === 'key'
             || key === 'modifierNodes' || key === 'evidenceNodes'
             || key === 'termUrl' || key === 'textMiningState'
-            || key === 'adverseEventNodes' || key === 'isPrivateInfoWarnSelected'
-            || key === 'dbId') {
+            || key === 'adverseEventNodes' || key === 'dbId') {
             return undefined;
         }
         return value;

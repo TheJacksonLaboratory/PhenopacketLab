@@ -25,8 +25,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
     @Input()
     submitted: boolean;
 
-    isPrivateInfoWarnSelected: boolean;
-
     timeOfLastEncounter: TimeElement;
     status: Status;
     // cause of death
@@ -99,8 +97,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
                 this.selectedCauseOfDeath = this.subject.vitalStatus.causeOfDeath;
                 this.causeOfDeathItems = [this.selectedCauseOfDeath];
             }
-            // set isPrivateInfoWarnSelected
-            this.isPrivateInfoWarnSelected = this.subject.isPrivateInfoWarnSelected;
         }
     }
     ngOnDestroy(): void {
@@ -116,13 +112,6 @@ export class IndividualEditComponent implements OnInit, OnDestroy {
             this.subject.timeAtLastEncounter = timeOfLastEncounter;
             this.subjectChange.emit(this.subject);
         }
-    }
-
-    updateIsPrivateInfoWarnSelected() {
-        if (this.subject) {
-            this.subject.isPrivateInfoWarnSelected = this.isPrivateInfoWarnSelected;
-        }
-        this.subjectChange.emit(this.subject);
     }
 
     updateSex(sex: ConstantObject) {
