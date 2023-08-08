@@ -1,23 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MedicalActionDetailComponent } from '../../medical-action/medical-action-detail/medical-action-detail.component';
+import { MeasurementDetailComponent } from './measurement-detail.component';
+import { PanelModule } from 'primeng/panel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Measurement } from 'src/app/models/measurement';
 
 
-describe('MedicalActionDetailComponent', () => {
-  let component: MedicalActionDetailComponent;
-  let fixture: ComponentFixture<MedicalActionDetailComponent>;
+describe('MeasurementDetailComponent', () => {
+  let component: MeasurementDetailComponent;
+  let fixture: ComponentFixture<MeasurementDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MedicalActionDetailComponent ],
+      declarations: [ MeasurementDetailComponent ],
       imports: [
+        BrowserAnimationsModule,
+        PanelModule
       ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MedicalActionDetailComponent);
+    fixture = TestBed.createComponent(MeasurementDetailComponent);
     component = fixture.componentInstance;
+    component.measurement = new Measurement();
     fixture.detectChanges();
   });
 
