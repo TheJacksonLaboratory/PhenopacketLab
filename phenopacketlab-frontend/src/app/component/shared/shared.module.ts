@@ -31,6 +31,8 @@ import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.c
 import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
 import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
 import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/medical-action-dialog.component';
+import { QuantityComponent } from './quantity/quantity.component';
+import { ReferenceRangeComponent } from './quantity/reference-range/reference-range.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
-    FileDialogComponent
+    FileDialogComponent,
+    QuantityComponent,
+    ReferenceRangeComponent
   ],
   exports: [
     SpinnerDialogComponent,
@@ -97,7 +101,9 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
-    FileDialogComponent
+    FileDialogComponent,
+    QuantityComponent,
+    ReferenceRangeComponent
   ]
 })
 export class SharedModule { }
