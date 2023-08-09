@@ -37,6 +37,7 @@ export const environment = {
   ROUTE_OF_ADMINISTRATION_URL: `${API_URL}/constants/tree-route-administration`,
   SCHEDULE_FREQUENCY_URL: `${API_URL}/constants/tree-schedule-frequency`,
   ADVERSE_EVENT_URL: `${API_URL}/constants/tree-adverse-event`,
+  HOMO_SAPIENS_URL: `${API_URL}/constants/homosapiens`,
   CHEMICAL_ENTITY_URL: `${API_URL}/chemical-entities`,
   CHEMICAL_ENTITY_SEARCH_URL: `${API_URL}/chemical-entities/search`,
   USER_URL: `${API_URL}/user`,

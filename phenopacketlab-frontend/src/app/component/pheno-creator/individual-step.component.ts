@@ -7,6 +7,9 @@ import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
+import { ConstantsService } from 'src/app/services/constants.service';
+import { OntologyClass } from 'src/app/models/base';
+import { Utils } from '../shared/utils';
 
 @Component({
     selector: 'app-individual-step',
@@ -24,19 +27,29 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
 
     privateInfoWarnSelectedSubscription: Subscription;
+    taxonomySubscription: Subscription;
 
     summary: string;
 
-    constructor(public phenopacketService: PhenopacketStepperService) {
+    constructor(public phenopacketService: PhenopacketStepperService,
+        private constantsService: ConstantsService) {
 
     }
 
     ngOnInit() {
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
-            this.phenopacket = new Phenopacket();
-            this.phenopacket.subject = new Individual();
-            this.phenopacket.metaData = new MetaData();
+            // get taxonomy and initialize phenopacket
+            this.taxonomySubscription = this.constantsService.getHomoSapiensTaxonomy().subscribe(taxon => {
+                if (taxon) {
+                    this.phenopacket = new Phenopacket();
+                    const subject = new Individual();
+                    subject.taxonomy = new OntologyClass(taxon.id, taxon.lbl, undefined, Utils.getUrlForId(taxon.id));
+                    this.phenopacket.subject = subject;
+                    this.phenopacket.metaData = new MetaData();
+                }
+            });
+
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
@@ -53,6 +66,9 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         }
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
+        }
+        if (this.taxonomySubscription) {
+            this.taxonomySubscription.unsubscribe();
         }
     }
 

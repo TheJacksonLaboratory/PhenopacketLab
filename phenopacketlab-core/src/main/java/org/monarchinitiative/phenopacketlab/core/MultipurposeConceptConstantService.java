@@ -13,12 +13,12 @@ import java.util.stream.Stream;
  * {@linkplain MultipurposeConceptConstantService} uses {@link ConceptResourceService} to fetch concepts to be used
  * in various parts of the application.
  */
-public class MultipurposeConceptConstantService implements DiseaseService, PhenotypicFeatureService, ChemicalEntityService {
+public class MultipurposeConceptConstantService implements DiseaseService, PhenotypicFeatureService, ChemicalEntityService,
+                                                        TaxonomyService {
 
     private final ConceptResourceService conceptResourceService;
     private final List<String> diseasePrefixes;
     private final List<String> phenotypePrefixes;
-
     private final List<String> chemicalEntityPrefixes;
 
     public MultipurposeConceptConstantService(ConceptResourceService conceptResourceService,
@@ -89,6 +89,17 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
     @Override
     public Stream<IdentifiedConcept> allChemicalEntityConcepts() {
         return findAllConceptsFromSelectedPrefixes(chemicalEntityPrefixes);
+    }
+
+    @Override
+    public Optional<IdentifiedConcept> homoSapiensNCBIConcept() {
+        List<String> ncbiTaxonPrefixes = List.of("NCBITaxon");
+        TermId id = TermId.of("NCBITaxon:9606");
+        if (ncbiTaxonPrefixes.contains(id.getPrefix())) {
+            return conceptResourceService.forPrefix(id.getPrefix())
+                    .flatMap(cr -> cr.conceptForTermId(id));
+        }
+        return Optional.empty();
     }
 
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {

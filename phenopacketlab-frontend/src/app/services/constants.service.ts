@@ -18,6 +18,7 @@ const scheduleFrequencyUrl = environment.SCHEDULE_FREQUENCY_URL;
 const adverseEventUrl = environment.ADVERSE_EVENT_URL;
 const bodySiteUrl = environment.BODY_SITE_URL;
 const unitUrl = environment.UNIT_URL;
+const homoSapiensUrl = environment.HOMO_SAPIENS_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,7 @@ export class ConstantsService {
     adverseEvent = new BehaviorSubject<any>(undefined);
     bodySites = new BehaviorSubject<any>(undefined);
     units = new BehaviorSubject<any>(undefined);
+    taxonomy = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -290,6 +292,17 @@ export class ConstantsService {
         }
         // return units even if the value is yet undefined.
         return this.units.asObservable();
+    }
+    public getHomoSapiensTaxonomy(): Observable<any> {
+        if (this.taxonomy.getValue() === undefined) {
+            console.log('Loading taxonomy...');
+            this.http.get(homoSapiensUrl).subscribe(res => {
+                this.taxonomy.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.taxonomy.asObservable();
     }
 }
 

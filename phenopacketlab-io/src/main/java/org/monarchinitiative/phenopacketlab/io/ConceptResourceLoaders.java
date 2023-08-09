@@ -123,6 +123,17 @@ public class ConceptResourceLoaders {
         return new PhenopacketResource(Resources.ncitVersion(version));
     }
 
+    public static ConceptResourceAndHierarchyServices ncbiTaxon(InputStream is) {
+        MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, LENIENT_OPTIONS, "NCBITaxon");
+        Resource resource = ncbiTaxonResource(getOntologyVersion(ontology));
+        OntologyConceptResource conceptResource = OntologyConceptResource.of(ontology, resource);
+        return addHierarchyService(conceptResource);
+    }
+
+    private static Resource ncbiTaxonResource(String version) {
+        return new PhenopacketResource(Resources.ncbiTaxonVersion(version));
+    }
+
     public static ConceptResourceAndHierarchyServices eco(InputStream is) {
         MinimalOntology ontology = MinimalOntologyLoader.loadOntology(is, CURIE_UTIL, STRICT_OPTIONS, "ECO");
         Resource resource = ecoResource(getOntologyVersion(ontology));

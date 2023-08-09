@@ -19,7 +19,8 @@ export class Utils {
 
     public static getUrlForId(id: string) {
         if (id.toUpperCase().startsWith('HP')
-        || id.toUpperCase().startsWith('MONDO')) {
+        || id.toUpperCase().startsWith('MONDO')
+        || id.toUpperCase().startsWith('NCBITaxon')) {
             const splittedId = id.split(':');
             const prefix = splittedId[0];
             const suffix = splittedId[1];
