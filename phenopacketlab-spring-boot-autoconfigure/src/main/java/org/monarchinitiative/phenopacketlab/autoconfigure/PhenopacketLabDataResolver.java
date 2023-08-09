@@ -68,10 +68,6 @@ public class PhenopacketLabDataResolver {
         return phenopacketLabDataDirectory.resolve("ncit.json");
     }
 
-    public Path ncbiTaxonJsonPath() {
-        return phenopacketLabDataDirectory.resolve("ncbitaxon.json");
-    }
-
     public Path ecoJsonPath() {
         return phenopacketLabDataDirectory.resolve("eco.json");
     }

@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 public class MultipurposeConceptConstantService implements DiseaseService, PhenotypicFeatureService, ChemicalEntityService,
                                                         TaxonomyService {
 
+    private static final TermId HOMO_SAPIENS = TermId.of("NCBITaxon:9606");
     private final ConceptResourceService conceptResourceService;
     private final List<String> diseasePrefixes;
     private final List<String> phenotypePrefixes;
@@ -93,13 +94,8 @@ public class MultipurposeConceptConstantService implements DiseaseService, Pheno
 
     @Override
     public Optional<IdentifiedConcept> homoSapiensNCBIConcept() {
-        List<String> ncbiTaxonPrefixes = List.of("NCBITaxon");
-        TermId id = TermId.of("NCBITaxon:9606");
-        if (ncbiTaxonPrefixes.contains(id.getPrefix())) {
-            return conceptResourceService.forPrefix(id.getPrefix())
-                    .flatMap(cr -> cr.conceptForTermId(id));
-        }
-        return Optional.empty();
+        return conceptResourceService.forPrefix(HOMO_SAPIENS.getPrefix())
+                .flatMap(cr -> cr.conceptForTermId(HOMO_SAPIENS));
     }
 
     private Stream<IdentifiedConcept> findAllConceptsFromSelectedPrefixes(List<String> prefixes) {

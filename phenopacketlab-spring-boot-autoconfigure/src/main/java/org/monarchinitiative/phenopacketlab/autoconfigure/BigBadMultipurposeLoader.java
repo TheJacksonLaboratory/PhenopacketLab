@@ -44,6 +44,9 @@ class BigBadMultipurposeLoader {
 
     BigBadDataBlob load() throws InvalidResourceException {
         Resources result = new Resources();
+        // Add NCBITaxon - we don't need any resource there, it's just one value, NCBITaxon:9606, for homo sapiens.
+        result.setNcbiTaxon(ConceptResourceLoaders.ncbiTaxon());
+
         List<String> errors = Collections.synchronizedList(new LinkedList<>());
         List<ResourceTuple<?>> resources = List.of(
                 new ResourceTuple<>(dataResolver.genoJsonPath(), ConceptResourceLoaders::geno, result::setGeno),
@@ -54,7 +57,6 @@ class BigBadMultipurposeLoader {
                 new ResourceTuple<>(dataResolver.soJsonPath(), ConceptResourceLoaders::so, result::setSo),
                 new ResourceTuple<>(dataResolver.uberonJsonPath(), ConceptResourceLoaders::uberon, result::setUberon),
                 new ResourceTuple<>(dataResolver.ncitJsonPath(), ConceptResourceLoaders::ncit, result::setNcit),
-                new ResourceTuple<>(dataResolver.ncbiTaxonJsonPath(), ConceptResourceLoaders::ncbiTaxon, result::setNcbiTaxon),
                 new ResourceTuple<>(dataResolver.uoJsonPath(), ConceptResourceLoaders::uo, result::setUo),
                 new ResourceTuple<>(dataResolver.ecoJsonPath(), ConceptResourceLoaders::eco, result::setEco),
                 new ResourceTuple<>(dataResolver.chebiJsonPath(), ConceptResourceLoaders::chebi, result::setChebi),
@@ -114,7 +116,7 @@ class BigBadMultipurposeLoader {
                 result.uberon.conceptResource(),
                 result.hgnc,
                 result.ncit.conceptResource(),
-                result.ncbiTaxon.conceptResource(),
+                result.ncbiTaxon,
                 result.uo.conceptResource(),
                 result.eco.conceptResource(),
                 result.chebi.conceptResource(),
@@ -131,7 +133,6 @@ class BigBadMultipurposeLoader {
                 result.so.hierarchyService(),
                 result.uberon.hierarchyService(),
                 result.ncit.hierarchyService(),
-                result.ncbiTaxon.hierarchyService(),
                 result.uo.hierarchyService(),
                 result.eco.hierarchyService(),
                 result.chebi.hierarchyService(),
@@ -162,7 +163,7 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices uberon;
         private IdentifiedConceptResource hgnc;
         private ConceptResourceAndHierarchyServices ncit;
-        private ConceptResourceAndHierarchyServices ncbiTaxon;
+        private IdentifiedConceptResource ncbiTaxon;
         private ConceptResourceAndHierarchyServices uo;
         private ConceptResourceAndHierarchyServices eco;
         private ConceptResourceAndHierarchyServices chebi;
@@ -197,7 +198,7 @@ class BigBadMultipurposeLoader {
             this.ncit = ncit;
         }
 
-        public void setNcbiTaxon(ConceptResourceAndHierarchyServices ncbiTaxon) {
+        public void setNcbiTaxon(IdentifiedConceptResource ncbiTaxon) {
             this.ncbiTaxon = ncbiTaxon;
         }
 
