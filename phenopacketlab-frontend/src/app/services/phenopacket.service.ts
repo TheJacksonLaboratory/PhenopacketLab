@@ -36,7 +36,9 @@ export class PhenopacketService {
      */
     public addPhenopacket(phenopacket: Phenopacket, user: User) {
         if (user) {
-            this._savePhenopacketRemote(this.downloadService.saveAsJson(phenopacket, false)).subscribe(() => {
+            this._savePhenopacketRemote(this.downloadService.saveAsJson(phenopacket, false)).subscribe((phenoSaved) => {
+                // retrieve the db id of the phenopacket that has been saved
+                phenopacket.dbId = phenoSaved.id;
                 this._addPhenopacket(phenopacket);
                 this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: `Phenopacket ${phenopacket.id} added.` });
             }, (error) => {
@@ -134,6 +136,8 @@ export class PhenopacketService {
 
     private _updatePhenopacketRemote(id: string, phenopacket: string) {
         const headers = { 'content-type': 'text/plain' };
+        console.log('id:');
+        console.log(id);
         return this.http.post(environment.PHENOPACKET_URL, phenopacket,
             { headers, params: new HttpParams().set('id', id) });
     }

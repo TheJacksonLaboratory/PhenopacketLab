@@ -52,9 +52,9 @@ public class PhenopacketController {
 		if (phenopacket.isBlank()){
 			return ResponseEntity.badRequest().build();
 		}
-		final boolean saved = this.phenopacketService.save(user, phenopacket);
-		if (saved){
-			return ResponseEntity.ok().build();
+		final Phenopacket phenoSaved = this.phenopacketService.save(user, phenopacket);
+		if (phenoSaved != null){
+			return ResponseEntity.ok(phenoSaved);
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
