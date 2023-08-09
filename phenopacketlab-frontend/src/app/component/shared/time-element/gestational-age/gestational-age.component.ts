@@ -49,8 +49,8 @@ export class GestationalAgeComponent implements OnInit {
             this.gestationalAge.weeks = this.weeks;
 
         } else if (type === 'days') {
-            if (value > 31) {
-                value = 31;
+            if (value > 7) {
+                value = 7;
             }
             this.days = value;
             this.gestationalAge.days = this.days;
