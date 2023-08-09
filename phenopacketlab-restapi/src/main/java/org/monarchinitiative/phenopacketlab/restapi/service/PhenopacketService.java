@@ -23,12 +23,11 @@ public class PhenopacketService {
 		return this.phenopacketRepository.findByIdAndUserId(user.getId(), id).stream().toList();
 	}
 
-	public boolean save(User user, String phenopacket){
+	public Phenopacket save(User user, String phenopacket){
 		try {
-			this.phenopacketRepository.save(new Phenopacket(user.getId(), phenopacket));
-			return true;
+			return this.phenopacketRepository.save(new Phenopacket(user.getId(), phenopacket));
 		} catch (Exception e){
-			return false;
+			return null;
 		}
 	}
 
