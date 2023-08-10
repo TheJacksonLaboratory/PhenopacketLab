@@ -7,7 +7,6 @@ import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
-import { ConstantsService } from 'src/app/services/constants.service';
 import { OntologyClass } from 'src/app/models/base';
 import { Utils } from '../shared/utils';
 
@@ -27,29 +26,23 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelection: ProfileSelection;
 
     privateInfoWarnSelectedSubscription: Subscription;
-    taxonomySubscription: Subscription;
+    // taxonomySubscription: Subscription;
+    taxonomy = new OntologyClass('NCBITaxon:9606', 'Homo sapiens', undefined, Utils.getUrlForId('NCBITaxon:9606'));
 
     summary: string;
 
-    constructor(public phenopacketService: PhenopacketStepperService,
-        private constantsService: ConstantsService) {
+    constructor(public phenopacketService: PhenopacketStepperService) {
 
     }
 
     ngOnInit() {
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
-            // get taxonomy and initialize phenopacket
-            this.taxonomySubscription = this.constantsService.getHomoSapiensTaxonomy().subscribe(taxon => {
-                if (taxon) {
-                    this.phenopacket = new Phenopacket();
-                    const subject = new Individual();
-                    subject.taxonomy = new OntologyClass(taxon.id, taxon.lbl, undefined, Utils.getUrlForId(taxon.id));
-                    this.phenopacket.subject = subject;
-                    this.phenopacket.metaData = new MetaData();
-                }
-            });
-
+            this.phenopacket = new Phenopacket();
+            const subject = new Individual();
+            subject.taxonomy = this.taxonomy;
+            this.phenopacket.subject = subject;
+            this.phenopacket.metaData = new MetaData();
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
@@ -67,11 +60,8 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.profileSelectionSubscription) {
             this.profileSelectionSubscription.unsubscribe();
         }
-        if (this.taxonomySubscription) {
-            this.taxonomySubscription.unsubscribe();
-        }
     }
-
+ 
     generateNewID() {
         if (this.phenopacket) {
             this.phenopacket.id = uuidv4();
