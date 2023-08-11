@@ -68,8 +68,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   regimenStatuses = Object.values(RegimenStatus);
   regimenStatus: RegimenStatus;
 
-  terminationReasonStr: string;
-
   actionTypes = [Procedure.actionName, Treatment.actionName, RadiationTherapy.actionName, TherapeuticRegimen.actionName];
   actionType: string;
   // We pull data from backend endpoint
@@ -79,8 +77,9 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   responses: OntologyClass[];
   responsesSubscription: Subscription;
 
-  terminationReasons: OntologyClass[];
+  terminationReasonsNodes: OntologyTreeNode[];
   terminationReasonsSubscription: Subscription;
+  terminationReasonSelected: OntologyTreeNode;
 
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
@@ -107,8 +106,13 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     this.responsesSubscription = this.medicalActionService.getTreatmentResponses().subscribe(responses => {
       this.responses = responses;
     });
-    this.terminationReasonsSubscription = this.medicalActionService.getTerminationReasons().subscribe(reasons => {
-      this.terminationReasons = reasons;
+    this.terminationReasonsSubscription = this.constantsService.getTerminationReasons().subscribe(nodes => {
+      if (nodes) {
+        this.terminationReasonsNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.treatmentTerminationReason) {
+          this.terminationReasonSelected = this.initializeTerminationReason(this.medicalAction.treatmentTerminationReason);
+        }
+      }
     });
     this.adverseEventsSubscription = this.constantsService.getAdverseEvents().subscribe(nodes => {
       // we get the children from the root node sent in response
@@ -194,7 +198,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       this.treatmentTarget = this.medicalAction.treatmentTarget;
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;
-      this.terminationReason = this.medicalAction.treatmentTerminationReason;
       this.responseToTreatmentVal = this.responseToTreatment?.label;
       if (this.medicalAction.procedure) {
         this.procedureCode = this.medicalAction.procedure.code;
@@ -256,6 +259,14 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  initializeTerminationReason(terminationReason: OntologyClass) {
+    for (const reason of this.terminationReasonsNodes) {
+      if (reason.key === terminationReason.id) {
+        return reason;
+      }
+    }
+  }
+
   updateTreatmentTarget(eventObj: any) {
     if (this.medicalAction) {
       // retrieve disease term from event obj
@@ -277,9 +288,13 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   }
 
   updateTreatmentTerminationReason(eventObj: any) {
-    if (this.medicalAction) {
-      this.medicalAction.treatmentTerminationReason = eventObj.value;
-    }
+    if (eventObj) {
+      if (this.medicalAction && eventObj.node) {
+        this.medicalAction.treatmentTerminationReason = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.treatmentTerminationReason = undefined;
+    } 
   }
 
   updateAdverseEvents(event) {

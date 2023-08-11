@@ -19,6 +19,7 @@ const adverseEventUrl = environment.ADVERSE_EVENT_URL;
 const bodySiteUrl = environment.BODY_SITE_URL;
 const unitUrl = environment.UNIT_URL;
 const homoSapiensUrl = environment.HOMO_SAPIENS_URL;
+const terminationReasonsUrl = environment.TREATMENT_STATUS;
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +43,7 @@ export class ConstantsService {
     bodySites = new BehaviorSubject<any>(undefined);
     units = new BehaviorSubject<any>(undefined);
     taxonomy = new BehaviorSubject<any>(undefined);
+    terminationReasons = new BehaviorSubject<any>(undefined);
 
     constructor(private http: HttpClient) {
     }
@@ -303,6 +305,17 @@ export class ConstantsService {
             })
         }
         return this.taxonomy.asObservable();
+    }
+    public getTerminationReasons(): Observable<any> {
+        if (this.terminationReasons.getValue() === undefined) {
+            console.log('Loading termination reasons...');
+            this.http.get(terminationReasonsUrl).subscribe(res => {
+                this.terminationReasons.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.terminationReasons.asObservable();
     }
 }
 

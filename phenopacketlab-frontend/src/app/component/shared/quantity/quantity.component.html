@@ -1,5 +1,5 @@
-<div class="grid flex align-content-center flex-wrap">
-  <div class="field col-4">
+<div class="grid">
+  <div class="col-5">
     <p-treeSelect
       ngDefaultControl
       id="unit"
@@ -23,7 +23,7 @@
       </ng-template>
     </p-treeSelect>
   </div>
-  <div class="field col-2">
+  <div class="col-2">
     <p-inputNumber
       placeholder="Value"
       (onInput)="updateValue($event)"
@@ -31,7 +31,7 @@
       required
     ></p-inputNumber>
   </div>
-  <div class="field col-6">
+  <div class="col-5">
     <app-reference-range
       [referenceRange]="quantity?.referenceRange"
       (referenceRangeChange)="updateReferenceRange($event)"

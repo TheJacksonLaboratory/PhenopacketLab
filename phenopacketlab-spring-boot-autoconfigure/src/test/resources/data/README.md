@@ -21,6 +21,7 @@ The files in this folder are subsets of the real data files.
   - `NCIT:C48884` Generic Regional Lymph Nodes TNM Finding
   - `NCIT:C48885` Generic Primary Tumor TNM Finding
   - `NCIT:C64493` Schedule frequency
+  - `NCIT:C45501` Treatment status
   ```shell
   module load robot
   # Download NCIT OWL

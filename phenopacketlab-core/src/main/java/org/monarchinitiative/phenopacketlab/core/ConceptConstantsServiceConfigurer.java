@@ -34,6 +34,7 @@ public class ConceptConstantsServiceConfigurer {
     private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
     private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");
     private static final TermId SCHEDULE_FREQUENCY = TermId.of("NCIT:C64493");
+    private static final TermId TREATMENT_STATUS = TermId.of("NCIT:C45501");
     private static final TermId ALLELIC_STATE = TermId.of("GENO:0000875");
     private static final TermId UNIT = TermId.of("UO:0000000");
 
@@ -66,6 +67,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> adverseEventTreeConstants = configureAdverseEventTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> bodySiteTreeConstants = configureBodySiteTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> treatmentStatusTreeConstants = configureTreatmentStatusTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> unitTreeConstants = configureUnitTreeConstants(resourceService, hierarchyServiceRegistry);
 
         return new ConceptConstantsServiceImpl(sexConstants,
@@ -90,6 +92,7 @@ public class ConceptConstantsServiceConfigurer {
                 scheduleFrequencyTreeConstants.orElse(null),
                 adverseEventTreeConstants.orElse(null),
                 bodySiteTreeConstants.orElse(null),
+                treatmentStatusTreeConstants.orElse(null),
                 unitTreeConstants.orElse(null),
                 contigConstants);
     }
@@ -334,6 +337,12 @@ public class ConceptConstantsServiceConfigurer {
                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
         return configureTreeConstants(resourceService, hierarchyServiceRegistry,
                 BODY_REGION, BODY_REGION.getPrefix(), null, true);
+    }
+
+    private static Optional<SubtreeNode> configureTreatmentStatusTreeConstants(ConceptResourceService resourceService,
+                                                                               OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                TREATMENT_STATUS, TREATMENT_STATUS.getPrefix(), null, true);
     }
 
     private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
