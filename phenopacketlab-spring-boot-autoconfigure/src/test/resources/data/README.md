@@ -23,6 +23,9 @@ The files in this folder are subsets of the real data files.
   - `NCIT:C64493` Schedule frequency
   - `NCIT:C45501` Treatment status
   - `NCIT:C50995` Disease Response
+  - `NCIT:C25218` Intervention or Procedure
+  - `NCIT:C15313` Radiation therapy
+  - `NCIT:C15697` Treatment regimen
   ```shell
   module load robot
   # Download NCIT OWL

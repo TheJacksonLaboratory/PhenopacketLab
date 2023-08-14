@@ -158,6 +158,24 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-ncit-procedure", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getNCITProcedureTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.ncitProcedureTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-radiation-therapy", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getRadiationTherapyTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.radiationTherapyTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-treatment-regimen", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTreatmentRegimenTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.treatmentRegimenTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "tree-disease-response", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> getDiseaseResponseTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.diseaseResponseTreeConstants();

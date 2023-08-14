@@ -34,6 +34,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final SubtreeNode bodySiteTreeConstants;
     private final SubtreeNode treatmentStatusTreeConstants;
     private final SubtreeNode diseaseResponseTreeConstants;
+    private final SubtreeNode ncitProcedureTreeConstants;
+    private final SubtreeNode radiationTherapyTreeConstants;
+    private final SubtreeNode treatmentRegimenTreeConstants;
     private final SubtreeNode unitTreeConstants;
     private final Map<String, List<Concept>> contigConstants;
 
@@ -61,6 +64,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 SubtreeNode bodySiteTreeConstants,
                                 SubtreeNode treatmentStatusTreeConstants,
                                 SubtreeNode diseaseResponseTreeConstants,
+                                SubtreeNode ncitProcedureTreeConstants,
+                                SubtreeNode radiationTherapyTreeConstants,
+                                SubtreeNode treatmentRegimenTreeConstants,
                                 SubtreeNode unitTreeConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
@@ -87,6 +93,9 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.bodySiteTreeConstants = bodySiteTreeConstants;
         this.treatmentStatusTreeConstants = treatmentStatusTreeConstants;
         this.diseaseResponseTreeConstants = diseaseResponseTreeConstants;
+        this.ncitProcedureTreeConstants = ncitProcedureTreeConstants;
+        this.radiationTherapyTreeConstants = radiationTherapyTreeConstants;
+        this.treatmentRegimenTreeConstants = treatmentRegimenTreeConstants;
         this.unitTreeConstants = unitTreeConstants;
         this.contigConstants = contigConstants;
     }
@@ -181,6 +190,15 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
 
     @Override
     public Optional<SubtreeNode> diseaseResponseTreeConstants() { return Optional.ofNullable(diseaseResponseTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> ncitProcedureTreeConstants() { return Optional.ofNullable(ncitProcedureTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> radiationTherapyTreeConstants() { return Optional.ofNullable(radiationTherapyTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> treatmentRegimenTreeConstants() { return Optional.ofNullable(treatmentRegimenTreeConstants); }
 
     @Override
     public Optional<SubtreeNode> bodySiteTreeConstants() { return Optional.ofNullable(bodySiteTreeConstants); }

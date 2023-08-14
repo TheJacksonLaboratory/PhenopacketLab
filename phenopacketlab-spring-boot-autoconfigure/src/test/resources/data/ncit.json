@@ -79,6 +79,341 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C15313",
+      "lbl" : "Radiation Therapy",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Treatment of a disease by means of exposure of the target or the whole body to radiation. Radiation therapy is often used as part of curative therapy and occasionally as a component of palliative treatment for cancer. Other uses include total body irradiation prior to transplantation."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C101858", "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C118169", "http://purl.obolibrary.org/obo/NCIT_C132298", "http://purl.obolibrary.org/obo/NCIT_C156952", "http://purl.obolibrary.org/obo/NCIT_C156953", "http://purl.obolibrary.org/obo/NCIT_C156954", "http://purl.obolibrary.org/obo/NCIT_C156955", "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C158037", "http://purl.obolibrary.org/obo/NCIT_C158520", "http://purl.obolibrary.org/obo/NCIT_C159328", "http://purl.obolibrary.org/obo/NCIT_C171094", "http://purl.obolibrary.org/obo/NCIT_C174237", "http://purl.obolibrary.org/obo/NCIT_C174239", "http://purl.obolibrary.org/obo/NCIT_C174253", "http://purl.obolibrary.org/obo/NCIT_C174255", "http://purl.obolibrary.org/obo/NCIT_C177384", "http://purl.obolibrary.org/obo/NCIT_C177403", "http://purl.obolibrary.org/obo/NCIT_C177537", "http://purl.obolibrary.org/obo/NCIT_C178113", "http://purl.obolibrary.org/obo/NCIT_C178115", "http://purl.obolibrary.org/obo/NCIT_C179483", "http://purl.obolibrary.org/obo/NCIT_C183087", "http://purl.obolibrary.org/obo/NCIT_C186310", "http://purl.obolibrary.org/obo/NCIT_C186312", "http://purl.obolibrary.org/obo/NCIT_C186316", "http://purl.obolibrary.org/obo/NCIT_C186318", "http://purl.obolibrary.org/obo/NCIT_C186319", "http://purl.obolibrary.org/obo/NCIT_C186320", "http://purl.obolibrary.org/obo/NCIT_C186321", "http://purl.obolibrary.org/obo/NCIT_C186322", "http://purl.obolibrary.org/obo/NCIT_C186323", "http://purl.obolibrary.org/obo/NCIT_C186324", "http://purl.obolibrary.org/obo/NCIT_C186325", "http://purl.obolibrary.org/obo/NCIT_C186326", "http://purl.obolibrary.org/obo/NCIT_C186327", "http://purl.obolibrary.org/obo/NCIT_C186328", "http://purl.obolibrary.org/obo/NCIT_C186329", "http://purl.obolibrary.org/obo/NCIT_C186330", "http://purl.obolibrary.org/obo/NCIT_C186331", "http://purl.obolibrary.org/obo/NCIT_C186332", "http://purl.obolibrary.org/obo/NCIT_C186333", "http://purl.obolibrary.org/obo/NCIT_C186334", "http://purl.obolibrary.org/obo/NCIT_C186335", "http://purl.obolibrary.org/obo/NCIT_C186337", "http://purl.obolibrary.org/obo/NCIT_C186341", "http://purl.obolibrary.org/obo/NCIT_C186342", "http://purl.obolibrary.org/obo/NCIT_C186764", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C62596", "http://purl.obolibrary.org/obo/NCIT_C66830", "http://purl.obolibrary.org/obo/NCIT_C99078" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Cancer Radiotherapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "ENERGY_TYPE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "ENERGY_TYPE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "ENERGY_TYPE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "ENERGY_TYPE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Irradiate"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Irradiated"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Irradiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RADIATION"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RADIOTHERAPY"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RT"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiation Therapy, NOS"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiotherapeutics"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiotherapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Radiotherapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapy, Radiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "irradiated"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "irradiation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "radiation therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "radiotherapy"
+        } ],
+        "xrefs" : [ {
+          "val" : "IMDRF:F2305"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A23",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C25162"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A28",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175041"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16035"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16135"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175032"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175033"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17649"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66897"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A32",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C25218"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66897"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C88112"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A35",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175041"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16035"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16135"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175032"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C175033"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17649"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66897"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16035"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16135"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66897"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C15313"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Therapeutic or Preventive Procedure"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Radiation Therapy"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1522449"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CPTAC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "DIPG/DMG"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "FDA"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "PCDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "Patient required additional radiation therapy."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "The use of high-energy radiation from x-rays, gamma rays, neutrons, protons, and other sources to kill cancer cells and shrink tumors. Radiation may come from a machine outside the body (external-beam radiation therapy), or it may come from radioactive material placed in the body near cancer cells (internal radiation therapy). Systemic radiation therapy uses a radioactive substance, such as a radiolabeled monoclonal antibody, that travels in the blood to tissues throughout the body."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "Use of targeted or whole body radiation to treat a disease."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Radiation_Therapy"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P375",
+          "val" : "Radiation Therapy, NOS"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C15697",
+      "lbl" : "Treatment Regimen",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A treatment plan that specifies the dosage, the schedule, and the duration of treatment."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C177536" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Regimen"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment Protocol"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment Regimen"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment Regimen"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment Schedule"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "regimen"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "regimen or line of therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "regimen_or_line_of_therapy"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C15697"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Functional Concept"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Treatment Regimen"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P208",
+          "val" : "CL031856"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "A treatment plan that specifies the dosage, the schedule, and the duration of treatment."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Treatment_Regimen"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C16203",
+      "lbl" : "Clinical or Research Activity",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "Any specific activity undertaken during the course of a clinical study or research protocol."
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Clinical or Research Activity"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C16203"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Activity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Clinical or Research Activity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1516654"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Clinical_or_Research_Activity"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C20181",
       "lbl" : "Conceptual Entity",
       "type" : "CLASS",
@@ -173,6 +508,279 @@
         }, {
           "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
           "val" : "Route"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C25218",
+      "lbl" : "Intervention or Procedure",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An activity that produces an effect, or that is intended to alter the course of a disease in a patient or population. This is a general term that encompasses the medical, social, behavioral, and environmental acts that can have preventive, therapeutic, or palliative effects."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C132298", "http://purl.obolibrary.org/obo/NCIT_C132310", "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C159501", "http://purl.obolibrary.org/obo/NCIT_C159502", "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C166373", "http://purl.obolibrary.org/obo/NCIT_C177536", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C67497", "http://purl.obolibrary.org/obo/NCIT_C90259", "http://purl.obolibrary.org/obo/NCIT_C99147" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Intervention"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Intervention"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Intervention Strategies"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Intervention or Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Intervention or Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Interventional"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "intervention"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "intervention"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "interventionDescription"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "interventionDescription"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "treatment type"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "treatment_type"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C104914"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C116466"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C116643"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C138187"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C141342"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15195"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C152055"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15215"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15230"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15262"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15289"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15313"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15329"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15358"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15370"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15382"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15393"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15431"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15445"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15470"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15533"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15632"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15651"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15666"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15696"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15747"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15751"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15752"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C157968"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15986"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16035"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16039"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C16135"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165189"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165192"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165194"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17649"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C178422"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C20985"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C443"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C46089"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C62714"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C62726"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C64172"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66891"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66897"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C66899"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C67444"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C70840"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C76243"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C798"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C85254"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C92991"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C93196"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C93340"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C95484"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C25218"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Health Care Activity"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Intervention or Procedure"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0184661"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "BRIDG"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC-GLOSS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "NICHD"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "In medicine, a treatment or action taken to prevent or treat disease, or improve health in other ways."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "The drug, device, therapy, or process under investigation in a clinical study that is believed to have an effect on outcomes of interest in a study (e.g., health-related quality of life, efficacy, safety, pharmacoeconomics). [After https://grants.nih.gov/grants/policy/faq_clinical_trial_definition.htm#5224] See also test articles, devices, drug product, medicinal product, combination product, general observation class, finding, event, treatment, diagnosis."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "The drug, device, therapy, or process under investigation in a clinical study that is believed to have an effect on outcomes of interest in a study. [After https://grants.nih.gov/grants/policy/faq_clinical_trial_definition.htm#5224] (CDISC-Glossary)"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Procedure"
         } ]
       }
     }, {
@@ -3559,6 +4167,126 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C49236",
+      "lbl" : "Therapeutic Procedure",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "An action or administration of therapeutic agents to produce an effect that is intended to alter or stop a pathologic process."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C103331", "http://purl.obolibrary.org/obo/NCIT_C116977", "http://purl.obolibrary.org/obo/NCIT_C118169", "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C165451", "http://purl.obolibrary.org/obo/NCIT_C166372", "http://purl.obolibrary.org/obo/NCIT_C166373", "http://purl.obolibrary.org/obo/NCIT_C177536", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C67497", "http://purl.obolibrary.org/obo/NCIT_C89506", "http://purl.obolibrary.org/obo/NCIT_C90259" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "TREAT"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "TX"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Interventions"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Method"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapeutic Technique"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Treatment"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "any therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "any_therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "treatment"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "treatment or therapy"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "treatment_or_therapy"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C49487"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C49488"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C49236"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Therapeutic or Preventive Procedure"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P107",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Therapeutic Procedure"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0087111"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC-GLOSS"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CTRP"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "ICDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "NICHD"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "Medical care given to a patient to mitigate or cure an illness, injury, or reduced health status. NOTE: May include prescribed drugs, biologics, surgery, devices, and physical or psychotherapies, but not diagnostics or prophylaxis. See also intervention, diagnosis."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "Treatment."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Therapeutic_Procedure"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C50995",
       "lbl" : "Disease Response",
       "type" : "CLASS",
@@ -3882,9 +4610,25 @@
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C12219"
     }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C15313",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C49236"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C15697",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C49236"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C16203",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C43431"
+    }, {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C25169",
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C20181"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C25218",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C16203"
     }, {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C25404",
       "pred" : "is_a",
@@ -3953,6 +4697,10 @@
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C48885",
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C48879"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C49236",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C25218"
     }, {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C50995",
       "pred" : "is_a",
