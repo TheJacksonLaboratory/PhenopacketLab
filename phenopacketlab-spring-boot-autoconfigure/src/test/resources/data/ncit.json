@@ -436,6 +436,60 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C35461",
+      "lbl" : "Clinical Course of Disease",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "A term that refers to the nature and/or clinical outcome of a disease (e.g., acute or chronic disease, aggressive or indolent disease, recurrent disease, etc.)."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C101832", "http://purl.obolibrary.org/obo/NCIT_C101833", "http://purl.obolibrary.org/obo/NCIT_C124302", "http://purl.obolibrary.org/obo/NCIT_C124303", "http://purl.obolibrary.org/obo/NCIT_C61410", "http://purl.obolibrary.org/obo/NCIT_C66830" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Clinical Course"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Clinical Course of Disease"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "LONGCRSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "LONGCRSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Longitudinal Course"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Longitudinal Course"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Longitudinal Course"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C35461"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Clinical Course of Disease"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C0449259"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "CDISC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P325",
+          "val" : "A description of the series of events, including signs and symptoms, that define the course of a chronic disease over time."
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Clinical_Course_of_Disease"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C36291",
       "lbl" : "Finding by Cause",
       "type" : "CLASS",
@@ -3505,6 +3559,240 @@
         } ]
       }
     }, {
+      "id" : "http://purl.obolibrary.org/obo/NCIT_C50995",
+      "lbl" : "Disease Response",
+      "type" : "CLASS",
+      "meta" : {
+        "definition" : {
+          "val" : "The pathologic and/or clinical changes that result from treatment. The changes may include eradication of detectable disease, stabilization of disease, or disease progression."
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/NCIT_C157711", "http://purl.obolibrary.org/obo/NCIT_C173208", "http://purl.obolibrary.org/obo/NCIT_C174018", "http://purl.obolibrary.org/obo/NCIT_C174239", "http://purl.obolibrary.org/obo/NCIT_C174259", "http://purl.obolibrary.org/obo/NCIT_C177384", "http://purl.obolibrary.org/obo/NCIT_C177407", "http://purl.obolibrary.org/obo/NCIT_C177536", "http://purl.obolibrary.org/obo/NCIT_C179480", "http://purl.obolibrary.org/obo/NCIT_C186333", "http://purl.obolibrary.org/obo/NCIT_C186342", "http://purl.obolibrary.org/obo/NCIT_C186764" ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Disease Response"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RESPONSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RESPONSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RESPONSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RESPONSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "RESPONSE"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Response"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease response"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "disease_response"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A23",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C25162"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A26",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C173526"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A26",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A26",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A26",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18058"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18213"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C35571"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A29",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C62222"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C101516"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C123598"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C123600"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C123614"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C123618"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C131142"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C131143"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C131144"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C133441"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15292"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C15675"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C156848"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C156849"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165196"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165198"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165202"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165204"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165205"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165206"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C165208"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17747"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18058"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18213"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C35571"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C71687"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C96700"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A31",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C98298"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C17998"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18058"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18213"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C35571"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C43234"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A34",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18058"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18213"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C35571"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A38",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C62222"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C123618"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18058"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C18213"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C35571"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_A39",
+          "val" : "http://purl.obolibrary.org/obo/NCIT_C4870"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_NHC0",
+          "val" : "C50995"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P106",
+          "val" : "Finding"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P108",
+          "val" : "Disease Response"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P207",
+          "val" : "C1704632"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "GDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P322",
+          "val" : "PCDC"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/NCIT_P366",
+          "val" : "Disease_Response"
+        } ]
+      }
+    }, {
       "id" : "http://purl.obolibrary.org/obo/NCIT_C64493",
       "lbl" : "Schedule Frequency",
       "type" : "CLASS",
@@ -3618,6 +3906,10 @@
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C7057"
     }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C35461",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C3367"
+    }, {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C36291",
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C3367"
@@ -3661,6 +3953,10 @@
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C48885",
       "pred" : "is_a",
       "obj" : "http://purl.obolibrary.org/obo/NCIT_C48879"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCIT_C50995",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCIT_C35461"
     }, {
       "sub" : "http://purl.obolibrary.org/obo/NCIT_C64493",
       "pred" : "is_a",

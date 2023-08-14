@@ -22,6 +22,7 @@ The files in this folder are subsets of the real data files.
   - `NCIT:C48885` Generic Primary Tumor TNM Finding
   - `NCIT:C64493` Schedule frequency
   - `NCIT:C45501` Treatment status
+  - `NCIT:C50995` Disease Response
   ```shell
   module load robot
   # Download NCIT OWL

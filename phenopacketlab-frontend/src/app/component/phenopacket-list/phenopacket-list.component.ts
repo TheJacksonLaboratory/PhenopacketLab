@@ -31,6 +31,7 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
   @ViewChild(FileUpload) fupload: FileUpload;
 
   @ViewChild(TabView) tabView: TabView;
+  // List of unique phenopackets with different identifiers
   phenopacketList: Phenopacket[];
   /** Array used to hold opened tabs **/
   tabs: Phenopacket[] = [];

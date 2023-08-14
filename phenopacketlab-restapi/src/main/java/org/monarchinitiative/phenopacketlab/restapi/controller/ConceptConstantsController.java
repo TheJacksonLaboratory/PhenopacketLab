@@ -158,6 +158,12 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-disease-response", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getDiseaseResponseTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.diseaseResponseTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "tree-unit", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> geUnitTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.unitTreeConstants();

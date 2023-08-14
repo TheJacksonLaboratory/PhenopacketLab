@@ -58,6 +58,8 @@ public interface ConceptConstantsService {
 
     Optional<SubtreeNode> treatmentStatusTreeConstants();
 
+    Optional<SubtreeNode> diseaseResponseTreeConstants();
+
     Optional<SubtreeNode> bodySiteTreeConstants();
 
     Optional<SubtreeNode> unitTreeConstants();
