@@ -20,11 +20,11 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
-              "src/styles.scss",
               "node_modules/primeng/resources/themes/lara-light-teal/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/primeng.css",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/primeflex/primeflex.css"
+              "node_modules/primeflex/primeflex.scss",
+              "src/styles.scss"
             ],
             "allowedCommonJsDependencies": [
               "lodash"
@@ -114,9 +114,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
             "karmaConfig": "karma.conf.js",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "scripts": [],
             "styles": [

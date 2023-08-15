@@ -1,0 +1,40 @@
+<div class="grid flex align-content-center flex-wrap">
+  <div class="field col-4">
+    <p-treeSelect
+      ngDefaultControl
+      id="unit"
+      appendTo="body"
+      [(ngModel)]="quantity.unit"
+      [options]="unitNodes"
+      (onNodeSelect)="updateUnit($event)"
+      [metaKeySelection]="false"
+      placeholder="Select unit"
+      [filter]="true"
+      filterBy="label"
+      [filterInputAutoFocus]="true"
+      [showClear]="true"
+      required
+      (onClear)="updateUnit($event)"
+    >
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom"
+          >[{{ node.key }}] {{ node.label }}</span
+        >
+      </ng-template>
+    </p-treeSelect>
+  </div>
+  <div class="field col-2">
+    <p-inputNumber
+      placeholder="Value"
+      (onInput)="updateValue($event)"
+      [(ngModel)]="quantity.value"
+      required
+    ></p-inputNumber>
+  </div>
+  <div class="field col-6">
+    <app-reference-range
+      [referenceRange]="quantity?.referenceRange"
+      (referenceRangeChange)="updateReferenceRange($event)"
+    ></app-reference-range>
+  </div>
+</div>

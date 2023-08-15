@@ -1,0 +1,16 @@
+<div class="grid">
+  <div class="field col-6">
+    <p-inputNumber
+      placeholder="low range"
+      (onInput)="updateLow($event)"
+      [(ngModel)]="low"
+    ></p-inputNumber>
+  </div>
+  <div class="field col-6">
+    <p-inputNumber
+      placeholder="upper range"
+      (onInput)="updateHigh($event)"
+      [(ngModel)]="high"
+    ></p-inputNumber>
+  </div>
+</div>

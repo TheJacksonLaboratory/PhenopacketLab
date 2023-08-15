@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { MaterialModule } from './material.module';
 import { PrimeModule } from './prime.module';
 import { SpinnerDialogComponent } from './spinner-dialog/spinner-dialog.component';
 import { TimeElementComponent } from './time-element/time-element.component';
@@ -12,7 +11,6 @@ import { AgeComponent } from './time-element/age/age.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { OntologyClassComponent } from './ontology-class/ontology-class.component';
 import { TreeSelectComponent } from './ontology-class/tree-select/tree-select.component';
-import { TreeSearchComponent } from './ontology-class/tree-search/tree-search.component';
 import { IndividualEditComponent } from './edit/individual-edit/individual-edit.component';
 import { AgeRangeComponent } from './time-element/age-range/age-range.component';
 import { GestationalAgeComponent } from './time-element/gestational-age/gestational-age.component';
@@ -33,6 +31,22 @@ import { DiseaseDialogComponent } from './dialog/disease-dialog/disease-dialog.c
 import { DiseaseSearchDialogComponent } from './dialog/disease-search-dialog/disease-search-dialog.component';
 import { FileDialogComponent } from './dialog/file-dialog/file-dialog.component';
 import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/medical-action-dialog.component';
+import { QuantityComponent } from './quantity/quantity.component';
+import { ReferenceRangeComponent } from './quantity/reference-range/reference-range.component';
+import { MeasurementComponent } from './table/measurement/measurement.component';
+import { MeasurementDetailComponent } from './table/measurement/measurement-detail/measurement-detail.component';
+import { DiseaseComponent } from './table/disease/disease.component';
+import { DiseaseDetailComponent } from './table/disease/disease-detail/disease-detail.component';
+import { MedicalActionComponent } from './table/medical-action/medical-action.component';
+import { MedicalActionDetailComponent } from './table/medical-action/medical-action-detail/medical-action-detail.component';
+import { PhenotypicFeatureComponent } from './table/phenotypic-feature/phenotypic-feature.component';
+import { PhenotypicDetailComponent } from './table/phenotypic-feature/phenotypic-detail/phenotypic-detail.component';
+import { FileComponent } from './table/file/file.component';
+import { FileDetailComponent } from './table/file/file-detail/file-detail.component';
+import { InterpretationComponent } from './table/interpretation/interpretation.component';
+import { InterpretationDetailComponent } from './table/interpretation/interpretation-detail/interpretation-detail.component';
+import { BiosampleComponent } from './table/biosample/biosample.component';
+import { BiosampleDetailComponent } from './table/biosample/biosample-detail/biosample-detail.component';
 
 
 @NgModule({
@@ -41,7 +55,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     FormsModule,
     ReactiveFormsModule,
     PrimeModule,
-    MaterialModule,
     AngularSplitModule
   ],
   declarations: [
@@ -54,7 +67,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent,
     DiseaseDialogComponent,
     DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
@@ -71,7 +83,23 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
-    FileDialogComponent
+    FileDialogComponent,
+    QuantityComponent,
+    ReferenceRangeComponent,
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    DiseaseComponent,
+    DiseaseDetailComponent,
+    MedicalActionComponent,
+    MedicalActionDetailComponent,
+    PhenotypicFeatureComponent,
+    PhenotypicDetailComponent,
+    FileComponent,
+    FileDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent
   ],
   exports: [
     SpinnerDialogComponent,
@@ -83,7 +111,6 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     SearchBoxComponent,
     TreeSelectComponent,
     OntologyClassComponent,
-    TreeSearchComponent,
     DiseaseDialogComponent,
     DiseaseSearchDialogComponent,
     PhenotypicFeatureDialogComponent,
@@ -97,13 +124,28 @@ import { MedicalActionDialogComponent } from './dialog/medical-action-dialog/med
     VariationSearchComponent,
     LabelCreatorDialogComponent,
     PrimeModule,
-    MaterialModule,
     AngularSplitModule,
     TextPipe,
     MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
     TextMiningComponent,
-    FileDialogComponent
+    FileDialogComponent,
+    QuantityComponent,
+    ReferenceRangeComponent,
+    MeasurementComponent,
+    MeasurementDetailComponent,
+    DiseaseComponent,
+    DiseaseDetailComponent,
+    MedicalActionComponent,
+    MedicalActionDetailComponent,
+    PhenotypicFeatureComponent,
+    PhenotypicDetailComponent,
+    FileComponent,
+    FileDetailComponent,
+    InterpretationComponent,
+    InterpretationDetailComponent,
+    BiosampleComponent,
+    BiosampleDetailComponent
   ]
 })
 export class SharedModule { }

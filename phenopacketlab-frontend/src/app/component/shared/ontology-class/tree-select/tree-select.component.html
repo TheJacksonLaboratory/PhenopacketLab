@@ -29,7 +29,7 @@
     </ng-template>
   </div> -->
   <ng-template let-node pTemplate="default">
-    <p-checkbox *ngIf="node.leaf === true" [(ngModel)]="node.isSelected" (onChange)="selectionChange($event.checked, node)" [binary]="true">
+    <p-checkbox *ngIf="node.selectable === true" [(ngModel)]="node.isSelected" (onChange)="selectionChange($event.checked, node)" [binary]="true">
           </p-checkbox>
     <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom">[{{ node.key }}] {{ node.label }}</span>
   </ng-template>

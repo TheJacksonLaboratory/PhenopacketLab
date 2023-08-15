@@ -23,7 +23,6 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    isPrivateInfoWarnSelected: boolean;
     privateInfoWarnSelectedSubscription: Subscription;
 
     summary: string;
@@ -37,16 +36,11 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
             this.phenopacket.subject = new Individual();
-            this.phenopacket.subject.isPrivateInfoWarnSelected = false;
             this.phenopacket.metaData = new MetaData();
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        // set isPrivateInfoSelected
-        if (this.phenopacket?.subject) {
-            this.isPrivateInfoWarnSelected = this.phenopacket.subject.isPrivateInfoWarnSelected;
-        }
 
         // Initialize the phenopacket
         this.phenopacketService.phenopacket = this.phenopacket;

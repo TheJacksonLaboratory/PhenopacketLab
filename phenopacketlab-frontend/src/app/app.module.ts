@@ -15,15 +15,14 @@ import { AppRoutingModule } from './app.routing.module';
 import { HelpComponent } from './component/help/help.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
-import { PhenopacketModule } from './component/phenopacket/phenopacket.module';
 import { AboutComponent } from './component/about/about.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { HeaderComponent } from './component/header/header.component';
 import { SharedModule } from './component/shared/shared.module';
 import { PhenoCreatorModule } from './component/pheno-creator/pheno-creator.module';
-import { PhenopacketListComponent } from './component/phenopacket-list/phenopacket-list.component';
 import { environment } from '../environments/environment';
+import { PhenopacketListModule } from './component/phenopacket-list/phenopacket-list.module';
 const config: AuthConfig = {
     ...environment.AUTH
 };
@@ -42,7 +41,7 @@ const config: AuthConfig = {
         FlexLayoutModule,
         GridModule,
         PhenoCreatorModule,
-        PhenopacketModule,
+        PhenopacketListModule,
         SharedModule,
         AuthModule.forRoot(config)
     ],
@@ -53,8 +52,7 @@ const config: AuthConfig = {
         SidebarComponent,
         FooterComponent,
         AboutComponent,
-        HelpComponent,
-        PhenopacketListComponent
+        HelpComponent
 
     ],
     exports: [RouterModule],

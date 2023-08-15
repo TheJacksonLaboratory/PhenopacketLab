@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
+import { CardModule } from 'primeng/card';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -9,6 +10,7 @@ describe('DashboardComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
+        CardModule
       ],
       declarations: [ DashboardComponent ]
 

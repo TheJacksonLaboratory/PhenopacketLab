@@ -7,7 +7,7 @@
     <parent>
         <artifactId>PhenopacketLab</artifactId>
         <groupId>org.monarchinitiative.phenopacketlab</groupId>
-        <version>0.0.1</version>
+        <version>1.0.0-alpha</version>
     </parent>
 
     <artifactId>phenopacketlab-ingest</artifactId>

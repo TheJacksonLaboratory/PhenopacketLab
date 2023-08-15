@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { OntologyTimeComponent } from './ontology-time.component';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 describe('OntologyTimeComponent', () => {
   let component: OntologyTimeComponent;
@@ -13,6 +14,7 @@ describe('OntologyTimeComponent', () => {
       imports: [
         InputNumberModule,
         FormsModule,
+        TreeSelectModule,
         HttpClientTestingModule
       ],
       declarations: [ OntologyTimeComponent ]
