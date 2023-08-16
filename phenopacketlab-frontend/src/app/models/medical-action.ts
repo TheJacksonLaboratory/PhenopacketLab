@@ -168,10 +168,10 @@ export class RadiationTherapy {
 }
 
 export enum RegimenStatus {
-    UNKNOWN_STATUS = 'Unknown',
-    STARTED = 'Started',
-    COMPLETED = 'Completed',
-    DISCONTINUED = 'Discontinued'
+    UNKNOWN_STATUS,
+    STARTED,
+    COMPLETED,
+    DISCONTINUED
 }
 export class TherapeuticRegimen {
     static actionName = 'Therapeutic regimen';
