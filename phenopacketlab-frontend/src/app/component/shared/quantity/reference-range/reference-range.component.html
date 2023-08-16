@@ -2,15 +2,17 @@
   <div class="col-6">
     <p-inputNumber
       placeholder="low range"
-      (onInput)="updateLow($event)"
-      [(ngModel)]="low"
+      (onInput)="updateLow($event.value)"
+      [ngModel]="referenceRange?.low"
+      required
     ></p-inputNumber>
   </div>
   <div class="col-6">
     <p-inputNumber
       placeholder="upper range"
-      (onInput)="updateHigh($event)"
-      [(ngModel)]="high"
+      (onInput)="updateHigh($event.value)"
+      [ngModel]="referenceRange?.high"
+      required
     ></p-inputNumber>
   </div>
 </div>

@@ -20,6 +20,11 @@ const bodySiteUrl = environment.BODY_SITE_URL;
 const unitUrl = environment.UNIT_URL;
 const homoSapiensUrl = environment.HOMO_SAPIENS_URL;
 const terminationReasonsUrl = environment.TREATMENT_STATUS;
+const proceduresUrl = environment.NCIT_PROCEDURE_URL;
+const radiationTherapyUrl = environment.RADIATION_THERAPY_URL;
+const therapeuticRegimenUrl = environment.TREATMENT_REGIMEN_URL;
+const responseToTreatmentUrl = environment.DISEASE_RESPONSE_URL;
+const treatmentIntentUrl = environment.TREATMENT_INTENT_URL;
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +49,12 @@ export class ConstantsService {
     units = new BehaviorSubject<any>(undefined);
     taxonomy = new BehaviorSubject<any>(undefined);
     terminationReasons = new BehaviorSubject<any>(undefined);
-
+    procedures = new BehaviorSubject<any>(undefined);
+    radiationTherapies = new BehaviorSubject<any>(undefined);
+    therapeuticRegimens = new BehaviorSubject<any>(undefined);
+    responsesToTreatment = new BehaviorSubject<any>(undefined);
+    treatmentIntents = new BehaviorSubject<any>(undefined);
+ 
     constructor(private http: HttpClient) {
     }
 
@@ -227,6 +237,24 @@ export class ConstantsService {
         // return severities for subscription even if the value is yet undefined.
         return this.diseaseStages.asObservable();
     }
+
+    /**
+     * Return evidences as an Observable
+     * @returns
+     */
+    public getTreatmentIntents(): Observable<any> {
+        // only if undefined, load from server
+        if (this.treatmentIntents.getValue() === undefined) {
+            console.log('Loading treatment intents...');
+            this.http.get(treatmentIntentUrl).subscribe(res => {
+                this.treatmentIntents.next(res);
+            }, (error) => {
+                console.log(error);
+            });
+        }
+        return this.treatmentIntents.asObservable();
+    }
+
     public getAdverseEvents(): Observable<any> {
         // only if undefined, load from server
         if (this.adverseEvent.getValue() === undefined) {
@@ -316,6 +344,54 @@ export class ConstantsService {
             })
         }
         return this.terminationReasons.asObservable();
+    }
+
+    public getProcedures(): Observable<any> {
+        if (this.procedures.getValue() === undefined) {
+            console.log('Loading procedures...');
+            this.http.get(proceduresUrl).subscribe(res => {
+                this.procedures.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.procedures.asObservable();
+    }
+
+    public getRadiationTherapies(): Observable<any> {
+        if (this.radiationTherapies.getValue() === undefined) {
+            console.log('Loading radiation therapies...');
+            this.http.get(radiationTherapyUrl).subscribe(res => {
+                this.radiationTherapies.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.radiationTherapies.asObservable();
+    }
+
+    public getTherapeuticRegimens(): Observable<any> {
+        if (this.therapeuticRegimens.getValue() === undefined) {
+            console.log('Loading therapeutic regimens...');
+            this.http.get(therapeuticRegimenUrl).subscribe(res => {
+                this.therapeuticRegimens.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.therapeuticRegimens.asObservable();
+    }
+
+    public getResponsesToTreatment(): Observable<any> {
+        if (this.responsesToTreatment.getValue() === undefined) {
+            console.log('Loading responses to treatment...');
+            this.http.get(responseToTreatmentUrl).subscribe(res => {
+                this.responsesToTreatment.next(res);
+            }, (error) => {
+                console.log(error);
+            })
+        }
+        return this.responsesToTreatment.asObservable();
     }
 }
 

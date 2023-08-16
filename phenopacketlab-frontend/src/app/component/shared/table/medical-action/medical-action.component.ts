@@ -57,11 +57,17 @@ export class MedicalActionComponent implements OnInit {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
-            data: { medicalAction: medicalAction }
+            data: {
+                medicalAction: medicalAction,
+                diseases: this.diseases
+            }
         });
 
         this.ref.onClose.subscribe((medicAction: MedicalAction) => {
             if (medicAction) {
+                if (this.medicalActions === undefined) {
+                    this.medicalActions = [];
+                }
                 const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
                 if (indexToUpdate === -1) {
                     this.medicalActions.push(medicAction);

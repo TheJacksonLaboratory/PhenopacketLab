@@ -47,6 +47,7 @@ import { InterpretationComponent } from './table/interpretation/interpretation.c
 import { InterpretationDetailComponent } from './table/interpretation/interpretation-detail/interpretation-detail.component';
 import { BiosampleComponent } from './table/biosample/biosample.component';
 import { BiosampleDetailComponent } from './table/biosample/biosample-detail/biosample-detail.component';
+import { TimeIntervalComponent } from './time-interval/time-interval.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { BiosampleDetailComponent } from './table/biosample/biosample-detail/bio
     InterpretationComponent,
     InterpretationDetailComponent,
     BiosampleComponent,
-    BiosampleDetailComponent
+    BiosampleDetailComponent,
+    TimeIntervalComponent
   ],
   exports: [
     SpinnerDialogComponent,
@@ -145,7 +147,8 @@ import { BiosampleDetailComponent } from './table/biosample/biosample-detail/bio
     InterpretationComponent,
     InterpretationDetailComponent,
     BiosampleComponent,
-    BiosampleDetailComponent
+    BiosampleDetailComponent,
+    TimeIntervalComponent
   ]
 })
 export class SharedModule { }

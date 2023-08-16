@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const bodySitesUrl = environment.BODY_SITE_URL;
-const treatmentIntentsUrl = environment.MEDICAL_ACTION_TREATMENT_INTENTS_URL;
-const treatmentResponsesUrl = environment.MEDICAL_ACTION_TREATMENT_RESPONSES_URL;
 const chemicalEntitiesUrl = environment.CHEMICAL_ENTITY_URL;
 const chemicalEntitiesSearchUrl = environment.CHEMICAL_ENTITY_SEARCH_URL;
 
@@ -24,13 +22,6 @@ export class MedicalActionService {
 
     public getAllBodySites(): Observable<any> {
         return this.http.get(bodySitesUrl);
-    }
-
-    public getTreatmentIntents(): Observable<any> {
-        return this.http.get(treatmentIntentsUrl);
-    }
-    public getTreatmentResponses(): Observable<any> {
-        return this.http.get(treatmentResponsesUrl);
     }
 
     public searchChemicalEntities(query: string): Observable<any> {

@@ -51,7 +51,6 @@ export class MedicalActionDetailComponent implements OnInit {
 
   updateMedicalActionAction() {
     if (this.medicalAction) {
-
       this.treatmentTarget = this.medicalAction.treatmentTarget;
       this.treatmentIntent = this.medicalAction.treatmentIntent;
       this.responseToTreatment = this.medicalAction.responseToTreatment;

@@ -1,3 +1,4 @@
+<p-toast position="center" key="cen"></p-toast>
 <div class="grid p-fluid">
   <div class="field col-6">
     <label for="treatmenttarget"><b>Treatment target:</b></label>
@@ -5,9 +6,9 @@
       ngDefaultControl
       id="treatmenttarget"
       appendTo="body"
-      [options]="diseases"
-      [ngModel]="medicalAction?.treatmentTarget"
-      (onChange)="updateTreatmentTarget($event)"
+      [options]="treatmentTargets"
+      [ngModel]="treatmentTargetSelected"
+      (onChange)="updateTreatmentTarget($event.value)"
       optionLabel="label"
       [filter]="true"
       filterBy="label,id"
@@ -32,23 +33,23 @@
       ngDefaultControl
       id="treatmentintent"
       appendTo="body"
-      [options]="intents"
-      [ngModel]="medicalAction?.treatmentIntent"
-      (onChange)="updateTreatmentIntent($event)"
-      optionLabel="label"
+      [options]="treatmentIntents"
+      [(ngModel)]="treatmentIntentSelected"
+      (onChange)="updateTreatmentIntent($event.value)"
+      optionLabel="lbl"
       [filter]="true"
-      filterBy="label,id"
+      filterBy="lbl,id"
       [showClear]="true"
       placeholder="Select an intent"
     >
       <ng-template let-intent pTemplate="item">
         <div
-          [pTooltip]="intent.label"
+          [pTooltip]="intent.def"
           showDelay="2000"
           tooltipPosition="bottom"
           escape="false"
         >
-          [{{ intent.id }}] {{ intent.label }}
+          [{{ intent.id }}] {{ intent.lbl }}
         </div>
       </ng-template>
     </p-dropdown>
@@ -56,30 +57,27 @@
 
   <div class="field col-6">
     <label for="treatmentresponse"><b>Response to treatment:</b></label>
-    <p-dropdown
+    <p-treeSelect
       ngDefaultControl
       id="treatmentresponse"
       appendTo="body"
-      [options]="responses"
-      [ngModel]="medicalAction?.responseToTreatment"
-      (onChange)="updateTreatmentResponse($event)"
-      optionLabel="label"
+      [(ngModel)]="responseToTreatmentSelected"
+      [options]="responsesToTreatmentNodes"
+      (onNodeSelect)="updateTreatmentResponse($event)"
+      [metaKeySelection]="false"
+      placeholder="Select response to treatment"
       [filter]="true"
-      filterBy="label,id"
+      filterBy="key,label"
+      [filterInputAutoFocus]="true"
       [showClear]="true"
-      placeholder="Select a treatment response"
+      (onClear)="updateTreatmentResponse($event)"
     >
-      <ng-template let-response pTemplate="item">
-        <div
-          [pTooltip]="response.label"
-          showDelay="2000"
-          tooltipPosition="bottom"
-          escape="false"
+      <ng-template let-node pTemplate="default">
+        <span [pTooltip]="node.label" showDelay="2000" tooltipPosition="bottom"
+          >[{{ node.key }}] {{ node.label }}</span
         >
-          [{{ response.id }}] {{ response.label }}
-        </div>
       </ng-template>
-    </p-dropdown>
+    </p-treeSelect>
   </div>
 
   <div class="field col-6">
@@ -121,17 +119,6 @@
         [nodes]="adverseEventNodes"
       ></ontology-tree-select>
     </p-panel>
-    <!-- <label for="events"><b>Adverse event(s)</b></label>
-    <ontology-tree-select
-      id="events"
-      pTooltip="Adverse event ontology (ODAE)"
-      tooltipPosition="bottom"
-      showDelay="2000"
-      [selectionMode]="'checkbox'"
-      (selectedNodesChange)="updateAdverseEvents($event)"
-      [selectedNodes]="medicalAction?.adverseEventNodes"
-      [nodes]="adverseEventNodes"
-    ></ontology-tree-select> -->
   </div>
 
   <div class="field col-6">
@@ -144,6 +131,7 @@
       [(ngModel)]="actionType"
       (onChange)="updateActionType($event)"
       [showClear]="true"
+      required
       placeholder="Select an action type"
     >
     </p-dropdown>
@@ -154,11 +142,31 @@
     <div class="grid">
       <div class="field col-6">
         <label for="code"><b>Code:</b></label>
-        <ontology-class-input
+        <p-treeSelect
+          ngDefaultControl
+          class="${procedureSelected ? '' : 'ng-invalid ng-dirty'}"
           id="code"
-          [ontologyObject]="procedureCode"
-          (ontologyObjectEvent)="changeProcedureCode($event)"
-        ></ontology-class-input>
+          appendTo="body"
+          [(ngModel)]="procedureSelected"
+          [options]="proceduresNodes"
+          (onNodeSelect)="updateProcedureCode($event)"
+          [metaKeySelection]="false"
+          placeholder="Select procedure code"
+          [filter]="true"
+          filterBy="key,label"
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateProcedureCode($event)"
+        >
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
       </div>
       <div class="field col-6">
         <label for="procedureBodySite"><b>Body site:</b></label>
@@ -205,6 +213,7 @@
           [(ngModel)]="selectedChemicalEntity"
           filter="true"
           filterBy="id,label"
+          required
           (onFilter)="chemicalEntityContentChanging($event.filter)"
           (onChange)="updateChemicalEntity($event.value)"
           showClear="true"
@@ -266,7 +275,7 @@
       </div>
       <div class="field col-6"></div>
 
-      <div *ngIf="doseIntervalVisible" class="field col-12">
+      <div class="field col-12">
         <p-table
           [value]="doseIntervals"
           dataKey="key"
@@ -274,7 +283,6 @@
           styleClass="p-datatable-sm"
         >
           <ng-template pTemplate="caption">
-            <!-- Display add button if not in stepper or if no expression is present -->
             <div class="flex align-items-center justify-content-between">
               Dose interval(s)
               <p-button
@@ -335,7 +343,7 @@
                 <!-- </div> -->
               </td>
               <td>
-                <input pInputText [(ngModel)]="doseinterval.interval" />
+                <app-time-interval [timeInterval]="doseinterval.interval" (timeIntervalChange)="updateDoseIntervalTimeInterval($event, doseinterval)"></app-time-interval>
               </td>
               <td>
                 <button
@@ -369,11 +377,31 @@
     <div class="grid">
       <div class="field col-6">
         <label for="modality"><b>Modality:</b></label>
-        <ontology-class-input
+        <p-treeSelect
+          ngDefaultControl
           id="modality"
-          [ontologyObject]="modality"
-          (ontologyObjectEvent)="changeModality($event)"
-        ></ontology-class-input>
+          appendTo="body"
+          [(ngModel)]="radiationTherapyModalitySelected"
+          [options]="radiationTherapyModalityNodes"
+          (onNodeSelect)="updateRadiationTherapyModality($event)"
+          [metaKeySelection]="false"
+          placeholder="Select radiation therapy modality"
+          [filter]="true"
+          filterBy="key,label"
+          required
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateRadiationTherapyModality($event)"
+        >
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
       </div>
       <div class="field col-6">
         <label for="radiationBodySite"><b>Body site:</b></label>
@@ -383,6 +411,7 @@
           appendTo="body"
           [(ngModel)]="radiationTherapyBodySite"
           [options]="bodySiteNodes"
+          required
           (onNodeSelect)="updateRadiationTherapyBodySite($event)"
           [metaKeySelection]="false"
           placeholder="Select body site"
@@ -406,6 +435,7 @@
         <label for="dosage"><b>Dosage:</b></label>
         <p-inputNumber
           id="dosage"
+          required
           onInput="changeDosage($event)"
           placeholder="Dosage in Gy"
         >
@@ -415,6 +445,7 @@
         <label for="fractions"><b>Fractions:</b></label>
         <p-inputNumber
           id="fractions"
+          required
           onInput="changeFractions($event)"
           placeholder="Fractions"
         >
@@ -428,11 +459,31 @@
     <div class="grid">
       <div class="field col-6">
         <label for="identifier"><b>Identifier:</b></label>
-        <ontology-class-input
-          id="identifier"
-          [ontologyObject]="identifier"
-          (ontologyObjectEvent)="changeIdentifier($event)"
-        ></ontology-class-input>
+        <p-treeSelect
+        ngDefaultControl
+        id="identifier"
+        appendTo="body"
+        [(ngModel)]="therapeuticRegimenIdentifierSelected"
+        [options]="therapeuticRegimenIdentifiersNodes"
+        (onNodeSelect)="updateTherapeuticRegimenIdentifier($event)"
+        [metaKeySelection]="false"
+        placeholder="Select therapeutic regimen identifier"
+        [filter]="true"
+        filterBy="key,label"
+        required
+        [filterInputAutoFocus]="true"
+        [showClear]="true"
+        (onClear)="updateTherapeuticRegimenIdentifier($event)"
+      >
+        <ng-template let-node pTemplate="default">
+          <span
+            [pTooltip]="node.label"
+            showDelay="2000"
+            tooltipPosition="bottom"
+            >[{{ node.key }}] {{ node.label }}</span
+          >
+        </ng-template>
+      </p-treeSelect>
       </div>
       <div class="field col-6">
         <label for="regimenstatus"><b>Regimen status:</b></label>
@@ -445,6 +496,7 @@
           (onChange)="onRegimenStatusChange($event)"
           [showClear]="true"
           [filter]="true"
+          required
           placeholder="Select an regimen status"
         >
         </p-dropdown>

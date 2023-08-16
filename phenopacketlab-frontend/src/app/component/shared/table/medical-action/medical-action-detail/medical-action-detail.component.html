@@ -1,10 +1,22 @@
 <p-panel>
   <ng-template pTemplate="header">
-    <span *ngIf="actionType === 'Procedure'" class="font-medium text-xl">{{ procedureCode?.toString() }}</span>
-    <span *ngIf="actionType === 'Treatment'" class="font-medium text-xl">{{ agent?.toString() }}</span>
+    <span *ngIf="actionType === 'Procedure'" class="font-medium text-xl">{{
+      procedureCode?.toString()
+    }}</span>
+    <span *ngIf="actionType === 'Treatment'" class="font-medium text-xl">{{
+      agent?.toString()
+    }}</span>
 
-    <span *ngIf="actionType === 'Radiation therapy'" class="font-medium text-xl">{{ modality?.toString() }}</span>
-    <span *ngIf="actionType === 'Therapeutic regimen'" class="font-medium text-xl">{{ getIdentifier() }}</span>
+    <span
+      *ngIf="actionType === 'Radiation therapy'"
+      class="font-medium text-xl"
+      >{{ modality?.toString() }}</span
+    >
+    <span
+      *ngIf="actionType === 'Therapeutic regimen'"
+      class="font-medium text-xl"
+      >{{ getIdentifier() }}</span
+    >
   </ng-template>
   <div class="grid">
     <div class="field col-6">
@@ -18,6 +30,30 @@
     </div>
     <div class="field col-6">
       <b>Treatment termination reason: </b>{{ terminationReason?.label }}
+    </div>
+    <div class="field col-12">
+      <p-table
+        *ngIf="medicalAction.adverseEvents?.length > 0"
+        [value]="medicalAction.adverseEvents"
+        dataKey="key"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="caption">
+          <div class="table-header">Adverse events</div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Label</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-event>
+          <tr>
+            <td><a href="{{ event.termUrl }}" target="_blank">{{ event.id }}</a></td>
+            <td>{{ event.label }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
     <!-- Procedure medical action -->
     <div *ngIf="actionType === 'Procedure'" class="field col-12">
@@ -36,21 +72,14 @@
     <!-- Treatement medical action -->
     <div *ngIf="actionType === 'Treatment'" class="field col-12">
       <div class="grid">
-        <div class="field col-4">
-          <b>Agent: </b>{{ agent?.toString() }}
-        </div>
+        <div class="field col-4"><b>Agent: </b>{{ agent?.toString() }}</div>
         <div class="field col-4">
           <b>Route of administration: </b
           >{{ routeOfAdministration?.toString() }}
         </div>
-        <div class="field col-4">
-          <b>Drug type: </b>{{ drugType }}
-        </div>
+        <div class="field col-4"><b>Drug type: </b>{{ drugType }}</div>
         <div class="field col-12">
-          <p-table
-            [value]="doseIntervals"
-            styleClass="p-datatable-sm"
-          >
+          <p-table *ngIf="doseIntervals?.length > 0" [value]="doseIntervals" styleClass="p-datatable-sm">
             <ng-template pTemplate="caption"> Dose intervals </ng-template>
             <ng-template pTemplate="header">
               <tr>
@@ -90,9 +119,7 @@
         <div class="field col-6">
           <b>Dosage: </b><span *ngIf="dosage">{{ dosage }} Gy</span>
         </div>
-        <div class="field col-6">
-          <b>Fractions: </b>{{ fractions }}
-        </div>
+        <div class="field col-6"><b>Fractions: </b>{{ fractions }}</div>
       </div>
     </div>
     <!-- TherapeuticRegimen medical action -->

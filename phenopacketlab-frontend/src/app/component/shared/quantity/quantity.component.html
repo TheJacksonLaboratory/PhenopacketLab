@@ -4,7 +4,7 @@
       ngDefaultControl
       id="unit"
       appendTo="body"
-      [(ngModel)]="quantity.unit"
+      [ngModel]="quantity?.unit"
       [options]="unitNodes"
       (onNodeSelect)="updateUnit($event)"
       [metaKeySelection]="false"
@@ -26,14 +26,15 @@
   <div class="col-2">
     <p-inputNumber
       placeholder="Value"
-      (onInput)="updateValue($event)"
-      [(ngModel)]="quantity.value"
+      (onInput)="updateValue($event.value)"
+      [ngModel]="quantity?.value"
       required
     ></p-inputNumber>
   </div>
   <div class="col-5">
     <app-reference-range
       [referenceRange]="quantity?.referenceRange"
+      [unit]="quantity?.unit"
       (referenceRangeChange)="updateReferenceRange($event)"
     ></app-reference-range>
   </div>

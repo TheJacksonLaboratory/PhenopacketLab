@@ -1,5 +1,9 @@
+<p-toast position="center" key="cen"></p-toast>
 <div class="m-5">
-  <div class="grid p-fluid">
-    <div class="field col-12">This step is not yet implemented.</div>
-  </div>
+  <h1 class="header-step"><b>Medical action(s)</b></h1>
+  <app-medical-action
+    [medicalActions]="medicalActions"
+    [diseases]="diseases"
+    (onMedicalActionChanged)="updateMedicalActions($event)"
+  ></app-medical-action>
 </div>
