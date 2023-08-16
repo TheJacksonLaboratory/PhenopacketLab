@@ -69,4 +69,6 @@ public interface ConceptConstantsService {
     Optional<SubtreeNode> bodySiteTreeConstants();
 
     Optional<SubtreeNode> unitTreeConstants();
+
+    List<IdentifiedConcept> treatmentIntentConstants();
 }

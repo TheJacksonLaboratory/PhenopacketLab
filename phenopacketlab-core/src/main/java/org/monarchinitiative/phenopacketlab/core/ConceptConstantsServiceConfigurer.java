@@ -77,6 +77,7 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> radiationTherapyTreeConstants = configureRadiationTherapyTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> treatmentRegimenTreeConstants = configureTreatmentRegimenTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> unitTreeConstants = configureUnitTreeConstants(resourceService, hierarchyServiceRegistry);
+        List<IdentifiedConcept> treatmentIntentConstants = configureTreatmentIntentConstants(resourceService);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -106,6 +107,7 @@ public class ConceptConstantsServiceConfigurer {
                 radiationTherapyTreeConstants.orElse(null),
                 treatmentRegimenTreeConstants.orElse(null),
                 unitTreeConstants.orElse(null),
+                treatmentIntentConstants,
                 contigConstants);
     }
 
@@ -383,7 +385,7 @@ public class ConceptConstantsServiceConfigurer {
 
     private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, UNIT, UNIT.getPrefix(), null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, UNIT, UNIT.getPrefix(), null, false);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {
@@ -405,6 +407,23 @@ public class ConceptConstantsServiceConfigurer {
         return List.copyOf(concepts);
     }
 
+    private static List<IdentifiedConcept> configureTreatmentIntentConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> ncitOptional = resourceService.forPrefix("NCIT");
+        if (ncitOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure evidence constants due to missing NCIT concept resource!");
+            return List.of();
+        }
+        IdentifiedConceptResource ncit = ncitOptional.get();
+        List<IdentifiedConcept> concepts = new ArrayList<>(5);
+        retrieveIdentifiedConcept(ncit, "NCIT:C101516", concepts, "Missing NCIT:C101516"); // palliative
+        retrieveIdentifiedConcept(ncit, "NCIT:C28005", concepts, "Missing NCIT:C28005");    // preventive
+        retrieveIdentifiedConcept(ncit, "NCIT:C185614", concepts, "Missing NCIT:C185614"); // curative therapy
+        retrieveIdentifiedConcept(ncit, "NCIT:C15359", concepts, "Missing NCIT:C15359");    // salvage therapy
+        retrieveIdentifiedConcept(ncit, "NCIT:C70827", concepts, "Missing NCIT:C70827");    // recovery
+        retrieveIdentifiedConcept(ncit, "NCIT:C115904", concepts, "Missing NCIT:C115904");  // Primary Goal to Extend Life
+
+        return List.copyOf(concepts);
+    }
     private static List<Concept> configureStructuralTypes() {
         Concept del = Concept.of("DEL", "Deletion.", List.of());
         Concept ins = Concept.of("INS", "Insertion.", List.of());

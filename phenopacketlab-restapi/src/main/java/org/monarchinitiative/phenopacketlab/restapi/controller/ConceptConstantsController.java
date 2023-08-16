@@ -188,6 +188,11 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "treatment-intent", headers = "Accept=application/json")
+    public ResponseEntity<List<IdentifiedConcept>> getTreatmentIntentConstants() {
+        return ResponseEntity.ok(conceptConstantsService.treatmentIntentConstants());
+    }
+
     @GetMapping(value = {"homosapiens"},headers = "Accept=application/json")
     public ResponseEntity<IdentifiedConcept> getHomoSapiensTaxonomy() {
         return ResponseEntity.of(taxonomyService.homoSapiensNCBIConcept());
