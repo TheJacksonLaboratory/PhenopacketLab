@@ -32,7 +32,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   proceduresNodes: OntologyTreeNode[];
   procedureSelected: OntologyTreeNode;
   proceduresSubscription: Subscription;
-  performed: TimeElement;
+  performedOnNodes: OntologyTreeNode[];
+  performedOnSubscription: Subscription;
   procedureBodySite: OntologyClass;
   bodySitesStorageKey = 'body_sites';
   // * Treatment *
@@ -148,6 +149,13 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         }
       }
     });
+    // get onsets
+    this.performedOnSubscription = this.constantsService.getOnsets().subscribe(nodes => {
+      // we get the children from the root node sent in response
+      if (nodes) {
+        this.performedOnNodes = <OntologyTreeNode[]>nodes.children;
+      }
+    });
     this.radiationTherapySubscription = this.constantsService.getRadiationTherapies().subscribe(nodes => {
       if (nodes) {
         this.radiationTherapyModalityNodes = <OntologyTreeNode[]>nodes.children;
@@ -250,6 +258,9 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (this.proceduresSubscription) {
       this.proceduresSubscription.unsubscribe();
     }
+    if (this.performedOnSubscription) {
+      this.performedOnSubscription.unsubscribe();
+    }
     if (this.radiationTherapySubscription) {
       this.radiationTherapySubscription.unsubscribe();
     }
@@ -263,7 +274,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       this.treatmentTargetSelected = this.medicalAction.treatmentTarget;
       if (this.medicalAction.procedure) {
         this.procedureBodySite = this.medicalAction.procedure.bodySite;
-        this.performed = this.medicalAction.procedure.performed;
         this.actionType = Procedure.actionName;
       } else if (this.medicalAction.treatment) {
         this.selectedChemicalEntity = this.medicalAction.treatment.agent;
@@ -375,6 +385,11 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       }
     } else {
       this.medicalAction.procedure.code = undefined;
+    }
+  }
+  updateProcedurePerformedOn(timeElement) {
+    if (this.medicalAction && this.medicalAction.procedure) {
+      this.medicalAction.procedure.performed = timeElement;
     }
   }
   // chemical entity

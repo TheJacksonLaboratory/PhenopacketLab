@@ -42,7 +42,6 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
   diseaseStageSelectedSubscription: Subscription;
 
   // onset
-  onset: any;
   onsetsNodes: OntologyTreeNode[];
   onsetsSubscription: Subscription;
 

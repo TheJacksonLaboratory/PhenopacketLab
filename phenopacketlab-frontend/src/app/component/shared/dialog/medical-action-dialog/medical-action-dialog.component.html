@@ -196,7 +196,14 @@
         </p-treeSelect>
       </div>
       <div class="field col-12">
-        <b>Performed on: </b> {{ performed?.toString() }}
+        <label for="performedOn"><b>Performed on: </b> </label>
+        <app-time-element
+          id="performedOn"
+          [timeElement]="medicalAction?.procedure?.performed"
+          [ontologyNodes]="performedOnNodes"
+          [useOntologyClass]="true"
+          (timeElementEvent)="updateProcedurePerformedOn($event)"
+        ></app-time-element>
       </div>
     </div>
   </div>
