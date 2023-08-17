@@ -5,6 +5,7 @@ import { PanelModule } from 'primeng/panel';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
+import { MedicalAction } from 'src/app/models/medical-action';
 
 describe('MedicalActionDetailComponent', () => {
   let component: MedicalActionDetailComponent;
@@ -28,6 +29,7 @@ describe('MedicalActionDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MedicalActionDetailComponent);
     component = fixture.componentInstance;
+    component.medicalAction = new MedicalAction();
     fixture.detectChanges();
   });
 

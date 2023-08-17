@@ -33,8 +33,8 @@
     </div>
     <div class="field col-12">
       <p-table
-        *ngIf="medicalAction.adverseEvents?.length > 0"
-        [value]="medicalAction.adverseEvents"
+        *ngIf="medicalAction?.adverseEvents?.length > 0"
+        [value]="medicalAction?.adverseEvents"
         dataKey="key"
         styleClass="p-datatable-sm"
       >

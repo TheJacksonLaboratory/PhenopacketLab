@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InputTextModule } from 'primeng/inputtext';
 import { TimeIntervalComponent } from './time-interval.component';
 import { TimeInterval } from 'src/app/models/base';
+import { FormsModule } from '@angular/forms';
 
 describe('TimeIntervalComponent', () => {
   let component: TimeIntervalComponent;
@@ -11,7 +12,8 @@ describe('TimeIntervalComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ TimeIntervalComponent ],
       imports: [
-        InputTextModule
+        InputTextModule,
+        FormsModule
       ],
       providers: [
       ]
