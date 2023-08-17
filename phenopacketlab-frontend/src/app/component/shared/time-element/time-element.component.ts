@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Age, AgeRange, GestationalAge, OntologyClass, TimeElement, TimeElementId, TimeElementType } from 'src/app/models/base';
+import { Age, AgeRange, GestationalAge, OntologyClass, TimeElement, TimeElementType } from 'src/app/models/base';
 import { AgeComponent } from './age/age.component';
 
 @Component({
@@ -17,10 +17,6 @@ export class TimeElementComponent implements OnInit {
   ontologyNodes: any[];
   @Input()
   useOntologyClass = false;
-
-  // Used to identify which time element it is
-  @Input()
-  timeElementId: TimeElementId;
 
   selectedAgeType: string;
 

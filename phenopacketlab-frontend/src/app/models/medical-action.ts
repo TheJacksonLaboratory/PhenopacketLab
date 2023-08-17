@@ -168,14 +168,17 @@ export class RadiationTherapy {
 }
 
 export enum RegimenStatus {
-    UNKNOWN_STATUS = 'Unknown',
-    STARTED = 'Started',
-    COMPLETED = 'Completed',
-    DISCONTINUED = 'Discontinued'
+    UNKNOWN_STATUS,
+    STARTED,
+    COMPLETED,
+    DISCONTINUED
 }
 export class TherapeuticRegimen {
     static actionName = 'Therapeutic regimen';
-    identifier: OntologyClass | ExternalReference;
+    // identifier as ontologyClass
+    ontologyClass: OntologyClass;
+    // identifier as ExternalReference
+    externalReference: ExternalReference;
     startTime: TimeElement;
     endTime: TimeElement;
     regimenStatus: RegimenStatus;
@@ -183,9 +186,9 @@ export class TherapeuticRegimen {
     static convert(obj: any): TherapeuticRegimen {
         const therapeuticRegimen = new TherapeuticRegimen();
         if (obj['ontologyClass']) {
-            therapeuticRegimen.identifier = OntologyClass.convert(obj['ontologyClass']);
+            therapeuticRegimen.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
         } else if (obj['externalReference']) {
-            therapeuticRegimen.identifier = ExternalReference.convert(obj['externalReference']);
+            therapeuticRegimen.externalReference = ExternalReference.convert(obj['externalReference']);
         } else {
             throw new Error(`Phenopacket file is missing 'ontologyClass' or 'externalReference' field in 'therapeuticRegimen' object.`);
         }
@@ -204,8 +207,10 @@ export class TherapeuticRegimen {
     }
 
     toString() {
-        if (this.identifier) {
-            return this.identifier.toString();
+        if (this.ontologyClass) {
+            return this.ontologyClass.toString();
+        } else if (this.externalReference) {
+            return this.externalReference.toString();
         }
         return '';
     }

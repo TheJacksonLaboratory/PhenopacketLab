@@ -159,9 +159,6 @@ export class Evidence extends Convert {
 }
 export class Procedure {
 
-    constructor() {
-        this.code = new OntologyClass('', '');
-    }
     static actionName = 'Procedure';
     code: OntologyClass;
     bodySite: OntologyClass;

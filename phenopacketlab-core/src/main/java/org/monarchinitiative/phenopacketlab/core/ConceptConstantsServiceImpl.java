@@ -32,7 +32,13 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     private final SubtreeNode scheduleFrequencyTreeConstants;
     private final SubtreeNode adverseEventTreeConstants;
     private final SubtreeNode bodySiteTreeConstants;
+    private final SubtreeNode treatmentStatusTreeConstants;
+    private final SubtreeNode diseaseResponseTreeConstants;
+    private final SubtreeNode ncitProcedureTreeConstants;
+    private final SubtreeNode radiationTherapyTreeConstants;
+    private final SubtreeNode treatmentRegimenTreeConstants;
     private final SubtreeNode unitTreeConstants;
+    private final List<IdentifiedConcept> treatmentIntentConstants;
     private final Map<String, List<Concept>> contigConstants;
 
     ConceptConstantsServiceImpl(List<IdentifiedConcept> sexConstants,
@@ -57,7 +63,13 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
                                 SubtreeNode scheduleFrequencyTreeConstants,
                                 SubtreeNode adverseEventTreeConstants,
                                 SubtreeNode bodySiteTreeConstants,
+                                SubtreeNode treatmentStatusTreeConstants,
+                                SubtreeNode diseaseResponseTreeConstants,
+                                SubtreeNode ncitProcedureTreeConstants,
+                                SubtreeNode radiationTherapyTreeConstants,
+                                SubtreeNode treatmentRegimenTreeConstants,
                                 SubtreeNode unitTreeConstants,
+                                List<IdentifiedConcept> treatmentIntentConstants,
                                 Map<String, List<Concept>> contigConstants) {
         this.sexConstants = sexConstants;
         this.genderConstants = genderConstants;
@@ -81,7 +93,13 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
         this.scheduleFrequencyTreeConstants = scheduleFrequencyTreeConstants;
         this.adverseEventTreeConstants = adverseEventTreeConstants;
         this.bodySiteTreeConstants = bodySiteTreeConstants;
+        this.treatmentStatusTreeConstants = treatmentStatusTreeConstants;
+        this.diseaseResponseTreeConstants = diseaseResponseTreeConstants;
+        this.ncitProcedureTreeConstants = ncitProcedureTreeConstants;
+        this.radiationTherapyTreeConstants = radiationTherapyTreeConstants;
+        this.treatmentRegimenTreeConstants = treatmentRegimenTreeConstants;
         this.unitTreeConstants = unitTreeConstants;
+        this.treatmentIntentConstants = treatmentIntentConstants;
         this.contigConstants = contigConstants;
     }
 
@@ -171,10 +189,28 @@ class ConceptConstantsServiceImpl implements ConceptConstantsService {
     public Optional<SubtreeNode> adverseEventTreeConstants() { return Optional.ofNullable(adverseEventTreeConstants); }
 
     @Override
+    public Optional<SubtreeNode> treatmentStatusTreeConstants() { return Optional.ofNullable(treatmentStatusTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> diseaseResponseTreeConstants() { return Optional.ofNullable(diseaseResponseTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> ncitProcedureTreeConstants() { return Optional.ofNullable(ncitProcedureTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> radiationTherapyTreeConstants() { return Optional.ofNullable(radiationTherapyTreeConstants); }
+
+    @Override
+    public Optional<SubtreeNode> treatmentRegimenTreeConstants() { return Optional.ofNullable(treatmentRegimenTreeConstants); }
+
+    @Override
     public Optional<SubtreeNode> bodySiteTreeConstants() { return Optional.ofNullable(bodySiteTreeConstants); }
 
     @Override
     public Optional<SubtreeNode> unitTreeConstants() { return Optional.ofNullable(unitTreeConstants); }
+
+    @Override
+    public List<IdentifiedConcept> treatmentIntentConstants() { return treatmentIntentConstants; }
 
     @Override
     public List<Concept> contigConstants(String genomeAssembly) {

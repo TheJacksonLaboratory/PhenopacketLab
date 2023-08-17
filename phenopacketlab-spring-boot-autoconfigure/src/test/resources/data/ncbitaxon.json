@@ -1,0 +1,913 @@
+{
+  "graphs" : [ {
+    "id" : "http://purl.obolibrary.org/obo/ncbitaxon.owl",
+    "meta" : {
+      "version" : "http://purl.obolibrary.org/obo/ncbitaxon/2023-06-20/ncbitaxon.owl"
+    },
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/IAO_0000115",
+      "lbl" : "definition",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_1",
+      "lbl" : "root",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "all"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_117570",
+      "lbl" : "Teleostomi",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_117571",
+      "lbl" : "Euteleostomi",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "bony vertebrates"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "NCBITaxon:40673"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_131567",
+      "lbl" : "cellular organisms",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "biota"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_1338369",
+      "lbl" : "Dipnotetrapodomorpha",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_1437010",
+      "lbl" : "Boreoeutheria",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Boreotheria"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        }, {
+          "val" : "PMID:11743200"
+        }, {
+          "val" : "PMID:11791233"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_207598",
+      "lbl" : "Homininae",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Homo/Pan/Gorilla group"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_subfamily"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_2759",
+      "lbl" : "Eukaryota",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "eucaryotes"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "eukaryotes"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Eucarya"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Eucaryotae"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Eukarya"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Eukaryotae"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "eukaryotes"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        }, {
+          "val" : "PMID:23020233"
+        }, {
+          "val" : "PMID:30257078"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_superkingdom"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_314146",
+      "lbl" : "Euarchontoglires",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        }, {
+          "val" : "PMID:11214319"
+        }, {
+          "val" : "PMID:12082125"
+        }, {
+          "val" : "PMID:12878460"
+        }, {
+          "val" : "PMID:15522813"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_superorder"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_314293",
+      "lbl" : "Simiiformes",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Anthropoidea"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_infraorder"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_314295",
+      "lbl" : "Hominoidea",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "ape"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "apes"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_superfamily"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_32523",
+      "lbl" : "Tetrapoda",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "tetrapods"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_32524",
+      "lbl" : "Amniota",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "amniotes"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_32525",
+      "lbl" : "Theria <mammals>",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#scientific_name",
+          "pred" : "hasExactSynonym",
+          "val" : "Theria"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_33154",
+      "lbl" : "Opisthokonta",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Fungi/Metazoa group"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "opisthokonts"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_33208",
+      "lbl" : "Metazoa",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "metazoans"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "multicellular animals"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Animalia"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "animals"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_kingdom"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_33213",
+      "lbl" : "Bilateria",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_33511",
+      "lbl" : "Deuterostomia",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "deuterostomes"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_376913",
+      "lbl" : "Haplorrhini",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_suborder"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_40674",
+      "lbl" : "Mammalia",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "mammals"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "mammals"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_class"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_6072",
+      "lbl" : "Eumetazoa",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_7711",
+      "lbl" : "Chordata",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "chordates"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "chordates"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_phylum"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_7742",
+      "lbl" : "Vertebrata <vertebrates>",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#scientific_name",
+          "pred" : "hasExactSynonym",
+          "val" : "Vertebrata"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "vertebrates"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "vertebrates"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_7776",
+      "lbl" : "Gnathostomata <vertebrates>",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#scientific_name",
+          "pred" : "hasExactSynonym",
+          "val" : "Gnathostomata"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "jawed vertebrates"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_8287",
+      "lbl" : "Sarcopterygii",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_superclass"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_89593",
+      "lbl" : "Craniata <chordates>",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#scientific_name",
+          "pred" : "hasExactSynonym",
+          "val" : "Craniata"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_subphylum"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9347",
+      "lbl" : "Eutheria",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "eutherian mammals"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "placental mammals"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "placentals"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Placentalia"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "placentals"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_clade"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9443",
+      "lbl" : "Primates",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#equivalent_name",
+          "pred" : "hasExactSynonym",
+          "val" : "primate"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Primata"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#blast_name",
+          "pred" : "hasRelatedSynonym",
+          "val" : "primates"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_order"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9526",
+      "lbl" : "Catarrhini",
+      "type" : "CLASS",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_parvorder"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9604",
+      "lbl" : "Hominidae",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "great apes"
+        }, {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#synonym",
+          "pred" : "hasRelatedSynonym",
+          "val" : "Pongidae"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_family"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9605",
+      "lbl" : "Homo",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "humans"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_genus"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "lbl" : "Homo sapiens",
+      "type" : "CLASS",
+      "meta" : {
+        "synonyms" : [ {
+          "synonymType" : "http://purl.obolibrary.org/obo/ncbitaxon#genbank_common_name",
+          "pred" : "hasExactSynonym",
+          "val" : "human"
+        } ],
+        "xrefs" : [ {
+          "val" : "GC_ID:1"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+          "val" : "http://purl.obolibrary.org/obo/NCBITaxon_species"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/ncbitaxon#has_rank",
+      "lbl" : "has_rank",
+      "type" : "PROPERTY",
+      "meta" : {
+        "definition" : {
+          "val" : "A metadata relation between a class and its taxonomic rank (eg species, family)"
+        },
+        "comments" : [ "This is an abstract class for use with the NCBI taxonomy to name the depth of the node within the tree. The link between the node term and the rank is only visible if you are using an obo 1.3 aware browser/editor; otherwise this can be ignored" ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "ncbi_taxonomy"
+        } ]
+      }
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+      "lbl" : "has_alternative_id",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasDbXref",
+      "lbl" : "database_cross_reference",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasExactSynonym",
+      "lbl" : "has_exact_synonym",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+      "lbl" : "has_obo_namespace",
+      "type" : "PROPERTY"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym",
+      "lbl" : "has_related_synonym",
+      "type" : "PROPERTY"
+    } ],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_1",
+      "pred" : "is_a",
+      "obj" : "http://www.w3.org/2002/07/owl#Thing"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_117570",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_7776"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_117571",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_117570"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_131567",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_1"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_1338369",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_8287"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_1437010",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_9347"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_207598",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_9604"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_2759",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_131567"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_314146",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_1437010"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_314293",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_376913"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_314295",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_9526"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_32523",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_1338369"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_32524",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_32523"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_32525",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_40674"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_33154",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_2759"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_33208",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_33154"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_33213",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_6072"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_33511",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_33213"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_376913",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_9443"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_40674",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_32524"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_6072",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_33208"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_7711",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_33511"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_7742",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_89593"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_7776",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_7742"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_8287",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_117571"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_89593",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_7711"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9347",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_32525"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9443",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_314146"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9526",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_314293"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9604",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_314295"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9605",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_207598"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/NCBITaxon_9605"
+    } ]
+  } ]
+}

@@ -40,7 +40,7 @@
         </span>
       </td>
       <td>{{ getActionName(medicalaction) }}</td>
-      <td>{{ getId(medicalaction) }}</td>
+      <td><a href="{{ medicalaction.treatment?.agent?.termUrl }}" target="_blank">{{ getId(medicalaction) }}</a></td>
       <td>{{ getTarget(medicalaction) }}</td>
       <td>{{ getIntent(medicalaction) }}</td>
       <td>
@@ -49,7 +49,7 @@
           pRipple
           icon="pi pi-pencil"
           class="p-button-rounded p-button-text"
-          (click)="addMedicalAction(medicalaction)"
+          (click)="editMedicalAction(medicalaction)"
         ></button>
         <button
           pButton

@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { Disease } from 'src/app/models/disease';
-import { Procedure } from 'src/app/models/base';
+import { DialogMode, Procedure } from 'src/app/models/base';
 import { MedicalActionDialogComponent } from '../../dialog/medical-action-dialog/medical-action-dialog.component';
 
 @Component({
@@ -46,10 +46,31 @@ export class MedicalActionComponent implements OnInit {
     /**
      * Add a new medical action with default values or no values
      */
-    addMedicalAction(medicalAction?: MedicalAction) {
-        if (medicalAction === undefined || medicalAction === null) {
-            medicalAction = new MedicalAction();
-        }
+    addMedicalAction() {
+        const medicalAction = new MedicalAction();
+        this.ref = this.dialogService.open(MedicalActionDialogComponent, {
+            header: 'Add Medical action',
+            width: '70%',
+            contentStyle: { 'overflow': 'auto' },
+            baseZIndex: 10000,
+            resizable: true,
+            draggable: true,
+            data: {
+                medicalAction: medicalAction,
+                diseases: this.diseases,
+                mode: DialogMode.ADD
+            }
+        });
+
+        this.ref.onClose.subscribe((medicAction: MedicalAction) => {
+           this.updateMedicalAction(medicAction);
+        });
+    }
+
+    /**
+     * Edit a new medical action with default values or no values
+     */
+    editMedicalAction(medicalAction: MedicalAction) {
         this.ref = this.dialogService.open(MedicalActionDialogComponent, {
             header: 'Edit Medical action',
             width: '70%',
@@ -57,24 +78,34 @@ export class MedicalActionComponent implements OnInit {
             baseZIndex: 10000,
             resizable: true,
             draggable: true,
-            data: { medicalAction: medicalAction }
+            data: {
+                medicalAction: medicalAction,
+                diseases: this.diseases,
+                mode: DialogMode.EDIT
+            }
         });
 
         this.ref.onClose.subscribe((medicAction: MedicalAction) => {
-            if (medicAction) {
-                const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
-                if (indexToUpdate === -1) {
-                    this.medicalActions.push(medicAction);
-                } else {
-                    this.medicalActions[indexToUpdate] = medicAction;
-                    this.medicalActions = Object.assign([], this.medicalActions);
-                }
-                // emit change
-                this.onMedicalActionChanged.emit(this.medicalActions);
-            }
+           this.updateMedicalAction(medicAction);
         });
     }
 
+    updateMedicalAction(medicAction: MedicalAction) {
+        if (medicAction) {
+            if (this.medicalActions === undefined) {
+                this.medicalActions = [];
+            }
+            const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
+            if (indexToUpdate === -1) {
+                this.medicalActions.push(medicAction);
+            } else {
+                this.medicalActions[indexToUpdate] = medicAction;
+                this.medicalActions = Object.assign([], this.medicalActions);
+            }
+            // emit change
+            this.onMedicalActionChanged.emit(this.medicalActions);
+        }
+    }
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
      * @param medicalAction
@@ -122,7 +153,11 @@ export class MedicalActionComponent implements OnInit {
         } else if (medicalAction.radiationTherapy) {
             return medicalAction.radiationTherapy.modality?.id;
         } else if (medicalAction.therapeuticRegimen) {
-            return medicalAction.therapeuticRegimen.identifier?.id;
+            if (medicalAction.therapeuticRegimen.ontologyClass) {
+                return medicalAction.therapeuticRegimen.ontologyClass?.id;
+            } else if (medicalAction.therapeuticRegimen.externalReference) {
+                return medicalAction.therapeuticRegimen.externalReference?.id;
+            }
         }
         return '';
     }

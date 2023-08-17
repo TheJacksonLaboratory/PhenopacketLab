@@ -44,6 +44,9 @@ class BigBadMultipurposeLoader {
 
     BigBadDataBlob load() throws InvalidResourceException {
         Resources result = new Resources();
+        // Add NCBITaxon - we don't need any resource there, it's just one value, NCBITaxon:9606, for homo sapiens.
+        result.setNcbiTaxon(ConceptResourceLoaders.ncbiTaxon());
+
         List<String> errors = Collections.synchronizedList(new LinkedList<>());
         List<ResourceTuple<?>> resources = List.of(
                 new ResourceTuple<>(dataResolver.genoJsonPath(), ConceptResourceLoaders::geno, result::setGeno),
@@ -113,6 +116,7 @@ class BigBadMultipurposeLoader {
                 result.uberon.conceptResource(),
                 result.hgnc,
                 result.ncit.conceptResource(),
+                result.ncbiTaxon,
                 result.uo.conceptResource(),
                 result.eco.conceptResource(),
                 result.chebi.conceptResource(),
@@ -159,6 +163,7 @@ class BigBadMultipurposeLoader {
         private ConceptResourceAndHierarchyServices uberon;
         private IdentifiedConceptResource hgnc;
         private ConceptResourceAndHierarchyServices ncit;
+        private IdentifiedConceptResource ncbiTaxon;
         private ConceptResourceAndHierarchyServices uo;
         private ConceptResourceAndHierarchyServices eco;
         private ConceptResourceAndHierarchyServices chebi;
@@ -191,6 +196,10 @@ class BigBadMultipurposeLoader {
 
         public void setNcit(ConceptResourceAndHierarchyServices ncit) {
             this.ncit = ncit;
+        }
+
+        public void setNcbiTaxon(IdentifiedConceptResource ncbiTaxon) {
+            this.ncbiTaxon = ncbiTaxon;
         }
 
         public void setUo(ConceptResourceAndHierarchyServices uo) {

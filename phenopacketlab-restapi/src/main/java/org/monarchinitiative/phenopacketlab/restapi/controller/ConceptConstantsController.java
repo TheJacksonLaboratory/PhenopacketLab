@@ -2,15 +2,13 @@ package org.monarchinitiative.phenopacketlab.restapi.controller;
 
 
 import org.monarchinitiative.phenopacketlab.core.ConceptConstantsService;
+import org.monarchinitiative.phenopacketlab.core.TaxonomyService;
 import org.monarchinitiative.phenopacketlab.core.subtree.SubtreeNode;
 import org.monarchinitiative.phenopacketlab.core.model.Concept;
 import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +22,11 @@ import java.util.Optional;
 public class ConceptConstantsController {
 
     private final ConceptConstantsService conceptConstantsService;
+    private final TaxonomyService taxonomyService;
 
-    public ConceptConstantsController(ConceptConstantsService conceptConstantsService) {
+    public ConceptConstantsController(ConceptConstantsService conceptConstantsService, TaxonomyService taxonomyService) {
         this.conceptConstantsService = conceptConstantsService;
+        this.taxonomyService = taxonomyService;
     }
 
     @GetMapping(value = "structural", headers = "Accept=application/json")
@@ -152,10 +152,50 @@ public class ConceptConstantsController {
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
+    @GetMapping(value = "tree-treatment-status", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTreatmentStatusTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.treatmentStatusTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-ncit-procedure", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getNCITProcedureTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.ncitProcedureTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-radiation-therapy", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getRadiationTherapyTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.radiationTherapyTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-treatment-regimen", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getTreatmentRegimenTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.treatmentRegimenTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "tree-disease-response", headers = "Accept=application/json")
+    public ResponseEntity<SubtreeNode> getDiseaseResponseTreeValues() {
+        Optional<SubtreeNode> node = conceptConstantsService.diseaseResponseTreeConstants();
+        return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
     @GetMapping(value = "tree-unit", headers = "Accept=application/json")
     public ResponseEntity<SubtreeNode> geUnitTreeValues() {
         Optional<SubtreeNode> node = conceptConstantsService.unitTreeConstants();
         return node.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @GetMapping(value = "treatment-intent", headers = "Accept=application/json")
+    public ResponseEntity<List<IdentifiedConcept>> getTreatmentIntentConstants() {
+        return ResponseEntity.ok(conceptConstantsService.treatmentIntentConstants());
+    }
+
+    @GetMapping(value = {"homosapiens"},headers = "Accept=application/json")
+    public ResponseEntity<IdentifiedConcept> getHomoSapiensTaxonomy() {
+        return ResponseEntity.of(taxonomyService.homoSapiensNCBIConcept());
     }
 
     @GetMapping(value = "contigs/{genomeAssembly}", headers = "Accept=application/json")

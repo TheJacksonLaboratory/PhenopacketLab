@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Age, AgeRange, TimeElement, TimeElementId } from 'src/app/models/base';
+import { Age, AgeRange, TimeElement } from 'src/app/models/base';
 
 @Component({
     selector: 'app-age-range',
@@ -13,9 +13,6 @@ export class AgeRangeComponent implements OnInit, OnDestroy {
 
     @Input()
     ageRange: AgeRange;
-
-    @Input()
-    timeElementId: TimeElementId;
 
     yearsStart: number;
     monthsStart: number;

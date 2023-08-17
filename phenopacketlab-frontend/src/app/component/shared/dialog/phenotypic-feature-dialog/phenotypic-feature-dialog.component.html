@@ -25,7 +25,6 @@
     <label for="onset"><b>Onset</b></label>
     <app-time-element
       id="onset"
-      [timeElementId]="getPhenotypicOnsetId()"
       [timeElement]="phenotypicFeature?.onset"
       [ontologyNodes]="onsetsNodes"
       [useOntologyClass]="true"
@@ -38,7 +37,6 @@
     <label for="resolution"><b>Resolution</b></label>
     <app-time-element
       id="resolution"
-      [timeElementId]="getPhenotypicResolutionId()"
       [timeElement]="phenotypicFeature?.resolution"
       (timeElementEvent)="updateResolution($event)"
       aria-labelledby="resolution-time-label"
