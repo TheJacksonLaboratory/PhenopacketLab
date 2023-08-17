@@ -4,7 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Utils } from 'src/app/component/shared/utils';
-import { OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
+import { DialogMode, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
@@ -19,6 +19,9 @@ import { MedicalActionService } from 'src/app/services/medical-action.service';
 export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   medicalAction: MedicalAction;
+
+  mode: DialogMode;
+  okLabel = 'Add medical action';
 
   bodySiteSubscription: Subscription;
   bodySiteNodes: OntologyTreeNode[];
@@ -95,10 +98,14 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig) {
-    this.medicalAction = Utils.clone(config.data?.medicalAction);
+    
+  }
+
+  ngOnInit() {
+    this.medicalAction = Utils.clone(this.config.data?.medicalAction);
     this.treatmentTargets = [];
-    if (config.data?.diseases) {
-      for (const disease of config.data?.diseases) {
+    if (this.config.data?.diseases) {
+      for (const disease of this.config.data?.diseases) {
         this.treatmentTargets.push(disease.term);
         // initialize selected target
         if (this.medicalAction.treatmentTarget?.id === disease.term.id) {
@@ -106,9 +113,11 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         }
       }
     }
-  }
-
-  ngOnInit() {
+    this.mode = this.config.data?.mode;
+    if (this.mode === DialogMode.EDIT) {
+      this.okLabel = 'Save medical action';
+    }
+ 
     this.treatmentIntentsSubscription = this.constantsService.getTreatmentIntents().subscribe(intents => {
       this.treatmentIntents = intents;
       // initialize selected intent
