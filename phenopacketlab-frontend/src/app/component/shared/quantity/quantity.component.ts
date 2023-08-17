@@ -63,7 +63,15 @@ export class QuantityComponent implements OnInit, OnDestroy {
     }
 
     updateReferenceRange(referenceRange) {
-
+        if (this.quantity === undefined) {
+            this.quantity = new Quantity();
+        }
+        if (referenceRange) {
+            this.quantity.referenceRange = referenceRange;
+        } else {
+            this.quantity.referenceRange = undefined;
+        }
+        this.quantityChange.emit(this.quantity);
     }
 
 }

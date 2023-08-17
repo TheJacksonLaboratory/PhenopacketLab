@@ -479,13 +479,20 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateQuantity(quantity: Quantity, doseInterval: DoseInterval) {
+  updateDoseIntervalQuantity(quantity: Quantity, doseInterval: DoseInterval) {
     if (doseInterval) {
       doseInterval.quantity = quantity;
     }
   }
   updateDoseIntervalTimeInterval(interval, doseInterval: DoseInterval) {
     doseInterval.interval = interval;
+  }
+  updateCumulativeDoseQuantity(quantity: Quantity) {
+    console.log('update cumulative');
+    if (this.medicalAction.treatment) {
+      console.log(quantity);
+      this.medicalAction.treatment.cumulativeDose = quantity;
+    }
   }
 
   // RadiationTherapy

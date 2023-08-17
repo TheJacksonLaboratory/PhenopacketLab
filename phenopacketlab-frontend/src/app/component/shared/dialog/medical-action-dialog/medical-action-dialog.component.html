@@ -311,39 +311,50 @@
               <td>
                 <app-quantity
                   [quantity]="doseinterval?.quantity"
-                  (quantityChange)="updateQuantity($event, doseinterval)"
+                  (quantityChange)="
+                    updateDoseIntervalQuantity($event, doseinterval)
+                  "
                 ></app-quantity>
               </td>
               <td>
-                <!-- <div class="flex align-items-stretch flex-wrap"> -->
-                <p-treeSelect
-                  ngDefaultControl
-                  id="scheduleFrequency"
-                  appendTo="body"
-                  [(ngModel)]="doseinterval.scheduleFrequency"
-                  [options]="scheduleFrequencyNodes"
-                  (onNodeSelect)="updateScheduleFrequency($event, doseinterval)"
-                  [metaKeySelection]="false"
-                  placeholder="Select schedule frequency"
-                  [filter]="true"
-                  filterBy="label"
-                  [filterInputAutoFocus]="true"
-                  [showClear]="true"
-                  (onClear)="updateScheduleFrequency($event, doseinterval)"
-                >
-                  <ng-template let-node pTemplate="default">
-                    <span
-                      [pTooltip]="node.label"
-                      showDelay="2000"
-                      tooltipPosition="bottom"
-                      >[{{ node.key }}] {{ node.label }}</span
+                <div class="grid">
+                  <div class="col-12">
+                    <p-treeSelect
+                      ngDefaultControl
+                      id="scheduleFrequency"
+                      appendTo="body"
+                      [(ngModel)]="doseinterval.scheduleFrequency"
+                      [options]="scheduleFrequencyNodes"
+                      (onNodeSelect)="
+                        updateScheduleFrequency($event, doseinterval)
+                      "
+                      [metaKeySelection]="false"
+                      placeholder="Select schedule frequency"
+                      [filter]="true"
+                      filterBy="label"
+                      [filterInputAutoFocus]="true"
+                      [showClear]="true"
+                      (onClear)="updateScheduleFrequency($event, doseinterval)"
                     >
-                  </ng-template>
-                </p-treeSelect>
-                <!-- </div> -->
+                      <ng-template let-node pTemplate="default">
+                        <span
+                          [pTooltip]="node.label"
+                          showDelay="2000"
+                          tooltipPosition="bottom"
+                          >[{{ node.key }}] {{ node.label }}</span
+                        >
+                      </ng-template>
+                    </p-treeSelect>
+                  </div>
+                </div>
               </td>
               <td>
-                <app-time-interval [timeInterval]="doseinterval.interval" (timeIntervalChange)="updateDoseIntervalTimeInterval($event, doseinterval)"></app-time-interval>
+                <app-time-interval
+                  [timeInterval]="doseinterval.interval"
+                  (timeIntervalChange)="
+                    updateDoseIntervalTimeInterval($event, doseinterval)
+                  "
+                ></app-time-interval>
               </td>
               <td>
                 <button
@@ -360,15 +371,12 @@
       </div>
 
       <div class="field col-12">
-        <b>Cumulative dose: </b>
-        {{
-          cumulativeDose?.value +
-            " " +
-            cumulativeDose?.unit.label +
-            " [" +
-            cumulativeDose?.unit.id +
-            "]"
-        }}
+        <label for="cumulativeDose"><b>Cumulative dose: </b></label>
+        <app-quantity
+          id="cumulativeDose"
+          [quantity]="medicalAction?.treatment?.cumulativeDose"
+          (quantityChange)="updateCumulativeDoseQuantity($event)"
+        ></app-quantity>
       </div>
     </div>
   </div>
@@ -460,30 +468,30 @@
       <div class="field col-6">
         <label for="identifier"><b>Identifier:</b></label>
         <p-treeSelect
-        ngDefaultControl
-        id="identifier"
-        appendTo="body"
-        [(ngModel)]="therapeuticRegimenIdentifierSelected"
-        [options]="therapeuticRegimenIdentifiersNodes"
-        (onNodeSelect)="updateTherapeuticRegimenIdentifier($event)"
-        [metaKeySelection]="false"
-        placeholder="Select therapeutic regimen identifier"
-        [filter]="true"
-        filterBy="key,label"
-        required
-        [filterInputAutoFocus]="true"
-        [showClear]="true"
-        (onClear)="updateTherapeuticRegimenIdentifier($event)"
-      >
-        <ng-template let-node pTemplate="default">
-          <span
-            [pTooltip]="node.label"
-            showDelay="2000"
-            tooltipPosition="bottom"
-            >[{{ node.key }}] {{ node.label }}</span
-          >
-        </ng-template>
-      </p-treeSelect>
+          ngDefaultControl
+          id="identifier"
+          appendTo="body"
+          [(ngModel)]="therapeuticRegimenIdentifierSelected"
+          [options]="therapeuticRegimenIdentifiersNodes"
+          (onNodeSelect)="updateTherapeuticRegimenIdentifier($event)"
+          [metaKeySelection]="false"
+          placeholder="Select therapeutic regimen identifier"
+          [filter]="true"
+          filterBy="key,label"
+          required
+          [filterInputAutoFocus]="true"
+          [showClear]="true"
+          (onClear)="updateTherapeuticRegimenIdentifier($event)"
+        >
+          <ng-template let-node pTemplate="default">
+            <span
+              [pTooltip]="node.label"
+              showDelay="2000"
+              tooltipPosition="bottom"
+              >[{{ node.key }}] {{ node.label }}</span
+            >
+          </ng-template>
+        </p-treeSelect>
       </div>
       <div class="field col-6">
         <label for="regimenstatus"><b>Regimen status:</b></label>
