@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Age, TimeElement, TimeElementId } from 'src/app/models/base';
+import { Age, TimeElement } from 'src/app/models/base';
 
 @Component({
     selector: 'app-age',
@@ -12,9 +12,6 @@ export class AgeComponent implements OnInit {
 
     @Input()
     age: Age;
-
-    @Input()
-    timeElementId: TimeElementId;
 
     years: number;
     months: number;

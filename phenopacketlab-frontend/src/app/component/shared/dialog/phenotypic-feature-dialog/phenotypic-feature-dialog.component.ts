@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import { Evidence, OntologyClass, TimeElementId } from 'src/app/models/base';
+import { Evidence, OntologyClass } from 'src/app/models/base';
 import { Severities } from 'src/app/models/disease';
 import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
@@ -105,13 +105,6 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  getPhenotypicOnsetId() {
-    return TimeElementId.PHENOTYPIC_ONSET;
-  }
-  getPhenotypicResolutionId() {
-    return TimeElementId.PHENOTYPIC_RESOLUTION;
-  }
   getSeverities() {
     return Severities.VALUES;
   }

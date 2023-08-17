@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subscription } from 'rxjs';
-import { OntologyClass, TimeElementId } from 'src/app/models/base';
+import { OntologyClass } from 'src/app/models/base';
 import { Disease, Stages } from 'src/app/models/disease';
 import { ConstantObject } from 'src/app/models/individual';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
@@ -204,13 +204,6 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
     treeNode.key = stage.id;
     treeNode.label = stage.label;
     this.stageSelected = treeNode;
-  }
-
-  getDiseaseOnsetId() {
-    return TimeElementId.DISEASE_ONSET;
-  }
-  getDiseaseResolutionId() {
-    return TimeElementId.DISEASE_RESOLUTION;
   }
 
   getStages() {
