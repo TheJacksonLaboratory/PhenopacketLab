@@ -75,7 +75,11 @@ export class MedicalActionDetailComponent implements OnInit {
         this.fractions = this.medicalAction.radiationTherapy.fractions;
       } else if (this.medicalAction.therapeuticRegimen) {
         this.actionType = TherapeuticRegimen.actionName;
-        this.identifier = this.medicalAction.therapeuticRegimen.identifier;
+        if (this.medicalAction.therapeuticRegimen.ontologyClass) {
+          this.identifier = this.medicalAction.therapeuticRegimen.ontologyClass;
+        } else if (this.medicalAction.therapeuticRegimen.externalReference) {
+          this.identifier = this.medicalAction.therapeuticRegimen.externalReference;
+        }
         this.startTime = this.medicalAction.therapeuticRegimen.startTime;
         this.endTime = this.medicalAction.therapeuticRegimen.endTime;
         this.regimenStatus = this.medicalAction.therapeuticRegimen.regimenStatus;

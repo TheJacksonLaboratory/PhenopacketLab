@@ -128,7 +128,11 @@ export class MedicalActionComponent implements OnInit {
         } else if (medicalAction.radiationTherapy) {
             return medicalAction.radiationTherapy.modality?.id;
         } else if (medicalAction.therapeuticRegimen) {
-            return medicalAction.therapeuticRegimen.identifier?.id;
+            if (medicalAction.therapeuticRegimen.ontologyClass) {
+                return medicalAction.therapeuticRegimen.ontologyClass?.id;
+            } else if (medicalAction.therapeuticRegimen.externalReference) {
+                return medicalAction.therapeuticRegimen.externalReference?.id;
+            }
         }
         return '';
     }

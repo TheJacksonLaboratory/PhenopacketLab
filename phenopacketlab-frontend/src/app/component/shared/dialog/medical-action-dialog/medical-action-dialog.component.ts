@@ -168,8 +168,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     this.therapeuticRegimenIdentifierSubscription = this.constantsService.getTherapeuticRegimens().subscribe(nodes => {
       if (nodes) {
         this.therapeuticRegimenIdentifiersNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.therapeuticRegimen?.identifier) {
-          this.therapeuticRegimenIdentifierSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.therapeuticRegimen.identifier.id,
+        if (this.medicalAction && this.medicalAction.therapeuticRegimen?.ontologyClass) {
+          this.therapeuticRegimenIdentifierSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.therapeuticRegimen.ontologyClass.id,
             this.therapeuticRegimenIdentifiersNodes);
         }
       }
@@ -535,10 +535,10 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (eventObj) {
       this.therapeuticRegimenIdentifierSelected = eventObj.node;
       if (this.medicalAction && this.medicalAction.therapeuticRegimen && eventObj.node) {
-        this.medicalAction.therapeuticRegimen.identifier = new OntologyClass(eventObj.node.key, eventObj.node.label);
+        this.medicalAction.therapeuticRegimen.ontologyClass = new OntologyClass(eventObj.node.key, eventObj.node.label);
       }
     } else {
-      this.medicalAction.therapeuticRegimen.identifier = undefined;
+      this.medicalAction.therapeuticRegimen.ontologyClass = undefined;
     }
   }
   onRegimenStatusChange(eventObj: any) {
@@ -636,7 +636,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       }
       // therapeutic regimen
       if (this.medicalAction.therapeuticRegimen) {
-        if (this.medicalAction.therapeuticRegimen.identifier === undefined || this.medicalAction.therapeuticRegimen.identifier === null) {
+        if ((this.medicalAction.therapeuticRegimen.ontologyClass === undefined || this.medicalAction.therapeuticRegimen.ontologyClass === null) 
+          && (this.medicalAction.therapeuticRegimen.externalReference === undefined || this.medicalAction.therapeuticRegimen.externalReference === null)) {
           this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select an identifier for the therapeutic regimen.` });
           return;
         }
