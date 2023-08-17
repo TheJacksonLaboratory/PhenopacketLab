@@ -444,7 +444,8 @@
         <p-inputNumber
           id="dosage"
           required
-          onInput="changeDosage($event)"
+          [ngModel]="medicalAction?.radiationTherapy?.dosage"
+          (onInput)="updateDosage($event.value)"
           placeholder="Dosage in Gy"
         >
         </p-inputNumber>
@@ -454,7 +455,8 @@
         <p-inputNumber
           id="fractions"
           required
-          onInput="changeFractions($event)"
+          [ngModel]="medicalAction?.radiationTherapy?.fractions"
+          (onInput)="updateFractions($event.value)"
           placeholder="Fractions"
         >
         </p-inputNumber>

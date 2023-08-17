@@ -395,13 +395,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   chemicalEntityContentChanging(input: string) {
     this.chemicalEntityQuery.next(input);
   }
-  // chemicalEntityItemSelected(item: any) {
-  //   if (item) {
-  //     if (this.medicalAction && this.medicalAction.treatment) {
-  //       this.medicalAction.treatment.agent = new OntologyClass(item.id, item.lbl);
-  //     }
-  //   }
-  // }
+
   hasValidChemicalEntityInput(qString: string) {
     return (qString && qString.length >= 3);
   }
@@ -507,23 +501,15 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private _filter(value: any): OntologyClass[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.radiationTherapyBodySites.filter(option => {
-  //     return (option as any).name.toLowerCase().includes(filterValue);
-  //   });
-  // }
-
-  changeDosage(eventObj: number) {
-    this.dosage = eventObj;
+  updateDosage(dosage) {
+    this.dosage = dosage;
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.dosage = this.dosage;
     }
   }
-  changeFractions(eventObj: number) {
-    this.fractions = eventObj;
+  updateFractions(fractions) {
+    this.fractions = fractions;
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.fractions = this.fractions;
