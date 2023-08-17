@@ -71,52 +71,6 @@ export class PhenopacketComponent implements OnInit, OnDestroy {
     }
   }
 
-  getPhenotypicFeatures() {
-    if (this.phenopacket) {
-      return this.phenopacket.phenotypicFeatures ? this.phenopacket.phenotypicFeatures : [];
-    }
-    return [];
-  }
-  getPhenopacketDiseases() {
-    if (this.phenopacket) {
-      return this.phenopacket.diseases;
-    }
-    return [];
-  }
-  getBiosamples() {
-    if (this.phenopacket) {
-      return this.phenopacket.biosamples;
-    }
-    return [];
-  }
-
-  getPhenopacketMeasurements() {
-    if (this.phenopacket) {
-      return this.phenopacket.measurements;
-    }
-    return [];
-  }
-
-  getInterpretations() {
-    if (this.phenopacket) {
-      return this.phenopacket.interpretations;
-    }
-    return [];
-  }
-  getPhenopacketMedicalActions() {
-    if (this.phenopacket) {
-      return this.phenopacket.medicalActions;
-    }
-    return [];
-  }
-
-  getPhenopacketFiles() {
-    if (this.phenopacket) {
-      return this.phenopacket.files;
-    }
-    return [];
-  }
-
   openEditDialog() {
     this.ref = this.dialogService.open(IndividualDialogComponent, {
       header: 'Edit Individual',

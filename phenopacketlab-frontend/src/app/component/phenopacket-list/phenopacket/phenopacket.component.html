@@ -74,12 +74,12 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-phenotypic-feature
-            [phenotypicFeatures]="getPhenotypicFeatures()"
+            [phenotypicFeatures]="phenopacket?.phenotypicFeatures"
             (onPhenotypicFeaturesChanged)="changePhenotypicFeatures($event)"
           ></app-phenotypic-feature>
         </ng-template>
       </p-accordionTab>
-      <p-accordionTab disabled="true">
+      <p-accordionTab [disabled]="phenopacket?.measurements === undefined">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <span class="material-icons tab-icon mr-2">square_foot</span>
@@ -93,12 +93,12 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-measurement
-            [measurements]="getPhenopacketMeasurements()"
+            [measurements]="phenopacket?.measurements"
             (onMeasurementsChanged)="changeMeasurements($event)"
           ></app-measurement>
         </ng-template>
       </p-accordionTab>
-      <p-accordionTab disabled="true">
+      <p-accordionTab [disabled]="phenopacket?.biosamples === undefined">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <span class="material-icons tab-icon mr-2">biotech</span>
@@ -113,7 +113,7 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-biosample
-            [biosamples]="getBiosamples()"
+            [biosamples]="phenopacket?.biosamples"
             (onBiosampleChanged)="changeBiosamples($event)"
           ></app-biosample>
         </ng-template>
@@ -131,7 +131,7 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-interpretation
-            [interpretations]="getInterpretations()"
+            [interpretations]="phenopacket?.interpretations"
             [phenopacket]="phenopacket"
             (onInterpretationsChange)="changeInterpretations($event)"
           ></app-interpretation>
@@ -150,7 +150,7 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-disease
-            [diseases]="getPhenopacketDiseases()"
+            [diseases]="phenopacket?.diseases"
             (onDiseasesChanged)="changeDiseases($event)"
           ></app-disease>
         </ng-template>
@@ -168,8 +168,8 @@
         </ng-template>
         <ng-template pTemplate="content">
           <app-medical-action
-            [medicalActions]="getPhenopacketMedicalActions()"
-            [diseases]="getPhenopacketDiseases()"
+            [medicalActions]="phenopacket?.medicalActions"
+            [diseases]="phenopacket?.diseases"
             (onMedicalActionChanged)="changeMedicalActions($event)"
           ></app-medical-action>
         </ng-template>
@@ -188,7 +188,7 @@
         <ng-template pTemplate="content">
           <app-file
             [phenopacket]="phenopacket"
-            [files]="getPhenopacketFiles()"
+            [files]="phenopacket?.files"
             (onFilesChanged)="changeFiles($event)"
           >
           </app-file>
