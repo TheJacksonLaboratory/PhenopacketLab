@@ -32,8 +32,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   proceduresNodes: OntologyTreeNode[];
   procedureSelected: OntologyTreeNode;
   proceduresSubscription: Subscription;
-  performedOnNodes: OntologyTreeNode[];
-  performedOnSubscription: Subscription;
+  ontologyClassTimeNodes: OntologyTreeNode[];
+  ontologyClassTimeSubscription: Subscription;
   procedureBodySite: OntologyClass;
   bodySitesStorageKey = 'body_sites';
   // * Treatment *
@@ -150,10 +150,10 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       }
     });
     // get onsets
-    this.performedOnSubscription = this.constantsService.getOnsets().subscribe(nodes => {
+    this.ontologyClassTimeSubscription = this.constantsService.getOnsets().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
-        this.performedOnNodes = <OntologyTreeNode[]>nodes.children;
+        this.ontologyClassTimeNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
     this.radiationTherapySubscription = this.constantsService.getRadiationTherapies().subscribe(nodes => {
@@ -258,8 +258,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (this.proceduresSubscription) {
       this.proceduresSubscription.unsubscribe();
     }
-    if (this.performedOnSubscription) {
-      this.performedOnSubscription.unsubscribe();
+    if (this.ontologyClassTimeSubscription) {
+      this.ontologyClassTimeSubscription.unsubscribe();
     }
     if (this.radiationTherapySubscription) {
       this.radiationTherapySubscription.unsubscribe();
@@ -497,7 +497,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     doseInterval.interval = interval;
   }
   updateCumulativeDoseQuantity(quantity: Quantity) {
-    console.log('update cumulative');
     if (this.medicalAction.treatment) {
       console.log(quantity);
       this.medicalAction.treatment.cumulativeDose = quantity;
@@ -547,6 +546,16 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     // update medicalAction
     if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
       this.medicalAction.therapeuticRegimen.regimenStatus = this.regimenStatus;
+    }
+  }
+  updateStartTime(startTime) {
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.startTime = startTime;
+    }
+  }
+  updateEndTime(endTime) {
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.endTime = endTime;
     }
   }
 

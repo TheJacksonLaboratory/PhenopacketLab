@@ -200,7 +200,7 @@
         <app-time-element
           id="performedOn"
           [timeElement]="medicalAction?.procedure?.performed"
-          [ontologyNodes]="performedOnNodes"
+          [ontologyNodes]="ontologyClassTimeNodes"
           [useOntologyClass]="true"
           (timeElementEvent)="updateProcedurePerformedOn($event)"
         ></app-time-element>
@@ -520,11 +520,23 @@
       </div>
       <div class="field col-6">
         <label for="starttime"><b>Start time:</b></label>
-        <app-time-element id="starttime"></app-time-element>
+        <app-time-element
+          id="starttime"
+          [timeElement]="medicalAction?.therapeuticRegimen?.startTime"
+          [ontologyNodes]="ontologyClassTimeNodes"
+          [useOntologyClass]="true"
+          (timeElementEvent)="updateStartTime($event)"
+        ></app-time-element>
       </div>
       <div class="field col-6">
         <label for="endtime"><b>End time:</b></label>
-        <app-time-element id="endtime"></app-time-element>
+        <app-time-element
+          id="endtime"
+          [timeElement]="medicalAction?.therapeuticRegimen?.endTime"
+          [ontologyNodes]="ontologyClassTimeNodes"
+          [useOntologyClass]="true"
+          (timeElementEvent)="updateStartTime($event)"
+        ></app-time-element>
       </div>
     </div>
   </div>
