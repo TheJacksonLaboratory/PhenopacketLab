@@ -109,7 +109,7 @@ export class Quantity {
         } else {
             throw new Error(`Phenopacket file is missing 'unit' field in 'quantity' object.`);
         }
-        if (obj['value']) {
+        if (obj['value'] !== undefined) {
             quantity.value = obj['value'];
         } else {
             throw new Error(`Phenopacket file is missing 'value' field in 'quantity' object.`);
@@ -166,12 +166,12 @@ export class ReferenceRange {
         } else {
             throw new Error(`Phenopacket file is missing 'unit' field in 'referenceRange' object.`);
         }
-        if (obj['low']) {
+        if (obj['low'] !== undefined) {
             referenceRange.low = obj['low'];
         } else {
             throw new Error(`Phenopacket file is missing 'low' field in 'referenceRange' object.`);
         }
-        if (obj['high']) {
+        if (obj['high'] !== undefined) {
             referenceRange.high = obj['high'];
         } else {
             throw new Error(`Phenopacket file is missing 'high' field in 'referenceRange' object.`);

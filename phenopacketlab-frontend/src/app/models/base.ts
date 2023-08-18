@@ -292,12 +292,12 @@ export class GestationalAge {
 
     public static convert(obj: any): GestationalAge {
         const gestationalAge = new GestationalAge();
-        if (obj['weeks']) {
+        if (obj['weeks'] !== undefined) {
             gestationalAge.weeks = obj['weeks'];
         } else {
             throw new Error(`Phenopacket file is missing 'weeks' field in 'gestationalAge' object.`);
         }
-        if (obj['days']) {
+        if (obj['days'] !== undefined) {
             gestationalAge.days = obj['days'];
         }
         return gestationalAge;

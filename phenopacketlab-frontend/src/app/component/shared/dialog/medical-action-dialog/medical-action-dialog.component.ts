@@ -602,6 +602,16 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
                 this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a value for quantity.` });
                 return;
               }
+              if (interval.quantity.referenceRange) {
+                if (interval.quantity.referenceRange.low === undefined || interval.quantity.referenceRange.low === null) {
+                  this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a low value for reference range.` });
+                  return;
+                }
+                if (interval.quantity.referenceRange.high === undefined || interval.quantity.referenceRange.high === null) {
+                  this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a high value for reference range.` });
+                  return;
+                }
+              }
             }
             if (interval.scheduleFrequency === undefined || interval.scheduleFrequency === null) {
               this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a schedule frequency for the dose interval.` });
