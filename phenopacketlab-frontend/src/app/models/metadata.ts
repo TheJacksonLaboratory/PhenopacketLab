@@ -11,22 +11,22 @@ export class MetaData {
 
     static convert(obj: any): MetaData {
         const metaData = new MetaData();
-        if (obj['created']) {
+        if ('created' in obj) {
             metaData.created = obj['created'];
         }
-        if (obj['createdBy']) {
+        if ('createdBy' in obj) {
             metaData.createdBy = obj['createdBy'];
         }
-        if (obj['submittedBy']) {
+        if ('submittedBy' in obj) {
             metaData.submittedBy = obj['submittedBy'];
         }
-        if (obj['resources']) {
+        if ('resources' in obj) {
             metaData.resources = Resource.convert(obj['resources']);
         }
-        if (obj['updates']) {
+        if ('updates' in obj) {
             metaData.updates = Update.convert(obj['updates']);
         }
-        if (obj['phenopacketSchemaVersion']) {
+        if ('phenopacketSchemaVersion' in obj) {
             metaData.phenopacketSchemaVersion = obj['phenopacketSchemaVersion'];
         }
         if (obj['externalReferences']) {
@@ -48,22 +48,22 @@ export class Resource extends Convert {
     static create(obj: any): Resource {
         if(obj) {
             const resource = new Resource();
-            if (obj['id']) {
+            if ('id' in obj) {
                 resource.id = obj['id'];
             }
-            if (obj['name']) {
+            if ('name' in obj) {
                 resource.name = obj['name'];
             }
-            if (obj['url']) {
+            if ('url' in obj) {
                 resource.url = obj['url'];
             }
-            if (obj['version']) {
+            if ('version' in obj) {
                 resource.version = obj['version'];
             }
-            if (obj['namespacePrefix']) {
+            if ('namespacePrefix' in obj) {
                 resource.namespacePrefix = obj['namespacePrefix'];
             }   
-            if (obj['iriPrefix']) {
+            if ('iriPrefix' in obj) {
                 resource.iriPrefix = obj['iriPrefix'];
             }
             return resource;
@@ -77,13 +77,13 @@ export class Update extends Convert {
 
     static create(obj: any): Update {
         const update = new Update();
-        if (obj['timestamp']) {
+        if ('timestamp' in obj) {
             update.timestamp = obj['timestamp'];
         }
-        if (obj['updatedBy']) {
+        if ('updatedBy' in obj) {
             update.updatedBy = obj['updatedBy'];
         }
-        if (obj['comment']) {
+        if ('comment' in obj) {
             update.comment = obj['comment'];
         }
         return update;

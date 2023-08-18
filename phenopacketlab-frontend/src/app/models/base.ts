@@ -334,18 +334,18 @@ export class TimeElement extends Convert {
 
     static create(obj: any): TimeElement {
         const timeElement = new TimeElement();
-        if (obj['age']) {
+        if ('age' in obj) {
             timeElement.age = Age.convert(obj['age']);
-        } else if (obj['ageRange']) {
+        } else if ('ageRange' in obj) {
             timeElement.ageRange = AgeRange.convert(obj['ageRange']);
-        } else if (obj['gestationalAge']) {
+        } else if ('gestationalAge' in obj) {
             timeElement.gestationalAge = GestationalAge.convert(obj['gestationalAge']);
-        } else if (obj['ontologyClass']) {
+        } else if ('ontologyClass' in obj) {
             timeElement.ontologyClass = OntologyClass.convert(obj['ontologyClass']);
             timeElement.ontologyClass.termUrl = `https://hpo.jax.org/app/browse/term/${timeElement.ontologyClass.id}`;
-        } else if (obj['timestamp']) {
+        } else if ('timestamp' in obj) {
             timeElement.timestamp = obj['timestamp'];
-        } else if (obj['interval']) {
+        } else if ('interval' in obj) {
             timeElement.interval = TimeInterval.convert(obj['interval']);
         }
         return timeElement;
@@ -424,15 +424,15 @@ export class File extends Convert {
     }
     static create(obj: any): File {
         const file = new File();
-        if (obj['uri']) {
+        if ('uri' in obj) {
             file.uri = obj['uri'];
         } else {
             throw new Error(`Phenopacket file is missing 'uri' field in 'file' object.`);
         }
-        if (obj['individualToFileIdentifiers']) {
+        if ('individualToFileIdentifiers' in obj) {
             file.individualToFileIdentifiers = obj['individualToFileIdentifiers'];
         }
-        if (obj['fileAttributes']) {
+        if ('fileAttributes' in obj) {
             file.fileAttributes = obj['fileAttributes'];
         }
 

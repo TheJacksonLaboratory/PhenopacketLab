@@ -26,37 +26,37 @@ export class Disease extends Convert {
 
     static create(obj: any): Disease {
         const disease = new Disease();
-        if (obj['term']) {
+        if ('term' in obj) {
             disease.term = OntologyClass.convert(obj['term']);
         } else {
             throw new Error(`Phenopacket file is missing 'term' field in 'disease' object.`);
         }
-        if (obj['excluded']) {
+        if ('excluded' in obj) {
             disease.excluded = obj['excluded'];
         }
-        if (obj['onset']) {
+        if ('onset' in obj) {
             disease.onset = TimeElement.convert(obj['onset']);
         }
-        if (obj['resolution']) {
+        if ('resolution' in obj) {
             disease.resolution = TimeElement.convert(obj['resolution']);
         }
-        if (obj['diseaseStage']) {
+        if ('diseaseStage' in obj) {
             disease.diseaseStage = OntologyClass.convert(obj['diseaseStage']);
             disease.diseaseStage.forEach(stage => {
                 stage.termUrl = Disease.getDiseaseURL(stage.id);
             });
         }
-        if (obj['clinicalTnmFinding']) {
+        if ('clinicalTnmFinding' in obj) {
             disease.clinicalTnmFinding = OntologyClass.convert(obj['clinicalTnmFinding']);
         }
-        if (obj['primarySite']) {
+        if ('primarySite' in obj) {
             disease.primarySite = OntologyClass.convert(obj['primarySite']);
         }
-        if (obj['laterality']) {
+        if ('laterality' in obj) {
             disease.laterality = OntologyClass.convert(obj['laterality']);
             disease.laterality.termUrl = `https://hpo.jax.org/app/browse/term/${disease.laterality.id}`;
         }
-        if (obj['description']) {
+        if ('description' in obj) {
             disease.description = obj['description'];
         }
 

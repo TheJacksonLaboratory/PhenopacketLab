@@ -29,61 +29,61 @@ export class BioSample extends Convert {
 
     static create(obj: any): BioSample {
         const bioSample = new BioSample();
-        if (obj['id']) {
+        if ('id' in obj) {
             bioSample.id = obj['id'];
             bioSample.key = obj['id'];
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'bioSample' object.`);
         }
-        if (obj['derivedFromId']) {
+        if ('derivedFromId' in obj) {
             bioSample.derivedFromId = obj['derivedFromId'];
         }
-        if (obj['description']) {
+        if ('description' in obj) {
             bioSample.description = obj['description'];
         }
-        if (obj['sampledTissue']) {
+        if ('sampledTissue' in obj) {
             bioSample.sampledTissue = OntologyClass.convert(obj['sampledTissue']);
         }
-        if (obj['sampleType']) {
+        if ('sampleType' in obj) {
             bioSample.sampleType = OntologyClass.convert(obj['sampleType']);
         }
-        if (obj['phenotypicFeatures']) {
+        if ('phenotypicFeatures' in obj) {
             bioSample.phenotypicFeatures = PhenotypicFeature.convert(obj['phenotypicFeatures']);
         }
-        if (obj['measurements']) {
+        if ('measurements' in obj) {
             bioSample.measurements = Measurement.convert(obj['measurements']);
         }
-        if (obj['taxonomy']) {
+        if ('taxonomy' in obj) {
             bioSample.taxonomy = OntologyClass.convert(obj['taxonomy']);
         }
-        if (obj['timeOfCollection']) {
+        if ('timeOfCollection' in obj) {
             bioSample.timeOfCollection = TimeElement.convert(obj['timeOfCollection']);
         }
-        if (obj['histologicalDiagnosis']) {
+        if ('histologicalDiagnosis' in obj) {
             bioSample.histologicalDiagnosis = OntologyClass.convert(obj['histologicalDiagnosis']);
         }
-        if (obj['tumorProgression']) {
+        if ('tumorProgression' in obj) {
             bioSample.tumorProgression = OntologyClass.convert(obj['tumorProgression']);
         }
-        if (obj['tumorGrade']) {
+        if ('tumorGrade' in obj) {
             bioSample.tumorGrade = OntologyClass.convert(obj['tumorGrade']);
         }
-        if (obj['pathologicalStage']) {
+        if ('pathologicalStage' in obj) {
             bioSample.pathologicalStage = OntologyClass.convert(obj['pathologicalStage']);
         }
-        if (obj['diagnosticMarkers']) {
+        if ('diagnosticMarkers' in obj) {
             bioSample.diagnosticMarkers = OntologyClass.convert(obj['diagnosticMarkers']);
         }
-        if (obj['files']) {
+        if ('files' in obj) {
             bioSample.files = File.convert(obj['files']);
         }
-        if (obj['materialSample']) {
+        if ('materialSample' in obj) {
             bioSample.materialSample = OntologyClass.convert(obj['materialSample']);
         }
-        if (obj['sampleProcessing']) {
+        if ('sampleProcessing' in obj) {
             bioSample.sampleProcessing = OntologyClass.convert(obj['sampleProcessing']);
         }
-        if (obj['sampleStorage']) {
+        if ('sampleStorage' in obj) {
             bioSample.sampleStorage = OntologyClass.convert(obj['sampleStorage']);
         }
 

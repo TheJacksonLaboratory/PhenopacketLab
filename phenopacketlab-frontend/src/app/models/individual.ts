@@ -19,33 +19,33 @@ export class Individual {
      */
     public static convert(obj: any): Individual {
         const individual = new Individual();
-        if (obj['id']) {
+        if ('id' in obj) {
             individual.id = obj['id'];
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'subject' object.`);
         }
-        if (obj['alternateIds']) {
+        if ('alternateIds' in obj) {
             individual.alternateIds = obj['alternateIds'];
         }
-        if (obj['dateOfBirth']) {
+        if ('dateOfBirth' in obj) {
             individual.dateOfBirth = obj['dateOfBirth'];
         }
-        if (obj['timeAtLastEncounter']) {
+        if ('timeAtLastEncounter' in obj) {
             individual.timeAtLastEncounter = TimeElement.convert(obj['timeAtLastEncounter']);
         }
-        if (obj['vitalStatus']) {
+        if ('vitalStatus' in obj) {
             individual.vitalStatus = VitalStatus.convert(obj['vitalStatus']);
         }
-        if (obj['sex']) {
+        if ('sex' in obj) {
             individual.sex = obj['sex'];
         }
-        if (obj['karyotypicSex']) {
+        if ('karyotypicSex' in obj) {
             individual.karyotypicSex = obj['karyotypicSex'];
         }
-        if (obj['gender']) {
+        if ('gender' in obj) {
             individual.gender = OntologyClass.convert(obj['gender']);
         }
-        if (obj['taxonomy']) {
+        if ('taxonomy' in obj) {
             individual.taxonomy = OntologyClass.convert(obj['taxonomy']);
         }
         return individual;
@@ -72,17 +72,17 @@ export class VitalStatus {
 
     public static convert(obj: any): VitalStatus {
         const vitalSatus = new VitalStatus();
-        if (obj['status']) {
+        if ('status' in obj) {
             vitalSatus.status = obj['status'];
         }
-        if (obj['timeOfDeath']) {
+        if ('timeOfDeath' in obj) {
             vitalSatus.timeOfDeath = TimeElement.convert(obj['timeOfDeath']);
         }
-        if (obj['causeOfDeath']) {
+        if ('causeOfDeath' in obj) {
             vitalSatus.causeOfDeath = OntologyClass.convert(obj['causeOfDeath']);
             vitalSatus.causeOfDeath.termUrl = Disease.getDiseaseURL(vitalSatus.causeOfDeath.id);
         }
-        if (obj['survivalTimeInDays']) {
+        if ('survivalTimeInDays' in obj) {
             vitalSatus.survivalTimeInDays = obj['survivalTimeInDays'];
         }
         return vitalSatus;

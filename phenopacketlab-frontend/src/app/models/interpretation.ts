@@ -10,20 +10,20 @@ export class Interpretation extends Convert {
 
     static create(obj: any): Interpretation {
         const interpretation = new Interpretation();
-        if (obj['id']) {
+        if ('id' in obj) {
             interpretation.id = obj['id'];
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'interpretation' object.`);
         }
-        if (obj['progressStatus']) {
+        if ('progressStatus' in obj) {
             interpretation.progressStatus = obj['progressStatus'];
         } else {
             throw new Error(`Phenopacket file is missing 'progressStatus' field in 'interpretation' object.`);
         }
-        if (obj['diagnosis']) {
+        if ('diagnosis' in obj) {
             interpretation.diagnosis = Diagnosis.convert(obj['diagnosis']);
         }
-        if (obj['summary']) {
+        if ('summary' in obj) {
             interpretation.summary = obj['summary'];
         }
         return interpretation;
@@ -43,10 +43,10 @@ export class Diagnosis {
 
     static convert(obj: any): Diagnosis {
         const diagnosis = new Diagnosis();
-        if (obj['disease']) {
+        if ('disease' in obj) {
             diagnosis.disease = OntologyClass.convert(obj['disease']);
         }
-        if (obj['genomicInterpretations']) {
+        if ('genomicInterpretations' in obj) {
             diagnosis.genomicInterpretations = GenomicInterpretation.convert(obj['genomicInterpretations']);
         }
         return diagnosis;
@@ -79,18 +79,18 @@ export class GenomicInterpretation extends Convert {
 
     static create(obj: any): GenomicInterpretation {
         const genomicInterpretation = new GenomicInterpretation();
-        if (obj['subjectOrBiosampleId']) {
+        if ('subjectOrBiosampleId' in obj) {
             genomicInterpretation.subjectOrBiosampleId = obj['subjectOrBiosampleId'];
         } else {
             throw new Error(`Phenopacket file is missing 'subjectOrBiosampleId' field in 'genomicInterpretation' object.`);
         }
-        if (obj['interpretationStatus']) {
+        if ('interpretationStatus' in obj) {
             genomicInterpretation.interpretationStatus = obj['interpretationStatus'];
         } else {
             throw new Error(`Phenopacket file is missing 'interpretationStatus' field in 'genomicInterpretation' object.`);
         }
         // call
-        if (obj['geneDescriptor']) {
+        if ('geneDescriptor' in obj) {
             genomicInterpretation.geneDescriptor = GeneDescriptor.convert(obj['geneDescriptor']);
         } else if (obj['variantInterpretation']) {
             genomicInterpretation.variantInterpretation = VariantInterpretation.convert(obj['variantInterpretation']);
@@ -140,31 +140,31 @@ export class VcfRecord {
 
     static convert(obj: any): VcfRecord {
         const vcfRecord = new VcfRecord();
-        if (obj['genomeAssembly']) {
+        if ('genomeAssembly' in obj) {
             vcfRecord.genomeAssembly = obj['genomeAssembly'];
         }
-        if (obj['chrom']) {
+        if ('chrom' in obj) {
             vcfRecord.chrom = obj['chrom'];
         }
-        if (obj['pos']) {
+        if ('pos' in obj) {
             vcfRecord.pos = obj['pos'];
         }
-        if (obj['id']) {
+        if ('id' in obj) {
             vcfRecord.id = obj['id'];
         }
-        if (obj['ref']) {
+        if ('ref' in obj) {
             vcfRecord.ref = obj['ref'];
         }
-        if (obj['alt']) {
+        if ('alt' in obj) {
             vcfRecord.alt = obj['alt'];
         }
-        if (obj['qual']) {
+        if ('qual' in obj) {
             vcfRecord.qual = obj['qual'];
         }
-        if (obj['filter']) {
+        if ('filter' in obj) {
             vcfRecord.filter = obj['filter'];
         }
-        if (obj['info']) {
+        if ('info' in obj) {
             vcfRecord.info = obj['info'];
         }
         return vcfRecord;
@@ -189,10 +189,10 @@ export class Extension extends Convert {
 
     static create(obj: any): Extension {
         const extension = new Extension();
-        if (obj['name']) {
+        if ('name' in obj) {
             extension.name = obj['name'];
         }
-        if (obj['value']) {
+        if ('value' in obj) {
             extension.value = obj['value'];
         }
         return extension;
@@ -206,13 +206,13 @@ export class Expression extends Convert {
 
     static create(obj: any): Expression {
         const expression = new Expression();
-        if (obj['syntax']) {
+        if ('syntax' in obj) {
             expression.syntax = obj['syntax'];
         }
-        if (obj['value']) {
+        if ('value' in obj) {
             expression.value = obj['value'];
         }
-        if (obj['version']) {
+        if ('version' in obj) {
             expression.version = obj['version'];
         }
 
@@ -237,49 +237,49 @@ export class VariationDescriptor {
 
     static convert(obj: any): VariationDescriptor {
         const variantDescriptor = new VariationDescriptor();
-        if (obj['id']) {
+        if ('id' in obj) {
             variantDescriptor.id = obj['id'];
         } else {
             throw new Error(`Phenopacket file is missing 'id' field in 'variationDescriptor' object.`);
         }
-        if (obj['variation']) {
+        if ('variation' in obj) {
             // TODO use VRS model
             variantDescriptor.variation = obj['variation'];
         }
-        if (obj['label']) {
+        if ('label' in obj) {
             variantDescriptor.label = obj['label'];
         }
-        if (obj['description']) {
+        if ('description' in obj) {
             variantDescriptor.description = obj['description'];
         }
-        if (obj['geneContext']) {
+        if ('geneContext' in obj) {
             variantDescriptor.geneContext = GeneDescriptor.convert(obj['geneContext']);
         }
-        if (obj['expressions']) {
+        if ('expressions' in obj) {
             variantDescriptor.expressions = Expression.convert(obj['expressions']);
         }
-        if (obj['vcfRecord']) {
+        if ('vcfRecord' in obj) {
             variantDescriptor.vcfRecord = VcfRecord.convert(obj['vcfRecord']);
         }
-        if (obj['xrefs']) {
+        if ('xrefs' in obj) {
             variantDescriptor.xrefs = obj['xrefs'];
         }
-        if (obj['alternateLabels']) {
+        if ('alternateLabels' in obj) {
             variantDescriptor.alternateLabels = obj['alternateLabels'];
         }
-        if (obj['extensions']) {
+        if ('extensions' in obj) {
             variantDescriptor.extensions = Extension.convert(obj['extensions']);
         }
-        if (obj['moleculeContext']) {
+        if ('moleculeContext' in obj) {
             variantDescriptor.moleculeContext = obj['moleculeContext'];
         }
-        if (obj['structuralType']) {
+        if ('structuralType' in obj) {
             variantDescriptor.structuralType = OntologyClass.convert(obj['structuralType']);
         }
-        if (obj['vrsRefAlleleSeq']) {
+        if ('vrsRefAlleleSeq' in obj) {
             variantDescriptor.vrsRefAlleleSeq = obj['vrsRefAlleleSeq'];
         }
-        if (obj['allelicState']) {
+        if ('allelicState' in obj) {
             variantDescriptor.allelicState = OntologyClass.convert(obj['allelicState']);
         }
         return variantDescriptor;
@@ -299,13 +299,13 @@ export class VariantInterpretation {
 
     static convert(obj: any): VariantInterpretation {
         const variantInterpretation = new VariantInterpretation();
-        if (obj['acmgPathogenicityClassification']) {
+        if ('acmgPathogenicityClassification' in obj) {
             variantInterpretation.acmgPathogenicityClassification = obj['acmgPathogenicityClassification'];
         }
-        if (obj['therapeuticActionability']) {
+        if ('therapeuticActionability' in obj) {
             variantInterpretation.therapeuticActionability = obj['therapeuticActionability'];
         }
-        if (obj['variationDescriptor']) {
+        if ('variationDescriptor' in obj) {
             variantInterpretation.variationDescriptor = VariationDescriptor.convert(obj['variationDescriptor']);
         }
 
@@ -328,26 +328,26 @@ export class GeneDescriptor {
 
     static convert(obj: any): GeneDescriptor {
         const geneDesciptor = new GeneDescriptor();
-        if (obj['valueId']) {
+        if ('valueId' in obj) {
             geneDesciptor.valueId = obj['valueId'];
         } else {
             throw new Error(`Phenopacket file is missing 'valueId' field in 'geneDescriptor' object.`);
         }
-        if (obj['symbol']) {
+        if ('symbol' in obj) {
             geneDesciptor.symbol = obj['symbol'];
         } else {
             throw new Error(`Phenopacket file is missing 'symbol' field in 'geneDescriptor' object.`);
         }
-        if (obj['description']) {
+        if ('description' in obj) {
             geneDesciptor.description = obj['description'];
         }
-        if (obj['alternateIds']) {
+        if ('alternateIds' in obj) {
             geneDesciptor.alternateIds = obj['alternateIds'];
         }
-        if (obj['xrefs']) {
+        if ('xrefs' in obj) {
             geneDesciptor.xrefs = obj['xrefs'];
         }
-        if (obj['alternateSymbols']) {
+        if ('alternateSymbols' in obj) {
             geneDesciptor.alternateSymbols = obj['alternateSymbols'];
         }
 
