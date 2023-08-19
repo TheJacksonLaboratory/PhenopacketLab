@@ -13,12 +13,12 @@ export class Interpretation extends Convert {
         if (obj['id']) {
             interpretation.id = obj['id'];
         } else {
-            throw new Error(`Phenopacket file is missing 'id' field in 'interpretation' object.`);
+            throw new Error(`'id' is missing from 'interpretation'.`);
         }
         if (obj['progressStatus']) {
             interpretation.progressStatus = obj['progressStatus'];
         } else {
-            throw new Error(`Phenopacket file is missing 'progressStatus' field in 'interpretation' object.`);
+            throw new Error(`'progressStatus' is missing from 'interpretation'.`);
         }
         if (obj['diagnosis']) {
             interpretation.diagnosis = Diagnosis.convert(obj['diagnosis']);
@@ -82,12 +82,12 @@ export class GenomicInterpretation extends Convert {
         if (obj['subjectOrBiosampleId']) {
             genomicInterpretation.subjectOrBiosampleId = obj['subjectOrBiosampleId'];
         } else {
-            throw new Error(`Phenopacket file is missing 'subjectOrBiosampleId' field in 'genomicInterpretation' object.`);
+            throw new Error(`'subjectOrBiosampleId' is missing from 'genomicInterpretation'.`);
         }
         if (obj['interpretationStatus']) {
             genomicInterpretation.interpretationStatus = obj['interpretationStatus'];
         } else {
-            throw new Error(`Phenopacket file is missing 'interpretationStatus' field in 'genomicInterpretation' object.`);
+            throw new Error(`'interpretationStatus' is missing from 'genomicInterpretation'.`);
         }
         // call
         if (obj['geneDescriptor']) {
@@ -95,7 +95,7 @@ export class GenomicInterpretation extends Convert {
         } else if (obj['variantInterpretation']) {
             genomicInterpretation.variantInterpretation = VariantInterpretation.convert(obj['variantInterpretation']);
         } else {
-            throw new Error(`Phenopacket file is missing 'geneDescriptor' or 'variantInterpretation' field in 'genomicInterpretation' object.`);
+            throw new Error(`'geneDescriptor' or 'variantInterpretation' is missing from 'genomicInterpretation'.`);
         }
         return genomicInterpretation;
     }
@@ -240,7 +240,7 @@ export class VariationDescriptor {
         if (obj['id']) {
             variantDescriptor.id = obj['id'];
         } else {
-            throw new Error(`Phenopacket file is missing 'id' field in 'variationDescriptor' object.`);
+            throw new Error(`'id' is missing from 'variationDescriptor'.`);
         }
         if (obj['variation']) {
             // TODO use VRS model
@@ -331,12 +331,12 @@ export class GeneDescriptor {
         if (obj['valueId']) {
             geneDesciptor.valueId = obj['valueId'];
         } else {
-            throw new Error(`Phenopacket file is missing 'valueId' field in 'geneDescriptor' object.`);
+            throw new Error(`'valueId' is missing from 'geneDescriptor'.`);
         }
         if (obj['symbol']) {
             geneDesciptor.symbol = obj['symbol'];
         } else {
-            throw new Error(`Phenopacket file is missing 'symbol' field in 'geneDescriptor' object.`);
+            throw new Error(`'symbol' ism issing from 'geneDescriptor' object.`);
         }
         if (obj['description']) {
             geneDesciptor.description = obj['description'];

@@ -170,6 +170,7 @@
           <app-medical-action
             [medicalActions]="phenopacket?.medicalActions"
             [diseases]="phenopacket?.diseases"
+            [phenopacket]="phenopacket"
             (onMedicalActionChanged)="changeMedicalActions($event)"
           ></app-medical-action>
         </ng-template>

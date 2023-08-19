@@ -54,9 +54,13 @@ export class OntologyClass extends Convert {
         if (obj['id']) {
             ontologyClass.id = obj['id'];
             ontologyClass.termUrl = Utils.getUrlForId(obj['id']);
+        } else {
+            throw new Error(`'id' is missing from 'ontologyClass'.`);
         }
         if (obj['label']) {
             ontologyClass.label = obj['label'];
+        } else {
+            throw new Error(`'label' is missing from 'ontologyClass'.`);
         }
         return ontologyClass;
     }
