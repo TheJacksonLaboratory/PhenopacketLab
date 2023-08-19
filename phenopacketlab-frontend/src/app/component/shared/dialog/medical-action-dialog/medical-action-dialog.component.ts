@@ -33,14 +33,15 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   treatmentIntentSelected: any;
   responsesToTreatmentNodes: OntologyTreeNode[];
   responseToTreatmentSelected: OntologyTreeNode;
+  responsesSubscription: Subscription;
+
   // * procedure *
   proceduresNodes: OntologyTreeNode[];
   procedureSelected: OntologyTreeNode;
   proceduresSubscription: Subscription;
   ontologyClassTimeNodes: OntologyTreeNode[];
   ontologyClassTimeSubscription: Subscription;
-  procedureBodySite: OntologyClass;
-  bodySitesStorageKey = 'body_sites';
+  procedureBodySiteSelected: OntologyTreeNode;
   // * Treatment *
   // Agent = chemical entity
   chemicalEntityItems: OntologyClass[];
@@ -64,9 +65,8 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   radiationTherapyModalityNodes: OntologyTreeNode[];
   radiationTherapyModalitySelected: OntologyTreeNode;
   radiationTherapySubscription: Subscription;
-  radiationTherapyBodySites: OntologyClass[];
   dosage: number;
-  radiationTherapyBodySite: OntologyClass;
+  radiationTherapyBodySiteSelected: OntologyTreeNode;
   fractions: number;
   // * therapeutic regimen *
   therapeuticRegimenIdentifiersNodes: OntologyTreeNode[];
@@ -83,17 +83,12 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   treatmentIntents: any[];
   treatmentIntentsSubscription: Subscription;
 
-  responses: OntologyClass[];
-  responsesSubscription: Subscription;
-
   terminationReasonsNodes: OntologyTreeNode[];
   terminationReasonsSubscription: Subscription;
   terminationReasonSelected: OntologyTreeNode;
 
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
-
-  valid: any = {};
 
   constructor(private medicalActionService: MedicalActionService,
     private constantsService: ConstantsService,
@@ -239,14 +234,20 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
       if (nodes) {
         this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
+        // initialize procedure bodysite
+        if (this.medicalAction && this.medicalAction.procedure?.bodySite) {
+          this.procedureBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.bodySite.id,
+            this.bodySiteNodes);
+        }
+        // initialize radiationTherapy bodysite
+        if (this.medicalAction && this.medicalAction.radiationTherapy?.bodySite) {
+          this.radiationTherapyBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.bodySite.id,
+            this.bodySiteNodes);
+        }
       }
     });
 
     this.updateMedicalAction();
-
-    // bodySite filter for RadiationTherapy
-    this.radiationTherapyBodySites = this.medicalActionService.getAllFromLocalStorage(this.bodySitesStorageKey);
-
 
   }
 
@@ -290,7 +291,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (this.medicalAction) {
       this.treatmentTargetSelected = this.medicalAction.treatmentTarget;
       if (this.medicalAction.procedure) {
-        this.procedureBodySite = this.medicalAction.procedure.bodySite;
         this.actionType = Procedure.actionName;
       } else if (this.medicalAction.treatment) {
         this.selectedChemicalEntity = this.medicalAction.treatment.agent;
@@ -300,7 +300,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.cumulativeDose = this.medicalAction.treatment.cumulativeDose;
         this.actionType = Treatment.actionName;
       } else if (this.medicalAction.radiationTherapy) {
-        this.radiationTherapyBodySite = this.medicalAction.radiationTherapy.bodySite;
         this.dosage = this.medicalAction.radiationTherapy.dosage;
         this.fractions = this.medicalAction.radiationTherapy.fractions;
         this.actionType = RadiationTherapy.actionName;
@@ -458,19 +457,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateRadiationTherapyBodySite(eventObj) {
-    if (this.medicalAction?.radiationTherapy) {
-      if (eventObj) {
-        this.medicalAction.radiationTherapy.bodySite = new OntologyClass(eventObj.node.key,
-                                                                         eventObj.node.label,
-                                                                         eventObj.node.key,
-                                                                         Utils.getUrlForId(eventObj.node.key));
-      } else {
-        this.medicalAction.radiationTherapy.bodySite = undefined;
-      }
-    }
-  }
-
   /** end body site search */
   onDrugTypeChange(eventObj: any) {
     this.drugType = eventObj.value;
@@ -547,6 +533,20 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateRadiationTherapyBodySite(eventObj) {
+    if (this.medicalAction?.radiationTherapy) {
+      if (eventObj) {
+        this.radiationTherapyBodySiteSelected = eventObj.node;
+        this.medicalAction.radiationTherapy.bodySite = new OntologyClass(eventObj.node.key,
+                                                                         eventObj.node.label,
+                                                                         eventObj.node.key,
+                                                                         Utils.getUrlForId(eventObj.node.key));
+      } else {
+        this.medicalAction.radiationTherapy.bodySite = undefined;
+      }
+    }
+  }
+
   updateDosage(dosage) {
     this.dosage = dosage;
     // update medicalAction
@@ -601,7 +601,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         MedicalAction.convert(this.medicalAction);
       } catch(error) {
         this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
-          return;
+        return;
       }     
     }
     // set key
