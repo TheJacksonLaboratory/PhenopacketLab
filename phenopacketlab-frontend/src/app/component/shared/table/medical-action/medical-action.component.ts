@@ -7,6 +7,8 @@ import { MedicalAction, RadiationTherapy, TherapeuticRegimen, Treatment } from '
 import { Disease } from 'src/app/models/disease';
 import { DialogMode, Procedure } from 'src/app/models/base';
 import { MedicalActionDialogComponent } from '../../dialog/medical-action-dialog/medical-action-dialog.component';
+import { Utils } from '../../utils';
+import { Phenopacket } from 'src/app/models/phenopacket';
 
 @Component({
     selector: 'app-medical-action',
@@ -19,6 +21,8 @@ export class MedicalActionComponent implements OnInit {
     medicalActions: MedicalAction[];
     @Input()
     diseases: Disease[];
+    @Input()
+    phenopacket: Phenopacket;
 
     @Output() onMedicalActionChanged = new EventEmitter<MedicalAction[]>();
 
@@ -47,7 +51,6 @@ export class MedicalActionComponent implements OnInit {
      * Add a new medical action with default values or no values
      */
     addMedicalAction() {
-        const medicalAction = new MedicalAction();
         this.ref = this.dialogService.open(MedicalActionDialogComponent, {
             header: 'Add Medical action',
             width: '70%',
@@ -56,9 +59,9 @@ export class MedicalActionComponent implements OnInit {
             resizable: true,
             draggable: true,
             data: {
-                medicalAction: medicalAction,
                 diseases: this.diseases,
-                mode: DialogMode.ADD
+                mode: DialogMode.ADD,
+                phenopacket: this.phenopacket
             }
         });
 
@@ -80,6 +83,7 @@ export class MedicalActionComponent implements OnInit {
             draggable: true,
             data: {
                 medicalAction: medicalAction,
+                phenopacket: this.phenopacket,
                 diseases: this.diseases,
                 mode: DialogMode.EDIT
             }
@@ -91,11 +95,27 @@ export class MedicalActionComponent implements OnInit {
     }
 
     updateMedicalAction(medicAction: MedicalAction) {
+        // if (medicAction) {
+        //     if (this.medicalActions === undefined) {
+        //         this.medicalActions = [];
+        //     }
+        //     const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
+        //     if (indexToUpdate === -1) {
+        //         this.medicalActions.push(medicAction);
+        //     } else {
+        //         this.medicalActions[indexToUpdate] = medicAction;
+        //         this.medicalActions = Object.assign([], this.medicalActions);
+        //     }
+        //     // emit change
+        //     this.onMedicalActionChanged.emit(this.medicalActions);
+        // }
+
         if (medicAction) {
             if (this.medicalActions === undefined) {
                 this.medicalActions = [];
             }
             const indexToUpdate = this.medicalActions.findIndex(item => item.key === medicAction.key);
+            medicAction.key = Utils.getBiggestKey(this.medicalActions) + 1;
             if (indexToUpdate === -1) {
                 this.medicalActions.push(medicAction);
             } else {
@@ -106,6 +126,7 @@ export class MedicalActionComponent implements OnInit {
             this.onMedicalActionChanged.emit(this.medicalActions);
         }
     }
+    
     /**
      * Removes the chosen element, if ok is pressed on the popup window.
      * @param medicalAction

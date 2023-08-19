@@ -8,6 +8,7 @@ import { DialogMode, OntologyClass, Procedure, TimeElement } from 'src/app/model
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { Phenopacket } from 'src/app/models/phenopacket';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { MedicalActionService } from 'src/app/services/medical-action.service';
 
@@ -21,6 +22,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   medicalAction: MedicalAction;
 
   mode: DialogMode;
+  phenopacket: Phenopacket;
   okLabel = 'Add medical action';
 
   bodySiteSubscription: Subscription;
@@ -102,7 +104,12 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.medicalAction = Utils.clone(this.config.data?.medicalAction);
+    const medicAction = this.config.data?.medicalAction;
+    if (medicAction === undefined || medicAction === null) {
+      this.medicalAction = new MedicalAction();
+    } else {
+      this.medicalAction = Utils.clone(medicAction);
+    }
     this.treatmentTargets = [];
     if (this.config.data?.diseases) {
       for (const disease of this.config.data?.diseases) {
@@ -113,6 +120,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         }
       }
     }
+    this.phenopacket = this.config.data?.phenopacket;
     this.mode = this.config.data?.mode;
     if (this.mode === DialogMode.EDIT) {
       this.okLabel = 'Save medical action';
@@ -499,6 +507,12 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   updateDoseIntervalQuantity(quantity: Quantity, doseInterval: DoseInterval) {
     if (doseInterval) {
+      if (quantity.referenceRange) {
+        if ((quantity.referenceRange.low === undefined || quantity.referenceRange.low === null) 
+          && (quantity.referenceRange.high === undefined || quantity.referenceRange.high === null)) {
+          quantity.referenceRange = undefined;
+        }
+      }
       doseInterval.quantity = quantity;
     }
   }
@@ -507,8 +521,17 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   }
   updateCumulativeDoseQuantity(quantity: Quantity) {
     if (this.medicalAction.treatment) {
-      console.log(quantity);
-      this.medicalAction.treatment.cumulativeDose = quantity;
+      if (quantity.referenceRange) {
+        if ((quantity.referenceRange.low === undefined || quantity.referenceRange.low === null) 
+          && (quantity.referenceRange.high === undefined || quantity.referenceRange.high === null)) {
+          quantity.referenceRange = undefined;
+        }
+      }
+      if (quantity.unit === undefined) {
+        this.medicalAction.treatment.cumulativeDose = undefined;
+      } else {
+        this.medicalAction.treatment.cumulativeDose = quantity;
+      }
     }
   }
 
@@ -574,106 +597,17 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   onOkClick() {
     if (this.medicalAction) {
-      // procedure
-      if (this.medicalAction.procedure) {
-        if (this.medicalAction.procedure.code === undefined || this.medicalAction.procedure.code === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a code for the procedure.` });
+      try {
+        MedicalAction.convert(this.medicalAction);
+      } catch(error) {
+        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
           return;
-        }
-      }
-      // treatment
-      if (this.medicalAction.treatment) {
-        if (this.medicalAction.treatment.agent === undefined || this.medicalAction.treatment.agent === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select an agent for the treatment.` });
-          return;
-        }
-        if (this.medicalAction.treatment.doseIntervals) {
-          for (const interval of this.medicalAction.treatment.doseIntervals) {
-            if (interval.quantity === undefined || interval.quantity === null) {
-              this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a quantity for the dose interval.` });
-              return;
-            }
-            if (interval.quantity) {
-              if (interval.quantity.unit === undefined || interval.quantity.unit === null) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a unit for the quantity.` });
-                return;
-              }
-              if (interval.quantity.value === undefined || interval.quantity.value === null) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a value for quantity.` });
-                return;
-              }
-              if (interval.quantity.referenceRange) {
-                if (interval.quantity.referenceRange.low === undefined || interval.quantity.referenceRange.low === null) {
-                  this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a low value for reference range.` });
-                  return;
-                }
-                if (interval.quantity.referenceRange.high === undefined || interval.quantity.referenceRange.high === null) {
-                  this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a high value for reference range.` });
-                  return;
-                }
-              }
-            }
-            if (interval.scheduleFrequency === undefined || interval.scheduleFrequency === null) {
-              this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a schedule frequency for the dose interval.` });
-              return;
-            }
-            if (interval.interval === undefined || interval.interval === null) {
-              this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set an interval for the dose interval.` });
-              return;
-            }
-            if (interval.interval) {
-              if (interval.interval.start === undefined || interval.interval.start === null) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set a start timestamp for the interval.` });
-                return;
-              }
-              if (interval.interval.end === undefined || interval.interval.end === null) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please set an end timestamp for the interval.` });
-                return;
-              }
-            }
-          }
-        }
-      }
-      // radiation therapy
-      if (this.medicalAction.radiationTherapy) {
-        if (this.medicalAction.radiationTherapy.modality === undefined || this.medicalAction.radiationTherapy.modality === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a modality for the radiation therapy.` });
-          return;
-        }
-        if (this.medicalAction.radiationTherapy.bodySite === undefined || this.medicalAction.radiationTherapy.bodySite === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a body site for the radiation therapy.` });
-          return;
-        }
-        if (this.medicalAction.radiationTherapy.dosage === undefined || this.medicalAction.radiationTherapy.dosage === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a dosage for the radiation therapy.` });
-          return;
-        }
-        if (this.medicalAction.radiationTherapy.fractions === undefined || this.medicalAction.radiationTherapy.fractions === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a fraction for dosage of the radiation therapy.` });
-          return;
-        }
-      }
-      // therapeutic regimen
-      if (this.medicalAction.therapeuticRegimen) {
-        if ((this.medicalAction.therapeuticRegimen.ontologyClass === undefined || this.medicalAction.therapeuticRegimen.ontologyClass === null) 
-          && (this.medicalAction.therapeuticRegimen.externalReference === undefined || this.medicalAction.therapeuticRegimen.externalReference === null)) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select an identifier for the therapeutic regimen.` });
-          return;
-        }
-        if (this.medicalAction.therapeuticRegimen.regimenStatus === undefined || this.medicalAction.therapeuticRegimen.regimenStatus === null) {
-          this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select a status for the therapeutic regimen.` });
-          return;
-        }
-      }
-      if (this.medicalAction.treatment === undefined
-        && this.medicalAction.procedure === undefined
-        && this.medicalAction.radiationTherapy === undefined
-        && this.medicalAction.therapeuticRegimen === undefined) {
-        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please select an action type.` });
-        return;
-      }
+      }     
     }
-
+    // set key
+    if (this.mode === DialogMode.ADD) {
+      this.medicalAction.key = Utils.getBiggestKey(this.phenopacket.medicalActions) + 1;
+    }
     this.ref.close(this.medicalAction);
   }
 }

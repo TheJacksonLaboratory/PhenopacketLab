@@ -1,3 +1,4 @@
+import { Utils } from '../component/shared/utils';
 import { Convert, Evidence, OntologyClass, TimeElement } from './base';
 import { OntologyTreeNode } from './ontology-treenode';
 
@@ -38,20 +39,20 @@ export class PhenotypicFeature extends Convert {
         if (obj['type']) {
             phenotypicFeature.type = OntologyClass.convert(obj['type']);
         } else {
-            throw new Error(`Phenopacket file is missing 'type' field in 'phenotypicFeatures' object.`);
+            throw new Error(`'type' is missing from 'phenotypicFeatures'.`);
         }
         if (obj['excluded']) {
             phenotypicFeature.excluded = obj['excluded'];
         }
         if (obj['severity']) {
             phenotypicFeature.severity = OntologyClass.convert(obj['severity']);
-            phenotypicFeature.severity.termUrl = `https://hpo.jax.org/app/browse/term/${phenotypicFeature.severity.id}`;
+            phenotypicFeature.severity.termUrl = Utils.getUrlForId(phenotypicFeature.severity.id);
         }
         if (obj['modifiers']) {
             phenotypicFeature.modifiers = OntologyClass.convert(obj['modifiers']);
             phenotypicFeature.modifierNodes = [];
             for (const modifier of phenotypicFeature.modifiers) {
-                modifier.termUrl = `https://hpo.jax.org/app/browse/term/${modifier.id}`;
+                modifier.termUrl = Utils.getUrlForId(modifier.id);
                 const node = new OntologyTreeNode();
                 node.label = modifier.label;
                 node.key = modifier.id;
