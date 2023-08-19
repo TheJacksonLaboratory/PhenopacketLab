@@ -1,3 +1,4 @@
+import { Utils } from '../component/shared/utils';
 import { Convert, ExternalReference, OntologyClass, Procedure, TimeElement, TimeInterval } from './base';
 import { Quantity } from './measurement';
 import { OntologyTreeNode } from './ontology-treenode';
@@ -42,6 +43,17 @@ export class MedicalAction extends Convert {
         }
         if (obj['adverseEvents']) {
             medicalAction.adverseEvents = OntologyClass.convert(obj['adverseEvents']);
+            medicalAction.adverseEventNodes = [];
+            for (const event of medicalAction.adverseEvents) {
+                event.termUrl = Utils.getUrlForId(event.id);
+                const node = new OntologyTreeNode();
+                node.label = event.label;
+                node.key = event.id;
+                medicalAction.adverseEventNodes.push(node);
+            }
+        }
+        if (obj['responseToTreatment']) {
+            medicalAction.responseToTreatment = OntologyClass.convert(obj['responseToTreatment']);
         }
         if (obj['treatmentTerminationReason']) {
             medicalAction.treatmentTerminationReason = OntologyClass.convert(obj['treatmentTerminationReason']);

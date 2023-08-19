@@ -174,7 +174,7 @@
           ngDefaultControl
           id="procedureBodySite"
           appendTo="body"
-          [(ngModel)]="procedureBodySite"
+          [(ngModel)]="procedureBodySiteSelected"
           [options]="bodySiteNodes"
           (onNodeSelect)="updateProcedureBodySite($event)"
           [metaKeySelection]="false"
@@ -330,7 +330,7 @@
                       ngDefaultControl
                       id="scheduleFrequency"
                       appendTo="body"
-                      [(ngModel)]="doseinterval.scheduleFrequency"
+                      [ngModel]="doseinterval.scheduleFrequency"
                       [options]="scheduleFrequencyNodes"
                       (onNodeSelect)="
                         updateScheduleFrequency($event, doseinterval)
@@ -424,7 +424,7 @@
           ngDefaultControl
           id="radiationBodySite"
           appendTo="body"
-          [(ngModel)]="radiationTherapyBodySite"
+          [(ngModel)]="radiationTherapyBodySiteSelected"
           [options]="bodySiteNodes"
           required
           (onNodeSelect)="updateRadiationTherapyBodySite($event)"
@@ -535,7 +535,7 @@
           [timeElement]="medicalAction?.therapeuticRegimen?.endTime"
           [ontologyNodes]="ontologyClassTimeNodes"
           [useOntologyClass]="true"
-          (timeElementEvent)="updateStartTime($event)"
+          (timeElementEvent)="updateEndTime($event)"
         ></app-time-element>
       </div>
     </div>
