@@ -9,9 +9,11 @@ export class Utils {
  */
     public static getBiggestKey(array: any[]) {
         let key = 0;
-        for (const item of array) {
-            if ((item.key) >= key) {
-                key = item.key;
+        if (array) {
+            for (const item of array) {
+                if ((item.key) >= key) {
+                    key = item.key;
+                }
             }
         }
         return key;
