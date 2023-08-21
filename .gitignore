@@ -47,3 +47,6 @@ Thumbs.db
 /bin/
 /lib/
 /node/
+
+# Documentation
+docs/_build/
