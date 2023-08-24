@@ -1,0 +1,71 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy documentation
+
+on:
+  # Runs on pushes targeting the master and develop branches
+  push:
+    branches: [ master, development, sqa ]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
+          ref: master
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install sphinx sphinx-rtd-theme
+
+      - name: Build documentation
+        run: |
+          ## Init the target folder. 
+          # We will put all site documentation there.
+          mkdir -p gh-pages
+          touch gh-pages/.nojekyll
+          
+          function build_docs {
+            # The function will checkout a branch and build the Javadoc & documentation 
+            # into provided documentation directory.
+            BRANCH=${1}
+            DOCDIR=${2}
+          
+            git checkout ${BRANCH}
+            git fetch
+            git pull
+            ## Init the target folder.
+            # We will put all site documentation there.
+            mkdir -p gh-pages/${DOCDIR}
+          
+            ## Build the docs
+            # Generate the HTML pages and move the generated content into the target folder.
+            printf "Building the %s documentation\n" ${DOCDIR}
+            cd docs
+            make html
+            mv _build/html/* ../gh-pages/${DOCDIR}
+          }
+          
+          # TODO - enable once we hit master and sqa.
+          ## We store the docs for `master` in `stable` folder
+          #build_docs master stable
+          ## We store the docs for `sqa` in `sqa` folder
+          #build_docs sqa sqa
+          # We store the docs for `development` in `dev` folder
+          build_docs development dev
+
+
+      - name: Deploy documentation
+        if: ${{ github.event_name == 'push' }}
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          folder: gh-pages
+          force: false
