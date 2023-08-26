@@ -235,7 +235,7 @@ public class ConceptConstantsServiceConfigurer {
         IdentifiedConceptResource eco = ecoOptional.get();
         List<IdentifiedConcept> concepts = new ArrayList<>(5);
         retrieveIdentifiedConcept(eco, "ECO:0006016", concepts, "Missing ECO:0006016");
-        retrieveIdentifiedConcept(eco, "ECO:0007339", concepts, "Missing ECO:0007339");
+        retrieveIdentifiedConcept(eco, "ECO:0007539", concepts, "Missing ECO:0007539");
         retrieveIdentifiedConcept(eco, "ECO:0006017", concepts, "Missing ECO:0006017");
         retrieveIdentifiedConcept(eco, "ECO:0000033", concepts, "Missing ECO:0000033");
         retrieveIdentifiedConcept(eco, "ECO:0006154", concepts, "Missing ECO:0006154");
