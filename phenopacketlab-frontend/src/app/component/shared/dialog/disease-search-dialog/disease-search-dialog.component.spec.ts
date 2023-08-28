@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiseaseSearchDialogComponent } from './disease-search-dialog.component';
 import { ConfirmationService } from 'primeng/api';
+import { SharedModule } from '../../shared.module';
 
 describe('DiseaseSearchDialogComponent', () => {
   let component: DiseaseSearchDialogComponent;
@@ -12,7 +13,8 @@ describe('DiseaseSearchDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ DiseaseSearchDialogComponent ],
       imports: [
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ],
       providers: [
         DialogService,

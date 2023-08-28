@@ -1,43 +1,9 @@
-// Custom Theming for Angular Material
-@use '@angular/material' as mat;
-// For more information: https://material.angular.io/guide/theming
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$phenopacketlab-primary: mat.define-palette(mat.$teal-palette, 800);
-$phenopacketlab-accent: mat.define-palette(mat.$lime-palette, 700);
-
-// The warn palette is optional (defaults to red).
-$phenopacketlab-warn: mat.define-palette(mat.$amber-palette, 800); //mat-palette($mat-red);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$phenopacketlab-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $phenopacketlab-primary,
-      accent: $phenopacketlab-accent,
-      warn: $phenopacketlab-warn,
-    ),
-  )
-);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($phenopacketlab-theme);
-
-/* You can add global styles to this file, and also import other style files */
+@import 'primeng/resources/themes/lara-light-teal/theme.css';
 
 html,
 body {
   height: 100%;
+  font-size: 14px;
 }
 body {
   margin: 0 auto;
@@ -45,6 +11,45 @@ body {
   display: flex;
   flex-direction: column;
   background: #fafafa;
+}
+
+/* typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 400;
+  color: inherit;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+h5 {
+  font-size: .75rem;
+}
+
+h6 {
+  font-size: .5rem;
+}
+
+p {
+  line-height: 1.25;
 }
 
 $dark-cerulean: #004D40; // JAX blue

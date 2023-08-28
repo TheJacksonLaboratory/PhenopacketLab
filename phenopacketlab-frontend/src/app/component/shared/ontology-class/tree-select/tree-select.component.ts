@@ -28,6 +28,8 @@ export class TreeSelectComponent implements OnInit {
     @Input()
     selectionMode = 'multiple';
 
+    loading: boolean = false;
+
     constructor() { }
 
     ngOnInit() {
@@ -102,5 +104,18 @@ export class TreeSelectComponent implements OnInit {
             }
         }
     }
+
+    // nodeExpand(event: any) {
+    //     if (event.node) {
+    //         this.loading = true;
+    //         setTimeout(() => {
+    //             this.nodeService.getLazyFiles().then((nodes) => {
+    //                 event.node.children = nodes;
+    //                 this.messageService.add({ severity: 'info', summary: 'Children Loaded', detail: event.node.label });
+    //             });
+    //             this.loading = false;
+    //         }, 200);
+    //     }
+    // }
 
 }

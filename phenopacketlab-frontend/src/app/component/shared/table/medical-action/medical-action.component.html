@@ -1,0 +1,83 @@
+<div class="flex">
+  <div class="flex-initial flex align-items-center justify-content-center">
+    <button
+      pButton
+      label="Add medical action"
+      (click)="addMedicalAction()"
+      icon="pi pi-plus"
+      class="p-button-outlined mb-2"
+    ></button>
+  </div>
+</div>
+
+<p-table *ngIf="medicalActions?.length > 0" [value]="medicalActions" dataKey="key" styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Action</th>
+      <th>ID</th>
+      <th>Treatment target</th>
+      <th>Treatment intent</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-medicalaction let-expanded="expanded">
+    <tr>
+      <td>
+        <button
+          type="button"
+          pButton
+          pRipple
+          [pRowToggler]="medicalaction"
+          class="p-button-text p-button-rounded p-button-plain"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+        ></button>
+      </td>
+      <td>
+        <span class="material-icons"> 
+          {{ getIcon(medicalaction) }}
+        </span>
+      </td>
+      <td>{{ getActionName(medicalaction) }}</td>
+      <td><a href="{{ medicalaction.treatment?.agent?.termUrl }}" target="_blank">{{ getId(medicalaction) }}</a></td>
+      <td>{{ getTarget(medicalaction) }}</td>
+      <td>{{ getIntent(medicalaction) }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-text"
+          (click)="editMedicalAction(medicalaction)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-text p-button-warning"
+          (click)="deleteMedicalAction(medicalaction)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-medicalaction>
+    <tr>
+      <td colspan="7">
+        <div class="p-3">
+          <app-medical-action-detail
+            [medicalAction]="medicalaction"
+            [diseases]="diseases"
+          ></app-medical-action-detail>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="7">No medical action to display.</td>
+    </tr>
+
+    <tr></tr
+  ></ng-template>
+</p-table>

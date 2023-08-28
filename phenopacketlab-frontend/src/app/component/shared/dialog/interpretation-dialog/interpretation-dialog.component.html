@@ -30,18 +30,6 @@
     <small *ngIf="!id && submitted" class="p-error"
       >Interpretation ID is required.</small
     >
-    <div class="grid p-fluid mt-2">
-      <div class="field col-12">
-        <p-checkbox
-          label="I confirm that this ID is not a medical record number, date of birth, initials, location, email, name, address, or any other personal identifying information."
-          [binary]="true"
-          [(ngModel)]="isPrivateInfoWarnSelected"
-          (onChange)="updateIsPrivateInfoWarn($event.checked)"
-          labelStyleClass="label-active text-sm"
-          [ngClass]="{ 'label-active': !isPrivateInfoWarnSelected }"
-        ></p-checkbox>
-      </div>
-    </div>
   </div>
   <div class="field col-12 md:col-6">
     <label for="progressstatus">Progress status *</label>

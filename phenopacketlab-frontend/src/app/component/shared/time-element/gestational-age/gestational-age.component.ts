@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { GestationalAge, TimeElement, TimeElementId } from 'src/app/models/base';
+import { GestationalAge, TimeElement } from 'src/app/models/base';
 
 @Component({
     selector: 'app-gestational-age',
@@ -13,9 +13,6 @@ export class GestationalAgeComponent implements OnInit {
 
     @Input()
     gestationalAge: GestationalAge;
-
-    @Input()
-    timeElementId: TimeElementId;
 
     weeks: number;
     days: number;
@@ -49,8 +46,8 @@ export class GestationalAgeComponent implements OnInit {
             this.gestationalAge.weeks = this.weeks;
 
         } else if (type === 'days') {
-            if (value > 31) {
-                value = 31;
+            if (value > 7) {
+                value = 7;
             }
             this.days = value;
             this.gestationalAge.days = this.days;

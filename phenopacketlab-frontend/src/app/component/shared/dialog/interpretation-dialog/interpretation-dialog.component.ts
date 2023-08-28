@@ -26,7 +26,6 @@ export class InterpretationDialogComponent implements OnInit {
   profile: ProfileSelection;
 
   submitted = false;
-  isPrivateInfoWarnSelected: boolean;
 
   visible = false;
   id: string;
@@ -104,7 +103,6 @@ export class InterpretationDialogComponent implements OnInit {
     // initialize
     if (this.interpretation) {
       this.id = this.interpretation.id;
-      this.isPrivateInfoWarnSelected = this.interpretation.isPrivateInfoWarnSelected;
       this.selectedProgressStatus = this.interpretation.progressStatus;
       this.selectedDisease = this.interpretation.diagnosis?.disease;
       if (this.selectedDisease) {
@@ -190,11 +188,6 @@ export class InterpretationDialogComponent implements OnInit {
     }
   }
 
-  updateIsPrivateInfoWarn(isPrivateInfoWarnSelected: boolean) {
-    if (this.interpretation) {
-      this.interpretation.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
-    }
-  }
   generateNewID() {
     this.id = uuidv4();
   }
@@ -206,11 +199,6 @@ export class InterpretationDialogComponent implements OnInit {
     this.submitted = true;
     if (this.id === undefined) {
       this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please fill in the interpretation ID.' });
-      return false;
-    }
-    // check if personal info has been checked
-    if (!this.isPrivateInfoWarnSelected) {
-      this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `Please, confirm that the ID used is not a MRN, DOB, initials, location, email, name, address, or any other personal identifying information.` });
       return false;
     }
     if (this.selectedProgressStatus === undefined || this.selectedProgressStatus === null) {

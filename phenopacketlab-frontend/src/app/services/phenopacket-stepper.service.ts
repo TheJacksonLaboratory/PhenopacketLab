@@ -38,7 +38,6 @@ export class PhenopacketStepperService {
 
     profileSelection = new BehaviorSubject<ProfileSelection>(ProfileSelection.RARE_DISEASE);
     isPrivateInfoWarnSelected = new BehaviorSubject<boolean>(false);
-    isInterpretationPrivateInfoWarnSelected = new BehaviorSubject<boolean>(false);
 
     private validated = new Subject<any>();
     validated$ = this.validated.asObservable();
@@ -233,12 +232,6 @@ export class PhenopacketStepperService {
     }
     getIsPrivateInfoWarnSelected(): Observable<boolean> {
         return this.isPrivateInfoWarnSelected.asObservable();
-    }
-    setInterpretationPrivateInfoWarnSelected(isInterpretationPrivateInfoWarnSelected: boolean) {
-        this.isInterpretationPrivateInfoWarnSelected.next(isInterpretationPrivateInfoWarnSelected);
-    }
-    getInterpretationIsPrivateInfoWarnSelected(): Observable<boolean> {
-        return this.isInterpretationPrivateInfoWarnSelected.asObservable();
     }
 }
 

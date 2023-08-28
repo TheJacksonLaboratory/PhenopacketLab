@@ -54,9 +54,13 @@ export class OntologyClass extends Convert {
         if (obj['id']) {
             ontologyClass.id = obj['id'];
             ontologyClass.termUrl = Utils.getUrlForId(obj['id']);
+        } else {
+            throw new Error(`'id' is missing from 'ontologyClass'.`);
         }
         if (obj['label']) {
             ontologyClass.label = obj['label'];
+        } else {
+            throw new Error(`'label' is missing from 'ontologyClass'.`);
         }
         return ontologyClass;
     }
@@ -159,9 +163,6 @@ export class Evidence extends Convert {
 }
 export class Procedure {
 
-    constructor() {
-        this.code = new OntologyClass('', '');
-    }
     static actionName = 'Procedure';
     code: OntologyClass;
     bodySite: OntologyClass;
@@ -295,12 +296,12 @@ export class GestationalAge {
 
     public static convert(obj: any): GestationalAge {
         const gestationalAge = new GestationalAge();
-        if (obj['weeks']) {
+        if (obj['weeks'] !== undefined) {
             gestationalAge.weeks = obj['weeks'];
         } else {
             throw new Error(`Phenopacket file is missing 'weeks' field in 'gestationalAge' object.`);
         }
-        if (obj['days']) {
+        if (obj['days'] !== undefined) {
             gestationalAge.days = obj['days'];
         }
         return gestationalAge;

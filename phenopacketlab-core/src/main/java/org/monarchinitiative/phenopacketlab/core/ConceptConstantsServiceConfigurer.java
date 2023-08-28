@@ -34,6 +34,11 @@ public class ConceptConstantsServiceConfigurer {
     private static final TermId GENERIC_REGIONAL_LYMPH_NODES_TNM_FINDING = TermId.of("NCIT:C48884");
     private static final TermId GENERIC_PRIMARY_TUMOR_TNM_FINDING = TermId.of("NCIT:C48885");
     private static final TermId SCHEDULE_FREQUENCY = TermId.of("NCIT:C64493");
+    private static final TermId TREATMENT_STATUS = TermId.of("NCIT:C45501");
+    private static final TermId DISEASE_RESPONSE = TermId.of("NCIT:C50995");
+    private static final TermId NCIT_PROCEDURE = TermId.of("NCIT:C25218");
+    private static final TermId RADIATION_THERAPY = TermId.of("NCIT:C15313");
+    private static final TermId TREATMENT_REGIMEN = TermId.of("NCIT:C15697");
     private static final TermId ALLELIC_STATE = TermId.of("GENO:0000875");
     private static final TermId UNIT = TermId.of("UO:0000000");
 
@@ -66,7 +71,13 @@ public class ConceptConstantsServiceConfigurer {
         Optional<SubtreeNode> scheduleFrequencyTreeConstants = configureScheduleFrequencyTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> adverseEventTreeConstants = configureAdverseEventTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> bodySiteTreeConstants = configureBodySiteTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> treatmentStatusTreeConstants = configureTreatmentStatusTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> diseaseResponseTreeConstants = configureDiseaseResponseTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> ncitProcedureTreeConstants = configureNcitProcedureTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> radiationTherapyTreeConstants = configureRadiationTherapyTreeConstants(resourceService, hierarchyServiceRegistry);
+        Optional<SubtreeNode> treatmentRegimenTreeConstants = configureTreatmentRegimenTreeConstants(resourceService, hierarchyServiceRegistry);
         Optional<SubtreeNode> unitTreeConstants = configureUnitTreeConstants(resourceService, hierarchyServiceRegistry);
+        List<IdentifiedConcept> treatmentIntentConstants = configureTreatmentIntentConstants(resourceService);
 
         return new ConceptConstantsServiceImpl(sexConstants,
                 genderConstants,
@@ -90,7 +101,13 @@ public class ConceptConstantsServiceConfigurer {
                 scheduleFrequencyTreeConstants.orElse(null),
                 adverseEventTreeConstants.orElse(null),
                 bodySiteTreeConstants.orElse(null),
+                treatmentStatusTreeConstants.orElse(null),
+                diseaseResponseTreeConstants.orElse(null),
+                ncitProcedureTreeConstants.orElse(null),
+                radiationTherapyTreeConstants.orElse(null),
+                treatmentRegimenTreeConstants.orElse(null),
                 unitTreeConstants.orElse(null),
+                treatmentIntentConstants,
                 contigConstants);
     }
 
@@ -336,9 +353,39 @@ public class ConceptConstantsServiceConfigurer {
                 BODY_REGION, BODY_REGION.getPrefix(), null, true);
     }
 
+    private static Optional<SubtreeNode> configureTreatmentStatusTreeConstants(ConceptResourceService resourceService,
+                                                                               OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                TREATMENT_STATUS, TREATMENT_STATUS.getPrefix(), null, true);
+    }
+
+    private static Optional<SubtreeNode> configureDiseaseResponseTreeConstants(ConceptResourceService resourceService,
+                                                                               OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                DISEASE_RESPONSE, DISEASE_RESPONSE.getPrefix(), null, true);
+    }
+
+    private static Optional<SubtreeNode> configureNcitProcedureTreeConstants(ConceptResourceService resourceService,
+                                                                               OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                NCIT_PROCEDURE, NCIT_PROCEDURE.getPrefix(), null, true);
+    }
+
+    private static Optional<SubtreeNode> configureRadiationTherapyTreeConstants(ConceptResourceService resourceService,
+                                                                             OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                RADIATION_THERAPY, RADIATION_THERAPY.getPrefix(), null, true);
+    }
+
+    private static Optional<SubtreeNode> configureTreatmentRegimenTreeConstants(ConceptResourceService resourceService,
+                                                                                OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry,
+                TREATMENT_REGIMEN, TREATMENT_REGIMEN.getPrefix(), null, true);
+    }
+
     private static Optional<SubtreeNode> configureUnitTreeConstants(ConceptResourceService resourceService,
                                                                         OntologyHierarchyServiceRegistry hierarchyServiceRegistry) {
-        return configureTreeConstants(resourceService, hierarchyServiceRegistry, UNIT, UNIT.getPrefix(), null, true);
+        return configureTreeConstants(resourceService, hierarchyServiceRegistry, UNIT, UNIT.getPrefix(), null, false);
     }
 
     private static List<IdentifiedConcept> configureSeverityConstants(ConceptResourceService resourceService) {
@@ -360,6 +407,23 @@ public class ConceptConstantsServiceConfigurer {
         return List.copyOf(concepts);
     }
 
+    private static List<IdentifiedConcept> configureTreatmentIntentConstants(ConceptResourceService resourceService) {
+        Optional<IdentifiedConceptResource> ncitOptional = resourceService.forPrefix("NCIT");
+        if (ncitOptional.isEmpty()) {
+            LOGGER.warn("Cannot configure evidence constants due to missing NCIT concept resource!");
+            return List.of();
+        }
+        IdentifiedConceptResource ncit = ncitOptional.get();
+        List<IdentifiedConcept> concepts = new ArrayList<>(5);
+        retrieveIdentifiedConcept(ncit, "NCIT:C101516", concepts, "Missing NCIT:C101516"); // palliative
+        retrieveIdentifiedConcept(ncit, "NCIT:C28005", concepts, "Missing NCIT:C28005");    // preventive
+        retrieveIdentifiedConcept(ncit, "NCIT:C185614", concepts, "Missing NCIT:C185614"); // curative therapy
+        retrieveIdentifiedConcept(ncit, "NCIT:C15359", concepts, "Missing NCIT:C15359");    // salvage therapy
+        retrieveIdentifiedConcept(ncit, "NCIT:C70827", concepts, "Missing NCIT:C70827");    // recovery
+        retrieveIdentifiedConcept(ncit, "NCIT:C115904", concepts, "Missing NCIT:C115904");  // Primary Goal to Extend Life
+
+        return List.copyOf(concepts);
+    }
     private static List<Concept> configureStructuralTypes() {
         Concept del = Concept.of("DEL", "Deletion.", List.of());
         Concept ins = Concept.of("INS", "Insertion.", List.of());

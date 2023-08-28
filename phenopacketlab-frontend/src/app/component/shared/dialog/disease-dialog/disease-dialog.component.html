@@ -27,7 +27,6 @@
     <label for="onset"><b>Onset</b></label>
     <app-time-element
       id="onset"
-      [timeElementId]="getDiseaseOnsetId()"
       [timeElement]="disease?.onset"
       [ontologyNodes]="onsetsNodes"
       [useOntologyClass]="true"
@@ -40,7 +39,6 @@
     <label for="resolution"><b>Resolution:</b></label>
     <app-time-element
       id="resolution"
-      [timeElementId]="getDiseaseResolutionId()"
       [timeElement]="disease?.resolution"
       (timeElementEvent)="updateResolution($event)"
       aria-labelledby="resolution-time-label"

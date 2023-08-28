@@ -5,13 +5,17 @@ import org.monarchinitiative.phenol.io.OntologyLoaderOptions;
 import org.monarchinitiative.phenol.io.utils.CurieUtil;
 import org.monarchinitiative.phenol.io.utils.CurieUtilBuilder;
 import org.monarchinitiative.phenol.ontology.data.MinimalOntology;
+import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacketlab.core.OntologyHierarchyService;
 import org.monarchinitiative.phenopacketlab.core.PhenolOntologyHierarchyService;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConcept;
+import org.monarchinitiative.phenopacketlab.core.model.IdentifiedConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.OntologyConceptResource;
 import org.monarchinitiative.phenopacketlab.core.model.Resource;
 import org.phenopackets.phenopackettools.builder.builders.Resources;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public class ConceptResourceLoaders {
@@ -121,6 +125,15 @@ public class ConceptResourceLoaders {
 
     private static Resource ncitResource(String version) {
         return new PhenopacketResource(Resources.ncitVersion(version));
+    }
+
+    public static IdentifiedConceptResource ncbiTaxon() {
+        List<IdentifiedConcept> concepts = List.of(
+                IdentifiedConcept.of(
+                        TermId.of("NCBITaxon:9606"), "Homo sapiens", "", List.of()
+                ));
+        Resource resource = new PhenopacketResource(Resources.ncbiTaxonVersion("2023-06-20"));
+        return IdentifiedConceptResource.of(concepts, resource);
     }
 
     public static ConceptResourceAndHierarchyServices eco(InputStream is) {

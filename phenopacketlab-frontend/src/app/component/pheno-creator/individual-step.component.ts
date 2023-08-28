@@ -7,6 +7,8 @@ import { MetaData } from 'src/app/models/metadata';
 import { Phenopacket } from 'src/app/models/phenopacket';
 import { ProfileSelection } from 'src/app/models/profile';
 import { PhenopacketStepperService } from 'src/app/services/phenopacket-stepper.service';
+import { OntologyClass } from 'src/app/models/base';
+import { Utils } from '../shared/utils';
 
 @Component({
     selector: 'app-individual-step',
@@ -23,8 +25,9 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
     profileSelectionSubscription: Subscription;
     profileSelection: ProfileSelection;
 
-    isPrivateInfoWarnSelected: boolean;
     privateInfoWarnSelectedSubscription: Subscription;
+    // taxonomySubscription: Subscription;
+    taxonomy = new OntologyClass('NCBITaxon:9606', 'Homo sapiens', undefined, Utils.getUrlForId('NCBITaxon:9606'));
 
     summary: string;
 
@@ -36,17 +39,14 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
         this.phenopacket = this.phenopacketService.phenopacket;
         if (this.phenopacket === undefined) {
             this.phenopacket = new Phenopacket();
-            this.phenopacket.subject = new Individual();
-            this.phenopacket.subject.isPrivateInfoWarnSelected = false;
+            const subject = new Individual();
+            subject.taxonomy = this.taxonomy;
+            this.phenopacket.subject = subject;
             this.phenopacket.metaData = new MetaData();
         }
         this.profileSelectionSubscription = this.phenopacketService.getProfileSelection().subscribe(profile => {
             this.profileSelection = profile;
         });
-        // set isPrivateInfoSelected
-        if (this.phenopacket?.subject) {
-            this.isPrivateInfoWarnSelected = this.phenopacket.subject.isPrivateInfoWarnSelected;
-        }
 
         // Initialize the phenopacket
         this.phenopacketService.phenopacket = this.phenopacket;
@@ -61,7 +61,7 @@ export class IndividualStepComponent implements OnInit, OnDestroy {
             this.profileSelectionSubscription.unsubscribe();
         }
     }
-
+ 
     generateNewID() {
         if (this.phenopacket) {
             this.phenopacket.id = uuidv4();

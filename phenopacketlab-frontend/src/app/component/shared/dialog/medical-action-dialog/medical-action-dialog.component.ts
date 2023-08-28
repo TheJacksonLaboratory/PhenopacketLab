@@ -4,11 +4,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Utils } from 'src/app/component/shared/utils';
-import { OntologyClass, Procedure, TimeElement, TimeInterval } from 'src/app/models/base';
-import { Disease } from 'src/app/models/disease';
+import { DialogMode, OntologyClass, Procedure, TimeElement } from 'src/app/models/base';
 import { Quantity } from 'src/app/models/measurement';
 import { DoseInterval, DrugType, MedicalAction, RadiationTherapy, RegimenStatus, TherapeuticRegimen, Treatment } from 'src/app/models/medical-action';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
+import { Phenopacket } from 'src/app/models/phenopacket';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { MedicalActionService } from 'src/app/services/medical-action.service';
 
@@ -20,22 +20,28 @@ import { MedicalActionService } from 'src/app/services/medical-action.service';
 export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   medicalAction: MedicalAction;
-  diseases: Disease[];
+
+  mode: DialogMode;
+  phenopacket: Phenopacket;
+  okLabel = 'Add medical action';
 
   bodySiteSubscription: Subscription;
   bodySiteNodes: OntologyTreeNode[];
   // action: any;
-  treatmentTarget: OntologyClass;
-  treatmentIntent: OntologyClass;
-  responseToTreatment: OntologyClass;
-  responseToTreatmentVal: string;
-  terminationReason: OntologyClass;
+  treatmentTargetSelected: OntologyClass;
+  treatmentTargets: OntologyClass[];
+  treatmentIntentSelected: any;
+  responsesToTreatmentNodes: OntologyTreeNode[];
+  responseToTreatmentSelected: OntologyTreeNode;
+  responsesSubscription: Subscription;
+
   // * procedure *
-  procedureCode: OntologyClass;
-  performed: TimeElement;
-  procedureBodySite: OntologyClass;
-  bodySitesStorageKey = 'body_sites';
-  currSearchParams: any = {};
+  proceduresNodes: OntologyTreeNode[];
+  procedureSelected: OntologyTreeNode;
+  proceduresSubscription: Subscription;
+  ontologyClassTimeNodes: OntologyTreeNode[];
+  ontologyClassTimeSubscription: Subscription;
+  procedureBodySiteSelected: OntologyTreeNode;
   // * Treatment *
   // Agent = chemical entity
   chemicalEntityItems: OntologyClass[];
@@ -56,62 +62,129 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   drugTypes = Object.values(DrugType);
   cumulativeDose: Quantity;
   // * radiationtherapy *
-  modality: OntologyClass;
-  radiationTherapyBodySites: OntologyClass[];
+  radiationTherapyModalityNodes: OntologyTreeNode[];
+  radiationTherapyModalitySelected: OntologyTreeNode;
+  radiationTherapySubscription: Subscription;
   dosage: number;
-  radiationTherapyBodySite: OntologyClass;
+  radiationTherapyBodySiteSelected: OntologyTreeNode;
   fractions: number;
   // * therapeutic regimen *
-  identifier: any;
+  therapeuticRegimenIdentifiersNodes: OntologyTreeNode[];
+  therapeuticRegimenIdentifierSelected: OntologyTreeNode;
+  therapeuticRegimenIdentifierSubscription: Subscription;
   startTime: TimeElement;
   endTime: TimeElement;
   regimenStatuses = Object.values(RegimenStatus);
   regimenStatus: RegimenStatus;
 
-  terminationReasonStr: string;
-
   actionTypes = [Procedure.actionName, Treatment.actionName, RadiationTherapy.actionName, TherapeuticRegimen.actionName];
   actionType: string;
-  // We pull data from backend endpoint
-  intents: OntologyClass[];
-  intentsSubscription: Subscription;
 
-  responses: OntologyClass[];
-  responsesSubscription: Subscription;
+  treatmentIntents: any[];
+  treatmentIntentsSubscription: Subscription;
 
-  terminationReasons: OntologyClass[];
+  terminationReasonsNodes: OntologyTreeNode[];
   terminationReasonsSubscription: Subscription;
+  terminationReasonSelected: OntologyTreeNode;
 
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
-
-  unitSubscription: Subscription;
-  unitNodes: OntologyTreeNode[];
-
-  // Dose Intervals table
-  doseIntervalVisible = false;
-  clonedDoseIntervals: { [s: string]: DoseInterval } = {};
-
-  valid: any = {};
 
   constructor(private medicalActionService: MedicalActionService,
     private constantsService: ConstantsService,
     private messageService: MessageService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig) {
-    this.medicalAction = config.data?.medicalAction;
-    this.diseases = config.data?.diseases;
+    
   }
 
   ngOnInit() {
-    this.intentsSubscription = this.medicalActionService.getTreatmentIntents().subscribe(intents => {
-      this.intents = intents;
+    const medicAction = this.config.data?.medicalAction;
+    if (medicAction === undefined || medicAction === null) {
+      this.medicalAction = new MedicalAction();
+    } else {
+      this.medicalAction = Utils.clone(medicAction);
+    }
+    this.treatmentTargets = [];
+    if (this.config.data?.diseases) {
+      for (const disease of this.config.data?.diseases) {
+        this.treatmentTargets.push(disease.term);
+        // initialize selected target
+        if (this.medicalAction.treatmentTarget?.id === disease.term.id) {
+          this.treatmentTargetSelected = disease.term.id;
+        }
+      }
+    }
+    this.phenopacket = this.config.data?.phenopacket;
+    this.mode = this.config.data?.mode;
+    if (this.mode === DialogMode.EDIT) {
+      this.okLabel = 'Save medical action';
+    }
+ 
+    this.treatmentIntentsSubscription = this.constantsService.getTreatmentIntents().subscribe(intents => {
+      this.treatmentIntents = intents;
+      // initialize selected intent
+      if (intents) {
+        for (const intent of intents) {
+          if (this.medicalAction && this.medicalAction.treatmentIntent) {
+            if (this.medicalAction.treatmentIntent.id === intent.id) {
+              this.treatmentIntentSelected = intent;
+            }
+          }
+        }
+      }
     });
-    this.responsesSubscription = this.medicalActionService.getTreatmentResponses().subscribe(responses => {
-      this.responses = responses;
+    this.responsesSubscription = this.constantsService.getResponsesToTreatment().subscribe(nodes => {
+      if (nodes) {
+        this.responsesToTreatmentNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.responseToTreatment) {
+          this.responseToTreatmentSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.responseToTreatment.id,
+            this.responsesToTreatmentNodes);
+        }
+      }
     });
-    this.terminationReasonsSubscription = this.medicalActionService.getTerminationReasons().subscribe(reasons => {
-      this.terminationReasons = reasons;
+    this.terminationReasonsSubscription = this.constantsService.getTerminationReasons().subscribe(nodes => {
+      if (nodes) {
+        this.terminationReasonsNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.treatmentTerminationReason) {
+          this.terminationReasonSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatmentTerminationReason.id,
+            this.terminationReasonsNodes);
+        }
+      }
+    });
+    this.proceduresSubscription = this.constantsService.getProcedures().subscribe(nodes => {
+      if (nodes) {
+        this.proceduresNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.procedure?.code) {
+          this.procedureSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.code.id,
+            this.proceduresNodes);
+        }
+      }
+    });
+    // get onsets
+    this.ontologyClassTimeSubscription = this.constantsService.getOnsets().subscribe(nodes => {
+      // we get the children from the root node sent in response
+      if (nodes) {
+        this.ontologyClassTimeNodes = <OntologyTreeNode[]>nodes.children;
+      }
+    });
+    this.radiationTherapySubscription = this.constantsService.getRadiationTherapies().subscribe(nodes => {
+      if (nodes) {
+        this.radiationTherapyModalityNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.radiationTherapy?.modality) {
+          this.radiationTherapyModalitySelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.modality.id,
+            this.radiationTherapyModalityNodes);
+        }
+      }
+    });
+    this.therapeuticRegimenIdentifierSubscription = this.constantsService.getTherapeuticRegimens().subscribe(nodes => {
+      if (nodes) {
+        this.therapeuticRegimenIdentifiersNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.therapeuticRegimen?.ontologyClass) {
+          this.therapeuticRegimenIdentifierSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.therapeuticRegimen.ontologyClass.id,
+            this.therapeuticRegimenIdentifiersNodes);
+        }
+      }
     });
     this.adverseEventsSubscription = this.constantsService.getAdverseEvents().subscribe(nodes => {
       // we get the children from the root node sent in response
@@ -147,6 +220,10 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     this.routeOfAdministrationSubscription = this.constantsService.getRoutesOfAdministration().subscribe(nodes => {
       if (nodes) {
         this.routeOfAdministrationNodes = <OntologyTreeNode[]>nodes.children;
+        if (this.medicalAction && this.medicalAction.treatment?.routeOfAdministration) {
+          this.routeOfAdministrationSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatment.routeOfAdministration.id,
+            this.routeOfAdministrationNodes);
+        }
       }
     });
     this.scheduleFrequencySubscription = this.constantsService.getScheduleFrequencies().subscribe(nodes => {
@@ -154,28 +231,29 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         this.scheduleFrequencyNodes = <OntologyTreeNode[]>nodes.children;
       }
     });
-    this.unitSubscription = this.constantsService.getUnits().subscribe(nodes => {
-      if (nodes) {
-        this.unitNodes = <OntologyTreeNode[]>nodes.children;
-      }
-    });
     this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
       if (nodes) {
         this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
+        // initialize procedure bodysite
+        if (this.medicalAction && this.medicalAction.procedure?.bodySite) {
+          this.procedureBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.bodySite.id,
+            this.bodySiteNodes);
+        }
+        // initialize radiationTherapy bodysite
+        if (this.medicalAction && this.medicalAction.radiationTherapy?.bodySite) {
+          this.radiationTherapyBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.bodySite.id,
+            this.bodySiteNodes);
+        }
       }
     });
 
     this.updateMedicalAction();
 
-    // bodySite filter for RadiationTherapy
-    this.radiationTherapyBodySites = this.medicalActionService.getAllFromLocalStorage(this.bodySitesStorageKey);
-
-
   }
 
   ngOnDestroy() {
-    if (this.intentsSubscription) {
-      this.intentsSubscription.unsubscribe();
+    if (this.treatmentIntentsSubscription) {
+      this.treatmentIntentsSubscription.unsubscribe();
     }
     if (this.responsesSubscription) {
       this.responsesSubscription.unsubscribe();
@@ -195,43 +273,37 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     if (this.bodySiteSubscription) {
       this.bodySiteSubscription.unsubscribe();
     }
-    if (this.unitSubscription) {
-      this.unitSubscription.unsubscribe();
+    if (this.proceduresSubscription) {
+      this.proceduresSubscription.unsubscribe();
+    }
+    if (this.ontologyClassTimeSubscription) {
+      this.ontologyClassTimeSubscription.unsubscribe();
+    }
+    if (this.radiationTherapySubscription) {
+      this.radiationTherapySubscription.unsubscribe();
+    }
+    if (this.therapeuticRegimenIdentifierSubscription) {
+      this.therapeuticRegimenIdentifierSubscription.unsubscribe();
     }
   }
 
   updateMedicalAction() {
     if (this.medicalAction) {
-      this.treatmentTarget = this.medicalAction.treatmentTarget;
-      this.treatmentIntent = this.medicalAction.treatmentIntent;
-      this.responseToTreatment = this.medicalAction.responseToTreatment;
-      this.terminationReason = this.medicalAction.treatmentTerminationReason;
-      this.responseToTreatmentVal = this.responseToTreatment?.label;
+      this.treatmentTargetSelected = this.medicalAction.treatmentTarget;
       if (this.medicalAction.procedure) {
-        this.procedureCode = this.medicalAction.procedure.code;
-        this.procedureBodySite = this.medicalAction.procedure.bodySite;
-        this.performed = this.medicalAction.procedure.performed;
         this.actionType = Procedure.actionName;
       } else if (this.medicalAction.treatment) {
         this.selectedChemicalEntity = this.medicalAction.treatment.agent;
         this.chemicalEntityItems = [this.selectedChemicalEntity];
-        this.routeOfAdministrationSelected = this.initializeRouteOfAdministrationSelected(
-            this.medicalAction.treatment.routeOfAdministration);
         this.doseIntervals = this.medicalAction.treatment.doseIntervals;
         this.drugType = this.medicalAction.treatment.drugType;
         this.cumulativeDose = this.medicalAction.treatment.cumulativeDose;
         this.actionType = Treatment.actionName;
-        if (this.doseIntervals && this.doseIntervals.length > 0) {
-          this.doseIntervalVisible = true;
-        }
       } else if (this.medicalAction.radiationTherapy) {
-        this.modality = this.medicalAction.radiationTherapy.modality;
-        this.radiationTherapyBodySite = this.medicalAction.radiationTherapy.bodySite;
         this.dosage = this.medicalAction.radiationTherapy.dosage;
         this.fractions = this.medicalAction.radiationTherapy.fractions;
         this.actionType = RadiationTherapy.actionName;
       } else if (this.medicalAction.therapeuticRegimen) {
-        this.identifier = this.medicalAction.therapeuticRegimen.identifier;
         this.startTime = this.medicalAction.therapeuticRegimen.startTime;
         this.endTime = this.medicalAction.therapeuticRegimen.endTime;
         this.regimenStatus = this.medicalAction.therapeuticRegimen.regimenStatus;
@@ -264,49 +336,81 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       this.medicalAction.treatment = undefined;
       this.medicalAction.radiationTherapy = undefined;
       this.medicalAction.therapeuticRegimen = new TherapeuticRegimen();
+    } else if (this.actionType === undefined || this.actionType === null) {
+      this.medicalAction.procedure = undefined;
+      this.medicalAction.treatment = undefined;
+      this.medicalAction.radiationTherapy = undefined;
+      this.medicalAction.therapeuticRegimen = undefined;
     }
   }
 
-  updateTreatmentTarget(eventObj: any) {
+  updateTreatmentTarget(treatmentTarget: OntologyClass) {
     if (this.medicalAction) {
-      // retrieve disease term from event obj
-      this.medicalAction.treatmentTarget = eventObj.value?.term;
+      this.medicalAction.treatmentTarget = treatmentTarget;
     }
   }
 
-  updateTreatmentIntent(eventObj: any) {
+  updateTreatmentIntent(treatmentIntent: any) {
     if (this.medicalAction) {
-      // retrieve intent from object
-      this.medicalAction.treatmentIntent = eventObj.value;
+      if (treatmentIntent) {
+        // retrieve intent from object
+        this.medicalAction.treatmentIntent = new OntologyClass(treatmentIntent.id, treatmentIntent.lbl);
+      } else {
+        this.medicalAction.treatmentIntent = undefined;
+      }
     }
   }
 
   updateTreatmentResponse(eventObj: any) {
-    if (this.medicalAction) {
-      this.medicalAction.responseToTreatment = eventObj.value;
+    // treatment response is an OntologyTreeNode
+    if (eventObj) {
+      if (this.medicalAction && eventObj.node) {
+        this.medicalAction.responseToTreatment = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.responseToTreatment = undefined;
     }
   }
 
   updateTreatmentTerminationReason(eventObj: any) {
-    if (this.medicalAction) {
-      this.medicalAction.treatmentTerminationReason = eventObj.value;
+    // treatment termination reason is an OntologyTreeNode
+    if (eventObj) {
+      if (this.medicalAction && eventObj.node) {
+        this.medicalAction.treatmentTerminationReason = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.treatmentTerminationReason = undefined;
     }
   }
 
-  updateAdverseEvents(event) {
-
+  updateAdverseEvents(nodeAdverseEvents: OntologyTreeNode[]) {
+    if (this.medicalAction) {
+      this.medicalAction.adverseEvents = OntologyTreeNode.toOntologyClass(nodeAdverseEvents);
+      this.medicalAction.adverseEventNodes = [];
+      for (const nodAdverse of nodeAdverseEvents) {
+        this.medicalAction.adverseEventNodes.push(nodAdverse);
+      }
+    }
   }
 
-  changeProcedureCode(eventObj: OntologyClass) {
-    this.procedureCode = eventObj;
-    // update medicalAction
+  updateProcedureCode(eventObj) {
+    // procedure code is an OntologyTreeNode
+    if (eventObj) {
+      if (this.medicalAction && this.medicalAction.procedure && eventObj.node) {
+        this.medicalAction.procedure.code = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.procedure.code = undefined;
+    }
+  }
+  updateProcedurePerformedOn(timeElement) {
     if (this.medicalAction && this.medicalAction.procedure) {
-      this.medicalAction.procedure.code = this.procedureCode;
+      this.medicalAction.procedure.performed = timeElement;
     }
   }
   // chemical entity
-  updateChemicalEntity(chemicalEntity: any) {
-    if (this.medicalAction?.treatment?.agent) {
+  updateChemicalEntity(chemicalEntity: OntologyClass) {
+    if (this.medicalAction?.treatment) {
       if (chemicalEntity) {
         if (this.chemicalEntitySearchstate === 'active') {
           this.chemicalEntitySearchstate = 'inactive';
@@ -322,34 +426,18 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   chemicalEntityContentChanging(input: string) {
     this.chemicalEntityQuery.next(input);
   }
-  chemicalEntityItemSelected(item: any) {
-    if (item) {
-      if (this.medicalAction && this.medicalAction.treatment) {
-        this.medicalAction.treatment.agent = new OntologyClass(item.id, item.lbl);
-      }
-    }
-  }
+
   hasValidChemicalEntityInput(qString: string) {
     return (qString && qString.length >= 3);
   }
 
-  initializeRouteOfAdministrationSelected(route: OntologyClass) {
-    // update when a route is selected
-    if (route === undefined) {
-      return;
-    }
-    const treeNode = new OntologyTreeNode();
-    treeNode.key = route.id;
-    treeNode.label = route.label;
-    return treeNode;
-  }
   updateRouteOfAdministration(eventObj) {
     if (this.medicalAction?.treatment) {
       if (eventObj) {
-        const route = new OntologyClass(eventObj.node.key, eventObj.node.label);
-        const id = eventObj.node.key.split(':')[1];
-        route.termUrl = `http://purl.obolibrary.org/obo/NCIT_${id}`;
-        this.medicalAction.treatment.routeOfAdministration = route;
+        this.medicalAction.treatment.routeOfAdministration = new OntologyClass(eventObj.node.key,
+                                                                              eventObj.node.label,
+                                                                              eventObj.node.key,
+                                                                              Utils.getUrlForId(eventObj.node.key));
       } else {
         this.medicalAction.treatment.routeOfAdministration = undefined;
       }
@@ -359,25 +447,12 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   updateProcedureBodySite(eventObj) {
     if (this.medicalAction?.procedure) {
       if (eventObj) {
-        const bodySite = new OntologyClass(eventObj.node.key, eventObj.node.label);
-        const id = eventObj.node.key.split(':')[1];
-        bodySite.termUrl = `http://purl.obolibrary.org/obo/NCIT_${id}`;
-        this.medicalAction.procedure.bodySite = bodySite;
+        this.medicalAction.procedure.bodySite = new OntologyClass(eventObj.node.key,
+                                                                  eventObj.node.label,
+                                                                  eventObj.node.key,
+                                                                  Utils.getUrlForId(eventObj.node.key));
       } else {
         this.medicalAction.procedure.bodySite = undefined;
-      }
-    }
-  }
-
-  updateRadiationTherapyBodySite(eventObj) {
-    if (this.medicalAction?.radiationTherapy) {
-      if (eventObj) {
-        const bodySite = new OntologyClass(eventObj.node.key, eventObj.node.label);
-        const id = eventObj.node.key.split(':')[1];
-        bodySite.termUrl = `http://purl.obolibrary.org/obo/NCIT_${id}`;
-        this.medicalAction.radiationTherapy.bodySite = bodySite;
-      } else {
-        this.medicalAction.radiationTherapy.bodySite = undefined;
       }
     }
   }
@@ -393,86 +468,94 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   addDoseInterval() {
     const doseInterval = new DoseInterval();
+    if (this.doseIntervals === undefined) {
+      this.doseIntervals = [];
+    }
     doseInterval.key = Utils.getBiggestKey(this.doseIntervals) + 1;
-    doseInterval.interval = new TimeInterval();
-    doseInterval.quantity = new Quantity();
-    doseInterval.scheduleFrequency = new OntologyClass();
     this.doseIntervals.push(doseInterval);
-    this.doseIntervalVisible = true;
+    if (this.medicalAction.treatment) {
+      this.medicalAction.treatment.doseIntervals = this.doseIntervals;
+    }
   }
 
   deleteDoseInterval(doseInterval: DoseInterval) {
     this.doseIntervals = this.doseIntervals.filter(val => val.key !== doseInterval.key);
-    if (this.doseIntervals.length === 0) {
-      this.doseIntervalVisible = false;
-    }
   }
   updateScheduleFrequency(eventObj, doseInterval: DoseInterval) {
     if (this.medicalAction?.treatment) {
       if (eventObj) {
-        const id = eventObj.node.key.split(':')[1];
-        const schedule = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
-        doseInterval.scheduleFrequency = schedule;
+        doseInterval.scheduleFrequency = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, Utils.getUrlForId(eventObj.node.key));
       } else {
         doseInterval.scheduleFrequency = undefined;
       }
     }
   }
 
-  updateUnit(eventObj, doseInterval: DoseInterval) {
-    if (this.medicalAction?.treatment) {
-      if (eventObj) {
-        const id = eventObj.node.key.split(':')[1];
-        const unit = new OntologyClass(eventObj.node.key, eventObj.node.label, eventObj.node.key, `http://purl.obolibrary.org/obo/NCIT_${id}`);
-        if (doseInterval.quantity === undefined) {
-          doseInterval.quantity = new Quantity();
+  updateDoseIntervalQuantity(quantity: Quantity, doseInterval: DoseInterval) {
+    if (doseInterval) {
+      if (quantity.referenceRange) {
+        if ((quantity.referenceRange.low === undefined || quantity.referenceRange.low === null) 
+          && (quantity.referenceRange.high === undefined || quantity.referenceRange.high === null)) {
+          quantity.referenceRange = undefined;
         }
-        doseInterval.quantity.unit = unit;
-      } else {
-        doseInterval.quantity.unit = undefined;
       }
+      doseInterval.quantity = quantity;
     }
   }
-
-  updateValue(value, doseInterval: DoseInterval) {
-    if (this.medicalAction?.treatment) {
-      if (value) {
-        if (doseInterval.quantity === undefined) {
-          doseInterval.quantity = new Quantity();
+  updateDoseIntervalTimeInterval(interval, doseInterval: DoseInterval) {
+    doseInterval.interval = interval;
+  }
+  updateCumulativeDoseQuantity(quantity: Quantity) {
+    if (this.medicalAction.treatment) {
+      if (quantity.referenceRange) {
+        if ((quantity.referenceRange.low === undefined || quantity.referenceRange.low === null) 
+          && (quantity.referenceRange.high === undefined || quantity.referenceRange.high === null)) {
+          quantity.referenceRange = undefined;
         }
-        doseInterval.quantity.value = value;
+      }
+      if (quantity.unit === undefined) {
+        this.medicalAction.treatment.cumulativeDose = undefined;
       } else {
-        doseInterval.quantity.value = undefined;
+        this.medicalAction.treatment.cumulativeDose = quantity;
       }
     }
   }
 
   // RadiationTherapy
-  changeModality(eventObj: OntologyClass) {
-    this.modality = eventObj;
-    // update medicalAction
-    if (this.medicalAction && this.medicalAction.radiationTherapy) {
-      this.medicalAction.radiationTherapy.modality = this.modality;
+  updateRadiationTherapyModality(eventObj) {
+    if (eventObj) {
+      this.radiationTherapyModalitySelected = eventObj.node;
+      if (this.medicalAction && this.medicalAction.radiationTherapy && eventObj.node) {
+        this.medicalAction.radiationTherapy.modality = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.radiationTherapy.modality = undefined;
     }
   }
 
-  private _filter(value: any): OntologyClass[] {
-    const filterValue = value.toLowerCase();
-
-    return this.radiationTherapyBodySites.filter(option => {
-      return (option as any).name.toLowerCase().includes(filterValue);
-    });
+  updateRadiationTherapyBodySite(eventObj) {
+    if (this.medicalAction?.radiationTherapy) {
+      if (eventObj) {
+        this.radiationTherapyBodySiteSelected = eventObj.node;
+        this.medicalAction.radiationTherapy.bodySite = new OntologyClass(eventObj.node.key,
+                                                                         eventObj.node.label,
+                                                                         eventObj.node.key,
+                                                                         Utils.getUrlForId(eventObj.node.key));
+      } else {
+        this.medicalAction.radiationTherapy.bodySite = undefined;
+      }
+    }
   }
 
-  changeDosage(eventObj: number) {
-    this.dosage = eventObj;
+  updateDosage(dosage) {
+    this.dosage = dosage;
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.dosage = this.dosage;
     }
   }
-  changeFractions(eventObj: number) {
-    this.fractions = eventObj;
+  updateFractions(fractions) {
+    this.fractions = fractions;
     // update medicalAction
     if (this.medicalAction && this.medicalAction.radiationTherapy) {
       this.medicalAction.radiationTherapy.fractions = this.fractions;
@@ -480,11 +563,14 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   }
 
   // Therapeutic regimen
-  changeIdentifier(eventObj: any) {
-    this.identifier = eventObj;
-    // update medicalAction
-    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
-      this.medicalAction.therapeuticRegimen.identifier = this.identifier;
+  updateTherapeuticRegimenIdentifier(eventObj) {
+    if (eventObj) {
+      this.therapeuticRegimenIdentifierSelected = eventObj.node;
+      if (this.medicalAction && this.medicalAction.therapeuticRegimen && eventObj.node) {
+        this.medicalAction.therapeuticRegimen.ontologyClass = new OntologyClass(eventObj.node.key, eventObj.node.label);
+      }
+    } else {
+      this.medicalAction.therapeuticRegimen.ontologyClass = undefined;
     }
   }
   onRegimenStatusChange(eventObj: any) {
@@ -494,12 +580,34 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       this.medicalAction.therapeuticRegimen.regimenStatus = this.regimenStatus;
     }
   }
+  updateStartTime(startTime) {
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.startTime = startTime;
+    }
+  }
+  updateEndTime(endTime) {
+    if (this.medicalAction && this.medicalAction.therapeuticRegimen) {
+      this.medicalAction.therapeuticRegimen.endTime = endTime;
+    }
+  }
 
   onCancelClick(): void {
     this.ref.close();
   }
 
   onOkClick() {
+    if (this.medicalAction) {
+      try {
+        MedicalAction.convert(this.medicalAction);
+      } catch(error) {
+        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
+        return;
+      }     
+    }
+    // set key
+    if (this.mode === DialogMode.ADD) {
+      this.medicalAction.key = Utils.getBiggestKey(this.phenopacket.medicalActions) + 1;
+    }
     this.ref.close(this.medicalAction);
   }
 }

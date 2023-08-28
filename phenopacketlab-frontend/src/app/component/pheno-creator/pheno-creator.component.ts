@@ -32,6 +32,7 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   activeIndex = 0;
   user: User;
+  isPrivateInfoWarnSelected: boolean;
 
   constructor(private router: Router, private messageService: MessageService, private dialogService: DialogService,
               private downloadService: DownloadService, private authService: AuthService,
@@ -56,7 +57,9 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
         detail: 'The phenopacket with the ID ' + phenopacket.subject.id + ' has been successfully validated.'
       });
     });
-
+    this.phenopacketStepperService.getIsPrivateInfoWarnSelected().subscribe(isPrivateInfoWarnSelected => {
+      this.isPrivateInfoWarnSelected = isPrivateInfoWarnSelected;
+    });
     this.authService.user$.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -109,10 +112,11 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   complete() {
     const phenopacket = this.phenopacketStepperService.phenopacket;
     this.phenopacketStepperService.validatePhenopacket(this.getPhenopacketJSON(phenopacket)).subscribe(validationResults => {
-      if (validationResults.validationResults.length === 0) {
+      if (validationResults.validationResults.length === 0 && this.isPrivateInfoWarnSelected) {
         this.phenopacketService.addPhenopacket(phenopacket, this.user);
         this.router.navigate(['phenopackets']);
         this.phenopacketStepperService.phenopacket = undefined;
+        this.phenopacketStepperService.setPrivateInfoWarnSelected(false);
       } else {
         this.dialogService.open(ValidationResultsDialogComponent, {
           header: 'Validation results',

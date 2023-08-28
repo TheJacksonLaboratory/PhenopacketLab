@@ -58,27 +58,15 @@ export class GenomicInterpretationDialogComponent implements OnInit {
     }
 
     onOkClick() {
-        if (this.genomicInterpretation.interpretationStatus === undefined) {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select interpretation status for genomic interpretation.' });
-            return;
+        if (this.genomicInterpretation) {
+            try {
+                GenomicInterpretation.convert(this.genomicInterpretation);
+            } catch (error) {
+                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
+                return;
+            }
         }
-        if (this.genomicInterpretation.variantInterpretation) {
-            if (this.genomicInterpretation.variantInterpretation.acmgPathogenicityClassification === undefined) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select acmgPathogenicityClassification in genomic interpretation.' });
-                return;
-            }
-            if (this.genomicInterpretation.variantInterpretation.therapeuticActionability === undefined) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please select therapeuticActionability in genomic interpretation.' });
-                return;
-            }
-            if (this.genomicInterpretation.variantInterpretation.variationDescriptor === undefined) {
-                this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please add a variationDescriptor to the genomic interpretation.' });
-                return;
-            }
-        } else {
-            this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: 'Please add a variant interpretation to the genomic interpretation.' });
-            return;
-        }
+
         if (this.genomicInterpretation.interpretationStatus === InterpretationStatus.UNKNOWN_STATUS) {
             this.confirmationService.confirm({
                 message: `The \'Interpretation Status\' of the genomic interpretation with the variation id \'${this.genomicInterpretation.variantInterpretation.variationDescriptor.id}\' is set to \'UNKNOWN_STATUS\'. Click on \'Yes\' to keep the status value to \'UNKNOWN_STATUS\'. Click on \'No\' to keep editing the interpretation and change the status value.`,

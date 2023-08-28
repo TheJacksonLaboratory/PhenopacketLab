@@ -56,7 +56,19 @@ public interface ConceptConstantsService {
 
     Optional<SubtreeNode> adverseEventTreeConstants();
 
+    Optional<SubtreeNode> treatmentStatusTreeConstants();
+
+    Optional<SubtreeNode> ncitProcedureTreeConstants();
+
+    Optional<SubtreeNode> radiationTherapyTreeConstants();
+
+    Optional<SubtreeNode> treatmentRegimenTreeConstants();
+
+    Optional<SubtreeNode> diseaseResponseTreeConstants();
+
     Optional<SubtreeNode> bodySiteTreeConstants();
 
     Optional<SubtreeNode> unitTreeConstants();
+
+    List<IdentifiedConcept> treatmentIntentConstants();
 }

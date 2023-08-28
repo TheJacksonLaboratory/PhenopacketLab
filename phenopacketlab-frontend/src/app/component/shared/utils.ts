@@ -9,9 +9,11 @@ export class Utils {
  */
     public static getBiggestKey(array: any[]) {
         let key = 0;
-        for (const item of array) {
-            if ((item.key) >= key) {
-                key = item.key;
+        if (array) {
+            for (const item of array) {
+                if ((item.key) >= key) {
+                    key = item.key;
+                }
             }
         }
         return key;
@@ -19,7 +21,11 @@ export class Utils {
 
     public static getUrlForId(id: string) {
         if (id.toUpperCase().startsWith('HP')
-        || id.toUpperCase().startsWith('MONDO')) {
+        || id.toUpperCase().startsWith('MONDO')
+        || id.toUpperCase().startsWith('NCBITaxon')
+        || id.toUpperCase().startsWith('NCIT')
+        || id.toUpperCase().startsWith('OAE')
+        || id.toUpperCase().startsWith('CHEBI')) {
             const splittedId = id.split(':');
             const prefix = splittedId[0];
             const suffix = splittedId[1];

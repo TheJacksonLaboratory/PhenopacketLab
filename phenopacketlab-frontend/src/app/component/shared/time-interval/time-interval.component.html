@@ -1,0 +1,22 @@
+<div class="grid">
+  <div class="col-6">
+    <input
+      pInputText
+      id="timestampStart"
+      type="text"
+      placeholder="YYYY-MM-DDTHH:mm:ss. sssZ"
+      [ngModel]="timeInterval?.start"
+      (ngModelChange)="updateStart($event)"
+    />
+  </div>
+  <div class="col-6">
+    <input
+      pInputText
+      id="timestampEnd"
+      type="text"
+      placeholder="YYYY-MM-DDTHH:mm:ss. sssZ"
+      [ngModel]="timeInterval?.end"
+      (ngModelChange)="updateEnd($event)"
+    />
+  </div>
+</div>

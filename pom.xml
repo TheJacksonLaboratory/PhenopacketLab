@@ -12,7 +12,7 @@
     <groupId>org.monarchinitiative.phenopacketlab</groupId>
     <artifactId>PhenopacketLab</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1</version>
+    <version>1.0.0-alpha</version>
 
     <developers>
         <developer>

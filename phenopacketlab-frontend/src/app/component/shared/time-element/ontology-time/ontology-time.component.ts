@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { OntologyClass, TimeElementId } from 'src/app/models/base';
+import { OntologyClass } from 'src/app/models/base';
 
 @Component({
     selector: 'app-ontology-time',
@@ -14,8 +14,6 @@ export class OntologyTimeComponent implements OnInit {
     ontologyClass: any;
     @Input()
     ontologyNodes: any[];
-    @Input()
-    timeElementId: TimeElementId;
 
     constructor() {
 
