@@ -3,16 +3,6 @@ app-header {
   width: 100vw;
   z-index: 10;
 }
-.welcome-screen {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/helix_image.jpg');
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-.bgimg {
-    background-image: url('../assets/img/helix_image.jpg');
-}
 .logo-img {
   width: 15rem;
   height: auto;
@@ -155,6 +145,16 @@ app-header {
   }
 
 }
+.welcome-screen {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/helix_image.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bgimg {
+  background-image: url('../assets/img/helix_image.jpg');
+}
 .pheno-logo {
   height: 30px;
   padding: .25rem;
@@ -162,10 +162,7 @@ app-header {
 .welcome-card {
   height:100px;
   width: 100%;
-  display: flex;
-  flex: 0;
-  text-align: center;
-  color: gray;
+  color: white;
   background-color: white;
   cursor: pointer;
   opacity: 0.75;
