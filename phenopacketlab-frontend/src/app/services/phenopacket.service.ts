@@ -15,6 +15,7 @@ const phenopacketValidateUrl = environment.PHENO_VALIDATE_URL;
 })
 export class PhenopacketService {
 
+    private showWelcomeScreen = new BehaviorSubject<boolean>(true);
     private phenopacketListSubject = new BehaviorSubject<Phenopacket[]>([]);
 
     constructor(private http: HttpClient,
@@ -22,6 +23,12 @@ export class PhenopacketService {
         private messageService: MessageService) {
     }
 
+    setShowWelcomeScreen(showWelcomeScreen: boolean) {
+        this.showWelcomeScreen.next(showWelcomeScreen);
+    }
+    getShowWelcomeScreen(): Observable<boolean> {
+        return this.showWelcomeScreen.asObservable();
+    } 
     setPhenopacketList(phenopacketList: Phenopacket[]) {
         this.phenopacketListSubject.next(phenopacketList);
     }
