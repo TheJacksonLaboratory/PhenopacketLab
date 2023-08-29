@@ -95,64 +95,61 @@ export class TimeElementComponent implements OnInit {
 
   ageTypeChange(event) {
     const type = event.value;
-    if (this.timeElement === undefined) {
-      this.timeElement = new TimeElement();
-    }
-    if (type === TimeElementType.AGE) {
-      this.updateTimeElement(new Age());
-    } else if (type === TimeElementType.AGE_RANGE) {
-      this.updateTimeElement(new AgeRange(new Age(), new Age()));
-    } else if (type === TimeElementType.GESTATIONAL_AGE) {
-      this.updateTimeElement(new GestationalAge());
-    } else if (type === TimeElementType.ONTOLOGY_CLASS) {
-      this.updateTimeElement(new OntologyClass());
-    } else if (type === TimeElementType.TIMESTAMP) {
-      this.updateTimeElement('');
-    } else if (type === null) {
+    if (type === null || type === undefined) {
       this.updateTimeElement(null);
+    } else {
+      if (this.timeElement === undefined) {
+        this.timeElement = new TimeElement();
+      }
+      if (type === TimeElementType.AGE) {
+        this.updateTimeElement(new Age());
+      } else if (type === TimeElementType.AGE_RANGE) {
+        this.updateTimeElement(new AgeRange(new Age(), new Age()));
+      } else if (type === TimeElementType.GESTATIONAL_AGE) {
+        this.updateTimeElement(new GestationalAge());
+      } else if (type === TimeElementType.ONTOLOGY_CLASS) {
+        this.updateTimeElement(new OntologyClass());
+      } else if (type === TimeElementType.TIMESTAMP) {
+        this.updateTimeElement('');
+      }
     }
   }
   updateTimeElement(timeElement: any) {
-    if (this.timeElement === undefined || this.timeElement === null) {
-      this.timeElement = new TimeElement();
-    }
-    if (timeElement instanceof Age) {
-      this.timeElement.age = timeElement;
-      this.timeElement.ageRange = undefined;
-      this.timeElement.gestationalAge = undefined;
-      this.timeElement.ontologyClass = undefined;
-      this.timeElement.timestamp = undefined;
-    } else if (timeElement instanceof AgeRange) {
-      this.timeElement.age = undefined;
-      this.timeElement.ageRange = timeElement;
-      this.timeElement.gestationalAge = undefined;
-      this.timeElement.ontologyClass = undefined;
-      this.timeElement.timestamp = undefined;
-    } else if (timeElement instanceof GestationalAge) {
-      this.timeElement.age = undefined;
-      this.timeElement.ageRange = undefined;
-      this.timeElement.gestationalAge = timeElement;
-      this.timeElement.ontologyClass = undefined;
-      this.timeElement.timestamp = undefined;
-    } else if (timeElement instanceof OntologyClass) {
-      this.timeElement.age = undefined;
-      this.timeElement.ageRange = undefined;
-      this.timeElement.gestationalAge = undefined;
-      this.timeElement.ontologyClass = timeElement;
-      this.timeElement.timestamp = undefined;
-    } else if (typeof timeElement === 'string') {
-      this.timeElement.age = undefined;
-      this.timeElement.ageRange = undefined;
-      this.timeElement.gestationalAge = undefined;
-      this.timeElement.ontologyClass = undefined;
-      // TODO check that timestamp is correct
-      this.timeElement.timestamp = timeElement;
+    if (timeElement === null) {
+      this.timeElement = undefined;
     } else {
-      this.timeElement.age = undefined;
-      this.timeElement.ageRange = undefined;
-      this.timeElement.gestationalAge = undefined;
-      this.timeElement.ontologyClass = undefined;
-      this.timeElement.timestamp = undefined;
+      if (timeElement instanceof Age) {
+        this.timeElement.age = timeElement;
+        this.timeElement.ageRange = undefined;
+        this.timeElement.gestationalAge = undefined;
+        this.timeElement.ontologyClass = undefined;
+        this.timeElement.timestamp = undefined;
+      } else if (timeElement instanceof AgeRange) {
+        this.timeElement.age = undefined;
+        this.timeElement.ageRange = timeElement;
+        this.timeElement.gestationalAge = undefined;
+        this.timeElement.ontologyClass = undefined;
+        this.timeElement.timestamp = undefined;
+      } else if (timeElement instanceof GestationalAge) {
+        this.timeElement.age = undefined;
+        this.timeElement.ageRange = undefined;
+        this.timeElement.gestationalAge = timeElement;
+        this.timeElement.ontologyClass = undefined;
+        this.timeElement.timestamp = undefined;
+      } else if (timeElement instanceof OntologyClass) {
+        this.timeElement.age = undefined;
+        this.timeElement.ageRange = undefined;
+        this.timeElement.gestationalAge = undefined;
+        this.timeElement.ontologyClass = timeElement;
+        this.timeElement.timestamp = undefined;
+      } else if (typeof timeElement === 'string') {
+        this.timeElement.age = undefined;
+        this.timeElement.ageRange = undefined;
+        this.timeElement.gestationalAge = undefined;
+        this.timeElement.ontologyClass = undefined;
+        // TODO check that timestamp is correct
+        this.timeElement.timestamp = timeElement;
+      }
     }
     this.timeElementEvent.emit(this.timeElement);
   }
