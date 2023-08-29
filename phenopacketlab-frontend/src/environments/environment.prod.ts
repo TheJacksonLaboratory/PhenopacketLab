@@ -44,6 +44,7 @@ export const environment = {
   HOMO_SAPIENS_URL: `${API_URL}/constants/homosapiens`,
   USER_URL: `${API_URL}/user`,
   PHENOPACKET_URL: `${API_URL}/phenopacket`,
+  DOCS_URL: `https://thejacksonlaboratory.github.io/PhenopacketLab/stable/`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',
