@@ -5,6 +5,20 @@
       <div class="p-accordion-sm">
         <p-accordion>
           <p-accordionTab
+            header="Where can I find the PhenopacketLab documentation?"
+            ><p class="doc-help">
+              The PhenopacketLab documentation with walkthroughs and how-tos can
+              be found
+              <button
+                pButton
+                label="here"
+                icon="pi pi-fw pi-external-link"
+                (click)="navigateToDocs()"
+                class="p-button-link"
+              ></button>
+            </p>
+          </p-accordionTab>
+          <p-accordionTab
             header="Do phenopackets contain confidential information?"
           >
             Phenopackets can contain confidential information in the form of

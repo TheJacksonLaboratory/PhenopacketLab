@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
+
 @Component({
     selector: 'app-help',
     templateUrl: './help.component.html',
@@ -6,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpComponent implements OnInit {
 
-    constructor() {
+    docsUrl = environment.DOCS_URL;
+
+    constructor(public router: Router) {
     }
 
     ngOnInit() {
+    }
+
+    navigateToDocs() {
+        window.open(this.docsUrl, '_blank');
     }
 }

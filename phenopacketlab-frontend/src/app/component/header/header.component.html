@@ -1,20 +1,20 @@
 <div class="header">
     <div class="title">
-        <a [routerLink]="['/']">
+        <a [routerLink]="['/']" (click)="showWelcome()">
             <img class="jax-logo" src="./assets/img/PhenoPackets_Logo.png" alt="phenopackets"/>
         </a>
-        <a [routerLink]="['/']">
+        <a [routerLink]="['/']" (click)="showWelcome()">
             <div class="text">Phenopacket Lab</div>
         </a>
-        <a [routerLink]="['/']">
+        <a [routerLink]="['/']" (click)="showWelcome()">
             <div class="smalltext"> v{{version}}</div>
         </a>
     </div>
     <div class="actions">
-        <a class="action" [routerLink]="['about']">
+        <a class="action" [routerLink]="['about']" (click)="hideWelcome()">
             About
         </a>
-        <a class="action" [routerLink]="['help']">
+        <a class="action" [routerLink]="['help']" (click)="hideWelcome()">
             Help
         </a>
         <span class="vertical-divide"></span>

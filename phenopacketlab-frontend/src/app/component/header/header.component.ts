@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs/operators';
+import { PhenopacketService } from 'src/app/services/phenopacket.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { filter } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private phenopacketService: PhenopacketService) {
   }
 
   user: User;
@@ -48,5 +49,12 @@ export class HeaderComponent implements OnInit {
       logoutParams: {
         returnTo: window.location.origin,
       }});
+  }
+
+  showWelcome() {
+    this.phenopacketService.setShowWelcomeScreen(true);
+  }
+  hideWelcome() {
+    this.phenopacketService.setShowWelcomeScreen(false);
   }
 }
