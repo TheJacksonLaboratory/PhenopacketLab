@@ -6,17 +6,12 @@
         <p-accordion>
           <p-accordionTab
             header="Where can I find the PhenopacketLab documentation?"
-            ><p class="doc-help">
-              The PhenopacketLab documentation with walkthroughs and how-tos can
-              be found
-              <button
-                pButton
-                label="here"
-                icon="pi pi-fw pi-external-link"
-                (click)="navigateToDocs()"
-                class="p-button-link"
-              ></button>
-            </p>
+          >
+            The PhenopacketLab documentation with walkthroughs and how-tos can
+            be found
+            <a [href]="docsUrl" target="_blank" class=""
+              >here <i class="pi pi-fw pi-external-link"></i></a
+            >.
           </p-accordionTab>
           <p-accordionTab
             header="Do phenopackets contain confidential information?"
