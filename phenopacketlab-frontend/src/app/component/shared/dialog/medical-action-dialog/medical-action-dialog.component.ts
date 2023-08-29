@@ -95,160 +95,158 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig) {
-    
-  }
-
-  ngOnInit() {
-    const medicAction = this.config.data?.medicalAction;
-    if (medicAction === undefined || medicAction === null) {
-      this.medicalAction = new MedicalAction();
-    } else {
-      this.medicalAction = Utils.clone(medicAction);
-    }
-    this.treatmentTargets = [];
-    if (this.config.data?.diseases) {
-      for (const disease of this.config.data?.diseases) {
-        this.treatmentTargets.push(disease.term);
-        // initialize selected target
-        if (this.medicalAction.treatmentTarget?.id === disease.term.id) {
-          this.treatmentTargetSelected = disease.term.id;
-        }
+      const medicAction = this.config.data?.medicalAction;
+      if (medicAction === undefined || medicAction === null) {
+        this.medicalAction = new MedicalAction();
+      } else {
+        this.medicalAction = Utils.clone(medicAction);
       }
-    }
-    this.phenopacket = this.config.data?.phenopacket;
-    this.mode = this.config.data?.mode;
-    if (this.mode === DialogMode.EDIT) {
-      this.okLabel = 'Save medical action';
-    }
- 
-    this.treatmentIntentsSubscription = this.constantsService.getTreatmentIntents().subscribe(intents => {
-      this.treatmentIntents = intents;
-      // initialize selected intent
-      if (intents) {
-        for (const intent of intents) {
-          if (this.medicalAction && this.medicalAction.treatmentIntent) {
-            if (this.medicalAction.treatmentIntent.id === intent.id) {
-              this.treatmentIntentSelected = intent;
-            }
+      this.treatmentTargets = [];
+      if (this.config.data?.diseases) {
+        for (const disease of this.config.data?.diseases) {
+          this.treatmentTargets.push(disease.term);
+          // initialize selected target
+          if (this.medicalAction.treatmentTarget?.id === disease.term.id) {
+            this.treatmentTargetSelected = disease.term.id;
           }
         }
       }
-    });
-    this.responsesSubscription = this.constantsService.getResponsesToTreatment().subscribe(nodes => {
-      if (nodes) {
-        this.responsesToTreatmentNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.responseToTreatment) {
-          this.responseToTreatmentSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.responseToTreatment.id,
-            this.responsesToTreatmentNodes);
-        }
+      this.phenopacket = this.config.data?.phenopacket;
+      this.mode = this.config.data?.mode;
+      if (this.mode === DialogMode.EDIT) {
+        this.okLabel = 'Save medical action';
       }
-    });
-    this.terminationReasonsSubscription = this.constantsService.getTerminationReasons().subscribe(nodes => {
-      if (nodes) {
-        this.terminationReasonsNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.treatmentTerminationReason) {
-          this.terminationReasonSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatmentTerminationReason.id,
-            this.terminationReasonsNodes);
-        }
-      }
-    });
-    this.proceduresSubscription = this.constantsService.getProcedures().subscribe(nodes => {
-      if (nodes) {
-        this.proceduresNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.procedure?.code) {
-          this.procedureSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.code.id,
-            this.proceduresNodes);
-        }
-      }
-    });
-    // get onsets
-    this.ontologyClassTimeSubscription = this.constantsService.getOnsets().subscribe(nodes => {
-      // we get the children from the root node sent in response
-      if (nodes) {
-        this.ontologyClassTimeNodes = <OntologyTreeNode[]>nodes.children;
-      }
-    });
-    this.radiationTherapySubscription = this.constantsService.getRadiationTherapies().subscribe(nodes => {
-      if (nodes) {
-        this.radiationTherapyModalityNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.radiationTherapy?.modality) {
-          this.radiationTherapyModalitySelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.modality.id,
-            this.radiationTherapyModalityNodes);
-        }
-      }
-    });
-    this.therapeuticRegimenIdentifierSubscription = this.constantsService.getTherapeuticRegimens().subscribe(nodes => {
-      if (nodes) {
-        this.therapeuticRegimenIdentifiersNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.therapeuticRegimen?.ontologyClass) {
-          this.therapeuticRegimenIdentifierSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.therapeuticRegimen.ontologyClass.id,
-            this.therapeuticRegimenIdentifiersNodes);
-        }
-      }
-    });
-    this.adverseEventsSubscription = this.constantsService.getAdverseEvents().subscribe(nodes => {
-      // we get the children from the root node sent in response
-      if (nodes) {
-        this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
-      }
-    });
-    // get chemical entities
-    this.chemicalEntityQuery.pipe(debounceTime(425),
-      distinctUntilChanged()).subscribe((val: string) => {
-        if (this.hasValidChemicalEntityInput(val)) {
-          this.loadingChemicalEntitySearchResults = true;
-          this.chemicalEntityQueryText = val;
-          this.medicalActionService.searchChemicalEntities(val).subscribe((data) => {
-            this.chemicalEntityItems = [];
-            for (const concept of data.foundConcepts) {
-              this.chemicalEntityItems.push(new OntologyClass(concept.id, concept.lbl, concept.id));
+   
+      this.treatmentIntentsSubscription = this.constantsService.getTreatmentIntents().subscribe(intents => {
+        this.treatmentIntents = intents;
+        // initialize selected intent
+        if (intents) {
+          for (const intent of intents) {
+            if (this.medicalAction && this.medicalAction.treatmentIntent) {
+              if (this.medicalAction.treatmentIntent.id === intent.id) {
+                this.treatmentIntentSelected = intent;
+              }
             }
-            this.chemicalEntityItemsCount = data.numberOfTerms;
-            this.chemicalEntityNotFoundFlag = (this.chemicalEntityItemsCount === 0);
-            this.chemicalEntitySearchstate = 'active';
-          }, (error) => {
-            console.log(error);
-            this.loadingChemicalEntitySearchResults = false;
-          }, () => {
-            this.loadingChemicalEntitySearchResults = false;
-          });
-
-        } else {
-          this.chemicalEntitySearchstate = 'inactive';
+          }
         }
       });
-    this.routeOfAdministrationSubscription = this.constantsService.getRoutesOfAdministration().subscribe(nodes => {
-      if (nodes) {
-        this.routeOfAdministrationNodes = <OntologyTreeNode[]>nodes.children;
-        if (this.medicalAction && this.medicalAction.treatment?.routeOfAdministration) {
-          this.routeOfAdministrationSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatment.routeOfAdministration.id,
-            this.routeOfAdministrationNodes);
+      this.responsesSubscription = this.constantsService.getResponsesToTreatment().subscribe(nodes => {
+        if (nodes) {
+          this.responsesToTreatmentNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.responseToTreatment) {
+            this.responseToTreatmentSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.responseToTreatment.id,
+              this.responsesToTreatmentNodes);
+          }
         }
-      }
-    });
-    this.scheduleFrequencySubscription = this.constantsService.getScheduleFrequencies().subscribe(nodes => {
-      if (nodes) {
-        this.scheduleFrequencyNodes = <OntologyTreeNode[]>nodes.children;
-      }
-    });
-    this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
-      if (nodes) {
-        this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
-        // initialize procedure bodysite
-        if (this.medicalAction && this.medicalAction.procedure?.bodySite) {
-          this.procedureBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.bodySite.id,
-            this.bodySiteNodes);
+      });
+      this.terminationReasonsSubscription = this.constantsService.getTerminationReasons().subscribe(nodes => {
+        if (nodes) {
+          this.terminationReasonsNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.treatmentTerminationReason) {
+            this.terminationReasonSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatmentTerminationReason.id,
+              this.terminationReasonsNodes);
+          }
         }
-        // initialize radiationTherapy bodysite
-        if (this.medicalAction && this.medicalAction.radiationTherapy?.bodySite) {
-          this.radiationTherapyBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.bodySite.id,
-            this.bodySiteNodes);
+      });
+      this.proceduresSubscription = this.constantsService.getProcedures().subscribe(nodes => {
+        if (nodes) {
+          this.proceduresNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.procedure?.code) {
+            this.procedureSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.code.id,
+              this.proceduresNodes);
+          }
         }
-      }
-    });
+      });
+      // get onsets
+      this.ontologyClassTimeSubscription = this.constantsService.getOnsets().subscribe(nodes => {
+        // we get the children from the root node sent in response
+        if (nodes) {
+          this.ontologyClassTimeNodes = <OntologyTreeNode[]>nodes.children;
+        }
+      });
+      this.radiationTherapySubscription = this.constantsService.getRadiationTherapies().subscribe(nodes => {
+        if (nodes) {
+          this.radiationTherapyModalityNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.radiationTherapy?.modality) {
+            this.radiationTherapyModalitySelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.modality.id,
+              this.radiationTherapyModalityNodes);
+          }
+        }
+      });
+      this.therapeuticRegimenIdentifierSubscription = this.constantsService.getTherapeuticRegimens().subscribe(nodes => {
+        if (nodes) {
+          this.therapeuticRegimenIdentifiersNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.therapeuticRegimen?.ontologyClass) {
+            this.therapeuticRegimenIdentifierSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.therapeuticRegimen.ontologyClass.id,
+              this.therapeuticRegimenIdentifiersNodes);
+          }
+        }
+      });
+      this.adverseEventsSubscription = this.constantsService.getAdverseEvents().subscribe(nodes => {
+        // we get the children from the root node sent in response
+        if (nodes) {
+          this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
+        }
+      });
+      // get chemical entities
+      this.chemicalEntityQuery.pipe(debounceTime(425),
+        distinctUntilChanged()).subscribe((val: string) => {
+          if (this.hasValidChemicalEntityInput(val)) {
+            this.loadingChemicalEntitySearchResults = true;
+            this.chemicalEntityQueryText = val;
+            this.medicalActionService.searchChemicalEntities(val).subscribe((data) => {
+              this.chemicalEntityItems = [];
+              for (const concept of data.foundConcepts) {
+                this.chemicalEntityItems.push(new OntologyClass(concept.id, concept.lbl, concept.id));
+              }
+              this.chemicalEntityItemsCount = data.numberOfTerms;
+              this.chemicalEntityNotFoundFlag = (this.chemicalEntityItemsCount === 0);
+              this.chemicalEntitySearchstate = 'active';
+            }, (error) => {
+              console.log(error);
+              this.loadingChemicalEntitySearchResults = false;
+            }, () => {
+              this.loadingChemicalEntitySearchResults = false;
+            });
+  
+          } else {
+            this.chemicalEntitySearchstate = 'inactive';
+          }
+        });
+      this.routeOfAdministrationSubscription = this.constantsService.getRoutesOfAdministration().subscribe(nodes => {
+        if (nodes) {
+          this.routeOfAdministrationNodes = <OntologyTreeNode[]>nodes.children;
+          if (this.medicalAction && this.medicalAction.treatment?.routeOfAdministration) {
+            this.routeOfAdministrationSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.treatment.routeOfAdministration.id,
+              this.routeOfAdministrationNodes);
+          }
+        }
+      });
+      this.scheduleFrequencySubscription = this.constantsService.getScheduleFrequencies().subscribe(nodes => {
+        if (nodes) {
+          this.scheduleFrequencyNodes = <OntologyTreeNode[]>nodes.children;
+        }
+      });
+      this.bodySiteSubscription = this.constantsService.getBodySites().subscribe(nodes => {
+        if (nodes) {
+          this.bodySiteNodes = <OntologyTreeNode[]>nodes.children;
+          // initialize procedure bodysite
+          if (this.medicalAction && this.medicalAction.procedure?.bodySite) {
+            this.procedureBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.procedure.bodySite.id,
+              this.bodySiteNodes);
+          }
+          // initialize radiationTherapy bodysite
+          if (this.medicalAction && this.medicalAction.radiationTherapy?.bodySite) {
+            this.radiationTherapyBodySiteSelected = OntologyTreeNode.getNodeWithKey(this.medicalAction.radiationTherapy.bodySite.id,
+              this.bodySiteNodes);
+          }
+        }
+      });
+  
+      this.updateMedicalAction();
+  }
 
-    this.updateMedicalAction();
-
+  ngOnInit() {
   }
 
   ngOnDestroy() {
