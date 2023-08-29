@@ -203,6 +203,8 @@ export class Age {
         const age = new Age();
         if (obj['iso8601duration']) {
             age.iso8601duration = obj['iso8601duration'];
+        } else {
+            throw new Error(`'iso8601duration' field is missing from 'age'.`);
         }
         return age;
     }
@@ -247,9 +249,13 @@ export class AgeRange {
         const ageRange = new AgeRange();
         if (obj['start']) {
             ageRange.start = Age.convert(obj['start']);
+        }  else {
+            throw new Error(`'start' field is missing from 'ageRange'.`);
         }
         if (obj['end']) {
             ageRange.end = Age.convert(obj['end']);
+        } else {
+            throw new Error(`'end' field is missing from 'ageRange'.`);
         }
         return ageRange;
     }
@@ -268,12 +274,12 @@ export class TimeInterval {
         if (obj['start']) {
             interval.start = obj['start'];
         } else {
-            throw new Error(`Phenopacket file is missing 'start' field in 'timeInterval' object.`);
+            throw new Error(`'start' field is missing from 'timeInterval'.`);
         }
         if (obj['end']) {
             interval.end = obj['end'];
         } else {
-            throw new Error(`Phenopacket file is missing 'end' field in 'timeInterval' object.`);
+            throw new Error(`'end' field is missing from 'timeInterval'.`);
         }
         return interval;
     }
@@ -299,7 +305,7 @@ export class GestationalAge {
         if (obj['weeks'] !== undefined) {
             gestationalAge.weeks = obj['weeks'];
         } else {
-            throw new Error(`Phenopacket file is missing 'weeks' field in 'gestationalAge' object.`);
+            throw new Error(`'weeks' field is missing from 'gestationalAge'.`);
         }
         if (obj['days'] !== undefined) {
             gestationalAge.days = obj['days'];

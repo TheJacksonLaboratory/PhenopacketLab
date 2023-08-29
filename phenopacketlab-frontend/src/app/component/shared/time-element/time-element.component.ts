@@ -115,7 +115,7 @@ export class TimeElementComponent implements OnInit {
     }
   }
   updateTimeElement(timeElement: any) {
-    if (timeElement === null) {
+    if (timeElement === null || timeElement === undefined) {
       this.timeElement = undefined;
     } else {
       if (timeElement instanceof Age) {

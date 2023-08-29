@@ -9,6 +9,7 @@ import { ProfileSelection } from 'src/app/models/profile';
 import { DiseaseSearchService } from 'src/app/services/disease-search.service';
 import { Utils } from '../../utils';
 import { ConstantsService } from 'src/app/services/constants.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-disease-dialog',
@@ -52,7 +53,8 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
 
   constructor(private constantsService: ConstantsService,
     private diseaseService: DiseaseSearchService,
-    public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+    public ref: DynamicDialogRef, public config: DynamicDialogConfig,
+    private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -287,6 +289,14 @@ export class DiseaseDialogComponent implements OnInit, OnDestroy {
   }
 
   onOkClick() {
+    if (this.disease) {
+      try {
+        Disease.convert(this.disease);
+      } catch(error) {
+        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
+        return;
+      }     
+    }
     this.ref.close(this.disease);
   }
 

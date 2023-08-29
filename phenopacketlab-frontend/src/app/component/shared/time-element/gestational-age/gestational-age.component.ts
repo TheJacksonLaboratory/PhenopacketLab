@@ -38,20 +38,21 @@ export class GestationalAgeComponent implements OnInit {
         if (this.gestationalAge === undefined || this.gestationalAge === null) {
             this.gestationalAge = new GestationalAge();
         }
+        if (value === null || value === undefined) {
+            value = undefined;
+        }
         if (type === 'weeks') {
             if (value > 45) {
                 value = 45;
             }
             this.weeks = value;
             this.gestationalAge.weeks = this.weeks;
-
         } else if (type === 'days') {
             if (value > 6) {
                 value = 6;
             }
             this.days = value;
             this.gestationalAge.days = this.days;
-
         }
         this.gestationalAgeChange.emit(this.gestationalAge);
     }

@@ -29,7 +29,7 @@ export class Disease extends Convert {
         if (obj['term']) {
             disease.term = OntologyClass.convert(obj['term']);
         } else {
-            throw new Error(`Phenopacket file is missing 'term' field in 'disease' object.`);
+            throw new Error(`'term' field is missing from 'disease'.`);
         }
         if (obj['excluded']) {
             disease.excluded = obj['excluded'];
