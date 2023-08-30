@@ -95,7 +95,10 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig) {
-      const medicAction = this.config.data?.medicalAction;
+  }
+
+  ngOnInit() {
+    const medicAction = this.config.data?.medicalAction;
       if (medicAction === undefined || medicAction === null) {
         this.medicalAction = new MedicalAction();
       } else {
@@ -244,9 +247,6 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
       });
   
       this.updateMedicalAction();
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {
