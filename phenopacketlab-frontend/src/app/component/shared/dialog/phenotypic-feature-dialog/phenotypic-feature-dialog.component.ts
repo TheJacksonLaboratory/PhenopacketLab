@@ -8,6 +8,7 @@ import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { Utils } from '../../utils';
 import { ConstantsService } from 'src/app/services/constants.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-phenotypic-feature-dialog',
@@ -35,7 +36,10 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   severities: ConstantObject[];
   selectedSeverity: ConstantObject;
   severitySubscription: Subscription;
-  constructor(public constantsService: ConstantsService, public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
+  constructor(public constantsService: ConstantsService, 
+              public ref: DynamicDialogRef, 
+              public config: DynamicDialogConfig,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -179,6 +183,14 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
   }
 
   onOkClick() {
+    if (this.phenotypicFeature) {
+      try {
+        PhenotypicFeature.convert(this.phenotypicFeature);
+      } catch(error) {
+        this.messageService.add({ key: 'cen', severity: 'error', summary: 'Error', detail: `${error}` });
+        return;
+      }     
+    }
     this.ref.close(this.phenotypicFeature);
   }
 

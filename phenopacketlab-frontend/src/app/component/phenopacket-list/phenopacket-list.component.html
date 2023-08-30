@@ -28,7 +28,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-phenopacket>
-          <tr [pSelectableRow]="phenopacket">
+          <tr [pSelectableRow]="phenopacket" pTooltip="Open in tab">
             <td>{{phenopacket.id}}</td>
             <td>{{phenopacket.subject?.id}}</td>
             <td>{{phenopacket.subject?.timeAtLastEncounter != null ? phenopacket.subject?.timeAtLastEncounter : '-'}}</td>
@@ -36,9 +36,9 @@
               {{phenopacket.subject?.sex != null ? phenopacket.subject.sex : '-'}}
             </td>
             <td class="actions">
-              <button pButton type="button" class="p-button-warning" icon="pi pi-check" pTooltip="Validate phenopacket" tooltipPosition="bottom" (click)="validatePhenopacket(phenopacket)"></button>
-              <button pButton type="button" class="p-button-danger" icon="pi pi-trash" (click)="removeIndividual(phenopacket)"></button>
-              <button pButton type="button" class="p-button" icon="pi pi-download" (click)="downloadPhenopacket(phenopacket)"></button>
+              <button pButton type="button" class="p-button" icon="pi pi-download" pTooltip="Download phenopacket as JSON" tooltipPosition="bottom" (click)="downloadPhenopacket(phenopacket)"></button>
+              <button pButton type="button" class="p-button-outlined p-button-secondary" icon="pi pi-check" pTooltip="Validate phenopacket" tooltipPosition="bottom" (click)="validatePhenopacket(phenopacket)"></button>
+              <button pButton type="button" class="p-button-outlined p-button-warning" icon="pi pi-trash" pTooltip="Delete phenopacket" tooltipPosition="bottom" (click)="removeIndividual(phenopacket)"></button>
             </td>
           </tr>
         </ng-template>

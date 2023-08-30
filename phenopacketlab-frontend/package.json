@@ -1,6 +1,6 @@
 {
   "name": "phenopacketlab-frontend",
-  "version": "1.0.0-alpha",
+  "version": "0.8.0",
   "license": "MIT",
   "browser": {
     "fs": false,

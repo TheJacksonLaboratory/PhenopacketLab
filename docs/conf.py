@@ -9,7 +9,7 @@
 project = 'Phenopacket Lab'
 copyright = '2023, Baha El Kassaby, Daniel Danis, Michael Gargano, Peter Robinson'
 author = 'Baha El Kassaby, Daniel Danis, Michael Gargano, Peter Robinson'
-release = '1.0.0-alpha'
+release = '0.8.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
