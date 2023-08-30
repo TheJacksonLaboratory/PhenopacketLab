@@ -7,8 +7,10 @@ import { AuthService } from '@auth0/auth0-angular';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 import { distinctUntilChanged, filter, first, take } from 'rxjs/operators';
-import { UserService } from './services/user.service';
 
+import { UserService } from './services/user.service';
+import { PhenopacketService } from './services/phenopacket.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +20,13 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
 
+  docsUrl = environment.DOCS_URL;
+  showWelcomeScreen = true;
   activeSidenav = true;
   constructor(public location: Location, public http: HttpClient, public router: Router,
-              public authService: AuthService, public userService: UserService, private messageService: MessageService) { }
+              public authService: AuthService, public userService: UserService, 
+              private messageService: MessageService, private phenopacketService: PhenopacketService,
+             ) { }
 
   ngOnInit() {
     const hideNavUrls = ['/about', '/help'];
@@ -28,6 +34,9 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationStart) {
           this.activeSidenav = !(hideNavUrls.includes(event.url));
         }
+    });
+    this.phenopacketService.getShowWelcomeScreen().subscribe(showWelcomeScreen => {
+      this.showWelcomeScreen = showWelcomeScreen;
     });
 
     this.authService.user$.pipe(
@@ -45,7 +54,17 @@ export class AppComponent implements OnInit {
                 const message = 'Your data will not be saved.';
                 this.messageService.add({ severity: 'warn', summary: 'No Login Found', detail: message, sticky: true });
             });
+        } else {
+          this.start();
         }
     });
+  }
+
+  start() {
+    this.showWelcomeScreen = false;
+    this.phenopacketService.setShowWelcomeScreen(false);
+  }
+  navigateTo(url: string) {
+    window.open(url, '_blank');
   }
 }

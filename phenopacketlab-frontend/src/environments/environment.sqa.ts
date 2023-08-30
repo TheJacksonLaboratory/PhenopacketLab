@@ -45,6 +45,7 @@ export const environment = {
   CHEMICAL_ENTITY_SEARCH_URL: `${API_URL}/chemical-entities/search`,
   USER_URL: `${API_URL}/user`,
   PHENOPACKET_URL: `${API_URL}/phenopacket`,
+  DOCS_URL: `https://thejacksonlaboratory.github.io/PhenopacketLab/sqa/`,
   AUTH: {
     domain: 'thejacksonlaboratory.auth0.com',
     clientId: 'oEZ1oN01Ts2wuW3MzTSxq3h6PcnN10Y5',

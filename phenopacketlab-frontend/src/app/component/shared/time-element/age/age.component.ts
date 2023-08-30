@@ -53,10 +53,14 @@ export class AgeComponent implements OnInit {
             }
             this.days = value;
         }
-        if (this.age === undefined || this.age === null) {
-            this.age = new Age();
+        if (this.years || this.months || this.days) {
+            if (this.age === undefined || this.age === null) {
+                this.age = new Age();
+            }
+            this.age.iso8601duration = Age.convertToIso8601(this.years, this.months, this.days);
+        } else {
+            this.age = undefined;
         }
-        this.age.iso8601duration = Age.convertToIso8601(this.years, this.months, this.days);
         this.ageEvent.emit(this.age);
     }
     updateYears(event) {

@@ -3,6 +3,14 @@ app-header {
   width: 100vw;
   z-index: 10;
 }
+.logo-img {
+  width: 15rem;
+  height: auto;
+
+  &:hover{
+    opacity: 0.75;
+  }
+}
 .main {
   display: flex;
   min-height: calc(100vh - 70px);
@@ -136,4 +144,29 @@ app-header {
     opacity: .65;
   }
 
+}
+.welcome-screen {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/helix_image.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.bgimg {
+  background-image: url('../assets/img/helix_image.jpg');
+}
+.pheno-logo {
+  height: 30px;
+  padding: .25rem;
+}
+.welcome-card {
+  height:100px;
+  width: 100%;
+  color: white;
+  background-color: white;
+  cursor: pointer;
+  opacity: 0.75;
+  &:hover{
+    opacity: 0.75;
+  }
 }

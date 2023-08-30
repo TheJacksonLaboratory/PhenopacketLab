@@ -102,6 +102,8 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
 
   startRareDisease() {
     this.phenopacketStepperService.setProfileSelection(ProfileSelection.RARE_DISEASE);
+    // reset phenopacket
+    this.phenopacketStepperService.phenopacket = undefined;
     this.router.navigate(['creator']);
   }
 

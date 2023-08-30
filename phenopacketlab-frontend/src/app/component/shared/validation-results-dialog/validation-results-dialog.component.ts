@@ -71,7 +71,9 @@ export class ValidationResultsDialogComponent implements OnInit {
           resources = [];
         }
         for (const item of prefixResources) {
-          resources.push(item.resource);
+          if (item.resource) {
+            resources.push(item.resource);
+          }
         }
         if (this.phenopacket && this.phenopacket.metaData) {
           this.phenopacket.metaData.resources = resources;

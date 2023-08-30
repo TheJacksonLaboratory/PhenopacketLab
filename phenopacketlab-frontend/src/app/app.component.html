@@ -1,30 +1,134 @@
 <app-header></app-header>
-<p-toast baseZIndex="11" position="bottom-right" showTransitionOption="100ms ease-out" hideTransitionOptions="100ms ease-in"></p-toast>
+<p-toast
+  baseZIndex="11"
+  position="bottom-right"
+  showTransitionOption="100ms ease-out"
+  hideTransitionOptions="100ms ease-in"
+></p-toast>
 <div class="main flex-row">
   <!-- <p-sidebar *ngIf="activeSidenav" [visible]="activeSidenav" styleClass="p-sidebar-sm" class="sidebar flex-1" [showCloseIcon]="false" [closeOnEscape]="false" transitionOptions="0ms">
-    <app-sidebar></app-sidebar>
-  </p-sidebar> -->
-  <div class="content-wrapper flex flex-column" [ngClass]="{'full': activeSidenav === false, 'pl-short': activeSidenav === true}">
+      <app-sidebar></app-sidebar>
+    </p-sidebar> -->
+  <div
+    class="content-wrapper flex flex-column"
+    [ngClass]="{
+      full: activeSidenav === false,
+      'pl-short': activeSidenav === true
+    }"
+  >
     <div class="flex flex-1 flex-column">
-      <router-outlet></router-outlet>
+      <span *ngIf="showWelcomeScreen">
+        <div class="relative">
+          <div class="grid m-5">
+            <div class="field col-12">
+              <h2
+                class="mt-2 text-base font-semibold uppercase tracking-wider text-800"
+              >
+                Welcome to
+              </h2>
+              <p
+                class="mt-2 text-white text-3xl font-extrabold tracking-tight sm:text-4xl"
+              >
+                <b class="text-teal-800">Phenopacket Lab</b>
+              </p>
+              <p class="mt-3 text-lg text-800">
+                PhenopacketLab is a single-page application for creating and
+                editing phenopackets. It provides a wizard to build phenopackets
+                from scratch and an editor for updating existing phenopackets.
+              </p>
+              <p class="text-lg text-800">
+                You can use your
+                <a href="https://orcid.org/" target="_blank">ORCID</a> profile
+                to login to the application and save your phenopackets. If you
+                do not want to login, you can still use the application
+                anonymously. However, ensure you download the phenopackets - the
+                data will <em>not</em> be saved, and you <em>will lose</em> the
+                phenopackets if you close or refresh your browser tab.
+              </p>
+            </div>
+            <div class="field col-12">
+              <p-button (onClick)="start()" styleClass="text-lg">
+                Start
+                <span class="material-icons ml-1"> open_in_browser </span>
+              </p-button>
+            </div>
+          </div>
+        </div>
+        <div class="text-white overflow-hidden bgimg">
+          <section class="p-10 m-8">
+            <div class="grid">
+              <div class="field col-6">
+                <button
+                  pButton
+                  class="flex align-items-center justify-content-center welcome-card p-button-secondary text-lg"
+                  (click)="navigateTo(docsUrl)"
+                >
+                  PhenopacketLab Documentation
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  pButton
+                  class="flex align-items-center justify-content-center welcome-card p-button-secondary text-lg"
+                  (click)="navigateTo('http://phenopackets.org/')"
+                >
+                  <img
+                    class="pheno-logo"
+                    src="../assets/img/PhenoPackets_Logo.png"
+                  />
+                  Learn more about the GA4GH Phenopacket Schema
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <a href="https://www.ga4gh.org/" target="_blank">
+            <img class="logo-img mt-2" src="../assets/img/ga4gh.svg" alt=""
+          /></a>
+          <a href="https://monarchinitiative.org/" target="_blank">
+            <img
+              class="logo-img ml-4 mt-2"
+              src="../assets/img/monarch-logo.png"
+              alt=""
+          /></a>
+          <a href="https://www.jax.org/" target="_blank">
+            <img
+              class="logo-img ml-4 mt-2"
+              src="../assets/img/jackson.png"
+              alt=""
+          /></a>
+        </div>
+      </span>
+
+      <router-outlet *ngIf="!showWelcomeScreen"></router-outlet>
     </div>
     <div class="footer flex flex-row grid">
       <div class="col-3 footer-hr">
-        <hr>
+        <hr />
       </div>
       <div class="col-2 footer-link">
-        <a href="https://www.jax.org/" target="_blank">The Jackson Laboratory</a>
+        <a href="https://www.jax.org/" target="_blank"
+          >The Jackson Laboratory</a
+        >
       </div>
       <div class="col-2 footer-link">
-        <a href="https://github.com/TheJacksonLaboratory/PhenopacketLab/issues/new" target="_blank">Report Issue</a>
+        <a
+          href="https://github.com/TheJacksonLaboratory/PhenopacketLab/issues/new"
+          target="_blank"
+          >Report Issue</a
+        >
       </div>
       <div class="col-2 footer-link">
-        <a href="https://raw.githubusercontent.com/TheJacksonLaboratory/PhenopacketLab/development/LICENSE" target="_blank">License</a>
+        <a
+          href="https://raw.githubusercontent.com/TheJacksonLaboratory/PhenopacketLab/development/LICENSE"
+          target="_blank"
+          >License</a
+        >
       </div>
       <div class="col-3 footer-hr">
-        <hr>
+        <hr />
       </div>
     </div>
   </div>
 </div>
-
