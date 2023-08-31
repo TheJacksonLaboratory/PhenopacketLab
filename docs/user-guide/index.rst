@@ -1,5 +1,5 @@
-Welcome to Phenopacket Lab's documentation!
-===========================================
+User Guide
+==========
 
 In this user guide, you will receive a walkthrough of how to create a phenopacket, edit a phenopacket,
 and upload a phenopacket using json files. The user guide will provide information about the various
@@ -12,12 +12,6 @@ Questions about the specific elements of a phenopacket can be answered here: htt
 
 
 
-   user-guide/index
+   login
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
