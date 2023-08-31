@@ -134,10 +134,10 @@ export class ScheduleFrequency {
                 new OntologyClass('NCIT:C64530', 'Four Times Daily')];
 }
 export enum DrugType {
-    UNKNOWN_DRUG_TYPE = 'Unknown',
-    PRESCRIPTION = 'Prescription',
-    EHR_MEDICATION_LIST = 'EHR medication list',
-    ADMINISTRATION_RELATED_TO_PROCEDURE = 'Administration related to procedure'
+    UNKNOWN_DRUG_TYPE = 'UNKNOWN_DRUG_TYPE',
+    PRESCRIPTION = 'PRESCRIPTION',
+    EHR_MEDICATION_LIST = 'EHR_MEDICATION_LIST',
+    ADMINISTRATION_RELATED_TO_PROCEDURE = 'ADMINISTRATION_RELATED_TO_PROCEDURE'
 }
 export class RadiationTherapy {
    static actionName = 'Radiation therapy';
@@ -180,10 +180,10 @@ export class RadiationTherapy {
 }
 
 export enum RegimenStatus {
-    UNKNOWN_STATUS,
-    STARTED,
-    COMPLETED,
-    DISCONTINUED
+    UNKNOWN_STATUS = 'UNKNOWN_STATUS',
+    STARTED = 'STARTED',
+    COMPLETED = 'COMPLETED',
+    DISCONTINUED = 'DISCONTINUED'
 }
 export class TherapeuticRegimen {
     static actionName = 'Therapeutic regimen';
