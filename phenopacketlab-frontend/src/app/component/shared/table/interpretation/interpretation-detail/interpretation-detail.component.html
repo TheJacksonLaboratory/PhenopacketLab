@@ -224,32 +224,27 @@
                       </div>
                       <div class="field col-6">
                         <b>Molecular context:</b>
-                        <br />
                         {{
-                          genomicinterpretation.variantInterpretation
-                            .variantDescriptor?.moleculeContext
+                          genomicinterpretation.variantInterpretation.variationDescriptor?.moleculeContext
                         }}
                       </div>
                       <div class="field col-6">
                         <b>Allelic state:</b>
-                        <br />
                         {{
-                          genomicinterpretation.variantInterpretation.variantDescriptor?.allelicState?.toString()
+                          genomicinterpretation.variantInterpretation.variationDescriptor?.allelicState?.label
                         }}
                       </div>
                       <div class="field col-6">
                         <b>Structural type:</b>
-                        <br />
                         {{
-                          genomicinterpretation.variantInterpretation.variantDescriptor?.structuralType?.toString()
+                          genomicinterpretation.variantInterpretation.variationDescriptor?.structuralType?.toString()
                         }}
                       </div>
                       <div class="field col-6">
                         <b>VRS Ref allele sequence:</b>
-                        <br />
                         {{
                           genomicinterpretation.variantInterpretation
-                            .variantDescriptor?.vrsRefAlleleSeq
+                            .variationDescriptor?.vrsRefAlleleSeq
                         }}
                       </div>
                     </div>
