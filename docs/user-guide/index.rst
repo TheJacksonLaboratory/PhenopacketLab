@@ -14,4 +14,6 @@ Questions about the specific elements of a phenopacket can be answered here: htt
 
    login
 
+   create_phenopacket
+
 
