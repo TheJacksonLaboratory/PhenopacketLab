@@ -52,13 +52,13 @@ jobs:
             cd docs
             make html
             mv _build/html/* ../gh-pages/${DOCDIR}
+            cd ..
           }
           
-          # TODO - enable once we hit master and sqa.
           ## We store the docs for `master` in `stable` folder
-          #build_docs master stable
+          build_docs master stable
           ## We store the docs for `sqa` in `sqa` folder
-          #build_docs sqa sqa
+          build_docs sqa sqa
           # We store the docs for `development` in `dev` folder
           build_docs development dev
 
