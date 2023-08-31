@@ -48,6 +48,7 @@ import { InterpretationDetailComponent } from './table/interpretation/interpreta
 import { BiosampleComponent } from './table/biosample/biosample.component';
 import { BiosampleDetailComponent } from './table/biosample/biosample-detail/biosample-detail.component';
 import { TimeIntervalComponent } from './time-interval/time-interval.component';
+import { ConfirmationDialogComponent } from './dialog/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { TimeIntervalComponent } from './time-interval/time-interval.component';
     InterpretationDetailComponent,
     BiosampleComponent,
     BiosampleDetailComponent,
-    TimeIntervalComponent
+    TimeIntervalComponent,
+    ConfirmationDialogComponent
   ],
   exports: [
     SpinnerDialogComponent,
@@ -148,7 +150,8 @@ import { TimeIntervalComponent } from './time-interval/time-interval.component';
     InterpretationDetailComponent,
     BiosampleComponent,
     BiosampleDetailComponent,
-    TimeIntervalComponent
+    TimeIntervalComponent,
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

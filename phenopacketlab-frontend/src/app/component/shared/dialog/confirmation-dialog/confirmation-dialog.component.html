@@ -1,0 +1,27 @@
+<div class="grid p-fluid">
+  <div class="field col-1">
+    <i
+      class="pi pi-exclamation-triangle"
+      style="font-size: 1.5rem; color: orange"
+    ></i>
+  </div>
+  <div class="field col-11">
+    <p>Are you sure you want to remove '{{ label }}'?</p>
+  </div>
+</div>
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Cancel"
+    (click)="onCancelClick()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Ok"
+    (click)="onOkClick()"
+  ></button>
+</div>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ConfirmationService } from 'primeng/api';
 
 import { OntologyClass, TimeElement } from 'src/app/models/base';
 import { PhenotypicFeature } from 'src/app/models/phenotypic-feature';
 import { ProfileSelection } from 'src/app/models/profile';
 import { Utils } from '../../utils';
 import { PhenotypicFeatureDialogComponent } from 'src/app/component/shared/dialog/phenotypic-feature-dialog/phenotypic-feature-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-phenotypic-feature-search-dialog',
@@ -22,9 +22,11 @@ export class PhenotypicFeatureSearchDialogComponent implements OnInit {
 
   refEdit: DynamicDialogRef;
 
+  // confirmation dialog
+  refDelete: DynamicDialogRef | undefined;
+
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-              private dialogService: DialogService,
-              private confirmationService: ConfirmationService) {
+              private dialogService: DialogService) {
   }
   ngOnInit(): void {
     this.features = this.config.data?.features;
@@ -89,17 +91,19 @@ export class PhenotypicFeatureSearchDialogComponent implements OnInit {
   }
 
   deleteFeature(feature: PhenotypicFeature) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to remove \'' + feature.type.label + '\'?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.features = this.features.filter(val => val.key !== feature.key);
-        this.selectedFeature = null;
-      },
-      reject: () => {
-        this.confirmationService.close();
-      }
+    this.refDelete = this.dialogService.open(ConfirmationDialogComponent, {
+      header: 'Delete confirmation',
+      width: '30%',
+      contentStyle: { 'overflow': 'auto' },
+      resizable: true,
+      data: { label: feature.type.label }
+    });
+
+    this.refDelete.onClose.subscribe((okClicked: boolean) => {
+        if (okClicked) {
+          this.features = this.features.filter(val => val.key !== feature.key);
+          this.selectedFeature = null;
+        }
     });
   }
 

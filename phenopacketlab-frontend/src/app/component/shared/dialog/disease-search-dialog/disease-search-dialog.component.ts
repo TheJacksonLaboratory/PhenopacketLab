@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ConfirmationService } from 'primeng/api';
 
 import { ProfileSelection } from 'src/app/models/profile';
 import { Utils } from '../../utils';
 import { Disease } from 'src/app/models/disease';
 import { OntologyClass } from 'src/app/models/base';
 import { DiseaseDialogComponent } from '../disease-dialog/disease-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-disease-search-dialog',
@@ -20,10 +20,10 @@ export class DiseaseSearchDialogComponent {
   profile: ProfileSelection;
 
   refEdit: DynamicDialogRef;
+  refDelete: DynamicDialogRef;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig,
-              private dialogService: DialogService,
-              private confirmationService: ConfirmationService) {
+              private dialogService: DialogService) {
     this.diseases = config.data?.diseases;
     if (this.diseases === undefined) {
       this.diseases = [];
@@ -80,17 +80,19 @@ export class DiseaseSearchDialogComponent {
   }
 
   deleteDisease(disease: Disease) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to remove \'' + disease.term.label + '\'?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.diseases = this.diseases.filter(val => val.key !== disease.key);
-        this.selectedDisease = null;
-      },
-      reject: () => {
-        this.confirmationService.close();
-      }
+    this.refDelete = this.dialogService.open(ConfirmationDialogComponent, {
+      header: 'Delete confirmation',
+      width: '30%',
+      contentStyle: { 'overflow': 'auto' },
+      resizable: true,
+      data: { label: disease.term.label }
+    });
+
+    this.refDelete.onClose.subscribe((okClicked: boolean) => {
+        if (okClicked) {
+          this.diseases = this.diseases.filter(val => val.key !== disease.key);
+          this.selectedDisease = null;
+        }
     });
   }
 
