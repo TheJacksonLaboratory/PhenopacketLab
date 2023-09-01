@@ -76,19 +76,31 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-id let-editing="editing">
+        <ng-template
+          pTemplate="body"
+          let-id
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
           <tr>
             <td
               pTooltip="Click on cell to edit"
-              [pEditableColumn]="id?.value"
+              [pEditableColumn]="id"
               pEditableColumnField="value"
             >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="id.value" />
+                  <input
+                    pInputText
+                    type="text"
+                    pTooltip="Press enter to validate the value change"
+                    [ngModel]="id"
+                    (ngModelChange)="onAlternateIdChange($event, id)"
+                    (keydown)="onAlternateIdChange($event, id)"
+                  />
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{ id.value }}
+                  {{ id }}
                 </ng-template>
               </p-cellEditor>
             </td>
@@ -130,19 +142,31 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-xref let-editing="editing">
+        <ng-template
+          pTemplate="body"
+          let-xref
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
           <tr>
             <td
               pTooltip="Click on cell to edit"
-              [pEditableColumn]="xref?.value"
+              [pEditableColumn]="xref"
               pEditableColumnField="value"
             >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="xref.value" />
+                  <input
+                    pInputText
+                    type="text"
+                    pTooltip="Press enter to validate the value change"
+                    [ngModel]="xref"
+                    (ngModelChange)="onXrefChange($event, ri)"
+                    (keydown)="onXrefChange($event, ri)"
+                  />
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{ xref.value }}
+                  {{ xref }}
                 </ng-template>
               </p-cellEditor>
             </td>
@@ -184,19 +208,31 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-symbol let-editing="editing">
+        <ng-template
+          pTemplate="body"
+          let-symbol
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
           <tr>
             <td
               pTooltip="Click on cell to edit"
-              [pEditableColumn]="symbol?.value"
+              [pEditableColumn]="symbol"
               pEditableColumnField="value"
             >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="symbol.value" />
+                  <input
+                    pInputText
+                    type="text"
+                    pTooltip="Press enter to validate the value change"
+                    [ngModel]="symbol"
+                    (ngModelChange)="onAlternateSymbolChange($event, ri)"
+                    (keydown)="onAlternateSymbolChange($event, ri)"
+                  />
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{ symbol.value }}
+                  {{ symbol }}
                 </ng-template>
               </p-cellEditor>
             </td>

@@ -20,7 +20,6 @@ import { GenomicInterpretationDialogComponent } from './dialog/interpretation-di
 import { VariationDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-descriptor/variation-descriptor.component';
 import { GeneDescriptorComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/gene-descriptor.component';
 import { VariationSearchComponent } from './dialog/interpretation-dialog/genomic-interpretation/variant-interpretation/variation-search/variation-search.component';
-import { LabelCreatorDialogComponent } from './dialog/interpretation-dialog/genomic-interpretation/gene-descriptor/label-creator-dialog.component';
 import { TextPipe } from './text.pipe';
 import { ValidationResultsDialogComponent } from './validation-results-dialog/validation-results-dialog.component';
 import { InterpretationDialogComponent } from './dialog/interpretation-dialog/interpretation-dialog.component';
@@ -80,7 +79,6 @@ import { ConfirmationDialogComponent } from './dialog/confirmation-dialog/confir
     VariationDescriptorComponent,
     VariationSearchComponent,
     GeneDescriptorComponent,
-    LabelCreatorDialogComponent,
     TextPipe,
     MedicalActionDialogComponent,
     ValidationResultsDialogComponent,
@@ -126,7 +124,6 @@ import { ConfirmationDialogComponent } from './dialog/confirmation-dialog/confir
     VariationDescriptorComponent,
     GeneDescriptorComponent,
     VariationSearchComponent,
-    LabelCreatorDialogComponent,
     PrimeModule,
     AngularSplitModule,
     TextPipe,

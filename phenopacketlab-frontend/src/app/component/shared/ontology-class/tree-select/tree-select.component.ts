@@ -98,7 +98,6 @@ export class TreeSelectComponent implements OnInit {
             this.selectedNodes.push(node);
         }
         this.setNodeSelection(this.nodes, this.selectedNodes);
-        console.log(this.selectedNodes);
         this.selectedNodesChange.emit(this.selectedNodes);
     }
     /**
