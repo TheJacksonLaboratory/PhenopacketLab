@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login &mdash; Phenopacket Lab 0.8.0 documentation</title>
+  <title>Editing a Phenopacket &mdash; Phenopacket Lab 0.8.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/phenopacket-lab.css" type="text/css" />
@@ -20,8 +20,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Create Phenopacket" href="create_phenopacket.html" />
-    <link rel="prev" title="User Guide" href="index.html" /> 
+    <link rel="prev" title="Phenopacket List Screen" href="phenopacket_list_screen.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,12 +45,12 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="login.html">Login</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_phenopacket.html">Create Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_rare_disease_phenopacket.html">Create Rare Disease Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_general_phenopacket.html">Create General Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="phenopacket_list_screen.html">Phenopacket List Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="editing_a_phenopacket.html">Editing a Phenopacket</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Editing a Phenopacket</a></li>
 </ul>
 </li>
 </ul>
@@ -71,9 +70,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
-      <li class="breadcrumb-item active">Login</li>
+      <li class="breadcrumb-item active">Editing a Phenopacket</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/user-guide/login.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/user-guide/editing_a_phenopacket.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -81,28 +80,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="login">
-<h1>Login<a class="headerlink" href="#login" title="Link to this heading"></a></h1>
-<p>A new user will be greeted by the welcome screen.</p>
+  <section id="editing-a-phenopacket">
+<h1>Editing a Phenopacket<a class="headerlink" href="#editing-a-phenopacket" title="Link to this heading"></a></h1>
+<p>You can open a phenopacket for editing from the home screen by
+clicking on the phenotype list row.</p>
 <figure class="align-default">
-<img alt="../_images/00WelcomeScreen.PNG" src="../_images/00WelcomeScreen.PNG" />
+<img alt="../_images/35PhenotypeDisplay.PNG" src="../_images/35PhenotypeDisplay.PNG" />
 </figure>
-<p>Here the user will find links to the about, help, Ga4GH phenopacket schema, documentation, license, Global Alliance for Genomics &amp; Health, Monarch Initiative, issue reporting, and The Jackson Laboratory.
-If the user does not want to login, click the Start button to begin, just realize no work will be saved. However, you can create a phenopacket and save what has been done in json format using the download feature. This online work will not persist if for any reason the user closes the browser page.</p>
-<p>Before beginning to create or edit a phenopacket, you will need to login using your ORCiD ID.
-If the user does not login, any phenopackets created or changed will not be saved once the user exits/closes the application.</p>
-<p>To login, click LOGIN on the upper right corner of the screen. The Sign in page will be displayed and the user needs to click the Continue with ORCiD button in order to proceed further.</p>
+<p>More than one phenotype may be open, the opened ones are listed
+across the top row. The one in view has the ID listed in cyan text.
+The different sections are listed below the identifier using an
+accordion. Note that some features are not yet enabled, these are
+displayed in gray, for example, Measurements. To see the details
+of the other sections, click on that section to open it. All
+possible steps are shown and may be added to or edited on the
+accordion view even if the phenopacket was created using the
+rare disease stepper.</p>
 <figure class="align-default">
-<img alt="../_images/login_orcid.png" src="../_images/login_orcid.png" />
+<img alt="../_images/41ListViewAccordion.PNG" src="../_images/41ListViewAccordion.PNG" />
 </figure>
+<p>To edit the Identifier information, click on the edit icon over
+on the right.</p>
+<figure class="align-default">
+<img alt="../_images/EditIcon.PNG" src="../_images/EditIcon.PNG" />
+</figure>
+<p>In general, the edit screens look and function the same as the
+screen used to create the phenopacket. See the sections for each
+screen for details. The exception to this is the individual
+screen which does not allow editing the phenopacket IDs.</p>
+<figure class="align-default">
+<img alt="../_images/36EditIndividual.PNG" src="../_images/36EditIndividual.PNG" />
+</figure>
+<p>The sections Phenotypic Features, Interpretations, Diseases,
+Medical Actions, and Files can be added to or edited the same
+as described in the stepper sections.</p>
+<p>Measurements and Biosamples sections are not currently implemented.</p>
+<p><strong>Metadata</strong></p>
+<p>The metadata section is only an informational section showing
+definitions of the resources and all the ontologies in use for
+this phenopacket.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="create_phenopacket.html" class="btn btn-neutral float-right" title="Create Phenopacket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="phenopacket_list_screen.html" class="btn btn-neutral float-left" title="Phenopacket List Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
