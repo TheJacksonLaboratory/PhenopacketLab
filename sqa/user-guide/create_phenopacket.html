@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login &mdash; Phenopacket Lab 0.8.0 documentation</title>
+  <title>Create Phenopacket &mdash; Phenopacket Lab 0.8.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/phenopacket-lab.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Create Phenopacket" href="create_phenopacket.html" />
-    <link rel="prev" title="User Guide" href="index.html" /> 
+    <link rel="next" title="Create Rare Disease Phenopacket" href="create_rare_disease_phenopacket.html" />
+    <link rel="prev" title="Login" href="login.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,8 +46,8 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Login</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_phenopacket.html">Create Phenopacket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="login.html">Login</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_rare_disease_phenopacket.html">Create Rare Disease Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="create_general_phenopacket.html">Create General Phenopacket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="phenopacket_list_screen.html">Phenopacket List Screen</a></li>
@@ -71,9 +71,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
-      <li class="breadcrumb-item active">Login</li>
+      <li class="breadcrumb-item active">Create Phenopacket</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/user-guide/login.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/user-guide/create_phenopacket.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -81,28 +81,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="login">
-<h1>Login<a class="headerlink" href="#login" title="Link to this heading"></a></h1>
-<p>A new user will be greeted by the welcome screen.</p>
+  <section id="create-phenopacket">
+<h1>Create Phenopacket<a class="headerlink" href="#create-phenopacket" title="Link to this heading"></a></h1>
+<p>Once logged in, the user will see the homepage.</p>
 <figure class="align-default">
-<img alt="../_images/00WelcomeScreen.PNG" src="../_images/00WelcomeScreen.PNG" />
+<img alt="../_images/02Home.PNG" src="../_images/02Home.PNG" />
 </figure>
-<p>Here the user will find links to the about, help, Ga4GH phenopacket schema, documentation, license, Global Alliance for Genomics &amp; Health, Monarch Initiative, issue reporting, and The Jackson Laboratory.
-If the user does not want to login, click the Start button to begin, just realize no work will be saved. However, you can create a phenopacket and save what has been done in json format using the download feature. This online work will not persist if for any reason the user closes the browser page.</p>
-<p>Before beginning to create or edit a phenopacket, you will need to login using your ORCiD ID.
-If the user does not login, any phenopackets created or changed will not be saved once the user exits/closes the application.</p>
-<p>To login, click LOGIN on the upper right corner of the screen. The Sign in page will be displayed and the user needs to click the Continue with ORCiD button in order to proceed further.</p>
+<p>The user may create a phenopacket from scratch, edit a phenopacket created in a previous session, or upload an existing phenopacket from a json file. Each of these functions are described in various sections of this document.</p>
+<p>The user can create either a Rare Disease Phenopacket or a General Phenopacket.</p>
+<p>Click the + Create button in the top left corner of the screen. The Phenopacket Creator form is displayed. Creation of a Rare Disease phenopacket is the default. It has a  stepper process where the user only needs to enter information from steps 1 to 5. To create a complete phenopacket, the user needs to click the Show all available steps button on Phenopacket creator form.</p>
 <figure class="align-default">
-<img alt="../_images/login_orcid.png" src="../_images/login_orcid.png" />
+<img alt="../_images/03RareVsAllStepper.PNG" src="../_images/03RareVsAllStepper.PNG" />
 </figure>
+<p>For a Rare Disease phenopacket the user will see and enter information from Step1 to Step5 where step 5 will be Validate. For a general phenopacket, the user will see and enter information from Step1 to Step 9.</p>
+<figure class="align-default">
+<img alt="../_images/04AllSteps.PNG" src="../_images/04AllSteps.PNG" />
+</figure>
+<p>The stepper is only shown when creating a new phenopacket. Step 1 (Individual) is mandatory as the user needs to provide a Phenopacket ID and Individual ID. The Validate step is mandatory in order to complete the phenopacket. All other steps are optional. The steps may be completed in any order by clicking on the step or using the next and back buttons at the bottom of the form. However, once the Validate step is completed, the stepper will go away and any other information must be entered using the editing functions.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="create_phenopacket.html" class="btn btn-neutral float-right" title="Create Phenopacket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="login.html" class="btn btn-neutral float-left" title="Login" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="create_rare_disease_phenopacket.html" class="btn btn-neutral float-right" title="Create Rare Disease Phenopacket" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
