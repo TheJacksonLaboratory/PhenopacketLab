@@ -72,8 +72,8 @@ app-header {
       flex: auto;
     }
 
-    &.pl-short{
-      padding: .15rem;
+    &.pl-short {
+      padding: 0.15rem 0 0.15rem 0;
     }
 
     .static-content-profile {
@@ -152,9 +152,12 @@ app-header {
   -o-background-size: cover;
   background-size: cover;
 }
+
 .bgimg {
-  background-image: url('../assets/img/helix_image.jpg');
+  background-image: url(https://www.jax.org/-/media/jaxweb/images/education-and-learning/online-minicourses/mlmc_web-banner-1600x254px_full-gradient.png?mw=1400&hash=0749A9385AA1AF970942F1AF57A6D887);
+  background-size: contain;
 }
+
 .pheno-logo {
   height: 30px;
   padding: .25rem;
