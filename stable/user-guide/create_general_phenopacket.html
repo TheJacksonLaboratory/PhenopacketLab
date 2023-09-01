@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create General Phenopacket &mdash; Phenopacket Lab 0.8.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/phenopacket-lab.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=486e5634"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Phenopacket List Screen" href="phenopacket_list_screen.html" />
+    <link rel="prev" title="Create Rare Disease Phenopacket" href="create_rare_disease_phenopacket.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Phenopacket Lab
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="login.html">Login</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_phenopacket.html">Create Phenopacket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_rare_disease_phenopacket.html">Create Rare Disease Phenopacket</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create General Phenopacket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="phenopacket_list_screen.html">Phenopacket List Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="editing_a_phenopacket.html">Editing a Phenopacket</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Phenopacket Lab</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User Guide</a></li>
+      <li class="breadcrumb-item active">Create General Phenopacket</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/create_general_phenopacket.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="create-general-phenopacket">
+<h1>Create General Phenopacket<a class="headerlink" href="#create-general-phenopacket" title="Link to this heading"></a></h1>
+<p>To create a regular phenopacket, click the Create button on the
+homepage. The Phenopacket Creator form will display a stepper
+with Step 1 to Step 5. On the top right corner, click Show all
+available steps. All steps for regular phenopacket will be displayed.</p>
+<figure class="align-default">
+<img alt="../_images/60AllStepper.PNG" src="../_images/60AllStepper.PNG" />
+</figure>
+<p>Step 1 to Step 6 are similar to the steps described in the section
+Create Rare Disease Phenopacket except Step 3 Measurements and
+Step 4 Biosample(s) have not been implemented for the current
+version.</p>
+<p><strong>Medical Action(s) Step</strong></p>
+<p>This step allows the user to enter information with regards to a
+medical action taken for any disease mentioned in the Phenopacket.
+To add a new record for Medical Action(s), click the Add medical
+action button. Select a Treatment target from the dropdown.
+This list will consist of only the diseases mentioned in the
+disease step of the given Phenopacket. The user can add several
+medical actions or edit or delete existing medical actions.</p>
+<figure class="align-default">
+<img alt="../_images/61AddMedicalAction.PNG" src="../_images/61AddMedicalAction.PNG" />
+</figure>
+<p>Treatment intent, Response to treatment, and Treatment termination
+reason are various dropdowns that lets the user select more
+details from the NCI Thesaurus ontology.</p>
+<p>Adverse event(s) allows the user to search for and select from
+the OAE (ontology of adverse events).</p>
+<figure class="align-default">
+<img alt="../_images/62AdverseEvents.PNG" src="../_images/62AdverseEvents.PNG" />
+</figure>
+<p>Select an action type (required), then various dropdowns will be
+presented depending on the action type selected. This is the
+treatment screen.</p>
+<figure class="align-default">
+<img alt="../_images/63Treatment.PNG" src="../_images/63Treatment.PNG" />
+</figure>
+<p>For example, if the user selects an action type of Radiation
+therapy, the system will display various dropdown fields
+related to a Radiation Therapy treatment.</p>
+<figure class="align-default">
+<img alt="../_images/64RadiationTherapy.PNG" src="../_images/64RadiationTherapy.PNG" />
+</figure>
+<p>When the user finishes adding information for a given medical
+action, click on the Add Medical action button to save the
+medical action record.</p>
+<p>The user can add several medical actions or edit or delete
+existing medical actions.</p>
+<figure class="align-default">
+<img alt="../_images/65MedicalActionList.PNG" src="../_images/65MedicalActionList.PNG" />
+</figure>
+<p><strong>File(s) Step</strong></p>
+<p>The files section allows the user to describe external files that
+may be linked with the phenotype data to inform analyses. Click
+on the + Add file button.</p>
+<figure class="align-default">
+<img alt="../_images/50AddFile.PNG" src="../_images/50AddFile.PNG" />
+</figure>
+<p>The URI (Uniform Resource Identifier) field is required.
+The field must contain a link to a file on the web, usually
+formatted as <a class="reference external" href="http://somewebsite/filename">http://somewebsite/filename</a> or to a file formatted
+as <a class="reference external" href="file://some/path/file.txt">file://some/path/file.txt</a>.</p>
+<p>Next click on the + Add Individual to File ID entry.</p>
+<figure class="align-default">
+<img alt="../_images/51AddFileIdentifier.PNG" src="../_images/51AddFileIdentifier.PNG" />
+</figure>
+<p>Note that the Individual ID is filled in and is the user
+specified ID for this phenopacket. Click on the edit icon
+(pencil) to add the File Identifier. The row changes to
+provide an entry box for the file identifier. Click the
+green check mark to save it.</p>
+<figure class="align-default">
+<img alt="../_images/52EnterFileIdentifier.PNG" src="../_images/52EnterFileIdentifier.PNG" />
+</figure>
+<p>Click on the + Add file attributes button. Three rows are added
+for entering genomeAssembly, fileFormat, and description. These
+are optional, if some are not needed, use the trash icon to
+remove them. Use the edit icon to enter the values.
+GenomeAssembly and fileFormat provide a dropdown list for the
+choices. Description is a free format field.</p>
+<figure class="align-default">
+<img alt="../_images/53EnterFileAttributes.PNG" src="../_images/53EnterFileAttributes.PNG" />
+</figure>
+<p>Finally, click the + Add attribute button. Here the user may add
+one or more file attributes. Enter both a key name and the
+attribute value.</p>
+<p>When finished, click the Add file button to save.</p>
+<figure class="align-default">
+<img alt="../_images/54EnterUserFileAttribute.PNG" src="../_images/54EnterUserFileAttribute.PNG" />
+</figure>
+<p>A finished file entry will look like this. It can be expanded
+to show all the fields. Several files may be added.</p>
+<figure class="align-default">
+<img alt="../_images/55ExampleFile.PNG" src="../_images/55ExampleFile.PNG" />
+</figure>
+<p><strong>Validate Step</strong></p>
+<p>Please refer to the Validate Step in the Create Rare Disease
+Phenopacket section.</p>
+<p>After validating the phenopacket, the user will be taken to
+the Phenopackets List screen and all the phenopackets created
+by the user will be listed.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="create_rare_disease_phenopacket.html" class="btn btn-neutral float-left" title="Create Rare Disease Phenopacket" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="phenopacket_list_screen.html" class="btn btn-neutral float-right" title="Phenopacket List Screen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Baha El Kassaby, Daniel Danis, Michael Gargano, Peter Robinson.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
