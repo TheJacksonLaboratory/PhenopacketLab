@@ -21,9 +21,12 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
 
   severity: OntologyClass;
   // modifiers
+  modifiersNodesLoaded = false;
+  selectedModifierNodes: OntologyTreeNode[];
   modifiersNodes: OntologyTreeNode[];
   modifiersSubscription: Subscription;
   // evidence
+  evidenceNodesLoaded = false;
   evidences: Evidence[];
   evidencesNodes: OntologyTreeNode[];
   evidencesSubscription: Subscription;
@@ -50,14 +53,22 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
     this.modifiersSubscription = this.constantsService.getModifiers().subscribe(nodes => {
       // we get the children from the root node sent in response
       if (nodes) {
+        this.modifiersNodesLoaded = true
         this.modifiersNodes = nodes.children;
+        this.selectedModifierNodes = [];
+        // set selected nodes
+        if (this.phenotypicFeature.modifiers) {
+          for (const modif of this.phenotypicFeature.modifiers) {
+            this.selectedModifierNodes.push(OntologyTreeNode.getNodeWithKey(modif.id, this.modifiersNodes));
+          }
+        }
       }
-    }
-    );
+    });
     // get Evidences
     this.evidencesSubscription = this.constantsService.getEvidences().subscribe(evidences => {
       if (evidences) {
         const nodes = [];
+        this.evidenceNodesLoaded = true;
         for (const evidence of evidences) {
           nodes.push({ label: evidence.lbl, key: evidence.id, leaf: true, parent: undefined });
         }
@@ -128,6 +139,7 @@ export class PhenotypicFeatureDialogComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   updateSeverity(event) {
     if (this.phenotypicFeature) {
       if (event.value) {

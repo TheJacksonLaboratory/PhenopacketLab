@@ -109,6 +109,7 @@
   <div class="field col-12">
     <p-panel header="Adverse event(s)" [toggleable]="true" [collapsed]="true">
       <ontology-tree-select
+        *ngIf="adverseEventNodesLoaded"
         id="events"
         pTooltip="Adverse event ontology (OAE)"
         tooltipPosition="bottom"

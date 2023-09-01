@@ -87,6 +87,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
   terminationReasonsSubscription: Subscription;
   terminationReasonSelected: OntologyTreeNode;
 
+  adverseEventNodesLoaded = false;
   adverseEventNodes: OntologyTreeNode[];
   adverseEventsSubscription: Subscription;
 
@@ -189,6 +190,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
         // we get the children from the root node sent in response
         if (nodes) {
           this.adverseEventNodes = <OntologyTreeNode[]>nodes.children;
+          this.adverseEventNodesLoaded = true;
         }
       });
       // get chemical entities
