@@ -14,6 +14,17 @@ Questions about the specific elements of a phenopacket can be answered here: htt
 
    login
 
+
    create_phenopacket
 
 
+   create_rare_disease_phenopacket
+
+
+   create_general_phenopacket
+
+
+   phenopacket_list_screen
+
+
+   editing_a_phenopacket
