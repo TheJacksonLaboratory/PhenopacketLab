@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     this.authService.user$.pipe(filter((user) => user != null)).subscribe((user) => {
       this.user = user;
       this.userActions = [
-        {label: 'ORCID Profile',  icon: 'pi pi-fw pi-external-link', url: `https://orcid.org/${this.idFromSub(user.sub)}`},
+        {label: 'ORCiD Profile',  icon: 'pi pi-fw pi-external-link', url: `https://orcid.org/${this.idFromSub(user.sub)}`},
         {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: e => this.logout()}
       ];
     });

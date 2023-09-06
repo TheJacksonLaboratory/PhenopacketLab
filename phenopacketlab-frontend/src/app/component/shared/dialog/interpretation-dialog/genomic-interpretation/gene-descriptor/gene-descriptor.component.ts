@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Utils } from 'src/app/component/shared/utils';
 import { GeneDescriptor } from 'src/app/models/interpretation';
 import { InterpretationService } from 'src/app/services/interpretation.service';
-import { LabelCreatorDialogComponent } from './label-creator-dialog.component';
 
 @Component({
     providers: [MessageService, ConfirmationService],
@@ -18,14 +18,9 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
     @Output()
     geneDescriptorChange = new EventEmitter<GeneDescriptor>();
 
-    submitted = false;
-    alternateIds: any[];
-    alternateId: any;
-    xrefs: any[];
-    xref: any;
-    alternateSymbols: any[];
-    alternateSymbol: any;
-
+    alternateIds: RowValue[];
+    xrefs: RowValue[];
+    alternateSymbols: RowValue[];
     ref: DynamicDialogRef;
 
 
@@ -34,6 +29,11 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        if (this.geneDescriptor) {
+            this.alternateIds = RowValue.getRowValues(this.geneDescriptor.alternateIds);
+            this.xrefs = RowValue.getRowValues(this.geneDescriptor.xrefs);
+            this.alternateSymbols = RowValue.getRowValues(this.geneDescriptor.alternateSymbols);
+        }
     }
 
     ngOnDestroy(): void {
@@ -41,79 +41,71 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
     }
 
     onValueIdChange(id: string) {
-        if (this.geneDescriptor) {
-            this.geneDescriptor.valueId = id;
-            this.geneDescriptorChange.emit(this.geneDescriptor);
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
         }
+        this.geneDescriptor.valueId = id;
+        this.geneDescriptorChange.emit(this.geneDescriptor);
     }
 
     onSymbolChange(symbol: string) {
-        if (this.geneDescriptor) {
-            this.geneDescriptor.symbol = symbol;
-            this.geneDescriptorChange.emit(this.geneDescriptor);
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
         }
+        this.geneDescriptor.symbol = symbol;
+        this.geneDescriptorChange.emit(this.geneDescriptor);
     }
     onDescriptionChange(description: string) {
-        if (this.geneDescriptor) {
-            this.geneDescriptor.description = description;
-            this.geneDescriptorChange.emit(this.geneDescriptor);
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
         }
+        this.geneDescriptor.description = description;
+        this.geneDescriptorChange.emit(this.geneDescriptor);
     }
 
+    onAlternateIdChange() {
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
+        }
+        this.geneDescriptor.alternateIds = RowValue.getStringArray(this.alternateIds);
+        this.geneDescriptorChange.emit(this.geneDescriptor);
+    }
     openNewAlternateId() {
-        this.ref = this.dialogService.open(LabelCreatorDialogComponent, {
-            header: 'Create new alternate ID',
-            data: this.alternateIds,
-            width: '20%',
-            contentStyle: { 'overflow': 'auto' },
-            baseZIndex: 10000
-        });
-
-        this.ref.onClose.subscribe((labels: any) => {
-            if (labels) {
-                this.alternateIds = labels;
-                this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: labels });
-            }
-        });
-
-        this.alternateId = {};
-        this.submitted = false;
+        if (this.alternateIds === undefined || this.alternateIds === null) {
+            this.alternateIds = [];
+        }
+        this.alternateIds.push(new RowValue(Utils.getBiggestKey(this.alternateIds) + 1));
     }
 
-    deleteAlternateId(id: any) {
+    deleteAlternateId(id: RowValue) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete ' + id.value + '?',
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.alternateIds = this.alternateIds.filter(val => val.key !== id.key);
-                this.alternateId = {};
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Alternate ID Deleted', life: 3000 });
                 if (this.geneDescriptor) {
-                    this.geneDescriptor.alternateIds = this.geneDescriptor.alternateIds.filter(val => val !== id);
+                    this.geneDescriptor.alternateIds = RowValue.getStringArray(this.alternateIds);
+                    this.geneDescriptorChange.emit(this.geneDescriptor);
+                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Alternate ID Deleted', life: 3000 });
                 }
             }
         });
     }
 
+    onXrefChange() {
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
+        }
+        this.geneDescriptor.xrefs = RowValue.getStringArray(this.xrefs);
+        this.geneDescriptorChange.emit(this.geneDescriptor);
+
+    }
     openNewXRef() {
-        this.ref = this.dialogService.open(LabelCreatorDialogComponent, {
-            header: 'Create new Xref',
-            data: this.xrefs,
-            width: '20%',
-            contentStyle: { 'overflow': 'auto' },
-            baseZIndex: 10000
-        });
-
-        this.ref.onClose.subscribe((xrefs: any) => {
-            if (xrefs) {
-                this.xrefs = xrefs;
-                this.messageService.add({ severity: 'info', summary: 'Xref created', detail: xrefs });
-            }
-        });
-
-        this.xref = {};
-        this.submitted = false;
+        if (this.xrefs === undefined || this.xrefs === null) {
+            this.xrefs = [];
+        }
+        this.xrefs.push(new RowValue(Utils.getBiggestKey(this.xrefs) + 1));
     }
 
     deleteXref(xref: any) {
@@ -123,33 +115,27 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.xrefs = this.xrefs.filter(val => val.key !== xref.key);
-                this.xref = {};
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Xref Deleted', life: 3000 });
                 if (this.geneDescriptor) {
-                    this.geneDescriptor.xrefs = this.geneDescriptor.xrefs.filter(val => val !== xref);
+                    this.geneDescriptor.xrefs = RowValue.getStringArray(this.xrefs);
+                    this.geneDescriptorChange.emit(this.geneDescriptor);
+                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Xref Deleted', life: 3000 });
                 }
             }
         });
     }
 
+    onAlternateSymbolChange() {
+        if (this.geneDescriptor === undefined) {
+            this.geneDescriptor = new GeneDescriptor();
+        }
+        this.geneDescriptor.alternateSymbols = RowValue.getStringArray(this.alternateSymbols);
+        this.geneDescriptorChange.emit(this.geneDescriptor);
+    }
     openNewAlternateSymbol() {
-        this.ref = this.dialogService.open(LabelCreatorDialogComponent, {
-            header: 'Create new alternate symbol',
-            data: this.alternateSymbols,
-            width: '20%',
-            contentStyle: { 'overflow': 'auto' },
-            baseZIndex: 10000
-        });
-
-        this.ref.onClose.subscribe((symbols: any) => {
-            if (symbols) {
-                this.alternateSymbols = symbols;
-                this.messageService.add({ severity: 'info', summary: 'Symbol created', detail: symbols });
-            }
-        });
-
-        this.alternateSymbol = {};
-        this.submitted = false;
+        if (this.alternateSymbols === undefined || this.alternateSymbols === null) {
+            this.alternateSymbols = [];
+        }
+        this.alternateSymbols.push(new RowValue(Utils.getBiggestKey(this.alternateSymbols) + 1));
     }
 
     deleteAlternateSymbol(symbol: any) {
@@ -158,14 +144,43 @@ export class GeneDescriptorComponent implements OnInit, OnDestroy {
             header: 'Confirm',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.alternateSymbols = this.alternateSymbols.filter(val => val.key !== symbol.key);
-                this.alternateSymbol = {};
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Alternate symbol Deleted', life: 3000 });
+                this.alternateSymbols = this.alternateSymbols.filter(val => val !== symbol);
                 if (this.geneDescriptor) {
-                    this.geneDescriptor.alternateSymbols = this.geneDescriptor.alternateSymbols.filter(val => val !== symbol);
+                    this.alternateSymbols = RowValue.getRowValues(this.geneDescriptor.alternateSymbols);
+                    this.geneDescriptorChange.emit(this.geneDescriptor);
+                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Alternate symbol Deleted', life: 3000 });
                 }
             }
         });
     }
 
+}
+
+export class RowValue {
+    key: number;
+    value: string;
+
+    constructor(key: number) {
+        this.key = key;
+    }
+    public static getRowValues(values: string[]): RowValue[] {
+        const rowValues = [];
+        if (values) {
+            for (const value of values) {
+                const rowValue = new RowValue(Utils.getBiggestKey(rowValues) + 1);
+                rowValue.value = value;
+                rowValues.push(rowValue);
+            }
+        }
+        return rowValues;
+    }
+    public static getStringArray(rowValues: RowValue[]): string[] {
+        const values = [];
+        if (rowValues) {
+            for (const rowValue of rowValues) {
+                values.push(rowValue.value);
+            }
+        }
+        return values;
+    }
 }

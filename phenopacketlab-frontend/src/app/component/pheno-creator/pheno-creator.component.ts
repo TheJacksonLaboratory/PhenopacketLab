@@ -30,7 +30,9 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   profileSelected: ProfileSelection;
   rareProfileSelected = true;
   subscription: Subscription;
-  activeIndex = 0;
+  // TODO better manage indexes to we could have more than 2 profiles
+  activeIndexRare = 0;
+  activeIndexAll = 0;
   user: User;
   isPrivateInfoWarnSelected: boolean;
 
@@ -75,11 +77,17 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
   }
 
   onActiveIndexChange(event: number) {
-    this.activeIndex = event;
+    if (this.rareProfileSelected) {
+      this.activeIndexRare = event;
+    } else {
+      this.activeIndexAll = event;
+    }
   }
 
   updateProfile(rareDiseaseProfileSelected: boolean) {
     this.rareProfileSelected = rareDiseaseProfileSelected;
+    this.activeIndexRare = 0;
+    this.activeIndexAll = 0;
     if (this.rareProfileSelected) {
       this.phenopacketStepperService.setProfileSelection(ProfileSelection.RARE_DISEASE);
       this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.RARE_DISEASE).steps;
@@ -87,25 +95,27 @@ export class PhenoCreatorComponent implements OnInit, OnDestroy {
       this.phenopacketStepperService.setProfileSelection(ProfileSelection.ALL_AVAILABLE);
       this.steps = Profile.profileSelectionOptions.find(element => element.value === ProfileSelection.ALL_AVAILABLE).steps;
     }
+    this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[0].routerLink}`]);
   }
 
   nextPage() {
-    this.activeIndex++;
     if (this.rareProfileSelected) {
-      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndex].routerLink}`]);
-
+      this.activeIndexRare++;
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndexRare].routerLink}`]);
     } else {
-      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndex].routerLink}`]);
+      this.activeIndexAll++;
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndexAll].routerLink}`]);
 
     }
   }
 
   prevPage() {
-    this.activeIndex--;
     if (this.rareProfileSelected) {
-      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndex].routerLink}`]);
+      this.activeIndexRare--;
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[0].steps[this.activeIndexRare].routerLink}`]);
     } else {
-      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndex].routerLink}`]);
+      this.activeIndexAll--;
+      this.router.navigate([`creator/${Profile.profileSelectionOptions[1].steps[this.activeIndexAll].routerLink}`]);
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { OntologyTreeNode } from 'src/app/models/ontology-treenode';
 
 @Component({
@@ -36,6 +36,7 @@ export class TreeSelectComponent implements OnInit {
         if (this.selectedNodes === undefined) {
             this.selectedNodes = [];
         }
+        this.resetNodeSelection(this.nodes);
         this.setNodeSelection(this.nodes, this.selectedNodes);
     }
 
@@ -47,12 +48,23 @@ export class TreeSelectComponent implements OnInit {
                     for (const selectedNode of nodesSelected) {
                         if (selectedNode.key === treeNode.key) {
                             treeNode.isSelected = true;
+                            treeNode.expanded = true;
                         }
                     }
                 }
-
                 if (treeNode.children) {
                     this.setNodeSelection(treeNode.children, nodesSelected);
+                }
+            }
+        }
+    }
+    resetNodeSelection(treeNodes: OntologyTreeNode[]) {
+        if (Array.isArray(treeNodes)) {
+            for (const treeNode of treeNodes) {
+                treeNode.isSelected = false;
+                treeNode.expanded = false;
+                if (treeNode.children) {
+                    this.resetNodeSelection(treeNode.children);
                 }
             }
         }
@@ -86,7 +98,6 @@ export class TreeSelectComponent implements OnInit {
             this.selectedNodes.push(node);
         }
         this.setNodeSelection(this.nodes, this.selectedNodes);
-        console.log(this.selectedNodes);
         this.selectedNodesChange.emit(this.selectedNodes);
     }
     /**

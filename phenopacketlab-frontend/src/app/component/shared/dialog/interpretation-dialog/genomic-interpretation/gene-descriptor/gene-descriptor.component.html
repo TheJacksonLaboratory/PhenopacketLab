@@ -18,6 +18,7 @@
         pInputText
         pTooltip="Official identifier of the gene. REQUIRED."
         tooltipPosition="bottom"
+        required
         [ngModel]="geneDescriptor?.valueId"
         (ngModelChange)="onValueIdChange($event)"
       />
@@ -29,6 +30,7 @@
         type="text"
         aria-describedby="Symbol"
         pInputText
+        required
         pTooltip="Official gene symbol. REQUIRED."
         tooltipPosition="bottom"
         [ngModel]="geneDescriptor?.symbol"
@@ -76,21 +78,15 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-id let-editing="editing">
+        <ng-template pTemplate="body" let-id let-ri="rowIndex">
           <tr>
-            <td
-              pTooltip="Click on cell to edit"
-              [pEditableColumn]="id?.value"
-              pEditableColumnField="value"
-            >
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="id.value" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ id.value }}
-                </ng-template>
-              </p-cellEditor>
+            <td>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="id.value"
+                (ngModelChange)="onAlternateIdChange()"
+              />
             </td>
             <td>
               <button
@@ -130,21 +126,15 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-xref let-editing="editing">
+        <ng-template pTemplate="body" let-xref let-ri="rowIndex">
           <tr>
-            <td
-              pTooltip="Click on cell to edit"
-              [pEditableColumn]="xref?.value"
-              pEditableColumnField="value"
-            >
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="xref.value" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ xref.value }}
-                </ng-template>
-              </p-cellEditor>
+            <td>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="xref.value"
+                (ngModelChange)="onXrefChange()"
+              />
             </td>
             <td>
               <button
@@ -184,21 +174,15 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-symbol let-editing="editing">
+        <ng-template pTemplate="body" let-symbol let-ri="rowIndex">
           <tr>
-            <td
-              pTooltip="Click on cell to edit"
-              [pEditableColumn]="symbol?.value"
-              pEditableColumnField="value"
-            >
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="symbol.value" />
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ symbol.value }}
-                </ng-template>
-              </p-cellEditor>
+            <td>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="symbol.value"
+                (ngModelChange)="onAlternateSymbolChange()"
+              />
             </td>
             <td>
               <button

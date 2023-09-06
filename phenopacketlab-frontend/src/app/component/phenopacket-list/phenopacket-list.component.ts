@@ -172,7 +172,6 @@ export class PhenopacketListComponent implements OnInit, OnDestroy {
         if (validationResults) {
           const validatedPhenopacket = validationResults.validatedPhenopacket;
           validatedPhenopacket.dbId = phenopacket.dbId;
-          console.log(validatedPhenopacket);
           this.phenopacketService.updatePhenopacket(validatedPhenopacket, this.user);
           // this.phenopacketService.removePhenopacket(phenopacket, this.user);
           // this.phenopacketService.addPhenopacket(validatedPhenopacket, this.user);

@@ -23,7 +23,7 @@
     <p-steps
       [model]="steps"
       [readonly]="false"
-      [(activeIndex)]="activeIndex"
+      [(activeIndex)]="rareProfileSelected === true ? activeIndexRare : activeIndexAll"
       (activeIndexChange)="onActiveIndexChange($event)"
     ></p-steps>
   </div>
@@ -33,7 +33,7 @@
 </div>
 <div class="flex align-content-end justify-content-between m-5">
   <div class="flex align-items-center justify-content-center">
-    <span *ngIf="activeIndex > 0">
+    <span *ngIf="rareProfileSelected === true ? activeIndexRare > 0 : activeIndexAll > 0">
       <p-button
         label="Back"
         (onClick)="prevPage()"
@@ -43,7 +43,7 @@
     </span>
   </div>
   <div class="flex align-items-center justify-content-center">
-    <span *ngIf="activeIndex < steps.length - 1">
+    <span *ngIf="rareProfileSelected === true ? activeIndexRare < steps.length - 1 : activeIndexAll < steps.length - 1">
       <p-button
         label="Next"
         (onClick)="nextPage()"
@@ -51,7 +51,7 @@
         iconPos="right"
       ></p-button>
     </span>
-    <span *ngIf="activeIndex == steps.length - 1">
+    <span *ngIf="rareProfileSelected === true ? activeIndexRare == steps.length - 1 : activeIndexAll == steps.length - 1">
       <p-button
               label="Complete"
               (onClick)="complete()"

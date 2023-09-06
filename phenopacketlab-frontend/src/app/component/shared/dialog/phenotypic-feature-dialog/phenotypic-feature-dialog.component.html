@@ -81,13 +81,14 @@
             <label for="modifier"><b>Modifiers</b></label>
 
             <ontology-tree-select
+              *ngIf="modifiersNodesLoaded"
               id="modifier"
               pTooltip="This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects."
               tooltipPosition="bottom"
               showDelay="2000"
               [selectionMode]="'checkbox'"
               (selectedNodesChange)="updateModifiers($event)"
-              [selectedNodes]="phenotypicFeature?.modifierNodes"
+              [selectedNodes]="selectedModifierNodes"
               [nodes]="modifiersNodes"
             ></ontology-tree-select>
 
@@ -97,6 +98,7 @@
           <div class="field col-12">
             <label for="evidence"><b>Evidence</b></label>
             <ontology-tree-select
+              *ngIf="evidenceNodesLoaded"
               id="evidence"
               pTooltip="This element intends to represent the evidence for an assertion such as an observation of a PhenotypicFeature. Terms available are from the Evidence & Conclusion Ontology (ECO)."
               tooltipPosition="bottom"

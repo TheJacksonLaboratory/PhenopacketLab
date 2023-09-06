@@ -336,7 +336,7 @@ export class GeneDescriptor {
         if (obj['symbol']) {
             geneDesciptor.symbol = obj['symbol'];
         } else {
-            throw new Error(`'symbol' ism issing from 'geneDescriptor' object.`);
+            throw new Error(`'symbol' is missing from 'geneDescriptor'.`);
         }
         if (obj['description']) {
             geneDesciptor.description = obj['description'];

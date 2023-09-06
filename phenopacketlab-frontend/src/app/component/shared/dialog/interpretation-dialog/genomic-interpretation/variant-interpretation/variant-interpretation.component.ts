@@ -46,7 +46,6 @@ export class VariantInterpretationComponent implements OnInit {
         if (this.variantInterpretation) {
             this.showRightSplit();
         }
-        console.log(this.profile);
     }
 
     showLeftSplit() {

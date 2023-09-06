@@ -1,7 +1,6 @@
 <app-header></app-header>
 <p-toast
   baseZIndex="11"
-  position="bottom-right"
   showTransitionOption="100ms ease-out"
   hideTransitionOptions="100ms ease-in"
 ></p-toast>
@@ -38,7 +37,7 @@
               </p>
               <p class="text-lg text-800">
                 You can use your
-                <a href="https://orcid.org/" target="_blank">ORCID</a> profile
+                <a href="https://orcid.org/" target="_blank">ORCiD</a> profile
                 to login to the application and save your phenopackets. If you
                 do not want to login, you can still use the application
                 anonymously. However, ensure you download the phenopackets - the
@@ -49,7 +48,7 @@
             <div class="field col-12">
               <p-button (onClick)="start()" styleClass="text-lg">
                 Start
-                <span class="material-icons ml-1"> open_in_browser </span>
+                <span class="material-icons ml-1"> start </span>
               </p-button>
             </div>
           </div>
@@ -72,17 +71,14 @@
                   class="flex align-items-center justify-content-center welcome-card p-button-secondary text-lg"
                   (click)="navigateTo('http://phenopackets.org/')"
                 >
-                  <img
-                    class="pheno-logo"
-                    src="../assets/img/PhenoPackets_Logo.png"
-                  />
-                  Learn more about the GA4GH Phenopacket Schema
+                  The GA4GH Phenopacket Schema
+                  <span class="material-icons ml-1">open_in_new</span>
                 </button>
               </div>
             </div>
           </section>
         </div>
-        <div class="flex align-items-center justify-content-center">
+        <div class="flex align-items-center justify-content-center mt-7">
           <a href="https://www.ga4gh.org/" target="_blank">
             <img class="logo-img mt-2" src="../assets/img/ga4gh.svg" alt=""
           /></a>

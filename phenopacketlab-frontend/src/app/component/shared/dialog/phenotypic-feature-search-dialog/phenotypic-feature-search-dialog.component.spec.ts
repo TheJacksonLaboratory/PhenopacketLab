@@ -20,7 +20,6 @@ describe('PhenotypicFeatureSearchDialogComponent', () => {
       ],
       providers: [
         DialogService,
-        ConfirmationService,
         { provide: DynamicDialogConfig, useValue: {} },
         { provide: DynamicDialogRef, useValue: {} }
       ]
