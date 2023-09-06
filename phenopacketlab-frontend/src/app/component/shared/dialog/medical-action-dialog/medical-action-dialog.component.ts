@@ -433,7 +433,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   updateRouteOfAdministration(eventObj) {
     if (this.medicalAction?.treatment) {
-      if (eventObj) {
+      if (eventObj && eventObj.node) {
         this.medicalAction.treatment.routeOfAdministration = new OntologyClass(eventObj.node.key,
                                                                               eventObj.node.label,
                                                                               eventObj.node.key,
@@ -446,7 +446,7 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   updateProcedureBodySite(eventObj) {
     if (this.medicalAction?.procedure) {
-      if (eventObj) {
+      if (eventObj && eventObj.node) {
         this.medicalAction.procedure.bodySite = new OntologyClass(eventObj.node.key,
                                                                   eventObj.node.label,
                                                                   eventObj.node.key,
@@ -459,7 +459,11 @@ export class MedicalActionDialogComponent implements OnInit, OnDestroy {
 
   /** end body site search */
   onDrugTypeChange(eventObj: any) {
-    this.drugType = eventObj.value;
+    if (eventObj.value === null) {
+      this.drugType = undefined;
+    } else {
+      this.drugType = eventObj.value;
+    }
     // update medicalAction
     if (this.medicalAction && this.medicalAction.treatment) {
       this.medicalAction.treatment.drugType = this.drugType;
